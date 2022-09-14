@@ -12,6 +12,7 @@ public class DemoController {
 	public String demo() {
 		return "view/Shop/index";
 	}
+	// adsdsadsa
 	
 	
 	@RequestMapping(value = "/cart",method = RequestMethod.GET)
