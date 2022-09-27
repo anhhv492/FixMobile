@@ -1,6 +1,5 @@
 package com.japan.shop.dto;
 
-import com.example.japanshop.entity.*;
 import com.japan.shop.entity.*;
 
 import java.math.BigDecimal;
