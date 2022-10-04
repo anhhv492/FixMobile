@@ -5,23 +5,40 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="445566a9-611e-42d7-88da-ade776dd0c8e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/japan/shop/controller/RoleController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/japan/shop/controller/ConfigrutationController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/admin/configrutation/phone.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f7e3cdcd-72bb-4a84-92bf-c472db978e85.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f7e3cdcd-72bb-4a84-92bf-c472db978e85/storage_v2/_src_/database/d15nlt0j5i8ivu.LI-hcw.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f7e3cdcd-72bb-4a84-92bf-c472db978e85/storage_v2/_src_/database/d15nlt0j5i8ivu.LI-hcw/schema/heroku_ext.Rm4jrA.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f7e3cdcd-72bb-4a84-92bf-c472db978e85/storage_v2/_src_/database/d15nlt0j5i8ivu.LI-hcw/schema/information_schema.FNRwLQ.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f7e3cdcd-72bb-4a84-92bf-c472db978e85/storage_v2/_src_/database/d15nlt0j5i8ivu.LI-hcw/schema/pg_catalog.0S1ZNQ.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f7e3cdcd-72bb-4a84-92bf-c472db978e85/storage_v2/_src_/database/d15nlt0j5i8ivu.LI-hcw/schema/public.abK9xQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/7583a110-9354-4f39-a1c9-91f71e4bafd4.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/7651dce6-8da4-4e3a-82e6-b44fd9b1f571.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/japan/shop/controller/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/japan/shop/controller/AdminController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/account/form.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/admin/account/form.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/admin/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/product/form.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/admin/product/form.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/admin/account/form.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/admin/account/form.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/admin/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/admin/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/admin/product/form.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/admin/product/form.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/m2e-wtp/web-resources/META-INF/maven/com.lab1/JAPAN_SHOP/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/m2e-wtp/web-resources/META-INF/maven/com.lab1/JAPAN_SHOP/pom.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/m2e-wtp/web-resources/META-INF/maven/com.lab1/JAPAN_SHOP/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/m2e-wtp/web-resources/META-INF/maven/com.lab1/JAPAN_SHOP/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CompilerWorkspaceConfiguration">
+    <option name="MAKE_PROJECT_ON_SAVE" value="true" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -53,6 +70,9 @@
       </MavenGeneralSettings>
     </option>
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectId" id="2F7WIfQym07fxyg7eFh9QF55pNj" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -73,12 +93,12 @@
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;database.data.extractors.current.export.id&quot;: &quot;SQL Inserts&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/AnhHVPH14045/Orienting/DATN/JapanShop&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/DATN/JapanShop/src/main/resources/static/admin/configrutation&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;configurable.group.build&quot;,
-    &quot;spring.configuration.checksum&quot;: &quot;b30652d1f6588440cb8ae840b0887167&quot;
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.propCompiler&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;e2a2aeb71cf61112bda883b5030531f6&quot;
   },
   &quot;keyToStringList&quot;: {
     &quot;DatabaseDriversLRU&quot;: [
@@ -88,6 +108,9 @@
   }
 }</component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\DATN\JapanShop\src\main\resources\static\admin\configrutation" />
+    </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.japan.shop.controller" />
     </key>
@@ -99,7 +122,20 @@
       </set>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Spring Boot.JapanShopApplication (1)">
+    <configuration name="JapanShopApplication (1)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="JapanShop" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.japan.shop.JapanShopApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.japan.shop.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="JapanShopApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true">
       <option name="ACTIVE_PROFILES" />
       <module name="JAPAN_SHOP" />
@@ -116,6 +152,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Spring Boot.JapanShopApplication (1)" />
         <item itemvalue="Spring Boot.JapanShopApplication" />
       </list>
     </recent_temporary>
@@ -132,11 +169,20 @@
       <workItem from="1664418376254" duration="630000" />
       <workItem from="1664419343916" duration="8143000" />
       <workItem from="1664589758864" duration="1576000" />
+      <workItem from="1664812751776" duration="478000" />
+      <workItem from="1664813320263" duration="1426000" />
+      <workItem from="1664842127226" duration="401000" />
+      <workItem from="1664843304824" duration="1415000" />
+      <workItem from="1664891615285" duration="7678000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="dependencySupport" implementationName="java:jakarta.persistence:jakarta.persistence-api" />
+    <option featureType="dependencySupport" implementationName="java:org.hibernate:hibernate-core" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -151,5 +197,9 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>
