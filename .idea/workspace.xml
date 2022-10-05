@@ -4,123 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="445566a9-611e-42d7-88da-ade776dd0c8e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/rest/controller/AccessoryRestController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/rest/controller/FileManagerRestController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/FileManagerService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/admin/accessory/form.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/admin/ctrl/accessory-ctrl.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/controller/ConfigrutationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/controller/ConfigrutationController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/AccessoryDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/AccessoryDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/AccountDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/AccountDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/AddressDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/AddressDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/CapacityDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/CapacityDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/CategoryDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/CategoryDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/ChangeDetailDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/ChangeDetailDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/ColorDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/ColorDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/CommuneDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/CommuneDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/DistrictDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/DistrictDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/ImageDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/ImageDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/ImageDetailDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/ImageDetailDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/ImeiDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/ImeiDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/InsuranceDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/InsuranceDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/InsuranceDetailDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/InsuranceDetailDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/InsuranceProductDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/InsuranceProductDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/OrderDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/OrderDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/OrderDetailAccessoryDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/OrderDetailAccessoryDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/OrderDetailProductDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/OrderDetailProductDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/ProductChangeDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/ProductChangeDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/ProductDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/ProductDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/ProductReturnDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/ProductReturnDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/ProvinceDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/ProvinceDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/RamDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/RamDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/ReturnDetailDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/ReturnDetailDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/RoleDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/RoleDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/SaleDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/SaleDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/SaleDetailDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/SaleDetailDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/AccessoryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/AccessoryRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/AccountRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/AccountRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/AddressRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/AddressRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/CapacityRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/CapacityRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/CategoryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/CategoryRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/ChangeDetailRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/ChangeDetailRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/ColorRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/ColorRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/CommuneRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/CommuneRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/DistrictRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/DistrictRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/ImageDetailRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/ImageDetailRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/ImageRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/ImageRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/ImeiRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/ImeiRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/InsuranceDetailRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/InsuranceDetailRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/InsuranceProductRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/InsuranceProductRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/InsuranceRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/InsuranceRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/OrderDetailAccessoryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/OrderDetailAccessoryRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/OrderDetailProductRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/OrderDetailProductRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/OrderRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/OrderRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/ProductChangeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/ProductChangeRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/ProductRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/ProductRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/ProductReturnRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/ProductReturnRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/ProvinceRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/ProvinceRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/RamRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/RamRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/ReturnDetailRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/ReturnDetailRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/RoleRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/RoleRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/SaleDetailRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/SaleDetailRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/SaleRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/SaleRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/AccessoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/AccessoryService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/AccountService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/AccountService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/AddressService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/AddressService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/CapacityService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/CapacityService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/CategoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/CategoryService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/ChangeDetailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/ChangeDetailService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/ColorService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/ColorService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/CommuneService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/CommuneService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/DistrictService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/DistrictService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/ImageDetailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/ImageDetailService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/ImageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/ImageService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/ImeiService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/ImeiService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/InsuranceDetailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/InsuranceDetailService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/InsuranceProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/InsuranceProductService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/InsuranceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/InsuranceService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/OrderDetailAccessoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/OrderDetailAccessoryService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/OrderDetailProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/OrderDetailProductService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/OrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/OrderService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/ProductChangeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/ProductChangeService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/ProductReturnService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/ProductReturnService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/ProductService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/ProvinceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/ProvinceService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/RamService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/RamService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/ReturnDetailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/ReturnDetailService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/RoleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/RoleService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/SaleDetailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/SaleDetailService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/SaleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/SaleService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/impl/AccessoryServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/impl/AccessoryServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/impl/AccountServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/impl/AccountServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/impl/AddressServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/impl/AddressServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/impl/CapacityServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/impl/CapacityServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/impl/CategoryServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/impl/CategoryServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/impl/ChangeDetailServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/impl/ChangeDetailServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/impl/ColorServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/impl/ColorServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/impl/CommuneServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/impl/CommuneServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/impl/DistrictServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/impl/DistrictServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/impl/ImageDetailServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/impl/ImageDetailServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/impl/ImageServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/impl/ImageServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/impl/ImeiServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/impl/ImeiServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/impl/InsuranceDetailServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/impl/InsuranceDetailServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/impl/InsuranceProductServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/impl/InsuranceProductServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/impl/InsuranceServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/impl/InsuranceServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/impl/OrderDetailAccessoryServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/impl/OrderDetailAccessoryServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/impl/OrderDetailProductServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/impl/OrderDetailProductServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/impl/OrderServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/impl/OrderServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/impl/ProductChangeServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/impl/ProductChangeServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/impl/ProductReturnServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/impl/ProductReturnServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/impl/ProductServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/impl/ProductServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/impl/ProvinceServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/impl/ProvinceServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/impl/RamServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/impl/RamServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/impl/ReturnDetailServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/impl/ReturnDetailServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/impl/RoleServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/impl/RoleServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/impl/SaleDetailServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/impl/SaleDetailServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/impl/SaleServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/impl/SaleServiceImpl.java" afterDir="false" />
-    </list>
+    <list default="true" id="445566a9-611e-42d7-88da-ade776dd0c8e" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -177,32 +61,32 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "database.data.extractors.current.export.id": "SQL Inserts",
-    "last_opened_file_path": "D:/AnhHVPH14045/Orienting/DATN/FixMobile/src/main/resources/static/admin",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "settings.editor.selected.configurable": "project.propCompiler",
-    "spring.configuration.checksum": "e2a2aeb71cf61112bda883b5030531f6"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;database.data.extractors.current.export.id&quot;: &quot;SQL Inserts&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/AnhHVPH14045/Orienting/DATN/FixMobile/src/main/resources/static/admin&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.propCompiler&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;e2a2aeb71cf61112bda883b5030531f6&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mysql",
-      "postgresql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;,
+      &quot;postgresql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\AnhHVPH14045\Orienting\DATN\FixMobile\src\main\java\com\fix\mobile" />
@@ -219,44 +103,17 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.JapanShopApplication (1)">
-    <configuration name="JapanShopApplication (1)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
-      <module name="JapanShop" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.japan.shop.JapanShopApplication" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.japan.shop.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="JapanShopApplication (2)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
-      <module name="FixMobile" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.japan.shop.JapanShopApplication" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="JapanShopApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true">
+  <component name="RunManager">
+    <configuration name="JapanShopApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <option name="ACTIVE_PROFILES" />
-      <module name="JAPAN_SHOP" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.japan.shop.JapanShopApplication" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.japan.shop.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
+      <module name="FixMobile" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.fix.mobile.JapanShopApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Spring Boot.JapanShopApplication (1)" />
         <item itemvalue="Spring Boot.JapanShopApplication" />
       </list>
     </recent_temporary>
