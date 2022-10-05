@@ -136,6 +136,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="JapanShopApplication (2)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="FixMobile" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.japan.shop.JapanShopApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="JapanShopApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true">
       <option name="ACTIVE_PROFILES" />
       <module name="JAPAN_SHOP" />
