@@ -425,7 +425,7 @@ function $RouteProvider() {
      *
      * <example name="$route-service" module="ngRouteExample"
      *          deps="angular-route.js" fixBase="true">
-     *   <file name="index.html">
+     *   <file name="indexs.html">
      *     <div ng-controller="MainController">
      *       Choose:
      *       <a href="Book/Moby">Moby</a> |
@@ -948,7 +948,7 @@ ngRouteModule.directive('ngView', ngViewFillContentFactory);
  *
  * @description
  * `ngView` is a directive that complements the {@link ngRoute.$route $route} service by
- * including the rendered template of the current route into the main layout (`index.html`) file.
+ * including the rendered template of the current route into the main layout (`indexs.html`) file.
  * Every time the current route changes, the included view changes with it according to the
  * configuration of the `$route` service.
  *
@@ -977,7 +977,7 @@ ngRouteModule.directive('ngView', ngViewFillContentFactory);
     <example name="ngView-directive" module="ngViewExample"
              deps="angular-route.js;angular-animate.js"
              animations="true" fixBase="true">
-      <file name="index.html">
+      <file name="indexs.html">
         <div ng-controller="MainCtrl as main">
           Choose:
           <a href="Book/Moby">Moby</a> |

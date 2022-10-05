@@ -431,7 +431,7 @@ var $$rAFSchedulerFactory = ['$$rAF', function($$rAF) {
  *
  * @example
  * <example module="ngAnimateChildren" name="ngAnimateChildren" deps="angular-animate.js" animations="true">
-     <file name="index.html">
+     <file name="indexs.html">
        <div ng-controller="MainController as main">
          <label>Show container? <input type="checkbox" ng-model="main.enterElement" /></label>
          <label>Animate children? <input type="checkbox" ng-model="main.animateChildren" /></label>
@@ -3291,7 +3291,7 @@ var $$AnimationProvider = ['$animateProvider', /** @this */ function($animatePro
  * <example name="ngAnimateSwap-directive" module="ngAnimateSwapExample"
  *          deps="angular-animate.js"
  *          animations="true" fixBase="true">
- *   <file name="index.html">
+ *   <file name="indexs.html">
  *     <div class="container" ng-controller="AppCtrl">
  *       <div ng-animate-swap="number" class="cell swap-animation" ng-class="colorClass(number)">
  *         {{ number }}
@@ -3822,7 +3822,7 @@ var ngAnimateSwapDirective = ['$animate', '$rootScope', function($animate, $root
  * Say for example we have the following template code:
  *
  * ```html
- * <!-- index.html -->
+ * <!-- indexs.html -->
  * <div ng-view class="view-animation">
  * </div>
  *
@@ -3914,7 +3914,7 @@ var ngAnimateSwapDirective = ['$animate', '$rootScope', function($animate, $root
            id="anchoringExample"
            deps="angular-animate.js;angular-route.js"
            animations="true">
-    <file name="index.html">
+    <file name="indexs.html">
       <a href="#!/">Home</a>
       <hr />
       <div class="view-container">
