@@ -1,6 +1,6 @@
 package com.fix.mobile.dto;
 
-import com.japan.shop.entity.Product;
+import com.fix.mobile.entity.Product;
 
 public class ImeiDTO extends AbstractDTO<Integer> {
     private Integer idImei;

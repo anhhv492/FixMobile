@@ -1,6 +1,6 @@
 package com.fix.mobile.repository;
 
-import com.japan.shop.entity.Product;
+import com.fix.mobile.entity.Product;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 

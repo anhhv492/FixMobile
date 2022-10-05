@@ -1,9 +1,9 @@
 package com.fix.mobile.dto;
 
 import com.fix.mobile.entity.OrderDetailAccessory;
-import com.japan.shop.entity.Account;
-import com.japan.shop.entity.OrderDetailAccessory;
-import com.japan.shop.entity.OrderDetailProduct;
+import com.fix.mobile.entity.Account;
+import com.fix.mobile.entity.OrderDetailAccessory;
+import com.fix.mobile.entity.OrderDetailProduct;
 
 import java.math.BigDecimal;
 import java.sql.Date;

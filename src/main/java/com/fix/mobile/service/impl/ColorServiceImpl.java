@@ -1,9 +1,9 @@
 package com.fix.mobile.service.impl;
 
 import com.fix.mobile.service.ColorService;
-import com.japan.shop.repository.ColorRepository;
-import com.japan.shop.entity.Color;
-import com.japan.shop.service.ColorService;
+import com.fix.mobile.repository.ColorRepository;
+import com.fix.mobile.entity.Color;
+import com.fix.mobile.service.ColorService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;

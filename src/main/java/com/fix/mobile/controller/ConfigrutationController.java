@@ -1,8 +1,8 @@
 package com.fix.mobile.controller;
 
 import com.fix.mobile.service.RamService;
-import com.japan.shop.entity.Ram;
-import com.japan.shop.service.RamService;
+import com.fix.mobile.entity.Ram;
+import com.fix.mobile.service.RamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;

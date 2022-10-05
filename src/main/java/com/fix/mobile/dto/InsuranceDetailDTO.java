@@ -1,8 +1,8 @@
 package com.fix.mobile.dto;
 
-import com.japan.shop.entity.Account;
-import com.japan.shop.entity.Insurance;
-import com.japan.shop.entity.Product;
+import com.fix.mobile.entity.Account;
+import com.fix.mobile.entity.Insurance;
+import com.fix.mobile.entity.Product;
 
 public class InsuranceDetailDTO extends AbstractDTO<Integer> {
     private Integer idDetail;

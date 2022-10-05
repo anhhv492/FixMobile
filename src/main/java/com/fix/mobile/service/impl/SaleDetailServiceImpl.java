@@ -1,9 +1,9 @@
 package com.fix.mobile.service.impl;
 
 import com.fix.mobile.service.SaleDetailService;
-import com.japan.shop.repository.SaleDetailRepository;
-import com.japan.shop.entity.SaleDetail;
-import com.japan.shop.service.SaleDetailService;
+import com.fix.mobile.repository.SaleDetailRepository;
+import com.fix.mobile.entity.SaleDetail;
+import com.fix.mobile.service.SaleDetailService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;

@@ -1,6 +1,7 @@
 package com.fix.mobile.service;
 
-import com.japan.shop.entity.Order;
+
+import com.fix.mobile.entity.Order;
 
 public interface OrderService extends GenericService<Order, Integer> {
 }

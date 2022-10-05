@@ -1,9 +1,9 @@
 package com.fix.mobile.service.impl;
 
 import com.fix.mobile.service.RoleService;
-import com.japan.shop.repository.RoleRepository;
-import com.japan.shop.entity.Role;
-import com.japan.shop.service.RoleService;
+import com.fix.mobile.repository.RoleRepository;
+import com.fix.mobile.entity.Role;
+import com.fix.mobile.service.RoleService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;

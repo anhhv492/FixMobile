@@ -1,6 +1,7 @@
 package com.fix.mobile.service;
 
-import com.japan.shop.entity.District;
+
+import com.fix.mobile.entity.District;
 
 public interface DistrictService extends GenericService<District, Integer> {
 }

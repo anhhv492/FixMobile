@@ -2,9 +2,9 @@ package com.fix.mobile.service.impl;
 
 import com.fix.mobile.entity.Imei;
 import com.fix.mobile.service.ImeiService;
-import com.japan.shop.repository.ImeiRepository;
-import com.japan.shop.entity.Imei;
-import com.japan.shop.service.ImeiService;
+import com.fix.mobile.repository.ImeiRepository;
+import com.fix.mobile.entity.Imei;
+import com.fix.mobile.service.ImeiService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;

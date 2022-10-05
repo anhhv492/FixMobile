@@ -1,6 +1,7 @@
 package com.fix.mobile.service;
 
-import com.japan.shop.entity.SaleDetail;
+
+import com.fix.mobile.entity.SaleDetail;
 
 public interface SaleDetailService extends GenericService<SaleDetail, Integer> {
 }

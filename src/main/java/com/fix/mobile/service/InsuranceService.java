@@ -1,6 +1,7 @@
 package com.fix.mobile.service;
 
-import com.japan.shop.entity.Insurance;
+
+import com.fix.mobile.entity.Insurance;
 
 public interface InsuranceService extends GenericService<Insurance, Integer> {
 }

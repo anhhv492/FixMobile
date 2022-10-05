@@ -2,10 +2,10 @@ package com.fix.mobile.dto;
 
 import com.fix.mobile.entity.Account;
 import com.fix.mobile.entity.Commune;
-import com.japan.shop.entity.Account;
-import com.japan.shop.entity.Commune;
-import com.japan.shop.entity.District;
-import com.japan.shop.entity.Province;
+import com.fix.mobile.entity.Account;
+import com.fix.mobile.entity.Commune;
+import com.fix.mobile.entity.District;
+import com.fix.mobile.entity.Province;
 
 public class AddressDTO extends AbstractDTO<Integer> {
     private Integer idAddress;

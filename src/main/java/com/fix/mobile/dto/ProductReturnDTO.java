@@ -1,9 +1,9 @@
 package com.fix.mobile.dto;
 
 import com.fix.mobile.entity.ReturnDetail;
-import com.japan.shop.entity.OrderDetailProduct;
-import com.japan.shop.entity.Product;
-import com.japan.shop.entity.ReturnDetail;
+import com.fix.mobile.entity.OrderDetailProduct;
+import com.fix.mobile.entity.Product;
+import com.fix.mobile.entity.ReturnDetail;
 
 import java.util.List;
 

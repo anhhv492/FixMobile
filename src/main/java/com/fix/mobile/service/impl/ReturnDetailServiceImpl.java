@@ -2,9 +2,9 @@ package com.fix.mobile.service.impl;
 
 import com.fix.mobile.entity.ReturnDetail;
 import com.fix.mobile.service.ReturnDetailService;
-import com.japan.shop.repository.ReturnDetailRepository;
-import com.japan.shop.entity.ReturnDetail;
-import com.japan.shop.service.ReturnDetailService;
+import com.fix.mobile.repository.ReturnDetailRepository;
+import com.fix.mobile.entity.ReturnDetail;
+import com.fix.mobile.service.ReturnDetailService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;

@@ -1,9 +1,9 @@
 package com.fix.mobile.service.impl;
 
 import com.fix.mobile.service.InsuranceProductService;
-import com.japan.shop.repository.InsuranceProductRepository;
-import com.japan.shop.entity.InsuranceProduct;
-import com.japan.shop.service.InsuranceProductService;
+import com.fix.mobile.repository.InsuranceProductRepository;
+import com.fix.mobile.entity.InsuranceProduct;
+import com.fix.mobile.service.InsuranceProductService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;

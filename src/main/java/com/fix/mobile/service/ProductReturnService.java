@@ -1,6 +1,7 @@
 package com.fix.mobile.service;
 
-import com.japan.shop.entity.ProductReturn;
+
+import com.fix.mobile.entity.ProductReturn;
 
 public interface ProductReturnService extends GenericService<ProductReturn, Integer> {
 }

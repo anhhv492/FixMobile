@@ -1,6 +1,6 @@
 package com.fix.mobile.dto;
 
-import com.japan.shop.entity.ProductReturn;
+import com.fix.mobile.entity.ProductReturn;
 
 import java.math.BigDecimal;
 import java.sql.Date;

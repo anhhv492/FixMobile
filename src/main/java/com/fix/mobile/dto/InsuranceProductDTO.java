@@ -1,6 +1,6 @@
 package com.fix.mobile.dto;
 
-import com.japan.shop.entity.OrderDetailProduct;
+import com.fix.mobile.entity.OrderDetailProduct;
 
 import java.sql.Date;
 

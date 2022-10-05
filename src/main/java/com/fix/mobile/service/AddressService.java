@@ -1,6 +1,6 @@
 package com.fix.mobile.service;
 
-import com.japan.shop.entity.Address;
+import com.fix.mobile.entity.Address;
 
 public interface AddressService extends GenericService<Address, Integer> {
 }

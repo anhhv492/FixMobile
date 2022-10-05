@@ -1,6 +1,7 @@
 package com.fix.mobile.service;
 
-import com.japan.shop.entity.Role;
+
+import com.fix.mobile.entity.Role;
 
 public interface RoleService extends GenericService<Role, Integer> {
 }

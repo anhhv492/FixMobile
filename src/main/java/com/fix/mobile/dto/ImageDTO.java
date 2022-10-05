@@ -1,6 +1,6 @@
 package com.fix.mobile.dto;
 
-import com.japan.shop.entity.ImageDetail;
+import com.fix.mobile.entity.ImageDetail;
 
 import java.util.List;
 

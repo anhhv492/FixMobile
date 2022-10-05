@@ -1,8 +1,8 @@
 package com.fix.mobile.dto;
 
 import com.fix.mobile.entity.Product;
-import com.japan.shop.entity.Image;
-import com.japan.shop.entity.Product;
+import com.fix.mobile.entity.Image;
+import com.fix.mobile.entity.Product;
 
 public class ImageDetailDTO extends AbstractDTO<Integer> {
     private Integer idDetail;

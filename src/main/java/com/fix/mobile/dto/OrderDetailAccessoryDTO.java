@@ -1,7 +1,7 @@
 package com.fix.mobile.dto;
 
-import com.japan.shop.entity.Accessory;
-import com.japan.shop.entity.Order;
+import com.fix.mobile.entity.Accessory;
+import com.fix.mobile.entity.Order;
 
 import java.math.BigDecimal;
 

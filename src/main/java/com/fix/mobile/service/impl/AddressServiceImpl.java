@@ -1,9 +1,9 @@
 package com.fix.mobile.service.impl;
 
 import com.fix.mobile.service.AddressService;
-import com.japan.shop.repository.AddressRepository;
-import com.japan.shop.entity.Address;
-import com.japan.shop.service.AddressService;
+import com.fix.mobile.repository.AddressRepository;
+import com.fix.mobile.entity.Address;
+import com.fix.mobile.service.AddressService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;

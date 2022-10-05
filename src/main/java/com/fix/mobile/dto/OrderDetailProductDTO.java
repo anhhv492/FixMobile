@@ -1,6 +1,6 @@
 package com.fix.mobile.dto;
 
-import com.japan.shop.entity.*;
+import com.fix.mobile.entity.*;
 
 import java.math.BigDecimal;
 import java.util.List;

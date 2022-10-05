@@ -1,7 +1,7 @@
 package com.fix.mobile.dto;
 
-import com.japan.shop.entity.Product;
-import com.japan.shop.entity.Sale;
+import com.fix.mobile.entity.Product;
+import com.fix.mobile.entity.Sale;
 
 public class SaleDetailDTO extends AbstractDTO<Integer> {
     private Integer idDetail;

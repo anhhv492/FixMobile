@@ -1,6 +1,6 @@
 package com.fix.mobile.service;
 
-import com.japan.shop.entity.Ram;
+import com.fix.mobile.entity.Ram;
 
 public interface RamService extends GenericService<Ram, Integer> {
 }

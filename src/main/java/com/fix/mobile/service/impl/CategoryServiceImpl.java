@@ -2,9 +2,9 @@ package com.fix.mobile.service.impl;
 
 import com.fix.mobile.entity.Category;
 import com.fix.mobile.repository.CategoryRepository;
-import com.japan.shop.repository.CategoryRepository;
-import com.japan.shop.entity.Category;
-import com.japan.shop.service.CategoryService;
+import com.fix.mobile.repository.CategoryRepository;
+import com.fix.mobile.entity.Category;
+import com.fix.mobile.service.CategoryService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -62,5 +62,8 @@ public class CategoryServiceImpl implements CategoryService {
             return save(entity);
         }
         return null;
+    }
+    public List<Category> findByType() {
+        return repository.findByType(true);
     }
 }

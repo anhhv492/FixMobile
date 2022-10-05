@@ -1,9 +1,9 @@
 package com.fix.mobile.service.impl;
 
 import com.fix.mobile.service.ProductChangeService;
-import com.japan.shop.repository.ProductChangeRepository;
-import com.japan.shop.entity.ProductChange;
-import com.japan.shop.service.ProductChangeService;
+import com.fix.mobile.repository.ProductChangeRepository;
+import com.fix.mobile.entity.ProductChange;
+import com.fix.mobile.service.ProductChangeService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;

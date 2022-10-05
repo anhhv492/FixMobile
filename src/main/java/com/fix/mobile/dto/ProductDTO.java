@@ -3,7 +3,7 @@ package com.fix.mobile.dto;
 import com.fix.mobile.entity.Capacity;
 import com.fix.mobile.entity.Imei;
 import com.fix.mobile.entity.InsuranceDetail;
-import com.japan.shop.entity.*;
+import com.fix.mobile.entity.*;
 
 import java.math.BigDecimal;
 import java.sql.Date;

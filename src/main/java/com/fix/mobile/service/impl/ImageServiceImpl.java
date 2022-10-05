@@ -1,9 +1,9 @@
 package com.fix.mobile.service.impl;
 
 import com.fix.mobile.service.ImageService;
-import com.japan.shop.repository.ImageRepository;
-import com.japan.shop.entity.Image;
-import com.japan.shop.service.ImageService;
+import com.fix.mobile.repository.ImageRepository;
+import com.fix.mobile.entity.Image;
+import com.fix.mobile.service.ImageService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;

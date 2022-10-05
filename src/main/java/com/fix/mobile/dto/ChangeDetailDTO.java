@@ -1,8 +1,8 @@
 package com.fix.mobile.dto;
 
-import com.japan.shop.entity.OrderDetailProduct;
-import com.japan.shop.entity.Product;
-import com.japan.shop.entity.ProductChange;
+import com.fix.mobile.entity.OrderDetailProduct;
+import com.fix.mobile.entity.Product;
+import com.fix.mobile.entity.ProductChange;
 
 public class ChangeDetailDTO extends AbstractDTO<Integer> {
     private Integer idChangeDetail;

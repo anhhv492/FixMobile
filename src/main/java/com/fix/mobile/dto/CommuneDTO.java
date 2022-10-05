@@ -1,6 +1,6 @@
 package com.fix.mobile.dto;
 
-import com.japan.shop.entity.Address;
+import com.fix.mobile.entity.Address;
 
 import java.util.List;
 

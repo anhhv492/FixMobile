@@ -1,9 +1,9 @@
 package com.fix.mobile.service.impl;
 
 import com.fix.mobile.service.RamService;
-import com.japan.shop.repository.RamRepository;
-import com.japan.shop.entity.Ram;
-import com.japan.shop.service.RamService;
+import com.fix.mobile.repository.RamRepository;
+import com.fix.mobile.entity.Ram;
+import com.fix.mobile.service.RamService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;

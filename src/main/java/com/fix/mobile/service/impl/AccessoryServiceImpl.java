@@ -2,9 +2,9 @@ package com.fix.mobile.service.impl;
 
 import com.fix.mobile.repository.AccessoryRepository;
 import com.fix.mobile.service.AccessoryService;
-import com.japan.shop.repository.AccessoryRepository;
-import com.japan.shop.entity.Accessory;
-import com.japan.shop.service.AccessoryService;
+import com.fix.mobile.repository.AccessoryRepository;
+import com.fix.mobile.entity.Accessory;
+import com.fix.mobile.service.AccessoryService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;

@@ -1,9 +1,9 @@
 package com.fix.mobile.service.impl;
 
 import com.fix.mobile.service.DistrictService;
-import com.japan.shop.repository.DistrictRepository;
-import com.japan.shop.entity.District;
-import com.japan.shop.service.DistrictService;
+import com.fix.mobile.repository.DistrictRepository;
+import com.fix.mobile.entity.District;
+import com.fix.mobile.service.DistrictService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;

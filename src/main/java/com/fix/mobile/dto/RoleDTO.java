@@ -1,6 +1,6 @@
 package com.fix.mobile.dto;
 
-import com.japan.shop.entity.Account;
+import com.fix.mobile.entity.Account;
 
 import java.util.List;
 

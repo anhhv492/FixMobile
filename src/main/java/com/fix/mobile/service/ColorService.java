@@ -1,6 +1,6 @@
 package com.fix.mobile.service;
 
-import com.japan.shop.entity.Color;
+import com.fix.mobile.entity.Color;
 
 public interface ColorService extends GenericService<Color, Integer> {
 }

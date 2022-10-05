@@ -1,7 +1,7 @@
 package com.fix.mobile.dto;
 
 import com.fix.mobile.entity.InsuranceDetail;
-import com.japan.shop.entity.InsuranceDetail;
+import com.fix.mobile.entity.InsuranceDetail;
 
 import java.math.BigDecimal;
 import java.sql.Date;

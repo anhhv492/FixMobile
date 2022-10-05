@@ -2,9 +2,9 @@ package com.fix.mobile.service.impl;
 
 import com.fix.mobile.entity.Commune;
 import com.fix.mobile.service.CommuneService;
-import com.japan.shop.repository.CommuneRepository;
-import com.japan.shop.entity.Commune;
-import com.japan.shop.service.CommuneService;
+import com.fix.mobile.repository.CommuneRepository;
+import com.fix.mobile.entity.Commune;
+import com.fix.mobile.service.CommuneService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;

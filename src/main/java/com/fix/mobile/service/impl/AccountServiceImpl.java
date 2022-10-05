@@ -2,9 +2,9 @@ package com.fix.mobile.service.impl;
 
 import com.fix.mobile.repository.AccountRepository;
 import com.fix.mobile.service.AccountService;
-import com.japan.shop.repository.AccountRepository;
-import com.japan.shop.entity.Account;
-import com.japan.shop.service.AccountService;
+import com.fix.mobile.repository.AccountRepository;
+import com.fix.mobile.entity.Account;
+import com.fix.mobile.service.AccountService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;

@@ -1,9 +1,9 @@
 package com.fix.mobile.service.impl;
 
 import com.fix.mobile.service.CapacityService;
-import com.japan.shop.repository.CapacityRepository;
-import com.japan.shop.entity.Capacity;
-import com.japan.shop.service.CapacityService;
+import com.fix.mobile.repository.CapacityRepository;
+import com.fix.mobile.entity.Capacity;
+import com.fix.mobile.service.CapacityService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
