@@ -20,7 +20,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 @RestController
-@RequestMapping("/rest/files")
+@RequestMapping("/rest/files/images")
 public class FileManagerRestController {
 	@Autowired
 	FileManagerService fileService;

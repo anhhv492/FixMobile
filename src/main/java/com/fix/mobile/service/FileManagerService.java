@@ -34,15 +34,15 @@ public class FileManagerService {
 		}
 	}
 	public File save(MultipartFile file, String folder) {
-		File dir = new File(app.getRealPath("/"+folder));
-		System.out.println("save run b1");
+		File dir = new File(System.getProperty("user.dir")+"/src/main/resources/static/images/"+folder);
+		System.out.println("- RealPath: "+System.getProperty("user.dir"));
 		if(!dir.exists()) {
 			dir.mkdirs();
 		}
 		try {
 			String filename = file.getOriginalFilename();
 			System.out.println("save run b2");
-			File savedFile = new File(new File("D:\\AnhHVPH14045\\Orienting\\DATN\\JapanShop\\src\\main\\resources\\static\\images"),filename);
+			File savedFile = new File(dir,filename);
 			file.transferTo(savedFile);
 			System.out.println(savedFile.getAbsolutePath());
 			System.out.println("save run b3");

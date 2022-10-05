@@ -4,7 +4,76 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="445566a9-611e-42d7-88da-ade776dd0c8e" name="Changes" comment="" />
+    <list default="true" id="445566a9-611e-42d7-88da-ade776dd0c8e" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/admin/nav.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/images/1001.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/images/1014.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/images/1017.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/images/1028.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/images/accessories/132122132221312w1e.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/images/accessories/2e21e21e221.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/images/accessories/3.ico" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/images/accessories/5bf01c13df7c09ae0a2c629a_Screen Shot 2018-11-17 at 13.47.20.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/images/accessories/5f9a352fc4998c10408be225_04.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/images/accessories/T2Uui2XkJXXXXXXXXX_761860821.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/images/accessories/asdssaq1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/images/accessories/cable-iphone-11-pro-msmobile-1_1577072708.jpg.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/images/accessories/dsadsaaas.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/images/accessories/opchongvadap.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/rest/controller/FileManagerRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/rest/controller/FileManagerRestController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/FileManagerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/FileManagerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/accessory/form.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/admin/accessory/form.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/add_category.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/add_product.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/categories/edit.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/admin/categories/edit.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/categories/form.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/admin/categories/form.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/category.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/charts-chartjs.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/ctrl/accessory-ctrl.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/admin/ctrl/accessory-ctrl.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/edit_category.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/edit_product.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/icons-feather.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/admin/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/js/angular-animate.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/admin/js/angular-animate.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/js/angular-route.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/admin/js/angular-route.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/maps-google.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/admin/maps-google.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/pages-blank.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/pages-sign-in.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/pages-sign-up.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/product.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/routefile.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/admin/routefile.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/ui-buttons.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/ui-cards.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/ui-forms.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/admin/ui-forms.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/ui-typography.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/upgrade-to-pro.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/admin/add_category.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/admin/add_product.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/admin/categories/edit.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/admin/categories/edit.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/admin/categories/form.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/admin/categories/form.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/admin/category.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/admin/charts-chartjs.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/admin/edit_category.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/admin/edit_product.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/admin/icons-feather.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/admin/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/admin/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/admin/js/angular-animate.js" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/admin/js/angular-animate.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/admin/js/angular-route.js" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/admin/js/angular-route.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/admin/maps-google.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/admin/maps-google.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/admin/pages-blank.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/admin/pages-sign-in.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/admin/pages-sign-up.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/admin/product.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/admin/routefile.js" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/admin/routefile.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/admin/ui-buttons.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/admin/ui-cards.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/admin/ui-forms.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/admin/ui-forms.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/admin/ui-typography.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/admin/upgrade-to-pro.html" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -16,6 +85,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="HTML File" />
         <option value="Class" />
       </list>
     </option>
@@ -61,32 +131,34 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;database.data.extractors.current.export.id&quot;: &quot;SQL Inserts&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/AnhHVPH14045/Orienting/DATN/FixMobile/src/main/resources/static/admin&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;project.propCompiler&quot;,
-    &quot;spring.configuration.checksum&quot;: &quot;e2a2aeb71cf61112bda883b5030531f6&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "DefaultHtmlFileTemplate": "HTML File",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "database.data.extractors.current.export.id": "SQL Inserts",
+    "last_opened_file_path": "D:/AnhHVPH14045/Orienting/DATN/FixMobile/src/main/resources/static/admin",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "project.propCompiler",
+    "spring.configuration.checksum": "e2a2aeb71cf61112bda883b5030531f6"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;mysql&quot;,
-      &quot;postgresql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql",
+      "postgresql"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\AnhHVPH14045\Orienting\DATN\FixMobile\src\main\java\com\fix\mobile" />

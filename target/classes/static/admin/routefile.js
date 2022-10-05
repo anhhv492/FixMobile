@@ -5,13 +5,17 @@ app.config(function($routeProvider){
           templateUrl:"/admin/product/form.html",
          // controller: "Ctrlproduct"
         })
-        .when("/categories",{
+        .when("/category",{
           templateUrl:"/admin/categories/category.html",
          // controller: "Ctrlcate"
         })
          .when("/account",{
           templateUrl:"/admin/account/form.html",
         //  controller: "Ctrluser"
+        })
+        .when("/accessory",{
+            templateUrl:"/admin/accessory/form.html",
+             controller: "rest_accessory"
         })
          /* .when("/athotiting",{
           templateUrl:"/asserts/admin/athotiting/athotities.html",
