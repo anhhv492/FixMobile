@@ -1,6 +1,6 @@
-# JapanShop
+# FixMobile
 
-Website bán điện thoại JapanShop
+Website bán điện thoại FixMobile
 
 - Danh sách thành viên:
   + PH13741 - Hạ Quyết Chiến
