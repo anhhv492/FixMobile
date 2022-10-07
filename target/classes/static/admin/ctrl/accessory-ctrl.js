@@ -254,7 +254,9 @@ app.controller('rest_accessory', function($scope, $http) {
         }
     };
     $scope.refresh = function() {
-        $scope.form = {};
+        $scope.form.idAccessory=null;
+        $scope.form.status=false;
+        $scope.form.image='logo-mobile.png';
         $scope.checkSubmit=false;
         $scope.getAccessories();
     };

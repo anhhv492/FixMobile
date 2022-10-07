@@ -5,77 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="445566a9-611e-42d7-88da-ade776dd0c8e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/0/7/07fe40980d781e7bb4c786798affb17a9ded6862" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/0/d/0db6601e0c1aa12f566d9422bc3d146075e144f5" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/0/d/0dbe86cde11d7c40225179382b3a3f6fe80feeaa" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/1/7/17c78efc3006b89b7ee742b2b8b858f357d10793" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/2/e/2e2a701cc535e0fa5ea0125359940b1a45a8f7a4" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/3/8/384f4c922c7d07039b33c4bbf6c21274a00845eb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/3/8/389ab8a2d9bb2e1dd23204588999eeecdd9d3edb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/3/c/3cc0a862de12e72eec9671e949ed37766fdd356c" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/4/2/42ace6d4d41b97929583495a04ccf1a3d8a78c51" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/4/3/4360d59c484b830d639b63a4da249d8ff423e4a2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/4/4/442292b8a7efeabbe4cc176709b833b1792140ec" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/4/7/478de2663159b978b1b8f6d856f4a7573ce473e0" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/4/a/4ac210dcaa59f31eb5a1bb2c525787f4700aab85" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/5/a/5a4713b836fb3c3602236765854eecfe50b71964" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/5/c/5cef725634d49faedca3ff10c4a251479df1dedd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/6/7/677a5d363b07fe3fb12c85dc4afc915a195aab7d" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/6/b/6bba326dbd36ca35fa041d63c8dc92bcdab6c21a" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/7/2/7255010286591cadaf880c3dc731f695b181baac" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/7/3/735b99e6d6f2063b13e38f9541c60fbb6f1a1e87" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/7/8/7889d23ebf370df7a29dd6ac0bc4a7d58ade47bc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/8/1/81d0cc690817b3a1ad525de57290edc17319a92c" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/9/0/9076d0597c3f9508169b22eaf9545bf769c7e4b6" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/9/0/90de27609c73b7fe777609282bbbca02d7c2ce1b" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/9/5/95da159c784bf464127a06770b4a27e1e1571291" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/9/8/980d96162cf8db96e3b28d37aafcb060e0a39585" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/9/b/9ba9f8855cb6b077b9d9d1e45665df8542627774" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/a/0/a047d3d90c486d08c4b82953128d89ab168c1729" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/a/4/a47cefcc9bb5f5933c150c715c2b3cedf6e2e919" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/a/7/a7265a54419113ece4d61eb0d3514c5070a059ed" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/a/9/a9a70c0d7559779da1f9337eb82738cdac8e18c1" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/a/f/afb6a0b56cc363b47428d2fdc51ee7ad9e256006" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/b/6/b66ef9295f97c2295950798d4c5223ebc6cc8144" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/b/9/b9b7a67d6ddc4654200d3da2677c63f52416c40e" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/b/d/bd24b1282f983fa303804505e063781b1a4c21ff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/c/9/c9ac4d5c74edebc8fec763ac6af2014214886c86" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/c/c/cc71cc1116b81e0f7918e1f010b82cd76c695a2e" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/c/d/cd32cee3931a8233cfd6883296642877dc880f03" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/d/6/d6cd9812cfd42a6288a8c87994cad5a0605c24cf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/d/7/d7e53f63fda75762328ef6b02b837044cd8da83f" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/d/a/dad4306fdb84a0e10e1dc5d67ad4de658f731e67" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/e/4/e4e6dbe406f4faeaef741788ff7311109ff5e2a9" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/e/7/e728ffaa4875e13e1ad6d5a44f9eaec88f58670d" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/images/accessories/08-X-stand-ad-mockup-psd-824x542.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/images/accessories/1002.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/images/accessories/1017.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/images/accessories/2.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/images/accessories/61b57e26-3da9-4808-9a37-f70bb4f9cb40_rw_1920.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/images/accessories/637094271122983378_HASP-00629662-dd.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/images/accessories/637734475067889592_avt.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/images/accessories/tai-nghe-khong-day.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/japan_shop.sql" beforeDir="false" afterPath="$PROJECT_DIR$/db/japan_shop.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/rest/controller/AccessoryRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/rest/controller/AccessoryRestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/FileManagerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/FileManagerService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/accessory/form.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/admin/accessory/form.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/admin-app.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/ctrl/accessory-ctrl.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/admin/ctrl/accessory-ctrl.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/admin/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/nav.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/images/accessories/5bf01c13df7c09ae0a2c629a_Screen Shot 2018-11-17 at 13.47.20.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/static/admin/accessory/form.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/admin/accessory/form.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/admin/admin-app.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/static/admin/ctrl/accessory-ctrl.js" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/admin/ctrl/accessory-ctrl.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/static/admin/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/admin/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/admin/nav.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/images/accessories/5bf01c13df7c09ae0a2c629a_Screen Shot 2018-11-17 at 13.47.20.png" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -212,7 +148,7 @@
       <workItem from="1664891615285" duration="7678000" />
       <workItem from="1665023972793" duration="1132000" />
       <workItem from="1665025671175" duration="16858000" />
-      <workItem from="1665108717849" duration="5344000" />
+      <workItem from="1665108717849" duration="13387000" />
     </task>
     <servers />
   </component>
