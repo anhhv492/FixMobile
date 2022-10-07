@@ -1,4 +1,4 @@
-create DATABASE japan_shop;
+
 use japan_shop;
 
 CREATE TABLE categories (
@@ -6,22 +6,6 @@ CREATE TABLE categories (
     type bit not null,
 	name nvarchar(255) not null
 ) ;
-insert into japan_shop.categories(type, name)
-values (0,"IPhone 5");
-insert into japan_shop.categories(type, name)
-values (0,"IPhone 6");
-insert into japan_shop.categories(type, name)
-values (0,"IPhone 7");
-insert into japan_shop.categories(type, name)
-values (0,"IPhone 8");
-insert into japan_shop.categories(type, name)
-values (0,"IPhone X");
-insert into japan_shop.categories(type, name)
-values (1,"Tai nghe");
-insert into japan_shop.categories(type, name)
-values (1,"Sạc");
-insert into japan_shop.categories(type, name)
-values (1,"Ốp lưng IPhone X");
 CREATE TABLE capacity (
 	id_capacity int NOT NULL auto_increment primary key,
 	name nvarchar(100) not null
@@ -254,10 +238,53 @@ CREATE TABLE change_detail (
 	foreign key(id_change) references product_change(id_change)
 );
 insert into japan_shop.roles(name)
-values ("ADMIN");
+values ('ADMIN');
 insert into japan_shop.roles(name)
-values ("STAFF");
+values ('STAFF');
 insert into japan_shop.roles(name)
-values ("USER");
+values ('USER');
 insert into japan_shop.roles(name)
-values ("GUEST");
+values ('GUEST');
+
+insert into japan_shop.categories(type, name)
+values (0,'IPhone 5');
+insert into japan_shop.categories(type, name)
+values (0,'IPhone 6');
+insert into japan_shop.categories(type, name)
+values (0,'IPhone 7');
+insert into japan_shop.categories(type, name)
+values (0,'IPhone 8');
+insert into japan_shop.categories(type, name)
+values (0,'IPhone X');
+insert into japan_shop.categories(type, name)
+values (1,'Tai nghe');
+insert into japan_shop.categories(type, name)
+values (1,'Sạc');
+insert into japan_shop.categories(type, name)
+values (1,'Ốp lưng IPhone X');
+
+INSERT INTO japan_shop.accessories (id_accessory, name, quantity, create_date, color, price, status, image, note, id_category) VALUES (1, 'Sạc giá sỉ XSMax', 213, '2022-10-04', 'Trắng', 200000, false, 'T2Uui2XkJXXXXXXXXX_761860821.jpg', 'Rẻ', 2);
+INSERT INTO japan_shop.accessories (id_accessory, name, quantity, create_date, color, price, status, image, note, id_category) VALUES (2, 'Ốp naruto', 123, '2022-10-04', 'Vàng', 75000, false, 'asdssaq1.jpg', 'Đẹp', 3);
+INSERT INTO japan_shop.accessories (id_accessory, name, quantity, create_date, color, price, status, image, note, id_category) VALUES (4, 'Tai nghe không dây', 200, '2022-10-04', 'Đen tuyền', 230000, false, 'tai-nghe-khong-day.jpg', 'Bền, đẹp mắt', 1);
+INSERT INTO japan_shop.accessories (id_accessory, name, quantity, create_date, color, price, status, image, note, id_category) VALUES (17, 'Ốp mỏng', 500, '2022-10-04', 'Cam trắng', 120000, false, '2e21e21e221.jpg', 'Đẹp, hoa cam hình tròn', 3);
+INSERT INTO japan_shop.accessories (id_accessory, name, quantity, create_date, color, price, status, image, note, id_category) VALUES (18, 'Sạc không dây', 26, '2022-10-05', 'Đen', 2000000, false, '132122132221312w1e.jpg', 'Không mô tả', 2);
+INSERT INTO japan_shop.accessories (id_accessory, name, quantity, create_date, color, price, status, image, note, id_category) VALUES (19, 'Ốp chống va đập', 21, '2022-10-05', 'Trắng, viền đen', 150000, false, 'opchongvadap.jpg', 'Loại ốp siêu bền', 3);
+INSERT INTO japan_shop.accessories (id_accessory, name, quantity, create_date, color, price, status, image, note, id_category) VALUES (20, 'sadsasda', 22, '2022-10-06', '22', 2222, false, '61b57e26-3da9-4808-9a37-f70bb4f9cb40_rw_1920.png', '211', 2);
+INSERT INTO japan_shop.accessories (id_accessory, name, quantity, create_date, color, price, status, image, note, id_category) VALUES (21, '2132', 213213, '2022-10-06', '231213', 312213213, false, 'opchongvadap.jpg', '213123', 2);
+INSERT INTO japan_shop.accessories (id_accessory, name, quantity, create_date, color, price, status, image, note, id_category) VALUES (22, '123213', 321312321, '2022-10-06', '312312', 123123123, false, '1017.jpg', '123123', 3);
+INSERT INTO japan_shop.accessories (id_accessory, name, quantity, create_date, color, price, status, image, note, id_category) VALUES (23, '1322131', 23123123, '2022-10-06', '231123', 123123123, false, '1002.jpg', '123213', 3);
+INSERT INTO japan_shop.accessories (id_accessory, name, quantity, create_date, color, price, status, image, note, id_category) VALUES (24, 'Sạc giá sỉ XSMax', 213, '2022-10-04', 'Trắng', 200000, false, 'T2Uui2XkJXXXXXXXXX_761860821.jpg', 'Rẻ', 2);
+INSERT INTO japan_shop.accessories (id_accessory, name, quantity, create_date, color, price, status, image, note, id_category) VALUES (25, 'Ốp naruto', 123, '2022-10-04', 'Vàng', 75000, false, 'asdssaq1.jpg', 'Đẹp', 3);
+INSERT INTO japan_shop.accessories (id_accessory, name, quantity, create_date, color, price, status, image, note, id_category) VALUES (26, 'Tai nghe không dây', 200, '2022-10-04', 'Đen tuyền', 230000, false, 'tai-nghe-khong-day.jpg', 'Bền, đẹp mắt', 1);
+INSERT INTO japan_shop.accessories (id_accessory, name, quantity, create_date, color, price, status, image, note, id_category) VALUES (27, 'Ốp mỏng', 500, '2022-10-04', 'Cam trắng', 120000, false, '2e21e21e221.jpg', 'Đẹp, hoa cam hình tròn', 3);
+INSERT INTO japan_shop.accessories (id_accessory, name, quantity, create_date, color, price, status, image, note, id_category) VALUES (28, 'Sạc không dây', 26, '2022-10-05', 'Đen', 2000000, false, '132122132221312w1e.jpg', 'Không mô tả', 2);
+INSERT INTO japan_shop.accessories (id_accessory, name, quantity, create_date, color, price, status, image, note, id_category) VALUES (29, 'Ốp chống va đập', 21, '2022-10-05', 'Trắng, viền đen', 150000, false, 'opchongvadap.jpg', 'Loại ốp siêu bền', 3);
+INSERT INTO japan_shop.accessories (id_accessory, name, quantity, create_date, color, price, status, image, note, id_category) VALUES (33, '1322131', 23123123, '2022-10-06', '231123', 123123123, false, '1017.jpg', '123213', 3);
+INSERT INTO japan_shop.accessories (id_accessory, name, quantity, create_date, color, price, status, image, note, id_category) VALUES (34, 'Sạc giá sỉ XSMax', 213, '2022-10-04', 'Trắng', 200000, false, 'T2Uui2XkJXXXXXXXXX_761860821.jpg', 'Rẻ', 2);
+INSERT INTO japan_shop.accessories (id_accessory, name, quantity, create_date, color, price, status, image, note, id_category) VALUES (35, 'Ốp naruto', 123, '2022-10-04', 'Vàng', 75000, false, 'asdssaq1.jpg', 'Đẹp', 3);
+INSERT INTO japan_shop.accessories (id_accessory, name, quantity, create_date, color, price, status, image, note, id_category) VALUES (36, 'Tai nghe không dây', 200, '2022-10-04', 'Đen tuyền', 230000, false, 'tai-nghe-khong-day.jpg', 'Bền, đẹp mắt', 1);
+INSERT INTO japan_shop.accessories (id_accessory, name, quantity, create_date, color, price, status, image, note, id_category) VALUES (37, 'Ốp mỏng', 500, '2022-10-04', 'Cam trắng', 120000, false, '2e21e21e221.jpg', 'Đẹp, hoa cam hình tròn', 3);
+INSERT INTO japan_shop.accessories (id_accessory, name, quantity, create_date, color, price, status, image, note, id_category) VALUES (38, 'Sạc không dây', 26, '2022-10-05', 'Đen', 2000000, false, '132122132221312w1e.jpg', 'Không mô tả', 2);
+INSERT INTO japan_shop.accessories (id_accessory, name, quantity, create_date, color, price, status, image, note, id_category) VALUES (39, 'Ốp chống va đập', 21, '2022-10-05', 'Trắng, viền đen', 150000, false, 'opchongvadap.jpg', 'Loại ốp siêu bền', 3);
+INSERT INTO japan_shop.accessories (id_accessory, name, quantity, create_date, color, price, status, image, note, id_category) VALUES (41, 'Tai nghe', 22, '2022-10-06', 'Đen', 200000, false, 'tai-nghe-khong-day.jpg', 'Bền, đẹp mắt', 1);
+INSERT INTO japan_shop.accessories (id_accessory, name, quantity, create_date, color, price, status, image, note, id_category) VALUES (42, 'Tai nghe', 22, '2022-10-06', 'Đen', 200000, false, 'tai-nghe-khong-day.jpg', 'Bền, đẹp mắt', 1);
