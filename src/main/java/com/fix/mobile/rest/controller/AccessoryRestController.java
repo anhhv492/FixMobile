@@ -5,6 +5,8 @@ import com.fix.mobile.entity.Category;
 import com.fix.mobile.service.AccessoryService;
 import com.fix.mobile.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,6 +16,7 @@ import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
@@ -30,7 +33,13 @@ public class AccessoryRestController {
 	public List<Accessory> findAll(){
 		return accessoryService.findAll();
 	}
-
+	//findall accessory pageable
+	@GetMapping(value="/page/{page}")
+	public List<Accessory> findAllPageable(@PathVariable("page") Optional<Integer> page){
+		Pageable pageable = PageRequest.of(page.get(), 10);
+		List<Accessory> accessories = accessoryService.findAll(pageable).getContent();
+		return accessories;
+	}
 	@GetMapping("/cate")
 	public List<Category> findByCate(){
 		return categoryService.findByType();
@@ -48,22 +57,5 @@ public class AccessoryRestController {
 	@PutMapping("/{id}")
 	public Accessory update(@PathVariable("id") Integer id, @RequestBody Accessory accessory){
 		return accessoryService.update(accessory,id);
-	}
-	@PostMapping("/save-file")
-	public void saveFile(@RequestBody Accessory accessory, MultipartFile imageFile){
-		if(!imageFile.isEmpty()){
-			String path = application.getRealPath("/");
-			System.out.println("path: "+path);
-			try {
-				accessory.setImage(imageFile.getOriginalFilename());
-				System.out.println("image: "+accessory.getImage());
-				String filePath = path+"/images/"+accessory.getImage();
-				imageFile.transferTo(new File(filePath));
-				imageFile=null;
-				accessory.setImage(filePath);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
 	}
 }

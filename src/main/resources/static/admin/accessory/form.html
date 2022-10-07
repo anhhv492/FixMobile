@@ -1,26 +1,26 @@
-<div class="col-sm-9 col-sm-offset-3 col-lg-12">
+<div class="col-sm-12 col-sm-offset-3 col-lg-12">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">{{checkSubmit==false?title.insert:title.update}} phụ kiện</h1>
+            <h2 class="page-header">{{checkSubmit==false?title.insert:title.update}} phụ kiện</h2>
         </div>
     </div><!--/.row-->
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <form role="form" method="post" class="row"
+                    <form role="form" method="post" class="row" name="myForm"
                           ng-submit="doSubmit()" enctype="multipart/form-data">
                         <div class="col-md-6">
                             <div class="form-group mt-1">
-                                <label>Thể loại </label>
-                                <select ng-model="form.category" class="form-select">
+                                <label >Thể loại </label>
+                                <select ng-model="form.category" class="form-select" name="category" required>
                                     <option ng-repeat="cate in categories" ng-value="cate.idCategory">{{cate.name}}
                                     </option>
                                 </select>
                             </div>
                             <div class="form-group mt-1">
                                 <label>Tên phụ kiện</label>
-                                <input ng-model="form.name" required class="form-control" placeholder="">
+                                <input ng-model="form.name" class="form-control" placeholder="Tên phụ kiện" required>
                             </div>
                             <div class="form-group mt-1">
                                 <label>Số lượng</label>
@@ -36,25 +36,25 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="form-group mt-2" ng-if="checkSubmit">
+                            <div class="form-group mt-2 mb-3" ng-if="checkSubmit">
                                 <label>Trạng thái</label>
                                 <br>
                                 <input type="radio" class="form-check-input" checked
                                        ng-model="form.status" name="status" ng-value="false"> Còn hàng
                                 <input type="radio" class="form-check-input"
                                        ng-model="form.status" name="status" ng-value="true"> Hết hàng
-                                <br>
                             </div>
                             <div class="form-group mt-1">
-                                <br>
                                 <label>Hình ảnh</label>
                                 <br>
                                 <input onchange="angular.element(this).scope().uploadFile(this.files)"
-                                        required ng-model="form.image" type="file">
+                                       ng-required="!form.image" ng-model="form.image" type="file" class="form-control">
                                 <br>
-                                <div>
-                                    <img style="filter: drop-shadow(0 0 5px rgb(119, 119, 145));" width="70px"
-                                         src="img/gift.gif">
+                                <div class="mt-1">
+                                    <img style="filter: drop-shadow(0 0 5px rgb(119, 119, 145));" width="105px"
+                                         src="/images/logo-mobile.png" ng-if="!form.image">
+                                    <img style="filter: drop-shadow(0 0 5px rgb(119, 119, 145));" width="105px"
+                                         src="/images/accessories/{{form.image}}">
                                 </div>
                             </div>
                             <div class="form-group mt-1">
@@ -63,7 +63,7 @@
                             </div>
                             <div class="form-group mt-4">
                                 <button type="submit" class="btn btn-success">{{checkSubmit==false?title.insert:title.update}}</button>
-                                <button ng-if="checkSubmit" ng-click="refresh()" class="btn btn-warning">Hủy</button>
+                                <button type="reset" ng-if="checkSubmit" ng-click="refresh()" class="btn btn-warning">Hủy</button>
                                 <button type="reset" class="btn btn-primary">Làm mới</button>
                             </div>
                         </div>
@@ -75,7 +75,7 @@
 
     <div class="row">
        <div class="col-lg-12">
-           <table class="table table-striped table-hover">
+           <table class="table table-striped table-hover table-responsive">
                <thead>
                <tr>
                    <th>STT</th>
@@ -86,6 +86,7 @@
                    <th>Giá (VNĐ)</th>
                    <th>Trạng thái</th>
                    <th>Mô tả</th>
+                   <th>Ngày tạo</th>
                    <th>Ảnh</th>
                    <th>Thao tác</th>
                </thead>
@@ -99,7 +100,8 @@
                    <td>{{accessory.price|number}}</td>
                    <td>{{accessory.status==0?'Còn hàng':'Hết hàng'}}</td>
                    <td>{{accessory.note}}</td>
-                   <td><img class="img-fluid" width="80px" src="/images/accessories/{{accessory.image}}"></td>
+                   <td>{{accessory.createDate}}</td>
+                   <td><img class="img-fluid" width="80px" height="80px" src="/images/accessories/{{accessory.image}}"></td>
                    <td>
                        <button ng-click="edit(accessory)" class="btn btn-primary">Sửa</button>
                        <button ng-click="delete(accessory)" class="btn btn-danger">Xóa</button>
@@ -107,6 +109,49 @@
                </tr>
                </tbody>
            </table>
+
        </div>
     </div>
 </div>
+<nav class="row">
+    <ul class="pagination justify-content-center row">
+        <div class="col-md-2 col-12">
+            <li class="page-item">
+                <a class="btn btn-primary {{!check_first?'disabled':''}}" ng-click="first()">Trang đầu</a>
+                <!--            <p class="btn btn-dark" disabled ng-show="!check_first">Trang đầu</p>-->
+            </li>
+        </div>
+        <div class="col-md-2 col-12">
+            <li class="page-item ms-2 me-2">
+                <a class="btn btn-success" ng-click="prev()">Trang trước</a>
+                <!--            <p class="btn btn-success" disabled ng-show="!check_first">Trang trước</p>-->
+            </li>
+        </div>
+        <div class="col-md-1 col-12">
+            <li class="page-item ms-1 me-1 pt-1 ">
+                <h4>{{index+1}}/{{totalPages}}</h4>
+            </li>
+        </div>
+        <div class="col-md-2 col-12">
+            <li class="page-item ms-2 me-2">
+                <a class="btn btn-success" ng-click="next()">Trang sau</a>
+                <!--            <p class="btn btn-success" disabled ng-show="!check_last">Trang sau</p>-->
+            </li>
+        </div>
+        <div class="col-md-2 col-12">
+            <li class="page-item">
+                <a class="btn btn-primary {{!check_last?'disabled':''}}" ng-click="last()">Trang cuối</a>
+                <!--            <p class="btn btn-dark" disabled ng-show="!check_last">Trang cuối</p>-->
+            </li>
+        </div>
+    </ul>
+</nav>
+
+<style>
+    input.ng-invalid.ng-touched {
+        background-color:pink;
+    }
+    input.ng-valid.ng-touched {
+        background-color:lightgreen;
+    }
+</style>

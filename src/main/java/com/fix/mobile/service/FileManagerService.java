@@ -43,7 +43,9 @@ public class FileManagerService {
 			String filename = file.getOriginalFilename();
 			System.out.println("save run b2");
 			File savedFile = new File(dir,filename);
-			file.transferTo(savedFile);
+			if(!savedFile.exists()) {
+				file.transferTo(savedFile);
+			}
 			System.out.println(savedFile.getAbsolutePath());
 			System.out.println("save run b3");
 			return savedFile;

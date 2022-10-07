@@ -1,26 +1,41 @@
 app.controller('rest_accessory', function($scope, $http) {
+    const pathAPI = "http://localhost:8080/rest/admin/accessory";
     $scope.form = {};
     $scope.accessories = [];
     $scope.categories = [];
+    $scope.index=0;
+    $scope.check_first=false;
+    $scope.check_last=true;
+    $scope.totalPages=0;
     $scope.title={
         insert:'Thêm mới',
         update:'Cập nhật'
     };
     $scope.checkSubmit=false;
     const now = new Date();
-    const pathAPI = "http://localhost:8080/rest/admin/accessory";
-    $scope.getAll =function (){
-        $http.get(pathAPI).then(function(response) {
+    $scope.getAccessories =function (){
+        $http.get(`${pathAPI}/page/0`).then(function(response) {
             $scope.accessories = response.data;
         }).catch(error=>{
             console.log(error);
         });
+        $scope.getCategories();
+        $scope.getTotalPages();
+    }
+    $scope.getTotalPages =function (){
+        $http.get(pathAPI).then(function(response) {
+            $scope.totalPages = Math.ceil(response.data.length/10);
+        }).catch(error=>{
+            console.log(error);
+        });
+    }
+    $scope.getCategories=function(){
         $http.get(`${pathAPI}/cate`).then(function(response) {
             $scope.categories = response.data;
         }).catch(error=>{
             console.log("error findByCate",error);
         });
-    }
+    };
     $scope.onSave = function() {
         $http.post(pathAPI+'/save-file', $scope.imageFile).then(response => {
         })
@@ -142,6 +157,7 @@ app.controller('rest_accessory', function($scope, $http) {
     };
     $scope.edit = function(accessory) {
         $scope.form = angular.copy(accessory);
+        $scope.form.image = accessory.image;
         $scope.form.category = accessory.category.idCategory;
         $scope.checkSubmit=true;
     };
@@ -240,15 +256,15 @@ app.controller('rest_accessory', function($scope, $http) {
     $scope.refresh = function() {
         $scope.form = {};
         $scope.checkSubmit=false;
-        $scope.getAll();
+        $scope.getAccessories();
     };
-    var url=`http://localhost:8080/rest/files/images/accessories`;
+    var urlImage=`http://localhost:8080/rest/files/images/accessories`;
     $scope.url = function(fileName){
-        return `${url}/`+`${fileName}`;
+        return `${urlImage}/`+`${fileName}`;
     }
     $scope.fileNames=[];
     $scope.listFile = function(){
-        $http.get(url).then(res=>{
+        $http.get(urlImage).then(res=>{
             $scope.fileNames = res.data;
             console.log('ok',res);
         }).catch(err=>{
@@ -258,7 +274,7 @@ app.controller('rest_accessory', function($scope, $http) {
     $scope.uploadFile = function(files){
         var form = new FormData();
         form.append('file',files[0]);
-        $http.post(url,form,{
+        $http.post(urlImage,form,{
             transformRequest: angular.identity,
             headers: {'Content-Type': undefined}
         }).then(res=>{
@@ -276,5 +292,67 @@ app.controller('rest_accessory', function($scope, $http) {
             console.log('Load products failse',err.data);
         });
     }
-    $scope.getAll();
+    // pagination
+    $scope.next=function(){
+        $scope.check_first=true;
+        $scope.index++;
+        if($scope.index>=$scope.totalPages){
+            $scope.index=0;
+            $scope.check_first=false;
+            $scope.check_last=true;
+        }
+        if($scope.index==$scope.totalPages-1){
+            $scope.check_first=true;
+            $scope.check_last=false;
+        }
+        $http.get(pathAPI+`/page/`+$scope.index).then(res=>{
+            $scope.accessories = res.data;
+            console.log('Load accessories success',res.data)
+        }).catch(err=>{
+            console.log('Load accessories failse',err.data);
+        })
+    }
+    $scope.prev=function(){
+        $scope.check_last=true;
+        $scope.index--;
+        if($scope.index<0){
+            $scope.index=$scope.totalPages-1;
+            $scope.check_first=true;
+            $scope.check_last=false;
+        }
+        if($scope.index==0){
+            $scope.check_first=false;
+            $scope.check_last=true;
+        }
+        $http.get(pathAPI+`/page/`+$scope.index).then(res=>{
+            $scope.accessories = res.data;
+            console.log('Load accessories success',res.data)
+        }).catch(err=>{
+            console.log('Load accessories failse',err.data);
+        })
+    }
+    $scope.first=function(){
+        $scope.check_first=false;
+        $scope.check_last=true;
+        $scope.index=0;
+        $http.get(pathAPI+`/page/`+$scope.index).then(res=>{
+            $scope.accessories = res.data;
+            console.log('Load accessories success',res.data)
+        }).catch(err=>{
+            console.log('Load accessories failse',err.data);
+        })
+    }
+    $scope.last=function(){
+        $scope.check_first=true;
+        $scope.check_last=false;
+        $scope.index=$scope.totalPages-1;
+        $http.get(pathAPI+`/page/`+$scope.index).then(res=>{
+            $scope.accessories = res.data;
+            console.log('Load accessories success',res.data)
+        }).catch(err=>{
+            console.log('Load accessories failse',err.data);
+        })
+    }
+    $scope.getAccessories();
+
 });
