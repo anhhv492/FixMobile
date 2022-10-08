@@ -4,32 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="445566a9-611e-42d7-88da-ade776dd0c8e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/rest/controller/CategoryRestController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/admin/ctrl/category-ctrl.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/images/accessories/1111.PNG" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/images/accessories/11111.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/images/accessories/CSDL.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/images/accessories/xóa khỏi giỏ hàng.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/CategoryDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/CategoryDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/CategoryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/CategoryRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/CategoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/CategoryService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/categories/categoriesjs.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/categories/category.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/admin/categories/category.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/categories/edit.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/categories/form.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/admin/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/routefile.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/admin/routefile.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/admin/categories/categoriesjs.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/admin/categories/category.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/admin/categories/category.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/admin/categories/edit.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/admin/categories/form.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/admin/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/admin/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/admin/routefile.js" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/admin/routefile.js" afterDir="false" />
-    </list>
+    <list default="true" id="445566a9-611e-42d7-88da-ade776dd0c8e" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -43,8 +18,6 @@
       <list>
         <option value="HTML File" />
         <option value="Class" />
-        <option value="JavaScript File" />
-        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -89,34 +62,34 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;database.data.extractors.current.export.id&quot;: &quot;SQL Inserts&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/KyThuat88/Desktop/APP/JAVA6/PH13741_HaQuyetChien_Assignment&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;project.propCompiler&quot;,
-    &quot;spring.configuration.checksum&quot;: &quot;ec839d69d4c5f408ec15036ea10ec506&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "DefaultHtmlFileTemplate": "HTML File",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "database.data.extractors.current.export.id": "SQL Inserts",
+    "last_opened_file_path": "D:/AnhHVPH14045/Orienting/DATN/FixMobile/src/main/resources/static/admin",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "project.propCompiler",
+    "spring.configuration.checksum": "e2a2aeb71cf61112bda883b5030531f6"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;mysql&quot;,
-      &quot;postgresql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql",
+      "postgresql"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\AnhHVPH14045\Orienting\DATN\FixMobile\src\main\java\com\fix\mobile" />
@@ -165,13 +138,6 @@
       <workItem from="1664842127226" duration="401000" />
       <workItem from="1664843304824" duration="1415000" />
       <workItem from="1664891615285" duration="7678000" />
-      <workItem from="1664981111034" duration="462000" />
-      <workItem from="1664981606876" duration="4396000" />
-      <workItem from="1665037461321" duration="11757000" />
-      <workItem from="1665107480788" duration="8194000" />
-      <workItem from="1665151043513" duration="1453000" />
-      <workItem from="1665234210999" duration="138000" />
-      <workItem from="1665234657943" duration="3550000" />
     </task>
     <servers />
   </component>
