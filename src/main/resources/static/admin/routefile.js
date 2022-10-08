@@ -7,7 +7,7 @@ app.config(function($routeProvider){
         })
         .when("/category",{
           templateUrl:"/admin/categories/category.html",
-         // controller: "Ctrlcate"
+          controller: "ctrl_cate"
         })
          .when("/account",{
           templateUrl:"/admin/account/form.html",
