@@ -66,46 +66,7 @@ public class CategoryRestController {
 
         return Sort.Direction.ASC;
     }
-
-    @GetMapping("/page")
-    public ResponseEntity<Map<String, Object>> getAllTutorialsPage(
-            @RequestParam(required = false) String title,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "3") int size,
-            @RequestParam(defaultValue = "id,desc") String[] sort
-    ){
-        try {
-            List<Sort.Order> orders = new ArrayList<>();
-            if (sort[0].contains(",")){
-                for (String sortOder : sort){
-                    String[] _sort = sortOder.split(",");
-                    orders.add(new Sort.Order(getSortDirection(_sort[1]), _sort[0]));
-                }
-            }else {
-                orders.add(new Sort.Order(getSortDirection(sort[1]), sort[0]));
-            }
-            List<Category> categories = new ArrayList<>();
-            Pageable pageable = PageRequest.of(page, size, Sort.by(orders));
-            Page<Category> categoryPage;
-            if (title == null){
-                categoryPage = categoryRepository.findByType(true, pageable);
-            }else {
-                categoryPage = categoryRepository.findByName(title, pageable);
-            }
-
-            categories = categoryPage.getContent();
-
-            Map<String , Object> response = new HashMap<>();
-            response.put("tutorials", categories);
-            response.put("currentPage", categoryPage.getNumber());
-            response.put("totalItems", categoryPage.getTotalElements());
-            response.put("totalPages", categoryPage.getTotalPages());
-
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        }catch (Exception e){
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+    
 
     @GetMapping("/page/published")
     public ResponseEntity<Map<String, Object>> findByPublished(
