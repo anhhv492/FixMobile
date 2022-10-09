@@ -23,8 +23,8 @@ public class Product {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "quantity")
-    private Integer quantity;
+    @Column(name = "imei")
+    private String imei;
 
     @Column(name = "create_date")
     private java.sql.Date createDate;
@@ -71,15 +71,11 @@ public class Product {
 
     @JsonIgnore
     @OneToMany(mappedBy = "product")
-    private List<Imei> imies;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "product")
     private List<InsuranceDetail> insuranceDetails;
 
     @JsonIgnore
     @OneToMany(mappedBy = "product")
-    private List<OrderDetailProduct> orderDetailProducts;
+    private List<OrderDetail> orderDetails;
 
     @JsonIgnore
     @OneToMany(mappedBy = "product")

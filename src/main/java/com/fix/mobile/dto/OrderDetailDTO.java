@@ -5,7 +5,7 @@ import com.fix.mobile.entity.*;
 import java.math.BigDecimal;
 import java.util.List;
 
-public class OrderDetailProductDTO extends AbstractDTO<Integer> {
+public class OrderDetailDTO extends AbstractDTO<Integer> {
     private Integer idDetail;
     private Integer quantity;
     private BigDecimal price;
@@ -13,10 +13,9 @@ public class OrderDetailProductDTO extends AbstractDTO<Integer> {
     private Order order;
     private Product product;
     private List<ChangeDetail> changeDetails;
-    private List<InsuranceProduct> insuranceProducts;
     private List<ProductReturn> productReturns;
 
-    public OrderDetailProductDTO() {
+    public OrderDetailDTO() {
     }
 
     public void setIdDetail(Integer idDetail) {
@@ -73,14 +72,6 @@ public class OrderDetailProductDTO extends AbstractDTO<Integer> {
 
     public java.util.List<ChangeDetail> getChangeDetails() {
         return this.changeDetails;
-    }
-
-    public void setInsuranceProducts(java.util.List<InsuranceProduct> insuranceProducts) {
-        this.insuranceProducts = insuranceProducts;
-    }
-
-    public java.util.List<InsuranceProduct> getInsuranceProducts() {
-        return this.insuranceProducts;
     }
 
     public void setProductReturns(java.util.List<ProductReturn> productReturns) {

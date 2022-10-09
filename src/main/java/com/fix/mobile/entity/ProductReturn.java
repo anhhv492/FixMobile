@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
+import java.sql.Date;
 import java.util.List;
 
 @Data
@@ -19,16 +21,20 @@ public class ProductReturn {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idReturn;
 
+    @Column(name = "date_return")
+    private Date dateReturn;
+
+    @Column(name = "price")
+    private BigDecimal price;
+
+    @Column(name = "note")
+    private String note;
+
     @ManyToOne
     @JoinColumn(name = "id_detail")
-    private OrderDetailProduct orderDetailProduct;
+    private OrderDetail orderDetail;
 
     @ManyToOne
     @JoinColumn(name = "id_product")
     private Product product;
-
-    //
-    @JsonIgnore
-    @OneToMany(mappedBy = "productReturn")
-    private List<ReturnDetail> returnDetails;
 }

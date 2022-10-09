@@ -1,8 +1,7 @@
 package com.fix.mobile.dto;
 
-import com.fix.mobile.entity.OrderDetailAccessory;
 import com.fix.mobile.entity.Category;
-import com.fix.mobile.entity.OrderDetailAccessory;
+import com.fix.mobile.entity.OrderDetail;
 
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -19,7 +18,7 @@ public class AccessoryDTO extends AbstractDTO<Integer> {
     private String image;
     private String note;
     private Category category;
-    private List<OrderDetailAccessory> orderDetailAccessories;
+    private List<OrderDetail> orderDetails;
 
     public AccessoryDTO() {
     }
@@ -104,11 +103,11 @@ public class AccessoryDTO extends AbstractDTO<Integer> {
         return this.category;
     }
 
-    public void setOrderDetailAccessories(java.util.List<OrderDetailAccessory> orderDetailAccessories) {
-        this.orderDetailAccessories = orderDetailAccessories;
+    public List<OrderDetail> getOrderDetails() {
+        return orderDetails;
     }
 
-    public java.util.List<OrderDetailAccessory> getOrderDetailAccessories() {
-        return this.orderDetailAccessories;
+    public void setOrderDetails(List<OrderDetail> orderDetails) {
+        this.orderDetails = orderDetails;
     }
 }
