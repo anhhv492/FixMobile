@@ -1,14 +1,8 @@
 
-b
-2src/main/java/com/fix/mobile/entity/Accessory.java,b\9\b9b7a67d6ddc4654200d3da2677c63f52416c40e
-^
-.src/main/java/com/fix/mobile/entity/Order.java,9\8\980d96162cf8db96e3b28d37aafcb060e0a39585
 e
 5src/main/java/com/fix/mobile/service/ImeiService.java,5\a\5a4713b836fb3c3602236765854eecfe50b71964
 h
 8src/main/java/com/fix/mobile/service/AccountService.java,4\3\4360d59c484b830d639b63a4da249d8ff423e4a2
-c
-3src/main/java/com/fix/mobile/entity/SaleDetail.java,a\9\a9a70c0d7559779da1f9337eb82738cdac8e18c1
 h
 8src/main/java/com/fix/mobile/service/AddressService.java,3\8\389ab8a2d9bb2e1dd23204588999eeecdd9d3edb
 i
@@ -45,8 +39,6 @@ h
 8src/main/java/com/fix/mobile/service/ProductService.java,a\4\a47cefcc9bb5f5933c150c715c2b3cedf6e2e919
 i
 9src/main/java/com/fix/mobile/service/ProvinceService.java,9\b\9ba9f8855cb6b077b9d9d1e45665df8542627774
-d
-4src/main/java/com/fix/mobile/service/RamService.java,d\6\d6cd9812cfd42a6288a8c87994cad5a0605c24cf
 m
 =src/main/java/com/fix/mobile/service/ReturnDetailService.java,8\1\81d0cc690817b3a1ad525de57290edc17319a92c
 e
@@ -79,7 +71,7 @@ o
 Ksrc/main/java/com/fix/mobile/rest/controller/FileManagerRestController.java,6\7\677a5d363b07fe3fb12c85dc4afc915a195aab7d
 j
 :src/main/java/com/fix/mobile/service/AccessoryService.java,1\7\17c78efc3006b89b7ee742b2b8b858f357d10793
-`
-0src/main/java/com/fix/mobile/entity/Account.java,3\8\384f4c922c7d07039b33c4bbf6c21274a00845eb
 h
 8src/main/java/com/fix/mobile/service/GenericService.java,0\d\0db6601e0c1aa12f566d9422bc3d146075e144f5
+u
+Esrc/main/java/com/fix/mobile/controller/ConfigrutationController.java,1\8\18979789a398278d24dfb90b7a025d3b3e84d2a1

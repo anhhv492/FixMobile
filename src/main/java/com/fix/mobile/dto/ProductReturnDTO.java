@@ -1,50 +1,69 @@
 package com.fix.mobile.dto;
 
-import com.fix.mobile.entity.ReturnDetail;
-import com.fix.mobile.entity.OrderDetailProduct;
+import com.fix.mobile.entity.OrderDetail;
 import com.fix.mobile.entity.Product;
-import com.fix.mobile.entity.ReturnDetail;
 
+import javax.persistence.Column;
+import java.math.BigDecimal;
+import java.sql.Date;
 import java.util.List;
 
 public class ProductReturnDTO extends AbstractDTO<Integer> {
     private Integer idReturn;
-    private OrderDetailProduct orderDetailProduct;
+    private Date dateReturn;
+    private BigDecimal price;
+    private String note;
+    private OrderDetail orderDetail;
     private Product product;
-    private List<ReturnDetail> returnDetails;
 
     public ProductReturnDTO() {
+    }
+
+    public Integer getIdReturn() {
+        return idReturn;
     }
 
     public void setIdReturn(Integer idReturn) {
         this.idReturn = idReturn;
     }
 
-    public Integer getIdReturn() {
-        return this.idReturn;
+    public Date getDateReturn() {
+        return dateReturn;
     }
 
-    public void setOrderDetailProduct(OrderDetailProduct orderDetailProduct) {
-        this.orderDetailProduct = orderDetailProduct;
+    public void setDateReturn(Date dateReturn) {
+        this.dateReturn = dateReturn;
     }
 
-    public OrderDetailProduct getOrderDetailProduct() {
-        return this.orderDetailProduct;
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public OrderDetail getOrderDetail() {
+        return orderDetail;
+    }
+
+    public void setOrderDetail(OrderDetail orderDetail) {
+        this.orderDetail = orderDetail;
+    }
+
+    public Product getProduct() {
+        return product;
     }
 
     public void setProduct(Product product) {
         this.product = product;
-    }
-
-    public Product getProduct() {
-        return this.product;
-    }
-
-    public void setReturnDetails(java.util.List<ReturnDetail> returnDetails) {
-        this.returnDetails = returnDetails;
-    }
-
-    public java.util.List<ReturnDetail> getReturnDetails() {
-        return this.returnDetails;
     }
 }

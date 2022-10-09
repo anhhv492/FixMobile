@@ -5,13 +5,61 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="445566a9-611e-42d7-88da-ade776dd0c8e" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/1/8/18979789a398278d24dfb90b7a025d3b3e84d2a1" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/db/fix_mobile.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/impl/OrderDetailServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/3/8/384f4c922c7d07039b33c4bbf6c21274a00845eb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/9/8/980d96162cf8db96e3b28d37aafcb060e0a39585" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/a/9/a9a70c0d7559779da1f9337eb82738cdac8e18c1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/b/9/b9b7a67d6ddc4654200d3da2677c63f52416c40e" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/d/6/d6cd9812cfd42a6288a8c87994cad5a0605c24cf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/japan_shop.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/japan_shop.sql.bak" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/JapanShopApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/FixMobileApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/ServletInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/ServletInitializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/AccessoryDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/AccessoryDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/ChangeDetailDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/ChangeDetailDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/ImeiDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/InsuranceProductDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/OrderDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/OrderDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/OrderDetailProductDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/OrderDetailDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/ProductDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/ProductDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/ProductReturnDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/ProductReturnDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/dto/ReturnDetailDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/entity/Accessory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/entity/Accessory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/entity/ChangeDetail.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/entity/ChangeDetail.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/entity/Imei.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/entity/InsuranceProduct.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/entity/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/entity/Order.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/entity/OrderDetailAccessory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/entity/OrderDetailProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/entity/OrderDetail.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/entity/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/entity/Product.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/entity/ProductReturn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/entity/ProductReturn.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/entity/ReturnDetail.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/ImeiRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/InsuranceProductRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/OrderDetailAccessoryRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/OrderDetailProductRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/OrderDetailRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/repository/ReturnDetailRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/ImeiService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/InsuranceProductService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/OrderDetailAccessoryService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/OrderDetailProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/OrderDetailService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/ReturnDetailService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/impl/ImeiServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/impl/InsuranceProductServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/impl/OrderDetailAccessoryServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/impl/OrderDetailProductServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fix/mobile/service/impl/ReturnDetailServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/accessory/form.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/admin/accessory/form.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/ctrl/accessory-ctrl.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/admin/ctrl/accessory-ctrl.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/admin/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/fix/mobile/JapanShopApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/fix/mobile/FixMobileApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/static/admin/accessory/form.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/admin/accessory/form.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/admin/ctrl/accessory-ctrl.js" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/admin/ctrl/accessory-ctrl.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/admin/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/admin/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,6 +74,7 @@
       <list>
         <option value="HTML File" />
         <option value="Class" />
+        <option value="com.haulmont.jpb.NewClass" />
       </list>
     </option>
   </component>
@@ -70,34 +119,34 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;database.data.extractors.current.export.id&quot;: &quot;SQL Inserts&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/AnhHVPH14045/Orienting/DATN/FixMobile/src/main/resources/static/admin&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;project.propCompiler&quot;,
-    &quot;spring.configuration.checksum&quot;: &quot;ec839d69d4c5f408ec15036ea10ec506&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "DefaultHtmlFileTemplate": "HTML File",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "database.data.extractors.current.export.id": "SQL Inserts",
+    "last_opened_file_path": "D:/AnhHVPH14045/Orienting/DATN/FixMobile/src/main/resources/static/admin",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "spring.configuration.checksum": "ec839d69d4c5f408ec15036ea10ec506"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;mysql&quot;,
-      &quot;postgresql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql",
+      "postgresql"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\AnhHVPH14045\Orienting\DATN\FixMobile\src\main\java\com\fix\mobile" />
@@ -115,17 +164,17 @@
     </option>
   </component>
   <component name="RunManager">
-    <configuration name="JapanShopApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <configuration name="FixMobileApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <option name="ACTIVE_PROFILES" />
       <module name="FixMobile" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.fix.mobile.JapanShopApplication" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.fix.mobile.FixMobileApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Spring Boot.JapanShopApplication" />
+        <item itemvalue="Spring Boot.FixMobileApplication" />
       </list>
     </recent_temporary>
   </component>
@@ -148,7 +197,8 @@
       <workItem from="1664891615285" duration="7678000" />
       <workItem from="1665023972793" duration="1132000" />
       <workItem from="1665025671175" duration="16858000" />
-      <workItem from="1665108717849" duration="13387000" />
+      <workItem from="1665108717849" duration="18138000" />
+      <workItem from="1665332616021" duration="3063000" />
     </task>
     <servers />
   </component>

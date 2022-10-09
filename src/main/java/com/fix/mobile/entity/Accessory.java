@@ -51,5 +51,5 @@ public class Accessory {
     //
     @JsonIgnore
     @OneToMany(mappedBy = "accessory")
-    private List<OrderDetailAccessory> orderDetailAccessories;
+    private List<OrderDetail> orderDetail;
 }

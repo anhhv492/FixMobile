@@ -1,7 +1,6 @@
 package com.fix.mobile.dto;
 
 import com.fix.mobile.entity.Capacity;
-import com.fix.mobile.entity.Imei;
 import com.fix.mobile.entity.InsuranceDetail;
 import com.fix.mobile.entity.*;
 
@@ -12,6 +11,7 @@ import java.util.List;
 public class ProductDTO extends AbstractDTO<Integer> {
     private Integer idProduct;
     private String name;
+    private String imei;
     private Integer quantity;
     private Date createDate;
     private String camera;
@@ -25,172 +25,171 @@ public class ProductDTO extends AbstractDTO<Integer> {
     private Category category;
     private List<ChangeDetail> changeDetails;
     private List<ImageDetail> imageDetails;
-    private List<Imei> imies;
     private List<InsuranceDetail> insuranceDetails;
-    private List<OrderDetailProduct> orderDetailProducts;
+    private List<OrderDetail> orderDetails;
     private List<ProductReturn> productReturns;
     private List<SaleDetail> saleDetails;
 
     public ProductDTO() {
     }
 
+    public Integer getIdProduct() {
+        return idProduct;
+    }
+
     public void setIdProduct(Integer idProduct) {
         this.idProduct = idProduct;
     }
 
-    public Integer getIdProduct() {
-        return this.idProduct;
+    public String getName() {
+        return name;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public String getName() {
-        return this.name;
+    public String getImei() {
+        return imei;
+    }
+
+    public void setImei(String imei) {
+        this.imei = imei;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
     }
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 
-    public Integer getQuantity() {
-        return this.quantity;
+    public Date getCreateDate() {
+        return createDate;
     }
 
-    public void setCreateDate(java.sql.Date createDate) {
+    public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
 
-    public Date getCreateDate() {
-        return this.createDate;
+    public String getCamera() {
+        return camera;
     }
 
     public void setCamera(String camera) {
         this.camera = camera;
     }
 
-    public String getCamera() {
-        return this.camera;
+    public BigDecimal getPrice() {
+        return price;
     }
 
-    public void setPrice(java.math.BigDecimal price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
-    public java.math.BigDecimal getPrice() {
-        return this.price;
+    public String getSize() {
+        return size;
     }
 
     public void setSize(String size) {
         this.size = size;
     }
 
-    public String getSize() {
-        return this.size;
+    public String getNote() {
+        return note;
     }
 
     public void setNote(String note) {
         this.note = note;
     }
 
-    public String getNote() {
-        return this.note;
+    public Boolean getStatus() {
+        return status;
     }
 
     public void setStatus(Boolean status) {
         this.status = status;
     }
 
-    public Boolean getStatus() {
-        return this.status;
+    public Ram getRam() {
+        return ram;
     }
 
     public void setRam(Ram ram) {
         this.ram = ram;
     }
 
-    public Ram getRam() {
-        return this.ram;
+    public Color getColor() {
+        return color;
     }
 
     public void setColor(Color color) {
         this.color = color;
     }
 
-    public Color getColor() {
-        return this.color;
+    public Capacity getCapacity() {
+        return capacity;
     }
 
     public void setCapacity(Capacity capacity) {
         this.capacity = capacity;
     }
 
-    public Capacity getCapacity() {
-        return this.capacity;
+    public Category getCategory() {
+        return category;
     }
 
     public void setCategory(Category category) {
         this.category = category;
     }
 
-    public Category getCategory() {
-        return this.category;
+    public List<ChangeDetail> getChangeDetails() {
+        return changeDetails;
     }
 
-    public void setChangeDetails(java.util.List<ChangeDetail> changeDetails) {
+    public void setChangeDetails(List<ChangeDetail> changeDetails) {
         this.changeDetails = changeDetails;
     }
 
-    public java.util.List<ChangeDetail> getChangeDetails() {
-        return this.changeDetails;
+    public List<ImageDetail> getImageDetails() {
+        return imageDetails;
     }
 
-    public void setImageDetails(java.util.List<ImageDetail> imageDetails) {
+    public void setImageDetails(List<ImageDetail> imageDetails) {
         this.imageDetails = imageDetails;
     }
 
-    public java.util.List<ImageDetail> getImageDetails() {
-        return this.imageDetails;
+    public List<InsuranceDetail> getInsuranceDetails() {
+        return insuranceDetails;
     }
 
-    public void setImies(java.util.List<Imei> imies) {
-        this.imies = imies;
-    }
-
-    public java.util.List<Imei> getImies() {
-        return this.imies;
-    }
-
-    public void setInsuranceDetails(java.util.List<InsuranceDetail> insuranceDetails) {
+    public void setInsuranceDetails(List<InsuranceDetail> insuranceDetails) {
         this.insuranceDetails = insuranceDetails;
     }
 
-    public java.util.List<InsuranceDetail> getInsuranceDetails() {
-        return this.insuranceDetails;
+    public List<OrderDetail> getOrderDetails() {
+        return orderDetails;
     }
 
-    public void setOrderDetailProducts(java.util.List<OrderDetailProduct> orderDetailProducts) {
-        this.orderDetailProducts = orderDetailProducts;
+    public void setOrderDetails(List<OrderDetail> orderDetails) {
+        this.orderDetails = orderDetails;
     }
 
-    public java.util.List<OrderDetailProduct> getOrderDetailProducts() {
-        return this.orderDetailProducts;
+    public List<ProductReturn> getProductReturns() {
+        return productReturns;
     }
 
-    public void setProductReturns(java.util.List<ProductReturn> productReturns) {
+    public void setProductReturns(List<ProductReturn> productReturns) {
         this.productReturns = productReturns;
     }
 
-    public java.util.List<ProductReturn> getProductReturns() {
-        return this.productReturns;
+    public List<SaleDetail> getSaleDetails() {
+        return saleDetails;
     }
 
-    public void setSaleDetails(java.util.List<SaleDetail> saleDetails) {
+    public void setSaleDetails(List<SaleDetail> saleDetails) {
         this.saleDetails = saleDetails;
-    }
-
-    public java.util.List<SaleDetail> getSaleDetails() {
-        return this.saleDetails;
     }
 }

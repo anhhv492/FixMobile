@@ -1,13 +1,13 @@
 package com.fix.mobile.dto;
 
-import com.fix.mobile.entity.OrderDetailProduct;
+import com.fix.mobile.entity.OrderDetail;
 import com.fix.mobile.entity.Product;
 import com.fix.mobile.entity.ProductChange;
 
 public class ChangeDetailDTO extends AbstractDTO<Integer> {
     private Integer idChangeDetail;
     private Product product;
-    private OrderDetailProduct orderDetailProduct;
+    private OrderDetail orderDetail;
     private ProductChange productChange;
 
     public ChangeDetailDTO() {
@@ -29,12 +29,12 @@ public class ChangeDetailDTO extends AbstractDTO<Integer> {
         return this.product;
     }
 
-    public void setOrderDetailProduct(OrderDetailProduct orderDetailProduct) {
-        this.orderDetailProduct = orderDetailProduct;
+    public void setOrderDetailProduct(OrderDetail orderDetail) {
+        this.orderDetail = orderDetail;
     }
 
-    public OrderDetailProduct getOrderDetailProduct() {
-        return this.orderDetailProduct;
+    public OrderDetail getOrderDetailProduct() {
+        return this.orderDetail;
     }
 
     public void setProductChange(ProductChange productChange) {

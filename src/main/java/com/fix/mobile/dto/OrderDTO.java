@@ -1,9 +1,7 @@
 package com.fix.mobile.dto;
 
-import com.fix.mobile.entity.OrderDetailAccessory;
 import com.fix.mobile.entity.Account;
-import com.fix.mobile.entity.OrderDetailAccessory;
-import com.fix.mobile.entity.OrderDetailProduct;
+import com.fix.mobile.entity.OrderDetail;
 
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -18,8 +16,7 @@ public class OrderDTO extends AbstractDTO<Integer> {
     private String address;
     private Boolean type;
     private Account account;
-    private List<OrderDetailAccessory> orderDetailAccessories;
-    private List<OrderDetailProduct> orderDetailProducts;
+    private List<OrderDetail> orderDetails;
 
     public OrderDTO() {
     }
@@ -88,19 +85,12 @@ public class OrderDTO extends AbstractDTO<Integer> {
         return this.account;
     }
 
-    public void setOrderDetailAccessories(java.util.List<OrderDetailAccessory> orderDetailAccessories) {
-        this.orderDetailAccessories = orderDetailAccessories;
+
+    public void setOrderDetailProducts(java.util.List<OrderDetail> orderDetails) {
+        this.orderDetails = orderDetails;
     }
 
-    public java.util.List<OrderDetailAccessory> getOrderDetailAccessories() {
-        return this.orderDetailAccessories;
-    }
-
-    public void setOrderDetailProducts(java.util.List<OrderDetailProduct> orderDetailProducts) {
-        this.orderDetailProducts = orderDetailProducts;
-    }
-
-    public java.util.List<OrderDetailProduct> getOrderDetailProducts() {
-        return this.orderDetailProducts;
+    public java.util.List<OrderDetail> getOrderDetailProducts() {
+        return this.orderDetails;
     }
 }

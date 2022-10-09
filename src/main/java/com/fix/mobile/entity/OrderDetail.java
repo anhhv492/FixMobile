@@ -1,18 +1,20 @@
 package com.fix.mobile.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "order_detail_accessory")
-public class OrderDetailAccessory {
+@Table(name = "order_detail_product")
+public class OrderDetail {
     @Id
     @Column(name = "id_detail")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,6 +34,18 @@ public class OrderDetailAccessory {
     private Order order;
 
     @ManyToOne
+    @JoinColumn(name = "id_product")
+    private Product product;
+
+    @ManyToOne
     @JoinColumn(name = "id_accessory")
     private Accessory accessory;
+    //
+    @JsonIgnore
+    @OneToMany(mappedBy = "orderDetail")
+    private List<ChangeDetail> changeDetails;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "orderDetail")
+    private List<ProductReturn> productReturns;
 }
