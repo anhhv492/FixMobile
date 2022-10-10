@@ -160,6 +160,7 @@ app.controller('rest_accessory', function($scope, $http) {
         $scope.form.image = accessory.image;
         $scope.form.category = accessory.category.idCategory;
         $scope.checkSubmit=true;
+        document.getElementById('manage-tab').click();
     };
     $scope.onUpdate = function() {
         $scope.form.category ={
@@ -182,6 +183,7 @@ app.controller('rest_accessory', function($scope, $http) {
                 icon: 'success',
                 title:'Cập nhật thành công!' ,
             })
+            document.getElementById('list-tab').click();
             $scope.refresh();
         }).catch(error=>{
             const Toast = Swal.mixin({
@@ -195,7 +197,7 @@ app.controller('rest_accessory', function($scope, $http) {
                     toast.addEventListener('mouseleave', Swal.resumeTimer)
                 }
             })
-
+            console.log('error', error);
             Toast.fire({
                 icon: 'error',
                 title: 'Cập nhật thất bại!',
