@@ -1,6 +1,6 @@
-# JapanShop
+![logo-mobile](https://user-images.githubusercontent.com/105498193/194022760-57fdfac0-adb3-4d7d-8747-2af45e216fc6.png)
 
-Website bán điện thoại JapanShop
+Website bán điện thoại FixMobile
 
 - Danh sách thành viên:
   + PH13741 - Hạ Quyết Chiến
