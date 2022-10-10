@@ -13,7 +13,7 @@ app.controller('rest_accessory', function($scope, $http) {
     };
     $scope.checkSubmit=false;
     const now = new Date();
-    $scope.getAccessories =function (){
+    $scope.loadAccessories =function (){
         $http.get(`${pathAPI}/page/0`).then(function(response) {
             $scope.accessories = response.data;
         }).catch(error=>{
@@ -163,6 +163,9 @@ app.controller('rest_accessory', function($scope, $http) {
         document.getElementById('manage-tab').click();
     };
     $scope.onUpdate = function() {
+        if(!$scope.form.image){
+            $scope.form.image='logo-mobile.png';
+        }
         $scope.form.category ={
             idCategory: $scope.form.category
         };
@@ -183,6 +186,7 @@ app.controller('rest_accessory', function($scope, $http) {
                 icon: 'success',
                 title:'Cập nhật thành công!' ,
             })
+
             document.getElementById('list-tab').click();
             $scope.refresh();
         }).catch(error=>{
@@ -204,6 +208,7 @@ app.controller('rest_accessory', function($scope, $http) {
             })
         })
     };
+    // submit form
     $scope.doSubmit = function() {
         if($scope.form.idAccessory) {
             let timerInterval
@@ -260,7 +265,7 @@ app.controller('rest_accessory', function($scope, $http) {
         $scope.form.status=false;
         $scope.form.image='logo-mobile.png';
         $scope.checkSubmit=false;
-        $scope.getAccessories();
+        $scope.getPageAccessories();
     };
     var urlImage=`http://localhost:8080/rest/files/images/accessories`;
     $scope.url = function(fileName){
@@ -357,6 +362,14 @@ app.controller('rest_accessory', function($scope, $http) {
             console.log('Load accessories failse',err.data);
         })
     }
-    $scope.getAccessories();
+    $scope.getPageAccessories = function(){
+        $http.get(pathAPI+`/page/`+$scope.index).then(res=>{
+            $scope.accessories = res.data;
+            console.log('Load accessories success',res.data)
+        }).catch(err=>{
+            console.log('Load accessories failse',err.data);
+        })
+    }
+    $scope.loadAccessories();
 
 });
