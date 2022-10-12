@@ -4,6 +4,7 @@ import com.fix.mobile.entity.Accessory;
 import com.fix.mobile.entity.Category;
 import com.fix.mobile.service.AccessoryService;
 import com.fix.mobile.service.CategoryService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +23,7 @@ import java.util.Optional;
 @CrossOrigin("*")
 @RequestMapping(value="/rest/admin/accessory")
 public class AccessoryRestController {
+	Logger LOGGER = Logger.getLogger(AccessoryRestController.class);
 	@Autowired
 	private AccessoryService accessoryService;
 	@Autowired
@@ -38,6 +40,8 @@ public class AccessoryRestController {
 	public List<Accessory> findAllPageable(@PathVariable("page") Optional<Integer> page){
 		Pageable pageable = PageRequest.of(page.get(), 10);
 		List<Accessory> accessories = accessoryService.findAll(pageable).getContent();
+		LOGGER.info("findAllPageable: "+accessories);
+		LOGGER.info("page: "+page);
 		return accessories;
 	}
 	@GetMapping("/cate")
@@ -46,16 +50,19 @@ public class AccessoryRestController {
 	}
 	@PostMapping
 	public Accessory save(@RequestBody Accessory accessory){
+		LOGGER.info("save: "+accessory);
 		return accessoryService.save(accessory);
 	}
 	//delete accessory
 	@DeleteMapping("/delete/{id}")
 	public void delete(@PathVariable("id") Integer id){
 		accessoryService.deleteById(id);
+		LOGGER.info("delete: "+id);
 	}
 	//update accessory
 	@PutMapping("/{id}")
 	public Accessory update(@PathVariable("id") Integer id, @RequestBody Accessory accessory){
+		LOGGER.info("update: "+accessory);
 		return accessoryService.update(accessory,id);
 	}
 }
