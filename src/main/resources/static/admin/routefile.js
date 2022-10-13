@@ -11,7 +11,7 @@ app.config(function($routeProvider){
         })
          .when("/account",{
           templateUrl:"/admin/account/form.html",
-        //  controller: "Ctrluser"
+         controller: "account-ctrl"
         })
         .when("/accessory",{
             templateUrl:"/admin/accessory/form.html",
