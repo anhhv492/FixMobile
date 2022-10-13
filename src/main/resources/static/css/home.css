@@ -39,7 +39,6 @@
     fill: var(--primary-color);
 }
 .menu__link {
-    font-size: 1.5rem;
     font-weight: 500;
     color: var(--text-color);
     color: black;
@@ -115,6 +114,7 @@
 }
 
 .bestselling__heading-wrap {
+    font-size: 1.7rem;
     width: 100%;
     display: flex;
     align-items: center;
@@ -131,7 +131,6 @@
 }
 
 .bestselling__heading {
-    font-size: 2.4rem;
     font-weight: 500;
     color: var(--primary-color);
     position: relative;
@@ -177,7 +176,6 @@
 }
 
 .bestselling__product-link {
-    font-size: 1.5rem;
     color: var(--text-color);
     text-decoration: none;
     display: block;
@@ -200,13 +198,11 @@
 }
 
 .bestselling__product-rate {
-    font-size: 1.4rem;
     color: var(--primary-color);
     margin-bottom: 0.8rem;
 }
 
 .bestselling__product-price {
-    font-size: 1.8rem;
     color: var(--primary-color);
     font-weight: 500;
 }
@@ -216,8 +212,8 @@
 }
 
 .bestselling__product-btn {
-    width: 10rem;
-    height: 3rem;
+    width: 6rem;
+    height: 2.5rem;
     border-radius: 0.2rem;
     background: var(--primary-color);
     color: var(--white-color);
@@ -226,7 +222,6 @@
     align-items: center;
     outline: none;
     border: none;
-    font-size: 1.4rem;
     font-weight: 500;
     margin: 1rem 0;
     cursor: pointer;
@@ -287,7 +282,6 @@
 }*/
 
 .product__sidebar-title {
-    font-size: 1.8rem;
     color: var(--white-color);
     margin-left: 4rem;
     fill: var(--white-color);
@@ -319,7 +313,6 @@
 
 .product__sidebar-item-name {
     display: block;
-    font-size: 1.4rem;
     color: var(--text-color);
     text-decoration: none;
     text-align: center;
@@ -361,7 +354,6 @@
 }
 
 .product__link {
-    font-size: 1.4rem;
     font-weight: 500;
     text-decoration: none;
     color: var(--text-color);
@@ -435,7 +427,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1.4rem;
     position: absolute;
     top: 1.4rem;
     left: 1rem;
@@ -467,7 +458,6 @@
 }
 
 .product__panel-link {
-    font-size: 1.5rem;
     color: var(--text-color);
     text-decoration: none;
     font-weight: 400;
@@ -492,7 +482,6 @@
 }
 
 .product__panel-rate {
-    font-size: 1.4rem;
     color: var(--primary-color);
     margin: 1.2rem 0;
 }
@@ -504,13 +493,11 @@
 }
 
 .product__panel-price-old {
-    font-size: 1.4rem;
     color: var(--text-color);
     text-decoration: line-through;
 }
 
 .product__panel-price-current {
-    font-size: 1.6rem;
     color: var(--primary-color);
     font-weight: 500;
 
@@ -528,7 +515,6 @@ section.product__love{
 }
 
 .product__love-heading {
-    font-size: 1.8rem;
     color: var(--primary-color);
 }
 
@@ -599,7 +585,6 @@ section.product__love{
 }
 
 .posts__item-title {
-    font-size: 1.5rem;
     color: var(--text-color);
     display: -webkit-box;
     -webkit-box-orient: vertical;
@@ -614,7 +599,6 @@ section.product__love{
     text-decoration: none;
 }
 .posts__item-date {
-    font-size: 1.2rem;
     color: var(--text-color);
 }
 
@@ -629,13 +613,11 @@ section.product__love{
 }
 
 .posts__item-cate-icon, .posts__item-cate-ad-icon{
-    font-size: 1.5rem;
     color: #888;
     margin-right: 0.5rem;
 }
 
 .posts__item-cate-name, .posts__item-cate-ad-name {
-    font-size: 1.3rem;
     color: var(--text-color);
 }
 
@@ -645,7 +627,6 @@ section.product__love{
 
 
 .posts__item-description {
-    font-size: 1.4rem;
     color: var(--text-color);
     display: -webkit-box;
     -webkit-box-orient: vertical;
@@ -663,7 +644,6 @@ section.product__love{
     padding: 0.6rem 1.8rem;
     background: var(--primary-color);
     color: var(--white-color);
-    font-size: 1.3rem;
     border: none;
     outline: none;
     border-radius: 0.2rem;
@@ -690,7 +670,6 @@ section.product__love{
     color: var(--primary-color);
     text-align: center;
     margin-bottom: 2rem;
-    font-size: 2.4rem;
 }
 
 
@@ -779,12 +758,10 @@ section.product__love{
 }
 
 .sale-off__sp{
-    font-size: 3rem;
     color: var(--primary-color);
     font-weight: 700;
 }
 .sale-off__name{
-    font-size: 2rem;
     color: var(--text-color);
     font-weight: 700;
 }
@@ -801,7 +778,6 @@ section.product__love{
     border: none;
     box-shadow: inset 0 2rem 2.5rem 0.5rem var(--primary-color);
     color: var(--white-color);
-    font-size: 1.6rem;
     border-radius: 0.2rem;
     cursor: pointer;
     transition: 0.3s;
@@ -822,7 +798,6 @@ section.product__love{
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1.6rem;
     color: #666;
     cursor: pointer;
 }
