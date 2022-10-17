@@ -1,13 +1,13 @@
 package com.fix.mobile.dto;
 
-import com.fix.mobile.entity.ImageDetail;
+import com.fix.mobile.entity.Product;
 
 import java.util.List;
 
 public class ImageDTO extends AbstractDTO<Integer> {
     private Integer idImage;
     private String name;
-    private List<ImageDetail> imageDetails;
+    private List<Product> products;
 
     public ImageDTO() {
     }
@@ -28,11 +28,11 @@ public class ImageDTO extends AbstractDTO<Integer> {
         return this.name;
     }
 
-    public void setImageDetails(java.util.List<ImageDetail> imageDetails) {
-        this.imageDetails = imageDetails;
+    public List<Product> getProducts() {
+        return products;
     }
 
-    public java.util.List<ImageDetail> getImageDetails() {
-        return this.imageDetails;
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 }

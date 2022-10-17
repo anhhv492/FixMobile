@@ -85,19 +85,14 @@ CREATE TABLE products (
 	id_color int NOT NULL,
 	id_capacity int NOT NULL,
 	id_category int NOT NULL,
+	id_image int NOT NULL,
 	foreign key(id_ram) references ram(id_ram),
 	foreign key(id_color) references color(id_color),
 	foreign key(id_capacity) references capacity(id_capacity),
-	foreign key(id_category) references categories(id_category)
+	foreign key(id_category) references categories(id_category),
+	foreign key(id_image) references images(id_image)
 ) ;
 
-CREATE TABLE image_detail (
-	id_detail int NOT NULL auto_increment primary key,
-	id_image int NOT NULL,
-	id_product int NOT NULL,
-	foreign key(id_image) references images(id_image),
-	foreign key(id_product) references products(id_product)
-) ;
 CREATE TABLE accessories (
 	id_accessory int NOT NULL auto_increment primary key,
 	name nvarchar(255) NOT NULL,
