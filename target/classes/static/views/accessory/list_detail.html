@@ -1,0 +1,171 @@
+<div class="container">
+    <div class="well well-sm row d-flex justify-content-center">
+        <div id="view" class="btn-group text-center">
+            <h2>Phụ kiện - {{cateDetail.name}}</h2>
+        </div>
+        <div class="alert alert-warning" ng-if="detailAccessories.length<=0">Sản phẩm này đã hết hàng!</div>
+        <div class="item col-xs-4 col-md-3 " ng-repeat="accessory in detailAccessories" ng-if="detailAccessories.length>0">
+            <div class="thumbnail row p-3">
+                <img class="group list-group-image" src="/images/accessories/{{accessory.image}}" height="250px" width="283px" />
+                <div class="caption mt-2">
+                    <h4 class="group inner list-group-item-heading">
+                        {{accessory.name}}</h4>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6">
+                            <p class="lead">
+                                {{accessory.price|number}}VNĐ</p>
+                        </div>
+                        <div class="btn-group">
+                            <a class="btn btn-details" href="http://www.jquery2dotnet.com">Details</a>
+                            <a class="btn btn-success" ng-click="addCart(accessory)">Add to cart</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .glyphicon { margin-right:5px; }
+    body{
+        background:#fff;
+        font-family: Open Sans;
+    }
+    .category{
+        position:relative;
+        top:-5px;
+        left:10px;
+        color:#20e3b2;
+        font-weight:200;
+        margin-bottom:-20px;
+    }
+    .well{
+        background:transparent;
+        border-style:none;
+    }
+    .btn{
+        border-style:none;
+
+    }
+    .col-md-3:hover{
+        box-shadow: 1px 5px 25px #ccc;
+
+    }
+    .thumbnail
+    {
+        margin-bottom: 0px;
+        padding: 0px;
+        -webkit-border-radius: 0px;
+        -moz-border-radius: 0px;
+        border-radius: 0px;
+
+    }
+    .inner{
+        margin-left:0px;
+    }
+    .item{
+        width:250px;
+        padding:0;
+        margin-top:5px;
+        margin:15px;
+        box-shadow: 1px 5px 15px #CCC;
+    }
+
+    .item.list-group-item
+    {
+        float: none;
+        width: 100%;
+        background-color: #fff;
+        margin-bottom: 10px;
+    }
+    .item.list-group-item:nth-of-type(odd):hover,.item.list-group-item:hover
+    {
+        box-shadow: 0px 1px 25px #ccc;
+    }
+
+    .item.list-group-item .list-group-image
+    {
+        margin-right:5px;
+
+    }
+    .item.list-group-item .thumbnail
+    {
+        margin-bottom: 0px;
+
+    }
+    .item.list-group-item .caption
+    {
+        padding: 9px 9px 0px 9px;
+
+    }
+
+
+    .item.list-group-item:before, .item.list-group-item:after
+    {
+        display: table;
+        content: " ";
+    }
+
+    .item.list-group-item img
+    {
+        float: left;
+    }
+    .item.list-group-item:after
+    {
+        clear: both;
+    }
+    .btn-success,.btn-details{
+        margin-top:30px;
+        margin-bottom:10px;
+    }
+    .btn-details{
+        background:transparent;
+        border-style:solid;
+        border-color:lightgrey;
+        border-radius:0%;
+        width:125px;
+        top:11px;
+        left:2px;
+        color:black;
+        height:33px;
+    }
+    .btn-details:hover{
+        background:lightgrey;
+        color:white;
+    }
+    .lead{
+        position:absolute;
+        font-weight:700;
+        font-size:18px;
+    }
+
+    .btn-success{
+        overflow:hidden;
+        border-radius:0%;
+        border-style:none;
+        width:125px;
+        right:2px;
+        top:11px;
+        height:33px;
+        background: linear-gradient(to right, #0cebeb, #20e3b2, #29ffc6);
+    }
+
+    .btn-success:hover{
+        background:#29ffc6  ;
+        color:white;
+    }
+    @keyframes scalewidth {
+        0% {
+            width: 0%;
+        }
+        100%{
+            width : 100%;
+        }
+    }
+</style>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#list').click(function(event){event.preventDefault();$('#products .item').addClass('list-group-item');});
+        $('#grid').click(function(event){event.preventDefault();$('#products .item').removeClass('list-group-item');$('#products .item').addClass('grid-group-item');});
+    });
+</script>
