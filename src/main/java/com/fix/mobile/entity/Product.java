@@ -60,14 +60,15 @@ public class Product {
     @JoinColumn(name = "id_category")
     private Category category;
 
+    @ManyToOne
+    @JoinColumn(name = "id_image")
+    private Image image;
+
+
     //
     @JsonIgnore
     @OneToMany(mappedBy = "product")
     private List<ChangeDetail> changeDetails;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "product")
-    private List<ImageDetail> imageDetails;
 
     @JsonIgnore
     @OneToMany(mappedBy = "product")
@@ -84,4 +85,5 @@ public class Product {
     @JsonIgnore
     @OneToMany(mappedBy = "product")
     private List<SaleDetail> saleDetails;
+
 }

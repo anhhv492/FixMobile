@@ -8,14 +8,8 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.ServletContext;
-import java.io.File;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,8 +22,7 @@ public class AccessoryRestController {
 	private AccessoryService accessoryService;
 	@Autowired
 	private CategoryService categoryService;
-	@Autowired
-	ServletContext application;
+
 	//findAll accessory
 	@GetMapping
 	public List<Accessory> findAll(){
@@ -44,10 +37,29 @@ public class AccessoryRestController {
 		LOGGER.info("page: "+page);
 		return accessories;
 	}
+	@GetMapping(value="/{id}")
+	public Accessory findById(@PathVariable("id") Integer id){
+		Optional<Accessory> accessory = accessoryService.findById(id);
+		if(accessory.isPresent()){
+			return accessory.get();
+		}
+		return null;
+	}
+	//find category by accessory
 	@GetMapping("/cate")
 	public List<Category> findByCate(){
 		return categoryService.findByType();
 	}
+	//find accessory by category
+	@GetMapping("/cate/{id}")
+	public List<Accessory> findByCateId(@PathVariable("id") Integer id){
+		Optional<Category> cate = categoryService.findById(id);
+		if(cate.isEmpty()){
+			return null;
+		}
+		return accessoryService.findByCate(cate);
+	}
+
 	@PostMapping
 	public Accessory save(@RequestBody Accessory accessory){
 		LOGGER.info("save: "+accessory);

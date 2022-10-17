@@ -1,10 +1,9 @@
 package com.fix.mobile.service.impl;
 
+import com.fix.mobile.entity.Category;
 import com.fix.mobile.repository.AccessoryRepository;
 import com.fix.mobile.service.AccessoryService;
-import com.fix.mobile.repository.AccessoryRepository;
 import com.fix.mobile.entity.Accessory;
-import com.fix.mobile.service.AccessoryService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -62,5 +61,10 @@ public class AccessoryServiceImpl implements AccessoryService {
             return save(entity);
         }
         return null;
+    }
+
+    @Override
+    public List<Accessory> findByCate(Optional<Category> cate) {
+        return repository.findByCategory(cate);
     }
 }
