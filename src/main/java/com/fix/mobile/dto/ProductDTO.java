@@ -24,11 +24,11 @@ public class ProductDTO extends AbstractDTO<Integer> {
     private Capacity capacity;
     private Category category;
     private List<ChangeDetail> changeDetails;
-    private List<ImageDetail> imageDetails;
     private List<InsuranceDetail> insuranceDetails;
     private List<OrderDetail> orderDetails;
     private List<ProductReturn> productReturns;
     private List<SaleDetail> saleDetails;
+    private Image image;
 
     public ProductDTO() {
     }
@@ -153,14 +153,6 @@ public class ProductDTO extends AbstractDTO<Integer> {
         this.changeDetails = changeDetails;
     }
 
-    public List<ImageDetail> getImageDetails() {
-        return imageDetails;
-    }
-
-    public void setImageDetails(List<ImageDetail> imageDetails) {
-        this.imageDetails = imageDetails;
-    }
-
     public List<InsuranceDetail> getInsuranceDetails() {
         return insuranceDetails;
     }
@@ -191,5 +183,13 @@ public class ProductDTO extends AbstractDTO<Integer> {
 
     public void setSaleDetails(List<SaleDetail> saleDetails) {
         this.saleDetails = saleDetails;
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
     }
 }

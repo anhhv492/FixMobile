@@ -66,4 +66,8 @@ public class CategoryServiceImpl implements CategoryService {
     public List<Category> findByType() {
         return repository.findByType(true);
     }
+
+    public List<Category> findByTypeProduct() {
+        return repository.findByType(false);
+    }
 }

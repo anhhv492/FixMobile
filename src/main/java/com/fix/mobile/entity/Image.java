@@ -25,5 +25,5 @@ public class Image {
     //
     @JsonIgnore
     @OneToMany(mappedBy = "image")
-    private List<ImageDetail> imageDetails;
+    private List<Product> products;
 }

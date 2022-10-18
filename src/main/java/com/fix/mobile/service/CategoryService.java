@@ -9,4 +9,5 @@ import java.util.List;
 public interface CategoryService extends GenericService<Category, Integer> {
     //anhhv findcategory
     List<Category> findByType();
+    List<Category> findByTypeProduct();
 }

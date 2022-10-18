@@ -1,67 +1,199 @@
-<main class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
-		<div class="row">
-			<div class="col-lg-12">
-				<h1 class="page-header">Thêm sản phẩm vvvvv</h1>
-			</div>
-        </div><!--/.row-->
-        <div class="row">
-                <div class="col-lg-12">
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <div class="col-md-6">
-                                <form role="form" method="post" enctype="multipart/form-data">
-                                <div class="form-group">
-                                    <label>Tên sản phẩm</label>
-                                    <input required name="prd_name" class="form-control" placeholder="">
-                                </div>
-                                                                
-                                <div class="form-group">
-                                    <label>Giá sản phẩm</label>
-                                    <input required name="prd_price" type="number" min="0" class="form-control">
-                                </div>
-                                <div class="form-group">
-                                    <label>Khuyến mãi</label>
-                                    <input required name="prd_promotion" type="number" min="0" class="form-control">
-                                </div>    
-                                
+<div class="col-sm-12 col-sm-offset-3 col-lg-12">
+    <div class="row">
+        <div class="col-lg-12">
+            <h2 class="page-header">{{checkSubmit==false?title.insert:title.update}} sản phẩm</h2>
+        </div>
+    </div><!--/.row-->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <form role="formProduct" method="post" class="row" name="myForm"
+                          ng-submit="doSubmit()" enctype="multipart/form-data">
+                        <div class="col-md-6">
+                            <div class="form-group mt-1">
+                                <label >Thể loại </label>
+                                <select ng-model="formProduct.category" class="form-select" name="category" required>
+                                    <option ng-repeat="cate in categories" ng-value="cate.idCategory">{{cate.name}}
+                                    </option>
+                                </select>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Ảnh sản phẩm</label>
-                                    
-                                    <input required name="prd_image" type="file">
-                                    <br>
-                                    <div>
-                                        <img  style="filter: drop-shadow(0 0 5px rgb(119, 119, 145));" width="80px" src="img/gift.gif">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Danh mục</label>
-                                    <select name="cat_id" class="form-control">
-                                        <option value=1>Sách Tiếng Việt</option>
-                                        <option value=2>Sách nước ngoài</option>
-                                        <option value=3>Manga - Comic</option>
+                            <div class="form-group mt-1">
+                                <label>Tên sản phẩm</label>
+                                <input ng-model="formProduct.name" class="form-control" placeholder="Tên sản phẩm" required>
+                            </div>
+                            <div class="form-group mt-1">
+                                <label >Ram </label>
+                                <select ng-model="formProduct.ram" class="form-select" name="ram" required>
+                                    <option ng-repeat="cate in rams" ng-value="cate.idRam">{{cate.name}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="form-group mt-1">
+                                    <label >Màu </label>
+                                    <select ng-model="formProduct.color" class="form-select" name="color" required>
+                                        <option ng-repeat="color in colors" ng-value="color.idColor">{{color.name}}
+                                        </option>
                                     </select>
-                                </div>
-                                <div class="form-group">
-                                    <label>Sản phẩm nổi bật</label>
-                                    <div class="checkbox">
-                                        <label>
-                                            <input name="prd_featured" type="checkbox" value=1>Nổi bật
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                        <label>Mô tả sản phẩm</label>
-                                        <textarea required name="prd_details" class="form-control" rows="3"></textarea>
-                                    </div>
-                                <button name="sbm" type="submit" class="btn btn-success">Thêm mới</button>
-                                <button type="reset" class="btn btn-default">Làm mới</button>
                             </div>
-                        </form>
+                            <div class="form-group mt-1">
+                                <label>Dung lượng</label>
+                                <select ng-model="formProduct.capacity" class="form-select" name="capacity" required>
+                                    <option ng-repeat="capa in capacitys" ng-value="capa.idCapacity">{{capa.name}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="form-group mt-1">
+                                <label>Giá</label>
+                                <input ng-model="formProduct.price" required type="number" class="form-control">
+                            </div>
+                            <div class="form-group mt-1">
+                                <label>imei máy</label>
+                                <input ng-model="formProduct.imei" required type="text" class="form-control">
+                            </div>
                         </div>
-                    </div>
-                </div><!-- /.col-->
-            </div><!-- /.row -->
-		
-	</main>	<!--/.main-->	
+                        <div class="col-md-6">
+                            <div class="form-group mt-1">
+                                <label>camera</label>
+                                <input ng-model="formProduct.camera" class="form-control" placeholder="camera" required>
+                            </div>
+                            <div class="form-group mt-2 mb-3" ng-if="checkSubmit">
+                                <label>Trạng thái</label>
+                                <br>
+                                <input type="radio" class="form-check-input" checked
+                                       ng-model="formProduct.status" name="status" ng-value="false"> Còn hàng
+                                <input type="radio" class="form-check-input"
+                                       ng-model="formProduct.status" name="status" ng-value="true"> Hết hàng
+                            </div>
+
+                            <div class="form-group mt-1">
+                                <label>Hình ảnh</label>
+                                <br>
+                                <!--<input onchange="angular.element(this).scope().uploadFile(this.files)"
+                                       ng-required="!formProduct.imageDetails" ng-model="formProduct.imageDetails"
+                                       type="file" class="form-control" multiple="multiple">-->
+                                <br>
+                                <div class="mt-1">
+                                    <label ng-repeat="image in fileNames" ng-value="image.idImage">
+                                        <img style="filter: drop-shadow(0 0 5px rgb(119, 119, 145));" width="105px"
+                                             ng-src="/images/products/{{image.name}}">
+                                    </label>
+                                    <img style="filter: drop-shadow(0 0 5px rgb(119, 119, 145));" width="105px"
+                                         src="/images/logo-mobile.png" ng-if="!formProduct.image">
+
+                                </div>
+                            </div>
+
+                            <div class="form-group mt-1">
+                                <label>Kích thước</label>
+                                <input ng-model="formProduct.size" class="form-control" placeholder="nhập kích thước" required>
+                            </div>
+
+                            <div class="form-group mt-1">
+                                <label>Mô tả sản phẩm</label>
+                                <textarea ng-model="formProduct.note" class="form-control" rows="3" required></textarea>
+                            </div>
+
+                            <div class="form-group mt-4">
+                                <button type="submit" class="btn btn-success" ng-disabled="myForm.$invalid">{{checkSubmit==false?title.insert:title.update}}</button>
+                                <button type="button" ng-if="checkSubmit" ng-click="refresh()" class="btn btn-warning">Hủy</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row table-responsive">
+       <div class="col-lg-12 mt-4">
+           <table class="table table-striped table-hover table-bordered">
+               <thead>
+               <tr>
+                   <th>STT</th>
+                   <th>Tên sản phẩm</th>
+                   <th>Thể loại</th>
+                   <th>Dung lượng</th>
+                   <th>Màu</th>
+                   <th>Giá (VNĐ)</th>
+                   <th>Trạng thái</th>
+                   <th>Mô tả</th>
+                   <th style="width: 100px">Ngày tạo</th>
+                   <th>Ảnh</th>
+                   <th>Thao tác</th>
+               </thead>
+               <tbody>
+               <tr ng-repeat="product in products">
+                   <td>{{$index + 1}}</td>
+                   <td>{{product.name}}</td>
+                   <td>{{product.category.name}}</td>
+                   <td>{{product.capacity.name}}</td>
+                   <td style="width: 100px">{{product.color.name}}</td>
+                   <td>{{product.price|number}}</td>
+                   <td>{{product.status==0?'Còn hàng':'Hết hàng'}}</td>
+                   <td>{{product.note}}</td>
+                   <td style="width: 100px">{{product.createDate}}</td>
+                   <td><img class="img-fluid" width="80px" height="80px" src="/images/product/{{product.image}}"></td>
+                   <td>
+                       <button class="btn btn-default" ng-click="edit(product)"><i class="fa fa-pencil-square" aria-hidden="true"> Sửa</i></button>
+                       <button class="btn btn-default" ng-click="delete(product)"><i class="fa fa-trash"> Xóa</i></button>
+                   </td>
+               </tr>
+               </tbody>
+           </table>
+
+       </div>
+    </div>
+</div>
+<nav class="row table-responsive">
+    <table>
+        <ul class="pagination justify-content-center row">
+            <div class="col-1">
+                <li class="page-item">
+                    <button class="btn btn-default {{!check_first?'disabled':''}}" ng-click="first()"><i class="fa fa-fast-backward" aria-hidden="true"></i></button>
+                    <!--            <p class="btn btn-dark" disabled ng-show="!check_first">Trang đầu</p>-->
+                </li>
+            </div>
+            <div class="col-1">
+                <li class="page-item ms-2 me-2">
+                    <button class="btn btn-default" ng-click="prev()"><i class="fa fa-step-backward" aria-hidden="true"></i></button>
+                    <!--            <p class="btn btn-success" disabled ng-show="!check_first">Trang trước</p>-->
+                </li>
+            </div>
+            <div class="col-1">
+                <li class="page-item ms-1 me-1 pt-1 ">
+                    <h4>{{index+1}}/{{totalPages}}</h4>
+                </li>
+            </div>
+            <div class="col-1">
+                <li class="page-item ms-2 me-2">
+                    <button class="btn btn-default" ng-click="next()"><i class="fa fa-step-forward" aria-hidden="true"></i></button>
+                    <!--            <p class="btn btn-success" disabled ng-show="!check_last">Trang sau</p>-->
+                </li>
+            </div>
+            <div class="col-1">
+                <li class="page-item">
+                    <button class="btn btn-default {{!check_last?'disabled':''}}" ng-click="last()"><i class="fa fa-fast-forward" aria-hidden="true"></i></button>
+                    <!--            <p class="btn btn-dark" disabled ng-show="!check_last">Trang cuối</p>-->
+                </li>
+            </div>
+        </ul>
+    </table>
+</nav>
+
+<style>
+    input.ng-invalid.ng-touched {
+        border:2px solid red;
+    }
+
+    textarea.ng-invalid.ng-touched {
+        border:2px solid red;
+    }
+    select.ng-invalid.ng-touched {
+        border:2px solid red;
+    }
+    button:hover{
+        box-shadow: 0 0 5px rgb(119, 119, 145);
+    }
+
+</style>
