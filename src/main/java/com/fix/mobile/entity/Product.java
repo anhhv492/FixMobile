@@ -81,7 +81,4 @@ public class Product {
     @OneToMany(mappedBy = "product")
     private List<ProductReturn> productReturns;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "product")
-    private List<SaleDetail> saleDetails;
 }
