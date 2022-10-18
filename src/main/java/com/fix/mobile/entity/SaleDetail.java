@@ -17,12 +17,11 @@ public class SaleDetail {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idDetail;
 
+    private Integer idProduct;
+
+    private Integer idUser;
+
     @ManyToOne
     @JoinColumn(name = "id_sale")
     private Sale sale;
-
-    @ManyToOne
-    @JoinColumn(name = "id_product")
-    private Product product;
-
 }
