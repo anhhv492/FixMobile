@@ -2,7 +2,6 @@
     <div class="container h-100 py-5">
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col">
-
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
@@ -10,82 +9,52 @@
                             <th scope="col" class="h5">Giỏ hàng</th>
                             <th scope="col">Loại</th>
                             <th scope="col">Số lượng</th>
-                            <th scope="col">Giá</th>
+                            <th scope="col">Giá (VNĐ)</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
+                        <tr ng-repeat="item in carts">
                             <th scope="row">
                                 <div class="d-flex align-items-center">
-                                    <img src="https://i.imgur.com/2DsA49b.webp" class="img-fluid rounded-3"
-                                         style="width: 120px;" alt="Book">
+                                    <img src="/images/accessories/{{item.image}}" class="img-fluid rounded-3"
+                                         style="width: 120px;height: 120px" alt="Book">
                                     <div class="flex-column ms-4">
-                                        <p class="mb-2">Thinking, Fast and Slow</p>
-                                        <p class="mb-0">Daniel Kahneman</p>
+                                        <h4 class="mb-2">{{item.name}}</h4>
+                                        <span class="mb-0 text-success">{{item.note}}</span>
                                     </div>
                                 </div>
                             </th>
                             <td class="align-middle">
-                                <p class="mb-0" style="font-weight: 500;">Digital</p>
+                                <p class="mb-0" style="font-weight: 500;">{{item.category.name}}</p>
                             </td>
                             <td class="align-middle">
                                 <div class="d-flex flex-row">
-                                    <button class="btn btn-link px-2"
-                                            onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                                    <button class="btn btn-link px-2" ng-click="reduce(item)">
                                         <i class="fas fa-minus"></i>
                                     </button>
 
-                                    <input id="form1" min="0" name="quantity" value="2" type="number"
+                                    <input min="0" ng-change="update(item)" ng-model="item.qty" ng-value="item.qty" type="number"
                                            class="form-control form-control-sm" style="width: 50px;" />
 
-                                    <button class="btn btn-link px-2"
-                                            onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                                    <button class="btn btn-link px-2" ng-click="raise(item)">
                                         <i class="fas fa-plus"></i>
                                     </button>
                                 </div>
                             </td>
                             <td class="align-middle">
-                                <p class="mb-0" style="font-weight: 500;">$9.99</p>
+                                <p class="mb-0" style="font-weight: 500;">{{item.price*item.qty|number}}</p>
                             </td>
-                        </tr>
-                        <tr>
-                            <th scope="row" class="border-bottom-0">
-                                <div class="d-flex align-items-center">
-                                    <img src="https://i.imgur.com/Oj1iQUX.webp" class="img-fluid rounded-3"
-                                         style="width: 120px;" alt="Book">
-                                    <div class="flex-column ms-4">
-                                        <p class="mb-2">Homo Deus: A Brief History of Tomorrow</p>
-                                        <p class="mb-0">Yuval Noah Harari</p>
-                                    </div>
-                                </div>
-                            </th>
-                            <td class="align-middle border-bottom-0">
-                                <p class="mb-0" style="font-weight: 500;">Paperback</p>
-                            </td>
-                            <td class="align-middle border-bottom-0">
-                                <div class="d-flex flex-row">
-                                    <button class="btn btn-link px-2"
-                                            onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                                        <i class="fas fa-minus"></i>
-                                    </button>
-
-                                    <input id="form1" min="0" name="quantity" value="1" type="number"
-                                           class="form-control form-control-sm" style="width: 50px;" />
-
-                                    <button class="btn btn-link px-2"
-                                            onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
-                                        <i class="fas fa-plus"></i>
-                                    </button>
-                                </div>
-                            </td>
-                            <td class="align-middle border-bottom-0">
-                                <p class="mb-0" style="font-weight: 500;">$13.50</p>
+                            <td>
+                                <button class="btn btn-light" ng-click="remove(item)">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                                        <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                                    </svg>
+                                </button>
                             </td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
-
                 <div class="card shadow-2-strong mb-5 mb-lg-0" style="border-radius: 16px;">
                     <div class="card-body p-4">
 
@@ -145,42 +114,40 @@
                                     </div>
                                     <div class="col-12 col-xl-6">
                                         <div class="form-outline mb-4 mb-xl-5">
-                                            <input type="text" id="typeText" class="form-control form-control-lg" siez="17"
+                                            <input type="text" id="typeText1" class="form-control form-control-lg" siez="17"
                                                    placeholder="1111 2222 3333 4444" minlength="19" maxlength="19" />
-                                            <label class="form-label" for="typeText">Card Number</label>
+                                            <label class="form-label" for="typeText1">Card Number</label>
                                         </div>
 
                                         <div class="form-outline mb-4 mb-xl-5">
-                                            <input type="password" id="typeText" class="form-control form-control-lg"
+                                            <input type="password" id="typeText2" class="form-control form-control-lg"
                                                    placeholder="&#9679;&#9679;&#9679;" size="1" minlength="3" maxlength="3" />
-                                            <label class="form-label" for="typeText">Cvv</label>
+                                            <label class="form-label" for="typeText2">Cvv</label>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-4 col-xl-3">
+                                <button class="btn btn-warning">Mã giảm giá</button>
                                 <div class="d-flex justify-content-between" style="font-weight: 500;">
-                                    <p class="mb-2">Subtotal</p>
-                                    <p class="mb-2">$23.49</p>
+                                    <p class="mb-2">Tổng đơn</p>
+                                    <p class="mb-2">{{totalPrice()|number}}đ</p>
                                 </div>
 
                                 <div class="d-flex justify-content-between" style="font-weight: 500;">
-                                    <p class="mb-0">Shipping</p>
-                                    <p class="mb-0">$2.99</p>
+                                    <p class="mb-0">Giao hàng</p>
+                                    <p class="mb-0">{{totalShip()|number}}đ</p>
                                 </div>
 
                                 <hr class="my-4">
 
-                                <div class="d-flex justify-content-between mb-4" style="font-weight: 500;">
-                                    <p class="mb-2">Total (tax included)</p>
-                                    <p class="mb-2">$26.48</p>
+                                <div class="d-flex justify-content-between mb-3" style="font-weight: 500;">
+                                    <h5 class="mb-2">Tổng tiền</h5>
+                                    <h5 class="mb-2">{{totals()|number}}đ</h5>
                                 </div>
 
                                 <button type="button" class="btn btn-primary btn-block btn-lg">
-                                    <div class="d-flex justify-content-between">
-                                        <span>Checkout</span>
-                                        <span>$26.48</span>
-                                    </div>
+                                    Thanh toán
                                 </button>
 
                             </div>

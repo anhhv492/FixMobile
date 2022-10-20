@@ -1,10 +1,11 @@
-app.controller('home-ctrl',function($rootScope,$scope,$http){
+app.controller('home-ctrl',function($rootScope,$scope,$http,$window){
     var urlCategory=`http://localhost:8080/rest/staff/category`;
     var urlAccessory=`http://localhost:8080/rest/admin/accessory`;
     $scope.cateAccessories=[];
     $scope.cateProducts=[];
+    $scope.item= {};
+    $rootScope.carts=[];
     $rootScope.qtyCart=0;
-    $scope.items=[];
     $scope.getCategories = function(){
         $http.get(`${urlCategory}/getAll`).then(res=>{
             res.data.forEach(cate=>{
@@ -36,52 +37,48 @@ app.controller('home-ctrl',function($rootScope,$scope,$http){
             $rootScope.idDetailProduct=item.idCategory;
         }
     }
-    $scope.findById=function(item){
-        if(item.category.type){
-            $http.get(`${urlAccessory}/${item.idAccessory}`).then(res=>{
-                console.log("cartAccessory",res)
-                return res.data;
-            }).catch(err=>{
-                console.log("error",err)
-                return null;
-            })
-        }
-    }
-    $scope.addCart=function(item){
+    $scope.addCart=function(accessory){
         $rootScope.qtyCart++;
         console.log("qty",$scope.qtyCart);
-        $scope.item = $scope.items.find(
-            item=>item.idAccessory=$rootScope.cartAccessory.idAccessory
+        $scope.item = $rootScope.carts.find(
+            it=>it.idAccessory===accessory.idAccessory
         );
-        if(item.category.type){
-            $http.get(`${urlAccessory}/${item.idAccessory}`).then(res=>{
+        if(accessory.category.type){
+            $http.get(`${urlAccessory}/${accessory.idAccessory}`).then(res=>{
                 console.log("cartAccessory",res)
-                $rootScope.cartAccessory= res.data;
+                let data= res.data;
                 if(!$scope.item){
-                    $rootScope.cartAccessory.qty=1;
-                    $scope.items.push($rootScope.cartAccessory);
-                    console.log("addCart",$rootScope.cartAccessory)
-                    $scope.saveLocalStorage();
+                    data.qty=1;
+                    $rootScope.carts.push(data);
+                    console.log("addCart1",data)
                 }else{
                     $scope.item.qty++;
-                    $scope.saveLocalStorage();
+                    console.log("addCart2",$scope.item)
                 }
+                $rootScope.saveLocalStorage();
             }).catch(err=>{
                 console.log("error",err)
-                $rootScope.cartAccessory=null;
             })
         }
     }
-    $scope.saveLocalStorage=function(){
-        let json = JSON.stringify(angular.copy($scope.items));
+    $rootScope.saveLocalStorage=function(){
+        let json = JSON.stringify(angular.copy($rootScope.carts));
         localStorage.setItem("cart",json);
     }
-    $scope.loadLocalStorage = function(){
+    $rootScope.loadLocalStorage = function(){
         let json = localStorage.getItem("cart");
-        $scope.items=json? JSON.parse(json):[];
+        $rootScope.carts=json? JSON.parse(json):[];
+    }
+    $rootScope.loadQtyCart=function(){
+        if($rootScope.carts){
+            $rootScope.carts.forEach(item=>{
+                $rootScope.qtyCart+=item.qty;
+            });
+        }
     }
     $scope.overPro=false;
     $scope.overAccess=false;
     $scope.getCategories();
-    $scope.loadLocalStorage();
+    $rootScope.loadLocalStorage();
+    $rootScope.loadQtyCart();
 })
