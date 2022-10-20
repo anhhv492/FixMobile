@@ -22,8 +22,4 @@ public class Image {
     @Column(name = "name")
     private String name;
 
-    //
-    @JsonIgnore
-    @OneToMany(mappedBy = "image")
-    private List<Product> products;
 }

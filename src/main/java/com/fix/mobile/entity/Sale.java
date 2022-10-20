@@ -64,6 +64,9 @@ public class Sale {
     @Column(name = "user_update")
     private Integer userpdate;
 
+    @Column(name = "detail_sale")
+    private String detailSale;
+
     @JsonIgnore
     @OneToMany(mappedBy = "sale")
     private List<SaleDetail> saleDetails;

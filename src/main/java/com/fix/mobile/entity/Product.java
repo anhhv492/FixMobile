@@ -65,9 +65,6 @@ public class Product {
     @OneToMany(mappedBy = "product")
     private List<ChangeDetail> changeDetails;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "product")
-    private List<ImageDetail> imageDetails;
 
     @JsonIgnore
     @OneToMany(mappedBy = "product")
@@ -81,7 +78,4 @@ public class Product {
     @OneToMany(mappedBy = "product")
     private List<ProductReturn> productReturns;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "product")
-    private List<SaleDetail> saleDetails;
 }

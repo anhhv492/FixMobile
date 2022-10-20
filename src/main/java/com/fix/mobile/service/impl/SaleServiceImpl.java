@@ -1,65 +1,55 @@
 package com.fix.mobile.service.impl;
 
-import com.fix.mobile.service.SaleService;
+import com.fix.mobile.exception.SaleException;
+import com.fix.mobile.exception.StaffException;
 import com.fix.mobile.repository.SaleRepository;
-import com.fix.mobile.entity.Sale;
 import com.fix.mobile.service.SaleService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
+import com.fix.mobile.entity.Sale;
+//import org.springframework.security.core.Authentication; cuongnd edit
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
+
+import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Service
-@Transactional
 public class SaleServiceImpl implements SaleService {
-    private final SaleRepository repository;
 
-    public SaleServiceImpl(SaleRepository repository) {
-        this.repository = repository;
-    }
+    @Autowired
+    SaleRepository dao;
 
     @Override
-    public Sale save(Sale entity) {
-        return repository.save(entity);
-    }
-
-    @Override
-    public List<Sale> save(List<Sale> entities) {
-        return (List<Sale>) repository.saveAll(entities);
-    }
-
-    @Override
-    public void deleteById(Integer id) {
-        repository.deleteById(id);
-    }
-
-    @Override
-    public Optional<Sale> findById(Integer id) {
-        return repository.findById(id);
-    }
-
-    @Override
-    public List<Sale> findAll() {
-        return (List<Sale>) repository.findAll();
-    }
-
-    @Override
-    public Page<Sale> findAll(Pageable pageable) {
-        Page<Sale> entityPage = repository.findAll(pageable);
-        List<Sale> entities = entityPage.getContent();
-        return new PageImpl<>(entities, pageable, entityPage.getTotalElements());
-    }
-
-    @Override
-    public Sale update(Sale entity, Integer id) {
-        Optional<Sale> optional = findById(id) ;
-        if (optional.isPresent()) {
-            return save(entity);
+    public Sale add(Sale sale) {
+        dao.findByName(sale.getName()).ifPresent(e -> {
+            throw new SaleException("Nam is present");
+        });
+        sale.setIdSale(null);
+        sale.setValueMin(null);
+        sale.setStatus(0);
+        sale.setCreateTime(new Date());
+        sale.setUpdateTime(null);
+        sale.setUserCreate(1); //cuongnd edit
+        if (sale.getDetailSale() == null) {
+            throw new StaffException("NOT NULL");
         }
+        return dao.save(sale);
+    }
+
+    @Override
+    public Sale update(Sale sale) {
         return null;
     }
+
+    @Override
+    public Sale delete(Integer id) {
+        return null;
+    }
+
+    @Override
+    public List<Sale> getall(Integer status) {
+        return null;
+    }
+
 }
+
