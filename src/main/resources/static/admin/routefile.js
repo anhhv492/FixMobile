@@ -34,6 +34,10 @@ app.config(function($routeProvider){
             templateUrl:"/admin/images/createimages.html",
             controller: "restaccsesries"
         })
+        .when("/sale",{
+            templateUrl:"/admin/sale/sale.html",
+            controller: "sale_ctrl"
+        })
         .otherwise({ 
 	     redirectTo:"/product"
 });

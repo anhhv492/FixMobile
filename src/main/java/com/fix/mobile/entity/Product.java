@@ -65,6 +65,7 @@ public class Product {
     @OneToMany(mappedBy = "product")
     private List<ChangeDetail> changeDetails;
 
+
     @JsonIgnore
     @OneToMany(mappedBy = "product")
     private List<InsuranceDetail> insuranceDetails;
