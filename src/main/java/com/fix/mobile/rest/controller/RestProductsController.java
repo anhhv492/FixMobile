@@ -7,7 +7,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,7 +20,6 @@ import java.util.Optional;
 public class RestProductsController {
 	@Autowired
 	private ProductService productService;
-
 	@Autowired
 	private RamService ramService;
 	@Autowired
@@ -30,6 +33,7 @@ public class RestProductsController {
 
 	@Autowired
 	private CategoryService categoryService;
+
 
 	@GetMapping("/getAllRam")
 	public List<Ram> findAllRam(){
@@ -68,7 +72,19 @@ public class RestProductsController {
 	}
 
 	@PostMapping("/saveProduct")
-	public Product save(@RequestBody Product products){
+	public Product save( @RequestParam("files") MultipartFile[] files, @RequestBody Product products){
+		try {
+
+			List<String> fileNames = new ArrayList<>();
+			Arrays.asList(files).stream().forEach(file -> {
+				imageService.save( (Image )file);
+				fileNames.add(file.getOriginalFilename());
+				System.out.println("sssssssssssssssssss"+ fileNames);
+			});
+			System.out.println("Uploaded the files successfully: " + fileNames);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return productService.save(products);
 	}
 

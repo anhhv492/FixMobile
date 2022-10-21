@@ -69,15 +69,16 @@
                             <div class="form-group mt-1">
                                 <label>Hình ảnh</label>
                                 <br>
-                                <!--<input onchange="angular.element(this).scope().uploadFile(this.files)"
-                                       ng-required="!formProduct.imageDetails" ng-model="formProduct.imageDetails"
-                                       type="file" class="form-control" multiple="multiple">-->
+                                <input onchange="angular.element(this).scope().uploadFile(this.files)"
+                                       ng-required="!formProduct.listImage" ng-model="formProduct.listImage"
+                                       type="file" class="form-control" multiple="multiple">
+                                        <label ng-repeat="image in fileNames" ng-value="image.idImage">
+                                            <img style="filter: drop-shadow(0 0 5px rgb(119, 119, 145));" width="105px"
+                                                 ng-src="/images/products/{{image.name}}">
+                                        </label>
                                 <br>
                                 <div class="mt-1">
-                                    <label ng-repeat="image in fileNames" ng-value="image.idImage">
-                                        <img style="filter: drop-shadow(0 0 5px rgb(119, 119, 145));" width="105px"
-                                             ng-src="/images/products/{{image.name}}">
-                                    </label>
+
                                     <img style="filter: drop-shadow(0 0 5px rgb(119, 119, 145));" width="105px"
                                          src="/images/logo-mobile.png" ng-if="!formProduct.image">
 
