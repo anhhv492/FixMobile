@@ -74,62 +74,6 @@ app.controller('product', function($scope, $http) {
         });
     };
 
-    $scope.onSave = function() {
-        /*$http.post(pathAPI+'/save-file', $scope.images).then(response => {
-        })*/
-        $scope.formProduct.status=false;
-        $scope.formProduct.createDate=now;
-        $scope.formProduct.category ={
-            idCategory: $scope.formProduct.category
-        };
-        $scope.formProduct.ram ={
-            idRam: $scope.formProduct.ram
-        };
-        $scope.formProduct.color ={
-            idColor: $scope.formProduct.color
-        };
-        $scope.formProduct.capacity ={
-            idCapacity: $scope.formProduct.capacity
-        };
-
-        $http.post('/rest/admin/product/saveProduct', $scope.formProduct).then(response => {
-            console.log("ddd " +$scope.formProduct);
-            const Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 1500,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
-            })
-
-            Toast.fire({
-                icon: 'success',
-                title: 'Thêm mới thành công!',
-            })
-            $scope.refresh();
-        }).catch(error => {
-            const Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 1500,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
-            })
-
-            Toast.fire({
-                icon: 'error',
-                title: 'Thêm mới thất bại!',
-            })
-        });
-    };
 
     $scope.delete = function(formProduct) {
         Swal.fire({
@@ -339,16 +283,20 @@ app.controller('product', function($scope, $http) {
     }
     $scope.uploadFile = function(files){
         var form = new FormData();
-        form.append('file',files[0]);
+        for(var i = 0 ; i < files.length; i++){
+            console.log("filesssss " + files[i]);
+            form.append('files', files[i]);
+        }
         $http.post(urlImage,form,{
             transformRequest: angular.identity,
-            headers: {'Content-Type': undefined}
+            headers: {'Content-Type': undefined }
         }).then(res=>{
             console.log('image',res.data);
-            $scope.product.image= res.data.name;
+            form = res.data.name;
         }).catch(err=>{
             console.log('err',err);
         })
+
     }
     $scope.loadProducts = function(){
         $http.get(urlImage+`/page/`+$scope.index).then(res=>{
@@ -358,6 +306,64 @@ app.controller('product', function($scope, $http) {
             console.log('Load products failse',err.data);
         });
     }
+    // thêm mới
+    $scope.onSave = function() {
+        $scope.formProduct.status=false;
+        $scope.formProduct.createDate=now;
+        $scope.formProduct.category ={
+            idCategory: $scope.formProduct.category
+        };
+        $scope.formProduct.ram ={
+            idRam: $scope.formProduct.ram
+        };
+        $scope.formProduct.color ={
+            idColor: $scope.formProduct.color
+        };
+        $scope.formProduct.capacity ={
+            idCapacity: $scope.formProduct.capacity
+        };
+
+
+        $http.post('/rest/admin/product/saveProduct', $scope.formProduct).then(response => {
+            console.log("ddd " +$scope.formProduct);
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 1500,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+
+            Toast.fire({
+                icon: 'success',
+                title: 'Thêm mới thành công!',
+            })
+            $scope.refresh();
+        }).catch(error => {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 1500,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+
+            Toast.fire({
+                icon: 'error',
+                title: 'Thêm mới thất bại!',
+            })
+        });
+    };
+
+
     // pagination
     $scope.next=function(){
         $scope.check_first=true;

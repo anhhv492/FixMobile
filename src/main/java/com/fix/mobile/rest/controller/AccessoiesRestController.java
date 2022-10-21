@@ -15,10 +15,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletContext;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.nio.file.Paths;
+import java.util.*;
 
 @RestController
 @CrossOrigin("*")
@@ -41,6 +39,9 @@ public class AccessoiesRestController {
 
 	@Autowired
 	private RamRepository ramReponsitory;
+
+	@Autowired
+	private FileManagerService file;
 
 
 	@GetMapping
@@ -115,6 +116,7 @@ public class AccessoiesRestController {
 	@PostMapping("/saveFile")
 	public void saveFile(@RequestBody Image imagesProduct, MultipartFile imageFile){
 		if(!imageFile.isEmpty()){
+			List<String> fileName = new ArrayList<>();
 			String path = application.getRealPath("/");
 			System.out.println("path: "+path);
 			try {
@@ -122,12 +124,27 @@ public class AccessoiesRestController {
 				System.out.println("image: "+imagesProduct.getName());
 				String filePath = path+"/images/"+imagesProduct.getName();
 				imageFile.transferTo(new File(filePath));
-				imageFile=null;
 				imagesProduct.setName(filePath);
+				fileName.add(imagesProduct.getName());
+				System.out.println("ksssss"+ fileName);
 			} catch (Exception e) {
 				e.printStackTrace();
+				System.out.println( "lỗi"+ e);
 			}
 		}
+	}
+
+	@PostMapping("/upload/file")
+	public List<String> list(String folder){
+		List<String> filenames = new ArrayList<String>();
+		File dir = Paths.get(application.getRealPath("/files/"),folder).toFile();
+		if(dir.exists()) {
+			File[] files = dir.listFiles();
+			for(File file:files) {
+				filenames.add(file.getName());
+			}
+		}
+		return filenames;
 	}
 
 	@GetMapping("/allImage")
@@ -136,8 +153,13 @@ public class AccessoiesRestController {
 	}
 
 	@PostMapping("/saveImage")
-	public Image createImages(@RequestBody Image images){
-		return imageService.save(images);
+	public void createImages(@RequestParam("files") MultipartFile[] files){
+		 //.save(images);
+		Arrays.asList(files).stream().forEach(file -> {
+			//storageService.save(file);
+			//fileNames.add(file.getOriginalFilename());
+			System.out.println(file.getOriginalFilename());
+		});
 	}
 
 	@DeleteMapping("/{id}")
