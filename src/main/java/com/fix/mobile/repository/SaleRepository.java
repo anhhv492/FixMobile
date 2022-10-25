@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface SaleRepository extends PagingAndSortingRepository<Sale, Integer> {
-    Optional<Sale> findByName(String name);
+    Optional<Sale> findByVoucher(String voucher);
 }

@@ -1,11 +1,15 @@
 app.controller("sale_ctrl", function ($scope, $http) {
+    let urlprd = "http://localhost:8080/rest/admin/product";
     $scope.saleadd = {}
     $scope.saleedit = {}
+    $scope.products = [];
+    $scope.index=0;
+    $scope.totalPages=0;
     $scope.createSale = function (){
         let item = angular.copy($scope.saleadd);
-        let url = `/admin/rest/sale/demo`;
-        $http.post(url, item).then(resp => {
-            console.log("Success", resp)
+        let urlsale = `/admin/rest/sale/demo`;
+        $http.post(urlsale, item).then(resp => {
+
             swal.fire({
                 icon: 'success',
                 showConfirmButton: false,
@@ -18,15 +22,23 @@ app.controller("sale_ctrl", function ($scope, $http) {
                 icon: 'error',
                 showConfirmButton: false,
                 title: error.data.message,
-                timer: 1000
+                timer: 3000
             })
         })
+        $scope.saleadd = {}
+    }
+    $scope.getProducts =function (){
+        $http.get(`${urlprd}/page/0`).then(function(response) {
+            $scope.products = response.data.content;
+        }).catch(error=>{
+            console.log(error);
+        });
     }
 
     ptgg();kieugg();loaigg();
+    $scope.getProducts();
 })
 function ptgg() {  //checkphuongthucgiamgia
-    console.log("hihihihi")
     var ptgg = document.getElementById('ptgg1');
     var checkValue = ptgg.value;
     if (checkValue == '1') {

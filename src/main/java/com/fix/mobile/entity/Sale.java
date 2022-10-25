@@ -67,6 +67,12 @@ public class Sale {
     @Column(name = "detail_sale")
     private String detailSale;
 
+    @Column(name = "discount_method")
+    private Integer discountMethod;
+
+    @Column(name = "discount_type")
+    private Integer discountType;
+
     @JsonIgnore
     @OneToMany(mappedBy = "sale")
     private List<SaleDetail> saleDetails;
