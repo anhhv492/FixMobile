@@ -42,7 +42,7 @@ public class Product {
     private String note;
 
     @Column(name = "status")
-    private Boolean status;
+    private Integer status;
 
     @ManyToOne
     @JoinColumn(name = "id_ram")

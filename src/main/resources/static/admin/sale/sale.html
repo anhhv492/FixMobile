@@ -1,7 +1,6 @@
 <main ng-controller="sale_ctrl">
-    <form action="">
         <div class="mb-3">
-            <label for="" class="form-label">loại giảm giá</label>
+            <label for="" class="form-label">Loại giảm giá</label>
             <select class="form-select form-select-lg" onchange="loaigg()" ng-model="saleadd.typeSale" id="loaigg1">
                 <option selected value="0">Toàn Bộ Cửa Hàng</option>
                 <option value="1">Theo Sản Phẩm</option>
@@ -15,7 +14,7 @@
         </div>
         <div class="mb-3">
             <label for="" class="form-label">Phương thức giảm giá</label>
-            <select class="form-select form-select-lg" onchange="ptgg()"  id="ptgg1">
+            <select class="form-select form-select-lg" onchange="ptgg()"  id="ptgg1" ng-model="saleadd.discountMethod" >
                 <option value="0" selected >theo voucher</option>
                 <option value="1">trực tiếp</option>
             </select>
@@ -26,7 +25,7 @@
         </div>
         <div class="mb-3">
             <label for="" class="form-label">Kiểu giảm giá</label>
-            <select class="form-select form-select-lg" onchange="kieugg()" name="" id="kieugg1">
+            <select class="form-select form-select-lg" onchange="kieugg()" ng-model="saleadd.discountType" name="" id="kieugg1">
                 <option value="0" selected >theo tiền mặt</option>
                 <option value="1">theo %</option>
             </select>
@@ -34,19 +33,19 @@
         <div class="mb-3" id="">
             <div class="row g-2">
                 <div class="col-md">
-                    <label for="" class="form-label">mức giảm giá</label>
+                    <label for="" class="form-label">Mức giảm giá</label>
                     <div class="input-group" id="mggtien">
                         <input type="input" class="form-control" ng-model="saleadd.moneySale">
                         <span class="input-group-text">VNĐ</span>
                     </div>
                     <div class="input-group" id="mggpt">
-                        <input type="input" class="form-control" ng-model="saleadd.percentSale">
+                        <input type="number" min="0" max="100" class="form-control" ng-model="saleadd.percentSale">
                         <span class="input-group-text">%</span>
                     </div>
                 </div>
                 <div class="col-md">
                     <label for="" class="form-label">Số lượng</label>
-                    <input type="text" ng-model="saleadd.quantity" id="" class="form-control" placeholder="" aria-describedby="helpId">
+                    <input type="text" maxlength="6" ng-model="saleadd.quantity" id="" class="form-control" placeholder="" aria-describedby="helpId">
                 </div>
             </div>
         </div>
@@ -59,11 +58,11 @@
             <div class="row g-2">
                 <div class="col-md">
                         <label for="" class="form-label">Thời gian bắt đầu</label>
-                        <input type="datetime-local" class="form-control" id="" ng-model="saleadd.createStart">
+                        <input type="datetime-local"  class="form-control" id="" ng-model="saleadd.createStart">
                 </div>
                 <div class="col-md">
                         <label for="" class="form-label">Thời gian kết thúc</label>
-                        <input type="datetime-local" class="form-control" id="" ng-model="saleadd.createEnd">
+                        <input type="datetime-local"  class="form-control" id="" ng-model="saleadd.createEnd">
                 </div>
             </div>
         </div>
@@ -88,13 +87,48 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
+                <tr ng-repeat="product in products">
                     <th scope="row"><input type="checkbox"></th>
-                    <td>1</td>
-                    <td>Iphone 6s plus</td>
+                    <td>{{product.idProduct}}</td>
+                    <td>{{product.name}}</td>
                 </tr>
                 </tbody>
             </table>
+            <nav class="row table-responsive">
+                <table>
+                    <ul class="pagination justify-content-center row">
+                        <div class="col-1">
+                            <li class="page-item">
+                                <button class="btn btn-default {{!check_first?'disabled':''}}" ng-click="first()"><i class="fa fa-fast-backward" aria-hidden="true"></i></button>
+                                <!--            <p class="btn btn-dark" disabled ng-show="!check_first">Trang đầu</p>-->
+                            </li>
+                        </div>
+                        <div class="col-1">
+                            <li class="page-item ms-2 me-2">
+                                <button class="btn btn-default" ng-click="prev()"><i class="fa fa-step-backward" aria-hidden="true"></i></button>
+                                <!--            <p class="btn btn-success" disabled ng-show="!check_first">Trang trước</p>-->
+                            </li>
+                        </div>
+                        <div class="col-1">
+                            <li class="page-item ms-1 me-1 pt-1 ">
+                                <h4>{{index+1}}/{{totalPages}}</h4>
+                            </li>
+                        </div>
+                        <div class="col-1">
+                            <li class="page-item ms-2 me-2">
+                                <button class="btn btn-default" ng-click="next()"><i class="fa fa-step-forward" aria-hidden="true"></i></button>
+                                <!--            <p class="btn btn-success" disabled ng-show="!check_last">Trang sau</p>-->
+                            </li>
+                        </div>
+                        <div class="col-1">
+                            <li class="page-item">
+                                <button class="btn btn-default {{!check_last?'disabled':''}}" ng-click="last()"><i class="fa fa-fast-forward" aria-hidden="true"></i></button>
+                                <!--            <p class="btn btn-dark" disabled ng-show="!check_last">Trang cuối</p>-->
+                            </li>
+                        </div>
+                    </ul>
+                </table>
+            </nav>
         </div>
         <!-- end table sản phẩm -->
 
@@ -124,6 +158,6 @@
         <!-- end table sản phẩm -->
 
         <button type="submit" ng-click="createSale()">Tạo</button>
-    </form>
+
 </main>
 

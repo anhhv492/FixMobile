@@ -3,6 +3,7 @@ package com.fix.mobile.rest.controller;
 import com.fix.mobile.entity.*;
 import com.fix.mobile.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.ui.Model;
@@ -64,9 +65,9 @@ public class RestProductsController {
 		return productService.findAll();
 	}
 
-	@GetMapping(value="/page/{page}")
+
 	public List<Product> findAllPageable(@PathVariable("page") Optional<Integer> page){
-		Pageable pageable = PageRequest.of(page.get(), 2);
+		Pageable pageable = PageRequest.of(page.get(), 5);
 		List<Product> products = productService.findAll(pageable).getContent();
 		return products;
 	}
@@ -96,5 +97,11 @@ public class RestProductsController {
 	@PutMapping("/{id}")
 	public Product update(@PathVariable("id") Integer id, @RequestBody Product product){
 		return productService.update(product,id);
+	}
+	@GetMapping(value="/page/{page}")
+	public Page<Product> findAllPage(@PathVariable("page") Integer page){
+		Page<Product> pageProduct = productService
+				.getByPage(page, 5,0);
+		return pageProduct;
 	}
 }
