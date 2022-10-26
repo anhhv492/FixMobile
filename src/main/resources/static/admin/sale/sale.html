@@ -1,11 +1,12 @@
 <main ng-controller="sale_ctrl">
         <div class="mb-3">
             <label for="" class="form-label">Loại giảm giá</label>
-            <select class="form-select form-select-lg" onchange="loaigg()" ng-model="saleadd.typeSale" id="loaigg1">
+            <select class="form-select form-select-lg" ng-change="onChange()" onchange="loaigg()" ng-model="saleadd.typeSale" id="loaigg1">
                 <option selected value="0">Toàn Bộ Cửa Hàng</option>
                 <option value="1">Theo Sản Phẩm</option>
                 <option value="2">Theo Đơn Hàng</option>
                 <option value="3">Theo Khách Hàng</option>
+                <option value="4">Theo phụ kiện</option>
             </select>
         </div>
         <div class="mb-3">
@@ -88,7 +89,7 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat="product in products">
-                    <th scope="row"><input type="checkbox"></th>
+                    <th scope="row"><input type="checkbox" ng-checked="checkSelect(product.idProduct)" ng-click="checkSelected(product.idProduct)"></th>
                     <td>{{product.idProduct}}</td>
                     <td>{{product.name}}</td>
                 </tr>
@@ -132,7 +133,7 @@
         </div>
         <!-- end table sản phẩm -->
 
-        <!-- table sản phẩm -->
+        <!-- table user -->
         <div id="tableUser">
             <table class="table">
                 <form class="">
@@ -155,7 +156,32 @@
                 </tbody>
             </table>
         </div>
-        <!-- end table sản phẩm -->
+        <!-- end table user -->
+
+        <!-- table user -->
+        <div id="tableAccessory">
+            <table class="table">
+                <form class="">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+                <thead>
+                <tr>
+                    <th scope="col">Chọn</th>
+                    <th scope="col">Mã Phụ Kiện</th>
+                    <th scope="col">Tên Phụ Kiện</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row"><input type="checkbox"></th>
+                    <td>1</td>
+                    <td>Nguyễn Duy Cương</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    <!-- end table user -->
 
         <button type="submit" ng-click="createSale()">Tạo</button>
 

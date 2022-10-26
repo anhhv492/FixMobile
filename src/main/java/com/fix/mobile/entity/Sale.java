@@ -73,6 +73,9 @@ public class Sale {
     @Column(name = "discount_type")
     private Integer discountType;
 
+    @Column(name = "user_type")
+    private Integer userType;
+
     @JsonIgnore
     @OneToMany(mappedBy = "sale")
     private List<SaleDetail> saleDetails;
