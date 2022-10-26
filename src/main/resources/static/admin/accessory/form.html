@@ -47,6 +47,12 @@
                                         <label>Giá</label>
                                         <input ng-model="form.price" required name="price" type="number" class="form-control">
                                     </div>
+                                    <hr>
+                                    <div class="form-group mt-1">
+                                        <label>Thêm file Excel</label>
+                                        <input type="file" ng-if="checkSubmit==false" class="form-control"
+                                               onchange="angular.element(this).scope().readExcel(this.files)">
+                                    </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group mt-2 mb-3" ng-if="checkSubmit">
