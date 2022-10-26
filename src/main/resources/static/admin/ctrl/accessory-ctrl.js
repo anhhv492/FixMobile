@@ -293,6 +293,71 @@ app.controller('rest_accessory', function($scope, $http) {
             console.log('err',err);
         })
     }
+    $scope.readExcel = function(files){
+        var form = new FormData();
+        form.append('file',files[0]);
+        let timerInterval
+        Swal.fire({
+            title: 'Đang thêm hàng loạt!',
+            html: 'Vui lòng chờ <b></b> milliseconds.',
+            timer: 3500,
+            timerProgressBar: true,
+            didOpen: () => {
+                Swal.showLoading()
+                const b = Swal.getHtmlContainer().querySelector('b')
+                timerInterval = setInterval(() => {
+                    b.textContent = Swal.getTimerLeft()
+                }, 100)
+            },
+            willClose: () => {
+                clearInterval(timerInterval)
+            }
+        }).then((result) => {
+            if (result.dismiss === Swal.DismissReason.timer) {
+                $http.post(pathAPI+'/read-excel',form,{
+                    transformRequest: angular.identity,
+                    headers: {'Content-Type': undefined}
+                }).then(res=>{
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                    })
+
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'Thêm file Excel thành công'
+                    })
+                    console.log('excel',res);
+                }).catch(err=>{
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                    })
+
+                    Toast.fire({
+                        icon: 'error',
+                        title: 'Có lỗi xảy ra!'
+                    })
+                    console.log('err',err);
+                })
+                console.log('I was closed by the timer')
+            }
+        })
+    }
     $scope.loadProducts = function(){
         $http.get(urlProduct+`/page/`+$scope.index).then(res=>{
             $scope.products = res.data;

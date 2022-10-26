@@ -2,6 +2,7 @@ package com.fix.mobile.rest.controller;
 
 import com.fix.mobile.entity.Accessory;
 import com.fix.mobile.entity.Category;
+import com.fix.mobile.helper.ExcelHelper;
 import com.fix.mobile.service.AccessoryService;
 import com.fix.mobile.service.CategoryService;
 import org.apache.log4j.Logger;
@@ -9,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.websocket.server.PathParam;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,7 +25,8 @@ public class AccessoryRestController {
 	private AccessoryService accessoryService;
 	@Autowired
 	private CategoryService categoryService;
-
+	@Autowired
+	private ExcelHelper excelHelper;
 	//findAll accessory
 	@GetMapping
 	public List<Accessory> findAll(){
@@ -61,8 +65,9 @@ public class AccessoryRestController {
 	}
 
 	@PostMapping
-	public Accessory save(@RequestBody Accessory accessory){
+	public Accessory save(@RequestBody Accessory accessory) throws Exception{
 		LOGGER.info("save: "+accessory);
+//		googleDriveService.upLoadFile(accessory.getImage(), accessory.getImage(), "image/png");
 		return accessoryService.save(accessory);
 	}
 	//delete accessory
@@ -76,5 +81,10 @@ public class AccessoryRestController {
 	public Accessory update(@PathVariable("id") Integer id, @RequestBody Accessory accessory){
 		LOGGER.info("update: "+accessory);
 		return accessoryService.update(accessory,id);
+	}
+	@PostMapping("/read-excel")
+	public Boolean readExcel(@PathParam("file") MultipartFile file) throws Exception{
+		Boolean checkExcel= excelHelper.readExcel(file);
+		return checkExcel;
 	}
 }
