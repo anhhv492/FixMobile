@@ -10,6 +10,10 @@ import java.util.Optional;
 public interface CategoryService extends GenericService<Category, Integer> {
     //anhhv findcategory
     List<Category> findByType();
+
     //anhhv findcategory
     Optional<Category> findByName(String name);
+    
+    List<Category> findByTypeProduct();
+
 }

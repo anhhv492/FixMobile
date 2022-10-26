@@ -23,7 +23,13 @@ public class Image {
     private String name;
 
     //
-    @JsonIgnore
+    /*@JsonIgnore
     @OneToMany(mappedBy = "image")
-    private List<Product> products;
+    private List<Product> products;*/
+
+    // lê đức nam đã thêm
+    @ManyToOne
+    @JoinColumn(name = "id_product")
+    private Product product;
+
 }

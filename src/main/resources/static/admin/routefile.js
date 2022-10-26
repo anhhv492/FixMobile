@@ -3,7 +3,7 @@ app.config(function($routeProvider){
 	$routeProvider
 	    .when("/product",{
           templateUrl:"/admin/product/form.html",
-         // controller: "Ctrlproduct"
+          controller: "product"
         })
         .when("/category",{
           templateUrl:"/admin/categories/category.html",
@@ -17,10 +17,23 @@ app.config(function($routeProvider){
             templateUrl:"/admin/accessory/form.html",
              controller: "rest_accessory"
         })
-         /* .when("/athotiting",{
-          templateUrl:"/asserts/admin/athotiting/athotities.html",
-         // controller: "Ctrlathotities"
-        })*/
+        // thuộc tính
+        .when("/createcapacity",{
+            templateUrl:"/admin/capacity/createcapacity.html",
+            controller: "restaccsesries"
+        })
+        .when("/createram",{
+            templateUrl:"/admin/ram/createram.html",
+            controller: "restaccsesries"
+        })
+        .when("/color",{
+            templateUrl:"/admin/color/createcolor.html",
+            controller: "restaccsesries"
+        })
+        .when("/images",{
+            templateUrl:"/admin/images/createimages.html",
+            controller: "restaccsesries"
+        })
         .otherwise({ 
 	     redirectTo:"/product"
 });
