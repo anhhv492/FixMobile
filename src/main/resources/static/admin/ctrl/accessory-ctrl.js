@@ -300,7 +300,7 @@ app.controller('rest_accessory', function($scope, $http) {
         Swal.fire({
             title: 'Đang thêm hàng loạt!',
             html: 'Vui lòng chờ <b></b> milliseconds.',
-            timer: 5000,
+            timer: 3500,
             timerProgressBar: true,
             didOpen: () => {
                 Swal.showLoading()
