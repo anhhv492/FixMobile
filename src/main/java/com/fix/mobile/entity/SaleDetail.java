@@ -21,6 +21,8 @@ public class SaleDetail {
 
     private Integer idUser;
 
+    private Integer idAccessory;
+
     @ManyToOne
     @JoinColumn(name = "id_sale")
     private Sale sale;

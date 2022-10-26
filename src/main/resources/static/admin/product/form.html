@@ -146,7 +146,41 @@
        </div>
     </div>
 </div>
-
+<nav class="row table-responsive">
+    <table>
+        <ul class="pagination justify-content-center row">
+            <div class="col-1">
+                <li class="page-item">
+                    <button class="btn btn-default {{!check_first?'disabled':''}}" ng-click="first()"><i class="fa fa-fast-backward" aria-hidden="true"></i></button>
+                    <!--            <p class="btn btn-dark" disabled ng-show="!check_first">Trang đầu</p>-->
+                </li>
+            </div>
+            <div class="col-1">
+                <li class="page-item ms-2 me-2">
+                    <button class="btn btn-default" ng-click="prev()"><i class="fa fa-step-backward" aria-hidden="true"></i></button>
+                    <!--            <p class="btn btn-success" disabled ng-show="!check_first">Trang trước</p>-->
+                </li>
+            </div>
+            <div class="col-1">
+                <li class="page-item ms-1 me-1 pt-1 ">
+                    <h4>{{index+1}}/{{totalPages}}</h4>
+                </li>
+            </div>
+            <div class="col-1">
+                <li class="page-item ms-2 me-2">
+                    <button class="btn btn-default" ng-click="next()"><i class="fa fa-step-forward" aria-hidden="true"></i></button>
+                    <!--            <p class="btn btn-success" disabled ng-show="!check_last">Trang sau</p>-->
+                </li>
+            </div>
+            <div class="col-1">
+                <li class="page-item">
+                    <button class="btn btn-default {{!check_last?'disabled':''}}" ng-click="last()"><i class="fa fa-fast-forward" aria-hidden="true"></i></button>
+                    <!--            <p class="btn btn-dark" disabled ng-show="!check_last">Trang cuối</p>-->
+                </li>
+            </div>
+        </ul>
+    </table>
+</nav>
 
 <style>
     input.ng-invalid.ng-touched {
