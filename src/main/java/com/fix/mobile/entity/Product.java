@@ -1,12 +1,17 @@
 package com.fix.mobile.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -26,8 +31,9 @@ public class Product {
     @Column(name = "imei")
     private String imei;
 
+
     @Column(name = "create_date")
-    private java.sql.Date createDate;
+    private Date createDate;
 
     @Column(name = "camera")
     private String camera;
@@ -60,12 +66,17 @@ public class Product {
     @JoinColumn(name = "id_category")
     private Category category;
 
-    @ManyToOne
-    @JoinColumn(name = "id_image")
-    private Image image;
+    @OneToMany(mappedBy = "product")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Image> images;
+    @JsonManagedReference
+    public List<Image> getImages(){
+        return images;
+    }
 
+    @Transient
+    private List<MultipartFile> files;
 
-    //
     @JsonIgnore
     @OneToMany(mappedBy = "product")
     private List<ChangeDetail> changeDetails;
@@ -85,5 +96,6 @@ public class Product {
     @JsonIgnore
     @OneToMany(mappedBy = "product")
     private List<SaleDetail> saleDetails;
+
 
 }

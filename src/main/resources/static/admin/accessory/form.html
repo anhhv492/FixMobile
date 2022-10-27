@@ -108,12 +108,11 @@
                             <td>{{$index + 1}}</td>
                             <td>{{accessory.name}}</td>
                             <td>{{accessory.category.name}}</td>
-                            <td>{{accessory.quantity}}</td>
                             <td>{{accessory.color}}</td>
                             <td>{{accessory.price|number}}</td>
                             <td>{{accessory.status==0?'Còn hàng':'Hết hàng'}}</td>
                             <td>{{accessory.note}}</td>
-                            <td>{{accessory.createDate}}</td>
+                            <td>{{accessory.createDate |date:'dd/MM/yyyy'}}</td>
                             <td><img class="img-fluid" width="80px" height="80px" src="/images/accessories/{{accessory.image}}"></td>
                             <td>
                                 <button class="btn btn-default" ng-click="edit(accessory)" data-bs-target="#tab-manage"
