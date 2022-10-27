@@ -3,13 +3,13 @@
         <div class="col-lg-12">
             <h2 class="page-header">{{checkSubmit==false?title.insert:title.update}} sản phẩm</h2>
         </div>
-    </div><!--/.row-->
+    </div>
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-body">
                     <form role="formProduct" method="post" class="row" name="myForm"
-                          ng-submit="doSubmit()" enctype="multipart/form-data">
+                          ng-submit="doSubmit()"  enctype="multipart/form-data">
                         <div class="col-md-6">
                             <div class="form-group mt-1">
                                 <label >Thể loại </label>
@@ -66,24 +66,16 @@
                                        ng-model="formProduct.status" name="status" ng-value="true"> Hết hàng
                             </div>
 
-                            <div class="form-group mt-1">
+                            <div  ng-if="" class="form-group mt-1">
                                 <label>Hình ảnh</label>
                                 <br>
-                                <input onchange="angular.element(this).scope().uploadFile(this.files)"
-                                       ng-required="!formProduct.listImage" ng-model="formProduct.listImage"
-                                       type="file" class="form-control" multiple="multiple">
-                                        <label ng-repeat="image in fileNames" ng-value="image.idImage">
-                                            <img style="filter: drop-shadow(0 0 5px rgb(119, 119, 145));" width="105px"
-                                                 ng-src="/images/products/{{image.name}}">
-                                        </label>
-                                <br>
-                                <div class="mt-1">
 
-                                    <img style="filter: drop-shadow(0 0 5px rgb(119, 119, 145));" width="105px"
-                                         src="/images/logo-mobile.png" ng-if="!formProduct.image">
-
-                                </div>
+                                <input
+                                        onchange="angular.element(this).scope().uploadFile(this.files)"
+                                        type="file" name="files"
+                                        class="form-control" multiple>
                             </div>
+
 
                             <div class="form-group mt-1">
                                 <label>Kích thước</label>
@@ -94,9 +86,8 @@
                                 <label>Mô tả sản phẩm</label>
                                 <textarea ng-model="formProduct.note" class="form-control" rows="3" required></textarea>
                             </div>
-
                             <div class="form-group mt-4">
-                                <button type="submit" class="btn btn-success" ng-disabled="myForm.$invalid">{{checkSubmit==false?title.insert:title.update}}</button>
+                                <button type="submit"  class="btn btn-success" ng-disabled="myForm.$invalid">{{checkSubmit==false?title.insert:title.update}}</button>
                                 <button type="button" ng-if="checkSubmit" ng-click="refresh()" class="btn btn-warning">Hủy</button>
                             </div>
                         </div>
@@ -129,15 +120,17 @@
                    <td>{{product.name}}</td>
                    <td>{{product.category.name}}</td>
                    <td>{{product.capacity.name}}</td>
-                   <td style="width: 100px">{{product.color.name}}</td>
+                   <td>{{product.color.name}}</td>
                    <td>{{product.price|number}}</td>
                    <td>{{product.status==0?'Còn hàng':'Hết hàng'}}</td>
                    <td>{{product.note}}</td>
-                   <td style="width: 100px">{{product.createDate}}</td>
-                   <td><img class="img-fluid" width="80px" height="80px" src="/images/product/{{product.image}}"></td>
+                   <td style="width: 100px">{{product.createDate | date:'dd/MM/yyyy'}}</td>
+                   <td><img class="img-responsive" width="80px" height="80px"
+                            src="{{product.images.length>0?product.images[0].name:''}}"></td>
                    <td>
-                       <button class="btn btn-default" ng-click="edit(product)"><i class="fa fa-pencil-square" aria-hidden="true"> Sửa</i></button>
-                       <button class="btn btn-default" ng-click="delete(product)"><i class="fa fa-trash"> Xóa</i></button>
+                       <button class="btn btn-default"
+                               ng-click="edit(product)"><i class="fa fa-pencil-square" aria-hidden="true"> Sửa</i></button>
+                       <button class="btn btn-default" ng-click="delete(product)"><i class="fa fa-trash"> Xóa</i></button>s
                    </td>
                </tr>
                </tbody>
@@ -149,33 +142,29 @@
 <nav class="row table-responsive">
     <table>
         <ul class="pagination justify-content-center row">
-            <div class="col-1">
+            <div class="col-1 justify-content-center pagination">
                 <li class="page-item">
                     <button class="btn btn-default {{!check_first?'disabled':''}}" ng-click="first()"><i class="fa fa-fast-backward" aria-hidden="true"></i></button>
-                    <!--            <p class="btn btn-dark" disabled ng-show="!check_first">Trang đầu</p>-->
                 </li>
             </div>
-            <div class="col-1">
+            <div class="col-1 justify-content-center pagination">
                 <li class="page-item ms-2 me-2">
                     <button class="btn btn-default" ng-click="prev()"><i class="fa fa-step-backward" aria-hidden="true"></i></button>
-                    <!--            <p class="btn btn-success" disabled ng-show="!check_first">Trang trước</p>-->
                 </li>
             </div>
-            <div class="col-1">
+            <div class="col-sm-1 col-12 justify-content-center pagination">
                 <li class="page-item ms-1 me-1 pt-1 ">
                     <h4>{{index+1}}/{{totalPages}}</h4>
                 </li>
             </div>
-            <div class="col-1">
+            <div class="col-1 justify-content-center pagination">
                 <li class="page-item ms-2 me-2">
                     <button class="btn btn-default" ng-click="next()"><i class="fa fa-step-forward" aria-hidden="true"></i></button>
-                    <!--            <p class="btn btn-success" disabled ng-show="!check_last">Trang sau</p>-->
                 </li>
             </div>
-            <div class="col-1">
+            <div class="col-1 justify-content-center pagination">
                 <li class="page-item">
                     <button class="btn btn-default {{!check_last?'disabled':''}}" ng-click="last()"><i class="fa fa-fast-forward" aria-hidden="true"></i></button>
-                    <!--            <p class="btn btn-dark" disabled ng-show="!check_last">Trang cuối</p>-->
                 </li>
             </div>
         </ul>
