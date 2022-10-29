@@ -263,3 +263,7 @@ INSERT INTO fix_mobile.accessories (name, quantity, create_date, color, price, s
 INSERT INTO fix_mobile.accessories (name, quantity, create_date, color, price, status, image, note, id_category) VALUES ('Ốp chống va đập', 21, '2022-10-05', 'Trắng, viền đen', 150000, false, 'opchongvadap.jpg', 'Loại ốp siêu bền', 3);
 INSERT INTO fix_mobile.accessories (name, quantity, create_date, color, price, status, image, note, id_category) VALUES ('Tai nghe', 22, '2022-10-06', 'Đen', 200000, false, 'tai-nghe-khong-day.jpg', 'Bền, đẹp mắt', 1);
 INSERT INTO fix_mobile.accessories (name, quantity, create_date, color, price, status, image, note, id_category) VALUES ('Tai nghe', 22, '2022-10-06', 'Đen', 200000, false, 'tai-nghe-khong-day.jpg', 'Bền, đẹp mắt', 1);
+
+INSERT INTO fix_mobile.accounts(username,password,full_name,gender,email,
+								phone,create_date,image,id_role) 
+VALUES ('admin','123','admin',0,'admin@gmail.com','0912321321','2022/10/30','',1);
