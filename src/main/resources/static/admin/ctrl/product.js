@@ -15,7 +15,7 @@ app.controller('product', function($scope, $http) {
         insert:'Thêm mới',
         update:'Cập nhật'
     };
-    $scope.loading = true;
+    $scope.checkButton = true;
     $scope.checkSubmit=false;
     $scope.getProducts =function (){
         $http.get(`${pathAPI}/page/0`).then(function(response) {
@@ -156,6 +156,7 @@ app.controller('product', function($scope, $http) {
         $scope.formProduct.color = formProduct.color.idColor;
         $scope.formProduct.capacity = formProduct.capacity.idCapacity;
         $scope.checkSubmit=true;
+        $scope.checkButton=false;
     };
     $scope.onUpdate = function() {
         $scope.formProduct.category ={
@@ -264,6 +265,7 @@ app.controller('product', function($scope, $http) {
         $scope.formProduct.status=false;
         $scope.formProduct.image='logo-mobile.png';
         $scope.checkSubmit=false;
+        $scope.checkButton=true;
         $scope.getProducts();
     };
 
@@ -339,6 +341,7 @@ app.controller('product', function($scope, $http) {
                 icon: 'success',
                 title: 'Thêm mới thành công!',
             })
+            $scope.getProducts();
         }).catch(error => {
             const Toast = Swal.mixin({
                 toast: true,
