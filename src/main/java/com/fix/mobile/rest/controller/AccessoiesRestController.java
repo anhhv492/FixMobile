@@ -113,6 +113,11 @@ public class AccessoiesRestController {
 		return capacityService.save(capacity);
 	}
 
+	@DeleteMapping("/deleteCapacity/idCapacity")
+	public void deleteCapacity(@PathVariable("idCapacity") Integer id){
+		capacityService.deleteById(id);
+	}
+
 	@PostMapping("/saveFile")
 	public void saveFile(@RequestBody Image imagesProduct, MultipartFile imageFile){
 		if(!imageFile.isEmpty()){

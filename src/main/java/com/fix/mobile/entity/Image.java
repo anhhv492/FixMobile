@@ -1,12 +1,11 @@
 package com.fix.mobile.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -31,5 +30,10 @@ public class Image {
     @ManyToOne
     @JoinColumn(name = "id_product")
     private Product product;
+    @JsonBackReference
+    public Product getProduct(){
+        return product;
+    }
+
 
 }

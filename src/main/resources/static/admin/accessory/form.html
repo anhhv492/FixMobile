@@ -47,6 +47,12 @@
                                         <label>Giá</label>
                                         <input ng-model="form.price" required name="price" type="number" class="form-control">
                                     </div>
+                                    <hr>
+                                    <div class="form-group mt-1">
+                                        <label>Thêm file Excel</label>
+                                        <input type="file" ng-if="checkSubmit==false" class="form-control"
+                                               onchange="angular.element(this).scope().readExcel(this.files)">
+                                    </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group mt-2 mb-3" ng-if="checkSubmit">
@@ -108,12 +114,11 @@
                             <td>{{$index + 1}}</td>
                             <td>{{accessory.name}}</td>
                             <td>{{accessory.category.name}}</td>
-                            <td>{{accessory.quantity}}</td>
                             <td>{{accessory.color}}</td>
                             <td>{{accessory.price|number}}</td>
                             <td>{{accessory.status==0?'Còn hàng':'Hết hàng'}}</td>
                             <td>{{accessory.note}}</td>
-                            <td>{{accessory.createDate}}</td>
+                            <td>{{accessory.createDate |date:'dd/MM/yyyy'}}</td>
                             <td><img class="img-fluid" width="80px" height="80px" src="/images/accessories/{{accessory.image}}"></td>
                             <td>
                                 <button class="btn btn-default" ng-click="edit(accessory)" data-bs-target="#tab-manage"

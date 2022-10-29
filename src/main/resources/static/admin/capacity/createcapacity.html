@@ -39,6 +39,9 @@
                <tr ng-repeat="capa in capacityItems">
                    <td>{{$index + 1}}</td>
                    <td>{{capa.name}}</td>
+                   <td>
+                       <button ng-click="deleteCapacity(capa)" class="btn btn-danger">Xóa</button>
+                   </td>
                </tr>
                </tbody>
            </table>

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.util.List;
 
 @Data
@@ -52,4 +53,16 @@ public class Accessory {
     @JsonIgnore
     @OneToMany(mappedBy = "accessory")
     private List<OrderDetail> orderDetail;
+
+    public Accessory(String name, Integer quantity, Date createDate, String color, BigDecimal price, Boolean status, String image, String note, Category category) {
+        this.name = name;
+        this.quantity = quantity;
+        this.createDate = createDate;
+        this.color = color;
+        this.price = price;
+        this.status = status;
+        this.image = image;
+        this.note = note;
+        this.category = category;
+    }
 }
