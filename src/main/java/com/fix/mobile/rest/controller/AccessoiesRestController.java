@@ -1,5 +1,7 @@
 package com.fix.mobile.rest.controller;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import com.fix.mobile.entity.*;
 import com.fix.mobile.repository.RamRepository;
 import com.fix.mobile.service.*;
@@ -41,7 +43,7 @@ public class AccessoiesRestController {
 	private RamRepository ramReponsitory;
 
 	@Autowired
-	private FileManagerService file;
+	private Cloudinary cloud;
 
 
 	@GetMapping
@@ -113,6 +115,11 @@ public class AccessoiesRestController {
 		return capacityService.save(capacity);
 	}
 
+	@DeleteMapping("/deleteCapacity/idCapacity")
+	public void deleteCapacity(@PathVariable("idCapacity") Integer id){
+		capacityService.deleteById(id);
+	}
+
 	@PostMapping("/saveFile")
 	public void saveFile(@RequestBody Image imagesProduct, MultipartFile imageFile){
 		if(!imageFile.isEmpty()){
@@ -164,6 +171,22 @@ public class AccessoiesRestController {
 
 	@DeleteMapping("/{id}")
 	public void deleteImage(@PathVariable("id") Integer id){
+		try {
+			if(id!=null){
+				Optional<Image> images = imageService.findById(id);
+				String key = images.get().getName().substring(62,82);
+				this.cloud.uploader().destroy(key,
+						ObjectUtils.asMap(
+								"cloud_name", "dcll6yp9s",
+								"api_key", "916219768485447",
+								"api_secret", "zUlI7pdWryWsQ66Lrc7yCZW0Xxg",
+								"secure", true,
+								"folders","c202a2cae1893315d8bccb24fd1e34b816"
+						));
+			}else;
+		}catch (Exception e){
+			e.getMessage();
+		}
 		imageService.deleteById(id);
 	}
 

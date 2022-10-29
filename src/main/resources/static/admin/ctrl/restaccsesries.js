@@ -319,6 +319,79 @@ app.controller("restaccsesries", function ($scope, $http) {
             console.log('lỗi', error);
         })
     }
+    $scope.deleteCapacity = function(capacityItems) {
+        Swal.fire({
+            title: 'Bạn có chắc muốn xóa: '+ capacityItems.name+'?',
+            text: "Xóa không thể khôi phục lại!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                let timerInterval
+                Swal.fire({
+                    title: 'Đang xóa: '+capacityItems.name+'!',
+                    html: 'Vui lòng chờ <b></b> milliseconds.',
+                    timer: 800,
+                    timerProgressBar: true,
+                    didOpen: () => {
+                        Swal.showLoading()
+                        const b = Swal.getHtmlContainer().querySelector('b')
+                        timerInterval = setInterval(() => {
+                            b.textContent = Swal.getTimerLeft()
+                        }, 100)
+                    },
+                    willClose: () => {
+                        clearInterval(timerInterval)
+                    }
+                }).then((result) => {
+                    if (result.dismiss === Swal.DismissReason.timer) {
+                        $http.delete(`/rest/admin/accessoríes/deleteCapacity/${capacityItems.idCapacity}`).then(response=> {
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 1500,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                }
+                            })
+                            $scope.capacityItems.splice($scope.capacityItems.indexOf(capacityItems), 1);
+                            Toast.fire({
+                                icon: 'success',
+                                title:'Xóa thành công!'
+                            })
+                            $scope.reset();
+                        }).catch(error=>{
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                }
+                            })
+
+                            Toast.fire({
+                                icon: 'error',
+                                title:'Không thể xóa: '+capacityItems.name+'!'+' này',
+                            })
+                        });
+                        console.log('I was closed by the timer')
+                    }
+                })
+
+            }
+        })
+
+    };
     $scope.findAllCapacity();
 
     // thêm ảnh

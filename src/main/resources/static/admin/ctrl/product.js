@@ -15,8 +15,8 @@ app.controller('product', function($scope, $http) {
         insert:'Thêm mới',
         update:'Cập nhật'
     };
+    $scope.checkButton = true;
     $scope.checkSubmit=false;
-    const now = new Date();
     $scope.getProducts =function (){
         $http.get(`${pathAPI}/page/0`).then(function(response) {
             $scope.products = response.data;
@@ -31,7 +31,7 @@ app.controller('product', function($scope, $http) {
     }
     $scope.getTotalPages =function (){
         $http.get(pathAPI).then(function(response) {
-            $scope.totalPages = Math.ceil(response.data.length/10);
+            $scope.totalPages = Math.ceil(response.data.length/5);
         }).catch(error=>{
             console.log(error);
         });
@@ -151,12 +151,12 @@ app.controller('product', function($scope, $http) {
     };
     $scope.edit = function(formProduct) {
         $scope.formProduct = angular.copy(formProduct);
-        $scope.formProduct.image = formProduct.image;
         $scope.formProduct.category = formProduct.category.idCategory;
         $scope.formProduct.ram = formProduct.ram.idRam;
         $scope.formProduct.color = formProduct.color.idColor;
         $scope.formProduct.capacity = formProduct.capacity.idCapacity;
         $scope.checkSubmit=true;
+        $scope.checkButton=false;
     };
     $scope.onUpdate = function() {
         $scope.formProduct.category ={
@@ -238,7 +238,7 @@ app.controller('product', function($scope, $http) {
             Swal.fire({
                 title: 'Đang lưu mới!',
                 html: 'Vui lòng chờ <b></b> milliseconds.',
-                timer: 1500,
+                timer: 2500,
                 timerProgressBar: true,
                 didOpen: () => {
                     Swal.showLoading()
@@ -265,84 +265,83 @@ app.controller('product', function($scope, $http) {
         $scope.formProduct.status=false;
         $scope.formProduct.image='logo-mobile.png';
         $scope.checkSubmit=false;
+        $scope.checkButton=true;
         $scope.getProducts();
     };
-    var urlImage=`http://localhost:8080/rest/files/images/products`;
-    $scope.url = function(fileName){
-        return `${urlImage}/`+`${fileName}`;
-    }
-    $scope.fileNames=[];
-    $scope.listFile = function(){
-        $http.get(urlImage ).then(res=>{
-            $scope.fileNames = res.data;
-            console.log('ok',res.data);
-            alert('ddddddddd');
-        }).catch(err=>{
-            console.log('Load files failse',err);
-        })
-    }
-    $scope.uploadFile = function(files){
-        var form = new FormData();
-        for(var i = 0 ; i < files.length; i++){
-            console.log("filesssss " + files[i]);
-            form.append('files', files[i]);
-        }
-        $http.post(urlImage,form,{
-            transformRequest: angular.identity,
-            headers: {'Content-Type': undefined }
-        }).then(res=>{
-            console.log('image',res.data);
-            form = res.data.name;
-        }).catch(err=>{
-            console.log('err',err);
-        })
 
+    $scope.files={};
+    $scope.uploadFile = function(files){
+        $scope.files = files;
+        console.log($scope.files);
     }
-    $scope.loadProducts = function(){
-        $http.get(urlImage+`/page/`+$scope.index).then(res=>{
-            $scope.products = res.data;
-            console.log('Load products success',res.data)
-        }).catch(err=>{
-            console.log('Load products failse',err.data);
-        });
+    const headers = {
+        headers: {
+            'Content-Type':'multipart/form-data'
+        },
+        data: { test: true }
     }
     // thêm mới
     $scope.onSave = function() {
-        $scope.formProduct.status=false;
-        $scope.formProduct.createDate=now;
-        $scope.formProduct.category ={
-            idCategory: $scope.formProduct.category
-        };
-        $scope.formProduct.ram ={
-            idRam: $scope.formProduct.ram
-        };
-        $scope.formProduct.color ={
-            idColor: $scope.formProduct.color
-        };
-        $scope.formProduct.capacity ={
-            idCapacity: $scope.formProduct.capacity
-        };
-
-
-        $http.post('/rest/admin/product/saveProduct', $scope.formProduct).then(response => {
-            console.log("ddd " +$scope.formProduct);
+        var formData = new FormData();
+        angular.forEach($scope.files, function(file) {
+            formData.append('files', file);
+        });
+        formData.append('name', $scope.formProduct.name);
+        formData.append('note', $scope.formProduct.note);
+        formData.append('size', $scope.formProduct.size);
+        formData.append('price',$scope.formProduct.price);
+        formData.append('camera',$scope.formProduct.camera);
+        formData.append('status',$scope.formProduct.status=false)
+        formData.append( 'category',$scope.formProduct.category)
+        formData.append('ram',$scope.formProduct.ram)
+        formData.append('color',$scope.formProduct.color)
+        formData.append('capacity',$scope.formProduct.capacity)
+        formData.append('imei',$scope.formProduct.imei)
+        console.log($scope.formProduct.category)
+        let req = {
+            method: 'POST',
+            url: '/rest/admin/product/saveProduct',
+            headers: {
+                'Content-Type': undefined
+                // or  'Content-Type':'application/json'
+            },
+            data: formData
+        }
+        let timerInterval
+        Swal.fire({
+            title: 'Đang thêm  mới vui lòng chờ!',
+            html: 'Vui lòng chờ <b></b> milliseconds.',
+            timer: 5500,
+            timerProgressBar: true,
+            didOpen: () => {
+                Swal.showLoading()
+                const b = Swal.getHtmlContainer().querySelector('b')
+                timerInterval = setInterval(() => {
+                    b.textContent = Swal.getTimerLeft()
+                }, 100)
+            },
+            willClose: () => {
+                clearInterval(timerInterval)
+            }
+        });
+        $http(req).then(response => {
+            console.log("ddd " + response);
             const Toast = Swal.mixin({
                 toast: true,
                 position: 'top-end',
                 showConfirmButton: false,
-                timer: 1500,
+                timer: 3500,
                 timerProgressBar: true,
                 didOpen: (toast) => {
                     toast.addEventListener('mouseenter', Swal.stopTimer)
                     toast.addEventListener('mouseleave', Swal.resumeTimer)
                 }
             })
-
             Toast.fire({
                 icon: 'success',
                 title: 'Thêm mới thành công!',
             })
-            $scope.refresh();
+            $scope.getProducts();
         }).catch(error => {
             const Toast = Swal.mixin({
                 toast: true,
@@ -379,9 +378,9 @@ app.controller('product', function($scope, $http) {
         }
         $http.get(pathAPI+`/page/`+$scope.index).then(res=>{
             $scope.formProduct = res.data;
-            console.log('Load accessories success',res.data)
+            console.log('Load pproduct success',res.data)
         }).catch(err=>{
-            console.log('Load accessories failse',err.data);
+            console.log('Load product failse',err.data);
         })
     }
     $scope.prev=function(){
@@ -398,9 +397,9 @@ app.controller('product', function($scope, $http) {
         }
         $http.get(pathAPI+`/page/`+$scope.index).then(res=>{
             $scope.formProduct = res.data;
-            console.log('Load accessories success',res.data)
+            console.log('Load product success',res.data)
         }).catch(err=>{
-            console.log('Load accessories failse',err.data);
+            console.log('Load product failse',err.data);
         })
     }
     $scope.first=function(){
@@ -419,7 +418,7 @@ app.controller('product', function($scope, $http) {
         $scope.check_last=false;
         $scope.index=$scope.totalPages-1;
         $http.get(pathAPI+`/page/`+$scope.index).then(res=>{
-            $scope.formProduct = res.data;
+            $scope.formProduct = res.data.formProduct;
             console.log('Load accessories success',res.data)
         }).catch(err=>{
             console.log('Load accessories failse',err.data);
@@ -427,5 +426,4 @@ app.controller('product', function($scope, $http) {
     }
 
     $scope.getProducts();
-
 });
