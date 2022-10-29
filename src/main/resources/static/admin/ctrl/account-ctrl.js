@@ -1,5 +1,4 @@
 app.controller("account-ctrl", function ($scope, $http) {
-
     $scope.accounts = [];
     $scope.roles = [];
     $scope.form = {};
@@ -15,7 +14,9 @@ app.controller("account-ctrl", function ($scope, $http) {
     $scope.a;
     //xóa form
     $scope.reset = function () {
-
+$scope.hideUsername=false;
+$scope.hideCreate=false;
+$scope.hideUpdate=true;
         $scope.form = {
             username:null,
             createDate: new Date(),
@@ -67,6 +68,7 @@ app.controller("account-ctrl", function ($scope, $http) {
     $scope.edit = function (account) {
         $scope.hideUpdate=false;
         $scope.hideUsername=true;
+        $scope.hideCreate=true;
         $scope.form = angular.copy(account);
         $scope.form.createDate = new Date(account.createDate)
         console.log(account.createDate + account.username)

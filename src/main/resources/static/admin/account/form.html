@@ -3,9 +3,10 @@
     
             <div class="mb-1">
                 <h1 class="h3 d-inline align-middle">Quản lý tài khoản</h1>
-                <div hidden>
+                <div >
                     <input type="checkbox" ng-model="hideUpdate">
                 <input type="checkbox" ng-model="hideUsername">
+                <input type="checkbox" ng-model="hideCreate">
                 </div>
                 
 
@@ -210,7 +211,7 @@
             
             <div class="row m-3">
                 <div class="col-sm-6 -p-0 offset-5">
-                    <button class="btn btn-success" ng-disabled="myForm.$invalid" ng-click="create()"> <b
+                    <button  ng-hide="hideCreate" class="btn btn-success" ng-disabled="myForm.$invalid" ng-click="create()"> <b
                             class="glyphicon glyphicon-plus"></b> Thêm mới</button>
                     <button ng-hide="hideUpdate"  class="btn btn-primary" ng-disabled="myForm.$invalid" ng-click="update()"> <b
                            class="glyphicon glyphicon-save"></b>Cập nhật</button>
