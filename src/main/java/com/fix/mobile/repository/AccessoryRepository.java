@@ -10,5 +10,5 @@ import java.util.Optional;
 
 @Repository
 public interface AccessoryRepository extends PagingAndSortingRepository<Accessory, Integer> {
-    List<Accessory> findByCategory(Optional<Category> cate);
+    List<Accessory> findByCategoryAndStatus(Optional<Category> cate, Boolean status);
 }
