@@ -1,12 +1,12 @@
 <main ng-controller="sale_ctrl">
         <div class="mb-3">
             <label for="" class="form-label">Loại giảm giá</label>
-            <select class="form-select form-select-lg" ng-change="onChange()" onchange="loaigg()" ng-model="saleadd.typeSale" id="loaigg1">
-                <option selected value="0">Toàn Bộ Cửa Hàng</option>
-                <option value="1">Theo Sản Phẩm</option>
-                <option value="2">Theo Đơn Hàng</option>
-                <option value="3">Theo Khách Hàng</option>
-                <option value="4">Theo phụ kiện</option>
+            <select class="form-select form-select-lg" ng-change="onChangeTypeSale()" ng-model="saleadd.typeSale" id="typeSale">
+                <option value="0" >Toàn Bộ Cửa Hàng</option>
+                <option value="1" >Theo Sản Phẩm</option>
+                <option value="2" >Theo Đơn Hàng</option>
+                <option value="3" >Theo Khách Hàng</option>
+                <option value="4" >Theo phụ kiện</option>
             </select>
         </div>
         <div class="mb-3">
@@ -15,19 +15,19 @@
         </div>
         <div class="mb-3">
             <label for="" class="form-label">Phương thức giảm giá</label>
-            <select class="form-select form-select-lg" onchange="ptgg()"  id="ptgg1" ng-model="saleadd.discountMethod" >
-                <option value="0" selected >theo voucher</option>
+            <select class="form-select form-select-lg"  ng-change="onChangeDiscountMethod()"  id="discountMethod" ng-model="saleadd.discountMethod" >
+                <option value="0">theo voucher</option>
                 <option value="1">trực tiếp</option>
             </select>
         </div>
-        <div class="mb-3" id="magg">
+        <div class="mb-3" ng-show="hiddenDiscountMethod">
             <label for="" class="form-label">Mã giảm giá</label>
             <input type="text" ng-model="saleadd.voucher" id="" class="form-control" placeholder="" aria-describedby="helpId">
         </div>
         <div class="mb-3">
             <label for="" class="form-label">Kiểu giảm giá</label>
-            <select class="form-select form-select-lg" onchange="kieugg()" ng-model="saleadd.discountType" name="" id="kieugg1">
-                <option value="0" selected >theo tiền mặt</option>
+            <select class="form-select form-select-lg" ng-change="onChangeDiscountType()" ng-model="saleadd.discountType" name="" id="discountType">
+                <option value="0">theo tiền mặt</option>
                 <option value="1">theo %</option>
             </select>
         </div>
@@ -35,11 +35,11 @@
             <div class="row g-2">
                 <div class="col-md">
                     <label for="" class="form-label">Mức giảm giá</label>
-                    <div class="input-group" id="mggtien">
+                    <div class="input-group" ng-show="hiddenMoneySale">
                         <input type="input" class="form-control" ng-model="saleadd.moneySale">
                         <span class="input-group-text">VNĐ</span>
                     </div>
-                    <div class="input-group" id="mggpt">
+                    <div class="input-group" ng-show="hiddenPercentSale">
                         <input type="number" min="0" max="100" class="form-control" ng-model="saleadd.percentSale">
                         <span class="input-group-text">%</span>
                     </div>
@@ -50,10 +50,18 @@
                 </div>
             </div>
         </div>
-        <div class="mb-3" id="gttt">
+        <div class="mb-3" ng-show="hiddenValueMin">
             <label for="" class="form-label">Giá trị đơn hàng tối thiểu</label>
             <input type="text" ng-model="saleadd.valueMin" id="" class="form-control" placeholder="" aria-describedby="helpId">
         </div>
+    <div class="mb-3" ng-show="hiddenUserType">
+        <label for="" class="form-label">Đối tượng giảm giá</label>
+        <select class="form-select form-select-lg" ng-change="onChangeUserType()" id="userType"
+                ng-model="saleadd.userType">
+            <option value="0">Tất cả user mới</option>
+            <option value="1">Chọn user</option>
+        </select>
+    </div>
 
         <div class="mb-3" id="">
             <div class="row g-2">
@@ -73,8 +81,8 @@
             <textarea class="form-control" placeholder="Leave a comment here" ng-model="saleadd.detailSale" id="floatingTextarea2" style="height: 100px"></textarea>
       </div>
 
-        <!-- table sản phẩm -->
-        <div id="tableProduct">
+        <!-- table all -->
+        <div ng-show="hiddenTableAll">
             <form class="">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success" type="submit">Search</button>
@@ -83,8 +91,8 @@
                 <thead>
                 <tr>
                     <th scope="col">Chọn</th>
-                    <th scope="col">Mã Sản Phẩm</th>
-                    <th scope="col">Tên Sản Phẩm</th>
+                    <th scope="col">Mã {{nameOnTable}}</th>
+                    <th scope="col">Tên {{nameOnTable}}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -131,57 +139,7 @@
                 </table>
             </nav>
         </div>
-        <!-- end table sản phẩm -->
-
-        <!-- table user -->
-        <div id="tableUser">
-            <table class="table">
-                <form class="">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
-                <thead>
-                <tr>
-                    <th scope="col">Chọn</th>
-                    <th scope="col">Mã Người Dùng</th>
-                    <th scope="col">Tên Người Dùng</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <th scope="row"><input type="checkbox"></th>
-                    <td>1</td>
-                    <td>Nguyễn Duy Cương</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-        <!-- end table user -->
-
-        <!-- table user -->
-        <div id="tableAccessory">
-            <table class="table">
-                <form class="">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
-                <thead>
-                <tr>
-                    <th scope="col">Chọn</th>
-                    <th scope="col">Mã Phụ Kiện</th>
-                    <th scope="col">Tên Phụ Kiện</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <th scope="row"><input type="checkbox"></th>
-                    <td>1</td>
-                    <td>Nguyễn Duy Cương</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    <!-- end table user -->
+        <!-- end table all -->
 
         <button type="submit" ng-click="createSale()">Tạo</button>
 

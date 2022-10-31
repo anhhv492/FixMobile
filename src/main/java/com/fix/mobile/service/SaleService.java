@@ -13,4 +13,5 @@ public interface SaleService {
     public Sale delete(Integer id);
 
     public List<Sale> getall(Integer status);
+    public Integer getIDaddSaleDetail ();
 }

@@ -1,7 +1,7 @@
 package com.fix.mobile.service.impl;
 
 import com.fix.mobile.exception.SaleException;
-import com.fix.mobile.exception.StaffException;
+import com.fix.mobile.repository.SaleDetailRepository;
 import com.fix.mobile.repository.SaleRepository;
 import com.fix.mobile.service.SaleService;
 import com.fix.mobile.entity.Sale;
@@ -10,13 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
-import java.math.BigDecimal;
-import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Optional;
 
 @Service
 public class SaleServiceImpl implements SaleService {
@@ -24,21 +21,17 @@ public class SaleServiceImpl implements SaleService {
     @Autowired
     SaleRepository dao;
 
+    @Autowired
+    SaleDetailRepository dao1;
+
     @Override
     public Sale add(Sale sale) {
-
-
-        if(sale.getQuantity() == null ){
-            throw new SaleException("Số lượng nhập sai định dạng");
-        }
-
         sale.setIdSale(null);
         sale.setValueMin(null);
         sale.setStatus(0);
         sale.setCreateTime(new Date());
         sale.setUpdateTime(null);
         sale.setUserCreate(1); //cuongnd edit
-
         return dao.save(sale);
     }
 
@@ -55,6 +48,11 @@ public class SaleServiceImpl implements SaleService {
     @Override
     public List<Sale> getall(Integer status) {
         return null;
+    }
+
+    @Override
+    public Integer getIDaddSaleDetail() {
+        return dao.getIDaddSaleDetail();
     }
 
     public void validate_Date(Sale sale) {
