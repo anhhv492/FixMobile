@@ -108,7 +108,7 @@
 			<version>6.2.0.Final</version>
 		</dependency>
 		<!--validator hibernate ttt-->
-=======
+
 		<!-- <dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
