@@ -10,10 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+import javax.swing.text.html.Option;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 
 @Service
 public class SaleServiceImpl implements SaleService {
@@ -26,6 +29,7 @@ public class SaleServiceImpl implements SaleService {
 
     @Override
     public Sale add(Sale sale) {
+        vaildate_NULL(sale);
         sale.setIdSale(null);
         sale.setValueMin(null);
         sale.setStatus(0);
@@ -48,11 +52,6 @@ public class SaleServiceImpl implements SaleService {
     @Override
     public List<Sale> getall(Integer status) {
         return null;
-    }
-
-    @Override
-    public Integer getIDaddSaleDetail() {
-        return dao.getIDaddSaleDetail();
     }
 
     public void validate_Date(Sale sale) {
@@ -151,6 +150,9 @@ public class SaleServiceImpl implements SaleService {
 
 
 
+    }
+    public Object getMaxSale(){
+        return dao.maxSale();
     }
 
 }

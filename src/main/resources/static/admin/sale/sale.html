@@ -2,36 +2,36 @@
         <div class="mb-3">
             <label for="" class="form-label">Loại giảm giá</label>
             <select class="form-select form-select-lg" ng-change="onChangeTypeSale()" ng-model="saleadd.typeSale" id="typeSale">
-                <option value="0" >Toàn Bộ Cửa Hàng</option>
-                <option value="1" >Theo Sản Phẩm</option>
-                <option value="2" >Theo Đơn Hàng</option>
-                <option value="3" >Theo Khách Hàng</option>
-                <option value="4" >Theo phụ kiện</option>
+                <option ng-value="0" >Toàn Bộ Cửa Hàng</option>
+                <option ng-value="1" >Theo Sản Phẩm</option>
+                <option ng-value="2" >Theo Đơn Hàng</option>
+                <option ng-value="3" >Theo Khách Hàng</option>
+                <option ng-value="4" >Theo phụ kiện</option>
             </select>
         </div>
         <div class="mb-3">
             <label for="" class="form-label">Tên chương trình</label>
-            <input type="text" ng-model="saleadd.name" id="" class="form-control" placeholder="" aria-describedby="helpId">
+            <input type="text" ng-model="saleadd.name" class="form-control" placeholder="" aria-describedby="helpId">
         </div>
         <div class="mb-3">
             <label for="" class="form-label">Phương thức giảm giá</label>
-            <select class="form-select form-select-lg"  ng-change="onChangeDiscountMethod()"  id="discountMethod" ng-model="saleadd.discountMethod" >
-                <option value="0">theo voucher</option>
-                <option value="1">trực tiếp</option>
+            <select class="form-select form-select-lg"  ng-change="onChangeDiscountMethod()" ng-model="saleadd.discountMethod" >
+                <option ng-value="0">theo voucher</option>
+                <option ng-value="1">trực tiếp</option>
             </select>
         </div>
         <div class="mb-3" ng-show="hiddenDiscountMethod">
             <label for="" class="form-label">Mã giảm giá</label>
-            <input type="text" ng-model="saleadd.voucher" id="" class="form-control" placeholder="" aria-describedby="helpId">
+            <input type="text" ng-model="saleadd.voucher" class="form-control" placeholder="" aria-describedby="helpId">
         </div>
         <div class="mb-3">
             <label for="" class="form-label">Kiểu giảm giá</label>
-            <select class="form-select form-select-lg" ng-change="onChangeDiscountType()" ng-model="saleadd.discountType" name="" id="discountType">
-                <option value="0">theo tiền mặt</option>
-                <option value="1">theo %</option>
+            <select class="form-select form-select-lg" ng-change="onChangeDiscountType()" ng-model="saleadd.discountType" name="">
+                <option ng-value="0">theo tiền mặt</option>
+                <option ng-value="1">theo %</option>
             </select>
         </div>
-        <div class="mb-3" id="">
+        <div class="mb-3">
             <div class="row g-2">
                 <div class="col-md">
                     <label for="" class="form-label">Mức giảm giá</label>
@@ -46,20 +46,20 @@
                 </div>
                 <div class="col-md">
                     <label for="" class="form-label">Số lượng</label>
-                    <input type="text" maxlength="6" ng-model="saleadd.quantity" id="" class="form-control" placeholder="" aria-describedby="helpId">
+                    <input type="text" maxlength="6" ng-model="saleadd.quantity" class="form-control" placeholder="" aria-describedby="helpId">
                 </div>
             </div>
         </div>
         <div class="mb-3" ng-show="hiddenValueMin">
             <label for="" class="form-label">Giá trị đơn hàng tối thiểu</label>
-            <input type="text" ng-model="saleadd.valueMin" id="" class="form-control" placeholder="" aria-describedby="helpId">
+            <input type="text" ng-model="saleadd.valueMin" class="form-control" placeholder="" aria-describedby="helpId">
         </div>
     <div class="mb-3" ng-show="hiddenUserType">
         <label for="" class="form-label">Đối tượng giảm giá</label>
-        <select class="form-select form-select-lg" ng-change="onChangeUserType()" id="userType"
+        <select class="form-select form-select-lg" ng-change="onChangeUserType()"
                 ng-model="saleadd.userType">
-            <option value="0">Tất cả user mới</option>
-            <option value="1">Chọn user</option>
+            <option ng-value="0">Tất cả user mới</option>
+            <option ng-value="1">Chọn user</option>
         </select>
     </div>
 
@@ -67,16 +67,16 @@
             <div class="row g-2">
                 <div class="col-md">
                         <label for="" class="form-label">Thời gian bắt đầu</label>
-                        <input type="datetime-local"  class="form-control" id="" ng-model="saleadd.createStart">
+                        <input type="datetime-local"  class="form-control" ng-model="saleadd.createStart">
                 </div>
                 <div class="col-md">
                         <label for="" class="form-label">Thời gian kết thúc</label>
-                        <input type="datetime-local"  class="form-control" id="" ng-model="saleadd.createEnd">
+                        <input type="datetime-local"  class="form-control" ng-model="saleadd.createEnd">
                 </div>
             </div>
         </div>
 
-        <div class="mb-3" id="">
+        <div class="mb-3">
             <label for="floatingTextarea2">Mô tả chi tiết</label>
             <textarea class="form-control" placeholder="Leave a comment here" ng-model="saleadd.detailSale" id="floatingTextarea2" style="height: 100px"></textarea>
       </div>

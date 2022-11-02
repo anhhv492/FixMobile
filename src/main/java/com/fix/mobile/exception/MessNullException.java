@@ -5,6 +5,6 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class SaleException extends RuntimeException {
+public class MessNullException extends RuntimeException {
     private String message;
 }

@@ -29,19 +29,16 @@ public class SaleRestController {
         return saleSV.add(sale);
     }
 
-    @RequestMapping("/demo1")
-    public Sale addDetailSale(@RequestBody Sale sale){
-
-        System.out.println(saleSV.getIDaddSaleDetail());
-        return sale;
-    }
-
     @RequestMapping("/demo3")
     public void addDetailSale1(@RequestBody ArrayList<Integer> listID){
         System.out.println("sạu");
         for (int i=0;i<listID.size();i++){
             saleDetailSV.createSaleDetail(listID.get(i));
         }
+    }
+    @RequestMapping("/demo1")
+    public String addSale(){
+        return saleSV.getMaxSale().toString();
     }
 
 //    @RequestMapping("demotb")

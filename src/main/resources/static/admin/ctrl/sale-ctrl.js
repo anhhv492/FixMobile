@@ -16,6 +16,10 @@ app.controller("sale_ctrl", function ($scope, $http) {
     $scope.hiddenMoneySale = true;
     $scope.hiddenPercentSale = false;
     $scope.hiddenUserType = false;
+    $scope.saleadd.typeSale= 0;
+    $scope.saleadd.discountMethod=0;
+    $scope.saleadd.discountType=0;
+    $scope.saleadd.userType=0
     //validate end
 
     //addSale Start
@@ -24,6 +28,13 @@ app.controller("sale_ctrl", function ($scope, $http) {
         let item = angular.copy($scope.saleadd);
         let urlsale = `/admin/rest/sale/demo`;
         $http.post(urlsale, item).then(resp => {
+        }).catch(error => {
+            swal.fire({
+                icon: 'error',
+                showConfirmButton: false,
+                title: error.data.message,
+                timer: 5000
+            });
         })
     }
     $scope.addSaleDetail = function (){
@@ -71,10 +82,10 @@ app.controller("sale_ctrl", function ($scope, $http) {
     $scope.getProducts =function (){
         $http.get(`${urlprd}/page/`+$scope.index).then(function(response) {
             $scope.products = response.data.content;
-            if(response.data.totalElements % 5 ==0){
-                $scope.totalPages=response.data.totalElements/5;
+            if(response.data.totalElements % 10 ==0){
+                $scope.totalPages=response.data.totalElements/10;
             }else{
-                $scope.totalPages=Math.floor(response.data.totalElements/5)+1;
+                $scope.totalPages=Math.floor(response.data.totalElements/10)+1;
             }
         }).catch(error=>{
             console.log(error);
@@ -138,9 +149,7 @@ app.controller("sale_ctrl", function ($scope, $http) {
         $scope.check_last=true;
     }
     $scope.onChangeTypeSale=function (){
-        var typeSale = document.getElementById('typeSale');
-        var checkValue = typeSale.value;
-        if(checkValue == '0' || checkValue == '? undefined:undefined ?'){
+        if($scope.saleadd.typeSale == '0'){
             $scope.products = [];
             $scope.seLected = [];
             $scope.index=0;
@@ -151,25 +160,33 @@ app.controller("sale_ctrl", function ($scope, $http) {
             $scope.hiddenTableAll = false;
             $scope.hiddenValueMin = false;
             $scope.hiddenUserType = false;
-        }else if(checkValue == '1'){
+            $scope.saleadd.typeSale= 0;
+            $scope.saleadd.discountMethod=0;
+            $scope.saleadd.discountType=0;
+            $scope.saleadd.userType=0
+        }else if($scope.saleadd.typeSale == '1'){
+            $scope.saleadd.typeSale= 1;
             $scope.hiddenTableAll = true;
             $scope.hiddenValueMin = false;
             $scope.hiddenUserType = false;
             $scope.nameOnTable = "sản phẩm"
             $scope.getProducts();
-        }else if(checkValue == '2'){
+        }else if($scope.saleadd.typeSale == '2'){
+            $scope.saleadd.typeSale= 2;
             $scope.hiddenTableAll = false;
             $scope.hiddenValueMin = true;
             $scope.hiddenUserType = false;
             $scope.nameOnTable = ""
             $scope.getProducts();
-        }else if(checkValue == '3'){
+        }else if($scope.saleadd.typeSale == '3'){
+            $scope.saleadd.typeSale= 3;
             $scope.hiddenTableAll = false;
             $scope.hiddenValueMin = false;
             $scope.hiddenUserType = true;
             $scope.nameOnTable = "user"
             $scope.getProducts();
-        }else if(checkValue == '4'){
+        }else if($scope.saleadd.typeSale == '4'){
+            $scope.saleadd.typeSale= 4;
             $scope.hiddenTableAll = true;
             $scope.hiddenValueMin = false;
             $scope.hiddenUserType = false;
@@ -179,37 +196,28 @@ app.controller("sale_ctrl", function ($scope, $http) {
     }
 
     $scope.onChangeDiscountMethod=function (){
-        var discountMethod = document.getElementById('discountMethod');
-        var checkValue = discountMethod.value;
-        if(checkValue==0){
+        if($scope.saleadd.discountMethod ==0){
             $scope.hiddenDiscountMethod = true;
-        }else if(checkValue==1){
+        }else if($scope.saleadd.discountMethod==1){
             $scope.hiddenDiscountMethod = false;
         }
     }
     $scope.onChangeDiscountType=function (){
-        var discountType = document.getElementById('discountType');
-        var checkValue = discountType.value;
-        if(checkValue==0){
+        if($scope.saleadd.discountType==0){
             $scope.hiddenMoneySale = true;
             $scope.hiddenPercentSale = false;
-        }else if(checkValue==1){
+        }else if($scope.saleadd.discountType==1){
             $scope.hiddenMoneySale = false;
             $scope.hiddenPercentSale = true;
         }
     }
     $scope.onChangeUserType=function (){
-        var userType = document.getElementById('userType');
-        var checkValue = userType.value;
-        if(checkValue==0){
+        if($scope.saleadd.userType==0){
             $scope.hiddenTableAll = false;
-        }else if(checkValue==1){
+        }else if($scope.saleadd.userType==1){
             $scope.hiddenTableAll = true;
         }
     }
-    $scope.loadCateSale = function () {
-        $scope.saleadd.typeSale= 0;
-    }
-    $scope.loadCateSale();
+
 })
 
