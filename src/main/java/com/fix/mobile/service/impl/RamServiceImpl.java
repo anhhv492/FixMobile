@@ -3,7 +3,6 @@ package com.fix.mobile.service.impl;
 import com.fix.mobile.service.RamService;
 import com.fix.mobile.repository.RamRepository;
 import com.fix.mobile.entity.Ram;
-import com.fix.mobile.service.RamService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -61,5 +60,10 @@ public class RamServiceImpl implements RamService {
             return save(entity);
         }
         return null;
+    }
+
+    @Override
+    public Optional<Ram> findByName(String name) {
+        return repository.findByName(name);
     }
 }

@@ -17,4 +17,8 @@ app.config(function($routeProvider){
             templateUrl:"product/detail.html",
             controller: "home-ctrl"
         })
+        .when("/product/product",{
+            templateUrl:"product/product.html",
+            controller: "home-ctrl"
+        })
 });

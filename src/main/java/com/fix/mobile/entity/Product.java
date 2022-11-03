@@ -48,7 +48,7 @@ public class Product {
     private String note;
 
     @Column(name = "status")
-    private Boolean status;
+    private int status;
 
     @ManyToOne
     @JoinColumn(name = "id_ram")
@@ -65,6 +65,25 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "id_category")
     private Category category;
+
+    public Product(String name, String imei, Date createDate, String camera, BigDecimal price,
+                   String size, String note, int status, Ram ram, Color color,
+                   Capacity capacity, Category category, List<Image> images, List<MultipartFile> files) {
+        this.name = name;
+        this.imei = imei;
+        this.createDate = createDate;
+        this.camera = camera;
+        this.price = price;
+        this.size = size;
+        this.note = note;
+        this.status = status;
+        this.ram = ram;
+        this.color = color;
+        this.capacity = capacity;
+        this.category = category;
+        this.images = images;
+        this.files = files;
+    }
 
     @OneToMany(mappedBy = "product")
     @LazyCollection(LazyCollectionOption.FALSE)
@@ -97,5 +116,7 @@ public class Product {
     @OneToMany(mappedBy = "product")
     private List<SaleDetail> saleDetails;
 
-
+    @JsonIgnore
+    @OneToMany(mappedBy = "product")
+    private List<ImayProduct> listImay;
 }
