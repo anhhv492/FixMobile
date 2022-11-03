@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trang chủ</title>
-
+    <!-- login -->
+    <link rel="stylesheet" href="/static/css/style1.css">
+       <!-- login -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="/fonts/fontawesome/css/all.min.css">
@@ -52,10 +54,10 @@
                                         <div class="dropdown-divider"></div>
                                         <a href="#" class="dropdown-item">Lịch sử mua hàng</a>
                                         <div class="dropdown-divider"></div>
-                                        <a href="#" class="dropdown-item">Đăng nhập</a>
-                                        <a href="#" class="dropdown-item">Đăng ký</a>
+                                        <a href="/login" class="dropdown-item">Đăng nhập</a>
+                                        <a href="/logout" class="dropdown-item">Đăng ký</a>
                                         <div class="dropdown-divider"></div>
-                                        <a href="#" class="dropdown-item">Đăng xuất</a>
+                                        <a href="/security/logoff" class="dropdown-item">Đăng xuất</a>
                                     </div>
                                 </li>
                             </ul>
@@ -140,15 +142,22 @@
     </div>
     <!-- footer -->
     <!-- end footer -->
-
+    <script src="/static/views/ctrl/login-ctrl.js"></script>
     <script src="ctrl/home-ctrl.js"></script>
     <script src="ctrl/nav-ctrl.js"></script>
     <script src="ctrl/cart-ctrl.js"></script>
     <script src="ctrl/detail-ctrl.js"></script>
     <script src="/js/jq.js"></script>
     <script src="/js/index.js"></script>
-    <script src="/js/jq.js"></script>
+
+<script src="/js/jq.js"></script>
     <script src="/js/product.js"></script>
+
+<!--Login-->
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/popper.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/main.js"></script>
 
 </body>
 </html>
