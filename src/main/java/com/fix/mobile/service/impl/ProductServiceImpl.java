@@ -62,4 +62,9 @@ public class ProductServiceImpl implements ProductService {
         }
         return null;
     }
+
+    @Override
+    public Page<Product> getAll(Pageable page) {
+        return repository.findAll(page);
+    }
 }

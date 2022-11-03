@@ -3,7 +3,6 @@ package com.fix.mobile.service.impl;
 import com.fix.mobile.service.CapacityService;
 import com.fix.mobile.repository.CapacityRepository;
 import com.fix.mobile.entity.Capacity;
-import com.fix.mobile.service.CapacityService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -61,5 +60,10 @@ public class CapacityServiceImpl implements CapacityService {
             return save(entity);
         }
         return null;
+    }
+
+    @Override
+    public Optional<Capacity> findByName(String name) {
+        return repository.findByName(name);
     }
 }

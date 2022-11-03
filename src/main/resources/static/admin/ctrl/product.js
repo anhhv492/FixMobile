@@ -11,6 +11,7 @@ app.controller('product', function($scope, $http) {
     $scope.check_first=false;
     $scope.check_last=true;
     $scope.totalPages=0;
+    $scope.currentPage = 0;
     $scope.title={
         insert:'Thêm mới',
         update:'Cập nhật'
@@ -18,23 +19,17 @@ app.controller('product', function($scope, $http) {
     $scope.checkButton = true;
     $scope.checkSubmit=false;
     $scope.getProducts =function (){
-        $http.get(`${pathAPI}/page/0`).then(function(response) {
-            $scope.products = response.data;
+        $http.get(`${pathAPI}/page/pushedlist?page=0`).then(function(response) {
+            $scope.products = response.data.list;
+            $scope.totalPages = response.data.totalPages;
+            $scope.currentPage = response.data.currentPage;
         }).catch(error=>{
             console.log(error);
         });
         $scope.getCategories();
-        $scope.getTotalPages();
         $scope.getRam();
         $scope.getColor();
         $scope.getCapacity();
-    }
-    $scope.getTotalPages =function (){
-        $http.get(pathAPI).then(function(response) {
-            $scope.totalPages = Math.ceil(response.data.length/5);
-        }).catch(error=>{
-            console.log(error);
-        });
     }
     $scope.getCategories=function(){
         $http.get(`${pathAPI}/category`).then(function(response) {
@@ -73,8 +68,6 @@ app.controller('product', function($scope, $http) {
             console.log("lỗi" +error );
         });
     };
-
-
     $scope.delete = function(formProduct) {
         Swal.fire({
             title: 'Bạn có chắc muốn xóa: '+formProduct.name+'?',
@@ -269,7 +262,7 @@ app.controller('product', function($scope, $http) {
         $scope.getProducts();
     };
 
-    $scope.files={};
+    //$scope.files={};
     $scope.uploadFile = function(files){
         $scope.files = files;
         console.log($scope.files);
@@ -376,11 +369,11 @@ app.controller('product', function($scope, $http) {
             $scope.check_first=true;
             $scope.check_last=false;
         }
-        $http.get(pathAPI+`/page/`+$scope.index).then(res=>{
-            $scope.formProduct = res.data;
-            console.log('Load pproduct success',res.data)
+        $http.get(pathAPI+`/page/pushedlist?page=`+$scope.index).then(res=>{
+            $scope.products = res.data.list;
+            console.log('Load product thành công',res.data.list);
         }).catch(err=>{
-            console.log('Load product failse',err.data);
+            console.log('Load product failse',err.data.list);
         })
     }
     $scope.prev=function(){
@@ -395,9 +388,9 @@ app.controller('product', function($scope, $http) {
             $scope.check_first=false;
             $scope.check_last=true;
         }
-        $http.get(pathAPI+`/page/`+$scope.index).then(res=>{
-            $scope.formProduct = res.data;
-            console.log('Load product success',res.data)
+        $http.get(pathAPI+`/page/pushedlist?page=`+$scope.index).then(res=>{
+            $scope.products = res.data.list;
+            console.log('Load product success',res.data.list)
         }).catch(err=>{
             console.log('Load product failse',err.data);
         })
@@ -406,9 +399,8 @@ app.controller('product', function($scope, $http) {
         $scope.check_first=false;
         $scope.check_last=true;
         $scope.index=0;
-        $http.get(pathAPI+`/page/`+$scope.index).then(res=>{
-            $scope.formProduct = res.data;
-            console.log('Load accessories success',res.data)
+        $http.get(pathAPI+`/page/pushedlist?page=`+$scope.index).then(res=>{
+            $scope.products = res.data.list;
         }).catch(err=>{
             console.log('Load accessories failse',err.data);
         })
@@ -417,11 +409,77 @@ app.controller('product', function($scope, $http) {
         $scope.check_first=true;
         $scope.check_last=false;
         $scope.index=$scope.totalPages-1;
-        $http.get(pathAPI+`/page/`+$scope.index).then(res=>{
-            $scope.formProduct = res.data.formProduct;
-            console.log('Load accessories success',res.data)
+        $http.get(pathAPI+`/page/pushedlist?page=`+$scope.index).then(res=>{
+            $scope.products = res.data.list;
+            console.log('Load product success',res.data.list)
         }).catch(err=>{
-            console.log('Load accessories failse',err.data);
+            console.log('Load product failse',err.data);
+        })
+    }
+
+    $scope.xcellData = function (files){
+        var form = new FormData();
+        form.append('file',files[0]);
+        let timerInterval
+        Swal.fire({
+            title: 'Đang thêm hàng loạt!',
+            html: 'Vui lòng chờ <b></b> milliseconds.',
+            timer: 1500,
+            timerProgressBar: true,
+            didOpen: () => {
+                Swal.showLoading()
+                const b = Swal.getHtmlContainer().querySelector('b')
+                timerInterval = setInterval(() => {
+                    b.textContent = Swal.getTimerLeft()
+                }, 100)
+            },
+            willClose: () => {
+                clearInterval(timerInterval)
+            }
+        }).then((result) => {
+            if (result.dismiss === Swal.DismissReason.timer) {
+                $http.post(pathAPI+'/readExcel',form,{
+                    transformRequest: angular.identity,
+                    headers: {'Content-Type': undefined}
+                }).then(res=>{
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                    })
+
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'Thêm file Excel thành công'
+                    })
+                    console.log('excel',res);
+                    $scope.getProducts();
+                }).catch(err=>{
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                    })
+                    Toast.fire({
+                        icon: 'error',
+                        title: 'Có lỗi xảy ra!'
+                    })
+                    console.log('err',err);
+                })
+                console.log('I was closed by the timer')
+            }
         })
     }
 
