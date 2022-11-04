@@ -32,6 +32,7 @@ app.controller('buy-success-ctrl',function($scope,$window,$timeout){
                         no-repeat
                      `
                 })
+                localStorage.clear();
                 console.log('Buy cart Paypal success!')
             }
         })

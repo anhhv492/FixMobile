@@ -1,5 +1,7 @@
 package com.fix.mobile.service.impl;
 
+import com.fix.mobile.entity.Accessory;
+import com.fix.mobile.entity.Category;
 import com.fix.mobile.service.ProductService;
 import com.fix.mobile.repository.ProductRepository;
 import com.fix.mobile.entity.Product;
@@ -63,7 +65,6 @@ public class ProductServiceImpl implements ProductService {
         }
         return null;
     }
-
     @Override
     public Page<Product> getByPage(int pageNumber, int maxRecord, Integer status) {
         Pageable pageable = PageRequest.of(pageNumber, maxRecord);
@@ -74,5 +75,14 @@ public class ProductServiceImpl implements ProductService {
      @Override 
     public Page<Product> getAll(Pageable page) {
         return repository.findAll(page);
+    }
+    @Override
+    public Page<Product> getAll(Pageable page) {
+        return repository.findAll(page);
+    }
+
+    @Override
+    public List<Product> findByCategoryAndStatus(Optional<Category> cate) {
+        return repository.findByCategoryAndStatus(cate.get(),1);
     }
 }

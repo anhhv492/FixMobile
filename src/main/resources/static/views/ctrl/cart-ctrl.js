@@ -1,10 +1,10 @@
 app.controller('cart-ctrl',function($rootScope,$scope,$http,$window){
-    var urlProduct=`http://localhost:8080/rest/product`;
-    var urlOrder=`http://localhost:8080/rest/order`;
-    var urlCategory=`http://localhost:8080/rest/staff/category`;
+    var urlOrder=`http://localhost:8080/rest/guest/order`;
+    var urlOrderDetail=`http://localhost:8080/rest/guest/order-detail`;
     $scope.info={};
     $scope.checkBuy=null;
     $scope.categories={};
+    $scope.cart={};
     $scope.counts=function(){
         return $rootScope.carts
             .map(item=>item.qty)
@@ -185,42 +185,92 @@ app.controller('cart-ctrl',function($rootScope,$scope,$http,$window){
         localStorage.clear();
     }
     $scope.buyCart=function () {
-        Swal.fire({
-            title: 'Xác nhận thanh toán?',
-            text: "Xác nhận thanh toán để mua hàng!",
-            icon: 'info',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Xác nhận!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                const address=$scope.address;
-                $scope.info={'address':address,'total':$scope.amounts()};
-                if($scope.checkBuy){
-                    let price=($scope.totals()/24865).toFixed(2)
-                    $http({
-                        url : `http://localhost:8080/pay`,
-                        method : 'POST',
-                        data: price,
-                        transformResponse: [
-                            function (data) {
-                                return data;
+        if(!$rootScope.account){
+            $window.location.href = '/login';
+        }else{
+            Swal.fire({
+                title: 'Xác nhận thanh toán?',
+                text: "Xác nhận thanh toán để mua hàng!",
+                icon: 'info',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Xác nhận!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    if($scope.checkBuy){
+                        let price=($scope.totals()/24865).toFixed(2)
+                        $http({
+                            url : `http://localhost:8080/pay`,
+                            method : 'POST',
+                            data: price,
+                            transformResponse: [
+                                function (data) {
+                                    return data;
+                                }
+                            ]
+                        }).then(res=>{
+                            console.log("buy cart", res.data)
+                            $scope.linkPaypal=res.data;
+                            $scope.cart.createDate=new Date();
+                            $scope.cart.total=$scope.totals();
+                            $scope.cart.status=false;
+                            $scope.cart.type=false;
+                            $http.post(urlOrder+'/add',$scope.cart).then(res=>{
+                                if(res.data){
+                                    $http.post(urlOrderDetail+'/add',$rootScope.carts).then(res=> {
+                                        console.log("orderDetail", res.data)
+                                    }).catch(err=>{
+                                        console.log("err orderDetail",err)
+                                    })
+                                    $window.location.href=$scope.linkPaypal;
+                                }else{
+                                    Swal.fire(
+                                        'Vui lòng điền địa chỉ!',
+                                        '',
+                                        'error'
+                                    )
+                                }
+                            }).catch(err=>{
+                                console.log("err order",err)
+                            })
+                        }).catch(err=>{
+                            console.log("error buy cart", err)
+                        })
+
+                    }else{
+                        $scope.cart.createDate=new Date();
+                        $scope.cart.total=$scope.totals();
+                        $scope.cart.status=false;
+                        $scope.cart.type=false;
+                        $http.post(urlOrder+'/add',$scope.cart).then(res=>{
+                            if(res.data){
+                                $http.post(urlOrderDetail+'/add',$rootScope.carts).then(res=> {
+                                    $window.location.href='/views/cart/buy-success.html';
+                                    console.log("orderDetail", res.data)
+                                }).catch(err=>{
+                                    console.log("err orderDetail",err)
+                                })
+                            }else{
+                                Swal.fire(
+                                    'Vui lòng điền địa chỉ!',
+                                    '',
+                                    'error'
+                                )
                             }
-                        ]
-                    }).then(res=>{
-                        console.log("buy cart", res.data)
-                        $window.location.href=res.data;
-                    }).catch(err=>{
-                        console.log("error buy cart", err)
-                    })
-                    localStorage.clear();
-                }else{
-                    $window.location.href='/views/cart/buy-success.html';
-                    localStorage.clear();
+
+                        }).catch(err=>{
+                            Swal.fire(
+                                'error!',
+                                'You clicked the button!',
+                                'error'
+                            )
+                            console.log("err order",err)
+                        })
+                    }
                 }
-            }
-        })
+            })
+        }
     }
     $scope.checkBuyPaypal=function () {
         $scope.checkBuy=true;

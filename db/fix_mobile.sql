@@ -21,6 +21,10 @@ CREATE TABLE ram (
 	id_ram int NOT NULL auto_increment primary key,
 	name nvarchar(100) not null
 ) ;
+
+-- SQLINES DEMO *** OR EVALUATION USE ONLY
+-- SQLINES LICENSE FOR EVALUATION USE ONLY
+
 -- SQLINES DEMO *** OR EVALUATION USE ONLY
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
 CREATE TABLE color (
@@ -104,7 +108,10 @@ CREATE TABLE products (
 	price decimal(10,0) NOT NULL,
 	size nvarchar(100) NOT NULL,
 	note nvarchar(255),
+
 	status int  default(0),
+	status bit default(0),
+	status int default(0),
 	id_ram int NOT NULL,
 	id_color int NOT NULL,
 	id_capacity int NOT NULL,
@@ -400,6 +407,36 @@ INSERT INTO fix_mobile.accessories (name, quantity, create_date, color, price, s
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
 INSERT INTO fix_mobile.accessories (name, quantity, create_date, color, price, status, image, note, id_category) VALUES ('Tai nghe', 22, '2022-10-06', 'Đen', 200000, true, 'tai-nghe-khong-day.jpg', 'Bền, đẹp mắt', 1);
 
+INSERT INTO fix_mobile.ram (name) 
+ VALUES ('4G');
+INSERT INTO fix_mobile.ram (name) 
+ VALUES ('6G');
+INSERT INTO fix_mobile.ram (name) 
+ VALUES ('8G');
+INSERT INTO fix_mobile.capacity (name) 
+ VALUES ('32GB');
+INSERT INTO fix_mobile.capacity (name) 
+ VALUES ('64GB');
+INSERT INTO fix_mobile.capacity (name) 
+ VALUES ('128GB');
+INSERT INTO fix_mobile.color (name) 
+ VALUES ('Xanh');
+INSERT INTO fix_mobile.color (name) 
+ VALUES ('Đỏ');
+INSERT INTO fix_mobile.color (name) 
+ VALUES ('Tím');
+INSERT INTO fix_mobile.color (name) 
+ VALUES ('Vàng');
+INSERT INTO fix_mobile.color (name) 
+ VALUES ('Hồng');
+INSERT INTO fix_mobile.color (name) 
+ VALUES ('Trắng');
+INSERT INTO fix_mobile.images (name) VALUES ('1017.jpg');
+
+INSERT INTO fix_mobile.products (name,create_date,camera,price,size,note,status,
+id_ram,id_color,id_capacity,id_category,id_image) 
+ VALUES ('IPhone XS Max', '2022-10-06', '1280px, cảm biến LiDAR', 20000000, '20x25cm', 'Bền, đẹp mắt', 1,1,1,1,13,1);
+select*from orders;
 INSERT INTO fix_mobile.accounts(username,password,full_name,gender,email,
 								phone,create_date,image,id_role) 
 VALUES ('admin','123','admin',0,'admin@gmail.com','0912321321','2022/10/30','',1);

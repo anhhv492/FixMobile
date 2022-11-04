@@ -4,4 +4,6 @@ import com.fix.mobile.entity.Account;
 
 public interface AccountService extends GenericService<Account, String> {
 	Account findByName(String username);
+
+    Account findByUsername(String name);
 }

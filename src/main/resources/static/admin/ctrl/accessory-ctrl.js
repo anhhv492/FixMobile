@@ -16,8 +16,9 @@ app.controller('rest_accessory', function($scope, $http) {
     $scope.loadAccessories =function (){
         $http.get(`${pathAPI}/page/0`).then(function(response) {
             $scope.accessories = response.data;
+            console.log("access",response.data);
         }).catch(error=>{
-            console.log(error);
+            console.log("access error",error);
         });
         $scope.getCategories();
         $scope.getTotalPages();

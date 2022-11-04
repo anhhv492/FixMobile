@@ -1,11 +1,22 @@
 app.controller('home-ctrl',function($rootScope,$scope,$http,$window){
-    var urlCategory=`http://localhost:8080/rest/staff/category`;
-    var urlAccessory=`http://localhost:8080/rest/admin/accessory`;
+    var urlCategory=`http://localhost:8080/rest/guest/category`;
+    var urlAccessory=`http://localhost:8080/rest/guest/accessory`;
+    var urlProduct=`http://localhost:8080/rest/guest/product`;
     $scope.cateAccessories=[];
     $scope.cateProducts=[];
     $scope.item= {};
     $rootScope.carts=[];
     $rootScope.qtyCart=0;
+    $rootScope.account=null;
+    $scope.getAccount=function (){
+        $http.get("http://localhost:8080/rest/account").then(resp=>{
+            $rootScope.account=resp.data;
+            console.log("resp account",resp.data);
+        }).catch(error=>{
+            $rootScope.account=null;
+            console.log("Error",error);
+        });
+    }
     $scope.getCategories = function(){
         $http.get(`${urlCategory}/getAll`).then(res=>{
             res.data.forEach(cate=>{
@@ -24,17 +35,22 @@ app.controller('home-ctrl',function($rootScope,$scope,$http,$window){
     }
 
     $scope.getDetail=function(item){
-        $rootScope.cateDetail=item;
         if(item.type){
-            $http.get(`${urlAccessory}/cate/${item.idCategory}`).then(res=>{
+            $http.get(`${urlAccessory}/cate-access/${item.idCategory}`).then(res=>{
                 $rootScope.detailAccessories=res.data;
                 console.log("detailAccessories",$rootScope.detailAccessories)
             }).catch(err=>{
                 $rootScope.detailAccessories=null;
                 console.log("error",err)
             })
-        }else if(!item.type){
-            $rootScope.idDetailProduct=item.idCategory;
+        }else{
+            $http.get(`${urlProduct}/cate-product/${item.idCategory}`).then(res=>{
+                $rootScope.detailAccessories=res.data;
+                console.log("detailProducts",$rootScope.detailAccessories)
+            }).catch(err=>{
+                $rootScope.detailAccessories=null;
+                console.log("error",err)
+            })
         }
     }
     $scope.addCart=function(accessory){
@@ -108,4 +124,5 @@ app.controller('home-ctrl',function($rootScope,$scope,$http,$window){
     $scope.getCategories();
     $rootScope.loadLocalStorage();
     $rootScope.loadQtyCart();
+    $scope.getAccount();
 })
