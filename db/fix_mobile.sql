@@ -1,5 +1,5 @@
 -- SQLINES DEMO *** ix_mobile;
-create database fix_mobile  
+-- create database fix_mobile;
 use fix_mobile;
 
 -- SQLINES DEMO *** OR EVALUATION USE ONLY
