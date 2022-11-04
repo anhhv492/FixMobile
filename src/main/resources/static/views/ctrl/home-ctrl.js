@@ -55,6 +55,22 @@ app.controller('home-ctrl',function($rootScope,$scope,$http,$window){
                     $scope.item.qty++;
                     console.log("addCart2",$scope.item)
                 }
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 1500,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                })
+
+                Toast.fire({
+                    icon: 'success',
+                    title: 'Thêm thành công!'
+                })
                 $rootScope.saveLocalStorage();
             }).catch(err=>{
                 console.log("error",err)
@@ -66,6 +82,17 @@ app.controller('home-ctrl',function($rootScope,$scope,$http,$window){
         localStorage.setItem("cart",json);
     }
     $rootScope.loadLocalStorage = function(){
+
+        for (let i = 0; i < $rootScope.carts.length; i++) {
+            $rootScope.carts.find(item=>{
+                $http.get("http://localhost:8080/cart-accessory/"+item.idAccessory).then(res=>{
+                    $rootScope.carts[i].price=res.data.price;
+                    console.log("price",item.price)
+                }).catch(err=>{
+                    console.log("error",err)
+                })
+            })
+        }
         let json = localStorage.getItem("cart");
         $rootScope.carts=json? JSON.parse(json):[];
     }
