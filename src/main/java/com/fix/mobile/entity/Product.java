@@ -119,10 +119,6 @@ public class Product {
 
     @JsonIgnore
     @OneToMany(mappedBy = "product")
-    private List<SaleDetail> saleDetails;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "product")
     private List<ImayProduct> listImay;
 
 }
