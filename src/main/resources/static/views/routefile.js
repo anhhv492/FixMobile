@@ -21,7 +21,7 @@ app.config(function($routeProvider){
         .when("/product/product",{
             templateUrl:"product/product.html",
             controller: "home-ctrl"
-
+	})
         .when("/login",{
             templateUrl:"login/form .html",
             controller: "login-ctrl"
