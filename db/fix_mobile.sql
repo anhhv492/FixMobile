@@ -180,8 +180,8 @@ CREATE TABLE order_detail (
 	price decimal(10,0) not null,
 	status binary DEFAULT(0),
 	id_order int NOT NULL, 
-	id_product int NOT NULL,
-	id_accessory int NOT NULL,
+	id_product int NULL,
+	id_accessory int NULL,
 	foreign key(id_order) references orders(id_order),
 	foreign key(id_product) references products(id_product),
 	foreign key(id_accessory) references accessories(id_accessory)
