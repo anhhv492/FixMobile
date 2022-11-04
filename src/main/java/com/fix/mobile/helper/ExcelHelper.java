@@ -5,21 +5,30 @@ import com.fix.mobile.entity.Category;
 import com.fix.mobile.repository.CategoryRepository;
 import com.fix.mobile.service.AccessoryService;
 import com.fix.mobile.service.CategoryService;
+import com.fix.mobile.service.FileManagerService;
 import com.fix.mobile.service.impl.CategoryServiceImpl;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.util.IOUtils;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.persistence.Column;
 import java.awt.*;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.math.BigDecimal;
+import java.nio.file.Files;
 import java.sql.Date;
 import java.util.Iterator;
 import java.util.Objects;
@@ -31,6 +40,8 @@ public class ExcelHelper {
     private CategoryService categoryService;
     @Autowired
     private AccessoryService accessoryService;
+    @Autowired
+    private FileManagerService fileManagerService;
 
     private Integer idAccessory=null;
     private String name=null;
@@ -41,11 +52,14 @@ public class ExcelHelper {
     private Boolean status=true;
     private String image=null;
     private String note=null;
-    private Optional<Category> category = null;
+    private String folder = "accessories";
     public Boolean readExcel(MultipartFile files) {
-        File dir = new File(System.getProperty("user.dir"));
+        File dir = new File(System.getProperty("user.dir")+"/excels");
         try {
             File savedFile = new File(dir,files.getOriginalFilename());
+            if(!dir.exists()) {
+                dir.mkdirs();
+            }
             if(!savedFile.exists()){
                 files.transferTo(savedFile);
             }else{
@@ -83,15 +97,11 @@ public class ExcelHelper {
                         }
                         if (cc.getColumnIndex() == 4 && cc.getCellType() == CellType.STRING) {
                             System.out.println(cc.getStringCellValue() + ", ");
-                            image = cc.getStringCellValue();
-                        }
-                        if (cc.getColumnIndex() == 5 && cc.getCellType() == CellType.STRING) {
-                            System.out.println(cc.getStringCellValue() + ", ");
                             note = cc.getStringCellValue();
                         }
-                        if (cc.getColumnIndex() == 6 && cc.getCellType() == CellType.STRING) {
+                        if (cc.getColumnIndex() == 5 && cc.getCellType() == CellType.STRING) {
                             System.out.println("Cate: "+cc.getStringCellValue());
-                            category = categoryService.findByName(cc.getStringCellValue());
+                            Optional<Category> category =  categoryService.findByName(cc.getStringCellValue());
                             if(!category.isPresent()){
                                 System.out.println("khong ton tai");
                                 Category category1 = new Category();
@@ -103,7 +113,7 @@ public class ExcelHelper {
                                 System.out.println("ton tai");
                             }
                             System.out.println("-- excel: " + name + " " + image + " " + note+" ");
-                            Accessory accessory = new Accessory(name,quantity,createDate,color,price,status,image,note,category.get());
+                            Accessory accessory = new Accessory(name,quantity,createDate,color,price,status,note,category.get());
                             accessoryService.save(accessory);
                         }
                     }

@@ -48,21 +48,13 @@
                                         <input ng-model="form.price" required name="price" type="number" class="form-control">
                                     </div>
                                     <hr>
-                                    <div class="form-group mt-1">
+                                    <div class="form-group mt-1" ng-if="checkSubmit==false">
                                         <label>Thêm file Excel</label>
-                                        <input type="file" ng-if="checkSubmit==false" class="form-control"
+                                        <input type="file" class="form-control"
                                                onchange="angular.element(this).scope().readExcel(this.files)">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="form-group mt-2 mb-3" ng-if="checkSubmit">
-                                        <label>Trạng thái</label>
-                                        <br>
-                                        <input type="radio" class="form-check-input" checked
-                                               ng-model="form.status" name="status" ng-value="false"> Còn hàng
-                                        <input type="radio" class="form-check-input"
-                                               ng-model="form.status" name="status" ng-value="true"> Hết hàng
-                                    </div>
                                     <div class="form-group mt-1">
                                         <label>Hình ảnh</label>
                                         <br>
@@ -117,17 +109,17 @@
                             <td>{{accessory.quantity}}</td>
                             <td>{{accessory.color}}</td>
                             <td>{{accessory.price|number}}</td>
-                            <td>{{accessory.status==0?'Còn hàng':'Hết hàng'}}</td>
+                            <td>{{accessory.status==0?'Hết hàng':'Còn hàng'}}</td>
                             <td>{{accessory.note}}</td>
-                            <td>{{accessory.createDate}}</td>
+                            <td>{{accessory.createDate |date:'dd/MM/yyyy'}}</td>
                             <td><img class="img-fluid" width="80px" height="80px" src="/images/accessories/{{accessory.image}}"></td>
                             <td>
                                 <button class="btn btn-default" ng-click="edit(accessory)" data-bs-target="#tab-manage"
                                         aria-controls="home-tab-pane">
                                     <i class="fa fa-pencil-square" aria-hidden="true"> Sửa</i>
                                 </button>
-                                <button class="btn btn-default" ng-click="delete(accessory)">
-                                    <i class="fa fa-trash"> Xóa</i>
+                                <button class="btn btn-default" ng-click="changeStatus(accessory)">
+                                    <i class="fa fa-wrench"> Thay đổi</i>
                                 </button>
                             </td>
                         </tr>

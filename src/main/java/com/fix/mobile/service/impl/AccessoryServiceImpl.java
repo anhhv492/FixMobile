@@ -24,6 +24,11 @@ public class AccessoryServiceImpl implements AccessoryService {
 
     @Override
     public Accessory save(Accessory entity) {
+        if (entity.getQuantity()<=0){
+            entity.setStatus(false);
+        }else{
+            entity.setStatus(true);
+        }
         return repository.save(entity);
     }
 
@@ -58,13 +63,19 @@ public class AccessoryServiceImpl implements AccessoryService {
     public Accessory update(Accessory entity, Integer id) {
         Optional<Accessory> optional = findById(id) ;
         if (optional.isPresent()) {
+            if (optional.get().getQuantity()<=0){
+                entity.setStatus(false);
+            }else{
+                entity.setStatus(true);
+            }
             return save(entity);
         }
         return null;
     }
 
     @Override
-    public List<Accessory> findByCate(Optional<Category> cate) {
-        return repository.findByCategory(cate);
+    public List<Accessory> findByCategoryAndStatus(Optional<Category> cate) {
+        return repository.findByCategoryAndStatus(cate,true);
     }
+
 }

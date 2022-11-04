@@ -63,4 +63,10 @@ public class AccountServiceImpl implements AccountService {
         }
         return null;
     }
+
+	@Override
+	public Account findByName(String username) {
+		// TODO Auto-generated method stub
+		return repository.findByName(username);
+	}
 }

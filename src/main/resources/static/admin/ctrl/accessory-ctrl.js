@@ -81,76 +81,54 @@ app.controller('rest_accessory', function($scope, $http) {
             })
         });
     };
-    $scope.delete = function(accessory) {
+    $scope.changeStatus = function(accessory) {
         Swal.fire({
-            title: 'Bạn có chắc muốn xóa: '+accessory.name+'?',
-            text: "Xóa không thể khôi phục lại!",
+            title: 'Thay đổi trạng thái: '+accessory.name+'?',
+            text: "Xác nhận đẻ tiếp tục!",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
+            confirmButtonText: 'Xác nhận!'
         }).then((result) => {
             if (result.isConfirmed) {
-                let timerInterval
-                Swal.fire({
-                    title: 'Đang xóa: '+accessory.name+'!',
-                    html: 'Vui lòng chờ <b></b> milliseconds.',
-                    timer: 1500,
-                    timerProgressBar: true,
-                    didOpen: () => {
-                        Swal.showLoading()
-                        const b = Swal.getHtmlContainer().querySelector('b')
-                        timerInterval = setInterval(() => {
-                            b.textContent = Swal.getTimerLeft()
-                        }, 100)
-                    },
-                    willClose: () => {
-                        clearInterval(timerInterval)
-                    }
-                }).then((result) => {
-                    /* Read more about handling dismissals below */
-                    if (result.dismiss === Swal.DismissReason.timer) {
-                        $http.delete(`${pathAPI}/delete/${accessory.idAccessory}`).then(response=> {
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: 'top-end',
-                            showConfirmButton: false,
-                            timer: 3000,
-                            timerProgressBar: true,
-                            didOpen: (toast) => {
-                                toast.addEventListener('mouseenter', Swal.stopTimer)
-                                toast.addEventListener('mouseleave', Swal.resumeTimer)
-                            }
-                        })
+                $http.put(`${pathAPI}/change/${accessory.idAccessory}`).then(response=> {
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 2000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                    })
 
-                        Toast.fire({
-                            icon: 'success',
-                            title:'Xóa thành công!'
-                        })
-                        $scope.accessories.splice($scope.accessories.indexOf(accessory), 1);
-                    }).catch(error=>{
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: 'top-end',
-                            showConfirmButton: false,
-                            timer: 3000,
-                            timerProgressBar: true,
-                            didOpen: (toast) => {
-                                toast.addEventListener('mouseenter', Swal.stopTimer)
-                                toast.addEventListener('mouseleave', Swal.resumeTimer)
-                            }
-                        })
+                    Toast.fire({
+                        icon: 'success',
+                        title:'Thay đổi thành công!'
+                    })
+                    console.log(response.data);
+                    $scope.accessories.find(item=>item.idAccessory==accessory.idAccessory).status=!accessory.status;
+                }).catch(error=>{
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 2000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                    })
 
-                        Toast.fire({
-                            icon: 'error',
-                            title:'Đã xảy ra lỗi!' ,
-                        })
-                    });
-                        console.log('I was closed by the timer')
-                    }
-                })
-
+                    Toast.fire({
+                        icon: 'error',
+                        title:'Đã xảy ra lỗi!' ,
+                    })
+                });
             }
         })
 
@@ -334,6 +312,7 @@ app.controller('rest_accessory', function($scope, $http) {
                         icon: 'success',
                         title: 'Thêm file Excel thành công'
                     })
+                    $scope.loadAccessories();
                     console.log('excel',res);
                 }).catch(err=>{
                     const Toast = Swal.mixin({
@@ -352,6 +331,7 @@ app.controller('rest_accessory', function($scope, $http) {
                         icon: 'error',
                         title: 'Có lỗi xảy ra!'
                     })
+                    $scope.loadAccessories();
                     console.log('err',err);
                 })
                 console.log('I was closed by the timer')

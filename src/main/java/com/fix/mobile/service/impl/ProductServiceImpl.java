@@ -69,5 +69,10 @@ public class ProductServiceImpl implements ProductService {
         Pageable pageable = PageRequest.of(pageNumber, maxRecord);
         Page<Product> pageProduct = repository.findByStatus(status, pageable);
         return pageProduct;
+     }
+     
+     @Override 
+    public Page<Product> getAll(Pageable page) {
+        return repository.findAll(page);
     }
 }
