@@ -7,5 +7,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface ProductService extends GenericService<Product, Integer> {
 
+  Page<Product> getByPage(int pageNumber, int maxRecord, Integer status);
 	Page<Product> getAll (Pageable page);
+
 }

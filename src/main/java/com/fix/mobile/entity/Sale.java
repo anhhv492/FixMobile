@@ -4,9 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -14,7 +16,9 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "sale")
+@ToString
 public class Sale {
+
     @Id
     @Column(name = "id_sale")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,13 +28,13 @@ public class Sale {
     private String name;
 
     @Column(name = "type_sale")
-    private String typeSale;
+    private Integer typeSale;
 
     @Column(name = "create_start")
-    private java.sql.Date createStart;
+    private Date createStart;
 
     @Column(name = "create_end")
-    private java.sql.Date createEnd;
+    private Date createEnd;
 
     @Column(name = "voucher")
     private String voucher;
@@ -41,11 +45,38 @@ public class Sale {
     @Column(name = "money_sale")
     private BigDecimal moneySale;
 
-    @Column(name = "quantity_use")
-    private Integer quantityUse;
+    @Column(name = "percent_sale")
+    private Integer percentSale;
+
+    @Column(name = "quantity")
+    private Integer quantity;
 
     @Column(name = "status")
-    private Boolean status;
+    private Integer status;
+
+    @Column(name = "create_time")
+    private Date createTime;
+
+    @Column(name = "update_time")
+    private Date updateTime;
+
+    @Column(name = "user_create")
+    private Integer userCreate;
+
+    @Column(name = "user_update")
+    private Integer userpdate;
+
+    @Column(name = "detail_sale")
+    private String detailSale;
+
+    @Column(name = "discount_method")
+    private Integer discountMethod;
+
+    @Column(name = "discount_type")
+    private Integer discountType;
+
+    @Column(name = "user_type")
+    private Integer userType;
 
     @JsonIgnore
     @OneToMany(mappedBy = "sale")
