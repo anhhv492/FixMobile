@@ -14,6 +14,12 @@ CREATE TABLE ram (
 	id_ram int NOT NULL auto_increment primary key,
 	name nvarchar(100) not null
 ) ;
+<<<<<<< Updated upstream
+=======
+
+-- SQLINES DEMO *** OR EVALUATION USE ONLY
+-- SQLINES LICENSE FOR EVALUATION USE ONLY
+>>>>>>> Stashed changes
 CREATE TABLE color (
 	id_color int NOT NULL auto_increment primary key,
 	name nvarchar(100) not null
@@ -80,7 +86,11 @@ CREATE TABLE products (
 	price decimal NOT NULL,
 	size nvarchar(100) NOT NULL,
 	note nvarchar(255),
+<<<<<<< Updated upstream
 	status bit default(0),
+=======
+	status int default(0),
+>>>>>>> Stashed changes
 	id_ram int NOT NULL,
 	id_color int NOT NULL,
 	id_capacity int NOT NULL,
@@ -146,8 +156,8 @@ CREATE TABLE order_detail (
 	price decimal not null,
 	status bit DEFAULT(0),
 	id_order int NOT NULL, 
-	id_product int NOT NULL,
-	id_accessory int NOT NULL,
+	id_product int NULL,
+	id_accessory int NULL,
 	foreign key(id_order) references orders(id_order),
 	foreign key(id_product) references products(id_product),
 	foreign key(id_accessory) references accessories(id_accessory)
@@ -264,6 +274,36 @@ INSERT INTO fix_mobile.accessories (name, quantity, create_date, color, price, s
 INSERT INTO fix_mobile.accessories (name, quantity, create_date, color, price, status, image, note, id_category) VALUES ('Tai nghe', 22, '2022-10-06', 'Đen', 200000, false, 'tai-nghe-khong-day.jpg', 'Bền, đẹp mắt', 1);
 INSERT INTO fix_mobile.accessories (name, quantity, create_date, color, price, status, image, note, id_category) VALUES ('Tai nghe', 22, '2022-10-06', 'Đen', 200000, false, 'tai-nghe-khong-day.jpg', 'Bền, đẹp mắt', 1);
 
+INSERT INTO fix_mobile.ram (name) 
+ VALUES ('4G');
+INSERT INTO fix_mobile.ram (name) 
+ VALUES ('6G');
+INSERT INTO fix_mobile.ram (name) 
+ VALUES ('8G');
+INSERT INTO fix_mobile.capacity (name) 
+ VALUES ('32GB');
+INSERT INTO fix_mobile.capacity (name) 
+ VALUES ('64GB');
+INSERT INTO fix_mobile.capacity (name) 
+ VALUES ('128GB');
+INSERT INTO fix_mobile.color (name) 
+ VALUES ('Xanh');
+INSERT INTO fix_mobile.color (name) 
+ VALUES ('Đỏ');
+INSERT INTO fix_mobile.color (name) 
+ VALUES ('Tím');
+INSERT INTO fix_mobile.color (name) 
+ VALUES ('Vàng');
+INSERT INTO fix_mobile.color (name) 
+ VALUES ('Hồng');
+INSERT INTO fix_mobile.color (name) 
+ VALUES ('Trắng');
+INSERT INTO fix_mobile.images (name) VALUES ('1017.jpg');
+
+INSERT INTO fix_mobile.products (name,create_date,camera,price,size,note,status,
+id_ram,id_color,id_capacity,id_category,id_image) 
+ VALUES ('IPhone XS Max', '2022-10-06', '1280px, cảm biến LiDAR', 20000000, '20x25cm', 'Bền, đẹp mắt', 1,1,1,1,13,1);
+select*from orders;
 INSERT INTO fix_mobile.accounts(username,password,full_name,gender,email,
 								phone,create_date,image,id_role) 
 VALUES ('admin','123','admin',0,'admin@gmail.com','0912321321','2022/10/30','',1);

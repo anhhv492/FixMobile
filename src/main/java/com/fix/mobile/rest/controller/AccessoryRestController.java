@@ -40,7 +40,7 @@ public class AccessoryRestController {
 	public List<Accessory> findAllPageable(@PathVariable("page") Optional<Integer> page){
 		Pageable pageable = PageRequest.of(page.get(), 10);
 		List<Accessory> accessories = accessoryService.findAll(pageable).getContent();
-		LOGGER.info("findAllPageable: "+accessories);
+		LOGGER.info("findAllPageable: "+accessories.size());
 		LOGGER.info("page: "+page);
 		return accessories;
 	}

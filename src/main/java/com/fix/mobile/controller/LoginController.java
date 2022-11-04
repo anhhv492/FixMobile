@@ -1,16 +1,34 @@
 package com.fix.mobile.controller;
 
+import com.fix.mobile.entity.Account;
+import com.fix.mobile.service.AccountService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.security.Principal;
 
 @Controller
 public class LoginController {
+	@Autowired
+	private AccountService accountService;
 	@RequestMapping("/login")
 	public String loginForm(Model model) {
 		return "views/login/form";
+	}
+
+	@GetMapping("/rest/account")
+	@ResponseBody
+	public Account login(Principal principal) {
+		if(principal == null) {
+			return null;
+		}
+		Account account = accountService.findByUsername(principal.getName());
+		return account;
 	}
 	@RequestMapping("/security/login/success")
 	public String loginSucess(Model model) {
