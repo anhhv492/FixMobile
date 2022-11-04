@@ -70,8 +70,8 @@ public class CategoryServiceImpl implements CategoryService {
         return repository.findByName(name);
     }
 
+    @Override
     public List<Category> findByTypeProduct() {
-        return repository.findByType(false);
-
+        return null;
     }
 }

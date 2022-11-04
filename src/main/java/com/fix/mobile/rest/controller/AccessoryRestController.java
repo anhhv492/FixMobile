@@ -38,7 +38,7 @@ public class AccessoryRestController {
 	//findall accessory pageable
 	@GetMapping(value="/page/{page}")
 	public List<Accessory> findAllPageable(@PathVariable("page") Optional<Integer> page){
-		Pageable pageable = PageRequest.of(page.get(), 10);
+		Pageable pageable = PageRequest.of(page.get(), 5);
 		List<Accessory> accessories = accessoryService.findAll(pageable).getContent();
 		LOGGER.info("findAllPageable: "+accessories.size());
 		LOGGER.info("page: "+page);

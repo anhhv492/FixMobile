@@ -54,7 +54,6 @@ public class AccessoiesRestController {
 
 	@PostMapping
 	public Ram create(@RequestBody Ram ram){
-		//System.out.println(ram + "ddddddddddddddddddddddddddddd");
 		return ramService.save(ram);
 	}
 
@@ -96,7 +95,6 @@ public class AccessoiesRestController {
 	}
 	@PostMapping("/save")
 	public Color createColor(@RequestBody Color color){
-		System.out.println(color + "ddddddddddddddddddddddddddddd");
 		return colorService.save(color);
 	}
 	@DeleteMapping("/deleteColor/{idColor}")

@@ -16,7 +16,7 @@ app.controller('ctrl_cate', function($scope, $http) {
 
     $scope.getAll =function (){
         $http.get(pathAPI+'/page/published?page=0').then(function(response) {
-            $scope.category = response.data.categories;
+            $scope.category = response.data.categories
             $scope.totalPages = response.data.totalPages;
             $scope.currentPage = response.data.currentPage;
         }).catch(error=>{

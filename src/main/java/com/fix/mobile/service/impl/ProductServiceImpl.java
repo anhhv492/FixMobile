@@ -8,6 +8,7 @@ import com.fix.mobile.entity.Product;
 import com.fix.mobile.service.ProductService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -64,9 +65,17 @@ public class ProductServiceImpl implements ProductService {
         }
         return null;
     }
-<<<<<<< Updated upstream
-=======
-
+    @Override
+    public Page<Product> getByPage(int pageNumber, int maxRecord, Integer status) {
+        Pageable pageable = PageRequest.of(pageNumber, maxRecord);
+        Page<Product> pageProduct = repository.findByStatus(status, pageable);
+        return pageProduct;
+     }
+     
+     @Override 
+    public Page<Product> getAll(Pageable page) {
+        return repository.findAll(page);
+    }
     @Override
     public Page<Product> getAll(Pageable page) {
         return repository.findAll(page);
@@ -76,5 +85,4 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> findByCategoryAndStatus(Optional<Category> cate) {
         return repository.findByCategoryAndStatus(cate.get(),1);
     }
->>>>>>> Stashed changes
 }
