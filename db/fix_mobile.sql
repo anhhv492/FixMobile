@@ -326,79 +326,79 @@ values (0,'IPhone X');
 
 -- SQLINES DEMO *** OR EVALUATION USE ONLY
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
-INSERT INTO fix_mobile.accessories (name, quantity, create_date, color, price, status, image, note, id_category) VALUES ('Sạc giá sỉ XSMax', 213, '2022-10-04', 'Trắng', 200000, false, 'T2Uui2XkJXXXXXXXXX_761860821.jpg', 'Rẻ', 2);
+INSERT INTO fix_mobile.accessories (name, quantity, create_date, color, price, status, image, note, id_category) VALUES ('Sạc giá sỉ XSMax', 213, '2022-10-04', 'Trắng', 200000, true, 'T2Uui2XkJXXXXXXXXX_761860821.jpg', 'Rẻ', 2);
 -- SQLINES DEMO *** OR EVALUATION USE ONLY
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
-INSERT INTO fix_mobile.accessories (name, quantity, create_date, color, price, status, image, note, id_category) VALUES ('Ốp naruto', 123, '2022-10-04', 'Vàng', 75000, false, 'asdssaq1.jpg', 'Đẹp', 3);
+INSERT INTO fix_mobile.accessories (name, quantity, create_date, color, price, status, image, note, id_category) VALUES ('Ốp naruto', 123, '2022-10-04', 'Vàng', 75000, true, 'asdssaq1.jpg', 'Đẹp', 3);
 -- SQLINES DEMO *** OR EVALUATION USE ONLY
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
-INSERT INTO fix_mobile.accessories (name, quantity, create_date, color, price, status, image, note, id_category) VALUES ('Tai nghe không dây', 200, '2022-10-04', 'Đen tuyền', 230000, false, 'tai-nghe-khong-day.jpg', 'Bền, đẹp mắt', 1);
+INSERT INTO fix_mobile.accessories (name, quantity, create_date, color, price, status, image, note, id_category) VALUES ('Tai nghe không dây', 200, '2022-10-04', 'Đen tuyền', 230000, true, 'tai-nghe-khong-day.jpg', 'Bền, đẹp mắt', 1);
 -- SQLINES DEMO *** OR EVALUATION USE ONLY
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
-INSERT INTO fix_mobile.accessories (name, quantity, create_date, color, price, status, image, note, id_category) VALUES ('Ốp mỏng', 500, '2022-10-04', 'Cam trắng', 120000, false, '2e21e21e221.jpg', 'Đẹp, hoa cam hình tròn', 3);
+INSERT INTO fix_mobile.accessories (name, quantity, create_date, color, price, status, image, note, id_category) VALUES ('Ốp mỏng', 500, '2022-10-04', 'Cam trắng', 120000, true, '2e21e21e221.jpg', 'Đẹp, hoa cam hình tròn', 3);
 -- SQLINES DEMO *** OR EVALUATION USE ONLY
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
-INSERT INTO fix_mobile.accessories (name, quantity, create_date, color, price, status, image, note, id_category) VALUES ('Sạc không dây', 26, '2022-10-05', 'Đen', 2000000, false, '132122132221312w1e.jpg', 'Không mô tả', 2);
+INSERT INTO fix_mobile.accessories (name, quantity, create_date, color, price, status, image, note, id_category) VALUES ('Sạc không dây', 26, '2022-10-05', 'Đen', 2000000, true, '132122132221312w1e.jpg', 'Không mô tả', 2);
 -- SQLINES DEMO *** OR EVALUATION USE ONLY
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
-INSERT INTO fix_mobile.accessories (name, quantity, create_date, color, price, status, image, note, id_category) VALUES ('Ốp chống va đập', 21, '2022-10-05', 'Trắng, viền đen', 150000, false, 'opchongvadap.jpg', 'Loại ốp siêu bền', 3);
+INSERT INTO fix_mobile.accessories (name, quantity, create_date, color, price, status, image, note, id_category) VALUES ('Ốp chống va đập', 21, '2022-10-05', 'Trắng, viền đen', 150000, true, 'opchongvadap.jpg', 'Loại ốp siêu bền', 3);
 -- SQLINES DEMO *** OR EVALUATION USE ONLY
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
-INSERT INTO fix_mobile.accessories (name, quantity, create_date, color, price, status, image, note, id_category) VALUES ('sadsasda', 22, '2022-10-06', '22', 2222, false, '61b57e26-3da9-4808-9a37-f70bb4f9cb40_rw_1920.png', '211', 2);
+INSERT INTO fix_mobile.accessories (name, quantity, create_date, color, price, status, image, note, id_category) VALUES ('sadsasda', 22, '2022-10-06', '22', 2222, true, '61b57e26-3da9-4808-9a37-f70bb4f9cb40_rw_1920.png', '211', 2);
 -- SQLINES DEMO *** OR EVALUATION USE ONLY
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
-INSERT INTO fix_mobile.accessories (name, quantity, create_date, color, price, status, image, note, id_category) VALUES ('2132', 213213, '2022-10-06', '231213', 312213213, false, 'opchongvadap.jpg', '213123', 2);
+INSERT INTO fix_mobile.accessories (name, quantity, create_date, color, price, status, image, note, id_category) VALUES ('2132', 213213, '2022-10-06', '231213', 312213213, true, 'opchongvadap.jpg', '213123', 2);
 -- SQLINES DEMO *** OR EVALUATION USE ONLY
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
-INSERT INTO fix_mobile.accessories (name, quantity, create_date, color, price, status, image, note, id_category) VALUES ('123213', 321312321, '2022-10-06', '312312', 123123123, false, '1017.jpg', '123123', 3);
+INSERT INTO fix_mobile.accessories (name, quantity, create_date, color, price, status, image, note, id_category) VALUES ('123213', 321312321, '2022-10-06', '312312', 123123123, true, '1017.jpg', '123123', 3);
 -- SQLINES DEMO *** OR EVALUATION USE ONLY
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
-INSERT INTO fix_mobile.accessories (name, quantity, create_date, color, price, status, image, note, id_category) VALUES ('1322131', 23123123, '2022-10-06', '231123', 123123123, false, '1002.jpg', '123213', 3);
+INSERT INTO fix_mobile.accessories (name, quantity, create_date, color, price, status, image, note, id_category) VALUES ('1322131', 23123123, '2022-10-06', '231123', 123123123, true, '1002.jpg', '123213', 3);
 -- SQLINES DEMO *** OR EVALUATION USE ONLY
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
-INSERT INTO fix_mobile.accessories (name, quantity, create_date, color, price, status, image, note, id_category) VALUES ('Sạc giá sỉ XSMax', 213, '2022-10-04', 'Trắng', 200000, false, 'T2Uui2XkJXXXXXXXXX_761860821.jpg', 'Rẻ', 2);
+INSERT INTO fix_mobile.accessories (name, quantity, create_date, color, price, status, image, note, id_category) VALUES ('Sạc giá sỉ XSMax', 213, '2022-10-04', 'Trắng', 200000, true, 'T2Uui2XkJXXXXXXXXX_761860821.jpg', 'Rẻ', 2);
 -- SQLINES DEMO *** OR EVALUATION USE ONLY
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
-INSERT INTO fix_mobile.accessories (name, quantity, create_date, color, price, status, image, note, id_category) VALUES ('Ốp naruto', 123, '2022-10-04', 'Vàng', 75000, false, 'asdssaq1.jpg', 'Đẹp', 3);
+INSERT INTO fix_mobile.accessories (name, quantity, create_date, color, price, status, image, note, id_category) VALUES ('Ốp naruto', 123, '2022-10-04', 'Vàng', 75000, true, 'asdssaq1.jpg', 'Đẹp', 3);
 -- SQLINES DEMO *** OR EVALUATION USE ONLY
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
-INSERT INTO fix_mobile.accessories (name, quantity, create_date, color, price, status, image, note, id_category) VALUES ('Tai nghe không dây', 200, '2022-10-04', 'Đen tuyền', 230000, false, 'tai-nghe-khong-day.jpg', 'Bền, đẹp mắt', 1);
+INSERT INTO fix_mobile.accessories (name, quantity, create_date, color, price, status, image, note, id_category) VALUES ('Tai nghe không dây', 200, '2022-10-04', 'Đen tuyền', 230000, true, 'tai-nghe-khong-day.jpg', 'Bền, đẹp mắt', 1);
 -- SQLINES DEMO *** OR EVALUATION USE ONLY
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
-INSERT INTO fix_mobile.accessories (name, quantity, create_date, color, price, status, image, note, id_category) VALUES ('Ốp mỏng', 500, '2022-10-04', 'Cam trắng', 120000, false, '2e21e21e221.jpg', 'Đẹp, hoa cam hình tròn', 3);
+INSERT INTO fix_mobile.accessories (name, quantity, create_date, color, price, status, image, note, id_category) VALUES ('Ốp mỏng', 500, '2022-10-04', 'Cam trắng', 120000, true, '2e21e21e221.jpg', 'Đẹp, hoa cam hình tròn', 3);
 -- SQLINES DEMO *** OR EVALUATION USE ONLY
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
-INSERT INTO fix_mobile.accessories (name, quantity, create_date, color, price, status, image, note, id_category) VALUES ('Sạc không dây', 26, '2022-10-05', 'Đen', 2000000, false, '132122132221312w1e.jpg', 'Không mô tả', 2);
+INSERT INTO fix_mobile.accessories (name, quantity, create_date, color, price, status, image, note, id_category) VALUES ('Sạc không dây', 26, '2022-10-05', 'Đen', 2000000, true, '132122132221312w1e.jpg', 'Không mô tả', 2);
 -- SQLINES DEMO *** OR EVALUATION USE ONLY
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
-INSERT INTO fix_mobile.accessories (name, quantity, create_date, color, price, status, image, note, id_category) VALUES ('Ốp chống va đập', 21, '2022-10-05', 'Trắng, viền đen', 150000, false, 'opchongvadap.jpg', 'Loại ốp siêu bền', 3);
+INSERT INTO fix_mobile.accessories (name, quantity, create_date, color, price, status, image, note, id_category) VALUES ('Ốp chống va đập', 21, '2022-10-05', 'Trắng, viền đen', 150000, true, 'opchongvadap.jpg', 'Loại ốp siêu bền', 3);
 -- SQLINES DEMO *** OR EVALUATION USE ONLY
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
-INSERT INTO fix_mobile.accessories (name, quantity, create_date, color, price, status, image, note, id_category) VALUES ('1322131', 23123123, '2022-10-06', '231123', 123123123, false, '1017.jpg', '123213', 3);
+INSERT INTO fix_mobile.accessories (name, quantity, create_date, color, price, status, image, note, id_category) VALUES ('1322131', 23123123, '2022-10-06', '231123', 123123123, true, '1017.jpg', '123213', 3);
 -- SQLINES DEMO *** OR EVALUATION USE ONLY
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
-INSERT INTO fix_mobile.accessories (name, quantity, create_date, color, price, status, image, note, id_category) VALUES ('Sạc giá sỉ XSMax', 213, '2022-10-04', 'Trắng', 200000, false, 'T2Uui2XkJXXXXXXXXX_761860821.jpg', 'Rẻ', 2);
+INSERT INTO fix_mobile.accessories (name, quantity, create_date, color, price, status, image, note, id_category) VALUES ('Sạc giá sỉ XSMax', 213, '2022-10-04', 'Trắng', 200000, true, 'T2Uui2XkJXXXXXXXXX_761860821.jpg', 'Rẻ', 2);
 -- SQLINES DEMO *** OR EVALUATION USE ONLY
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
-INSERT INTO fix_mobile.accessories (name, quantity, create_date, color, price, status, image, note, id_category) VALUES ('Ốp naruto', 123, '2022-10-04', 'Vàng', 75000, false, 'asdssaq1.jpg', 'Đẹp', 3);
+INSERT INTO fix_mobile.accessories (name, quantity, create_date, color, price, status, image, note, id_category) VALUES ('Ốp naruto', 123, '2022-10-04', 'Vàng', 75000, true, 'asdssaq1.jpg', 'Đẹp', 3);
 -- SQLINES DEMO *** OR EVALUATION USE ONLY
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
-INSERT INTO fix_mobile.accessories (name, quantity, create_date, color, price, status, image, note, id_category) VALUES ('Tai nghe không dây', 200, '2022-10-04', 'Đen tuyền', 230000, false, 'tai-nghe-khong-day.jpg', 'Bền, đẹp mắt', 1);
+INSERT INTO fix_mobile.accessories (name, quantity, create_date, color, price, status, image, note, id_category) VALUES ('Tai nghe không dây', 200, '2022-10-04', 'Đen tuyền', 230000, true, 'tai-nghe-khong-day.jpg', 'Bền, đẹp mắt', 1);
+-- SQLINES DEMO *** OR EVALUATION USE ONLY
+-- SQLINES LICENSE FOR EVALUATION USE true
+INSERT INTO fix_mobile.accessories (name, quantity, create_date, color, price, status, image, note, id_category) VALUES ('Ốp mỏng', 500, '2022-10-04', 'Cam trắng', 120000, true, '2e21e21e221.jpg', 'Đẹp, hoa cam hình tròn', 3);
 -- SQLINES DEMO *** OR EVALUATION USE ONLY
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
-INSERT INTO fix_mobile.accessories (name, quantity, create_date, color, price, status, image, note, id_category) VALUES ('Ốp mỏng', 500, '2022-10-04', 'Cam trắng', 120000, false, '2e21e21e221.jpg', 'Đẹp, hoa cam hình tròn', 3);
+INSERT INTO fix_mobile.accessories (name, quantity, create_date, color, price, status, image, note, id_category) VALUES ('Sạc không dây', 26, '2022-10-05', 'Đen', 2000000, true, '132122132221312w1e.jpg', 'Không mô tả', 2);
 -- SQLINES DEMO *** OR EVALUATION USE ONLY
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
-INSERT INTO fix_mobile.accessories (name, quantity, create_date, color, price, status, image, note, id_category) VALUES ('Sạc không dây', 26, '2022-10-05', 'Đen', 2000000, false, '132122132221312w1e.jpg', 'Không mô tả', 2);
+INSERT INTO fix_mobile.accessories (name, quantity, create_date, color, price, status, image, note, id_category) VALUES ('Ốp chống va đập', 21, '2022-10-05', 'Trắng, viền đen', 150000, true, 'opchongvadap.jpg', 'Loại ốp siêu bền', 3);
 -- SQLINES DEMO *** OR EVALUATION USE ONLY
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
-INSERT INTO fix_mobile.accessories (name, quantity, create_date, color, price, status, image, note, id_category) VALUES ('Ốp chống va đập', 21, '2022-10-05', 'Trắng, viền đen', 150000, false, 'opchongvadap.jpg', 'Loại ốp siêu bền', 3);
+INSERT INTO fix_mobile.accessories (name, quantity, create_date, color, price, status, image, note, id_category) VALUES ('Tai nghe', 22, '2022-10-06', 'Đen', 200000, true, 'tai-nghe-khong-day.jpg', 'Bền, đẹp mắt', 1);
 -- SQLINES DEMO *** OR EVALUATION USE ONLY
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
-INSERT INTO fix_mobile.accessories (name, quantity, create_date, color, price, status, image, note, id_category) VALUES ('Tai nghe', 22, '2022-10-06', 'Đen', 200000, false, 'tai-nghe-khong-day.jpg', 'Bền, đẹp mắt', 1);
--- SQLINES DEMO *** OR EVALUATION USE ONLY
--- SQLINES LICENSE FOR EVALUATION USE ONLY
-INSERT INTO fix_mobile.accessories (name, quantity, create_date, color, price, status, image, note, id_category) VALUES ('Tai nghe', 22, '2022-10-06', 'Đen', 200000, false, 'tai-nghe-khong-day.jpg', 'Bền, đẹp mắt', 1);
+INSERT INTO fix_mobile.accessories (name, quantity, create_date, color, price, status, image, note, id_category) VALUES ('Tai nghe', 22, '2022-10-06', 'Đen', 200000, true, 'tai-nghe-khong-day.jpg', 'Bền, đẹp mắt', 1);
 
 INSERT INTO fix_mobile.accounts(username,password,full_name,gender,email,
 								phone,create_date,image,id_role) 
