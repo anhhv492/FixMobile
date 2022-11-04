@@ -16,7 +16,6 @@ public interface ProductService extends GenericService<Product, Integer> {
   Page<Product> getByPage(int pageNumber, int maxRecord, Integer status);
 	Page<Product> getAll (Pageable page);
 
-	Page<Product> getAll (Pageable page);
 	List<Product> findByCategoryAndStatus(Optional<Category> cate);
 
 }
