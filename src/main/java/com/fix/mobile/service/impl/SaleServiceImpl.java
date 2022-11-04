@@ -1,6 +1,6 @@
 package com.fix.mobile.service.impl;
 
-
+import org.hibernate.StaleStateException;
 import com.fix.mobile.repository.SaleDetailRepository;
 import com.fix.mobile.repository.SaleRepository;
 import com.fix.mobile.service.SaleService;
