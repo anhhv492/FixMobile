@@ -76,10 +76,6 @@ public class ProductServiceImpl implements ProductService {
     public Page<Product> getAll(Pageable page) {
         return repository.findAll(page);
     }
-    @Override
-    public Page<Product> getAll(Pageable page) {
-        return repository.findAll(page);
-    }
 
     @Override
     public List<Product> findByCategoryAndStatus(Optional<Category> cate) {
