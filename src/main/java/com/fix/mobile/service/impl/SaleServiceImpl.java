@@ -144,7 +144,7 @@ public class SaleServiceImpl implements SaleService {
                 throw new StaleStateException("Số lượng được nhập tối đa 999999 đơn vị");
             }
         }catch (NumberFormatException e){
-            throw new SaleExStaleStateExceptionception("Số lượng bạn nhập chưa phải là số");
+            throw new StaleStateException("Số lượng bạn nhập chưa phải là số");
         }
         //validateMucGG
 
