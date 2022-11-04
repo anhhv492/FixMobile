@@ -164,7 +164,7 @@ CREATE TABLE orders (
 	id_order int NOT NULL auto_increment primary key, 
 	create_date date not null,
 	total decimal(10,0) not null,
-	note nvarchar(255) NOT NULL,
+	note nvarchar(255) NULL,
 	address nvarchar(255) not null,
 	status binary DEFAULT(0) not null,
 	type binary not null,
