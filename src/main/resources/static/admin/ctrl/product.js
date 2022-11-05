@@ -16,6 +16,41 @@ app.controller('product', function($scope, $http) {
         insert:'Thêm mới',
         update:'Cập nhật'
     };
+    $scope.message = function (mes){
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3500,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+        Toast.fire({
+            icon: 'success',
+            title: mes,
+        })
+    }
+    $scope.error =  function (err){
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+
+        Toast.fire({
+            icon: 'error',
+            title: err,
+        })
+    }
     $scope.checkButton = true;
     $scope.checkSubmit=false;
     $scope.getProducts =function (){
@@ -99,40 +134,10 @@ app.controller('product', function($scope, $http) {
                     /* Read more about handling dismissals below */
                     if (result.dismiss === Swal.DismissReason.timer) {
                         $http.delete(`${pathAPI}/delete/${formProduct.idProduct}`).then(response=> {
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: 'top-end',
-                            showConfirmButton: false,
-                            timer: 3000,
-                            timerProgressBar: true,
-                            didOpen: (toast) => {
-                                toast.addEventListener('mouseenter', Swal.stopTimer)
-                                toast.addEventListener('mouseleave', Swal.resumeTimer)
-                            }
-                        })
-
-                        Toast.fire({
-                            icon: 'success',
-                            title:'Xóa thành công!'
-                        })
                         $scope.products.splice($scope.products.indexOf(formProduct), 1);
+                        $scope.message('Đã xóa thành công sản phẩm');
                     }).catch(error=>{
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: 'top-end',
-                            showConfirmButton: false,
-                            timer: 3000,
-                            timerProgressBar: true,
-                            didOpen: (toast) => {
-                                toast.addEventListener('mouseenter', Swal.stopTimer)
-                                toast.addEventListener('mouseleave', Swal.resumeTimer)
-                            }
-                        })
-
-                        Toast.fire({
-                            icon: 'error',
-                            title:'Đã xảy ra lỗi!' ,
-                        })
+                        $scope.error('xóa thất bại');
                     });
                         console.log('I was closed by the timer')
                     }
@@ -165,40 +170,10 @@ app.controller('product', function($scope, $http) {
             idCapacity: $scope.formProduct.capacity
         };
         $http.put(pathAPI+'/'+$scope.formProduct.idProduct, $scope.formProduct).then(response=> {
-            const Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
-            })
-
-            Toast.fire({
-                icon: 'success',
-                title:'Cập nhật thành công!' ,
-            })
+            $scope.message("cập nhật thành công"+ $scope.formProduct.name);
             $scope.refresh();
         }).catch(error=>{
-            const Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
-            })
-
-            Toast.fire({
-                icon: 'error',
-                title: 'Cập nhật thất bại!',
-            })
+            $scope.error('cập nhật thất bại');
         })
     };
     $scope.doSubmit = function() {
@@ -284,12 +259,11 @@ app.controller('product', function($scope, $http) {
         formData.append('size', $scope.formProduct.size);
         formData.append('price',$scope.formProduct.price);
         formData.append('camera',$scope.formProduct.camera);
-        formData.append('status',$scope.formProduct.status=false)
+        formData.append('status',$scope.formProduct.status=1)
         formData.append( 'category',$scope.formProduct.category)
         formData.append('ram',$scope.formProduct.ram)
         formData.append('color',$scope.formProduct.color)
         formData.append('capacity',$scope.formProduct.capacity)
-        formData.append('imei',$scope.formProduct.imei)
         console.log($scope.formProduct.category)
         let req = {
             method: 'POST',
@@ -319,39 +293,11 @@ app.controller('product', function($scope, $http) {
         });
         $http(req).then(response => {
             console.log("ddd " + response);
-            const Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3500,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
-            })
-            Toast.fire({
-                icon: 'success',
-                title: 'Thêm mới thành công!',
-            })
+            $scope.message("thêm mới sản phẩm thành công");
+            $scope.refresh();
             $scope.getProducts();
         }).catch(error => {
-            const Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 1500,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
-            })
-
-            Toast.fire({
-                icon: 'error',
-                title: 'Thêm mới thất bại!',
-            })
+            $scope.error('thêm mới thất bại');
         });
     };
 
@@ -480,6 +426,70 @@ app.controller('product', function($scope, $http) {
                 })
                 console.log('I was closed by the timer')
             }
+        })
+    }
+    $scope.formImay = {};
+    $scope.doSubmitImay = function (){
+        if($scope.formImay.idImay) {
+            let timerInterval
+            Swal.fire({
+                title: 'Đang cập nhật!',
+                html: 'Vui lòng chờ <b></b> milliseconds.',
+                timer: 1500,
+                timerProgressBar: true,
+                didOpen: () => {
+                    Swal.showLoading()
+                    const b = Swal.getHtmlContainer().querySelector('b')
+                    timerInterval = setInterval(() => {
+                        b.textContent = Swal.getTimerLeft()
+                    }, 100)
+                },
+                willClose: () => {
+                    clearInterval(timerInterval)
+                }
+            }).then((result) => {
+                /* Read more about handling dismissals below */
+                if (result.dismiss === Swal.DismissReason.timer) {
+                    $scope.onUpdate();
+                    console.log('I was closed by the timer')
+                }
+            })
+        }else{
+            let timerInterval
+            Swal.fire({
+                title: 'Đang lưu mới!',
+                html: 'Vui lòng chờ <b></b> milliseconds.',
+                timer: 2500,
+                timerProgressBar: true,
+                didOpen: () => {
+                    Swal.showLoading()
+                    const b = Swal.getHtmlContainer().querySelector('b')
+                    timerInterval = setInterval(() => {
+                        b.textContent = Swal.getTimerLeft()
+                    }, 100)
+                },
+                willClose: () => {
+                    clearInterval(timerInterval)
+                }
+            }).then((result) => {
+                /* Read more about handling dismissals below */
+                if (result.dismiss === Swal.DismissReason.timer) {
+                    $scope.saveImay();
+                    console.log('I was closed by the timer')
+                }
+            })
+        }
+    }
+    $scope.saveImay = function (){
+        var form = new FormData();
+        form.append("name",$scope.formImay.name);
+        form.append("product",$scope.formImay.product);
+        form.append("status",$scope.formImay.status = 1);
+        $http.post('/rest/admin/product/saveImay',form).then(response=> {
+            $scope.message('Đã thêm '+ $scope.formImay.name);
+
+        }).catch(error=>{
+            $scope.error('thêm mới thất bại');
         })
     }
 

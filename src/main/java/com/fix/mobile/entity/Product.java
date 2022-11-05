@@ -28,10 +28,6 @@ public class Product {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "imei")
-    private String imei;
-
-
     @Column(name = "create_date")
     private Date createDate;
 
@@ -70,7 +66,6 @@ public class Product {
                    String size, String note, int status, Ram ram, Color color,
                    Capacity capacity, Category category, List<Image> images, List<MultipartFile> files) {
         this.name = name;
-        this.imei = imei;
         this.createDate = createDate;
         this.camera = camera;
         this.price = price;

@@ -113,7 +113,7 @@ public class AccessoiesRestController {
 		return capacityService.save(capacity);
 	}
 
-	@DeleteMapping("/deleteCapacity/idCapacity")
+	@DeleteMapping("/deleteCapacity/{idCapacity}")
 	public void deleteCapacity(@PathVariable("idCapacity") Integer id){
 		capacityService.deleteById(id);
 	}

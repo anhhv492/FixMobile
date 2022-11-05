@@ -3,6 +3,7 @@ package com.fix.mobile.rest.controller;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.fix.mobile.config.WebConfigrutation;
+import com.fix.mobile.dto.ImayProductDTO;
 import com.fix.mobile.entity.*;
 import com.fix.mobile.helper.ExcelProducts;
 import com.fix.mobile.payload.SaveProductRequest;
@@ -48,6 +49,7 @@ public class RestProductsController {
 
 	@Autowired  private ExcelProducts excelProduct;
 
+	@Autowired private ImayProductService imayService;
 
 	@GetMapping("/getAllRam")
 	public List<Ram> findAllRam(){
@@ -61,11 +63,6 @@ public class RestProductsController {
 	@GetMapping("/getAllColor")
 	public List<Color> findAllColor(){
 		return colorService.findAll();
-	}
-	// ảnh
-	@GetMapping("/getAllImage")
-	public List<Image> findAllImage(){
-		return imageService.findAll();
 	}
 	// danh mục
 	@GetMapping("/category")
@@ -150,5 +147,20 @@ public class RestProductsController {
 	public Boolean readExcel(@PathParam("file") MultipartFile file) throws Exception{
 		Boolean checkExcel= excelProduct.readExcel(file);
 		return checkExcel;
+	}
+	// imay product
+	@RequestMapping( value = "/saveImay", method = POST)
+	public ImayProduct saveImay(@ModelAttribute ImayProductDTO imay){
+		if  (imay!=null ){
+			try {
+				ImayProduct i = new ImayProduct();
+				i.setNameImay(imay.getNameImay());
+				i.setStatus(imay.getStatus());
+				return imayService.save(i);
+			}catch (Exception e){
+				e.getMessage();
+			}
+		}
+		return null;
 	}
 }
