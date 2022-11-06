@@ -72,6 +72,13 @@ public class RestProductsController {
 		return productService.findAll();
 	}
 
+
+	public List<Product> findAllPageable(@PathVariable("page") Optional<Integer> page){
+		Pageable pageable = PageRequest.of(page.get(), 5);
+		List<Product> products = productService.findAll(pageable).getContent();
+		return products;
+  }
+  
 	@GetMapping(value="/page/pushedlist")
 	public ResponseEntity<Map<String, Object>> findByPublished(
 			@RequestParam(defaultValue = "0") int page,
@@ -140,6 +147,14 @@ public class RestProductsController {
 	public Product update(@PathVariable("id") Integer id, @RequestBody Product product){
 		return productService.update(product,id);
 	}
+
+@GetMapping(value="/page/{page}")
+	public Page<Product> findAllPage(@PathVariable("page") Integer page){
+		Page<Product> pageProduct = productService
+				.getByPage(page, 5,0);
+		return pageProduct;
+   }
+   
 	@PostMapping("/readExcel")
 	public Boolean readExcel(@PathParam("file") MultipartFile file) throws Exception{
 		Boolean checkExcel= excelProduct.readExcel(file);

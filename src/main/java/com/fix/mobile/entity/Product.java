@@ -46,6 +46,7 @@ public class Product {
     @Column(name = "status")
     private int status;
 
+
     @ManyToOne
     @JoinColumn(name = "id_ram")
     private Ram ram;
@@ -61,6 +62,7 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "id_category")
     private Category category;
+
 
     public Product(String name, String imei, Date createDate, String camera, BigDecimal price,
                    String size, String note, int status, Ram ram, Color color,
@@ -83,6 +85,7 @@ public class Product {
     @OneToMany(mappedBy = "product")
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Image> images;
+    
     @JsonManagedReference
     public List<Image> getImages(){
         return images;
@@ -91,9 +94,11 @@ public class Product {
     @Transient
     private List<MultipartFile> files;
 
+
     @JsonIgnore
     @OneToMany(mappedBy = "product")
     private List<ChangeDetail> changeDetails;
+
 
     @JsonIgnore
     @OneToMany(mappedBy = "product")
@@ -109,9 +114,6 @@ public class Product {
 
     @JsonIgnore
     @OneToMany(mappedBy = "product")
-    private List<SaleDetail> saleDetails;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "product")
     private List<ImayProduct> listImay;
+
 }

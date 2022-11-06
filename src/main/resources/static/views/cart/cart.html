@@ -55,39 +55,26 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="card shadow-2-strong mb-5 mb-lg-0" style="border-radius: 16px;">
+                <div class="card shadow-2-strong mb-5 mb-lg-0" style="border-radius: 16px;" ng-if="qtyCart>0">
                     <div class="card-body p-4">
 
                         <div class="row">
-                            <div class="col-md-6 col-lg-4 col-xl-3 mb-4 mb-md-0">
+                            <div class="col-md-6 col-lg-4 col-xl-3 mb-md-0">
                                 <form>
+                                    <label class="form-label ps-2">Phương thức thanh toán</label>
                                     <div class="d-flex flex-row pb-3">
                                         <div class="d-flex align-items-center pe-2">
-                                            <input class="form-check-input" type="radio" name="radioNoLabel" id="radioNoLabel1v"
-                                                   value="" aria-label="..." checked />
+                                            <input class="form-check-input" type="radio" ng-click="checkBuyCOD()" name="checkBuy">
                                         </div>
                                         <div class="rounded border w-100 p-3">
                                             <p class="d-flex align-items-center mb-0">
-                                                <i class="fab fa-cc-mastercard fa-2x text-dark pe-2"></i>Credit
-                                                Card
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex flex-row pb-3">
-                                        <div class="d-flex align-items-center pe-2">
-                                            <input class="form-check-input" type="radio" name="radioNoLabel" id="radioNoLabel2v"
-                                                   value="" aria-label="..." />
-                                        </div>
-                                        <div class="rounded border w-100 p-3">
-                                            <p class="d-flex align-items-center mb-0">
-                                                <i class="fab fa-cc-visa fa-2x fa-lg text-dark pe-2"></i>Debit Card
+                                                <i class="fab fa-cc-diners-club fa-2x fa-lg text-dark pe-2"></i>Tiền mặt
                                             </p>
                                         </div>
                                     </div>
                                     <div class="d-flex flex-row">
                                         <div class="d-flex align-items-center pe-2">
-                                            <input class="form-check-input" type="radio" name="radioNoLabel" id="radioNoLabel3v"
-                                                   value="" aria-label="..." />
+                                            <input class="form-check-input" type="radio" ng-click="checkBuyPaypal()" name="checkBuy">
                                         </div>
                                         <div class="rounded border w-100 p-3">
                                             <p class="d-flex align-items-center mb-0">
@@ -99,31 +86,23 @@
                             </div>
                             <div class="col-md-6 col-lg-4 col-xl-6">
                                 <div class="row">
-                                    <div class="col-12 col-xl-6">
-                                        <div class="form-outline mb-4 mb-xl-5">
-                                            <input type="text" id="typeName" class="form-control form-control-lg" siez="17"
-                                                   placeholder="John Smith" />
-                                            <label class="form-label" for="typeName">Name on card</label>
-                                        </div>
-
-                                        <div class="form-outline mb-4 mb-xl-5">
-                                            <input type="text" id="typeExp" class="form-control form-control-lg" placeholder="MM/YY"
-                                                   size="7" id="exp" minlength="7" maxlength="7" />
-                                            <label class="form-label" for="typeExp">Expiration</label>
-                                        </div>
+                                    <div class="form-outline col-6">
+                                        <label class="form-label" for="typeName">Người nhận</label>
+                                        <input type="text" id="typeName" class="form-control" placeholder="Name" />
                                     </div>
-                                    <div class="col-12 col-xl-6">
-                                        <div class="form-outline mb-4 mb-xl-5">
-                                            <input type="text" id="typeText1" class="form-control form-control-lg" siez="17"
-                                                   placeholder="1111 2222 3333 4444" minlength="19" maxlength="19" />
-                                            <label class="form-label" for="typeText1">Card Number</label>
-                                        </div>
-
-                                        <div class="form-outline mb-4 mb-xl-5">
-                                            <input type="password" id="typeText2" class="form-control form-control-lg"
-                                                   placeholder="&#9679;&#9679;&#9679;" size="1" minlength="3" maxlength="3" />
-                                            <label class="form-label" for="typeText2">Cvv</label>
-                                        </div>
+                                    <div class="form-outline col-6">
+                                        <label class="form-label" for="typeExp">Số điện thoại</label>
+                                        <input type="text" id="typeExp" class="form-control" placeholder="SĐT" minlength="10" maxlength="15" />
+                                    </div>
+                                    <div class="form-outline col-12 mt-2">
+                                        <label class="form-label" for="typeText1">Địa chỉ</label>
+                                        <textarea class="form-control" ng-model="cart.address" name="address"
+                                                  id="typeText1" rows="4" placeholder="Address"></textarea>
+                                    </div>
+                                    <div class="form-outline col-12 mt-2">
+                                        <label class="form-label" for="typeText2">Ghi chú</label>
+                                        <textarea class="form-control" ng-model="cart.note" name="note"
+                                                  id="typeText2" rows="4" placeholder="Note"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -146,7 +125,8 @@
                                     <h5 class="mb-2">{{totals()|number}}đ</h5>
                                 </div>
 
-                                <button type="button" class="btn btn-primary btn-block btn-lg">
+                                <button type="button" class="btn btn-primary btn-block btn-lg" ng-if="checkBuy!=null"
+                                    ng-click="buyCart()">
                                     Thanh toán
                                 </button>
 

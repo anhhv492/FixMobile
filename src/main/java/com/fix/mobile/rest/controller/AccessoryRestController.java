@@ -3,6 +3,7 @@ package com.fix.mobile.rest.controller;
 import com.fix.mobile.entity.Accessory;
 import com.fix.mobile.entity.Category;
 import com.fix.mobile.helper.ExcelHelper;
+import com.fix.mobile.repository.AccessoryRepository;
 import com.fix.mobile.service.AccessoryService;
 import com.fix.mobile.service.CategoryService;
 import org.apache.log4j.Logger;
@@ -24,6 +25,8 @@ public class AccessoryRestController {
 	@Autowired
 	private AccessoryService accessoryService;
 	@Autowired
+	private AccessoryRepository accessoryRepository;
+	@Autowired
 	private CategoryService categoryService;
 	@Autowired
 	private ExcelHelper excelHelper;
@@ -37,7 +40,7 @@ public class AccessoryRestController {
 	public List<Accessory> findAllPageable(@PathVariable("page") Optional<Integer> page){
 		Pageable pageable = PageRequest.of(page.get(), 5);
 		List<Accessory> accessories = accessoryService.findAll(pageable).getContent();
-		LOGGER.info("findAllPageable: "+accessories);
+		LOGGER.info("findAllPageable: "+accessories.size());
 		LOGGER.info("page: "+page);
 		return accessories;
 	}
@@ -61,7 +64,8 @@ public class AccessoryRestController {
 		if(cate.isEmpty()){
 			return null;
 		}
-		return accessoryService.findByCate(cate);
+		List<Accessory> accessories = accessoryService.findByCategoryAndStatus(cate);
+		return accessories;
 	}
 
 	@PostMapping
@@ -70,11 +74,17 @@ public class AccessoryRestController {
 //		googleDriveService.upLoadFile(accessory.getImage(), accessory.getImage(), "image/png");
 		return accessoryService.save(accessory);
 	}
-	//delete accessory
-	@DeleteMapping("/delete/{id}")
-	public void delete(@PathVariable("id") Integer id){
-		accessoryService.deleteById(id);
-		LOGGER.info("delete: "+id);
+	//change status accessory
+	@PutMapping("/change/{id}")
+	public Accessory changeStatus(@PathVariable("id") Integer id){
+	    Accessory accessory = accessoryService.findById(id).get();
+		if(accessory.getStatus() == true){
+			accessory.setStatus(false);
+		}else{
+			accessory.setStatus(true);
+		}
+		LOGGER.info("change status: "+id);
+		return accessoryRepository.save(accessory);
 	}
 	//update accessory
 	@PutMapping("/{id}")

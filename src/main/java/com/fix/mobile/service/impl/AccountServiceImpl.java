@@ -69,4 +69,9 @@ public class AccountServiceImpl implements AccountService {
 		// TODO Auto-generated method stub
 		return repository.findByName(username);
 	}
+
+    @Override
+    public Account findByUsername(String name) {
+        return repository.findByName(name);
+    }
 }
