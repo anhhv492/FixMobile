@@ -3,7 +3,7 @@
     
             <div class="mb-1">
                 <h1 class="h3 d-inline align-middle">Quản lý tài khoản</h1>
-                <div >
+                <div hidden >
                     <input type="checkbox" ng-model="hideUpdate">
                 <input type="checkbox" ng-model="hideUsername">
                 <input type="checkbox" ng-model="hideCreate">
@@ -39,8 +39,8 @@
                                 <div class="col-sm-9">
                                     <select ng-model="form.status" name="status" required class="form-select mb-1">
                                         <option disabled>Chọn trạng thái</option>
-                                        <option ng-value="true">Hoạt động</option>
-                                        <option ng-value="false">Không hoạt động</option>
+                                        <option ng-value="1">Hoạt động</option>
+                                        <option ng-value="0">Không hoạt động</option>
                                     </select><br>
                                     <span ng-show="myForm.$submitted || myForm.status.$dirty">
                                         <span class="error" ng-show="myForm.status.$error.required"> <i
@@ -174,13 +174,13 @@
                                     <label class="card-title mb-0">Mật khẩu</label>
                                 </div>
                                 <div class="col-sm-9">
-                                    <input ng-model="form.password" type="password" name="password" class="form-control" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{3,}$"
+                                    <input ng-model="form.password" type="password" name="password" class="form-control" pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{3,250}$"
                                         required placeholder="Mật khẩu">
                                     <span ng-show="myForm.$submitted || myForm.password.$dirty">
                                         <span class="error" ng-show="myForm.password.$error.required"> <i
                                                 class="fa fa-exclamation-circle"></i>Mật khẩu không được trống</span>
                                                 <span class="error" ng-show="myForm.password.$error.pattern"> <i
-                                                    class="fa fa-exclamation-circle"></i>Tối thiểu ba ký tự, ít nhất một chữ cái và một số</span>
+                                                    class="fa fa-exclamation-circle"></i>Tối thiểu ba ký tự, ít nhất một chữ cái, một số và một ký tự đặc biệt</span>
                                     </span><br><br>
                                 </div>
                             </div>

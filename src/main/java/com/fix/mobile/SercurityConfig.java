@@ -4,6 +4,9 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +22,6 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-
 import com.fix.mobile.entity.Account;
 import com.fix.mobile.entity.Role;
 import com.fix.mobile.service.AccountService;
@@ -30,6 +32,10 @@ import com.fix.mobile.service.AccountService;
 public class SercurityConfig extends WebSecurityConfigurerAdapter {
 	//HttpSecurity: Phân quyền sử dụng
 	//Cau hinh, chi thi phuong thuc login
+	@Autowired
+	private HttpServletRequest request;
+	
+
 	
 //	@Bean 
 //	public JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter()throws Exception{
@@ -52,22 +58,32 @@ public class SercurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	AccountService accountService;
 	@Bean
-	BCryptPasswordEncoder pe() {//Mã hóa password
+	public BCryptPasswordEncoder pe() {//Mã hóa password
 		return new BCryptPasswordEncoder();
 	}
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-	//Viet phuong thuc userDetailService cos du lieu truyen vao: username
-		auth.userDetailsService(username ->{
+//	Viet phuong thuc userDetailService cos du lieu truyen vao: username
+//		HttpSession session = request.getSession(); 
+		auth.userDetailsService((username) ->{
 			try {
 				Account user = accountService.findByName(username);
-				String password = pe().encode(user.getPassword());
-				String roles =  user.getRole().getName();
-				return User.withUsername(username).password(password).roles(roles).build();
+				if (user == null) {
+//					session.setAttribute("error", "Sai email hoặc mật khẩu");
+					System.out.println("Sai thông tin login");
+				}else 
+					System.out.println("Password chưa mã hóa: "+ user.getPassword());
+//					System.out.println("Mã hóa pass word: " + pe().encode(user.getPassword()));
+					String password = user.getPassword();
+					String roles =  user.getRole().getName();
+					return User.withUsername(username).password(password).roles(roles).build();
+				
+				
 			} catch (NoSuchElementException e) {
 				throw new UsernameNotFoundException(username + "not found!");
 			}
 		});
+		
 	}
 	
     @Override

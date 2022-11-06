@@ -1,0 +1,136 @@
+
+<body ng-app="app-register">
+  <section class="ftco-section">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-6 text-center mb-5">
+          <h2 class="heading-section">Hãy đăng ký tài khoản</h2>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-md-9 col-lg-8">
+          <div class="login-wrap p-4 p-md-5">
+            <div class="icon d-flex align-items-center justify-content-center">
+              <span class="fa fa-user-o"></span>
+            </div>
+            <h3 class="text-center mb-4">Bạn chưa có tài khoản?</h3>
+               <!-- action="/register/save" method="POST" -->
+            <form class="register-form" ng-controller="register-ctrl" 
+         
+              modelAttribute="account">
+              <div class="form-group">
+                <label for="username"> Tên tài khoản</label>
+                <input type="text" class="form-control rounded-left" ng-model="form.username" path="username"
+                  name="username" placeholder="Tên tài khoản" required>
+              </div>
+              <div class="form-group">
+                <label for="fullName"> Họ tên</label>
+                <input type="text" class="form-control rounded-left" ng-model="form.fullName" path="fullName"
+                  name="fullName" placeholder="Họ tên" required>
+              </div>
+              <div class="form-group ">
+                <label for="password"> Mật khẩu</label>
+                <input type="password" class="form-control rounded-left" ng-model="form.password" path="password"
+                  name="password" placeholder="Mật khẩu" required>
+              </div>
+              <div class="form-group">
+                <label for="email"> Email</label>
+                <input type="text" class="form-control rounded-left" ng-model="form.email" path="email" name="email"
+                  placeholder="abc@gmail.com" required>
+              </div>
+              <div class="form-group">
+                <label for="phone"> Số điện thoại</label>
+                <input type="text" class="form-control rounded-left" ng-model="form.phone" path="phone" name="phone"
+                  placeholder="Số điện thoại" required>
+              </div>
+              <div class="form-group" hidden>
+                
+                  <div class="row  ">
+                      <div class="col-sm-3">
+                          <label class="card-title mb-0">Trạng thái</label>
+                      </div>
+                      <div class="col-sm-9">
+                          <select ng-model="form.status" name="status" required class="form-select mb-1">
+                              <option disabled>Chọn trạng thái</option>
+                              <option ng-value="1">Hoạt động</option>
+                              <option ng-value="0">Không hoạt động</option>
+                          </select><br>
+                          
+                      </div>
+                  </div>
+              
+                
+                  <div class="row  ">
+                      <div class="col-sm-3">
+                          <label class="card-title mb-0">Giới tính</label>
+                      </div>
+                      <div class="col-sm-9">
+
+                          <label class="radio-inline"> <input name="gender" ng-model="form.gender"
+                                  ng-value="true" checked type="radio" required>Nam
+                          </label>
+                          <!-- ng-value: để giá trị true -false | không phải là chuỗi -->
+                          <label class="radio-inline"> <input name="gender" ng-model="form.gender"
+                                  ng-value="false" type="radio" required>Nữ
+                          </label>
+                      </div>
+                  </div>
+                            
+                  <div class="row  ">
+                      <div class="col-sm-3">
+                          <label class="card-title mb-0">Chức vụ</label>
+                      </div>
+                      <div class="col-sm-9">
+                          <select ng-model="form.role.idRole" class="form-select " name="role" required>
+                              <option disabled>Chọn chức vụ</option>
+                              <option ng-repeat=" role in roles" ng-value="role.idRole">{{role.name}}
+                              </option>
+                          </select>
+                         
+                      </div>
+                  </div>
+                  
+                  <div class="row  ">
+                    <div class="col-sm-3">
+                      <label class="card-title mb-0">Ngày tạo</label>
+                    </div>
+                    <div class="col-sm-9">
+                      <div class="">
+                        <input disabled ng-model="form.createDate" name="creatDate" type="date" class="form-control">
+                       
+                      </div>
+                    </div>
+                  </div>
+               
+                
+                  <div class="row  ">
+                    <div class="col-sm-3">
+                      <label class="card-title mb-0">Hình ảnh</label>
+                    </div>
+                    <div class="col-sm-9">
+                      <label for="image">
+                        <img style="filter: drop-shadow(0 0 5px rgb(119, 119, 145));" width="105px"
+                          src="/images/img/5.png" ng-if="!form.image">
+                        <img style="filter: drop-shadow(0 0 5px rgb(119, 119, 145));" width="105px"
+                          ng-src="/images/img/{{form.image}}" style="max-width: 100%; height: 100px;">
+                      </label>
+                      <div class="">
+                        <input onchange="angular.element(this).scope().uploadFile(this.files)" ng-model="form.image"
+                          class="form-control" type="file" id="image">
+                      </div>
+                    </div>
+                  </div>
+              </div>
+             
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary rounded submit p-3
+                 px-5 " ng-click="create()">Đăng ký</button>
+              </div>
+              <div class="row mb-5"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>

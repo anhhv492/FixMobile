@@ -11,6 +11,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -46,18 +47,18 @@ public class Account {
 
     @Column(name = "phone")
     @NotBlank
-    @Size(min = 10, max = 10)
+//    @Size(min = 10, max = 10)
     private String phone;
 
     @Column(name = "create_date")
-    private java.sql.Date createDate;
+    private Date createDate;
 
     @Column(name = "image")
     @Lob
     private String image;
 
     @Column(name = "status")
-    private Boolean status;
+    private int status;
 
     @ManyToOne
     @JoinColumn(name = "id_role")
@@ -76,6 +77,12 @@ public class Account {
     @JsonIgnore
     @OneToMany(mappedBy = "account")
     private List<ProductChange> productChanges;
+	public Role getRole() {
+		return role;
+	}
+	
+	
+    
 
 	
    
