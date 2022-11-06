@@ -63,81 +63,15 @@ app.controller("restaccsesries", function ($scope, $http) {
         }
     }
     const pathAPI = "http://localhost:8080/rest/admin/accessoríes";
-    $scope.index=0;
-    $scope.check_firsts=false;
-    $scope.check_lasts=true;
-    $scope.totalPagess=0;
-    $scope.currentPages = 0;
-    $scope.next=function(){
-        $scope.check_firsts=true;
-        $scope.index++;
-        if($scope.index>=$scope.totalPagess){
-            $scope.index=0;
-            $scope.check_firsts=false;
-            $scope.check_lasts=true;
-        }
-        if($scope.index==$scope.totalPagess-1){
-            $scope.check_firsts=true;
-            $scope.check_lasts=false;
-        }
-        $http.get(pathAPI+'/page/ram?page='+$scope.index).then(res=>{
-            $scope.ram = res.data.items;
-            console.log('Load accessories success',res.data)
-        }).catch(err=>{
-            console.log('Load accessories failse',err.data);
-        })
-    }
-
-    $scope.prev=function(){
-        $scope.check_lasts=true;
-        $scope.index--;
-        if($scope.index<0){
-            $scope.index=$scope.totalPagess-1;
-            $scope.check_firsts=true;
-            $scope.check_lasts=false;
-        }
-        if($scope.index==0){
-            $scope.check_firsts=false;
-            $scope.check_lasts=true;
-        }
-        $http.get(pathAPI+'/page/ram?page='+$scope.index).then(res=>{
-            $scope.ram = res.data.items;
-            console.log('Load accessories success',res.data)
-        }).catch(err=>{
-            console.log('Load accessories failse',err.data);
-        })
-    }
-    $scope.first=function(){
-        $scope.check_firsts=false;
-        $scope.check_lasts=true;
-        $scope.index=0;
-        $http.get(pathAPI+'/page/ram?page='+$scope.index).then(res=>{
-            $scope.ram = res.data.items;
-            console.log('Load accessories success',res.data)
-        }).catch(err=>{
-            console.log('Load accessories failse',err.data);
-        })
-    }
-    $scope.last=function(){
-        $scope.check_firsts=true;
-        $scope.check_lasts=false;
-        $scope.index=$scope.totalPagess-1;
-        $http.get(pathAPI+'/page/ram?page='+$scope.index).then(res=>{
-            $scope.ram = res.data.items;
-            console.log('Load accessories success',res.data)
-        }).catch(err=>{
-            console.log('Load accessories failse',err.data);
-        })
-    }
-
     $scope.create = function (){
         var item = angular.copy($scope.accseries);
         console.log(item);
         $http.post("/rest/admin/accessoríes",item).then(resp => {
             $scope.items.push(item);
             $scope.reset();
+            $scope.message("Đã thêm thành công");
             $scope.initialize();
-            $scope.mes("Đã thêm " + item.name);
+            console.log(resp);
         }).catch(error => {
             $scope.error("thêm mới thất bại");
         })
@@ -176,6 +110,7 @@ app.controller("restaccsesries", function ($scope, $http) {
                             $scope.items.splice($scope.items.indexOf(items), 1);
                             $scope.message('xóa thành công');
                             $scope.reset();
+                            $scope.initialize();
                         }).catch(error=>{
                             $scope.error('xóa thất bại');
                         });

@@ -1,6 +1,7 @@
 app.controller('product', function($scope, $http) {
     const pathAPI = "http://localhost:8080/rest/admin/product";
     $scope.formProduct = {};
+    $scope.imeis = []
     $scope.products = [];
     $scope.categories = [];
     $scope.colors= [];
@@ -405,7 +406,6 @@ app.controller('product', function($scope, $http) {
                         title: 'Thêm file Excel thành công'
                     })
                     console.log('excel',res);
-                    $scope.getProducts();
                 }).catch(err=>{
                     const Toast = Swal.mixin({
                         toast: true,
@@ -428,9 +428,8 @@ app.controller('product', function($scope, $http) {
             }
         })
     }
-    $scope.formImay = {};
     $scope.doSubmitImay = function (){
-        if($scope.formImay.idImay) {
+        if($scope.formProduct.idImay) {
             let timerInterval
             Swal.fire({
                 title: 'Đang cập nhật!',
@@ -448,7 +447,6 @@ app.controller('product', function($scope, $http) {
                     clearInterval(timerInterval)
                 }
             }).then((result) => {
-                /* Read more about handling dismissals below */
                 if (result.dismiss === Swal.DismissReason.timer) {
                     $scope.onUpdate();
                     console.log('I was closed by the timer')
@@ -472,7 +470,6 @@ app.controller('product', function($scope, $http) {
                     clearInterval(timerInterval)
                 }
             }).then((result) => {
-                /* Read more about handling dismissals below */
                 if (result.dismiss === Swal.DismissReason.timer) {
                     $scope.saveImay();
                     console.log('I was closed by the timer')
@@ -482,16 +479,82 @@ app.controller('product', function($scope, $http) {
     }
     $scope.saveImay = function (){
         var form = new FormData();
-        form.append("name",$scope.formImay.name);
-        form.append("product",$scope.formImay.product);
-        form.append("status",$scope.formImay.status = 1);
-        $http.post('/rest/admin/product/saveImay',form).then(response=> {
-            $scope.message('Đã thêm '+ $scope.formImay.name);
-
+        if(!$scope.imeis.isPrototypeOf()){
+            angular.forEach($scope.imeis, function(name) {
+                form.append('name', name.value);
+                console.log('vvvvv '+ name.value);
+                debugger;
+            });
+        }
+        form.append('name',$scope.formProduct.name );
+        form.append('product',$scope.formProduct.product);
+        let req = {
+            method: 'POST',
+            url: '/rest/admin/product/saveImay',
+            headers: {
+                'Content-Type': undefined // or  'Content-Type':'application/json'
+            },
+            data: form
+        }
+        $http(req).then(response=> {
+            $scope.message('Đã thêm '+ $scope.formProduct.name);
+            console.log('ddadadasdsssssssssssssss '+ $scope.formProduct.name)
+            $scope.formProduct = {}
+            $scope.imeis=null;
         }).catch(error=>{
             $scope.error('thêm mới thất bại');
         })
     }
+    $scope.xcellDataImay = function (files){
+        var form = new FormData();
+        form.append('file',files[0]);
+        let timerInterval
+        Swal.fire({
+            title: 'Đang thêm hàng loạt!',
+            html: 'Vui lòng chờ <b></b> milliseconds.',
+            timer: 1500,
+            timerProgressBar: true,
+            didOpen: () => {
+                Swal.showLoading()
+                const b = Swal.getHtmlContainer().querySelector('b')
+                timerInterval = setInterval(() => {
+                    b.textContent = Swal.getTimerLeft()
+                }, 100)
+            },
+            willClose: () => {
+                clearInterval(timerInterval)
+            }
+        }).then((result) => {
+            if (result.dismiss === Swal.DismissReason.timer) {
+                $http.post(pathAPI+'/readExcelImay',form,{
+                    transformRequest: angular.identity,
+                    headers: {'Content-Type': undefined}
+                }).then(res=>{
+                    $scope.message("Thêm hàng loạt dữ liệu thành công")
+                    console.log('excel',res);
+                }).catch(err=>{
+                    $scope.error("thêm mới hàng loạt thất bại")
+                    console.log('err',err);
+                })
+                console.log('I was closed by the timer')
+            }
+        })
+    }
 
+    $scope.addInput  = function (){
+
+    }
     $scope.getProducts();
+
+    $scope.addImei = function (){
+        $scope.imeis.push({
+            value: ''
+        });
+        console.log($scope.imeis);
+    }
+    $scope.removeImei = function (){
+        $scope.imeis.splice(
+            $scope.imeis.indexOf('')
+        )
+    }
 });

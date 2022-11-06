@@ -78,7 +78,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public Optional<Product> findByName(String name) {
+        return repository.findByName(name);
+    }
+
     public List<Product> findByCategoryAndStatus(Optional<Category> cate) {
         return repository.findByCategoryAndStatus(cate.get(),1);
     }
+    
 }
