@@ -7,5 +7,5 @@ import java.util.List;
 import java.util.Optional;
 
 public interface AccessoryService extends GenericService<Accessory, Integer> {
-    List<Accessory> findByCate(Optional<Category> cate);
+    List<Accessory> findByCategoryAndStatus(Optional<Category> cate);
 }

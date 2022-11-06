@@ -7,6 +7,41 @@ app.controller("restaccsesries", function ($scope, $http) {
     $scope.colorItems = [];
     $scope.color = {};
 
+    $scope.message = function (mes){
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3500,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+        Toast.fire({
+            icon: 'success',
+            title: mes,
+        })
+    }
+    $scope.error = function (err){
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+
+        Toast.fire({
+            icon: 'error',
+            title: err ,
+        })
+    }
 
     // hàm ram
     $scope.initialize = function () {
@@ -28,88 +63,17 @@ app.controller("restaccsesries", function ($scope, $http) {
         }
     }
     const pathAPI = "http://localhost:8080/rest/admin/accessoríes";
-    $scope.index=0;
-    $scope.check_firsts=false;
-    $scope.check_lasts=true;
-    $scope.totalPagess=0;
-    $scope.currentPages = 0;
-    $scope.next=function(){
-        $scope.check_firsts=true;
-        $scope.index++;
-        if($scope.index>=$scope.totalPagess){
-            $scope.index=0;
-            $scope.check_firsts=false;
-            $scope.check_lasts=true;
-        }
-        if($scope.index==$scope.totalPagess-1){
-            $scope.check_firsts=true;
-            $scope.check_lasts=false;
-        }
-        $http.get(pathAPI+'/page/ram?page='+$scope.index).then(res=>{
-            $scope.ram = res.data.items;
-            console.log('Load accessories success',res.data)
-        }).catch(err=>{
-            console.log('Load accessories failse',err.data);
-        })
-    }
-
-    $scope.prev=function(){
-        $scope.check_lasts=true;
-        $scope.index--;
-        if($scope.index<0){
-            $scope.index=$scope.totalPagess-1;
-            $scope.check_firsts=true;
-            $scope.check_lasts=false;
-        }
-        if($scope.index==0){
-            $scope.check_firsts=false;
-            $scope.check_lasts=true;
-        }
-        $http.get(pathAPI+'/page/ram?page='+$scope.index).then(res=>{
-            $scope.ram = res.data.items;
-            console.log('Load accessories success',res.data)
-        }).catch(err=>{
-            console.log('Load accessories failse',err.data);
-        })
-    }
-    $scope.first=function(){
-        $scope.check_firsts=false;
-        $scope.check_lasts=true;
-        $scope.index=0;
-        $http.get(pathAPI+'/page/ram?page='+$scope.index).then(res=>{
-            $scope.ram = res.data.items;
-            console.log('Load accessories success',res.data)
-        }).catch(err=>{
-            console.log('Load accessories failse',err.data);
-        })
-    }
-    $scope.last=function(){
-        $scope.check_firsts=true;
-        $scope.check_lasts=false;
-        $scope.index=$scope.totalPagess-1;
-        $http.get(pathAPI+'/page/ram?page='+$scope.index).then(res=>{
-            $scope.ram = res.data.items;
-            console.log('Load accessories success',res.data)
-        }).catch(err=>{
-            console.log('Load accessories failse',err.data);
-        })
-    }
-
     $scope.create = function (){
         var item = angular.copy($scope.accseries);
         console.log(item);
         $http.post("/rest/admin/accessoríes",item).then(resp => {
             $scope.items.push(item);
             $scope.reset();
+            $scope.message("Đã thêm thành công");
             $scope.initialize();
-            Swal.fire(
-                'Thông báo!',
-                'Thêm ram mới thành công!',
-                'success'
-            )
+            console.log(resp);
         }).catch(error => {
-            alert('thêm mới lỗi');
-            console.log('lỗi', error);
+            $scope.error("thêm mới thất bại");
         })
     }
     $scope.delete = function(items) {
@@ -143,40 +107,12 @@ app.controller("restaccsesries", function ($scope, $http) {
                     /* Read more about handling dismissals below */
                     if (result.dismiss === Swal.DismissReason.timer) {
                         $http.delete(`/rest/admin/accessoríes/delete/${items.idRam}`).then(response=> {
-                            const Toast = Swal.mixin({
-                                toast: true,
-                                position: 'top-end',
-                                showConfirmButton: false,
-                                timer: 1500,
-                                timerProgressBar: true,
-                                didOpen: (toast) => {
-                                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                                }
-                            })
                             $scope.items.splice($scope.items.indexOf(items), 1);
-                            Toast.fire({
-                                icon: 'success',
-                                title:'Xóa thành công!'
-                            })
+                            $scope.message('xóa thành công');
                             $scope.reset();
+                            $scope.initialize();
                         }).catch(error=>{
-                            const Toast = Swal.mixin({
-                                toast: true,
-                                position: 'top-end',
-                                showConfirmButton: false,
-                                timer: 3000,
-                                timerProgressBar: true,
-                                didOpen: (toast) => {
-                                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                                }
-                            })
-
-                            Toast.fire({
-                                icon: 'error',
-                                title:'Đã xảy ra lỗi!' ,
-                            })
+                            $scope.error('xóa thất bại');
                         });
                         console.log('I was closed by the timer')
                     }
@@ -207,11 +143,7 @@ app.controller("restaccsesries", function ($scope, $http) {
             $scope.colorItems.push(item);
             $scope.resetColor();
             $scope.findAll();
-            Swal.fire(
-                'Thông báo!',
-                'Thêm mới màu thành công!',
-                'success'
-            )
+            $scope.message('thêm mới màu thành công');
         }).catch(error => {
             alert('thêm mới lỗi');
             console.log('lỗi', error);
@@ -248,39 +180,11 @@ app.controller("restaccsesries", function ($scope, $http) {
                     /* Read more about handling dismissals below */
                     if (result.dismiss === Swal.DismissReason.timer) {
                         $http.delete(`/rest/admin/accessoríes/deleteColor/${colorItems.idColor}`).then(response=> {
-                            const Toast = Swal.mixin({
-                                toast: true,
-                                position: 'top-end',
-                                showConfirmButton: false,
-                                timer: 1500,
-                                timerProgressBar: true,
-                                didOpen: (toast) => {
-                                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                                }
-                            })
                             $scope.colorItems.splice($scope.colorItems.indexOf(colorItems), 1);
-                            Toast.fire({
-                                icon: 'success',
-                                title:'Màu này đã xóa thành công!'
-                            })
+                            $scope.message('xóa thành công');
                             $scope.reset();
                         }).catch(error=>{
-                            const Toast = Swal.mixin({
-                                toast: true,
-                                position: 'top-end',
-                                showConfirmButton: false,
-                                timer: 3000,
-                                timerProgressBar: true,
-                                didOpen: (toast) => {
-                                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                                }
-                            })
-                            Toast.fire({
-                                icon: 'error',
-                                title:'Đã xảy ra lỗi!' ,
-                            })
+                            $scope.error("xóa thất bại");
                         });
                         console.log('I was closed by the timer')
                     }
@@ -313,7 +217,7 @@ app.controller("restaccsesries", function ($scope, $http) {
             $scope.capacityItems.push(capacitys);
             $scope.resetCapacity();
             $scope.findAllCapacity();
-            alert('thêm mới dung lượng thành công');
+            $scope.message('thêm thành công');
         }).catch(error => {
             alert('thêm mới lỗi');
             console.log('lỗi', error);
@@ -349,40 +253,11 @@ app.controller("restaccsesries", function ($scope, $http) {
                 }).then((result) => {
                     if (result.dismiss === Swal.DismissReason.timer) {
                         $http.delete(`/rest/admin/accessoríes/deleteCapacity/${capacityItems.idCapacity}`).then(response=> {
-                            const Toast = Swal.mixin({
-                                toast: true,
-                                position: 'top-end',
-                                showConfirmButton: false,
-                                timer: 1500,
-                                timerProgressBar: true,
-                                didOpen: (toast) => {
-                                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                                }
-                            })
                             $scope.capacityItems.splice($scope.capacityItems.indexOf(capacityItems), 1);
-                            Toast.fire({
-                                icon: 'success',
-                                title:'Xóa thành công!'
-                            })
+                            $scope.message('xóa thành công');
                             $scope.reset();
                         }).catch(error=>{
-                            const Toast = Swal.mixin({
-                                toast: true,
-                                position: 'top-end',
-                                showConfirmButton: false,
-                                timer: 3000,
-                                timerProgressBar: true,
-                                didOpen: (toast) => {
-                                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                                }
-                            })
-
-                            Toast.fire({
-                                icon: 'error',
-                                title:'Không thể xóa: '+capacityItems.name+'!'+' này',
-                            })
+                            $scope.error("xóa thất bại");
                         });
                         console.log('I was closed by the timer')
                     }
@@ -412,21 +287,6 @@ app.controller("restaccsesries", function ($scope, $http) {
             console.log('Load files failse',err);
         })
     }
-    $scope.uploadFile = function(files){
-        var form = new FormData();
-        form.append('file',files[0]);
-        $http.post(url,form,{
-            transformRequest: angular.identity,
-            headers: {'Content-Type': undefined},
-        }).then(res=>{
-            $scope.imagePr.name =res.data.name;
-            console.log('image',res);
-            alert('đã load')
-
-        }).catch(err=>{
-            console.log('err',err);
-        })
-    }
 
     $scope.allImage = function () {
         $http.get("/rest/admin/accessoríes/allImage").then(resp => {
@@ -445,16 +305,11 @@ app.controller("restaccsesries", function ($scope, $http) {
         var item = angular.copy($scope.imagePr);
         $http.post("/rest/admin/accessoríes/saveImage",item).then(resp => {
             $scope.img.push(item);
-            Swal.fire(
-                'Thông báo!',
-                'Thêm mới ảnh thành công!',
-                'success'
-            )
+            $scope.message('thêm ảnh thành công');
             $scope.resetImage();
             $scope.allImage();
         }).catch(error => {
-            alert('thêm mới lỗi');
-            console.log('lỗi', error);
+            $scope.error("xóa thất bại");
         })
     }
     $scope.deleteImage = function(img) {
@@ -488,40 +343,11 @@ app.controller("restaccsesries", function ($scope, $http) {
                     /* Read more about handling dismissals below */
                     if (result.dismiss === Swal.DismissReason.timer) {
                         $http.delete(`/rest/admin/accessoríes/${img.idImage}`).then(response=> {
-                            const Toast = Swal.mixin({
-                                toast: true,
-                                position: 'top-end',
-                                showConfirmButton: false,
-                                timer: 1500,
-                                timerProgressBar: true,
-                                didOpen: (toast) => {
-                                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                                }
-                            })
                             $scope.img.splice($scope.img.indexOf(img), 1);
-                            Toast.fire({
-                                icon: 'success',
-                                title:'Xóa thành công!'
-                            })
+                            $scope.message('xóa thành công');
                             $scope.resetImage();
                         }).catch(error=>{
-                            const Toast = Swal.mixin({
-                                toast: true,
-                                position: 'top-end',
-                                showConfirmButton: false,
-                                timer: 3000,
-                                timerProgressBar: true,
-                                didOpen: (toast) => {
-                                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                                }
-                            })
-
-                            Toast.fire({
-                                icon: 'error',
-                                title:'Đã xảy ra lỗi!' ,
-                            })
+                            $scope.error("xóa thất bại");
                         });
                     }
                 })
@@ -532,6 +358,5 @@ app.controller("restaccsesries", function ($scope, $http) {
     };
 
     $scope.allImage();
-
 
 })

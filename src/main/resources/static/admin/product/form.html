@@ -1,175 +1,250 @@
 <div class="col-sm-12 col-sm-offset-3 col-lg-12">
-    <div class="row">
-        <div class="col-lg-12">
-            <h2 class="page-header">{{checkSubmit==false?title.insert:title.update}} sản phẩm</h2>
+    <ul class="nav nav-tabs">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="manage-tab" data-bs-toggle="tab" data-bs-target="#tab-manage"
+                    type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Quản lý</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="list-tab" data-bs-toggle="tab" data-bs-target="#tab-list"
+                    type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Thêm Imay Máy</button>
+        </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="tab-manage" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+            <div class="row">
+                <div class="col-lg-6">
+                    <h2 class="page-header">{{checkSubmit==false?title.insert:title.update}} sản phẩm</h2>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <form role="formProduct" method="post" class="row" name="myForm"
+                                  ng-submit="doSubmit()"  enctype="multipart/form-data">
+                                <div class="col-md-6">
+                                    <div class="form-group mt-1">
+                                        <label >Thể loại </label>
+                                        <select ng-model="formProduct.category" class="form-select" name="category" required>
+                                            <option ng-repeat="cate in categories" ng-value="cate.idCategory">{{cate.name}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group mt-1">
+                                        <label>Tên sản phẩm</label>
+                                        <input ng-model="formProduct.name" class="form-control" placeholder="Tên sản phẩm" required>
+                                    </div>
+                                    <div class="form-group mt-1">
+                                        <label >Ram </label>
+                                        <select ng-model="formProduct.ram" class="form-select" name="ram" required>
+                                            <option ng-repeat="cate in rams" ng-value="cate.idRam">{{cate.name}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group mt-1">
+                                            <label >Màu </label>
+                                            <select ng-model="formProduct.color" class="form-select" name="color" required>
+                                                <option ng-repeat="color in colors" ng-value="color.idColor">{{color.name}}
+                                                </option>
+                                            </select>
+                                    </div>
+                                    <div class="form-group mt-1">
+                                        <label>Dung lượng</label>
+                                        <select ng-model="formProduct.capacity" class="form-select" name="capacity" required>
+                                            <option ng-repeat="capa in capacitys"  ng-value="capa.idCapacity">{{capa.name}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group mt-1">
+                                        <label>Giá</label>
+                                        <input ng-model="formProduct.price" required type="number" class="form-control">
+                                    </div>
+
+
+
+                                    <div ng-if="checkSubmit==false" class="form-group mt-1">
+                                        <label>Thêm file Excel</label>
+                                        <input type="file"  class="form-control"
+                                               onchange="angular.element(this).scope().xcellData(this.files)" >
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mt-1">
+                                        <label>camera</label>
+                                        <input ng-model="formProduct.camera" class="form-control" placeholder="camera" required>
+                                    </div>
+                                    <div class="form-group mt-2 mb-3" ng-if="checkSubmit">
+                                        <label>Trạng thái</label>
+                                        <br>
+                                        <input type="radio" class="form-check-input" checked
+                                               ng-model="formProduct.status" name="status" ng-value="1"> Còn hàng
+                                        <input type="radio" class="form-check-input"
+                                               ng-model="formProduct.status" name="status" ng-value="0"> Hết hàng
+                                    </div>
+
+                                    <div  ng-if="checkButton" class="form-group mt-1">
+                                        <label>Hình ảnh</label>
+                                        <br>
+
+                                        <input
+                                                onchange="angular.element(this).scope().uploadFile(this.files)"
+                                                type="file" name="files"
+                                                class="form-control" multiple>
+                                    </div>
+
+
+                                    <div class="form-group mt-1">
+                                        <label>Kích thước</label>
+                                        <input ng-model="formProduct.size" class="form-control" placeholder="nhập kích thước" required>
+                                    </div>
+
+                                    <div class="form-group mt-1">
+                                        <label>Mô tả sản phẩm</label>
+                                        <textarea ng-model="formProduct.note" class="form-control" rows="3" required></textarea>
+                                    </div>
+
+                                    <div class="form-group mt-4">
+                                        <button type="submit"  class="btn btn-success" ng-disabled="myForm.$invalid">{{checkSubmit==false?title.insert:title.update}}</button>
+                                        <button type="button" ng-if="checkSubmit" ng-click="refresh()" class="btn btn-warning">Hủy</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row table-responsive">
+                   <div class="col-lg-12 mt-4">
+                       <table class="table table-striped table-hover table-bordered">
+                           <thead>
+                           <tr>
+                               <th>STT</th>
+                               <th>Tên sản phẩm</th>
+                               <th>Thể loại</th>
+                               <th>Dung lượng</th>
+                               <th>Màu</th>
+                               <th>Giá (VNĐ)</th>
+                               <th>Trạng thái</th>
+                               <th>Mô tả</th>
+                               <th style="width: 100px">Ngày tạo</th>
+                               <th>Ảnh</th>
+                               <th>Thao tác</th>
+                           </thead>
+                           <tbody>
+                           <tr ng-repeat="product in products">
+                               <td>{{$index + 1}}</td>
+                               <td>{{product.name}}</td>
+                               <td>{{product.category.name}}</td>
+                               <td>{{product.capacity.name}}</td>
+                               <td>{{product.color.name}}</td>
+                               <td>{{product.price|number}}</td>
+                               <td>{{product.status== 1?'Còn hàng':'Hết hàng'}}</td>
+                               <td>{{product.note}}</td>
+                               <td style="width: 100px">{{product.createDate | date:'dd/MM/yyyy'}}</td>
+                               <td><img class="img-responsive" width="80px" height="80px"
+                                        src="{{product.images.length>0?product.images[0].name:''}}"></td>
+                               <td>
+                                   <button class="btn btn-default"
+                                           ng-click="edit(product)"><i class="fa fa-pencil-square" aria-hidden="true"> Sửa</i></button>
+                                   <button class="btn btn-default" ng-click="delete(product)"><i class="fa fa-trash"> Xóa</i></button>s
+                               </td>
+                           </tr>
+                           </tbody>
+                       </table>
+
+       </div>
+            </div>
+            <nav class="row table-responsive">
+                <table>
+                    <ul class="pagination justify-content-center row">
+                        <div class="col-1 justify-content-center pagination">
+                            <li class="page-item">
+                                <button class="btn btn-default {{!check_first?'disabled':''}}" ng-click="first()"><i class="fa fa-fast-backward" aria-hidden="true"></i></button>
+                            </li>
+                        </div>
+                        <div class="col-1 justify-content-center pagination">
+                            <li class="page-item ms-2 me-2">
+                                <button class="btn btn-default" ng-click="prev()"><i class="fa fa-step-backward" aria-hidden="true"></i></button>
+                            </li>
+                        </div>
+                        <div class="col-sm-1 col-12 justify-content-center pagination">
+                            <li class="page-item ms-1 me-1 pt-1 ">
+                                <h4>{{index+1}}/{{totalPages}}</h4>
+                            </li>
+                        </div>
+                        <div class="col-1 justify-content-center pagination">
+                            <li class="page-item ms-2 me-2">
+                                <button class="btn btn-default" ng-click="next()"><i class="fa fa-step-forward" aria-hidden="true"></i></button>
+                            </li>
+                        </div>
+                        <div class="col-1 justify-content-center pagination">
+                            <li class="page-item">
+                                <button class="btn btn-default {{!check_last?'disabled':''}}" ng-click="last()"><i class="fa fa-fast-forward" aria-hidden="true"></i></button>
+                            </li>
+                        </div>
+                    </ul>
+                </table>
+            </nav>
         </div>
+
     </div>
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <form role="formProduct" method="post" class="row" name="myForm"
-                          ng-submit="doSubmit()"  enctype="multipart/form-data">
-                        <div class="col-md-6">
-                            <div class="form-group mt-1">
-                                <label >Thể loại </label>
-                                <select ng-model="formProduct.category" class="form-select" name="category" required>
-                                    <option ng-repeat="cate in categories" ng-value="cate.idCategory">{{cate.name}}
-                                    </option>
-                                </select>
-                            </div>
-                            <div class="form-group mt-1">
-                                <label>Tên sản phẩm</label>
-                                <input ng-model="formProduct.name" class="form-control" placeholder="Tên sản phẩm" required>
-                            </div>
-                            <div class="form-group mt-1">
-                                <label >Ram </label>
-                                <select ng-model="formProduct.ram" class="form-select" name="ram" required>
-                                    <option ng-repeat="cate in rams" ng-value="cate.idRam">{{cate.name}}
-                                    </option>
-                                </select>
-                            </div>
-                            <div class="form-group mt-1">
-                                    <label >Màu </label>
-                                    <select ng-model="formProduct.color" class="form-select" name="color" required>
-                                        <option ng-repeat="color in colors" ng-value="color.idColor">{{color.name}}
+    <div class="tab-pane fade" id="tab-list" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+        <div class="row">
+            <div class="col-lg-6">
+                <h2 class="page-header">{{checkSubmit==false?title.insert:title.update}} imay máy</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <form role="formProduct" method="post" class="row" name="myFormImay"
+                              ng-submit="doSubmitImay()"  enctype="multipart/form-data">
+                            <div class="col-md-6">
+                                <div class="form-group mt-1">
+                                    <label >Sản phẩm </label>
+                                    <select ng-model="formProduct.product" class="form-select text-danger" name="product" required>
+                                        <option ng-repeat="p in products" ng-value="p.idProduct">{{p.name}}
                                         </option>
                                     </select>
+                                </div>
+
+                                <div class="form-group mt-1 ">
+                                        <label>Nhập Imay sản phẩm</label>
+                                        <input ng-model="formProduct.name"  class="form-control" placeholder="Nhập imay máy" required>
+
+                                </div>
+                                <div class="mt-3" ng-repeat="imei in imeis">
+                                    <input ng-model="imei.value"  class="form-control" placeholder="Nhập imay máy" required>
+                                </div>
+
                             </div>
-                            <div class="form-group mt-1">
-                                <label>Dung lượng</label>
-                                <select ng-model="formProduct.capacity" class="form-select" name="capacity" required>
-                                    <option ng-repeat="capa in capacitys" ng-value="capa.idCapacity">{{capa.name}}
-                                    </option>
-                                </select>
-                            </div>
-                            <div class="form-group mt-1">
-                                <label>Giá</label>
-                                <input ng-model="formProduct.price" required type="number" class="form-control">
-                            </div>
-                            <div class="form-group mt-1">
-                                <label>imei máy</label>
-                                <input ng-model="formProduct.imei" required type="text" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group mt-1">
-                                <label>camera</label>
-                                <input ng-model="formProduct.camera" class="form-control" placeholder="camera" required>
-                            </div>
-                            <div class="form-group mt-2 mb-3" ng-if="checkSubmit">
-                                <label>Trạng thái</label>
-                                <br>
-                                <input type="radio" class="form-check-input" checked
-                                       ng-model="formProduct.status" name="status" ng-value="false"> Còn hàng
-                                <input type="radio" class="form-check-input"
-                                       ng-model="formProduct.status" name="status" ng-value="true"> Hết hàng
+                            <div class="col-md-6">
+                                <div ng-if="checkSubmit==false" class="form-group mt-1">
+                                    <label>Thêm file Excel</label>
+                                    <input type="file"  class="form-control"
+                                           onchange="angular.element(this).scope().xcellDataImay(this.files)" >
+                                </div>
+                                <div class="form-group mt-4">
+                                    <button type="submit"  class="btn btn-success"  ng-disabled="myFormImay.$invalid">{{checkSubmit==false?title.insert:title.update}}</button>
+                                    <button type="button" ng-if="checkSubmit" ng-click="refresh()" class="btn btn-warning">Hủy</button>
+                                    <button type="button" class="btn btn-success" ng-click="addImei()">add input</button>
+                                    <button type="button" class="btn btn-success" ng-click="removeImei()" >remove input</button>
+                                </div>
                             </div>
 
-                            <div  ng-if="checkButton" class="form-group mt-1">
-                                <label>Hình ảnh</label>
-                                <br>
-
-                                <input
-                                        onchange="angular.element(this).scope().uploadFile(this.files)"
-                                        type="file" name="files"
-                                        class="form-control" multiple>
-                            </div>
-
-
-                            <div class="form-group mt-1">
-                                <label>Kích thước</label>
-                                <input ng-model="formProduct.size" class="form-control" placeholder="nhập kích thước" required>
-                            </div>
-
-                            <div class="form-group mt-1">
-                                <label>Mô tả sản phẩm</label>
-                                <textarea ng-model="formProduct.note" class="form-control" rows="3" required></textarea>
-                            </div>
-                            <div class="form-group mt-4">
-                                <button type="submit"  class="btn btn-success" ng-disabled="myForm.$invalid">{{checkSubmit==false?title.insert:title.update}}</button>
-                                <button type="button" ng-if="checkSubmit" ng-click="refresh()" class="btn btn-warning">Hủy</button>
-                            </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
+
     </div>
 
-    <div class="row table-responsive">
-       <div class="col-lg-12 mt-4">
-           <table class="table table-striped table-hover table-bordered">
-               <thead>
-               <tr>
-                   <th>STT</th>
-                   <th>Tên sản phẩm</th>
-                   <th>Thể loại</th>
-                   <th>Dung lượng</th>
-                   <th>Màu</th>
-                   <th>Giá (VNĐ)</th>
-                   <th>Trạng thái</th>
-                   <th>Mô tả</th>
-                   <th style="width: 100px">Ngày tạo</th>
-                   <th>Ảnh</th>
-                   <th>Thao tác</th>
-               </thead>
-               <tbody>
-               <tr ng-repeat="product in products">
-                   <td>{{$index + 1}}</td>
-                   <td>{{product.name}}</td>
-                   <td>{{product.category.name}}</td>
-                   <td>{{product.capacity.name}}</td>
-                   <td>{{product.color.name}}</td>
-                   <td>{{product.price|number}}</td>
-                   <td>{{product.status==0?'Còn hàng':'Hết hàng'}}</td>
-                   <td>{{product.note}}</td>
-                   <td style="width: 100px">{{product.createDate | date:'dd/MM/yyyy'}}</td>
-                   <td><img class="img-responsive" width="80px" height="80px"
-                            src="{{product.images.length>0?product.images[0].name:''}}"></td>
-                   <td>
-                       <button class="btn btn-default"
-                               ng-click="edit(product)"><i class="fa fa-pencil-square" aria-hidden="true"> Sửa</i></button>
-                       <button class="btn btn-default" ng-click="delete(product)"><i class="fa fa-trash"> Xóa</i></button>s
-                   </td>
-               </tr>
-               </tbody>
-           </table>
-
-       </div>
-    </div>
 </div>
-<nav class="row table-responsive">
-    <table>
-        <ul class="pagination justify-content-center row">
-            <div class="col-1 justify-content-center pagination">
-                <li class="page-item">
-                    <button class="btn btn-default {{!check_first?'disabled':''}}" ng-click="first()"><i class="fa fa-fast-backward" aria-hidden="true"></i></button>
-                </li>
-            </div>
-            <div class="col-1 justify-content-center pagination">
-                <li class="page-item ms-2 me-2">
-                    <button class="btn btn-default" ng-click="prev()"><i class="fa fa-step-backward" aria-hidden="true"></i></button>
-                </li>
-            </div>
-            <div class="col-sm-1 col-12 justify-content-center pagination">
-                <li class="page-item ms-1 me-1 pt-1 ">
-                    <h4>{{index+1}}/{{totalPages}}</h4>
-                </li>
-            </div>
-            <div class="col-1 justify-content-center pagination">
-                <li class="page-item ms-2 me-2">
-                    <button class="btn btn-default" ng-click="next()"><i class="fa fa-step-forward" aria-hidden="true"></i></button>
-                </li>
-            </div>
-            <div class="col-1 justify-content-center pagination">
-                <li class="page-item">
-                    <button class="btn btn-default {{!check_last?'disabled':''}}" ng-click="last()"><i class="fa fa-fast-forward" aria-hidden="true"></i></button>
-                </li>
-            </div>
-        </ul>
-    </table>
-</nav>
+
 
 <style>
     input.ng-invalid.ng-touched {

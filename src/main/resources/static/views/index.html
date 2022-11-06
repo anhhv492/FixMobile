@@ -56,6 +56,7 @@
                                         <i class="fa fa-user-circle fa-2x" aria-hidden="true"></i>
                                     </button>
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown04">
+
                                         <a href="#" class="dropdown-item">Thông tin tài khoản</a>
                                         <div class="dropdown-divider"></div>
                                         <a href="#" class="dropdown-item">Lịch sử mua hàng</a>
@@ -64,6 +65,21 @@
                                         <a href="#!register" class="dropdown-item">Đăng ký</a>
                                         <div class="dropdown-divider"></div>
                                         <a href="/security/logoff" class="dropdown-item">Đăng xuất</a>
+
+                                        <div ng-if="account">
+                                            <a href="#" class="dropdown-item">Thông tin tài khoản</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a href="#" class="dropdown-item">Lịch sử mua hàng</a>
+                                            <div class="dropdown-divider"></div>
+                                        </div>
+                                        <div ng-if="!account">
+                                            <a href="/login" class="dropdown-item">Đăng nhập</a>
+                                            <a href="/logout" class="dropdown-item">Đăng ký</a>
+                                        </div>
+                                        <div ng-if="account">
+                                            <a href="/security/logoff" class="dropdown-item">Đăng xuất</a>
+                                            <div class="dropdown-divider"></div>
+                                        </div>
                                     </div>
                                 </li>
                             </ul>
@@ -85,7 +101,7 @@
                                     </a>
                                     <ul class="dropdown-menu {{overPro?'show':''}}" aria-labelledby="dropdownPro" >
                                         <li ng-repeat="catePro in cateProducts">
-                                            <a class="dropdown-item" href="#!product/detail" ng-click="getDetail(catePro)">{{catePro.name}}</a>
+                                            <a class="dropdown-item" href="#!accessory/detail" ng-click="getDetail(catePro)">{{catePro.name}}</a>
                                         </li>
                                     </ul>
                                 </li>
@@ -156,14 +172,13 @@
     <script src="ctrl/register-ctrl.js"></script>
     <script src="/js/jq.js"></script>
     <script src="/js/index.js"></script>
+    <script src="/js/product.js"></script>
 
 
-<!--Login-->
     <script src="/static/js/jquery.min.js"></script>
     <script src="/static/js/popper.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>
     <script src="/static/js/main.js"></script>
-    
     
 </body>
 </html>

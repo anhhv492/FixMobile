@@ -1,11 +1,14 @@
 package com.fix.mobile.service.impl;
 
+import com.fix.mobile.entity.Accessory;
+import com.fix.mobile.entity.Category;
 import com.fix.mobile.service.ProductService;
 import com.fix.mobile.repository.ProductRepository;
 import com.fix.mobile.entity.Product;
 import com.fix.mobile.service.ProductService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -62,4 +65,25 @@ public class ProductServiceImpl implements ProductService {
         }
         return null;
     }
+    @Override
+    public Page<Product> getByPage(int pageNumber, int maxRecord, Integer status) {
+        Pageable pageable = PageRequest.of(pageNumber, maxRecord);
+        Page<Product> pageProduct = repository.findByStatus(status, pageable);
+        return pageProduct;
+     }
+     
+     @Override 
+    public Page<Product> getAll(Pageable page) {
+        return repository.findAll(page);
+    }
+
+    @Override
+    public Optional<Product> findByName(String name) {
+        return repository.findByName(name);
+    }
+
+    public List<Product> findByCategoryAndStatus(Optional<Category> cate) {
+        return repository.findByCategoryAndStatus(cate.get(),1);
+    }
+    
 }
