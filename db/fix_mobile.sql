@@ -24,9 +24,6 @@ CREATE TABLE ram (
 
 -- SQLINES DEMO *** OR EVALUATION USE ONLY
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
-
--- SQLINES DEMO *** OR EVALUATION USE ONLY
--- SQLINES LICENSE FOR EVALUATION USE ONLY
 CREATE TABLE color (
 	id_color int NOT NULL auto_increment primary key,
 	name nvarchar(100) not null
@@ -108,9 +105,6 @@ CREATE TABLE products (
 	price decimal(10,0) NOT NULL,
 	size nvarchar(100) NOT NULL,
 	note nvarchar(255),
-
-	status int  default(0),
-	status bit default(0),
 	status int default(0),
 	id_ram int NOT NULL,
 	id_color int NOT NULL,
@@ -173,7 +167,7 @@ CREATE TABLE orders (
 	total decimal(10,0) not null,
 	note nvarchar(255) NULL,
 	address nvarchar(255) not null,
-	status binary DEFAULT(0) not null,
+	status int DEFAULT(0) not null,
 	type binary not null,
 	username nvarchar(50) NOT NULL,
 	foreign key(username) references accounts(username)
@@ -193,7 +187,9 @@ CREATE TABLE order_detail (
 	foreign key(id_product) references products(id_product),
 	foreign key(id_accessory) references accessories(id_accessory)
 );
-
+select *from orders;
+select *from order_detail;
+select *from accessories;
 -- SQLINES DEMO *** OR EVALUATION USE ONLY
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
 CREATE TABLE insurance (
@@ -440,3 +436,10 @@ select*from orders;
 INSERT INTO fix_mobile.accounts(username,password,full_name,gender,email,
 								phone,create_date,image,id_role) 
 VALUES ('admin','123','admin',0,'admin@gmail.com','0912321321','2022/10/30','',1);
+INSERT INTO fix_mobile.accounts(username,password,full_name,gender,email,
+								phone,create_date,image,id_role) 
+VALUES ('vietanhvs','492002','Hạ Việt Anh',0,'vietanhvs@gmail.com','0984297473','2022/10/30','',1);
+INSERT INTO fix_mobile.accounts(username,password,full_name,gender,email,
+								phone,create_date,image,id_role) 
+VALUES ('user','123','user',1,'user@gmail.com','0123456789','2002/11/11','',2);
+select*from accounts;

@@ -103,6 +103,8 @@ public class GuestRestController {
                         price =new BigDecimal(accessory.get().getPrice().doubleValue());
                         orderDetail.setPrice(price);
                         orderDetail.setProduct(null);
+                        accessory.get().setQuantity(accessory.get().getQuantity()-productList.get(i).get("qty").asInt());
+                        accessoryService.update(accessory.get(),accessory.get().getIdAccessory());
                         orderDetailService.save(orderDetail);
                     }
                 } else if (productList.get(i).get("idProduct").asInt()!=0){
