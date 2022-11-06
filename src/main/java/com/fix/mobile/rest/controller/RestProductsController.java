@@ -2,13 +2,11 @@ package com.fix.mobile.rest.controller;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
-import com.fix.mobile.config.WebConfigrutation;
 import com.fix.mobile.dto.ImayProductDTO;
 import com.fix.mobile.entity.*;
 import com.fix.mobile.helper.ExcelProducts;
 import com.fix.mobile.payload.SaveProductRequest;
 import com.fix.mobile.service.*;
-import org.aspectj.bridge.IMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,11 +14,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import javax.websocket.server.PathParam;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -50,6 +46,7 @@ public class RestProductsController {
 	@Autowired  private ExcelProducts excelProduct;
 
 	@Autowired private ImayProductService imayService;
+
 
 	@GetMapping("/getAllRam")
 	public List<Ram> findAllRam(){
@@ -149,18 +146,25 @@ public class RestProductsController {
 		return checkExcel;
 	}
 	// imay product
-	@RequestMapping( value = "/saveImay", method = POST)
-	public ImayProduct saveImay(@ModelAttribute ImayProductDTO imay){
-		if  (imay!=null ){
-			try {
+	@PostMapping("/saveImay")
+	public void saveImay(@ModelAttribute ImayProductDTO  imay){
+		try {
+			for ( String  s :  imay.getName()) {
 				ImayProduct i = new ImayProduct();
-				i.setNameImay(imay.getNameImay());
-				i.setStatus(imay.getStatus());
-				return imayService.save(i);
-			}catch (Exception e){
-				e.getMessage();
+				i.setName(s);
+				i.setProduct(imay.getProduct());
+				i.setStatus(1);
+				imayService.save(i);
 			}
+		}catch (Exception e ){
+			e.getMessage();
+			e.printStackTrace();
 		}
-		return null;
+	}
+
+	@PostMapping("/readExcelImay")
+	public Boolean readExcelImay(@PathParam("file") MultipartFile file) throws Exception{
+		Boolean checkExcel= excelProduct.readExcelImay(file);
+		return checkExcel;
 	}
 }

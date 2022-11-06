@@ -51,6 +51,14 @@ public class ExcelProducts {
 	private Optional<Capacity> capacitys =null;
 
 	private Optional<Ram> ram = null;
+
+	// imay
+	@Autowired private ImayProductService imayService;
+	private Integer idImay = null;
+	private String nameImay = null;
+	private int  statusImay= 1;
+	private Optional<Product> product = null;
+
 	public Boolean readExcel(MultipartFile files) {
 		File dir = new File(System.getProperty("user.dir"));
 		try {
@@ -152,6 +160,63 @@ public class ExcelProducts {
 						}
 
 
+					}
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			e.getMessage();
+			return false;
+		}
+		return true;
+	}
+
+	public Boolean readExcelImay(MultipartFile files) {
+		File dir = new File(System.getProperty("user.dir"));
+		try {
+			File savedFile = new File(dir,files.getOriginalFilename());
+			if(!savedFile.exists()){
+				files.transferTo(savedFile);
+			}else{
+				savedFile.delete();
+				files.transferTo(savedFile);
+			}
+			System.out.println(savedFile.getAbsolutePath());
+			FileInputStream file = new FileInputStream(savedFile.getAbsolutePath());
+			XSSFWorkbook wb = new XSSFWorkbook(file);
+			XSSFSheet sheet = wb.getSheetAt(0);
+			Iterator<Row> iterator = sheet.iterator();
+			while (iterator.hasNext()) {
+				Row currentRow = iterator.next();
+				Iterator<Cell> cellIterator = currentRow.iterator();
+				while (cellIterator.hasNext()) {
+					Cell cc = cellIterator.next();
+					if (cc.getRowIndex() > 0) {
+						if (cc.getColumnIndex() == 0 && cc.getCellType() == CellType.STRING) {
+							System.out.println(cc.getStringCellValue() + ", ");
+							nameImay = cc.getStringCellValue();
+						}
+						if (cc.getColumnIndex() == 1 && cc.getCellType() == CellType.NUMERIC) {
+							System.out.println(cc.getNumericCellValue() + ", ");
+							statusImay = Integer.valueOf((int) cc.getNumericCellValue());
+						}
+						if (cc.getColumnIndex() == 2 && cc.getCellType() == CellType.STRING) {
+							System.out.println("product " + cc.getStringCellValue() + ", ");
+							product =  productService.findByName(cc.getStringCellValue());
+							if (!product.isPresent()){
+								System.out.println("produtcssssssss "+product);
+								System.out.println("chưa có sản phẩm này");
+							}else if(product==null){
+								System.out.println("đã null");
+							}
+							else;
+							ImayProduct imay = new ImayProduct(nameImay,statusImay,product.get());
+							if(imay!=null){
+								imayService.save(imay);
+							}else{
+								System.out.println("lỗi");
+							}
+						}
 					}
 				}
 			}
