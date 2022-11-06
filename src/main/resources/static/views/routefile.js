@@ -18,7 +18,13 @@ app.config(function($routeProvider){
             controller: "home-ctrl"
         })
         .when("/login",{
-            templateUrl:"login/form .html",
-            controller: "login-ctrl"
+            templateUrl:"/views/login/form.html",
+            controller: "login-ctrl" 
         })
+        .when("/register",{
+            templateUrl:"/views/register/form.html",
+            controller: "register-ctrl" 
+        })
+
+
 });
