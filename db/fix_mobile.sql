@@ -441,5 +441,6 @@ INSERT INTO fix_mobile.accounts(username,password,full_name,gender,email,
 VALUES ('vietanhvs','492002','Hạ Việt Anh',0,'vietanhvs@gmail.com','0984297473','2022/10/30','',1);
 INSERT INTO fix_mobile.accounts(username,password,full_name,gender,email,
 								phone,create_date,image,id_role) 
-VALUES ('user','123','user',1,'user@gmail.com','0123456789','2002/11/11','',2);
+VALUES ('user','123','user',1,'user@gmail.com','0123456789','2002/11/11','',3);
 select*from accounts;
+select*from roles;
