@@ -6,7 +6,7 @@
         </li>
         <li class="nav-item" role="presentation">
             <button class="nav-link" id="list-tab" data-bs-toggle="tab" data-bs-target="#tab-list"
-                    type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Danh sách</button>
+                    type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Thêm Imay Máy</button>
         </li>
     </ul>
     <div class="tab-content" id="myTabContent">
@@ -78,9 +78,9 @@
                                         <label>Trạng thái</label>
                                         <br>
                                         <input type="radio" class="form-check-input" checked
-                                               ng-model="formProduct.status" name="status" ng-value="false"> Còn hàng
+                                               ng-model="formProduct.status" name="status" ng-value="1"> Còn hàng
                                         <input type="radio" class="form-check-input"
-                                               ng-model="formProduct.status" name="status" ng-value="true"> Hết hàng
+                                               ng-model="formProduct.status" name="status" ng-value="0"> Hết hàng
                                     </div>
 
                                     <div  ng-if="checkButton" class="form-group mt-1">
@@ -140,7 +140,7 @@
                                <td>{{product.capacity.name}}</td>
                                <td>{{product.color.name}}</td>
                                <td>{{product.price|number}}</td>
-                               <td>{{product.status== 0?'Còn hàng':'Hết hàng'}}</td>
+                               <td>{{product.status== 1?'Còn hàng':'Hết hàng'}}</td>
                                <td>{{product.note}}</td>
                                <td style="width: 100px">{{product.createDate | date:'dd/MM/yyyy'}}</td>
                                <td><img class="img-responsive" width="80px" height="80px"
@@ -200,32 +200,38 @@
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <form role="formImay" method="post" class="row" name="myFormImay"
-                              ng-submit="doSubmit()"  enctype="multipart/form-data">
+                        <form role="formProduct" method="post" class="row" name="myFormImay"
+                              ng-submit="doSubmitImay()"  enctype="multipart/form-data">
                             <div class="col-md-6">
                                 <div class="form-group mt-1">
                                     <label >Sản phẩm </label>
-                                    <select ng-model="formImay.product" class="form-select text-danger" name="product" required>
+                                    <select ng-model="formProduct.product" class="form-select text-danger" name="product" required>
                                         <option ng-repeat="p in products" ng-value="p.idProduct">{{p.name}}
-                                            <strong>màu {{p.color.name}}</strong>
                                         </option>
                                     </select>
                                 </div>
 
-                                <div class="form-group mt-1">
-                                    <label>Nhập Imay sản phẩm</label>
-                                    <input ng-model="formProduct.name" class="form-control" placeholder="Nhập imay máy" required>
+                                <div class="form-group mt-1 ">
+                                        <label>Nhập Imay sản phẩm</label>
+                                        <input ng-model="formProduct.name"  class="form-control" placeholder="Nhập imay máy" required>
+
                                 </div>
+                                <div class="mt-3" ng-repeat="imei in imeis">
+                                    <input ng-model="imei.value"  class="form-control" placeholder="Nhập imay máy" required>
+                                </div>
+
                             </div>
                             <div class="col-md-6">
                                 <div ng-if="checkSubmit==false" class="form-group mt-1">
                                     <label>Thêm file Excel</label>
                                     <input type="file"  class="form-control"
-                                           onchange="angular.element(this).scope().xcellData(this.files)" >
+                                           onchange="angular.element(this).scope().xcellDataImay(this.files)" >
                                 </div>
                                 <div class="form-group mt-4">
-                                    <button type="submit"  class="btn btn-success" ng-disabled="myFormImay.$invalid">{{checkSubmit==false?title.insert:title.update}}</button>
+                                    <button type="submit"  class="btn btn-success"  ng-disabled="myFormImay.$invalid">{{checkSubmit==false?title.insert:title.update}}</button>
                                     <button type="button" ng-if="checkSubmit" ng-click="refresh()" class="btn btn-warning">Hủy</button>
+                                    <button type="button" class="btn btn-success" ng-click="addImei()">add input</button>
+                                    <button type="button" class="btn btn-success" ng-click="removeImei()" >remove input</button>
                                 </div>
                             </div>
 

@@ -1,7 +1,6 @@
 package com.fix.mobile.service.impl;
 
-import com.fix.mobile.dao.ImayProductRepository;
-import com.fix.mobile.dto.ImayProductDTO;
+import com.fix.mobile.repository.ImayProductRepository;
 import com.fix.mobile.entity.ImayProduct;
 import com.fix.mobile.service.ImayProductService;
 import org.springframework.data.domain.Page;
@@ -62,4 +61,6 @@ public class ImayProductServiceImpl implements ImayProductService {
 		}
 		return null;
 	}
+
+
 }

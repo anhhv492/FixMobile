@@ -57,33 +57,9 @@ public class AccessoiesRestController {
 		return ramService.save(ram);
 	}
 
-	@DeleteMapping("/delete/{id}")
-	public void delete(@PathVariable("id") Integer id){
+	@DeleteMapping("/delete/{idRam}")
+	public void delete(@PathVariable("idRam") Integer id){
 		ramService.deleteById(id);
-	}
-
-	@GetMapping("/page/ram")
-	public ResponseEntity<Map<String, Object>> findByPublished(
-			@RequestParam(defaultValue = "5") int page,
-			@RequestParam(defaultValue = "5") int size) {
-
-		try {
-			List<Ram> ram = new ArrayList<Ram>();
-			Pageable paging = PageRequest.of(page, size);
-
-			Page<Ram> pageTuts = ramReponsitory.findAll(paging);
-			ram = pageTuts.getContent();
-
-			Map<String, Object> response = new HashMap<>();
-			response.put("ram", ram);
-			response.put("currentPage", pageTuts.getNumber());
-			response.put("totalItems", pageTuts.getTotalElements());
-			response.put("totalPages", pageTuts.getTotalPages());
-
-			return new ResponseEntity<>(response, HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-		}
 	}
 
 
@@ -113,7 +89,7 @@ public class AccessoiesRestController {
 		return capacityService.save(capacity);
 	}
 
-	@DeleteMapping("/deleteCapacity/idCapacity")
+	@DeleteMapping("/deleteCapacity/{idCapacity}")
 	public void deleteCapacity(@PathVariable("idCapacity") Integer id){
 		capacityService.deleteById(id);
 	}

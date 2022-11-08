@@ -29,10 +29,18 @@ app.config(function($routeProvider){
         .when("/product/product",{
             templateUrl:"product/product.html",
             controller: "home-ctrl"
-	    })
+	      })
         .when("/login",{
-            templateUrl:"login/form .html",
-            controller: "login-ctrl"
-            
+            templateUrl:"/views/login/form.html",
+            controller: "login-ctrl" 
         })
+        .when("/register",{
+            templateUrl:"/views/register/form.html",
+            controller: "register-ctrl" 
+        })
+
+
 });
+
+
+

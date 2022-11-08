@@ -1,6 +1,6 @@
 package com.fix.mobile.service.impl;
 
-import com.fix.mobile.exception.SaleException;
+import org.hibernate.StaleStateException;
 import com.fix.mobile.repository.SaleDetailRepository;
 import com.fix.mobile.repository.SaleRepository;
 import com.fix.mobile.service.SaleService;
@@ -59,92 +59,92 @@ public class SaleServiceImpl implements SaleService {
         Date day = new Date();
         if (sale.getIdSale() == null) {
             if (sale.getCreateStart().before(day)) {
-                throw new SaleException("Thời gian bắt đầu không thể trước " + viewDate.format(day));
+                throw new StaleStateException("Thời gian bắt đầu không thể trước " + viewDate.format(day));
             }
             if (sale.getCreateEnd().before(sale.getCreateStart())) {
-                throw new SaleException("Thời gian kết thúc không thể trước Thời gian bắt đầu");
+                throw new StaleStateException("Thời gian kết thúc không thể trước Thời gian bắt đầu");
             }
         } else {
             Sale saleud = dao.findById(sale.getIdSale()).get();
             if(saleud.getCreateStart().before(day)) {
                 if (!saleud.getCreateStart().equals(sale.getCreateStart())) {
-                    throw new SaleException("Không thể sửa Thời gian bắt đầu");
+                    throw new StaleStateException("Không thể sửa Thời gian bắt đầu");
                 }
                 if (sale.getCreateEnd().before(day)) {
-                    throw new SaleException("Thời gian kết thúc không thể trước " + viewDate.format(day));
+                    throw new StaleStateException("Thời gian kết thúc không thể trước " + viewDate.format(day));
                 }
             }
             if (sale.getCreateStart().before(day)) {
-                throw new SaleException("Thời gian bắt đầu không thể trước " + viewDate.format(day));
+                throw new StaleStateException("Thời gian bắt đầu không thể trước " + viewDate.format(day));
             }
             if (sale.getCreateEnd().before(sale.getCreateStart())) {
-                throw new SaleException("Thời gian kết thúc không thể trước Thời gian bắt đầu");
+                throw new StaleStateException("Thời gian kết thúc không thể trước Thời gian bắt đầu");
             }
         }
     }
 
     public void vaildate_NULL(Sale sale){
         if(sale.getTypeSale()==null){
-            throw new SaleException("Bạn phải chọn loại giảm giá");
+            throw new StaleStateException("Bạn phải chọn loại giảm giá");
         }
         if(sale.getName()==null){
-            throw new SaleException("Bạn không thể bỏ trống Tên chương trình");
+            throw new StaleStateException("Bạn không thể bỏ trống Tên chương trình");
         }
         if(sale.getDiscountMethod() == null){
-            throw new SaleException("Bạn phải chọn Phương thức giảm giá");
+            throw new StaleStateException("Bạn phải chọn Phương thức giảm giá");
         }
         if(sale.getDiscountMethod() == 0){
             if(sale.getVoucher() == null ){
-                throw new SaleException("Bạn không thể bỏ trống Mã giảm giá");
+                throw new StaleStateException("Bạn không thể bỏ trống Mã giảm giá");
             }
         }
         if(sale.getDiscountType() == null){
-            throw new SaleException("Bạn phải chọn Kiểu giảm giá");
+            throw new StaleStateException("Bạn phải chọn Kiểu giảm giá");
         }
         if(sale.getDiscountType() == 0){
             if(sale.getMoneySale() == null){
-                throw new SaleException("Bạn không thể bỏ trống Mức giảm giá");
+                throw new StaleStateException("Bạn không thể bỏ trống Mức giảm giá");
             }
         }
         if(sale.getDiscountType() == 1){
             if(sale.getPercentSale() == null){
-                throw new SaleException("Bạn không thể bỏ trống Mức giảm giá");
+                throw new StaleStateException("Bạn không thể bỏ trống Mức giảm giá");
             }
         }
         if(sale.getQuantity() == null){
-            throw new SaleException("Bạn không thể bỏ trống Số lượng");
+            throw new StaleStateException("Bạn không thể bỏ trống Số lượng");
         }
         if(sale.getCreateStart() == null){
-            throw new SaleException("Bạn không thể bỏ trống Thời gian bắt đầu");
+            throw new StaleStateException("Bạn không thể bỏ trống Thời gian bắt đầu");
         }
         if(sale.getCreateEnd() == null){
-            throw new SaleException("Bạn không thể bỏ trống Thời gian kết thúc");
+            throw new StaleStateException("Bạn không thể bỏ trống Thời gian kết thúc");
         }
         if(sale.getTypeSale() == 2 ){
             if(sale.getValueMin() == null ){
-                throw new SaleException("Bạn không thể bỏ trống Giá trị đơn hàng tối thiểu");
+                throw new StaleStateException("Bạn không thể bỏ trống Giá trị đơn hàng tối thiểu");
             }
         }
     }
 
     public void validate_NumberANDLength(Sale sale){
         if(sale.getName().length() > 250 ){
-            throw new SaleException("Tên chương trình được nhập tối đa 250 kí tự");
+            throw new StaleStateException("Tên chương trình được nhập tối đa 250 kí tự");
         }
         if(sale.getVoucher().length() > 250 ){
-            throw new SaleException("Mã giảm giá được nhập tối đa 250 kí tự");
+            throw new StaleStateException("Mã giảm giá được nhập tối đa 250 kí tự");
         }
         //validate quantity
         try {
             int so =sale.getQuantity();
             if(sale.getQuantity() <= 0 ){
-                throw new SaleException("Số lượng được nhập phải lớn hơn 0 đơn vị");
+                throw new StaleStateException("Số lượng được nhập phải lớn hơn 0 đơn vị");
             }
             if(sale.getQuantity() >= 1000000 ){
-                throw new SaleException("Số lượng được nhập tối đa 999999 đơn vị");
+                throw new StaleStateException("Số lượng được nhập tối đa 999999 đơn vị");
             }
         }catch (NumberFormatException e){
-            throw new SaleException("Số lượng bạn nhập chưa phải là số");
+            throw new StaleStateException("Số lượng bạn nhập chưa phải là số");
         }
         //validateMucGG
 

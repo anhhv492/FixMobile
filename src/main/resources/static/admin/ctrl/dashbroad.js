@@ -1,4 +1,4 @@
-app.controller("account-ctrl", function ($scope, $http) {
+app.controller("dashbroad", function ($scope, $http) {
 document.addEventListener("DOMContentLoaded", function() {
     var ctx = document.getElementById("chartjs-dashboard-line").getContext("2d");
     var gradient = ctx.createLinearGradient(0, 0, 0, 225);

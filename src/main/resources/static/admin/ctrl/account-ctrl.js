@@ -14,22 +14,20 @@ app.controller("account-ctrl", function ($scope, $http) {
     $scope.a;
     //xóa form
     $scope.reset = function () {
-$scope.hideUsername=false;
-$scope.hideCreate=false;
-$scope.hideUpdate=true;
+    $scope.hideUsername=false;
+    $scope.hideCreate=false;
+    $scope.hideUpdate=true;
         $scope.form = {
             username:null,
             createDate: new Date(),
             image: "5.png",
             gender: true,
-            status: true,
+            status: 1,
             password: null,
             role: {
                 idRole: 3,
                 name: "USER"
             },
-
-
         }
         $scope.getPageAccounts();
     }
@@ -51,7 +49,7 @@ $scope.hideUpdate=true;
             console.log(error);
         });;
         $scope.getTotalPages();
-        alert("Load du lieu tu db thanh cong")
+        // alert("Load du lieu tu db thanh cong")
 
     }
     $scope.getTotalPages = function () {
@@ -96,7 +94,7 @@ $scope.hideUpdate=true;
             })
 
             return a = $scope.b;
-            console.log("Hello")
+          
         });
 
 
@@ -180,13 +178,14 @@ $scope.hideUpdate=true;
 
     }
 
-    //cập nhật sản phẩm
+    //cập nhật account
     $scope.update = function () {
         var account = angular.copy($scope.form);
         console.log(account.username)
         $http.put(`/rest/admin/accounts/${account.username}`, account).then(resp => {
             var index = $scope.accounts.findIndex(a => a.username == account.username);
             $scope.accounts[index] = account;
+            $scope.initialize();
             alert("Update success!");
         }).catch(error => {
             alert("Update Error!")
@@ -195,7 +194,7 @@ $scope.hideUpdate=true;
 
     }
 
-    //xóa sản phẩm
+    //xóa account
     $scope.delete = function (account) {
 
         $http.delete(`/rest/admin/accounts/${account.username}`).then(resp => {

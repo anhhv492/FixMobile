@@ -18,7 +18,7 @@ public class ImayProduct {
 	private Integer idImay;
 
 	@Column(name = "name")
-	private String nameImay;
+	private String name;
 
 	@Column(name = "status")
 	private int status;
@@ -26,4 +26,10 @@ public class ImayProduct {
 	@ManyToOne
 	@JoinColumn(name = "id_product")
 	private Product product;
+
+	public ImayProduct( String name, int status, Product product) {
+		this.name = name;
+		this.status = status;
+		this.product = product;
+	}
 }
