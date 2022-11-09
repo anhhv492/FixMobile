@@ -10,20 +10,34 @@ app.controller("account-ctrl", function ($scope, $http) {
     $scope.totalPages = 0;
     $scope.b;
     $scope.hideUpdate=true;
-
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    })
     $scope.a;
     //xóa form
     $scope.reset = function () {
     $scope.hideUsername=false;
     $scope.hideCreate=false;
     $scope.hideUpdate=true;
+    $scope.hidePassword=false;
         $scope.form = {
-            username:null,
             createDate: new Date(),
+            // username:"",
+            // fullName:"",
+            // email:"",
+            // phone:"",
+            // password:"",
             image: "5.png",
             gender: true,
             status: 1,
-            password: null,
             role: {
                 idRole: 3,
                 name: "USER"
@@ -42,12 +56,12 @@ app.controller("account-ctrl", function ($scope, $http) {
 
         }).catch(error => {
             console.log(error);
-        });;
+        });
         $http.get("/rest/admin/accounts/roles").then(resp => {
             $scope.roles = resp.data;
         }).catch(error => {
             console.log(error);
-        });;
+        });
         $scope.getTotalPages();
         // alert("Load du lieu tu db thanh cong")
 
@@ -67,6 +81,7 @@ app.controller("account-ctrl", function ($scope, $http) {
         $scope.hideUpdate=false;
         $scope.hideUsername=true;
         $scope.hideCreate=true;
+        $scope.hidePassword=true;
         $scope.form = angular.copy(account);
         $scope.form.createDate = new Date(account.createDate)
         console.log(account.createDate + account.username)
@@ -88,17 +103,12 @@ app.controller("account-ctrl", function ($scope, $http) {
                     console.log(" trùng")
                     alert("Tài khoản đã tồn tại")
                     return a = 0;
-
                 }
-
             })
-
             return a = $scope.b;
           
         });
-
-
-        console.log("Kết thúc check trùng")
+console.log("Kết thúc check trùng")
         // $http.get("/rest/admin/accounts").then(resp => {
         //     console.log("Bắt đầu kiểm tra check trùng")
         //     $scope.accounts = resp.data; 
@@ -130,7 +140,11 @@ app.controller("account-ctrl", function ($scope, $http) {
                     console.log($scope.form.username)
                     console.log(acc.username)
                     console.log(" trùng")
-                    alert("Tài khoản đã tồn tại")
+                    Toast.fire({
+                        icon: 'error',
+                        title: 'Tài khoản đã tồn tại ',
+                    })
+                    // alert("Tài khoản đã tồn tại")
                     return a = 0;
 
                 }
@@ -138,14 +152,24 @@ app.controller("account-ctrl", function ($scope, $http) {
             })
             if (a == 1) {
                 console.log("Bắt đầu thêm mới")
-                var account = angular.copy($scope.form);
+                 var account = angular.copy($scope.form);
+                // $scope.form();
                 $http.post('/rest/admin/accounts', account).then(resp => {
                     resp.data.createDate = new Date(resp.data.createDate)
                     $scope.accounts.push(resp.data);
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'Thêm mới thành công!',
+                    })
                     $scope.reset();
-                    alert("Create success!");
+
+                    // alert("Create success!");
                 }).catch(error => {
-                    alert("Error create!")
+                    Toast.fire({
+                        icon: 'error',
+                        title: 'Thêm mới thất bại!',
+                    })
+                    // alert("Error create!")
                     console.log("Error", error)
                 })
 
@@ -157,24 +181,30 @@ app.controller("account-ctrl", function ($scope, $http) {
     }
     //Kiểm tra form
     $scope.form = function () {
-        alert("CHạy method form")
+        alert("Chạy method form")
         var account = angular.copy($scope.form);
-        if (account.username == null) {
-            $scope.error = "Tên tài khoản không được để trống"
+        if (account.username.trim() == null) {
+            // $scope.error = "Tên tài khoản không được để trống"
             alert("Tên tài khoản trống")
+            return null;
         }
-        if (account.fullName == null) {
+        if (account.fullName.trim() == null) {
             alert("Họ và tên không được để trống khoản trống")
+            return null;
         }
-        if (account.phone == null) {
+        if (account.phone.trim() == null) {
             alert("Tên tài khoản trống")
+            return null;
         }
-        if (account.email == null) {
+        if (account.email.trim() == null) {
             alert("Tên tài khoản trống")
+            return null;
         }
-        if (account.password == null) {
+        if (account.password.trim() == null) {
             alert("Tên tài khoản trống")
+            return null;
         }
+        return account;
 
     }
 
@@ -185,10 +215,19 @@ app.controller("account-ctrl", function ($scope, $http) {
         $http.put(`/rest/admin/accounts/${account.username}`, account).then(resp => {
             var index = $scope.accounts.findIndex(a => a.username == account.username);
             $scope.accounts[index] = account;
+            Toast.fire({
+                icon: 'success',
+                title: 'Cập nhật thành công!',
+            })
             $scope.initialize();
-            alert("Update success!");
+
+            // alert("Update success!");
         }).catch(error => {
-            alert("Update Error!")
+            // alert("Update Error!")
+            Toast.fire({
+                icon: 'error',
+                title: 'Cập nhật thất bại!',
+            })
             console.log("Error", error)
         })
 
@@ -200,10 +239,18 @@ app.controller("account-ctrl", function ($scope, $http) {
         $http.delete(`/rest/admin/accounts/${account.username}`).then(resp => {
             var index = $scope.accounts.findIndex(p => p.username == account.username);
             $scope.accounts.splice(index, 1);
+            Toast.fire({
+                icon: 'success',
+                title: 'Xóa thành công!',
+            })
             $scope.reset();
-            alert("Delete success!");
+            // alert("Delete success!");
         }).catch(error => {
-            alert("Delete Error!")
+            // alert("Delete Error!")
+            Toast.fire({
+                icon: 'error',
+                title: 'Xóa thất bại!',
+            })
             console.log("Error", error)
         })
     }
@@ -252,7 +299,7 @@ app.controller("account-ctrl", function ($scope, $http) {
             $scope.accounts = res.data;
             console.log('Load accounts success', res.data)
         }).catch(err => {
-            console.log('Load accounts failse', err.data);
+            console.log('Load accounts false', err.data);
         })
     }
     $scope.prev = function () {

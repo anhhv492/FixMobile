@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import java.util.Date;
@@ -24,29 +25,31 @@ import java.util.List;
 })})
 public class Account {
     @Id
-    @Column(name = "username")
-    @NotBlank
-    @Size(min = 3, max = 8)
+    @Column(name = "username", length = 250)
+    @NotBlank(message = "Tên tài khoản không được trống")
+    @Size(min = 3, max = 250, message = "Tên tài khoản từ 3-250 ký tự")
     private String username;
 
-    @Column(name = "password")
-    
+    @NotBlank(message = "Mật khẩu không được trống")
+    @Column(name = "password", length = 250)
     private String password;
 
-    @Column(name = "full_name")
+    @NotBlank(message = "Họ tên không được trống")
+    @Column(name = "full_name", length = 250)
     private String fullName;
 
     @Column(name = "gender")
     private Boolean gender;
 
-    @Column(name = "email")
-    @Email
-    @NotBlank
-    @Size(max = 50)
+    @Column(name = "email", length = 250)
+    @Email(message = "Email sai định dạng")
+    @NotBlank(message = "Không được để trống")
+    @Size(max = 250)
     private String email;
 
-    @Column(name = "phone")
-    @NotBlank
+    @Column(name = "phone", length = 10)
+    @NotBlank(message = "SĐT không được trống")
+    @Pattern(regexp = "(84|0[3|5|7|8|9])+([0-9]{8})\\b", message = "SĐT sai định dạng")
 //    @Size(min = 10, max = 10)
     private String phone;
 
