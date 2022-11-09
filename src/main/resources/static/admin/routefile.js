@@ -21,6 +21,14 @@ app.config(function($routeProvider){
             templateUrl:"/admin/accessory/form.html",
              controller: "rest_accessory"
         })
+        .when("/order",{
+            templateUrl:"/admin/order/form.html",
+            controller: "order-admin-ctrl"
+        })
+        .when("/order-detail",{
+            templateUrl:"/admin/order/detail/form.html",
+            controller: "order-admin-detail-ctrl"
+        })
         // thuộc tính
         .when("/createcapacity",{
             templateUrl:"/admin/capacity/createcapacity.html",
@@ -31,7 +39,7 @@ app.config(function($routeProvider){
             controller: "restaccsesries"
         })
         .when("/color",{
-            templateUrl:"/admin/color/createcolor.html",
+            templateUrl:"/admin/color/form.html",
             controller: "restaccsesries"
         })
         .when("/images",{

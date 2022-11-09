@@ -30,7 +30,7 @@ public class Order {
     private String note;
 
     @Column(name = "status")
-    private Boolean status;
+    private Integer status;
 
     @Column(name = "address")
     private String address;

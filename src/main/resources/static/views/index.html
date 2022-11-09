@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="/css/stylebaner.css">
     <link rel="stylesheet" href="css/owl.carousel.css">
 
+    <link rel="stylesheet" href="/css/login.css">
+    <link rel="stylesheet" href="../css/register.css">
     <script src="/js/jquery-3.3.1.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -20,13 +22,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-route/1.8.3/angular-route.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery.min.js"></script>
-<!--    <script src="../js/mainbaner.js"></script>-->
-<!--    <script  src="../js/owl.carousel.min.js"></script>-->
+
     <!-- banner scprit -->
     <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,700,600' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:400,700,300' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Raleway:400,100' rel='stylesheet' type='text/css'>
-
+    
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <!-- JavaScript Bundle with Popper -->
     <script src="routefile.js"></script>
@@ -64,12 +67,12 @@
                                         <div ng-if="account">
                                             <a href="#" class="dropdown-item">Thông tin tài khoản</a>
                                             <div class="dropdown-divider"></div>
-                                            <a href="#" class="dropdown-item">Lịch sử mua hàng</a>
+                                            <a href="#!order" class="dropdown-item">Lịch sử mua hàng</a>
                                             <div class="dropdown-divider"></div>
                                         </div>
                                         <div ng-if="!account">
-                                            <a href="/login" class="dropdown-item">Đăng nhập</a>
-                                            <a href="/logout" class="dropdown-item">Đăng ký</a>
+                                            <a href="#!login" class="dropdown-item">Đăng nhập</a>
+                                            <a href="#!register" class="dropdown-item">Đăng ký</a>                                         
                                         </div>
                                         <div ng-if="account">
                                             <a href="/security/logoff" class="dropdown-item">Đăng xuất</a>
@@ -165,13 +168,14 @@
     <script src="ctrl/nav-ctrl.js"></script>
     <script src="ctrl/cart-ctrl.js"></script>
     <script src="ctrl/detail-ctrl.js"></script>
+    <script src="ctrl/order-ctrl.js"></script>
+    <script src="ctrl/order-detail-ctrl.js"></script>
+    <script src="ctrl/login-ctrl.js"></script>
+    <script src="ctrl/register-ctrl.js"></script>
     <script src="/js/jq.js"></script>
     <script src="/js/index.js"></script>
     <script src="/js/product.js"></script>
-
-
-
-    <!--Login-->
+    
 <!--    <script src="/static/js/jquery.min.js"></script>-->
 <!--    <script src="/static/js/popper.js"></script>-->
 <!--    <script src="/static/js/bootstrap.min.js"></script>-->

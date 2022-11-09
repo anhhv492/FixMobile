@@ -30,10 +30,13 @@ import com.fix.mobile.entity.Account;
 import com.fix.mobile.entity.Account;
 import com.fix.mobile.entity.Category;
 import com.fix.mobile.entity.Role;
+import com.fix.mobile.help.HashUtil;
 import com.fix.mobile.repository.AccountRepository;
 import com.fix.mobile.repository.CategoryRepository;
 import com.fix.mobile.service.AccountService;
 import com.fix.mobile.service.RoleService;
+
+
 import java.util.Optional;
 
 @RestController
@@ -68,11 +71,15 @@ public class AccountRestController {
     }
     @PostMapping
     public Account create(@RequestBody Account account) {
-        return accountService.save(account);
+    	String hashedPassword = HashUtil.hash(account.getPassword());
+		account.setPassword(hashedPassword);
+    	return accountService.save(account);
     }
     
     @PutMapping("/{username}")
     public Account update(@PathVariable("username") String username, @RequestBody Account account){
+    	String hashedPassword = HashUtil.hash(account.getPassword());
+		account.setPassword(hashedPassword);
         return accountService.update(account, username);
     }
     
