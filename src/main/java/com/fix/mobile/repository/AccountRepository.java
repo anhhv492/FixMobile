@@ -13,6 +13,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AccountRepository extends PagingAndSortingRepository<Account, String> {
-	@Query("SELECT a FROM Account a WHERE a.username LIKE :username ")
+	@Query("SELECT a FROM Account a WHERE a.username LIKE :username AND a.status = 1")
 	public Account findByName(@Param ("username") String username);
 }

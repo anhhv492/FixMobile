@@ -28,16 +28,18 @@ public class LoginController {
 			return null;
 		}
 		Account account = accountService.findByUsername(principal.getName());
+		System.out.println("Username đang login: " + account.getUsername());
 		return account;
 	}
 	@RequestMapping("/security/login/success")
-	public String loginSucess(Model model) {
+	public String loginSuccess(Model model) {
 		model.addAttribute("message", "Đăng nhập thành công!");
 		return "redirect:/views/index.html#!/home/index";
 	}
 	@RequestMapping("/security/login/error")
 	public String loginError(Model model) {
-		model.addAttribute("error", "Sai thông tin đăng nhập");
+		model.addAttribute("error", "Tài khoản không hoạt động hoặc sai thông tin");
+		System.out.println("Tài khoản không hoạt động hoặc sai thông tin");
 	return "redirect:/views/index.html#!/login";
 	}
 	

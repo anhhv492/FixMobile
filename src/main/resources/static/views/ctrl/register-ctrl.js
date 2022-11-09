@@ -2,6 +2,17 @@ app.controller("register-ctrl",function ($scope, $http){
     $scope.accounts = [];
     $scope.roles = [];
     $scope.form = {};
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    })
     $scope.init = function(){
         
         $http.get("/rest/admin/accounts/roles").then(resp => {
@@ -25,12 +36,14 @@ app.controller("register-ctrl",function ($scope, $http){
     $scope.reset = function () {
        
             $scope.form = {
-                username:null,
+                username:"",
                 createDate: new Date(),
                 image: "5.png",
                 gender: true,
                 status: 1,
-                password: null,
+                password:"",
+                email:"",
+                phone:"",
                 role: {
                     idRole: 3,
                     name: "USER"
@@ -52,7 +65,11 @@ app.controller("register-ctrl",function ($scope, $http){
                     console.log($scope.form.username)
                     console.log(acc.username)
                     console.log(" trùng")
-                    alert("Tài khoản đã tồn tại")
+                    Toast.fire({
+                        icon: 'error',
+                        title: 'Tài khoản đã tồn tại',
+                    })
+                    // alert("Tài khoản đã tồn tại")
                     return a = 0;
 
                 }
@@ -63,10 +80,18 @@ app.controller("register-ctrl",function ($scope, $http){
                 $http.post(api, account).then(resp => {
                     resp.data.createDate = new Date(resp.data.createDate)
                     $scope.accounts.push(resp.data);
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'Đăng ký thành công!',
+                    })
                     $scope.reset();
-                    alert("Create success!");
+                    // alert("Create success!");
                 }).catch(error => {
-                    alert("Error create!")
+                    Toast.fire({
+                        icon: 'error',
+                        title: 'Đăng ký thất bại!',
+                    })
+                    // alert("Error create!")
                     console.log("Error", error)
                 })
 
