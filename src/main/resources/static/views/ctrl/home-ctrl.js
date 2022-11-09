@@ -119,6 +119,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http,$window){
             });
         }
     }
+
     $scope.overPro=false;
     $scope.overAccess=false;
     $scope.getCategories();

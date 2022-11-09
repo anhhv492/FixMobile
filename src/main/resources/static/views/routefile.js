@@ -3,7 +3,8 @@ app.config(function($routeProvider){
 	$routeProvider
         .when("/home/index",{
             templateUrl:"home/view.html",
-            controller: "home-ctrl"
+            controller: "home-ctrl",
+            controller: "view_product_ctrl"
         })
 	    .when("/cart",{
             templateUrl:"cart/cart.html",
