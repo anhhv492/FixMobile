@@ -119,6 +119,7 @@
             });
         }
     }
+
     $scope.overPro=false;
     $scope.overAccess=false;
     $scope.getCategories();

@@ -214,7 +214,7 @@ app.controller('cart-ctrl',function($rootScope,$scope,$http,$window){
                             $scope.linkPaypal=res.data;
                             $scope.cart.createDate=new Date();
                             $scope.cart.total=$scope.totals();
-                            $scope.cart.status=false;
+                            $scope.cart.status=0;
                             $scope.cart.type=false;
                             $http.post(urlOrder+'/add',$scope.cart).then(res=>{
                                 if(res.data){
@@ -241,7 +241,7 @@ app.controller('cart-ctrl',function($rootScope,$scope,$http,$window){
                     }else{
                         $scope.cart.createDate=new Date();
                         $scope.cart.total=$scope.totals();
-                        $scope.cart.status=false;
+                        $scope.cart.status=0;
                         $scope.cart.type=false;
                         $http.post(urlOrder+'/add',$scope.cart).then(res=>{
                             if(res.data){

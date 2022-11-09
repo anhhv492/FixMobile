@@ -1,5 +1,7 @@
 package com.fix.mobile.service.impl;
 
+import com.fix.mobile.entity.Account;
+import com.fix.mobile.entity.OrderDetail;
 import com.fix.mobile.service.OrderService;
 import com.fix.mobile.repository.OrderRepository;
 import com.fix.mobile.entity.Order;
@@ -62,4 +64,10 @@ public class OrderServiceImpl implements OrderService {
         }
         return null;
     }
+
+    @Override
+    public List<Order> findAllByAccount(Account account) {
+        return repository.findAllByAccount(account);
+    }
+
 }

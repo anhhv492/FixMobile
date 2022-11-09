@@ -1,5 +1,6 @@
 package com.fix.mobile.service.impl;
 
+import com.fix.mobile.entity.Order;
 import com.fix.mobile.service.OrderDetailService;
 import com.fix.mobile.repository.OrderDetailRepository;
 import com.fix.mobile.entity.OrderDetail;
@@ -60,5 +61,10 @@ public class OrderDetailServiceImpl implements OrderDetailService {
             return save(entity);
         }
         return null;
+    }
+
+    @Override
+    public List<OrderDetail> findAllByOrder(Order order) {
+        return repository.findAllByOrder(order);
     }
 }
