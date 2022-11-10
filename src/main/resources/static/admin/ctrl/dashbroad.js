@@ -1,4 +1,15 @@
-app.controller("dashbroad", function ($scope, $http) {
+app.controller("dashbroad", function ($scope, $http, $window) {
+
+    $scope.username = {};
+
+    const jwtToken = localStorage.getItem("jwtToken")
+    const token = {
+        headers: {
+            Authorization: `Bearer `+jwtToken
+        }
+    }
+    
+
 document.addEventListener("DOMContentLoaded", function() {
     var ctx = document.getElementById("chartjs-dashboard-line").getContext("2d");
     var gradient = ctx.createLinearGradient(0, 0, 0, 225);

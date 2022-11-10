@@ -11,10 +11,16 @@ app.controller('rest_accessory', function($scope, $http) {
         insert:'Thêm mới',
         update:'Cập nhật'
     };
+    const jwtToken = localStorage.getItem("jwtToken")
+    const token = {
+        headers: {
+            Authorization: `Bearer `+jwtToken
+        }
+    }
     $scope.checkSubmit=false;
     const now = new Date();
     $scope.loadAccessories =function (){
-        $http.get(`${pathAPI}/page/0`).then(function(response) {
+        $http.get(`${pathAPI}/page/0`,token).then(function(response) {
             $scope.accessories = response.data;
             console.log("access",response.data);
         }).catch(error=>{
@@ -24,28 +30,28 @@ app.controller('rest_accessory', function($scope, $http) {
         $scope.getTotalPages();
     }
     $scope.getTotalPages =function (){
-        $http.get(pathAPI).then(function(response) {
+        $http.get(pathAPI,token).then(function(response) {
             $scope.totalPages = Math.ceil(response.data.length/10);
         }).catch(error=>{
             console.log(error);
         });
     }
     $scope.getCategories=function(){
-        $http.get(`${pathAPI}/cate`).then(function(response) {
+        $http.get(`${pathAPI}/cate`,token).then(function(response) {
             $scope.categories = response.data;
         }).catch(error=>{
             console.log("error findByCate",error);
         });
     };
     $scope.onSave = function() {
-        $http.post(pathAPI+'/save-file', $scope.imageFile).then(response => {
+        $http.post(pathAPI+'/save-file', $scope.imageFile,token).then(response => {
         })
         $scope.form.status=false;
         $scope.form.createDate=now;
         $scope.form.category ={
             idCategory: $scope.form.category
         };
-        $http.post(pathAPI, $scope.form).then(response => {
+        $http.post(pathAPI, $scope.form,token).then(response => {
             const Toast = Swal.mixin({
                 toast: true,
                 position: 'top-end',
@@ -93,7 +99,7 @@ app.controller('rest_accessory', function($scope, $http) {
             confirmButtonText: 'Xác nhận!'
         }).then((result) => {
             if (result.isConfirmed) {
-                $http.put(`${pathAPI}/change/${accessory.idAccessory}`).then(response=> {
+                $http.put(`${pathAPI}/change/${accessory.idAccessory}`,token).then(response=> {
                     const Toast = Swal.mixin({
                         toast: true,
                         position: 'top-end',
@@ -148,7 +154,7 @@ app.controller('rest_accessory', function($scope, $http) {
         $scope.form.category ={
             idCategory: $scope.form.category
         };
-        $http.put(pathAPI+'/'+$scope.form.idAccessory, $scope.form).then(response=> {
+        $http.put(pathAPI+'/'+$scope.form.idAccessory, $scope.form,token).then(response=> {
             const Toast = Swal.mixin({
                 toast: true,
                 position: 'top-end',
@@ -252,7 +258,7 @@ app.controller('rest_accessory', function($scope, $http) {
     }
     $scope.fileNames=[];
     $scope.listFile = function(){
-        $http.get(urlImage).then(res=>{
+        $http.get(urlImage,token).then(res=>{
             $scope.fileNames = res.data;
             console.log('ok',res);
         }).catch(err=>{
@@ -262,7 +268,7 @@ app.controller('rest_accessory', function($scope, $http) {
     $scope.uploadFile = function(files){
         var form = new FormData();
         form.append('file',files[0]);
-        $http.post(urlImage,form,{
+        $http.post(urlImage,form,token,{
             transformRequest: angular.identity,
             headers: {'Content-Type': undefined}
         }).then(res=>{
@@ -293,7 +299,7 @@ app.controller('rest_accessory', function($scope, $http) {
             }
         }).then((result) => {
             if (result.dismiss === Swal.DismissReason.timer) {
-                $http.post(pathAPI+'/read-excel',form,{
+                $http.post(pathAPI+'/read-excel',form,token,{
                     transformRequest: angular.identity,
                     headers: {'Content-Type': undefined}
                 }).then(res=>{
@@ -340,7 +346,7 @@ app.controller('rest_accessory', function($scope, $http) {
         })
     }
     $scope.loadProducts = function(){
-        $http.get(urlProduct+`/page/`+$scope.index).then(res=>{
+        $http.get(urlProduct+`/page/`+$scope.index,token).then(res=>{
             $scope.products = res.data;
             console.log('Load products success',res.data)
         }).catch(err=>{
@@ -360,7 +366,7 @@ app.controller('rest_accessory', function($scope, $http) {
             $scope.check_first=true;
             $scope.check_last=false;
         }
-        $http.get(pathAPI+`/page/`+$scope.index).then(res=>{
+        $http.get(pathAPI+`/page/`+$scope.index,token).then(res=>{
             $scope.accessories = res.data;
             console.log('Load accessories success',res.data)
         }).catch(err=>{
@@ -379,7 +385,7 @@ app.controller('rest_accessory', function($scope, $http) {
             $scope.check_first=false;
             $scope.check_last=true;
         }
-        $http.get(pathAPI+`/page/`+$scope.index).then(res=>{
+        $http.get(pathAPI+`/page/`+$scope.index,token).then(res=>{
             $scope.accessories = res.data;
             console.log('Load accessories success',res.data)
         }).catch(err=>{
@@ -390,7 +396,7 @@ app.controller('rest_accessory', function($scope, $http) {
         $scope.check_first=false;
         $scope.check_last=true;
         $scope.index=0;
-        $http.get(pathAPI+`/page/`+$scope.index).then(res=>{
+        $http.get(pathAPI+`/page/`+$scope.index,token).then(res=>{
             $scope.accessories = res.data;
             console.log('Load accessories success',res.data)
         }).catch(err=>{
@@ -401,7 +407,7 @@ app.controller('rest_accessory', function($scope, $http) {
         $scope.check_first=true;
         $scope.check_last=false;
         $scope.index=$scope.totalPages-1;
-        $http.get(pathAPI+`/page/`+$scope.index).then(res=>{
+        $http.get(pathAPI+`/page/`+$scope.index,token).then(res=>{
             $scope.accessories = res.data;
             console.log('Load accessories success',res.data)
         }).catch(err=>{
@@ -409,7 +415,7 @@ app.controller('rest_accessory', function($scope, $http) {
         })
     }
     $scope.getPageAccessories = function(){
-        $http.get(pathAPI+`/page/`+$scope.index).then(res=>{
+        $http.get(pathAPI+`/page/`+$scope.index,token).then(res=>{
             $scope.accessories = res.data;
             console.log('Load accessories success',res.data)
         }).catch(err=>{

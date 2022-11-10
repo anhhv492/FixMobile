@@ -80,6 +80,17 @@ public class Account {
 	public Role getRole() {
 		return role;
 	}
+
+    public Account(String username, String password, String fullName, Boolean gender, String email, Date date, Role role , String phone ) {
+        this.username = username;
+        this.password = password;
+        this.fullName = fullName;
+        this.gender = gender;
+        this.email = email;
+        this.createDate = date;
+        this.role = role;
+        this.phone = phone;
+    }
 	
 	
     

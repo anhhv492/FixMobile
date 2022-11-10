@@ -26,17 +26,8 @@ public class Address {
     @Column(name = "phone_take")
     private String phoneTake;
 
-    @ManyToOne
-    @JoinColumn(name = "id_province")
-    private Province province;
-
-    @ManyToOne
-    @JoinColumn(name = "id_district")
-    private District district;
-
-    @ManyToOne
-    @JoinColumn(name = "id_commune")
-    private Commune commune;
+    @Column(name = "address_take")
+    private String addressTake;
 
     @ManyToOne
     @JoinColumn(name = "username")

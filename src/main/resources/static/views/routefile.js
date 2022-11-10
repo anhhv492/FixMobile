@@ -23,6 +23,7 @@ app.config(function($routeProvider){
             controller: "home-ctrl"
 	       })
         .when("/login",{
+
             templateUrl:"/views/login/form.html",
             controller: "login-ctrl" 
         })
@@ -30,9 +31,19 @@ app.config(function($routeProvider){
             templateUrl:"/views/register/form.html",
             controller: "register-ctrl" 
         })
+        .when("/profile", {
+            templateUrl:"profile/profile.html",
+            controller:"profile-ctl"
+        })
+        .when("/address", {
+            templateUrl:"address/addressTable.html",
+            controller:"address-form-ctrl"
+        })
+        .when("/addressCretae", {
+            templateUrl:"address/addressForm.html",
+            controller:"address-form-ctrl"
+        })
 
 
 });
-
-
 

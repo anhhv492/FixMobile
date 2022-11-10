@@ -1,0 +1,119 @@
+<section style="background-color: #eee;">
+    <div class="container py-5">
+        <div class="row">
+            <div class="card mb-4 col-lg-4">
+                <div class="card-body row d-flex align-content-center text-center">
+                        <div class="col-12">
+                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
+                                 alt="avatar"
+                                 class="rounded-circle img-fluid" style="width: 150px">
+                        </div>
+                        <h5 class="col-12 my-3">John Smith</h5>
+                        <p class="col-12 text-muted">Dụng lượng file tối đa 1 MB</p>
+                        <p class="col-12 text-muted">Định dạng:.JPEG, .PNG</p>
+                        <div class="upload-btn-wrapper col-12 d-flex justify-content-center mb-2">
+                            <button type="button" class="btn btn-outline-primary ms-1">Chọn ảnh</button>
+                            <input type="file" name="myfile" accept=".jpg,.jpeg,.png"/>
+                        </div>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <form>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Tên đăng nhập</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <input class="text-muted mb-0 input" disabled value="{{accountActive.username}}">
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Tên</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <input class="text-muted mb-0 input" value="{{accountActive.fullName}}">
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Email</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <input class="text-muted mb-0 input" value="{{accountActive.email}}" required pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$">
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Số điện thoại</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <input class="text-muted mb-0 input" value="{{accountActive.phone}}" pattern="(84|0[3|5|7|8|9])+([0-9]{8})\b"
+                                           ng-minlength="0" ng-maxlength="10">
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Giới tính</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <input name="radio" class="radio mb-0" type="radio" value="0" checked>
+                                    Nam </input>
+                                    <input name="radio" class="radio mb-0 ms-5" type="radio" value="1">
+                                    Nữ </input>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row date">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Ngày sinh</p>
+                                </div>
+                                <div class="col-sm-9 d-flex gap-3">
+                                    <div id="dob-year" class="input-wrapper small-4 columns" style="padding-left: 0;">
+                                        <select name="year" id="year" ng-model="year" ng-options="y for y in years"
+                                                ng-change="updateDate('year')" onchange="changeMe(this)" required>
+                                            <option value='' selected disabled>Năm</option>
+                                        </select>
+
+                                    </div>
+                                    <div id="dob-month" class="input-wrapper small-4 columns">
+                                        <select name="month" id="month" ng-model="month"
+                                                ng-options="m.name for m in months | validMonths:year"
+                                                ng-change="updateDate('month')" onchange="changeMe(this)" required>
+                                            <option value='' selected disabled>Tháng</option>
+                                        </select>
+                                    </div>
+                                    <div id="dob-day" class="input-wrapper small-4 columns" style="padding-right: 0;">
+                                        <select name="day" id="day" ng-model="day"
+                                                ng-options="d for d in days | daysInMonth:year:month | validDays:year:month"
+                                                ng-change="updateDate('day')" onchange="changeMe(this)" required>
+                                            <option value='' selected disabled>Ngày</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Địa Chỉ</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <a href="#!/address">Xem</a>
+                                </div>
+                            </div>
+                            <hr>
+                            <button type="button" class="btn btn-outline-primary ms-1 mt-3 offset-2">Lưu</button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>

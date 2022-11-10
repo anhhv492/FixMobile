@@ -18,6 +18,7 @@ public class LoginController {
 	private AccountService accountService;
 	@RequestMapping("/login")
 	public String loginForm(Model model) {
+
 		return "redirect:/views/index.html#!/login";
 	}
 
@@ -29,6 +30,7 @@ public class LoginController {
 		}
 		Account account = accountService.findByUsername(principal.getName());
 		return account;
+
 	}
 	@RequestMapping("/security/login/success")
 	public String loginSucess(Model model) {
@@ -37,20 +39,26 @@ public class LoginController {
 	}
 	@RequestMapping("/security/login/error")
 	public String loginError(Model model) {
+
 		model.addAttribute("error", "Sai thông tin đăng nhập");
 	return "redirect:/views/index.html#!/login";
+
 	}
 	
 	@RequestMapping("/security/unauthoried")
 	public String unauthoried(Model model) {
 		model.addAttribute("message", "Không có quyền truy xuất");
+
 		model.addAttribute("message","Sai thông tin đăng nhập");
 		return "redirect:/views/index.html#!/login";
+
 	}
 	@RequestMapping("/security/logoff/success")
 	public String logoffSucess(Model model) {
 		model.addAttribute("message", "Bạn đã đăng xuất!");
+
 		return "redirect:/views/index.html#!/login";
+
 	}
 	@RequestMapping("/security/login")
 	public String login() {

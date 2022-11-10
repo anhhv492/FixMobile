@@ -1,4 +1,12 @@
 app.controller("sale_ctrl", function ($scope, $http) {
+
+    const jwtToken = localStorage.getItem("jwtToken")
+    const token = {
+        headers: {
+            Authorization: `Bearer `+jwtToken
+        }
+    }
+
     let urlprd = "http://localhost:8080/rest/admin/product";
     $scope.saleadd = {};
     $scope.saleedit = {};
@@ -27,7 +35,7 @@ app.controller("sale_ctrl", function ($scope, $http) {
     $scope.addSale = function (){
         let item = angular.copy($scope.saleadd);
         let urlsale = `/admin/rest/sale/demo`;
-        $http.post(urlsale, item).then(resp => {
+        $http.post(urlsale, item,token).then(resp => {
         }).catch(error => {
             swal.fire({
                 icon: 'error',
@@ -40,7 +48,7 @@ app.controller("sale_ctrl", function ($scope, $http) {
     $scope.addSaleDetail = function (){
         let listDetail = angular.copy($scope.seLected);
         let urlsale = `/admin/rest/sale/demo3`;
-        $http.post(urlsale, listDetail).then(resp => {
+        $http.post(urlsale, listDetail,token).then(resp => {
             swal.fire({
                 icon: 'success',
                 showConfirmButton: false,
@@ -80,7 +88,7 @@ app.controller("sale_ctrl", function ($scope, $http) {
 
     //get data table start
     $scope.getProducts =function (){
-        $http.get(`${urlprd}/page/`+$scope.index).then(function(response) {
+        $http.get(`${urlprd}/page/`+$scope.index,token).then(function(response) {
             $scope.products = response.data.content;
             if(response.data.totalElements % 10 ==0){
                 $scope.totalPages=response.data.totalElements/10;

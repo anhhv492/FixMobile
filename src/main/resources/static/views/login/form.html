@@ -14,28 +14,25 @@
  <div></div>
     <section class="ftco-section">
         <div class="container">
-          <div class="alert alert-danger" role="alert" name="error.value">
-            {error.value}
-          </div>
-            <div class="row justify-content-center">
+            <div class="row justify-content-center mt-3">
                 <div class="col-md-6 text-center mb-5">
                     <h2 class="heading-section">Hãy đăng nhập</h2>
                 </div>
             </div>
-            <div class="row justify-content-center">
+            <div class="row justify-content-center mb-5">
                 <div class="col-md-6 col-lg-5">
                     <div class="login-wrap p-4 p-md-5">
                         <div class="icon d-flex align-items-center justify-content-center">
                             <span class="fa fa-user-o"></span>
                         </div>
                         <h3 class="text-center mb-4">Bạn đã có tài khoản?</h3>
-                        <form action="/security/login" method="post" class="login-form">
+                        <form  method="post" class="login-form">
                             <div class="form-group">
-                                <input type="text" class="form-control rounded-left" path="username" name="username" placeholder="Tên tài khoản"
+                                <input ng-model="form.username" type="text" class="form-control rounded-left" path="username" name="username" placeholder="Tên tài khoản"
                                     required>
                             </div>
                             <div class="form-group d-flex">
-                                <input type="password" class="form-control rounded-left" path="password" name="password" placeholder="Mật khẩu"
+                                <input ng-model="form.password" type="password" class="form-control rounded-left" path="password" name="password" placeholder="Mật khẩu"
                                     required>
                             </div>
                             <div class="form-group col-6-offset-2 mb-0 ">
@@ -57,7 +54,7 @@
                             </div>
                             -->
                             <div class="form-group">
-                                <button type="submit" class="btn btn-primary rounded submit p-3
+                                <button ng-click="onLogin()" type="submit" class="btn btn-primary rounded submit p-3
                                  px-5 ">Đăng nhập</button>
                             </div>
                            <div class="row mb-5"></div>

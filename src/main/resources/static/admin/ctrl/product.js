@@ -17,6 +17,12 @@ app.controller('product', function($scope, $http) {
         insert:'Thêm mới',
         update:'Cập nhật'
     };
+    const jwtToken = localStorage.getItem("jwtToken")
+    const token = {
+        headers: {
+            Authorization: `Bearer `+jwtToken
+        }
+    }
     $scope.message = function (mes){
         const Toast = Swal.mixin({
             toast: true,
@@ -55,7 +61,7 @@ app.controller('product', function($scope, $http) {
     $scope.checkButton = true;
     $scope.checkSubmit=false;
     $scope.getProducts =function (){
-        $http.get(`${pathAPI}/page/pushedlist?page=0`).then(function(response) {
+        $http.get(`${pathAPI}/page/pushedlist?page=0`,token).then(function(response) {
             $scope.products = response.data.list;
             $scope.totalPages = response.data.totalPages;
             $scope.currentPage = response.data.currentPage;
@@ -68,35 +74,35 @@ app.controller('product', function($scope, $http) {
         $scope.getCapacity();
     }
     $scope.getCategories=function(){
-        $http.get(`${pathAPI}/category`).then(function(response) {
+        $http.get(`${pathAPI}/category`,token).then(function(response) {
             $scope.categories = response.data;
         }).catch(error=>{
             console.log("error findByCate",error);
         });
     };
     $scope.getRam=function(){
-        $http.get(`${pathAPI}/getAllRam`).then(function(response) {
+        $http.get(`${pathAPI}/getAllRam`,token).then(function(response) {
             $scope.rams = response.data;
         }).catch(error=>{
             console.log(error + 'looxi');
         });
     };
     $scope.getColor=function(){
-        $http.get(`${pathAPI}/getAllColor`).then(function(response) {
+        $http.get(`${pathAPI}/getAllColor`,token).then(function(response) {
             $scope.colors = response.data;
         }).catch(error=>{
             console.log(error + 'looxi');
         });
     };
     $scope.getCapacity=function(){
-        $http.get(`${pathAPI}/getAllCapacity`).then(function(response) {
+        $http.get(`${pathAPI}/getAllCapacity`,token).then(function(response) {
             $scope.capacitys = response.data;
         }).catch(error=>{
             console.log(error + 'looxi');
         });
     };
     $scope.getImageProduct=function(){
-        $http.get(`rest/files/images/products`).then(function(response) {
+        $http.get(`rest/files/images/products`,token).then(function(response) {
             $scope.images = response.data;
             console.log(reponse.data );
             alert('dddd' + response.data);
@@ -134,7 +140,7 @@ app.controller('product', function($scope, $http) {
                 }).then((result) => {
                     /* Read more about handling dismissals below */
                     if (result.dismiss === Swal.DismissReason.timer) {
-                        $http.delete(`${pathAPI}/delete/${formProduct.idProduct}`).then(response=> {
+                        $http.delete(`${pathAPI}/delete/${formProduct.idProduct}`,token).then(response=> {
                         $scope.products.splice($scope.products.indexOf(formProduct), 1);
                         $scope.message('Đã xóa thành công sản phẩm');
                     }).catch(error=>{
@@ -170,7 +176,7 @@ app.controller('product', function($scope, $http) {
         $scope.formProduct.capacity ={
             idCapacity: $scope.formProduct.capacity
         };
-        $http.put(pathAPI+'/'+$scope.formProduct.idProduct, $scope.formProduct).then(response=> {
+        $http.put(pathAPI+'/'+$scope.formProduct.idProduct, $scope.formProduct,token).then(response=> {
             $scope.message("cập nhật thành công"+ $scope.formProduct.name);
             $scope.refresh();
         }).catch(error=>{
@@ -245,7 +251,8 @@ app.controller('product', function($scope, $http) {
     }
     const headers = {
         headers: {
-            'Content-Type':'multipart/form-data'
+            'Content-Type':'multipart/form-data',
+            Authorization: `Bearer `+jwtToken
         },
         data: { test: true }
     }
@@ -270,7 +277,8 @@ app.controller('product', function($scope, $http) {
             method: 'POST',
             url: '/rest/admin/product/saveProduct',
             headers: {
-                'Content-Type': undefined
+                'Content-Type': undefined,
+                Authorization: `Bearer `+jwtToken
                 // or  'Content-Type':'application/json'
             },
             data: formData
@@ -316,7 +324,7 @@ app.controller('product', function($scope, $http) {
             $scope.check_first=true;
             $scope.check_last=false;
         }
-        $http.get(pathAPI+`/page/pushedlist?page=`+$scope.index).then(res=>{
+        $http.get(pathAPI+`/page/pushedlist?page=`+$scope.index,token).then(res=>{
             $scope.products = res.data.list;
             console.log('Load product thành công',res.data.list);
         }).catch(err=>{
@@ -335,7 +343,7 @@ app.controller('product', function($scope, $http) {
             $scope.check_first=false;
             $scope.check_last=true;
         }
-        $http.get(pathAPI+`/page/pushedlist?page=`+$scope.index).then(res=>{
+        $http.get(pathAPI+`/page/pushedlist?page=`+$scope.index,token).then(res=>{
             $scope.products = res.data.list;
             console.log('Load product success',res.data.list)
         }).catch(err=>{
@@ -346,7 +354,7 @@ app.controller('product', function($scope, $http) {
         $scope.check_first=false;
         $scope.check_last=true;
         $scope.index=0;
-        $http.get(pathAPI+`/page/pushedlist?page=`+$scope.index).then(res=>{
+        $http.get(pathAPI+`/page/pushedlist?page=`+$scope.index,token).then(res=>{
             $scope.products = res.data.list;
         }).catch(err=>{
             console.log('Load accessories failse',err.data);
@@ -356,7 +364,7 @@ app.controller('product', function($scope, $http) {
         $scope.check_first=true;
         $scope.check_last=false;
         $scope.index=$scope.totalPages-1;
-        $http.get(pathAPI+`/page/pushedlist?page=`+$scope.index).then(res=>{
+        $http.get(pathAPI+`/page/pushedlist?page=`+$scope.index,token).then(res=>{
             $scope.products = res.data.list;
             console.log('Load product success',res.data.list)
         }).catch(err=>{
@@ -385,7 +393,7 @@ app.controller('product', function($scope, $http) {
             }
         }).then((result) => {
             if (result.dismiss === Swal.DismissReason.timer) {
-                $http.post(pathAPI+'/readExcel',form,{
+                $http.post(pathAPI+'/readExcel',form,token,{
                     transformRequest: angular.identity,
                     headers: {'Content-Type': undefined}
                 }).then(res=>{
@@ -492,11 +500,12 @@ app.controller('product', function($scope, $http) {
             method: 'POST',
             url: '/rest/admin/product/saveImay',
             headers: {
-                'Content-Type': undefined // or  'Content-Type':'application/json'
+                'Content-Type': undefined, // or  'Content-Type':'application/json'
+                Authorization: `Bearer `+jwtToken
             },
             data: form
         }
-        $http(req).then(response=> {
+        $http(req,token).then(response=> {
             $scope.message('Đã thêm '+ $scope.formProduct.name);
             console.log('ddadadasdsssssssssssssss '+ $scope.formProduct.name)
             $scope.formProduct = {}
@@ -526,7 +535,7 @@ app.controller('product', function($scope, $http) {
             }
         }).then((result) => {
             if (result.dismiss === Swal.DismissReason.timer) {
-                $http.post(pathAPI+'/readExcelImay',form,{
+                $http.post(pathAPI+'/readExcelImay',form,token,{
                     transformRequest: angular.identity,
                     headers: {'Content-Type': undefined}
                 }).then(res=>{

@@ -8,7 +8,11 @@ import java.util.Map;
 
 import javax.servlet.ServletContext;
 
+import com.fix.mobile.dto.AccountDTO;
+import com.fix.mobile.utils.UserName;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -48,12 +52,20 @@ public class AccountRestController {
     private AccountService accountService;
     @Autowired
     private RoleService roleService;
-    @Autowired
-    private AccountRepository accountRepository;
 
     @Autowired
     ServletContext application;
-    
+
+    @Autowired
+    ModelMapper modelMapper;
+
+    public AccountRestController(AccountService accountService, RoleService roleService, ServletContext application, ModelMapper modelMapper) {
+        this.accountService = accountService;
+        this.roleService = roleService;
+        this.application = application;
+        this.modelMapper = modelMapper;
+    }
+
     @GetMapping
     public List<Account> findAll() {
         return accountService.findAll();
@@ -88,5 +100,10 @@ public class AccountRestController {
         accountService.deleteById(username);
     }
     
-
+    @GetMapping("/getAccountActive")
+    public AccountDTO getAccountActive(){
+        Account account = accountService.findByUsername(UserName.getUserName());
+        AccountDTO accountDTO = modelMapper.map(account, AccountDTO.class);
+        return accountDTO;
+    }
 }

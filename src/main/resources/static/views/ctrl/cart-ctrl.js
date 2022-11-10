@@ -1,6 +1,12 @@
 app.controller('cart-ctrl',function($rootScope,$scope,$http,$window){
     var urlOrder=`http://localhost:8080/rest/guest/order`;
     var urlOrderDetail=`http://localhost:8080/rest/guest/order-detail`;
+    const jwtToken = localStorage.getItem("jwtToken")
+    const token = {
+        headers: {
+            Authorization: `Bearer `+jwtToken
+        }
+    }
     $scope.info={};
     $scope.checkBuy=null;
     $scope.categories={};

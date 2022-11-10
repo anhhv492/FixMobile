@@ -1,21 +1,44 @@
 app.controller('home-ctrl',function($rootScope,$scope,$http,$window){
-    var urlCategory=`http://localhost:8080/rest/guest/category`;
-    var urlAccessory=`http://localhost:8080/rest/guest/accessory`;
-    var urlProduct=`http://localhost:8080/rest/guest/product`;
+
+    var urlCategory=`http://localhost:8080/rest/staff/category`;
+    var urlAccessory=`http://localhost:8080/rest/admin/accessory`;
+    var urlAccount = `http://localhost:8080/rest/admin/accounts`;
+
+    const jwtToken = localStorage.getItem("jwtToken")
+    const token = {
+        headers: {
+            Authorization: `Bearer `+jwtToken
+        }
+    }
+
     $scope.cateAccessories=[];
     $scope.cateProducts=[];
     $scope.item= {};
     $rootScope.carts=[];
     $rootScope.qtyCart=0;
+
+
     $rootScope.account=null;
     $scope.getAccount=function (){
         $http.get("http://localhost:8080/rest/account").then(resp=>{
             $rootScope.account=resp.data;
-            console.log("resp account",resp.data);
+            console.log(resp.data);
         }).catch(error=>{
             $rootScope.account=null;
             console.log("Error",error);
         });
+        }
+
+
+
+    $scope.getAccountActive = function () {
+        $http.get(`${urlAccount}/getAccountActive`).then(res => {
+            res.data = $scope.item;
+
+            alert('user'+$scope.item)
+            console.log($scope.item)
+        })
+
     }
     $scope.getCategories = function(){
         $http.get(`${urlCategory}/getAll`).then(res=>{
@@ -122,7 +145,11 @@ app.controller('home-ctrl',function($rootScope,$scope,$http,$window){
     $scope.overPro=false;
     $scope.overAccess=false;
     $scope.getCategories();
+
     $rootScope.loadLocalStorage();
     $rootScope.loadQtyCart();
+
     $scope.getAccount();
+
+
 })
