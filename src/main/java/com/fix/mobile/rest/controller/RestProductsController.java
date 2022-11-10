@@ -65,7 +65,7 @@ public class RestProductsController {
 	// danh mục
 	@GetMapping("/category")
 	public List<Category> findByCate(){
-		return categoryService.findByTypeProduct();
+		return categoryService.findByTypeSP();
 	}
 
 	@GetMapping("/getAll")
