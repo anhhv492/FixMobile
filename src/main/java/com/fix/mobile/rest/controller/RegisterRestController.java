@@ -41,8 +41,8 @@ import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping(value = "/rest/admin/accounts")
-public class AccountRestController {
+@RequestMapping(value = "/rest/admin/registers")
+public class RegisterRestController {
 
     @Autowired
     private AccountService accountService;
@@ -53,37 +53,31 @@ public class AccountRestController {
 
     @Autowired
     ServletContext application;
-    
+
     @GetMapping
     public List<Account> findAll() {
         return accountService.findAll();
     }
-    @GetMapping("/page/{page}")
-	public List<Account> findAllPageable(@PathVariable("page") Optional<Integer> page){
-		Pageable pageable = PageRequest.of(page.get(), 10);
-		List<Account> accounts = accountService.findAll(pageable).getContent();
-		return accounts;
-	}
-  
+
+
     @GetMapping("/roles")
     public List<Role> findRoles(){
         return roleService.findAll();
     }
     @PostMapping
     public Account create(@RequestBody Account account) {
-    	String hashedPassword = HashUtil.hash(account.getPassword());
-		account.setPassword(hashedPassword);
-    	return accountService.save(account);
+        String hashedPassword = HashUtil.hash(account.getPassword());
+        account.setPassword(hashedPassword);
+        return accountService.save(account);
     }
-    
+
     @PutMapping("/{username}")
-    public Account update(@PathVariable("username") String username, @RequestBody Account account){return accountService.update(account, username);
+    public Account update(@PathVariable("username") String username, @RequestBody Account account){
+        String hashedPassword = HashUtil.hash(account.getPassword());
+        account.setPassword(hashedPassword);
+        return accountService.update(account, username);
     }
-    
-    @DeleteMapping("/{username}")
-    public void delete(@PathVariable("username") String username){
-        accountService.deleteById(username);
-    }
-    
+
+
 
 }

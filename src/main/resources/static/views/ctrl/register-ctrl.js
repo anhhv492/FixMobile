@@ -15,7 +15,7 @@ app.controller("register-ctrl",function ($scope, $http){
     })
     $scope.init = function(){
         
-        $http.get("/rest/admin/accounts/roles").then(resp => {
+        $http.get("/rest/admin/registers/roles").then(resp => {
             $scope.roles = resp.data;
         }).catch(error => {
             console.log(error);
@@ -52,7 +52,7 @@ app.controller("register-ctrl",function ($scope, $http){
            
     }
     $scope.init();
-    const api ="/rest/admin/accounts";
+    const api ="/rest/admin/registers";
     $scope.create =function(){
         $http.get(api).then(resp => {
             var a = 1;
