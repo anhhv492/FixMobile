@@ -146,6 +146,9 @@ CREATE TABLE sale (
 	value_min decimal(10,0) NOT NULL,
 	money_sale decimal(10,0) NOT NULL,
 	quantity_use int NOT NULL,
+	update_time date ,
+	user_update nvarchar(50) ,
+	user_type int default(0) ,
 	status binary DEFAULT(0)
 ) ;
 
@@ -155,8 +158,12 @@ CREATE TABLE sale_detail (
 	id_detail int NOT NULL auto_increment primary key,
 	id_sale int NOT NULL,
 	id_product int NOT NULL,
+	id_accessory int NULL,
+	username nvarchar(50) not null,
+	foreign key(username) references accounts(username),
 	foreign key(id_sale) references sale(id_sale),
-	foreign key(id_product) references products(id_product)
+	foreign key(id_product) references products(id_product),
+	foreign key(id_accessory) references accessories(id_accessory)
 );
 
 -- SQLINES DEMO *** OR EVALUATION USE ONLY
@@ -442,5 +449,6 @@ VALUES ('vietanhvs','492002','Hạ Việt Anh',0,'vietanhvs@gmail.com','09842974
 INSERT INTO fix_mobile.accounts(username,password,full_name,gender,email,
 								phone,create_date,image,id_role) 
 VALUES ('user','123','user',1,'user@gmail.com','0123456789','2002/11/11','',3);
+
 select*from accounts;
 select*from roles;
