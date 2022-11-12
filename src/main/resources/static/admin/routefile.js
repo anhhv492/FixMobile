@@ -39,7 +39,7 @@ app.config(function($routeProvider){
             controller: "restaccsesries"
         })
         .when("/sale",{
-            templateUrl:"/admin/sale/sale.html",
+            templateUrl:"/admin/sale/showsale.html",
             controller: "sale_ctrl"
         })
         .otherwise({ 
