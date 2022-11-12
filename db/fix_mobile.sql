@@ -138,18 +138,23 @@ CREATE TABLE accessories (
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
 CREATE TABLE sale (
 	id_sale int NOT NULL auto_increment primary key,
-	name nvarchar(100) NOT NULL,
-	type_sale nvarchar(100) NOT NULL,
-	create_start date NOT NULL,
-	create_end date NOT NULL,
-	voucher nvarchar(100) NOT NULL,
-	value_min decimal(10,0) NOT NULL,
-	money_sale decimal(10,0) NOT NULL,
-	quantity_use int NOT NULL,
-	update_time date ,
-	user_update nvarchar(50) ,
-	user_type int default(0) ,
-	status binary DEFAULT(0)
+	name nvarchar(100) ,
+	type_sale nvarchar(100) ,
+	create_start date ,
+	create_end date,
+	voucher nvarchar(100),
+	value_min decimal(10,0),
+	money_sale decimal(10,0),
+	percent_sale int,
+	quantity_use int,
+	create_time datetime,
+	update_time datetime ,
+	user_update int ,
+	user_create int,
+	detail_sale varchar(250),
+	discount_method int,
+	discount_type int,
+	user_type int,
 ) ;
 
 -- SQLINES DEMO *** OR EVALUATION USE ONLY
