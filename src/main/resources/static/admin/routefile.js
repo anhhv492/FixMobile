@@ -39,7 +39,7 @@ app.config(function($routeProvider){
             controller: "restaccsesries"
         })
         .when("/color",{
-            templateUrl:"/admin/color/form.html",
+            templateUrl:"/admin/color/createcolor.html",
             controller: "restaccsesries"
         })
         .when("/images",{

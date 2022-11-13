@@ -7,6 +7,7 @@ import com.fix.mobile.entity.*;
 import com.fix.mobile.helper.ExcelProducts;
 import com.fix.mobile.payload.SaveProductRequest;
 import com.fix.mobile.service.*;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,6 +25,8 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 @RestController
 @RequestMapping(value= "/rest/admin/product")
 public class RestProductsController {
+
+	Logger LOGGER = Logger.getLogger(RestProductsController.class);
 
 	@Autowired
 	private ProductService productService;

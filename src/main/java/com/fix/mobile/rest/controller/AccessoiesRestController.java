@@ -5,6 +5,7 @@ import com.cloudinary.utils.ObjectUtils;
 import com.fix.mobile.entity.*;
 import com.fix.mobile.repository.RamRepository;
 import com.fix.mobile.service.*;
+import org.apache.log4j.Logger;
 import org.hibernate.Cache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,6 +25,8 @@ import java.util.*;
 @CrossOrigin("*")
 @RequestMapping(value="/rest/admin/accessoríes")
 public class AccessoiesRestController {
+
+	Logger LOGGER = Logger.getLogger(AccessoiesRestController.class);
 
 	@Autowired
 	private RamService ramService;
