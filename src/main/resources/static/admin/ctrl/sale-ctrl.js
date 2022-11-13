@@ -23,7 +23,6 @@ app.controller("sale_ctrl", function ($scope, $http) {
     //validate end
 
     //addSale Start
-
     $scope.addSale = function (){
         let item = angular.copy($scope.saleadd);
         let urlsale = `/admin/rest/sale/demo`;
@@ -79,8 +78,8 @@ app.controller("sale_ctrl", function ($scope, $http) {
     //addSale end
 
     //get data table start
-    $scope.getProducts =function (){
-        $http.get(`${urlprd}/page/`+$scope.index).then(function(response) {
+    $scope.getProducts =function (urlDataTable){
+        $http.get(`${urlDataTable}/page/`+$scope.index).then(function(response) {
             $scope.products = response.data.content;
             if(response.data.totalElements % 10 ==0){
                 $scope.totalPages=response.data.totalElements/10;
@@ -139,6 +138,10 @@ app.controller("sale_ctrl", function ($scope, $http) {
             }
         }
     }
+    $scope.getDataSale = function (){
+
+    }
+
     $scope.clear=function (){
         $scope.saleedit = {}
         $scope.products = [];
@@ -170,14 +173,14 @@ app.controller("sale_ctrl", function ($scope, $http) {
             $scope.hiddenValueMin = false;
             $scope.hiddenUserType = false;
             $scope.nameOnTable = "sản phẩm"
-            $scope.getProducts();
+            $scope.getProducts(urlprd);
         }else if($scope.saleadd.typeSale == '2'){
             $scope.saleadd.typeSale= 2;
             $scope.hiddenTableAll = false;
             $scope.hiddenValueMin = true;
             $scope.hiddenUserType = false;
             $scope.nameOnTable = ""
-            $scope.getProducts();
+            // $scope.getProducts();
         }else if($scope.saleadd.typeSale == '3'){
             $scope.saleadd.typeSale= 3;
             $scope.hiddenTableAll = false;
@@ -193,6 +196,8 @@ app.controller("sale_ctrl", function ($scope, $http) {
             $scope.nameOnTable = "phụ kiện"
             $scope.getProducts();
         }
+        $scope.onChangeDiscountMethod();
+        $scope.onChangeDiscountType();
     }
 
     $scope.onChangeDiscountMethod=function (){
@@ -217,6 +222,24 @@ app.controller("sale_ctrl", function ($scope, $http) {
         }else if($scope.saleadd.userType==1){
             $scope.hiddenTableAll = true;
         }
+    }
+
+//showmemu
+    $scope.showDataTableSale=function (stt){
+        $scope.dataTableSale=[];
+        $scope.index=0;
+        var urlGetDataTableSale=`/admin/rest/sale/getall/`+$scope.index+`?stt=`+stt+`&share=&type=`;
+        $http.get(urlGetDataTableSale).then(function(response) {
+            $scope.dataTableSale = response.data.content;
+            console.log($scope.dataTableSale);
+            if(response.data.totalElements % 10 ==0){
+                $scope.totalPages=response.data.totalElements/10;
+            }else{
+                $scope.totalPages=Math.floor(response.data.totalElements/10)+1;
+            }
+        }).catch(error=>{
+            console.log(error);
+        });
     }
 
 })
