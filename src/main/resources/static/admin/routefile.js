@@ -5,9 +5,9 @@ app.config(function($routeProvider){
           templateUrl:"/admin/product/form.html",
           controller: "product"
         })
-        .when("/dashbroad",{
-            templateUrl:"/admin/dashbroad/dashbroad.html",
-            controller: "dashbroad"
+        .when("/dashboard",{
+            templateUrl:"/admin/dashboard/dashboard.html",
+            controller: "dashboard"
           })
         .when("/category",{
           templateUrl:"/admin/categories/category.html",
@@ -20,6 +20,14 @@ app.config(function($routeProvider){
         .when("/accessory",{
             templateUrl:"/admin/accessory/form.html",
              controller: "rest_accessory"
+        })
+        .when("/order",{
+            templateUrl:"/admin/order/form.html",
+            controller: "order-admin-ctrl"
+        })
+        .when("/order-detail",{
+            templateUrl:"/admin/order/detail/form.html",
+            controller: "order-admin-detail-ctrl"
         })
         // thuộc tính
         .when("/createcapacity",{
@@ -39,11 +47,11 @@ app.config(function($routeProvider){
             controller: "restaccsesries"
         })
         .when("/sale",{
-            templateUrl:"/admin/sale/sale.html",
+            templateUrl:"/admin/sale/showsale.html",
             controller: "sale_ctrl"
         })
         .otherwise({ 
-	     redirectTo:"/product"
+	     redirectTo:"/dashboard"
 });
 	
 });

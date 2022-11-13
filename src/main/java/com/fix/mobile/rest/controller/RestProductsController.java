@@ -7,6 +7,7 @@ import com.fix.mobile.entity.*;
 import com.fix.mobile.helper.ExcelProducts;
 import com.fix.mobile.payload.SaveProductRequest;
 import com.fix.mobile.service.*;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,6 +25,9 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 @RestController
 @RequestMapping(value= "/rest/admin/product")
 public class RestProductsController {
+
+	Logger LOGGER = Logger.getLogger(RestProductsController.class);
+
 	@Autowired
 	private ProductService productService;
 	@Autowired
@@ -64,7 +68,7 @@ public class RestProductsController {
 	// danh mục
 	@GetMapping("/category")
 	public List<Category> findByCate(){
-		return categoryService.findByTypeProduct();
+		return categoryService.findByTypeSP();
 	}
 
 	@GetMapping("/getAll")
@@ -182,4 +186,21 @@ public class RestProductsController {
 		Boolean checkExcel= excelProduct.readExcelImay(file);
 		return checkExcel;
 	}
+
+	// get top sp
+	@GetMapping("/findByProduct")
+	public List<Product> findByproduct() {
+		List<Product> listproduct = productService.findByProductLimit();
+		if (listproduct.isEmpty()){
+			System.out.println("null");
+		}
+		return listproduct;
+	}
+	//get giá có sẵn 200k
+	@GetMapping("/findByPriceExits")
+	public List<Product> findByPriceExits() {
+		return productService.findByProductLitmitPrice();
+	}
+
+
 }

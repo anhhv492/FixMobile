@@ -1,15 +1,15 @@
-app.controller('home-ctrl',function($rootScope,$scope,$http,$window){
+app.controller('home-ctrl',function($rootScope,$scope,$http){
+    var urlCategory=`http://localhost:8080/rest/guest/category`;
+    var urlAccessory=`http://localhost:8080/rest/guest/accessory`;
+    var urlProduct=`http://localhost:8080/rest/guest/product`;
+     var urlAccount = `http://localhost:8080/rest/admin/accounts`;
 
-    var urlCategory=`http://localhost:8080/rest/staff/category`;
-    var urlAccessory=`http://localhost:8080/rest/admin/accessory`;
-    var urlAccount = `http://localhost:8080/rest/admin/accounts`;
-
-    const jwtToken = localStorage.getItem("jwtToken")
-    const token = {
-        headers: {
-            Authorization: `Bearer `+jwtToken
-        }
-    }
+     const jwtToken = localStorage.getItem("jwtToken")
+     const token = {
+             headers: {
+                 Authorization: `Bearer `+jwtToken
+             }
+         }
 
     $scope.cateAccessories=[];
     $scope.cateProducts=[];
@@ -142,6 +142,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http,$window){
             });
         }
     }
+
     $scope.overPro=false;
     $scope.overAccess=false;
     $scope.getCategories();
@@ -151,5 +152,5 @@ app.controller('home-ctrl',function($rootScope,$scope,$http,$window){
 
     $scope.getAccount();
 
-
 })
+

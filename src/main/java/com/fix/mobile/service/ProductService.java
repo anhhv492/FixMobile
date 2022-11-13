@@ -15,6 +15,11 @@ public interface ProductService extends GenericService<Product, Integer> {
 	Page<Product> getAll (Pageable page);
 	Optional<Product> findByName(String name);
 	List<Product> findByCategoryAndStatus(Optional<Category> cate);
-  
+
+	List<Product> findByProductLimit();
+	List<Product> findByProductLitmitPrice();
+
+
+
 }
 

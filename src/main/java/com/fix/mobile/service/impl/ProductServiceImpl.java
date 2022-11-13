@@ -85,5 +85,16 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> findByCategoryAndStatus(Optional<Category> cate) {
         return repository.findByCategoryAndStatus(cate.get(),1);
     }
-    
+
+    @Override
+    public List<Product> findByProductLimit() {
+        return repository.findByProductLimit();
+    }
+
+    @Override
+    public List<Product> findByProductLitmitPrice() {
+        return repository.findByProductLitmitPrice();
+    }
+
+
 }

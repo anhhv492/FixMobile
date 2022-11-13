@@ -1,18 +1,18 @@
 
 <div class="main">
-    
-            <div class="mb-1">
+             <div class="mb-1">
                 <h1 class="h3 d-inline align-middle">Quản lý tài khoản</h1>
                 <div hidden >
                     <input type="checkbox" ng-model="hideUpdate">
                 <input type="checkbox" ng-model="hideUsername">
                 <input type="checkbox" ng-model="hideCreate">
+                <input type="checkbox" ng-model="hidePassword">
                 </div>
                 
 
             </div>
             <div class="container">
-                <form name="myForm" class="cen" novalidate>
+                <form modelAttribute="account" name="myForm" class="cen" novalidate>
                     <div class="row">
                         <div class="col-sm-6 -p-0">
                             <div class="row  mb-1">
@@ -20,14 +20,14 @@
                                     <label class="card-title mb-0">Tên tài khoản</label>
                                 </div>
                                 <div class="col-sm-9">
-                                    <input ng-disabled="hideUsername" ng-model="form.username" name="username" type="text" class="form-control" pattern="^[a-zA-Z0-9_-]{3,8}$"
-                                        required placeholder="Tên tài khoản">
+                                    <input ng-disabled="hideUsername" ng-model="form.username" name="username" type="text" class="form-control"  pattern="^[a-zA-Z0-9_-]{3,100}$"
+                                        required placeholder="Ví dụ: tranvana">
                                     <span ng-show="myForm.$submitted || myForm.username.$dirty">
                                         <span class="error" ng-show="myForm.username.$error.required"> <i
                                         class="fa fa-exclamation-circle"></i>Tên tài khoản không được trống</span>
                                         <span class="error" ng-show="myForm.username.$error.pattern"> <i
-                                            class="fa fa-exclamation-circle"></i>Tên tài khoản gồm 3-8 ký tự</span>
-                                    </span><br><br>
+                                            class="fa fa-exclamation-circle"></i>Tên tài khoản gồm 3-100 ký tự theo định dạng</span>
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -57,14 +57,14 @@
                                     <label class="card-title mb-0">Họ và Tên</label>
                                 </div>
                                 <div class="col-sm-9">
-                                    <input ng-model="form.fullName" name="fullName" type="text" class="form-control" minlength="6" maxlength="100"
-                                        required placeholder="Họ và Tên">
+                                    <input ng-model="form.fullName" name="fullName" type="text" class="form-control" ng-minlength="6" ng-maxlength="250"
+                                        required placeholder="Ví dụ: Trần Văn A">
                                     <span ng-show="myForm.$submitted || myForm.fullName.$dirty">
                                         <span class="error" ng-show="myForm.fullName.$error.required"> <i
                                                 class="fa fa-exclamation-circle"></i>Họ và Tên không được trống</span>
-                                                <span class="error"
-                                                ng-show="((myForm.fullName.$error.minlength || myForm.fullName.$error.maxlength) && myForm.fullName.$error.$dirty)">
-                                                <i class="fa fa-exclamation-circle"></i>Họ và tên từ 6-100 ký tự</span>
+                                        <span class="error"
+                                                ng-show="((myForm.fullName.$error.minlength || myForm.fullName.$error.maxlength) || myForm.fullName.$error.$dirty)">
+                                                <i class="fa fa-exclamation-circle"></i>Họ và tên từ 6-250 ký tự</span>
                                     </span><br><br>
                                 </div>
                             </div>
@@ -85,7 +85,7 @@
 
                                             <span class="error" ng-show="myForm.phone.$error.pattern"> <i
                                                 class="fa fa-exclamation-circle"></i>Số điện thoại sai đinh dạng</span>
-                                    </span><br><br>
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -136,7 +136,7 @@
                                 </div>
                                 <div class="col-sm-9">
                                     <input ng-model="form.email" type="email" name="email" class="form-control" required pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"
-                                        placeholder="Email">
+                                        placeholder="Ví dụ: abc@gmail.com">
                                     <span ng-show="myForm.$submitted || myForm.email.$dirty">
                                         <span class="error" ng-show="myForm.email.$error.required"> <i
                                                 class="fa fa-exclamation-circle"></i>Email không được trống</span>
@@ -167,20 +167,24 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-6 -p-0">
+                        <div ng-hide="hidePassword"  class="col-sm-6 -p-0">
 
                             <div class="row  mb-1">
                                 <div class="col-sm-3">
                                     <label class="card-title mb-0">Mật khẩu</label>
                                 </div>
                                 <div class="col-sm-9">
-                                    <input ng-model="form.password" type="password" name="password" class="form-control" pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{3,250}$"
-                                        required placeholder="Mật khẩu">
+                                    <input  ng-model="form.password" type="password" name="password" class="form-control" 
+                                        required placeholder="Mật khẩu" ng-minlength="3" ng-maxlength="250" >
+                                        <!-- pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{3,250}$" -->
                                     <span ng-show="myForm.$submitted || myForm.password.$dirty">
                                         <span class="error" ng-show="myForm.password.$error.required"> <i
                                                 class="fa fa-exclamation-circle"></i>Mật khẩu không được trống</span>
-                                                <span class="error" ng-show="myForm.password.$error.pattern"> <i
-                                                    class="fa fa-exclamation-circle"></i>Tối thiểu ba ký tự, ít nhất một chữ cái, một số và một ký tự đặc biệt</span>
+                                        <span class="error"
+                                              ng-show="((myForm.password.$error.minlength || myForm.password.$error.maxlength) || myForm.fullName.$error.$dirty)">
+                                                <i class="fa fa-exclamation-circle"></i>Mật khẩu tối thiểu 3-250 ký tự</span>
+                                                <!-- <span class="error" ng-show="myForm.password.$error.pattern"> <i
+                                                    class="fa fa-exclamation-circle"></i>Tối thiểu ba ký tự, ít nhất một chữ cái, một số và một ký tự đặc biệt</span> -->
                                     </span><br><br>
                                 </div>
                             </div>
@@ -215,8 +219,7 @@
                             class="glyphicon glyphicon-plus"></b> Thêm mới</button>
                     <button ng-hide="hideUpdate"  class="btn btn-primary" ng-disabled="myForm.$invalid" ng-click="update()"> <b
                            class="glyphicon glyphicon-save"></b>Cập nhật</button>
-                    <button class="btn btn-danger" ng-click="reset()"> <b class="glyphicon glyphicon-trash"></b>Xóa
-                        form</button>
+                    <button class="btn btn-danger" ng-click="reset()"> <b class="glyphicon glyphicon-trash"></b>Xóa form</button>
                 </div>
             </div>
             <div class="row ">

@@ -4,6 +4,7 @@ app.controller('login-ctrl',function($rootScope,$scope,$http,$window){
     const pathAPI = "http://localhost:8080/api/auth/login";
 
 
+
     localStorage.removeItem('jwtToken');
     $scope.onLogin = function () {
         $http.post(pathAPI, $scope.form).then(respon =>{
