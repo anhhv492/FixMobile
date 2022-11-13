@@ -39,10 +39,7 @@ app.config(function($routeProvider){
             templateUrl:"address/addressTable.html",
             controller:"address-form-ctrl"
         })
-        .when("/addressCretae", {
-            templateUrl:"address/addressForm.html",
-            controller:"address-form-ctrl"
-        })
+
 
 
 });

@@ -4,20 +4,13 @@
             <div class="col-lg-12">
                 <div class="card mb-4">
                     <div class="card-body">
-
                         <div ng-repeat="addres in listaddress" class="card mb-2">
                             <div class="card-header">
                                 <div class="row">
-                                    <div class="col-lg-10">
+                                    <div class="col-lg-11">
                                         <h5 >Địa chỉ</h5>
                                     </div>
-                                    <div class="col-lg-2">
-                                        <button ng-click="edit(addres)" class="btn">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-                                            </svg>
-                                        </button>
+                                    <div class="col-lg-1">
                                         <button ng-click="delete(addres)" class="btn">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
                                                 <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
@@ -62,10 +55,71 @@
                                 </div>
                             </div>
                         </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <form method="post"
+                              ng-submit="doSubmit()" enctype="multipart/form-data">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Người nhận</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <input ng-model="form.personTake" class="text-muted mb-0 input" value="admin">
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Số điện thoại</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <input ng-model="form.phoneTake" class="text-muted mb-0 input" value="Johnatan Smith">
+                                </div>
+                            </div>
 
-                        <div>
-                            <a href="#!/addressCretae" class="btn btn-outline-primary btn-light me-3" style="float: right">Thêm</a>
-                        </div>
+                            <hr>
+                            <div class="row date">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Địa chỉ</p>
+                                </div>
+                                <div class="col-sm-9 d-flex gap-3">
+                                    <div class="input-wrapper small-4 columns" style="padding-left: 0;">
+                                        <select  id="city" required>
+                                            <option value='' selected>Chọn Tỉnh/Thành phố</option>
+                                        </select>
+                                    </div>
+                                    <div  class="input-wrapper small-4 columns">
+                                        <select  id="district" required>
+                                            <option value='' selected>Chọn Quận/Huyện</option>
+                                        </select>
+                                    </div>
+                                    <div  class="input-wrapper small-4 columns" style="padding-right: 0;">
+                                        <select  id="ward" required>
+                                            <option value='' selected>Chọn Xã/Phường</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Địa chỉ cụ thể</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <input ng-model="form.addressDetail" class="text-muted mb-0 input" value="....">
+                                </div>
+                            </div>
+                            <hr>
+                            <button type="submit" class="btn btn-outline-primary ms-1 mt-3 offset-2">
+                                {{checkSubmit == false ? title.insert : title.update}}
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
