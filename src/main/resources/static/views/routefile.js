@@ -27,9 +27,10 @@ app.config(function($routeProvider){
             controller: "order-detail-ctrl"
         })
 
-        .when("/product/product",{
+        .when("/product",{
             templateUrl:"product/product.html",
-            controller: "home-ctrl"
+            controller: "home-ctrl",
+            controller: "product"
 	      })
         .when("/login",{
             templateUrl:"/views/login/form.html",
@@ -39,7 +40,10 @@ app.config(function($routeProvider){
             templateUrl:"/views/register/form.html",
             controller: "register-ctrl" 
         })
-
+        .when("/contact",{
+            templateUrl:"/views/shop/contact.html",
+            // controller: "register-ctrl"
+        })
 
 });
 
