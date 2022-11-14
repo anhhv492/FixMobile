@@ -21,12 +21,6 @@ public class Image {
     @Column(name = "name")
     private String name;
 
-    //
-    /*@JsonIgnore
-    @OneToMany(mappedBy = "image")
-    private List<Product> products;*/
-
-    // lê đức nam đã thêm
     @ManyToOne
     @JoinColumn(name = "id_product")
     private Product product;
