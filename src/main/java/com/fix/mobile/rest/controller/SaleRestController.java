@@ -5,11 +5,12 @@ import com.fix.mobile.entity.SaleDetail;
 import com.fix.mobile.service.SaleDetailService;
 import com.fix.mobile.service.SaleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,9 +37,13 @@ public class SaleRestController {
             saleDetailSV.createSaleDetail(listID.get(i));
         }
     }
-    @RequestMapping("/demo1")
-    public String addSale(){
-        return saleSV.getMaxSale().toString();
+    @RequestMapping("/getall/{page}")
+    public Page<Sale> getAll(@PathVariable ("page") Integer page,
+                             @RequestParam ("stt") Integer stt,
+                             @RequestParam ("share") String share,
+                             @RequestParam ("type") String type
+                             ){
+        return saleSV.getByPage(page,5,stt,null,null);
     }
 
 //    @RequestMapping("demotb")

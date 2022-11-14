@@ -40,10 +40,18 @@ app.config(function($routeProvider){
             templateUrl:"/views/register/form.html",
             controller: "register-ctrl" 
         })
+
         .when("/contact",{
             templateUrl:"/views/shop/contact.html",
             // controller: "register-ctrl"
         })
+
+        .when("/changePassword",{
+            templateUrl:"/views/changePassword/form.html",
+            controller: "changePassword-ctrl"
+        })
+
+
 
 });
 

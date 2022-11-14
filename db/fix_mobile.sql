@@ -138,15 +138,23 @@ CREATE TABLE accessories (
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
 CREATE TABLE sale (
 	id_sale int NOT NULL auto_increment primary key,
-	name nvarchar(100) NOT NULL,
-	type_sale nvarchar(100) NOT NULL,
-	create_start date NOT NULL,
-	create_end date NOT NULL,
-	voucher nvarchar(100) NOT NULL,
-	value_min decimal(10,0) NOT NULL,
-	money_sale decimal(10,0) NOT NULL,
-	quantity_use int NOT NULL,
-	status binary DEFAULT(0)
+	name nvarchar(100) ,
+	type_sale nvarchar(100) ,
+	create_start date ,
+	create_end date,
+	voucher nvarchar(100),
+	value_min decimal(10,0),
+	money_sale decimal(10,0),
+	percent_sale int,
+	quantity_use int,
+	create_time datetime,
+	update_time datetime ,
+	user_update int ,
+	user_create int,
+	detail_sale varchar(250),
+	discount_method int,
+	discount_type int,
+	user_type int,
 ) ;
 
 -- SQLINES DEMO *** OR EVALUATION USE ONLY
@@ -155,8 +163,12 @@ CREATE TABLE sale_detail (
 	id_detail int NOT NULL auto_increment primary key,
 	id_sale int NOT NULL,
 	id_product int NOT NULL,
+	id_accessory int NULL,
+	username nvarchar(50) not null,
+	foreign key(username) references accounts(username),
 	foreign key(id_sale) references sale(id_sale),
-	foreign key(id_product) references products(id_product)
+	foreign key(id_product) references products(id_product),
+	foreign key(id_accessory) references accessories(id_accessory)
 );
 
 -- SQLINES DEMO *** OR EVALUATION USE ONLY
@@ -442,5 +454,6 @@ VALUES ('vietanhvs','492002','Hạ Việt Anh',0,'vietanhvs@gmail.com','09842974
 INSERT INTO fix_mobile.accounts(username,password,full_name,gender,email,
 								phone,create_date,image,id_role) 
 VALUES ('user','123','user',1,'user@gmail.com','0123456789','2002/11/11','',3);
+
 select*from accounts;
 select*from roles;

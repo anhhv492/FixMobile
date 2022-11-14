@@ -5,9 +5,9 @@ app.config(function($routeProvider){
           templateUrl:"/admin/product/form.html",
           controller: "product"
         })
-        .when("/dashbroad",{
-            templateUrl:"/admin/dashbroad/dashbroad.html",
-            controller: "dashbroad"
+        .when("/dashboard",{
+            templateUrl:"/admin/dashboard/dashboard.html",
+            controller: "dashboard"
           })
         .when("/category",{
           templateUrl:"/admin/categories/category.html",
@@ -47,11 +47,11 @@ app.config(function($routeProvider){
             controller: "restaccsesries"
         })
         .when("/sale",{
-            templateUrl:"/admin/sale/sale.html",
+            templateUrl:"/admin/sale/showsale.html",
             controller: "sale_ctrl"
         })
         .otherwise({ 
-	     redirectTo:"/product"
+	     redirectTo:"/dashboard"
 });
 	
 });

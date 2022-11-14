@@ -27,7 +27,7 @@ public class Sale {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "type_sale")
+    @Column(name = "type_sale") //0=toàn bộ, 1= sản phẩm, 2= đơn hàng, 3=khách hàng,4= phụ kiện
     private Integer typeSale;
 
     @Column(name = "create_start")
@@ -50,9 +50,6 @@ public class Sale {
 
     @Column(name = "quantity")
     private Integer quantity;
-
-    @Column(name = "status")
-    private Integer status;
 
     @Column(name = "create_time")
     private Date createTime;

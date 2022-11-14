@@ -24,13 +24,13 @@ public class RegisterController {
 	@Autowired
 	private AccountRepository accountRepository;
 	@Autowired
-	private RoleRepository rolerepository;
+	private RoleRepository roleRepository;
 	
 @GetMapping
 public String loginForm(Model model) {
 	model.addAttribute("createDate", new Date());
-	model.addAttribute("roles",rolerepository.findAll());
-	return "redirect:/views/index.html#!/register";
+	model.addAttribute("roles",roleRepository.findAll());
+		return "redirect:/views/index.html#!/register";
 }
 @PostMapping(value = "/save")
 public String postCreate(  @ModelAttribute(name = "account") Account accounts,
