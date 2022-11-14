@@ -1,10 +1,17 @@
 package com.fix.mobile.service.impl;
 
+import com.fix.mobile.dto.AccountDTO;
+import com.fix.mobile.dto.AddressDTO;
+import com.fix.mobile.entity.Address;
 import com.fix.mobile.repository.AccountRepository;
+import com.fix.mobile.repository.AddressRepository;
 import com.fix.mobile.service.AccountService;
 import com.fix.mobile.repository.AccountRepository;
 import com.fix.mobile.entity.Account;
 import com.fix.mobile.service.AccountService;
+import com.fix.mobile.utils.UserName;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -19,8 +26,17 @@ import java.util.Optional;
 public class AccountServiceImpl implements AccountService {
     private final AccountRepository repository;
 
-    public AccountServiceImpl(AccountRepository repository) {
+    @Autowired
+    private AddressRepository addressRepository;
+
+    @Autowired
+    private ModelMapper modelMapper;
+
+
+    public AccountServiceImpl(AccountRepository repository, AddressRepository addressRepository, ModelMapper modelMapper) {
         this.repository = repository;
+        this.addressRepository = addressRepository;
+        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -73,5 +89,22 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Account findByUsername(String name) {
         return repository.findByName(name);
+    }
+
+    @Override
+    public String setAddressDefault(Integer id) {
+        Address address = addressRepository.findById(id).orElse(null);
+        Account account = repository.findByName(UserName.getUserName());
+        account.setAddress_id(address);
+        repository.save(account);
+        return "OK";
+    }
+
+    @Override
+    public AddressDTO getAddress() {
+        Account account = repository.findByName(UserName.getUserName());
+        Address address = addressRepository.findById(account.getAddress_id().getIdAddress()).orElse(null);
+        AddressDTO addressDTO = modelMapper.map(address, AddressDTO.class);
+        return addressDTO;
     }
 }

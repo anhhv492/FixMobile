@@ -71,6 +71,7 @@ public class Account {
     @JsonIgnore
     @OneToMany(mappedBy = "account")
     private List<Address> addresses;
+
     @JsonIgnore
     @OneToMany(mappedBy = "account")
     private List<InsuranceDetail> insuranceDetails;
@@ -80,6 +81,10 @@ public class Account {
     @JsonIgnore
     @OneToMany(mappedBy = "account")
     private List<ProductChange> productChanges;
+
+    @OneToOne
+    @JoinColumn(name = "address_id" , referencedColumnName = "id_address")
+    private Address address_id;
 	public Role getRole() {
 		return role;
 	}

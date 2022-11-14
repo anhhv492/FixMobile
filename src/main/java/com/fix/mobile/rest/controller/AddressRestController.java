@@ -5,6 +5,7 @@ import com.fix.mobile.dto.AddressDTO;
 import com.fix.mobile.service.AddressService;
 import com.fix.mobile.utils.UserName;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +17,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/rest/user/address")
 public class AddressRestController {
+
+
+
+
+
+    public
     @Autowired
     AddressService addressService;
 
@@ -60,5 +67,20 @@ public class AddressRestController {
     @GetMapping("/getByUsername")
     public ResponseEntity<List<AddressDTO>> getByUsername(){
         return ResponseEntity.ok().body(addressService.findByUsername());
+    }
+
+    @GetMapping("/getProvince")
+    public ResponseEntity<?> getProvince(){
+        return addressService.getAllProvince();
+    }
+
+    @GetMapping("/getDistrict")
+    public ResponseEntity<?> getDistrict(@RequestParam("province_id") Integer id){
+        return addressService.getDistrict(id);
+    }
+
+    @GetMapping("/getWard")
+    public ResponseEntity<?> getWard(@RequestParam("district_id") Integer id){
+        return addressService.getWard(id);
     }
 }

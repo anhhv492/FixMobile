@@ -6,15 +6,18 @@ import com.fix.mobile.repository.AccountRepository;
 import com.fix.mobile.service.AddressService;
 import com.fix.mobile.repository.AddressRepository;
 import com.fix.mobile.entity.Address;
-import com.fix.mobile.service.AddressService;
+
 import com.fix.mobile.utils.UserName;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
+import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
@@ -23,17 +26,39 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 public class AddressServiceImpl implements AddressService {
+
+    private String tokenApiGhn;
+    @Value("${api.ghn.token}")
+    public void getTokenApiGhn(String tokenApiGhn) {
+        this.tokenApiGhn = tokenApiGhn;
+    }
+    private HttpEntity<Object> httpEntity;
+
+    private HttpHeaders httpHeaders;
+
+
+    @PostConstruct
+    public void init(){
+        httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+        httpHeaders.add("token",tokenApiGhn);
+        httpEntity = new HttpEntity<>(httpHeaders);
+    }
     private final AddressRepository repository;
 
-   @Autowired
+    @Autowired
     ModelMapper modelMapper;
 
-   @Autowired
-    AccountRepository accountRepository;
+    @Autowired
+    private RestTemplate restTemplate;
+    @Autowired
+    private AccountRepository accountRepository;
 
-    public AddressServiceImpl(AddressRepository repository, ModelMapper modelMapper, AccountRepository accountRepository) {
+    public AddressServiceImpl(AddressRepository repository, ModelMapper modelMapper, RestTemplate restTemplate, AccountRepository accountRepository) {
         this.repository = repository;
         this.modelMapper = modelMapper;
+        this.restTemplate = restTemplate;
+
         this.accountRepository = accountRepository;
     }
 
@@ -94,5 +119,23 @@ public class AddressServiceImpl implements AddressService {
         List<AddressDTO> addressDTOList = addressList.stream().map(address ->
                 modelMapper.map(address, AddressDTO.class)).collect(Collectors.toList());
         return addressDTOList;
+    }
+
+    @Override
+    public ResponseEntity<?> getAllProvince() {
+        return restTemplate.exchange("https://online-gateway.ghn.vn/shiip/public-api/master-data/province",
+                HttpMethod.GET, httpEntity, Object.class);
+    }
+
+    @Override
+    public ResponseEntity<?> getDistrict(Integer id) {
+        return restTemplate.exchange("https://online-gateway.ghn.vn/shiip/public-api/master-data/district?province_id="+id,
+                HttpMethod.GET, httpEntity, Object.class);
+    }
+
+    @Override
+    public ResponseEntity<?> getWard(Integer id) {
+        return restTemplate.exchange("https://online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id="+id,
+                HttpMethod.GET, httpEntity, Object.class);
     }
 }

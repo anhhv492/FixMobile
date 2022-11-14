@@ -4,6 +4,7 @@ package com.fix.mobile.service;
 import com.fix.mobile.dto.AddressDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -21,4 +22,10 @@ public interface AddressService {
     List<AddressDTO> findAll();
 
     List<AddressDTO> findByUsername();
+
+    ResponseEntity<?> getAllProvince();
+
+    ResponseEntity<?> getDistrict(Integer id);
+
+    ResponseEntity<?> getWard(Integer id);
 }

@@ -1,5 +1,6 @@
 package com.fix.mobile.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,6 +29,11 @@ public class Address {
 
     @Column(name = "address_take")
     private String addressTake;
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "address_id")
+    private Account account_address;
+
 
     @ManyToOne
     @JoinColumn(name = "username")

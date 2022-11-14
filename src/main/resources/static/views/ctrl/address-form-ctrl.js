@@ -9,6 +9,7 @@ app.controller('address-form-ctrl', function ($http, $scope, $window) {
     $scope.listaddress= [];
 
     const callApiAddress = "http://localhost:8080/rest/user/address";
+    const callApiAcounts = "http://localhost:8080/rest/admin/accounts";
 
     const jwtToken = localStorage.getItem("jwtToken")
     const token = {
@@ -179,12 +180,6 @@ app.controller('address-form-ctrl', function ($http, $scope, $window) {
         })
     }
 
-    $scope.edit = function(addres) {
-        $window.location.href = '#!addressCretae'
-        $scope.form = angular.copy(addres);
-        console.log(addres.addressTake)
-        $scope.checkSubmit=true;
-    };
 
     $scope.delete = function(addres) {
         Swal.fire({
@@ -261,6 +256,14 @@ app.controller('address-form-ctrl', function ($http, $scope, $window) {
         })
 
     };
+    $scope.setAddressDefault = function (addres) {
+        $http.post(`${callApiAcounts}/setaddressdefault`,addres.idAddress, token).then(function () {
+            $window.location.href = '#!profile';
+
+        }).catch(err=>{
+            console.log(err)
+        })
+    }
 
     $scope.getAddressByUsername();
 

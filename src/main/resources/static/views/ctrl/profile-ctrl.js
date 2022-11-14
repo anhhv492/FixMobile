@@ -1,6 +1,7 @@
 app.controller('profile-ctl', function ($scope,$http, $window) {
     $scope.accountActive = {};
     const callApi = "http://localhost:8080/rest/admin/accounts";
+    $scope.addressDefault = {};
 
     const jwtToken = localStorage.getItem("jwtToken")
     const token = {
@@ -22,6 +23,24 @@ app.controller('profile-ctl', function ($scope,$http, $window) {
             $window.location.href='#!login';
         })
     }
+
+    $scope.getAddress = function () {
+        $http.get("http://localhost:8080/rest/admin/accounts/getAddress", token).then(function (respon){
+            $scope.addressDefault = respon.data.addressTake;
+            console.log($scope.addressDefault)
+        }).catch(err => {
+            Swal.fire({
+                icon: 'error',
+                text: 'Bạn chưa đăng nhập !!!',
+            })
+            console.log(err)
+            $window.location.href='#!login';
+        })
+    }
+
+    $scope.getAddress();
+
+
 
     $scope.fieldValues = {
         dateOfBirth: ""

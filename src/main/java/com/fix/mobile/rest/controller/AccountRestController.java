@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.servlet.ServletContext;
 
 import com.fix.mobile.dto.AccountDTO;
+import com.fix.mobile.dto.AddressDTO;
 import com.fix.mobile.utils.UserName;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -102,5 +103,15 @@ public class AccountRestController {
         Account account = accountService.findByUsername(UserName.getUserName());
         AccountDTO accountDTO = modelMapper.map(account, AccountDTO.class);
         return accountDTO;
+    }
+
+    @PostMapping("/setaddressdefault")
+    public void setaddressdefault(@RequestBody Integer id){
+        accountService.setAddressDefault(id);
+    }
+
+    @GetMapping("/getAddress")
+    public AddressDTO getAddress(){
+        return accountService.getAddress();
     }
 }
