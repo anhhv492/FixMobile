@@ -32,7 +32,8 @@ CREATE TABLE color (
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
 CREATE TABLE images (
 	id_image int NOT NULL auto_increment primary key,
-	name nvarchar(255) not null
+	name nvarchar(255) not null,
+	id_product int null
 ) ;
 
 -- SQLINES DEMO *** OR EVALUATION USE ONLY
@@ -110,7 +111,7 @@ CREATE TABLE products (
 	id_color int NOT NULL,
 	id_capacity int NOT NULL,
 	id_category int NOT NULL,
-	id_image int NOT NULL,
+	id_image int  NULL,
 	foreign key(id_ram) references ram(id_ram),
 	foreign key(id_color) references color(id_color),
 	foreign key(id_capacity) references capacity(id_capacity),
