@@ -253,7 +253,7 @@ app.controller('cart-ctrl',function($rootScope,$scope,$http,$window){
                                 })
                             }else{
                                 Swal.fire(
-                                    'Vui lòng điền địa chỉ!',
+                                    'Vui lòng nhập địa chỉ!',
                                     '',
                                     'error'
                                 )
