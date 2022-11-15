@@ -154,7 +154,7 @@ CREATE TABLE sale (
 	detail_sale varchar(250),
 	discount_method int,
 	discount_type int,
-	user_type int,
+	user_type int
 ) ;
 
 -- SQLINES DEMO *** OR EVALUATION USE ONLY
