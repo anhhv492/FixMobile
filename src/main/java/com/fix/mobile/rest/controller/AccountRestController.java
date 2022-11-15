@@ -77,10 +77,7 @@ public class AccountRestController {
     }
     
     @PutMapping("/{username}")
-    public Account update(@PathVariable("username") String username, @RequestBody Account account){
-    	String hashedPassword = HashUtil.hash(account.getPassword());
-		account.setPassword(hashedPassword);
-        return accountService.update(account, username);
+    public Account update(@PathVariable("username") String username, @RequestBody Account account){return accountService.update(account, username);
     }
     
     @DeleteMapping("/{username}")

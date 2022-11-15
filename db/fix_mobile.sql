@@ -32,7 +32,8 @@ CREATE TABLE color (
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
 CREATE TABLE images (
 	id_image int NOT NULL auto_increment primary key,
-	name nvarchar(255) not null
+	name nvarchar(255) not null,
+	id_product int null
 ) ;
 
 -- SQLINES DEMO *** OR EVALUATION USE ONLY
@@ -110,7 +111,7 @@ CREATE TABLE products (
 	id_color int NOT NULL,
 	id_capacity int NOT NULL,
 	id_category int NOT NULL,
-	id_image int NOT NULL,
+	id_image int  NULL,
 	foreign key(id_ram) references ram(id_ram),
 	foreign key(id_color) references color(id_color),
 	foreign key(id_capacity) references capacity(id_capacity),
@@ -138,15 +139,23 @@ CREATE TABLE accessories (
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
 CREATE TABLE sale (
 	id_sale int NOT NULL auto_increment primary key,
-	name nvarchar(100) NOT NULL,
-	type_sale nvarchar(100) NOT NULL,
-	create_start date NOT NULL,
-	create_end date NOT NULL,
-	voucher nvarchar(100) NOT NULL,
-	value_min decimal(10,0) NOT NULL,
-	money_sale decimal(10,0) NOT NULL,
-	quantity_use int NOT NULL,
-	status binary DEFAULT(0)
+	name nvarchar(100) ,
+	type_sale nvarchar(100) ,
+	create_start date ,
+	create_end date,
+	voucher nvarchar(100),
+	value_min decimal(10,0),
+	money_sale decimal(10,0),
+	percent_sale int,
+	quantity_use int,
+	create_time datetime,
+	update_time datetime ,
+	user_update int ,
+	user_create int,
+	detail_sale varchar(250),
+	discount_method int,
+	discount_type int,
+	user_type int
 ) ;
 
 -- SQLINES DEMO *** OR EVALUATION USE ONLY
@@ -155,8 +164,12 @@ CREATE TABLE sale_detail (
 	id_detail int NOT NULL auto_increment primary key,
 	id_sale int NOT NULL,
 	id_product int NOT NULL,
+	id_accessory int NULL,
+	username nvarchar(50) not null,
+	foreign key(username) references accounts(username),
 	foreign key(id_sale) references sale(id_sale),
-	foreign key(id_product) references products(id_product)
+	foreign key(id_product) references products(id_product),
+	foreign key(id_accessory) references accessories(id_accessory)
 );
 
 -- SQLINES DEMO *** OR EVALUATION USE ONLY
@@ -433,14 +446,19 @@ INSERT INTO fix_mobile.products (name,create_date,camera,price,size,note,status,
 id_ram,id_color,id_capacity,id_category,id_image) 
  VALUES ('IPhone XS Max', '2022-10-06', '1280px, cảm biến LiDAR', 20000000, '20x25cm', 'Bền, đẹp mắt', 1,1,1,1,13,1);
 select*from orders;
+
 INSERT INTO fix_mobile.accounts(username,password,full_name,gender,email,
-								phone,create_date,image,id_role) 
-VALUES ('admin','$07$FB.EeD4MiR/LDMGnPZ5wuufkIBfc6zCywdcHBqWec4Anf3JoEhNIO','admin',0,'admin@gmail.com','0912321321','2022/10/30','',1);
+				status,phone,create_date,image,id_role) 
+VALUES ('admin','$2a$12$nSbqR9l9BenII9tUcUoHXeDb77X.x59UZPMB894ynZ8z8I4WDSLOO','admin',0,'admin@gmail.com',
+	1,'0912321321','2022/10/30','',1);
 INSERT INTO fix_mobile.accounts(username,password,full_name,gender,email,
-								phone,create_date,image,id_role) 
-VALUES ('vietanhvs','$07$sktqoF0Y452X5Qze6mpdge6SknamqM5I0Wwiksxn5TK/TF14lPUaq','Hạ Việt Anh',0,'vietanhvs@gmail.com','0984297473','2022/10/30','',1);
+				status,phone,create_date,image,id_role) 
+VALUES ('user','$2a$12$SYSb7NU1cND3wct0LRWrxe3id70DF6PeGbhkbcFATooYDKe4wyyqe','user',1,'user@gmail.com',
+	1,'0123456789','2002/11/11','',3);
 INSERT INTO fix_mobile.accounts(username,password,full_name,gender,email,
-								phone,create_date,image,id_role) 
-VALUES ('user','$07$aW6LCerEPaTOuixyFCN5xeKY7vZHb89wBiqYbUpHy5mP93KKCjBaq','user',1,'user@gmail.com','0123456789','2002/11/11','',3);
-select*from accounts; 
+				status,phone,create_date,image,id_role) 
+VALUES ('vietanhvs','$2a$12$FUNIidYXB/rc3BRR1XuQZObS4Vn7BPPomqllVvwcBOkJtZJWKFM16','Hạ Việt Anh',0,'vietanhvs@gmail.com',
+	1,'0984297473','2022/10/30','',1);
+
+select*from accounts;
 select*from roles;

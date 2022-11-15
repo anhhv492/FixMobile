@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController("/product ")
+@RestController("/product")
 @CrossOrigin("*")
 public class ConfigrutationController {
 	@Autowired

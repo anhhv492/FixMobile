@@ -91,7 +91,7 @@ public class SercurityConfig extends WebSecurityConfigurerAdapter {
 		//Disable crsf cho đường dẫn /rest/**
     	http.csrf().disable();
     	
-		http.authorizeHttpRequests()//Phân quyền sử dụng 
+		http.authorizeHttpRequests()//Phân quyền sử dụng
 		.antMatchers("/order/**").authenticated()
 		.antMatchers("/admin/**").hasAnyRole("STAFF","ADMIN")
 		.antMatchers("/rest/authorities").hasRole("DIRE")

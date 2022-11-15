@@ -1,4 +1,4 @@
-app.controller('home-ctrl',function($rootScope,$scope,$http,$window){
+ app.controller('home-ctrl',function($rootScope,$scope,$http){
     var urlCategory=`http://localhost:8080/rest/guest/category`;
     var urlAccessory=`http://localhost:8080/rest/guest/accessory`;
     var urlProduct=`http://localhost:8080/rest/guest/product`;
@@ -119,6 +119,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http,$window){
             });
         }
     }
+
     $scope.overPro=false;
     $scope.overAccess=false;
     $scope.getCategories();

@@ -7,6 +7,9 @@ import com.fix.mobile.service.SaleService;
 import com.fix.mobile.entity.Sale;
 //import org.springframework.security.core.Authentication; cuongnd edit
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 
@@ -32,7 +35,6 @@ public class SaleServiceImpl implements SaleService {
         vaildate_NULL(sale);
         sale.setIdSale(null);
         sale.setValueMin(null);
-        sale.setStatus(0);
         sale.setCreateTime(new Date());
         sale.setUpdateTime(null);
         sale.setUserCreate(1); //cuongnd edit
@@ -151,9 +153,56 @@ public class SaleServiceImpl implements SaleService {
 
 
     }
-    public Object getMaxSale(){
-        return dao.maxSale();
-    }
 
+    @Override
+    public Page<Sale> getByPage(int pageNumber, int maxRecord, Integer status, String share,String type) {
+        Pageable pageable = PageRequest.of(pageNumber, maxRecord);
+        if (null == type) {
+            if (null == share) {
+                if (0 == status) {
+                    Page<Sale> page = dao.findAll(pageable);
+                    return page;
+                } else if (1 == status) {//đang diễn ra
+                    Page<Sale> page = dao.findGoingOn(pageable);
+                    return page;
+                } else if (2 == status) {//sắp diễn ra
+                    Page<Sale> page = dao.findUpcoming(pageable);
+                    return page;
+                } else if (3 == status) {//đã dừng
+                    Page<Sale> page = dao.findStopped(pageable);
+                    return page;
+                }
+            } else {
+                if (0 == status) {
+                    Page<Sale> page = dao.findByNameContains(share, pageable);
+                    return page;
+                } else if (1 == status) {
+                    Page<Sale> page = dao.findGoingOnANDName(share, pageable);
+                    return page;
+                } else if (2 == status) {
+                    Page<Sale> page = dao.findUpcomingANDName(share, pageable);
+                    return page;
+                } else if (3 == status) {
+                    Page<Sale> page = dao.findStoppedANDName(share, pageable);
+                    return page;
+                }
+            }
+        } else {
+            if (0 == status) {
+                Page<Sale> page = dao.findByVoucherContains(share, pageable);
+                return page;
+            } else if (1 == status) {
+                Page<Sale> page = dao.findGoingOnANDVoucher(share, pageable);
+                return page;
+            } else if (2 == status) {
+                Page<Sale> page = dao.findUpcomingANDVoucher(share, pageable);
+                return page;
+            } else if (3 == status) {
+                Page<Sale> page = dao.findStoppedANDVoucher(share, pageable);
+                return page;
+            }
+        }
+        return null;
+    }
 }
 
