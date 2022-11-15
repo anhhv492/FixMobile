@@ -6,6 +6,7 @@ pickBtn.onclick = function(){
     currentCount ++;
 cartInfo.textContent=currentCount;
 };
+alert('vvvv');
 
 /* let minusBtn = document.getElementsByClassName('product__main-info-cart-quantity-minus')[0];
 let plusBtn = document.getElementsByClassName('product__main-info-cart-quantity-plus')[0];

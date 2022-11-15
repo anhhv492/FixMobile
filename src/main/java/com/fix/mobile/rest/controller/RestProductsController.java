@@ -8,6 +8,7 @@ import com.fix.mobile.helper.ExcelProducts;
 import com.fix.mobile.payload.SaveProductRequest;
 import com.fix.mobile.service.*;
 import org.apache.log4j.Logger;
+import org.hibernate.annotations.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import javax.websocket.server.PathParam;
@@ -24,6 +26,8 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @RestController
 @RequestMapping(value= "/rest/admin/product")
+@CrossOrigin("*")
+@Component
 public class RestProductsController {
 
 	Logger LOGGER = Logger.getLogger(RestProductsController.class);
@@ -188,7 +192,7 @@ public class RestProductsController {
 	}
 
 	// get top sp
-	@GetMapping("/findByProduct")
+	@GetMapping(value ="/findByProduct")
 	public List<Product> findByproduct() {
 		List<Product> listproduct = productService.findByProductLimit();
 		if (listproduct.isEmpty()){
@@ -197,10 +201,17 @@ public class RestProductsController {
 		return listproduct;
 	}
 	//get giá có sẵn 200k
-	@GetMapping("/findByPriceExits")
+	@GetMapping(value ="/findByPriceExits")
 	public List<Product> findByPriceExits() {
 		return productService.findByProductLitmitPrice();
 	}
 
+	@GetMapping(value ="/findByProductCode")
+	public Optional<Product> findByProductCode(Integer productCode) {
+		Optional<Product> product = null;
+		if (productCode == null) ;
+			product = productService.findById(productCode);
+		return product;
+	}
 
 }
