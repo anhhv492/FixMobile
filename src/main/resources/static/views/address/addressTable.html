@@ -93,18 +93,21 @@
                                 </div>
                                 <div class="col-sm-9 d-flex gap-3">
                                     <div class="input-wrapper small-4 columns" style="padding-left: 0;">
-                                        <select  id="city" required>
+                                        <select ng-model="form.provinceId" id="city" required>
                                             <option value='' selected>Chọn Tỉnh/Thành phố</option>
+                                            <option ng-repeat="provin in provinces" value='{{provin.ProvinceID}}'>{{provin.ProvinceName}}</option>
                                         </select>
                                     </div>
                                     <div  class="input-wrapper small-4 columns">
-                                        <select  id="district" required>
+                                        <select ng-model="form.districtId"  id="district" required>
                                             <option value='' selected>Chọn Quận/Huyện</option>
+                                            <option ng-repeat="dis in district" value='{{dis.DistrictID}}'>{{dis.DistrictName}}</option>
                                         </select>
                                     </div>
                                     <div  class="input-wrapper small-4 columns" style="padding-right: 0;">
-                                        <select  id="ward" required>
+                                        <select  ng-model="form.wardId" id="ward" required>
                                             <option value='' selected>Chọn Xã/Phường</option>
+                                            <option ng-repeat="wd in ward" value="{{wd.WardCode}}">{{wd.WardName}}</option>
                                         </select>
                                     </div>
                                 </div>

@@ -7,7 +7,15 @@ app.controller('address-form-ctrl', function ($http, $scope, $window) {
     };
     $scope.checkSubmit=false;
     $scope.listaddress= [];
-
+    $scope.provinces = [];
+    $scope.district = [];
+    $scope.ward = [];
+    $scope.name_province = "";
+    $scope.name_district = "";
+    $scope.name_ward = "";
+    $scope.id_province="";
+    $scope.id_district="";
+    $scope.id_ward ="";
     const callApiAddress = "http://localhost:8080/rest/user/address";
     const callApiAcounts = "http://localhost:8080/rest/admin/accounts";
 
@@ -22,65 +30,14 @@ app.controller('address-form-ctrl', function ($http, $scope, $window) {
     var districts = document.getElementById("district");
     var wards = document.getElementById("ward");
 
-    var Parameter = {
-        url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
-        method: "GET",
-        responseType: "application/json",
-    };
-
-    $scope.city = "";
-    $scope.distri = "";
-    $scope.war = "";
-    $scope.city = "";
-    var promise = axios(Parameter);
-    promise.then(function (result) {
-        renderCity(result.data);
-    });
-
-    function renderCity(data) {
-        for (const x of data) {
-            citis.options[citis.options.length] = new Option(x.Name, x.Id);
-        }
-        citis.onchange = function () {
-            district.length = 1;
-            ward.length = 1;
-            if (this.value != "") {
-                const result = data.filter(n => n.Id === this.value);
-
-                $scope.city =  result[0].Name;
-                console.log($scope.city)
-                for (const k of result[0].Districts) {
-                    district.options[district.options.length] = new Option(k.Name, k.Id);
-                }
-            }
-        };
-        districts.onchange = function () {
-            ward.length = 1;
-            const dataCity = data.filter((n) => n.Id === citis.value);
-            if (this.value != "") {
-                const dataWards = dataCity[0].Districts.filter(n => n.Id === this.value)[0].Wards;
-                $scope.distri =  dataCity[0].Districts.filter(n => n.Id === this.value)[0].Name;
-                console.log($scope.distri)
-                for (const w of dataWards) {
-                    wards.options[wards.options.length] = new Option(w.Name, w.Id);
-                    console.log(w.name)
-                }
-            }
-        };
-        wards.onchange = function () {
-            const datadistri = data.filter((n) => n.Id === citis.value)[0]
-                .Districts.filter(n => n.Id === districts.value)[0].Wards.filter(n => n.Id === wards.value)[0].Name;
-            $scope.war = datadistri;
-            console.log($scope.war)
-        };
-    }
-
 
 
     $scope.onSave = function() {
 
         $http.post(callApiAddress+"/create", $scope.form, token,
-            $scope.form.addressTake=$scope.war+", "+$scope.distri+", "+$scope.city).then(response => {
+            $scope.form.addressTake = $scope.name_ward+", "+$scope.name_district+", "+$scope.name_province,
+            $scope.form.province = $scope.name_province, $scope.form.district = $scope.name_district,
+            $scope.form.ward = $scope.name_ward).then(response => {
             const Toast = Swal.mixin({
                 toast: true,
                 position: 'top-end',
@@ -170,7 +127,7 @@ app.controller('address-form-ctrl', function ($http, $scope, $window) {
             })
         }
     };
-
+    //tìm address theo username
     $scope.getAddressByUsername = function () {
         $http.get(callApiAddress+"/getByUsername", token).then(function (respon){
             $scope.listaddress = respon.data;
@@ -178,6 +135,70 @@ app.controller('address-form-ctrl', function ($http, $scope, $window) {
         }).catch(err => {
             console.log(err)
         })
+    }
+    //get tất cả tỉnh
+    $scope.getProvince = function (){
+        $http.get(callApiAddress+"/getProvince", token).then(function (respon) {
+            $scope.provinces = respon.data.data;
+            console.log($scope.provinces)
+        }).catch(err =>{
+            console.log(err)
+        })
+    }
+    //get tất cả huyện theo id của tỉnh
+    $scope.getDistrict = function (provinces){
+        $http.get(callApiAddress+"/getDistrict?province_id="+provinces, token).then(function (respon) {
+            $scope.district = respon.data.data;
+            console.log($scope.district)
+        }).catch(err =>{
+            console.log(err)
+        })
+    }
+    //get tất cả xã theo id của huyện
+    $scope.getWard = function (district){
+        $http.get(callApiAddress+"/getWard?district_id="+district, token).then(function (respon) {
+            $scope.ward = respon.data.data;
+            console.log($scope.ward)
+        }).catch(err =>{
+            console.log(err)
+        })
+    }
+
+    // bắt thay đổi của select tỉnh
+    citis.onchange = function (){
+        district.length = 1;
+        ward.length = 1;
+        if (this.value != "") {
+            console.log(citis.options[citis.selectedIndex].text)
+            $scope.getDistrict(this.value)
+            $scope.name_province = citis.options[citis.selectedIndex].text;
+            $scope.id_province = this.value;
+
+        }
+    }
+
+    //bắt thay đổi của select huyện
+    districts.onchange = function (){
+        ward.length = 1;
+        if (this.value != "") {
+            console.log(districts.options[districts.selectedIndex].text)
+            console.log(this.value)
+            $scope.getWard(this.value)
+            $scope.name_district = districts.options[districts.selectedIndex].text;
+            $scope.id_district = this.value;
+
+        }
+    }
+
+    //bắt thay đổi của select xã
+    wards.onchange = function (){
+        if (this.value != "") {
+            console.log(wards.options[wards.selectedIndex].text)
+            console.log(this.value)
+            $scope.name_ward = wards.options[wards.selectedIndex].text;
+            $scope.id_ward = this.value;
+
+        }
     }
 
 
@@ -266,5 +287,6 @@ app.controller('address-form-ctrl', function ($http, $scope, $window) {
     }
 
     $scope.getAddressByUsername();
+    $scope.getProvince();
 
 })

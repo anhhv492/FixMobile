@@ -30,6 +30,24 @@ public class Address {
     @Column(name = "address_take")
     private String addressTake;
 
+    @Column(name = "id_province")
+    private Integer provinceId;
+
+    @Column(name = "id_district")
+    private Integer districtId;
+
+    @Column(name = "id_ward")
+    private Integer wardId;
+
+    @Column(name = "province")
+    private String province;
+
+    @Column(name = "district")
+    private String district;
+
+    @Column(name = "ward")
+    private String ward;
+
     @JsonIgnore
     @OneToOne(mappedBy = "address_id")
     private Account account_address;
