@@ -3,18 +3,18 @@ package com.fix.mobile.service.impl;
 import com.fix.mobile.dto.AccountDTO;
 import com.fix.mobile.dto.AddressDTO;
 import com.fix.mobile.entity.Address;
+import com.fix.mobile.help.HashUtil;
 import com.fix.mobile.repository.AccountRepository;
 import com.fix.mobile.repository.AddressRepository;
 import com.fix.mobile.service.AccountService;
-import com.fix.mobile.repository.AccountRepository;
 import com.fix.mobile.entity.Account;
-import com.fix.mobile.service.AccountService;
 import com.fix.mobile.utils.UserName;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -31,6 +31,8 @@ public class AccountServiceImpl implements AccountService {
 
     @Autowired
     private ModelMapper modelMapper;
+
+
 
 
     public AccountServiceImpl(AccountRepository repository, AddressRepository addressRepository, ModelMapper modelMapper) {
@@ -72,11 +74,9 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Account update(Account entity, String id) {
-        Optional<Account> optional = findById(id) ;
-        if (optional.isPresent()) {
-            return save(entity);
-        }
+    public AccountDTO update(AccountDTO accountDTO, String username) {
+        Account optional = findByName(username) ;
+
         return null;
     }
 
@@ -106,5 +106,18 @@ public class AccountServiceImpl implements AccountService {
         Address address = addressRepository.findById(account.getAddress_id().getIdAddress()).orElse(null);
         AddressDTO addressDTO = modelMapper.map(address, AddressDTO.class);
         return addressDTO;
+    }
+
+    @Override
+    public AccountDTO updateAccountActive(AccountDTO accountDTO) {
+        Account accountActive = repository.findByName(UserName.getUserName());
+        accountActive.setPhone(accountDTO.getPhone());
+        accountActive.setEmail(accountDTO.getEmail());
+        accountActive.setFullName(accountDTO.getFullName());
+        accountActive.setGender(accountDTO.getGender());
+        accountActive.setImage(accountDTO.getImage());
+        Account account = repository.save(accountActive);
+        AccountDTO accountDTORes = modelMapper.map(account, AccountDTO.class);
+        return accountDTORes;
     }
 }

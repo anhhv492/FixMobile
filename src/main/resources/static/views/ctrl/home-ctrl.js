@@ -1,4 +1,4 @@
-app.controller('home-ctrl',function($rootScope,$scope,$http){
+app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
     var urlCategory=`http://localhost:8080/rest/guest/category`;
     var urlAccessory=`http://localhost:8080/rest/guest/accessory`;
     var urlProduct=`http://localhost:8080/rest/guest/product`;
@@ -31,14 +31,23 @@ app.controller('home-ctrl',function($rootScope,$scope,$http){
 
 
 
-    $scope.getAccountActive = function () {
-        $http.get(`${urlAccount}/getAccountActive`).then(res => {
-            res.data = $scope.item;
-
-            alert('user'+$scope.item)
-            console.log($scope.item)
+    $scope.getAcountActive = function () {
+        $http.get(urlAccount+`/getAccountActive`, token).then(function (respon){
+            $scope.accountActive = respon.data;
+            $rootScope.account = token;
+            console.log($scope.accountActive.username)
+        }).catch(err => {
+            Swal.fire({
+                icon: 'error',
+                text: 'Bạn chưa đăng nhập !!!',
+            })
+            console.log(err)
+            $window.location.href='#!login';
         })
+    }
 
+    $scope.logoff = function () {
+        $rootScope.account = null;
     }
     $scope.getCategories = function(){
         $http.get(`${urlCategory}/getAll`).then(res=>{
@@ -151,6 +160,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http){
     $rootScope.loadQtyCart();
 
     $scope.getAccount();
+    $scope.getAcountActive();
 
 })
 

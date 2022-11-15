@@ -71,7 +71,7 @@ public class CategoryRestController {
     @GetMapping("/page/published")
     public ResponseEntity<Map<String, Object>> findByPublished(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "2") int size) {
+            @RequestParam(defaultValue = "5") int size) {
 
         try {
             List<Category> categories = new ArrayList<Category>();

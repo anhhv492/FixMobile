@@ -132,9 +132,11 @@ public class SercurityConfig{
 		//Disable crsf cho đường dẫn /rest/**
     	http.csrf().disable();
     	
-		http.authorizeHttpRequests().antMatchers("/admin/**","/rest/admin/accounts/getAccountActive").permitAll()//Phân quyền sử dụng
+		http.authorizeHttpRequests().antMatchers("/admin/*",
+						"/rest/admin/accounts/getAccountActive","/rest/admin/accounts/setaddressdefault",
+						"/rest/admin/accounts/getAddress").permitAll()//Phân quyền sử dụng
 		.antMatchers("/order/**").authenticated()
-		.antMatchers("/rest/admin/**").hasAnyRole("STAFF","ADMIN")
+		.antMatchers("/rest/admin/**","/rest/staff/**").hasAnyRole("STAFF","ADMIN")
 		.antMatchers("/rest/authorities").hasRole("DIRE")
 		 .and().exceptionHandling().authenticationEntryPoint(jwtEntrypoint)
 				.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);

@@ -89,8 +89,9 @@ public class AccountRestController {
     	return accountService.save(account);
     }
     
-    @PutMapping("/{username}")
-    public Account update(@PathVariable("username") String username, @RequestBody Account account){return accountService.update(account, username);
+    @PutMapping("/update")
+    public AccountDTO update(@RequestParam("username") String username, @RequestBody AccountDTO accountDTO){
+        return accountService.update(accountDTO, username);
     }
     
     @DeleteMapping("/{username}")
@@ -113,5 +114,10 @@ public class AccountRestController {
     @GetMapping("/getAddress")
     public AddressDTO getAddress(){
         return accountService.getAddress();
+    }
+
+    @PostMapping("/updateAccountActive")
+    public AccountDTO updateAccountActive(@RequestBody AccountDTO accountDTO){
+        return accountService.updateAccountActive(accountDTO);
     }
 }
