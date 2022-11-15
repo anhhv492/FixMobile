@@ -447,17 +447,17 @@ id_ram,id_color,id_capacity,id_category,id_image)
 select*from orders;
 
 INSERT INTO fix_mobile.accounts(username,password,full_name,gender,email,
-				phone,create_date,image,id_role) 
+				status,phone,create_date,image,id_role) 
 VALUES ('admin','$2a$12$nSbqR9l9BenII9tUcUoHXeDb77X.x59UZPMB894ynZ8z8I4WDSLOO','admin',0,'admin@gmail.com',
-	'0912321321','2022/10/30','',1);
+	1,'0912321321','2022/10/30','',1);
 INSERT INTO fix_mobile.accounts(username,password,full_name,gender,email,
-				phone,create_date,image,id_role) 
+				status,phone,create_date,image,id_role) 
 VALUES ('user','$2a$12$SYSb7NU1cND3wct0LRWrxe3id70DF6PeGbhkbcFATooYDKe4wyyqe','user',1,'user@gmail.com',
-	'0123456789','2002/11/11','',3);
+	1,'0123456789','2002/11/11','',3);
 INSERT INTO fix_mobile.accounts(username,password,full_name,gender,email,
-				phone,create_date,image,id_role) 
+				status,phone,create_date,image,id_role) 
 VALUES ('vietanhvs','$2a$12$FUNIidYXB/rc3BRR1XuQZObS4Vn7BPPomqllVvwcBOkJtZJWKFM16','Hạ Việt Anh',0,'vietanhvs@gmail.com',
-	'0984297473','2022/10/30','',1);
+	1,'0984297473','2022/10/30','',1);
 
 select*from accounts;
 select*from roles;
