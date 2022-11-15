@@ -5,9 +5,12 @@ app.controller('order-admin-ctrl',function($rootScope,$scope,$http,$window){
     $scope.form= {};
     $scope.showUpdate=false;
     $scope.status = [
-        {id : 0, name : "Đang xử lý"},
-        {id : 1, name : "Đang giao hàng"},
-        {id : 2, name : "Hoàn tất"},
+        {id : '', name : "Thay đổi"},
+        {id : 0, name : "Chưa thanh toán"},
+        {id : 1, name : "Đã thanh toán"},
+        {id : 2, name : "Đang giao hàng"},
+        {id : 3, name : "Hoàn tất"},
+        {id : 4, name : "Hoàn đơn"},
     ];
     $scope.getAll=function(){
         $http.get(urlOrder).then(function(response){
@@ -35,5 +38,6 @@ app.controller('order-admin-ctrl',function($rootScope,$scope,$http,$window){
             console.log('error update',error);
         });
     }
+    $scope.status.id='';
     $scope.getAll();
 });

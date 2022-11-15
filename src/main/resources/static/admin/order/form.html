@@ -1,4 +1,4 @@
-<table class="table table-bordered table-hover container">
+<table class="table-bordered table-hover container">
     <thead>
     <tr>
         <th>STT</th>
@@ -21,26 +21,24 @@
         <td>{{order.total|number}}</td>
         <td>
         <span ng-if="order.status==0">
-            <span class="text-warning">Đang xử lý</span>
+            <span class="text-warning">Chưa thanh toán</span>
         </span>
         <span ng-if="order.status==1">
-            <span class="text-primary">Đang giao hàng</span>
+            <span class="text-warning">Đã thanh toán</span>
         </span>
         <span ng-if="order.status==2">
+            <span class="text-primary">Đang giao hàng</span>
+        </span>
+        <span ng-if="order.status==3">
             <span class="text-success">Hoàn tất</span>
+        </span>
+        <span ng-if="order.status==4">
+            <span class="text-dark">Hoàn đơn</span>
         </span>
             <select ng-model="form.status" ng-change="updateStatus(order.idOrder)" class="form-select" >
                 <option ng-repeat="item in status" ng-value="item.id">{{item.name}}</option>
             </select>
-<!--            <select ng-model="form.status=order.status" ng-click="show()" ng-if="showUpdate==false" class="form-select" >-->
-<!--                <option ng-repeat="item in status" ng-value="item.id" selected>{{item.name}}</option>-->
-<!--            </select>-->
-<!--            <select ng-model="form.status" ng-change="updateStatus(order.idOrder)" ng-if="showUpdate==true" class="form-select" >-->
-<!--                <option ng-repeat="item in status" ng-value="item.id" selected>{{item.name}}</option>-->
-<!--            </select>-->
         </td>
-        <td>
-    </td>
         <td>
             <a href="#!order-detail" ng-click="getOrder(order.idOrder)" class="btn btn-default">
                 <i class="fa fa-info-circle" aria-hidden="true"></i> Chi tiết
