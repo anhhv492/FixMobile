@@ -18,7 +18,7 @@
     <td>{{orderDetail.accessory.price|number}}</td>
     <td>{{orderDetail.quantity}}</td>
     <td><img width="80px" height="80px" src="/images/accessories/{{orderDetail.accessory.image}}"></td>
-    <td>{{orderDetail.quantity*orderDetail.accessory.price|number}}</td>
+    <td>{{orderDetail.quantity*orderDetail.price|number}}</td>
   </tr>
   <tr ng-repeat="orderDetail in orderDetails" ng-if="orderDetail.product">
     <td>{{orderDetail.product.name}}</td>
@@ -27,7 +27,7 @@
     <td>{{orderDetail.product.price|number}}</td>
     <td>{{orderDetail.quantity}}</td>
     <td><img width="80px" height="80px" src="/images/accessories/{{orderDetail.product.image}}"></td>
-    <td>{{orderDetail.quantity*orderDetail.product.price|number}}</td>
+    <td>{{orderDetail.quantity*orderDetail.price|number}}</td>
   </tr>
   </tbody>
 </table>
