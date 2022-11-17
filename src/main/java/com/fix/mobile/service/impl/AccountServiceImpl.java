@@ -1,5 +1,6 @@
 package com.fix.mobile.service.impl;
 
+import com.fix.mobile.entity.Accessory;
 import com.fix.mobile.repository.AccountRepository;
 import com.fix.mobile.service.AccountService;
 import com.fix.mobile.repository.AccountRepository;
@@ -7,6 +8,7 @@ import com.fix.mobile.entity.Account;
 import com.fix.mobile.service.AccountService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -73,5 +75,12 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Account findByUsername(String name) {
         return repository.findByName(name);
+    }
+
+    @Override
+    public Page<Account> getByPage(int pageNumber, int maxRecord, String share) {
+        Pageable pageable = PageRequest.of(pageNumber, maxRecord);
+        Page<Account> page = repository.findShowSale(share,pageable);
+        return page;
     }
 }

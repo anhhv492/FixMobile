@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.servlet.ServletContext;
 
+import com.fix.mobile.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,9 +28,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import com.fix.mobile.entity.Account;
-import com.fix.mobile.entity.Account;
-import com.fix.mobile.entity.Category;
-import com.fix.mobile.entity.Role;
 import com.fix.mobile.help.HashUtil;
 import com.fix.mobile.repository.AccountRepository;
 import com.fix.mobile.repository.CategoryRepository;
@@ -84,6 +82,16 @@ public class AccountRestController {
     public void delete(@PathVariable("username") String username){
         accountService.deleteById(username);
     }
-    
+
+    @RequestMapping("/getdatasale/{page}")
+    public Page<Account> getDataShowSale(
+            @PathVariable ("page") Integer page,
+            @RequestParam ("share") String share
+    ){
+        if(null == share||"undefined".equals(share)){
+            share="";
+        }
+        return accountService.getByPage(page,5,share);
+    }
 
 }
