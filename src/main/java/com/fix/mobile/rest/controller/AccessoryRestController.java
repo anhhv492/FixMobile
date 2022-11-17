@@ -8,6 +8,7 @@ import com.fix.mobile.service.AccessoryService;
 import com.fix.mobile.service.CategoryService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
@@ -96,5 +97,16 @@ public class AccessoryRestController {
 	public Boolean readExcel(@PathParam("file") MultipartFile file) throws Exception{
 		Boolean checkExcel= excelHelper.readExcel(file);
 		return checkExcel;
+	}
+
+	@RequestMapping("/getdatasale/{page}")
+	public Page<Accessory> getDataShowSale(
+			@PathVariable ("page") Integer page,
+			@RequestParam ("share") String share
+	){
+		if(null == share||"undefined".equals(share)){
+			share="";
+		}
+		return accessoryService.getByPage(page,5,share);
 	}
 }
