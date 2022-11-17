@@ -32,7 +32,8 @@ CREATE TABLE color (
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
 CREATE TABLE images (
 	id_image int NOT NULL auto_increment primary key,
-	name nvarchar(255) not null
+	name nvarchar(255) not null,
+	id_product int null
 ) ;
 
 -- SQLINES DEMO *** OR EVALUATION USE ONLY
@@ -110,7 +111,7 @@ CREATE TABLE products (
 	id_color int NOT NULL,
 	id_capacity int NOT NULL,
 	id_category int NOT NULL,
-	id_image int NOT NULL,
+	id_image int  NULL,
 	foreign key(id_ram) references ram(id_ram),
 	foreign key(id_color) references color(id_color),
 	foreign key(id_capacity) references capacity(id_capacity),
@@ -154,7 +155,7 @@ CREATE TABLE sale (
 	detail_sale varchar(250),
 	discount_method int,
 	discount_type int,
-	user_type int,
+	user_type int
 ) ;
 
 -- SQLINES DEMO *** OR EVALUATION USE ONLY
@@ -445,15 +446,19 @@ INSERT INTO fix_mobile.products (name,create_date,camera,price,size,note,status,
 id_ram,id_color,id_capacity,id_category,id_image) 
  VALUES ('IPhone XS Max', '2022-10-06', '1280px, cảm biến LiDAR', 20000000, '20x25cm', 'Bền, đẹp mắt', 1,1,1,1,13,1);
 select*from orders;
+
 INSERT INTO fix_mobile.accounts(username,password,full_name,gender,email,
-								phone,create_date,image,id_role) 
-VALUES ('admin','123','admin',0,'admin@gmail.com','0912321321','2022/10/30','',1);
+				status,phone,create_date,image,id_role) 
+VALUES ('admin','$2a$12$nSbqR9l9BenII9tUcUoHXeDb77X.x59UZPMB894ynZ8z8I4WDSLOO','admin',0,'admin@gmail.com',
+	1,'0912321321','2022/10/30','',1);
 INSERT INTO fix_mobile.accounts(username,password,full_name,gender,email,
-								phone,create_date,image,id_role) 
-VALUES ('vietanhvs','492002','Hạ Việt Anh',0,'vietanhvs@gmail.com','0984297473','2022/10/30','',1);
+				status,phone,create_date,image,id_role) 
+VALUES ('user','$2a$12$SYSb7NU1cND3wct0LRWrxe3id70DF6PeGbhkbcFATooYDKe4wyyqe','user',1,'user@gmail.com',
+	1,'0123456789','2002/11/11','',3);
 INSERT INTO fix_mobile.accounts(username,password,full_name,gender,email,
-								phone,create_date,image,id_role) 
-VALUES ('user','123','user',1,'user@gmail.com','0123456789','2002/11/11','',3);
+				status,phone,create_date,image,id_role) 
+VALUES ('vietanhvs','$2a$12$FUNIidYXB/rc3BRR1XuQZObS4Vn7BPPomqllVvwcBOkJtZJWKFM16','Hạ Việt Anh',0,'vietanhvs@gmail.com',
+	1,'0984297473','2022/10/30','',1);
 
 select*from accounts;
 select*from roles;
