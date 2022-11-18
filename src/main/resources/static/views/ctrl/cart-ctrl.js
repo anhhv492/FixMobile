@@ -131,6 +131,7 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window) {
     $scope.reduce = function (item) {
         const index = $rootScope.carts.findIndex(it => it.idAccessory === item.idAccessory)
         $rootScope.carts[index].qty--;
+        $scope.getShippingOder();
         if ($rootScope.carts[index].qty <= 0) {
             let timerInterval
             Swal.fire({
@@ -154,6 +155,7 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window) {
                     $rootScope.carts.splice(index, 1);
                     $rootScope.saveLocalStorage();
                     $rootScope.loadLocalStorage();
+                    $scope.getShippingOder();
                     const Toast = Swal.mixin({
                         toast: true,
                         position: 'top-end',
