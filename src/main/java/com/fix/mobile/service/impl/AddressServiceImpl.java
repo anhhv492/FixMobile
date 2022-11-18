@@ -20,7 +20,6 @@ import org.springframework.web.client.RestTemplate;
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,6 +27,13 @@ import java.util.stream.Collectors;
 public class AddressServiceImpl implements AddressService {
 
     private String tokenApiGhn;
+
+    private String shopId;
+
+    @Value("${api.ghn.ShopId}")
+    public void getshopId(String shopId) {
+        this.shopId = shopId;
+    }
     @Value("${api.ghn.token}")
     public void getTokenApiGhn(String tokenApiGhn) {
         this.tokenApiGhn = tokenApiGhn;
@@ -42,6 +48,7 @@ public class AddressServiceImpl implements AddressService {
         httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         httpHeaders.add("token",tokenApiGhn);
+        httpHeaders.add("ShopId", shopId);
         httpEntity = new HttpEntity<>(httpHeaders);
     }
     private final AddressRepository repository;
@@ -128,14 +135,26 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public ResponseEntity<?> getDistrict(Integer id) {
+    public ResponseEntity<?> getDistrict(String id) {
         return restTemplate.exchange("https://online-gateway.ghn.vn/shiip/public-api/master-data/district?province_id="+id,
                 HttpMethod.GET, httpEntity, Object.class);
     }
 
     @Override
-    public ResponseEntity<?> getWard(Integer id) {
+    public ResponseEntity<?> getWard(String id) {
         return restTemplate.exchange("https://online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id="+id,
                 HttpMethod.GET, httpEntity, Object.class);
     }
+
+    @Override
+    public ResponseEntity<?> getShippingOrder(String from_district_id, String service_id
+            , String to_district_id, String to_ward_code
+            , String weight, String insurance_value) {
+        return restTemplate.exchange("https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee?from_district_id="
+                        +from_district_id+"&service_id="+service_id+"&to_district_id="+to_district_id+"&to_ward_code="
+                        +to_ward_code+"&weight="+weight+"&insurance_value="+insurance_value,
+                HttpMethod.GET, httpEntity, Object.class);
+    }
+
+
 }

@@ -134,7 +134,7 @@ public class SercurityConfig{
     	
 		http.authorizeHttpRequests().antMatchers("/admin/*",
 						"/rest/admin/accounts/getAccountActive","/rest/admin/accounts/setaddressdefault",
-						"/rest/admin/accounts/getAddress").permitAll()//Phân quyền sử dụng
+						"/rest/admin/accounts/getAddress","/rest/admin/accounts/updateAccountActive").permitAll()//Phân quyền sử dụng
 		.antMatchers("/order/**").authenticated()
 		.antMatchers("/rest/admin/**","/rest/staff/**").hasAnyRole("STAFF","ADMIN")
 		.antMatchers("/rest/authorities").hasRole("DIRE")

@@ -8,22 +8,16 @@ import java.util.Map;
 
 import javax.servlet.ServletContext;
 
+import com.fix.mobile.dto.Account.AccountRequestDTO;
+import com.fix.mobile.dto.Account.AccountResponDTO;
 import com.fix.mobile.dto.AccountDTO;
 import com.fix.mobile.dto.AddressDTO;
 import com.fix.mobile.utils.UserName;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -67,26 +61,28 @@ public class AccountRestController {
         this.modelMapper = modelMapper;
     }
 
-    @GetMapping
-    public List<Account> findAll() {
+    @GetMapping("/getAll")
+    public List<AccountResponDTO> findAll() {
         return accountService.findAll();
     }
-    @GetMapping("/page/{page}")
-	public List<Account> findAllPageable(@PathVariable("page") Optional<Integer> page){
-		Pageable pageable = PageRequest.of(page.get(), 10);
-		List<Account> accounts = accountService.findAll(pageable).getContent();
-		return accounts;
-	}
+
+    @GetMapping("/page")
+    public Page<AccountResponDTO> page(
+            @RequestParam(name = "page" , defaultValue = "1") int page,
+            @RequestParam(name = "size" , defaultValue = "10") int size
+    ){
+        Pageable pageable = PageRequest.of(page - 1 , size);
+        return accountService.findAll(pageable);
+    }
   
     @GetMapping("/roles")
     public List<Role> findRoles(){
         return roleService.findAll();
     }
-    @PostMapping
-    public Account create(@RequestBody Account account) {
-    	String hashedPassword = HashUtil.hash(account.getPassword());
-		account.setPassword(hashedPassword);
-    	return accountService.save(account);
+    @PostMapping(value = "/create", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+    public AccountResponDTO create(@ModelAttribute AccountRequestDTO accountRequestDTO) {
+
+    	return accountService.save(accountRequestDTO);
     }
     
     @PutMapping("/update")

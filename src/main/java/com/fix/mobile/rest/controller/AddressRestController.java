@@ -5,7 +5,6 @@ import com.fix.mobile.dto.AddressDTO;
 import com.fix.mobile.service.AddressService;
 import com.fix.mobile.utils.UserName;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -17,9 +16,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/rest/user/address")
 public class AddressRestController {
-
-
-
 
 
     public
@@ -75,12 +71,25 @@ public class AddressRestController {
     }
 
     @GetMapping("/getDistrict")
-    public ResponseEntity<?> getDistrict(@RequestParam("province_id") Integer id){
+    public ResponseEntity<?> getDistrict(@RequestParam("province_id") String id){
         return addressService.getDistrict(id);
     }
 
     @GetMapping("/getWard")
-    public ResponseEntity<?> getWard(@RequestParam("district_id") Integer id){
+    public ResponseEntity<?> getWard(@RequestParam("district_id") String id){
         return addressService.getWard(id);
+    }
+
+    @GetMapping("/getShipping-order")
+    public ResponseEntity<?> getShippingOrder(
+            @RequestParam("from_district_id") String from_district_id,
+            @RequestParam("service_id") String service_id,
+            @RequestParam("to_district_id") String to_district_id,
+            @RequestParam("to_ward_code") String to_ward_code,
+            @RequestParam("weight") String weight,
+            @RequestParam("insurance_value") String insurance_value
+    ){
+        return addressService.getShippingOrder(from_district_id, service_id, to_district_id,
+                to_ward_code, weight, insurance_value);
     }
 }

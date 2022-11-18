@@ -61,7 +61,7 @@ app.controller("account-ctrl", function ($scope, $http) {
 
         //load accounts
 
-        $http.get("/rest/admin/accounts/page/0",token).then(resp => {
+        $http.get("/rest/admin/accounts/page",token).then(resp => {
             $scope.accounts = resp.data;
             $scope.reset();
 
@@ -80,7 +80,7 @@ app.controller("account-ctrl", function ($scope, $http) {
 
     }
     $scope.getTotalPages = function () {
-        $http.get("/rest/admin/accounts",token).then(function (response) {
+        $http.get("/rest/admin/accounts/getAll",token).then(function (response) {
             $scope.totalPages = Math.ceil(response.data.length / 10);
         }).catch(error => {
             console.log(error);
@@ -103,7 +103,7 @@ app.controller("account-ctrl", function ($scope, $http) {
     //Check trùng
     $scope.check = function () {
 
-        $http.get("/rest/admin/accounts",token).then(resp => {
+        $http.get("/rest/admin/accounts/getAll",token).then(resp => {
             var a = 1;
             console.log("Bắt đầu kiểm tra check trùng")
             $scope.accounts = resp.data;
@@ -142,7 +142,7 @@ console.log("Kết thúc check trùng")
     //thêm sản phẩm mới
     $scope.create = function () {
         console.log($scope.b)
-        $http.get("/rest/admin/accounts",token).then(resp => {
+        $http.get("/rest/admin/accounts/getAll",token).then(resp => {
             var a = 1;
             console.log("Bắt đầu kiểm tra check trùng")
             $scope.accounts = resp.data;
@@ -167,7 +167,7 @@ console.log("Kết thúc check trùng")
                 console.log("Bắt đầu thêm mới")
 
                 var account = angular.copy($scope.form);
-                $http.post('/rest/admin/accounts', account,token).then(resp => {
+                $http.post('/rest/admin/accounts/create', account,token).then(resp => {
 
                     resp.data.createDate = new Date(resp.data.createDate)
                     $scope.accounts.push(resp.data);
@@ -309,7 +309,7 @@ console.log("Kết thúc check trùng")
             $scope.check_first = true;
             $scope.check_last = false;
         }
-        $http.get(pathAPI + `/page/` + $scope.index,token).then(res => {
+        $http.get(pathAPI + `/page?page=` + $scope.index,token).then(res => {
             $scope.accounts = res.data;
             console.log('Load accounts success', res.data)
         }).catch(err => {
@@ -328,7 +328,7 @@ console.log("Kết thúc check trùng")
             $scope.check_first = false;
             $scope.check_last = true;
         }
-        $http.get(pathAPI + `/page/` + $scope.index,token).then(res => {
+        $http.get(pathAPI + `/page?page=` + $scope.index,token).then(res => {
             $scope.accounts = res.data;
             console.log('Load accounts success', res.data)
         }).catch(err => {
@@ -339,7 +339,7 @@ console.log("Kết thúc check trùng")
         $scope.check_first = false;
         $scope.check_last = true;
         $scope.index = 0;
-        $http.get(pathAPI + `/page/` + $scope.index,token).then(res => {
+        $http.get(pathAPI + `/page?page=` + $scope.index,token).then(res => {
             $scope.accounts = res.data;
             console.log('Load accounts success', res.data)
         }).catch(err => {
@@ -350,7 +350,7 @@ console.log("Kết thúc check trùng")
         $scope.check_first = true;
         $scope.check_last = false;
         $scope.index = $scope.totalPages - 1;
-        $http.get(pathAPI + `/page/` + $scope.index,token).then(res => {
+        $http.get(pathAPI + `/page?page=` + $scope.index,token).then(res => {
             $scope.accounts = res.data;
             console.log('Load accounts success', res.data)
         }).catch(err => {
@@ -358,7 +358,7 @@ console.log("Kết thúc check trùng")
         })
     }
     $scope.getPageAccounts = function () {
-        $http.get(pathAPI + `/page/` + $scope.index,token).then(res => {
+        $http.get(pathAPI + `/page?page=` + $scope.index,token).then(res => {
             $scope.accounts = res.data;
             console.log('Load accounts success', res.data)
         }).catch(err => {

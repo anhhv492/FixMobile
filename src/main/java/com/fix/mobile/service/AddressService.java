@@ -25,7 +25,12 @@ public interface AddressService {
 
     ResponseEntity<?> getAllProvince();
 
-    ResponseEntity<?> getDistrict(Integer id);
+    ResponseEntity<?> getDistrict(String id);
 
-    ResponseEntity<?> getWard(Integer id);
+    ResponseEntity<?> getWard(String id);
+
+
+
+    ResponseEntity<?> getShippingOrder(String from_district_id, String service_id, String to_district_id,
+                                       String to_ward_code, String weight, String insurance_value);
 }

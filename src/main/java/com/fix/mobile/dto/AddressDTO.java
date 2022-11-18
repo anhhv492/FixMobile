@@ -12,9 +12,9 @@ public class AddressDTO extends AbstractDTO<Integer> {
     private String personTake;
     private String phoneTake;
     private String addressTake;
-    private Integer provinceId;
-    private Integer districtId;
-    private Integer wardId;
+    private String provinceId;
+    private String districtId;
+    private String wardId;
     private String province;
     private String district;
     private String ward;

@@ -31,13 +31,13 @@ public class Address {
     private String addressTake;
 
     @Column(name = "id_province")
-    private Integer provinceId;
+    private String provinceId;
 
     @Column(name = "id_district")
-    private Integer districtId;
+    private String districtId;
 
     @Column(name = "id_ward")
-    private Integer wardId;
+    private String wardId;
 
     @Column(name = "province")
     private String province;

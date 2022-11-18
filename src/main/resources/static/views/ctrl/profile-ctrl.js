@@ -32,10 +32,10 @@ app.controller('profile-ctl', function ($scope,$http, $window) {
         }).catch(err => {
             Swal.fire({
                 icon: 'error',
-                text: 'Bạn chưa đăng nhập !!!',
+                text: 'Vui lòng thêm địa chỉ!!!',
             })
             console.log(err)
-            $window.location.href='#!login';
+            $window.location.href='#!address';
         })
     }
 

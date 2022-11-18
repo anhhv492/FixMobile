@@ -20,7 +20,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
 
     $rootScope.account=null;
     $scope.getAccount=function (){
-        $http.get("http://localhost:8080/rest/account").then(resp=>{
+        $http.get("http://localhost:8080/rest/account", token).then(resp=>{
             $rootScope.account=resp.data;
             console.log(resp.data);
         }).catch(error=>{
@@ -50,7 +50,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
         $rootScope.account = null;
     }
     $scope.getCategories = function(){
-        $http.get(`${urlCategory}/getAll`).then(res=>{
+        $http.get(`${urlCategory}/getAll`, token).then(res=>{
             res.data.forEach(cate=>{
                 if(cate.type){
                     $scope.cateAccessories.push(cate);
@@ -68,7 +68,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
 
     $scope.getDetail=function(item){
         if(item.type){
-            $http.get(`${urlAccessory}/cate-access/${item.idCategory}`).then(res=>{
+            $http.get(`${urlAccessory}/cate-access/${item.idCategory}`, token).then(res=>{
                 $rootScope.detailAccessories=res.data;
                 console.log("detailAccessories",$rootScope.detailAccessories)
             }).catch(err=>{
@@ -76,7 +76,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                 console.log("error",err)
             })
         }else{
-            $http.get(`${urlProduct}/cate-product/${item.idCategory}`).then(res=>{
+            $http.get(`${urlProduct}/cate-product/${item.idCategory}`, token).then(res=>{
                 $rootScope.detailAccessories=res.data;
                 console.log("detailProducts",$rootScope.detailAccessories)
             }).catch(err=>{
@@ -92,7 +92,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
             it=>it.idAccessory===accessory.idAccessory
         );
         if(accessory.category.type){
-            $http.get(`${urlAccessory}/${accessory.idAccessory}`).then(res=>{
+            $http.get(`${urlAccessory}/${accessory.idAccessory}`,token).then(res=>{
                 console.log("cartAccessory",res)
                 let data= res.data;
                 if(!$scope.item){
@@ -133,7 +133,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
 
         for (let i = 0; i < $rootScope.carts.length; i++) {
             $rootScope.carts.find(item=>{
-                $http.get("http://localhost:8080/cart-accessory/"+item.idAccessory).then(res=>{
+                $http.get("http://localhost:8080/cart-accessory/"+item.idAccessory, token).then(res=>{
                     $rootScope.carts[i].price=res.data.price;
                     console.log("price",item.price)
                 }).catch(err=>{

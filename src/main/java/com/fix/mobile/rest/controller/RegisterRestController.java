@@ -54,10 +54,10 @@ public class RegisterRestController {
     @Autowired
     ServletContext application;
 
-    @GetMapping
-    public List<Account> findAll() {
-        return accountService.findAll();
-    }
+//    @GetMapping
+//    public List<Account> findAll() {
+//        return accountService.findAll();
+//    }
 
 
     @GetMapping("/roles")
