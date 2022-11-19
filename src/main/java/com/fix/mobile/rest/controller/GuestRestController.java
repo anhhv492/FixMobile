@@ -92,7 +92,7 @@ public class GuestRestController {
                 return null;
             }else{
                 orderDetail = new OrderDetail();
-                if(productList.get(i).get("idAccessory").asInt()!=0){
+                if(productList.get(i).get("idAccessory").asInt()>-1){
                     Optional<Accessory> accessory = accessoryService.findById(productList.get(i).get("idAccessory").asInt());
                     if(accessory.isPresent()){
                         orderDetail.setAccessory(accessory.get());
@@ -100,14 +100,10 @@ public class GuestRestController {
                         orderDetail.setQuantity(productList.get(i).get("qty").asInt());
                         orderDetail.setPrice(accessory.get().getPrice());
                         orderDetailService.save(orderDetail);
-                        price =new BigDecimal(accessory.get().getPrice().doubleValue());
-                        orderDetail.setPrice(price);
-                        orderDetail.setProduct(null);
                         accessory.get().setQuantity(accessory.get().getQuantity()-productList.get(i).get("qty").asInt());
                         accessoryService.update(accessory.get(),accessory.get().getIdAccessory());
-                        orderDetailService.save(orderDetail);
                     }
-                } else if (productList.get(i).get("idProduct").asInt()!=0){
+                } else if (productList.get(i).get("idProduct").asInt()>-1){
                     Optional<Product> product = productService.findById(productList.get(i).get("idProduct").asInt());
                     if(product.isPresent()){
                         orderDetail.setProduct(product.get());
