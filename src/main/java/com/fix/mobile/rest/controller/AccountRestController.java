@@ -59,10 +59,10 @@ public class AccountRestController {
         this.modelMapper = modelMapper;
     }
 
-    @GetMapping("/getAll")
-    public List<AccountResponDTO> findAll() {
-        return accountService.findAll();
-    }
+//    @GetMapping("/getAll")
+//    public List<AccountResponDTO> findAll() {
+//        return accountService.findAll();
+//    }
 
     @GetMapping("/page")
     public Page<AccountResponDTO> page(

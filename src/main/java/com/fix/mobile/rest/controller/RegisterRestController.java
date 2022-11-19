@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.servlet.ServletContext;
 
+import com.fix.mobile.dto.Account.AccountResponDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -54,10 +55,10 @@ public class RegisterRestController {
     @Autowired
     ServletContext application;
 
-//    @GetMapping
-//    public List<Account> findAll() {
-//        return accountService.findAll();
-//    }
+    @GetMapping
+    public List<Account> findAll() {
+        return accountService.findAll();
+    }
 
 
     @GetMapping("/roles")
@@ -67,7 +68,9 @@ public class RegisterRestController {
     @PostMapping
     public Account create(@RequestBody Account account) {
         String hashedPassword = HashUtil.hash(account.getPassword());
+        System.out.println("success");
         account.setPassword(hashedPassword);
+        System.out.println("success");
         return accountService.save(account);
     }
 

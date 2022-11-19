@@ -24,7 +24,9 @@ public interface AccountService {
 
     Optional<Account> findById(String id);
 
-    List<AccountResponDTO> findAll();
+    List<Account> findAll();
+
+
 
     Page<AccountResponDTO> findAll(Pageable pageable);
 
