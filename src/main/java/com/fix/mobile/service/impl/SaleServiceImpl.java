@@ -32,7 +32,7 @@ public class SaleServiceImpl implements SaleService {
 
     @Override
     public Sale add(Sale sale) {
-//        vaildate_NULL(sale);
+        vaildate_NULL(sale);
         sale.setIdSale(null);
         sale.setValueMin(null);
         sale.setCreateTime(new Date());

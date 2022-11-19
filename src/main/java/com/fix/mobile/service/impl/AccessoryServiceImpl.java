@@ -1,13 +1,11 @@
 package com.fix.mobile.service.impl;
 
 import com.fix.mobile.entity.Category;
-import com.fix.mobile.entity.Sale;
 import com.fix.mobile.repository.AccessoryRepository;
 import com.fix.mobile.service.AccessoryService;
 import com.fix.mobile.entity.Accessory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -78,13 +76,6 @@ public class AccessoryServiceImpl implements AccessoryService {
     @Override
     public List<Accessory> findByCategoryAndStatus(Optional<Category> cate) {
         return repository.findByCategoryAndStatus(cate,true);
-    }
-
-    @Override
-    public Page<Accessory> getByPage(int pageNumber, int maxRecord, String name) {
-        Pageable pageable = PageRequest.of(pageNumber, maxRecord);
-        Page<Accessory> page = repository.findShowSale(name,pageable);
-        return page;
     }
 
 }

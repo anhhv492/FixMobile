@@ -66,9 +66,9 @@ public class ProductServiceImpl implements ProductService {
         return null;
     }
     @Override
-    public Page<Product> findShowSale(int pageNumber, int maxRecord, String share) {
+    public Page<Product> getByPage(int pageNumber, int maxRecord, Integer status) {
         Pageable pageable = PageRequest.of(pageNumber, maxRecord);
-        Page<Product> pageProduct = repository.findShowSale(share, pageable);
+        Page<Product> pageProduct = repository.findByStatus(status, pageable);
         return pageProduct;
      }
      

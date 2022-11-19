@@ -1,7 +1,4 @@
-app.controller("sale_ctrl", function ($scope, $http,$filter) {
-    let urlprd = "http://localhost:8080/rest/admin/product/getdatasale";
-    let urlacsr="http://localhost:8080/rest/admin/accessory/getdatasale";
-    let urlacc="http://localhost:8080/rest/admin/accounts/getdatasale";
+app.controller("sale_ctrl", function ($scope, $http) {
 
     const jwtToken = localStorage.getItem("jwtToken")
     const token = {
@@ -9,9 +6,11 @@ app.controller("sale_ctrl", function ($scope, $http,$filter) {
             Authorization: `Bearer `+jwtToken
         }
     }
+
+    let urlprd = "http://localhost:8080/rest/admin/product";
     $scope.saleadd = {};
     $scope.saleedit = {};
-    $scope.dataTable = [];
+    $scope.products = [];
     $scope.seLected = [];
     $scope.index=0;
     $scope.totalPages=0;
@@ -63,9 +62,12 @@ app.controller("sale_ctrl", function ($scope, $http,$filter) {
                 timer: 5000
             });
         })
+        $scope.clear();
     }
     $scope.createSale = function (){
-        if($scope.saleadd.typeSale==0||$scope.saleadd.typeSale==2){
+        var typeSale = document.getElementById('typeSale');
+        var checkValue = typeSale.value;
+        if(checkValue==0||checkValue==2){
             $scope.addSale();
             swal.fire({
                 icon: 'success',
@@ -78,18 +80,18 @@ app.controller("sale_ctrl", function ($scope, $http,$filter) {
                 $scope.addSaleDetail();
             }
         }
+        $scope.saleadd={};
         $scope.onChangeTypeSale();
     }
     //addSale end
 
     //get data table start
 
-    $scope.getDataTable =function (urlDataTable,shear){
-        $http.get(`${urlDataTable}/`+$scope.index+"?share="+shear,token).then(function(response) {
-            console.log(`${urlDataTable}/`+$scope.index+"?share=");
-            $scope.dataTable = response.data.content;
-            if(response.data.totalElements % 10 == 0){
+    $scope.getProducts =function (urlDataTable){
+        $http.get(`${urlDataTable}/page/`+$scope.index, token).then(function(response) {
 
+            $scope.products = response.data.content;
+            if(response.data.totalElements % 10 ==0){
                 $scope.totalPages=response.data.totalElements/10;
             }else{
                 $scope.totalPages=Math.floor(response.data.totalElements/10)+1;
@@ -111,7 +113,7 @@ app.controller("sale_ctrl", function ($scope, $http,$filter) {
             $scope.check_first=true;
             $scope.check_last=false;
         }
-        $scope.getDataTable();
+        $scope.getProducts();
     }
     $scope.prev=function(){
         $scope.check_last=true;
@@ -125,7 +127,7 @@ app.controller("sale_ctrl", function ($scope, $http,$filter) {
             $scope.check_first=false;
             $scope.check_last=true;
         }
-        $scope.getDataTable();
+        $scope.getProducts();
     }
     $scope.checkSelected=function (id){
         var check = true;
@@ -152,7 +154,7 @@ app.controller("sale_ctrl", function ($scope, $http,$filter) {
 
     $scope.clear=function (){
         $scope.saleedit = {}
-        $scope.dataTable = [];
+        $scope.products = [];
         $scope.seLected = [];
         $scope.index=0;
         $scope.totalPages=0;
@@ -161,8 +163,9 @@ app.controller("sale_ctrl", function ($scope, $http,$filter) {
     }
     $scope.onChangeTypeSale=function (){
         if($scope.saleadd.typeSale == '0'){
-            $scope.dataTable = [];
+            $scope.products = [];
             $scope.seLected = [];
+            $scope.index=0;
             $scope.totalPages=0;
             $scope.check_first=false;
             $scope.check_last=true;
@@ -180,30 +183,28 @@ app.controller("sale_ctrl", function ($scope, $http,$filter) {
             $scope.hiddenValueMin = false;
             $scope.hiddenUserType = false;
             $scope.nameOnTable = "sản phẩm"
-            $scope.seLected = []
-            $scope.getDataTable(urlprd);
+            $scope.getProducts(urlprd);
         }else if($scope.saleadd.typeSale == '2'){
             $scope.saleadd.typeSale= 2;
             $scope.hiddenTableAll = false;
             $scope.hiddenValueMin = true;
             $scope.hiddenUserType = false;
             $scope.nameOnTable = ""
+            // $scope.getProducts();
         }else if($scope.saleadd.typeSale == '3'){
             $scope.saleadd.typeSale= 3;
             $scope.hiddenTableAll = false;
             $scope.hiddenValueMin = false;
             $scope.hiddenUserType = true;
             $scope.nameOnTable = "user"
-            $scope.seLected = []
-            $scope.getDataTable(urlacc);
+            $scope.getProducts();
         }else if($scope.saleadd.typeSale == '4'){
             $scope.saleadd.typeSale= 4;
             $scope.hiddenTableAll = true;
             $scope.hiddenValueMin = false;
             $scope.hiddenUserType = false;
             $scope.nameOnTable = "phụ kiện"
-            $scope.seLected = []
-            $scope.getDataTable(urlacsr);
+            $scope.getProducts();
         }
         $scope.onChangeDiscountMethod();
         $scope.onChangeDiscountType();
@@ -240,8 +241,7 @@ app.controller("sale_ctrl", function ($scope, $http,$filter) {
         var urlGetDataTableSale=`/admin/rest/sale/getall/`+$scope.index+`?stt=`+stt+`&share=&type=`;
         $http.get(urlGetDataTableSale).then(function(response) {
             $scope.dataTableSale = response.data.content;
-            console.log(response.data.totalElements);
-            console.log(response.data.totalElements);
+            console.log($scope.dataTableSale);
             if(response.data.totalElements % 10 ==0){
                 $scope.totalPages=response.data.totalElements/10;
             }else{
@@ -250,26 +250,6 @@ app.controller("sale_ctrl", function ($scope, $http,$filter) {
         }).catch(error=>{
             console.log(error);
         });
-    }
-    $scope.compareDate=function (dateStart, dateEnd, quantity){
-        var newDate = new Date();
-        var startDate = new Date(dateStart);
-        var endDate = new Date(dateEnd);
-        if(endDate < newDate){
-            return 2;
-        }
-        if(quantity==0){
-            return 3;
-        }
-        if(startDate > newDate){
-            return 0;
-        }
-        if( startDate < newDate && endDate > newDate){
-            return 1;
-        }
-
-        console.log("jihih")
-        return -1;
     }
 
 })

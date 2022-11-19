@@ -16,8 +16,8 @@ import java.util.Optional;
 
 @Repository
 public interface ProductRepository extends PagingAndSortingRepository<Product, Integer> {
-    @Query(value = "select * from products where status = 1 and (name like %?1% or id_product like %?1%)",nativeQuery = true)
-    Page<Product> findShowSale(String share,Pageable pageable);
+
+    Page<Product> findByStatus(Integer status, Pageable pageable);
     
     Optional<Product> findByName(String name);
 

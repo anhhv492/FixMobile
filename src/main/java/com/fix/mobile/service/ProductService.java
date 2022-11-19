@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public interface ProductService extends GenericService<Product, Integer> {
 
-  Page<Product> findShowSale(int pageNumber, int maxRecord, String share);
+  Page<Product> getByPage(int pageNumber, int maxRecord, Integer status);
 	Page<Product> getAll (Pageable page);
 	Optional<Product> findByName(String name);
 	List<Product> findByCategoryAndStatus(Optional<Category> cate);

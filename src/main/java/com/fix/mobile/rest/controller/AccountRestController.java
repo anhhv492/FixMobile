@@ -14,7 +14,6 @@ import com.fix.mobile.dto.AccountDTO;
 import com.fix.mobile.dto.AddressDTO;
 import com.fix.mobile.utils.UserName;
 import org.modelmapper.ModelMapper;
-import com.fix.mobile.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,6 +26,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import com.fix.mobile.entity.Account;
+import com.fix.mobile.entity.Account;
+import com.fix.mobile.entity.Category;
+import com.fix.mobile.entity.Role;
 import com.fix.mobile.help.HashUtil;
 import com.fix.mobile.repository.AccountRepository;
 import com.fix.mobile.repository.CategoryRepository;
@@ -92,24 +94,12 @@ public class AccountRestController {
     public void delete(@PathVariable("username") String username){
         accountService.deleteById(username);
     }
-
     
     @GetMapping("/getAccountActive")
-    public AccountDTO getAccountActive() {
+    public AccountDTO getAccountActive(){
         Account account = accountService.findByUsername(UserName.getUserName());
         AccountDTO accountDTO = modelMapper.map(account, AccountDTO.class);
         return accountDTO;
-    }
-
-    @RequestMapping("/getdatasale/{page}")
-    public Page<Account> getDataShowSale(
-            @PathVariable ("page") Integer page,
-            @RequestParam ("share") String share
-    ){
-        if(null == share||"undefined".equals(share)){
-            share="";
-        }
-        return accountService.getByPage(page,5,share);
     }
 
     @PostMapping("/setaddressdefault")

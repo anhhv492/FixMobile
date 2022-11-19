@@ -101,8 +101,58 @@
               </div>
               <h2><a href="single-product.html">{{p1.name}}</a></h2>
               <div class="product-carousel-price">
-                <ins>{{p1.price}}</ins> VND
+                <ins>{{p1.price}}</ins> <del>$100.00</del>
               </div>
+      <div class="product__panel-item col-lg-3 col-md-2 col-sm-6" ng-repeat="p1 in viewByPrice">
+        <div class="product__panel-img-wrap">
+          <img src="{{p1.images.length>0?p1.images[0].name:''}}" alt="" class="product__panel-img">
+        </div>
+        <h3 class="product__panel-heading">
+          <a href="#" class="product__panel-link">{{p1.name}}</a>
+        </h3>
+
+        <div class="product__panel-rate-wrap">
+          <i class="fas fa-star product__panel-rate"></i>
+          <i class="fas fa-star product__panel-rate"></i>
+          <i class="fas fa-star product__panel-rate"></i>
+          <i class="fas fa-star product__panel-rate"></i>
+          <i class="fas fa-star product__panel-rate"></i>
+        </div>
+
+        <div class="product__panel-price">
+                        <span class="product__panel-price-old product__panel-price-old-hide">
+                            150.000đ
+                        </span>
+          <span class="product__panel-price-current">
+                            112.500đ
+                        </span>
+        </div>
+      </div>
+
+      <div class="product__panel-item col-lg-2 col-md-3 col-sm-6">
+        <div class="product__panel-img-wrap">
+          <img src="images1/product/8936049524905.jpg" alt="" class="product__panel-img" >
+        </div>
+        <h3 class="product__panel-heading">
+          <a href="#" class="product__panel-link">5 Centimet Trên Giây</a>
+        </h3>
+        <div class="product__panel-rate-wrap">
+          <i class="fas fa-star product__panel-rate"></i>
+          <i class="fas fa-star product__panel-rate"></i>
+          <i class="fas fa-star product__panel-rate"></i>
+          <i class="fas fa-star product__panel-rate"></i>
+          <i class="fas fa-star product__panel-rate"></i>
+        </div>
+
+        <div class="product__panel-price">
+            <span class="product__panel-price-old product__panel-price-old-hide">
+                {{p1.price}}
+            </span>
+            <span class="product__panel-price-current">
+                {{p1.price}}
+            </span>
+        </div>
+      </div>
 
     </div>
 
@@ -255,4 +305,4 @@
       <a href="post.html" class="posts__view-btn">Xem thêm</a>
     </article>
   </div>
-</section>
+<!--</section>-->

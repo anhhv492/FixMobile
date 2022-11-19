@@ -1,6 +1,5 @@
 package com.fix.mobile.service.impl;
 
-
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.fix.mobile.dto.Account.AccountRequestDTO;
@@ -10,7 +9,6 @@ import com.fix.mobile.dto.AddressDTO;
 import com.fix.mobile.entity.Address;
 import com.fix.mobile.entity.Role;
 import com.fix.mobile.help.HashUtil;
-
 import com.fix.mobile.repository.AccountRepository;
 import com.fix.mobile.repository.AddressRepository;
 import com.fix.mobile.repository.RoleRepository;
@@ -20,9 +18,6 @@ import com.fix.mobile.utils.UserName;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -183,11 +178,5 @@ public class AccountServiceImpl implements AccountService {
         Account account = repository.save(accountActive);
         AccountDTO accountDTORes = modelMapper.map(account, AccountDTO.class);
         return accountDTORes;
-    }
-    public Page<Account> getByPage(int pageNumber, int maxRecord, String share) {
-        Pageable pageable = PageRequest.of(pageNumber, maxRecord);
-        Page<Account> page = repository.findShowSale(share,pageable);
-        return page;
-
     }
 }

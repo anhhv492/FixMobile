@@ -231,12 +231,11 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window) {
                             $scope.linkPaypal = res.data;
                             $scope.cart.createDate = new Date();
                             $scope.cart.total = $scope.totals();
-                            $scope.cart.status = 1;
+                            $scope.cart.status = 0;
                             $scope.cart.type = false;
                             $http.post(urlOrder + '/add', $scope.cart).then(res => {
                                 if (res.data) {
                                     $http.post(urlOrderDetail + '/add', $rootScope.carts, token).then(res => {
-
                                         console.log("orderDetail", res.data)
                                     }).catch(err => {
                                         console.log("err orderDetail", err)
@@ -271,7 +270,7 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window) {
                                 })
                             } else {
                                 Swal.fire(
-                                    'Vui lòng nhập địa chỉ!',
+                                    'Vui lòng điền địa chỉ!',
                                     '',
                                     'error'
                                 )
