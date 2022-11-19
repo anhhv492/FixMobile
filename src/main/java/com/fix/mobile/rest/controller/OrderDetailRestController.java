@@ -29,7 +29,6 @@ public class OrderDetailRestController {
     private OrderService orderService;
     @Autowired
     private OrderDetailService orderDetailService;
-
     @GetMapping(value="/rest/user/order-detail/{id}")
     public List<OrderDetail> getAllByAccount(@PathVariable("id") Integer id){
         Optional<Order> order = orderService.findById(id);

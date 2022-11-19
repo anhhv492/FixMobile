@@ -32,18 +32,21 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
 
 
     $scope.getAcountActive = function () {
-        $http.get(urlAccount+`/getAccountActive`, token).then(function (respon){
-            $scope.accountActive = respon.data;
-            $rootScope.account = token;
-            console.log($scope.accountActive.username)
-        }).catch(err => {
-            Swal.fire({
-                icon: 'error',
-                text: 'Bạn chưa đăng nhập !!!',
+        if (jwtToken != null){
+            $http.get(urlAccount+`/getAccountActive`, token).then(function (respon){
+                $scope.accountActive = respon.data;
+                $rootScope.account = token;
+                console.log($scope.accountActive.username)
             })
-            console.log(err)
-            $window.location.href='#!login';
-        })
+        }
+        //     .catch(err => {
+        //     Swal.fire({
+        //         icon: 'error',
+        //         text: 'Bạn chưa đăng nhập !!!',
+        //     })
+        //     console.log(err)
+        //     $window.location.href='#!login';
+        // })
     }
 
     $scope.logoff = function () {
