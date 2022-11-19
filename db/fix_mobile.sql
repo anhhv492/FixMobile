@@ -38,24 +38,15 @@ CREATE TABLE images (
 
 -- SQLINES DEMO *** OR EVALUATION USE ONLY
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
-CREATE TABLE province (
-	id_province int NOT NULL auto_increment primary key,
-	name nvarchar(255) not null
-) ;
+
 
 -- SQLINES DEMO *** OR EVALUATION USE ONLY
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
-CREATE TABLE district (
-	id_district int NOT NULL auto_increment primary key,
-	name nvarchar(255) not null
-) ;
+
 
 -- SQLINES DEMO *** OR EVALUATION USE ONLY
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
-CREATE TABLE commune (
-	id_commune int NOT NULL auto_increment primary key,
-	name nvarchar(255) not null
-) ;
+
 
 -- SQLINES DEMO *** OR EVALUATION USE ONLY
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
@@ -77,7 +68,9 @@ CREATE TABLE accounts (
 	image nvarchar(255) not null,
 	status binary DEFAULT(0) not null,
 	id_role int not null,
-	foreign key(id_role) references roles(id_role)
+	address_id int NULL,
+	foreign key(id_role) references roles(id_role),
+	foreign key(address_id) references roles(id_address)
 ) ;
 -- SQLINES DEMO *** OR EVALUATION USE ONLY
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
@@ -86,14 +79,15 @@ CREATE TABLE address (
     address_detail nvarchar(255) not null,
     person_take nvarchar(50) not null,
     phone_take nvarchar(20) not null,
-	id_province int NOT NULL,
-	id_district int NOT NULL,
-	id_commune int NOT NULL,
+	id_province VARCHAR(40) NULL,
+	id_district VARCHAR(40) NULL,
+	id_ward int VARCHAR(40) NULL,
 	username nvarchar(50) not null,
-	foreign key(username) references accounts(username),
-	foreign key(id_province) references province(id_province),
-	foreign key(id_district) references district(id_district),
-	foreign key(id_commune) references commune(id_commune)
+	address_take VARCHAR(1000) NULL,
+	district VARCHAR(1000) NULL,
+	province VARCHAR(1000) NULL,
+	ward VARCHAR(1000) NULL,
+	foreign key(username) references accounts(username)
 ) ;
 
 -- SQLINES DEMO *** OR EVALUATION USE ONLY
