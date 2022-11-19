@@ -4,6 +4,8 @@ app.controller('ctrl_cate', function($scope, $http) {
     $scope.index=0;
     $scope.check_first=false;
     $scope.check_last=true;
+    $scope.check_next=true;
+    $scope.check_prev=true;
     $scope.totalPages=0;
     $scope.currentPage = 0;
     $scope.title={
@@ -26,6 +28,13 @@ app.controller('ctrl_cate', function($scope, $http) {
             $scope.category = response.data.categories
             $scope.totalPages = response.data.totalPages;
             $scope.currentPage = response.data.currentPage;
+            $scope.first();
+            $scope.check_prev = false;
+            $scope.check_first = false;
+            $scope.check_next = true;
+            $scope.check_last = true;
+            $scope.index=0;
+
         }).catch(error=>{
             console.log(error);
         });
@@ -34,6 +43,7 @@ app.controller('ctrl_cate', function($scope, $http) {
     $scope.next=function(){
         $scope.check_first=true;
         $scope.index++;
+        $scope.check_prev =true;
         if($scope.index>=$scope.totalPages){
             $scope.index=0;
             $scope.check_first=false;
@@ -42,6 +52,7 @@ app.controller('ctrl_cate', function($scope, $http) {
         if($scope.index==$scope.totalPages-1){
             $scope.check_first=true;
             $scope.check_last=false;
+            $scope.check_next = false;
         }
         $http.get(pathAPI+'/page/published?page='+$scope.index,token).then(res=>{
             $scope.category = res.data.categories;
@@ -54,6 +65,7 @@ app.controller('ctrl_cate', function($scope, $http) {
     $scope.prev=function(){
         $scope.check_last=true;
         $scope.index--;
+        $scope.check_next = true
         if($scope.index<0){
             $scope.index=$scope.totalPages-1;
             $scope.check_first=true;
@@ -62,6 +74,7 @@ app.controller('ctrl_cate', function($scope, $http) {
         if($scope.index==0){
             $scope.check_first=false;
             $scope.check_last=true;
+            $scope.check_prev = false;
         }
         $http.get(pathAPI+'/page/published?page='+$scope.index,token).then(res=>{
             $scope.category = res.data.categories;
@@ -73,6 +86,8 @@ app.controller('ctrl_cate', function($scope, $http) {
     $scope.first=function(){
         $scope.check_first=false;
         $scope.check_last=true;
+        $scope.check_prev = false;
+        $scope.check_next = true
         $scope.index=0;
         $http.get(pathAPI+'/page/published?page='+$scope.index,token).then(res=>{
             $scope.category = res.data.categories;
@@ -84,6 +99,8 @@ app.controller('ctrl_cate', function($scope, $http) {
     $scope.last=function(){
         $scope.check_first=true;
         $scope.check_last=false;
+        $scope.check_prev= true;
+        $scope.check_next=false;
         $scope.index=$scope.totalPages-1;
         $http.get(pathAPI+'/page/published?page='+$scope.index,token).then(res=>{
             $scope.category = res.data.categories;
@@ -141,7 +158,8 @@ app.controller('ctrl_cate', function($scope, $http) {
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
+            confirmButtonText: 'Xác nhận!!',
+            cancelButtonText: 'Hủy'
         }).then((result) => {
             if (result.isConfirmed) {
                 let timerInterval
@@ -232,7 +250,10 @@ app.controller('ctrl_cate', function($scope, $http) {
                 icon: 'success',
                 title:'Cập nhật thành công!' ,
             })
+
             $scope.refresh();
+            $scope.last();
+            $scope.getAll();
         }).catch(error=>{
             const Toast = Swal.mixin({
                 toast: true,
@@ -312,5 +333,7 @@ app.controller('ctrl_cate', function($scope, $http) {
         $scope.getAll();
     };
 
+
     $scope.getAll();
+    $scope.refresh();
 });

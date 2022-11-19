@@ -109,7 +109,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public List<AccountResponDTO> findAll() {
+    public List<Account> findAll() {
         List<Account> accountList = (List<Account>) repository.findAll();
         List<AccountResponDTO> accountResponDTOList = new ArrayList<>();
         AccountResponDTO accountResponDTO = new AccountResponDTO();
@@ -127,7 +127,7 @@ public class AccountServiceImpl implements AccountService {
             accountResponDTOList.add(accountResponDTO);
         }
 
-        return accountResponDTOList;
+        return (List<Account>) repository.findAll();
     }
 
     @Override

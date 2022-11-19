@@ -160,7 +160,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
     $rootScope.loadQtyCart();
 
     $scope.getAccount();
-    $scope.getAcountActive();
+    // $scope.getAcountActive();
 
 })
 
