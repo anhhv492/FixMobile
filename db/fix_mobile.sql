@@ -34,7 +34,7 @@ CREATE TABLE roles (
 CREATE TABLE accounts (
 	username nvarchar(50) PRIMARY KEY not null,
 	password nvarchar(100) not null,
-    full_name nvarchar(100) not null,
+    	full_name nvarchar(100) not null,
 	gender binary default(0) not null,
 	email nvarchar(100) not null,
 	phone nvarchar(20) not null,
@@ -43,8 +43,7 @@ CREATE TABLE accounts (
 	status binary DEFAULT(0) not null,
 	id_role int not null,
 	address_id int NULL,
-	foreign key(id_role) references roles(id_role),
-	foreign key(address_id) references address(id_address)
+	foreign key(id_role) references roles(id_role)
 ) ;
 CREATE TABLE address (
 	id_address int NOT NULL auto_increment primary key,
