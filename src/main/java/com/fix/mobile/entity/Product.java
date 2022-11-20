@@ -82,7 +82,6 @@ public class Product {
         this.files = files;
     }
 
-
     @OneToMany(mappedBy = "product")
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Image> images;

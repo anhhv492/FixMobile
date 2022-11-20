@@ -19,5 +19,7 @@ public interface ProductService extends GenericService<Product, Integer> {
 	List<Product> findByProductLimit();
 	List<Product> findByProductLitmitPrice();
 
+
+
 }
 
