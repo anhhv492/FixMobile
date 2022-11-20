@@ -88,16 +88,16 @@
                                 <div class="row">
                                     <div class="form-outline col-6">
                                         <label class="form-label" for="typeName">Người nhận</label>
-                                        <input type="text" id="typeName" class="form-control" placeholder="Name" />
+                                        <input value="{{addressAccount.personTake}}" type="text" id="typeName" class="form-control" placeholder="Name" disabled/>
                                     </div>
                                     <div class="form-outline col-6">
                                         <label class="form-label" for="typeExp">Số điện thoại</label>
-                                        <input type="text" id="typeExp" class="form-control" placeholder="SĐT" minlength="10" maxlength="15" />
+                                        <input  value="{{addressAccount.phoneTake}}" type="text" id="typeExp" class="form-control" placeholder="SĐT" minlength="10" maxlength="15" disabled/>
                                     </div>
                                     <div class="form-outline col-12 mt-2">
                                         <label class="form-label" for="typeText1">Địa chỉ</label>
-                                        <textarea class="form-control" ng-model="cart.address" name="address"
-                                                  id="typeText1" rows="4" placeholder="Address"></textarea>
+                                        <input  class="form-control" ng-model="cart.address" type="text"
+                                                  id="typeText1" value="{{addressAccount.addressDetail}}, {{addressAccount.addressTake}}" disabled/>
                                     </div>
                                     <div class="form-outline col-12 mt-2">
                                         <label class="form-label" for="typeText2">Ghi chú</label>
@@ -107,6 +107,7 @@
                                 </div>
                             </div>
                             <div class="col-lg-4 col-xl-3">
+                                <a class="btn btn-outline-primary" href="#!address">Chọn địa chỉ</a>
                                 <button class="btn btn-warning">Mã giảm giá</button>
                                 <div class="d-flex justify-content-between" style="font-weight: 500;">
                                     <p class="mb-2">Tổng đơn</p>
@@ -115,7 +116,7 @@
 
                                 <div class="d-flex justify-content-between" style="font-weight: 500;">
                                     <p class="mb-0">Giao hàng</p>
-                                    <p class="mb-0">{{totalShip()|number}}đ</p>
+                                    <p class="mb-0">{{ship|number}}đ</p>
                                 </div>
 
                                 <hr class="my-4">

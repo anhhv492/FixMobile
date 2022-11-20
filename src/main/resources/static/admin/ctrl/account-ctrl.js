@@ -10,6 +10,16 @@ app.controller("account-ctrl", function ($scope, $http) {
     $scope.totalPages = 0;
     $scope.b;
     $scope.hideUpdate=true;
+
+
+    const jwtToken = localStorage.getItem("jwtToken")
+    const token = {
+        headers: {
+            Authorization: `Bearer `+jwtToken
+        }
+    }
+
+
     const Toast = Swal.mixin({
         toast: true,
         position: 'top-end',
@@ -21,6 +31,7 @@ app.controller("account-ctrl", function ($scope, $http) {
             toast.addEventListener('mouseleave', Swal.resumeTimer)
         }
     })
+
     $scope.a;
     //xóa form
     $scope.reset = function () {
@@ -50,14 +61,16 @@ app.controller("account-ctrl", function ($scope, $http) {
 
         //load accounts
 
-        $http.get("/rest/admin/accounts/page/0").then(resp => {
+        $http.get("/rest/admin/accounts/page",token).then(resp => {
             $scope.accounts = resp.data;
             $scope.reset();
 
         }).catch(error => {
             console.log(error);
-        });
-        $http.get("/rest/admin/accounts/roles").then(resp => {
+
+        });;
+        $http.get("/rest/admin/accounts/roles",token).then(resp => {
+
             $scope.roles = resp.data;
         }).catch(error => {
             console.log(error);
@@ -67,7 +80,7 @@ app.controller("account-ctrl", function ($scope, $http) {
 
     }
     $scope.getTotalPages = function () {
-        $http.get("/rest/admin/accounts").then(function (response) {
+        $http.get("/rest/admin/accounts/getAll",token).then(function (response) {
             $scope.totalPages = Math.ceil(response.data.length / 10);
         }).catch(error => {
             console.log(error);
@@ -90,7 +103,7 @@ app.controller("account-ctrl", function ($scope, $http) {
     //Check trùng
     $scope.check = function () {
 
-        $http.get("/rest/admin/accounts").then(resp => {
+        $http.get("/rest/admin/accounts/getAll",token).then(resp => {
             var a = 1;
             console.log("Bắt đầu kiểm tra check trùng")
             $scope.accounts = resp.data;
@@ -129,7 +142,7 @@ console.log("Kết thúc check trùng")
     //thêm sản phẩm mới
     $scope.create = function () {
         console.log($scope.b)
-        $http.get("/rest/admin/accounts").then(resp => {
+        $http.get("/rest/admin/accounts/getAll",token).then(resp => {
             var a = 1;
             console.log("Bắt đầu kiểm tra check trùng")
             $scope.accounts = resp.data;
@@ -152,9 +165,10 @@ console.log("Kết thúc check trùng")
             })
             if (a == 1) {
                 console.log("Bắt đầu thêm mới")
-                 var account = angular.copy($scope.form);
-                // $scope.form();
-                $http.post('/rest/admin/accounts', account).then(resp => {
+
+                var account = angular.copy($scope.form);
+                $http.post('/rest/admin/accounts/create', account,token).then(resp => {
+
                     resp.data.createDate = new Date(resp.data.createDate)
                     $scope.accounts.push(resp.data);
                     Toast.fire({
@@ -212,7 +226,7 @@ console.log("Kết thúc check trùng")
     $scope.update = function () {
         var account = angular.copy($scope.form);
         console.log(account.username)
-        $http.put(`/rest/admin/accounts/${account.username}`, account).then(resp => {
+        $http.put(`/rest/admin/accounts/${account.username}`, account,token).then(resp => {
             var index = $scope.accounts.findIndex(a => a.username == account.username);
             $scope.accounts[index] = account;
             Toast.fire({
@@ -236,7 +250,7 @@ console.log("Kết thúc check trùng")
     //xóa account
     $scope.delete = function (account) {
 
-        $http.delete(`/rest/admin/accounts/${account.username}`).then(resp => {
+        $http.delete(`/rest/admin/accounts/${account.username}`,token).then(resp => {
             var index = $scope.accounts.findIndex(p => p.username == account.username);
             $scope.accounts.splice(index, 1);
             Toast.fire({
@@ -260,7 +274,7 @@ console.log("Kết thúc check trùng")
     }
     $scope.fileNames = [];
     $scope.listFile = function () {
-        $http.get(urlImage).then(res => {
+        $http.get(urlImage,token).then(res => {
             $scope.fileNames = res.data;
             console.log('ok', res);
         }).catch(err => {
@@ -271,7 +285,7 @@ console.log("Kết thúc check trùng")
     $scope.uploadFile = function (files) {
         var form = new FormData();
         form.append('file', files[0]);
-        $http.post(urlImage, form, {
+        $http.post(urlImage, form,token, {
             transformRequest: angular.identity,
             headers: { 'Content-Type': undefined }
         }).then(res => {
@@ -295,7 +309,7 @@ console.log("Kết thúc check trùng")
             $scope.check_first = true;
             $scope.check_last = false;
         }
-        $http.get(pathAPI + `/page/` + $scope.index).then(res => {
+        $http.get(pathAPI + `/page?page=` + $scope.index,token).then(res => {
             $scope.accounts = res.data;
             console.log('Load accounts success', res.data)
         }).catch(err => {
@@ -314,7 +328,7 @@ console.log("Kết thúc check trùng")
             $scope.check_first = false;
             $scope.check_last = true;
         }
-        $http.get(pathAPI + `/page/` + $scope.index).then(res => {
+        $http.get(pathAPI + `/page?page=` + $scope.index,token).then(res => {
             $scope.accounts = res.data;
             console.log('Load accounts success', res.data)
         }).catch(err => {
@@ -325,7 +339,7 @@ console.log("Kết thúc check trùng")
         $scope.check_first = false;
         $scope.check_last = true;
         $scope.index = 0;
-        $http.get(pathAPI + `/page/` + $scope.index).then(res => {
+        $http.get(pathAPI + `/page?page=` + $scope.index,token).then(res => {
             $scope.accounts = res.data;
             console.log('Load accounts success', res.data)
         }).catch(err => {
@@ -336,7 +350,7 @@ console.log("Kết thúc check trùng")
         $scope.check_first = true;
         $scope.check_last = false;
         $scope.index = $scope.totalPages - 1;
-        $http.get(pathAPI + `/page/` + $scope.index).then(res => {
+        $http.get(pathAPI + `/page?page=` + $scope.index,token).then(res => {
             $scope.accounts = res.data;
             console.log('Load accounts success', res.data)
         }).catch(err => {
@@ -344,7 +358,7 @@ console.log("Kết thúc check trùng")
         })
     }
     $scope.getPageAccounts = function () {
-        $http.get(pathAPI + `/page/` + $scope.index).then(res => {
+        $http.get(pathAPI + `/page?page=` + $scope.index,token).then(res => {
             $scope.accounts = res.data;
             console.log('Load accounts success', res.data)
         }).catch(err => {

@@ -30,9 +30,12 @@ app.config(function($routeProvider){
         .when("/product",{
             templateUrl:"product/product.html",
             controller: "home-ctrl",
-            controller: "product"
-	      })
+            controller: "product",
+            controller: "view_product_ctrl"
+
+        })
         .when("/login",{
+
             templateUrl:"/views/login/form.html",
             controller: "login-ctrl" 
         })
@@ -40,20 +43,28 @@ app.config(function($routeProvider){
             templateUrl:"/views/register/form.html",
             controller: "register-ctrl" 
         })
-
+        .when("/profile", {
+            templateUrl:"profile/profile.html",
+            controller:"profile-ctl"
+        })
+        .when("/address", {
+            templateUrl:"address/addressTable.html",
+            controller:"address-form-ctrl"
+        })
         .when("/contact",{
             templateUrl:"/views/shop/contact.html",
             // controller: "register-ctrl"
         })
-
         .when("/changePassword",{
             templateUrl:"/views/changePassword/form.html",
             controller: "changePassword-ctrl"
         })
+        .when("/productDetail",{
+            templateUrl:"accessory/view_detail.html",
+            controller: "home-ctrl",
 
+        })
 
 
 });
-
-
 

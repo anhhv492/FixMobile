@@ -96,10 +96,17 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="product in products">
-                    <th scope="row"><input type="checkbox" ng-checked="checkSelect(product.idProduct)" ng-click="checkSelected(product.idProduct)"></th>
-                    <td>{{product.idProduct}}</td>
-                    <td>{{product.name}}</td>
+                <tr ng-repeat="dta in dataTable">
+                    <th scope="row"><input type="checkbox" ng-checked="checkSelect(dta.idAccessory)" ng-click="checkSelected(dta.idAccessory)"></th>
+                    <td>
+                        <p ng-if="dta.idAccessory">{{dta.idAccessory}}</p>
+                        <p ng-if="dta.username">{{dta.username}}</p>
+                        <p ng-if="dta.idProduct">{{dta.idProduct}}</p>
+                    </td>
+                    <td>
+                        <p ng-if="dta.name">{{dta.name}}</p>
+                        <p ng-if="dta.fullName">{{dta.fullName}}</p>
+                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -142,6 +149,7 @@
         <!-- end table all -->
 
         <button type="submit" ng-click="createSale()">Tạo</button>
-
+    <a href="#!showsale">xem</a>
 </main>
+
 

@@ -1,5 +1,13 @@
 const app = angular.module('app-buy', ['ngRoute']);
 app.controller('buy-success-ctrl',function($scope,$window,$timeout){
+
+    const jwtToken = localStorage.getItem("jwtToken")
+    const token = {
+        headers: {
+            Authorization: `Bearer `+jwtToken
+        }
+    }
+
     $scope.show=function () {
         let timerInterval
         Swal.fire({
@@ -38,7 +46,7 @@ app.controller('buy-success-ctrl',function($scope,$window,$timeout){
         })
 
         $timeout(function () {
-            $window.location.href = 'http://localhost:8080/views/index.html#!/home/index';
+            $window.location.href = 'http://localhost:8080/views/index.html#!/home/index',token;
         }, 5500);
     }
     $scope.show()

@@ -7,7 +7,8 @@ app.config(function($routeProvider){
         })
         .when("/dashboard",{
             templateUrl:"/admin/dashboard/dashboard.html",
-            controller: "dashboard"
+            controller: "dashboard",
+            controller: "report-ctrl",
           })
         .when("/category",{
           templateUrl:"/admin/categories/category.html",
@@ -47,6 +48,9 @@ app.config(function($routeProvider){
             controller: "restaccsesries"
         })
         .when("/sale",{
+            templateUrl:"/admin/sale/sale.html",
+            controller: "sale_ctrl"
+        }).when("/showsale",{
             templateUrl:"/admin/sale/showsale.html",
             controller: "sale_ctrl"
         })

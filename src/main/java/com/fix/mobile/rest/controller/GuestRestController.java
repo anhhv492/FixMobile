@@ -137,4 +137,10 @@ public class GuestRestController {
         logger.info("-- OrderDetail success: "+principal.getName());
         return carts;
     }
+    @GetMapping(value ="/findByProductCode/{productCode}")
+    public Optional<Product> findByProductCode(@PathVariable("productCode") Integer productCode) {
+        Optional<Product> product = productService.findById(productCode);
+
+        return Optional.of(product.get());
+    }
 }
