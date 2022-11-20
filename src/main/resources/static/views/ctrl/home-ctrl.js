@@ -2,6 +2,7 @@
     var urlCategory=`http://localhost:8080/rest/guest/category`;
     var urlAccessory=`http://localhost:8080/rest/guest/accessory`;
     var urlProduct=`http://localhost:8080/rest/guest/product`;
+    var urlOneProduct = `http://localhost:8080/rest/guest`;
     $scope.cateAccessories=[];
     $scope.cateProducts=[];
     $scope.item= {};
@@ -126,4 +127,14 @@
     $rootScope.loadLocalStorage();
     $rootScope.loadQtyCart();
     $scope.getAccount();
+
+     $rootScope.productCode = {};
+     $scope.getOneProduct = function (productCode){
+         $http.get(`${urlOneProduct}/findByProductCode/${productCode.idProduct}`).then(res=>{
+             $rootScope.productCode = res.data;
+             console.log(productCode);
+         }).catch(err=>{
+             console.log("error",err);
+         })
+     }
 })

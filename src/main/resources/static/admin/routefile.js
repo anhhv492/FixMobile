@@ -7,7 +7,8 @@ app.config(function($routeProvider){
         })
         .when("/dashboard",{
             templateUrl:"/admin/dashboard/dashboard.html",
-            controller: "dashboard"
+            controller: "dashboard",
+            controller: "report-ctrl",
           })
         .when("/category",{
           templateUrl:"/admin/categories/category.html",

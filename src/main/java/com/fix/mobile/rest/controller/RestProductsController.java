@@ -206,12 +206,6 @@ public class RestProductsController {
 		return productService.findByProductLitmitPrice();
 	}
 
-	@GetMapping(value ="/findByProductCode")
-	public Optional<Product> findByProductCode(Integer productCode) {
-		Optional<Product> product = null;
-		if (productCode == null) ;
-			product = productService.findById(productCode);
-		return product;
-	}
+
 
 }

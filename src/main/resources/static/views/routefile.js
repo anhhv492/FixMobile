@@ -30,8 +30,10 @@ app.config(function($routeProvider){
         .when("/product",{
             templateUrl:"product/product.html",
             controller: "home-ctrl",
-            controller: "product"
-	      })
+            controller: "product",
+            controller: "view_product_ctrl"
+
+        })
         .when("/login",{
             templateUrl:"/views/login/form.html",
             controller: "login-ctrl" 
@@ -50,7 +52,11 @@ app.config(function($routeProvider){
             templateUrl:"/views/changePassword/form.html",
             controller: "changePassword-ctrl"
         })
+        .when("/productDetail",{
+            templateUrl:"accessory/view_detail.html",
+            controller: "home-ctrl",
 
+        })
 
 
 });
