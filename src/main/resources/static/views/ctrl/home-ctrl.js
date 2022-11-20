@@ -2,7 +2,8 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
     var urlCategory=`http://localhost:8080/rest/guest/category`;
     var urlAccessory=`http://localhost:8080/rest/guest/accessory`;
     var urlProduct=`http://localhost:8080/rest/guest/product`;
-     var urlAccount = `http://localhost:8080/rest/admin/accounts`;
+    var urlOneProduct = `http://localhost:8080/rest/guest`;
+    var urlAccount = `http://localhost:8080/rest/admin/accounts`;
 
      const jwtToken = localStorage.getItem("jwtToken")
      const token = {
@@ -160,6 +161,16 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
     $rootScope.loadQtyCart();
 
     $scope.getAccount();
+
+     $rootScope.productCode = {};
+     $scope.getOneProduct = function (productCode){
+         $http.get(`${urlOneProduct}/findByProductCode/${productCode.idProduct}`).then(res=>{
+             $rootScope.productCode = res.data;
+             console.log(productCode);
+         }).catch(err=>{
+             console.log("error",err);
+         })
+     }
     $scope.getAcountActive();
 
 })
