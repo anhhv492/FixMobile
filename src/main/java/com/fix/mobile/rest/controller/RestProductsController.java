@@ -156,12 +156,6 @@ public class RestProductsController {
 		return productService.update(product,id);
 	}
 
-@GetMapping(value="/page/{page}")
-	public Page<Product> findAllPage(@PathVariable("page") Integer page){
-		Page<Product> pageProduct = productService
-				.getByPage(page, 5,0);
-		return pageProduct;
-   }
    
 	@PostMapping("/readExcel")
 	public Boolean readExcel(@PathParam("file") MultipartFile file) throws Exception{
@@ -206,6 +200,23 @@ public class RestProductsController {
 		return productService.findByProductLitmitPrice();
 	}
 
+	@RequestMapping("/getdatasale/{page}")
+	public Page<Product> getDataShowSale(
+			@PathVariable ("page") Integer page,
+			@RequestParam ("share") String share
+	){
+		if(null == share||"undefined".equals(share)){
+			share="";
+		}
+		return productService.findShowSale(page,5,share);
+	}
 
+	@GetMapping(value ="/findByProductCode")
+	public Optional<Product> findByProductCode(Integer productCode) {
+		Optional<Product> product = null;
+		if (productCode == null) ;
+			product = productService.findById(productCode);
+		return product;
+	}
 
 }

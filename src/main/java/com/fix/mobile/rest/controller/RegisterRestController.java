@@ -54,10 +54,10 @@ public class RegisterRestController {
     @Autowired
     ServletContext application;
 
-    @GetMapping
-    public List<Account> findAll() {
-        return accountService.findAll();
-    }
+//    @GetMapping
+//    public List<Account> findAll() {
+//        return accountService.findAll();
+//    }
 
 
     @GetMapping("/roles")
@@ -71,12 +71,12 @@ public class RegisterRestController {
         return accountService.save(account);
     }
 
-    @PutMapping("/{username}")
-    public Account update(@PathVariable("username") String username, @RequestBody Account account){
-        String hashedPassword = HashUtil.hash(account.getPassword());
-        account.setPassword(hashedPassword);
-        return accountService.update(account, username);
-    }
+//    @PutMapping("/{username}")
+//    public Account update(@PathVariable("username") String username, @RequestBody Account account){
+//        String hashedPassword = HashUtil.hash(account.getPassword());
+//        account.setPassword(hashedPassword);
+//        return accountService.update(account, username);
+//    }
 
 
 

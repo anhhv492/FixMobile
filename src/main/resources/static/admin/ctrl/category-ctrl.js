@@ -12,10 +12,17 @@ app.controller('ctrl_cate', function($scope, $http) {
     };
     $scope.checkSubmit=false;
 
+    const jwtToken = localStorage.getItem("jwtToken")
+    const token = {
+        headers: {
+            Authorization: `Bearer `+jwtToken
+        }
+    }
+
     const pathAPI = "http://localhost:8080/rest/staff/category";
 
     $scope.getAll =function (){
-        $http.get(pathAPI+'/page/published?page=0').then(function(response) {
+        $http.get(pathAPI+'/page/published?page=0',token).then(function(response) {
             $scope.category = response.data.categories
             $scope.totalPages = response.data.totalPages;
             $scope.currentPage = response.data.currentPage;
@@ -36,7 +43,7 @@ app.controller('ctrl_cate', function($scope, $http) {
             $scope.check_first=true;
             $scope.check_last=false;
         }
-        $http.get(pathAPI+'/page/published?page='+$scope.index).then(res=>{
+        $http.get(pathAPI+'/page/published?page='+$scope.index,token).then(res=>{
             $scope.category = res.data.categories;
             console.log('Load accessories success',res.data)
         }).catch(err=>{
@@ -56,7 +63,7 @@ app.controller('ctrl_cate', function($scope, $http) {
             $scope.check_first=false;
             $scope.check_last=true;
         }
-        $http.get(pathAPI+'/page/published?page='+$scope.index).then(res=>{
+        $http.get(pathAPI+'/page/published?page='+$scope.index,token).then(res=>{
             $scope.category = res.data.categories;
             console.log('Load accessories success',res.data)
         }).catch(err=>{
@@ -67,7 +74,7 @@ app.controller('ctrl_cate', function($scope, $http) {
         $scope.check_first=false;
         $scope.check_last=true;
         $scope.index=0;
-        $http.get(pathAPI+'/page/published?page='+$scope.index).then(res=>{
+        $http.get(pathAPI+'/page/published?page='+$scope.index,token).then(res=>{
             $scope.category = res.data.categories;
             console.log('Load accessories success',res.data)
         }).catch(err=>{
@@ -78,7 +85,7 @@ app.controller('ctrl_cate', function($scope, $http) {
         $scope.check_first=true;
         $scope.check_last=false;
         $scope.index=$scope.totalPages-1;
-        $http.get(pathAPI+'/page/published?page='+$scope.index).then(res=>{
+        $http.get(pathAPI+'/page/published?page='+$scope.index,token).then(res=>{
             $scope.category = res.data.categories;
             console.log('Load accessories success',res.data)
         }).catch(err=>{
@@ -88,7 +95,7 @@ app.controller('ctrl_cate', function($scope, $http) {
 
     $scope.onSave = function() {
 
-        $http.post(pathAPI+"/create", $scope.form).then(response => {
+        $http.post(pathAPI+"/create", $scope.form,token).then(response => {
             const Toast = Swal.mixin({
                 toast: true,
                 position: 'top-end',
@@ -156,7 +163,7 @@ app.controller('ctrl_cate', function($scope, $http) {
                 }).then((result) => {
                     /* Read more about handling dismissals below */
                     if (result.dismiss === Swal.DismissReason.timer) {
-                        $http.delete(`${pathAPI}/delete/${category.idCategory}`).then(response=> {
+                        $http.delete(`${pathAPI}/delete/${category.idCategory}`,token).then(response=> {
                             const Toast = Swal.mixin({
                                 toast: true,
                                 position: 'top-end',
@@ -208,7 +215,7 @@ app.controller('ctrl_cate', function($scope, $http) {
     };
 
     $scope.onUpdate = function() {
-        $http.put(pathAPI+'/update/'+$scope.form.idCategory, $scope.form).then(response=> {
+        $http.put(pathAPI+'/update/'+$scope.form.idCategory, $scope.form,token).then(response=> {
             const Toast = Swal.mixin({
                 toast: true,
                 position: 'top-end',

@@ -1,25 +1,57 @@
- app.controller('home-ctrl',function($rootScope,$scope,$http){
+app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
     var urlCategory=`http://localhost:8080/rest/guest/category`;
     var urlAccessory=`http://localhost:8080/rest/guest/accessory`;
     var urlProduct=`http://localhost:8080/rest/guest/product`;
     var urlOneProduct = `http://localhost:8080/rest/guest`;
+    var urlAccount = `http://localhost:8080/rest/admin/accounts`;
+
+     const jwtToken = localStorage.getItem("jwtToken")
+     const token = {
+             headers: {
+                 Authorization: `Bearer `+jwtToken
+             }
+         }
+
     $scope.cateAccessories=[];
     $scope.cateProducts=[];
     $scope.item= {};
     $rootScope.carts=[];
     $rootScope.qtyCart=0;
+
+
     $rootScope.account=null;
     $scope.getAccount=function (){
-        $http.get("http://localhost:8080/rest/account").then(resp=>{
+        $http.get("http://localhost:8080/rest/account", token).then(resp=>{
             $rootScope.account=resp.data;
-            console.log("resp account",resp.data);
+            console.log(resp.data);
         }).catch(error=>{
             $rootScope.account=null;
             console.log("Error",error);
         });
+        }
+
+
+
+    $scope.getAcountActive = function () {
+        $http.get(urlAccount+`/getAccountActive`, token).then(function (respon){
+            $scope.accountActive = respon.data;
+            $rootScope.account = token;
+            console.log($scope.accountActive.username)
+        }).catch(err => {
+            Swal.fire({
+                icon: 'error',
+                text: 'Bạn chưa đăng nhập !!!',
+            })
+            console.log(err)
+            $window.location.href='#!login';
+        })
+    }
+
+    $scope.logoff = function () {
+        $rootScope.account = null;
     }
     $scope.getCategories = function(){
-        $http.get(`${urlCategory}/getAll`).then(res=>{
+        $http.get(`${urlCategory}/getAll`, token).then(res=>{
             res.data.forEach(cate=>{
                 if(cate.type){
                     $scope.cateAccessories.push(cate);
@@ -37,7 +69,7 @@
 
     $scope.getDetail=function(item){
         if(item.type){
-            $http.get(`${urlAccessory}/cate-access/${item.idCategory}`).then(res=>{
+            $http.get(`${urlAccessory}/cate-access/${item.idCategory}`, token).then(res=>{
                 $rootScope.detailAccessories=res.data;
                 console.log("detailAccessories",$rootScope.detailAccessories)
             }).catch(err=>{
@@ -45,7 +77,7 @@
                 console.log("error",err)
             })
         }else{
-            $http.get(`${urlProduct}/cate-product/${item.idCategory}`).then(res=>{
+            $http.get(`${urlProduct}/cate-product/${item.idCategory}`, token).then(res=>{
                 $rootScope.detailAccessories=res.data;
                 console.log("detailProducts",$rootScope.detailAccessories)
             }).catch(err=>{
@@ -61,7 +93,7 @@
             it=>it.idAccessory===accessory.idAccessory
         );
         if(accessory.category.type){
-            $http.get(`${urlAccessory}/${accessory.idAccessory}`).then(res=>{
+            $http.get(`${urlAccessory}/${accessory.idAccessory}`,token).then(res=>{
                 console.log("cartAccessory",res)
                 let data= res.data;
                 if(!$scope.item){
@@ -102,7 +134,7 @@
 
         for (let i = 0; i < $rootScope.carts.length; i++) {
             $rootScope.carts.find(item=>{
-                $http.get("http://localhost:8080/cart-accessory/"+item.idAccessory).then(res=>{
+                $http.get("http://localhost:8080/cart-accessory/"+item.idAccessory, token).then(res=>{
                     $rootScope.carts[i].price=res.data.price;
                     console.log("price",item.price)
                 }).catch(err=>{
@@ -124,8 +156,10 @@
     $scope.overPro=false;
     $scope.overAccess=false;
     $scope.getCategories();
+
     $rootScope.loadLocalStorage();
     $rootScope.loadQtyCart();
+
     $scope.getAccount();
 
      $rootScope.productCode = {};
@@ -137,4 +171,7 @@
              console.log("error",err);
          })
      }
+    $scope.getAcountActive();
+
 })
+
