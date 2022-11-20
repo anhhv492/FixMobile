@@ -354,4 +354,6 @@ INSERT INTO fix_mobile.accounts(username,password,full_name,gender,email,
 				status,phone,create_date,image,id_role) 
 VALUES ('vietanhvs','$2a$12$FUNIidYXB/rc3BRR1XuQZObS4Vn7BPPomqllVvwcBOkJtZJWKFM16','Hạ Việt Anh',0,'vietanhvs@gmail.com',
 	1,'0984297473','2022/10/30','',1);
+	
+CREATE OR REPLACE view customerorders as select o.id_order AS 'id_order',count(d.id_detail) AS 'totalquantity',count(o.id_order) AS 'totalorder',`a`.`full_name` AS 'full_name', a.create_date AS 'create_date',sum(o.total) AS 'totalmoney' from ((((`japanshop`.`accounts` `a` left join `japanshop`.`orders` `o` on(`a`.`username` = `o`.`username`)) left join `japanshop`.`order_detail` `d` on(`d`.`id_order` = `o`.`id_order`)) left join `japanshop`.`products` `p` on(`p`.`id_product` = `d`.`id_product`)) left join `japanshop`.`imei` `i` on(`i`.`id_product` = `p`.`id_product`)) group by `o`.`id_order`,`a`.`username`,`p`.`id_product`;
 
