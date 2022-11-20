@@ -44,7 +44,7 @@ CREATE TABLE accounts (
 	id_role int not null,
 	address_id int NULL,
 	foreign key(id_role) references roles(id_role),
-	foreign key(address_id) references roles(id_address)
+	foreign key(address_id) references address(id_address)
 ) ;
 CREATE TABLE address (
 	id_address int NOT NULL auto_increment primary key,
