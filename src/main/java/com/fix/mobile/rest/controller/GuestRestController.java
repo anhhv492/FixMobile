@@ -28,11 +28,11 @@ public class GuestRestController {
     @Autowired
     private AccountService accountService;
     @Autowired
-    Order order = null;
-    @Autowired
     private ImayProductService imayProductService;
     @Autowired
     private OrderDetailService orderDetailService;
+    
+    Order order = null;
     @GetMapping("/category/getAll")
     public List<Category> getAll(){
         return categoryService.findAll();
