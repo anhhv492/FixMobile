@@ -45,31 +45,62 @@
             })
         }else{
             $http.get(`${urlProduct}/cate-product/${item.idCategory}`).then(res=>{
-                $rootScope.detailAccessories=res.data;
-                console.log("detailProducts",$rootScope.detailAccessories)
+                $rootScope.detailProducts=res.data;
+                console.log("detailProducts",$rootScope.detailProducts)
             }).catch(err=>{
-                $rootScope.detailAccessories=null;
+                $rootScope.detailProducts=null;
                 console.log("error",err)
             })
         }
     }
-    $scope.addCart=function(accessory){
+    $scope.addCart=function(item){
         $rootScope.qtyCart++;
         console.log("qty",$scope.qtyCart);
-        $scope.item = $rootScope.carts.find(
-            it=>it.idAccessory===accessory.idAccessory
+        $scope.accessoryItem = $rootScope.carts.find(
+            it=>it.idAccessory===item.idAccessory
         );
-        if(accessory.category.type){
-            $http.get(`${urlAccessory}/${accessory.idAccessory}`).then(res=>{
-                console.log("cartAccessory",res)
+        $scope.productItem = $rootScope.carts.find(
+            it=>it.idProduct===item.idProduct
+        );
+        if(item.category.type){
+            $http.get(`${urlAccessory}/${item.idAccessory}`).then(res=>{
                 let data= res.data;
-                if(!$scope.item){
+                if(!$scope.accessoryItem){
                     data.qty=1;
                     $rootScope.carts.push(data);
-                    console.log("addCart1",data)
                 }else{
-                    $scope.item.qty++;
-                    console.log("addCart2",$scope.item)
+                    $scope.accessoryItem.qty++;
+                    console.log("addCart2",$scope.accessoryItem)
+                }
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 1500,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                })
+
+                Toast.fire({
+                    icon: 'success',
+                    title: 'Thêm thành công!'
+                })
+                $rootScope.saveLocalStorage();
+            }).catch(err=>{
+                console.log("error",err)
+            })
+        }else{
+            $http.get(`${urlProduct}/${item.idProduct}`).then(res=>{
+                let data= res.data;
+                if(!$scope.productItem){
+                    data.qty=1;
+                    $rootScope.carts.push(data);
+                }else{
+                    $scope.productItem.qty++;
+                    console.log("addCart2",$scope.productItem)
                 }
                 const Toast = Swal.mixin({
                     toast: true,
