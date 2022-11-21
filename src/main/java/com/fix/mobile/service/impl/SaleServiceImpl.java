@@ -43,7 +43,8 @@ public class SaleServiceImpl implements SaleService {
 
     @Override
     public Sale update(Sale sale) {
-        return null;
+        System.out.println(sale.toString());
+        return dao.save(sale);
     }
 
     @Override
@@ -54,6 +55,11 @@ public class SaleServiceImpl implements SaleService {
     @Override
     public List<Sale> getall(Integer status) {
         return null;
+    }
+
+    @Override
+    public Sale findByid(Integer id) {
+        return dao.findByIdSale(id);
     }
 
     public void validate_Date(Sale sale) {

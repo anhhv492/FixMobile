@@ -17,10 +17,13 @@ public class SaleDetail {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idDetail;
 
+    @Column(name = "id_product")
     private Integer idProduct;
 
-    private Integer idUser;
+    @Column(name = "username")
+    private String userName;
 
+    @Column(name = "id_accessory")
     private Integer idAccessory;
 
     @ManyToOne

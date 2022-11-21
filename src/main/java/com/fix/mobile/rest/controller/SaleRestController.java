@@ -23,18 +23,29 @@ public class SaleRestController {
     @Autowired
     SaleDetailService saleDetailSV;
 
-    @RequestMapping("/demo")
+    @RequestMapping("/add")
     public Sale addSale(@RequestBody Sale sale){
-
-        System.out.println("truoc");
         return saleSV.add(sale);
     }
+    @RequestMapping("/update")
+    public Sale updateSale(@RequestBody Sale sale){
+        System.out.println(sale.toString());
+        return saleSV.update(sale);
+    }
 
-    @RequestMapping("/demo3")
-    public void addDetailSale1(@RequestBody ArrayList<Integer> listID){
-        System.out.println("sạu");
+    @RequestMapping("/adddetail/{idx}")
+    public void addDetailSale1(@PathVariable(name="idx") Integer idx,
+                               @RequestBody ArrayList<String> listID){
         for (int i=0;i<listID.size();i++){
-            saleDetailSV.createSaleDetail(listID.get(i));
+            saleDetailSV.createSaleDetail(listID.get(i),idx);
+        }
+    }
+
+    @RequestMapping("/updatedetail/{idx}")
+    public void updatedetail(@PathVariable(name="idx") Integer idx,
+                               @RequestBody ArrayList<String> listID){
+        for (int i=0;i<listID.size();i++){
+            saleDetailSV.createSaleDetail(listID.get(i),idx);
         }
     }
     @RequestMapping("/getall/{page}")
@@ -44,6 +55,15 @@ public class SaleRestController {
                              @RequestParam ("type") String type
                              ){
         return saleSV.getByPage(page,5,stt,null,null);
+    }
+    @RequestMapping("/getsale/{id}")
+    public Sale finByid(@PathVariable("id") Integer id){
+        return saleSV.findByid(id);
+    }
+    @RequestMapping("/getsaledetail/{id}")
+    public List<SaleDetail> finByidsaledetail(@PathVariable("id") Integer id){
+        Sale sale = saleSV.findByid(id);
+        return saleDetailSV.findByid(sale);
     }
 
 //    @RequestMapping("demotb")
