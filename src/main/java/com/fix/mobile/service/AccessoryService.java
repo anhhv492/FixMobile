@@ -12,4 +12,5 @@ public interface AccessoryService extends GenericService<Accessory, Integer> {
     List<Accessory> findByCategoryAndStatus(Optional<Category> cate);
 
     Page<Accessory> getByPage(int pageNumber, int maxRecord, String share);
+
 }

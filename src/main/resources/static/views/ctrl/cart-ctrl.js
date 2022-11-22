@@ -1,5 +1,7 @@
 app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window) {
     var urlOrder = `http://localhost:8080/rest/guest/order`;
+    var urlImei = `http://localhost:8080/rest/guest/imei`;
+    var urlAccessory = `http://localhost:8080/rest/guest/accessory`;
     var urlOrderDetail = `http://localhost:8080/rest/guest/order-detail`;
     var urlAccounts = `http://localhost:8080/rest/admin/accounts`;
     var urlShippingOder = `http://localhost:8080/rest/user/address/getShipping-order`;
@@ -29,7 +31,12 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window) {
             .reduce((total, qty) => total += qty, 0);
     }
     $scope.remove = function (item) {
-        const index = $rootScope.carts.findIndex(it => it.idAccessory === item.idAccessory)
+        if(item.idAccessory>-1) {
+            var index = $rootScope.carts.findIndex(it => it.idAccessory === item.idAccessory)
+        }else if(item.idProduct>-1){
+            var index = $rootScope.carts.findIndex(it => it.idProduct === item.idProduct)
+        }
+
         Swal.fire({
             title: 'Xóa: ' + item.name + ' khỏi giỏ hàng?',
             text: "Sau khi xóa không thể khôi phục lại!",
@@ -66,32 +73,11 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window) {
         })
     }
     $scope.update = function (item) {
-        const index = $rootScope.carts.findIndex(it => it.idAccessory === item.idAccessory)
-        $rootScope.carts[index].qty = item.qty;
-        $scope.getShippingOder();
-        if ($rootScope.carts[index].qty <= 0) {
-            let timerInterval
-            Swal.fire({
-                title: 'Đang xóa vui lòng chờ!',
-                html: 'Cửa sổ sẽ tự đóng sau: <b></b> milliseconds.',
-                timer: 1000,
-                timerProgressBar: true,
-                didOpen: () => {
-                    Swal.showLoading()
-                    const b = Swal.getHtmlContainer().querySelector('b')
-                    timerInterval = setInterval(() => {
-                        b.textContent = Swal.getTimerLeft()
-                    }, 100)
-                },
-                willClose: () => {
-                    clearInterval(timerInterval)
-                }
-            }).then((result) => {
-                /* Read more about handling dismissals below */
-                if (result.dismiss === Swal.DismissReason.timer) {
-                    $rootScope.carts.splice(index, 1);
-                    $rootScope.saveLocalStorage();
-                    $rootScope.loadLocalStorage();
+        let index = null;
+        if(item.idAccessory>-1) {
+            index = $rootScope.carts.findIndex(it => it.idAccessory === item.idAccessory)
+            $http.get(`${urlAccessory}/amount/${item.idAccessory}`).then(res=>{
+                if(item.qty>res.data) {
                     const Toast = Swal.mixin({
                         toast: true,
                         position: 'top-end',
@@ -103,59 +89,27 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window) {
                             toast.addEventListener('mouseleave', Swal.resumeTimer)
                         }
                     })
-
                     Toast.fire({
-                        icon: 'success',
-                        title: 'Xóa thành công!'
+                        icon: 'error',
+                        title: 'Số lượng sản phẩm không đủ!'
                     })
-                    $rootScope.carts.splice(index, 1);
-                    $window.location.href = '#!cart';
-                    console.log('I was closed by the timer')
-                }
-            })
-        }
-        $rootScope.saveLocalStorage();
-        $rootScope.loadLocalStorage();
-        $rootScope.qtyCart++;
-        console.log('add', item.qty)
-    }
-    $scope.raise = function (item) {
-        const index = $rootScope.carts.findIndex(it => it.idAccessory === item.idAccessory)
-        $rootScope.carts[index].qty++;
-        $rootScope.saveLocalStorage();
-        $rootScope.loadLocalStorage();
-        $scope.getShippingOder();
-        $rootScope.qtyCart++;
-        console.log('add', item.qty)
-    }
-    $scope.reduce = function (item) {
-        const index = $rootScope.carts.findIndex(it => it.idAccessory === item.idAccessory)
-        $rootScope.carts[index].qty--;
-        $scope.getShippingOder();
-        if ($rootScope.carts[index].qty <= 0) {
-            let timerInterval
-            Swal.fire({
-                title: 'Đang xóa vui lòng chờ!',
-                html: 'Cửa sổ sẽ tự đóng sau: <b></b> milliseconds.',
-                timer: 1000,
-                timerProgressBar: true,
-                didOpen: () => {
-                    Swal.showLoading()
-                    const b = Swal.getHtmlContainer().querySelector('b')
-                    timerInterval = setInterval(() => {
-                        b.textContent = Swal.getTimerLeft()
-                    }, 100)
-                },
-                willClose: () => {
-                    clearInterval(timerInterval)
-                }
-            }).then((result) => {
-                /* Read more about handling dismissals below */
-                if (result.dismiss === Swal.DismissReason.timer) {
-                    $rootScope.carts.splice(index, 1);
+                    item.qty = res.data;
                     $rootScope.saveLocalStorage();
                     $rootScope.loadLocalStorage();
                     $scope.getShippingOder();
+                }else{
+                    $rootScope.carts[index].qty=item.qty;
+                    $rootScope.saveLocalStorage();
+                    $rootScope.loadLocalStorage();
+                    $scope.getShippingOder();
+                }
+            }).catch(err=>{
+                console.log(err)
+            })
+        }else if(item.idProduct>-1){
+            index = $rootScope.carts.findIndex(it => it.idProduct === item.idProduct)
+            $http.get(`${urlImei}/amount/${item.idProduct}`).then(res=>{
+                if(item.qty>res.data) {
                     const Toast = Swal.mixin({
                         toast: true,
                         position: 'top-end',
@@ -167,16 +121,115 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window) {
                             toast.addEventListener('mouseleave', Swal.resumeTimer)
                         }
                     })
-
                     Toast.fire({
-                        icon: 'success',
-                        title: 'Xóa thành công!'
+                        icon: 'error',
+                        title: 'Số lượng sản phẩm không đủ!'
                     })
-                    $rootScope.carts.splice(index, 1);
-                    $window.location.href = '#!cart';
-                    console.log('I was closed by the timer')
+                    item.qty = res.data;
+                    $rootScope.saveLocalStorage();
+                    $rootScope.loadLocalStorage();
+                    $scope.getShippingOder();
+                }else{
+                    $rootScope.carts[index].qty=item.qty;
+                    $rootScope.saveLocalStorage();
+                    $rootScope.loadLocalStorage();
+                    $scope.getShippingOder();
                 }
+            }).catch(err=>{
+                console.log(err)
             })
+        }
+        if ($rootScope.carts[index].qty <= 0) {
+            $rootScope.saveLocalStorage();
+            $rootScope.loadLocalStorage();
+            $rootScope.carts.splice(index, 1);
+            $window.location.href = '#!cart';
+            console.log('I was closed by the timer')
+        }
+    }
+    $scope.raise = function (item) {
+        if(item.idAccessory>-1) {
+            let index = $rootScope.carts.findIndex(it => it.idAccessory === item.idAccessory)
+            $http.get(`${urlAccessory}/amount/${item.idAccessory}`).then(res=>{
+                if(item.qty>=res.data) {
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 2000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                    })
+                    Toast.fire({
+                        icon: 'error',
+                        title: 'Số lượng sản phẩm không đủ!'
+                    })
+                    item.qty = res.data;
+                    $rootScope.loadLocalStorage();
+                    $scope.getShippingOder();
+                }else{
+                    $rootScope.qtyCart++;
+                    $rootScope.carts[index].qty++;
+                    $rootScope.saveLocalStorage();
+                    $rootScope.loadLocalStorage();
+                    $scope.getShippingOder();
+                }
+            }).catch(err=>{
+                console.log(err)
+            })
+        }else if(item.idProduct>-1){
+            let index = $rootScope.carts.findIndex(it => it.idProduct === item.idProduct)
+            $http.get(`${urlImei}/amount/${item.idProduct}`).then(res=>{
+                if(item.qty>=res.data) {
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 2000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                    })
+                    Toast.fire({
+                        icon: 'error',
+                        title: 'Số lượng sản phẩm không đủ!'
+                    })
+                    item.qty = res.data;
+                    $rootScope.saveLocalStorage();
+                    $rootScope.loadLocalStorage();
+                }else{
+                    $rootScope.carts[index].qty++;
+                    $rootScope.qtyCart++;
+                    $rootScope.saveLocalStorage();
+                    $rootScope.loadLocalStorage();
+                    $scope.getShippingOder();
+                    console.log('add', item.qty)
+                }
+            }).catch(err=>{
+                console.log(err)
+            })
+        }
+    }
+    $scope.reduce = function (item) {
+        if(item.idAccessory>-1) {
+            var index = $rootScope.carts.findIndex(it => it.idAccessory === item.idAccessory)
+        }else if(item.idProduct>-1){
+            var index = $rootScope.carts.findIndex(it => it.idProduct === item.idProduct)
+        }
+        $rootScope.carts[index].qty--;
+        $scope.getShippingOder();
+        if ($rootScope.carts[index].qty <= 0) {
+            $rootScope.saveLocalStorage();
+            $rootScope.loadLocalStorage();
+            $scope.getShippingOder();
+            $rootScope.carts.splice(index, 1);
+            $window.location.href = '#!cart';
+            console.log('I was closed by the timer')
         }
         $rootScope.saveLocalStorage();
         $rootScope.loadLocalStorage();

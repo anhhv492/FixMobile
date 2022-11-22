@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -21,7 +22,7 @@ public class Order {
     private Integer idOrder;
 
     @Column(name = "create_date")
-    private java.sql.Date createDate;
+    private Date createDate;
 
     @Column(name = "total")
     private BigDecimal total;
