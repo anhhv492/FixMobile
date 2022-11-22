@@ -17,20 +17,6 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
     $scope.item= {};
     $rootScope.carts=[];
     $rootScope.qtyCart=0;
-    $rootScope.account=null;
-    $scope.getAccount=function (){
-        $http.get("http://localhost:8080/rest/account").then(resp=>{
-            if(resp.data){
-                $rootScope.account=resp.data;
-            }else{
-                $rootScope.account=null;
-            }
-        }).catch(error=>{
-            $rootScope.account=null;
-            console.log("Error",error);
-        });
-    }
-
     $scope.getAcountActive = function () {
         $http.get(urlAccount+`/getAccountActive`, token).then(function (respon){
             $scope.accountActive = respon.data;
@@ -42,7 +28,6 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
 
     $scope.logoff = function () {
         $rootScope.account = null;
-        $scope.getAccount()
     }
     $scope.getCategories = function(){
         $http.get(`${urlCategory}/getAll`, token).then(res=>{
@@ -229,15 +214,21 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
         localStorage.setItem("cart",json);
     }
     $rootScope.loadLocalStorage = function(){
-
         for (let i = 0; i < $rootScope.carts.length; i++) {
             $rootScope.carts.find(item=>{
-                $http.get("http://localhost:8080/cart-accessory/"+item.idAccessory, token).then(res=>{
-                    $rootScope.carts[i].price=res.data.price;
-                    console.log("price",item.price)
-                }).catch(err=>{
-                    console.log("error",err)
-                })
+                if(item.idAccessory){
+                    $http.get(`${urlAccessory}/accessory/`+item.idAccessory, token).then(res=>{
+                        $rootScope.carts[i].price=res.data.price;
+                    }).catch(err=>{
+                        console.log("error",err)
+                    })
+                }else{
+                    $http.get(`${urlProduct}/product/`+item.idProduct, token).then(res=>{
+                        $rootScope.carts[i].price=res.data.price;
+                    }).catch(err=>{
+                        console.log("error",err)
+                    })
+                }
             })
         }
         let json = localStorage.getItem("cart");
