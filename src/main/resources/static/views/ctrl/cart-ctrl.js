@@ -2,7 +2,7 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window) {
     var urlOrder = `http://localhost:8080/rest/guest/order`;
     var urlImei = `http://localhost:8080/rest/guest/imei`;
     var urlAccessory = `http://localhost:8080/rest/guest/accessory`;
-    var urlOrderDetail = `http://localhost:8080/rest/guest/order-detail`;
+    var urlOrderDetail = `http://localhost:8080/rest/guest/order/detail`;
     var urlAccounts = `http://localhost:8080/rest/admin/accounts`;
     var urlShippingOder = `http://localhost:8080/rest/user/address/getShipping-order`;
     const jwtToken = localStorage.getItem("jwtToken")
@@ -275,7 +275,7 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window) {
                         $http({
                             url: `http://localhost:8080/pay`,
                             method: 'POST',
-                            data: price,
+                            data: price,token,
                             transformResponse: [
                                 function (data) {
                                     return data;
@@ -289,9 +289,9 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window) {
                             $scope.cart.total = $scope.totals();
                             $scope.cart.status = 1;
                             $scope.cart.type = false;
-                            $http.post(urlOrder + '/add', $scope.cart).then(res => {
+                            $http.post(urlOrder + '/add', $scope.cart,token).then(res => {
                                 if (res.data) {
-                                    $http.post(urlOrderDetail + '/add', $rootScope.carts, token).then(res => {
+                                    $http.post(urlOrderDetail + '/add', $rootScope.carts,token).then(res => {
 
                                         console.log("orderDetail", res.data)
                                     }).catch(err => {
@@ -300,7 +300,7 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window) {
                                     $window.location.href = $scope.linkPaypal;
                                 } else {
                                     Swal.fire(
-                                        'Vui lòng điền địa chỉ!',
+                                        'Thanh toán thất bại!',
                                         '',
                                         'error'
                                     )
@@ -314,29 +314,23 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window) {
 
                     } else {
                         $scope.cart.createDate = new Date();
+                        $scope.cart.address = $scope.addressAccount.addressDetail+", "+$scope.addressAccount.addressTake;
                         $scope.cart.total = $scope.totals();
                         $scope.cart.status = 0;
                         $scope.cart.type = false;
-                        $http.post(urlOrder + '/add', $scope.cart).then(res => {
+                        $http.post(urlOrder + '/add', $scope.cart,token).then(res => {
                             if (res.data) {
-                                $http.post(urlOrderDetail + '/add', $rootScope.carts, token).then(res => {
+                                $http.post(urlOrderDetail + '/add', $rootScope.carts,token).then(res => {
                                     $window.location.href = '/views/cart/buy-success.html';
-                                    console.log("orderDetail", res.data)
                                 }).catch(err => {
                                     console.log("err orderDetail", err)
                                 })
-                            } else {
-                                Swal.fire(
-                                    'Vui lòng nhập địa chỉ!',
-                                    '',
-                                    'error'
-                                )
                             }
 
                         }).catch(err => {
                             Swal.fire(
-                                'error!',
-                                'You clicked the button!',
+                                'Thanh toán thất bại!',
+                                '',
                                 'error'
                             )
                             console.log("err order", err)

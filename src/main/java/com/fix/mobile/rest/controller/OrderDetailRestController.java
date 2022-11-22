@@ -30,7 +30,7 @@ public class OrderDetailRestController {
     @Autowired
     private OrderDetailService orderDetailService;
 
-    @GetMapping(value="/rest/user/order-detail/{id}")
+    @GetMapping(value="/rest/staff/order/detail/{id}")
     public List<OrderDetail> getAllByAccount(@PathVariable("id") Integer id){
         Optional<Order> order = orderService.findById(id);
         List<OrderDetail> orderDetails = orderDetailService.findAllByOrder(order.get());
