@@ -23,6 +23,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category save(Category entity) {
+        entity.setStatus(true);
         return repository.save(entity);
     }
 
@@ -33,7 +34,9 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void deleteById(Integer id) {
-        repository.deleteById(id);
+        Category category = repository.findById(id).orElse(null);
+        category.setStatus(false);
+        repository.save(category);
     }
 
     @Override
@@ -76,6 +79,11 @@ public class CategoryServiceImpl implements CategoryService {
     }
     public List<Category> findByTypeSP() {
         return repository.findByType(false);
+    }
+
+    @Override
+    public Page<Category>  page(Boolean status, Pageable pageable) {
+        return repository.findByStatus(status, pageable);
     }
 
 }

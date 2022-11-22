@@ -25,6 +25,8 @@ public class Category {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "status")
+    private Boolean status;
     @JsonIgnore
     @OneToMany(mappedBy = "category")
     private List<Product> products;

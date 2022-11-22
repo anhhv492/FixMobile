@@ -10,6 +10,42 @@ app.controller('profile-ctl', function ($scope,$http, $window) {
             Authorization: `Bearer `+jwtToken
         }
     }
+    $scope.message = function (mes){
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3500,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+        Toast.fire({
+            icon: 'success',
+            title: mes,
+        })
+    }
+
+    $scope.error =  function (err){
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+
+        Toast.fire({
+            icon: 'error',
+            title: err,
+        })
+    }
 
     $scope.getAcountActive = function () {
         $http.get(callApi+`/getAccountActive`, token).then(function (respon){
@@ -79,6 +115,49 @@ app.controller('profile-ctl', function ($scope,$http, $window) {
             console.log($scope.accountActive)
         });
     };
+    
+    $scope.upLoadFile = function (file) {
+        $scope.files = file;
+        console.log($scope.files)
+        var formData = new FormData();
+        angular.forEach($scope.files, function(image) {
+            formData.append('image', image);
+        });
+        let req = {
+            method: 'POST',
+            url: '/rest/admin/accounts/updateImage',
+            headers: {
+                'Content-Type': undefined,
+                Authorization: `Bearer `+jwtToken
+                // or  'Content-Type':'application/json'
+            },
+            data: formData
+        }
+        let timerInterval
+        Swal.fire({
+            title: 'Đang sửa ảnh vui lòng chờ!',
+            html: 'Vui lòng chờ <b></b> milliseconds.',
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: () => {
+                Swal.showLoading()
+                const b = Swal.getHtmlContainer().querySelector('b')
+                timerInterval = setInterval(() => {
+                    b.textContent = Swal.getTimerLeft()
+                }, 100)
+            },
+            willClose: () => {
+                clearInterval(timerInterval)
+            }
+        });
+        $http(req).then(response => {
+            console.log("ok " + response.data.image);
+            $scope.message("Sửa ảnh thành công");
+            $scope.accountActive.image = response.data.image;
+        }).catch(error => {
+            $scope.error('Sửa ảnh thất bại');
+        });
+    }
 
     $scope.doSubmit = function() {
         if($scope.accountActive.username) {

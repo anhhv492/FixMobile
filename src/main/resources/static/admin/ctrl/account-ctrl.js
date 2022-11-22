@@ -4,12 +4,16 @@ app.controller("account-ctrl", function ($scope, $http) {
     $scope.form = {};
     $scope.form.createDate = new Date();
     $scope.form.gender = true;
-    $scope.index = 0;
+    $scope.index = 1;
     $scope.check_first = false;
     $scope.check_last = true;
+    $scope.check_prev = false;
+    $scope.check_next = true;
     $scope.totalPages = 0;
+    $scope.idrole_form= "";
     $scope.b;
     $scope.hideUpdate=true;
+    var role = document.getElementById("role");
 
 
     const jwtToken = localStorage.getItem("jwtToken")
@@ -32,6 +36,48 @@ app.controller("account-ctrl", function ($scope, $http) {
         }
     })
 
+    role.onchange = function () {
+        if (this.value != "") {
+            console.log(this.value)
+            $scope.idrole_form = this.value;
+        }
+    }
+
+    $scope.message = function (mes){
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3500,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+        Toast.fire({
+            icon: 'success',
+            title: mes,
+        })
+    }
+    $scope.error =  function (err){
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+
+        Toast.fire({
+            icon: 'error',
+            title: err,
+        })
+    }
     $scope.a;
     //xóa form
     $scope.reset = function () {
@@ -39,6 +85,7 @@ app.controller("account-ctrl", function ($scope, $http) {
     $scope.hideCreate=false;
     $scope.hideUpdate=true;
     $scope.hidePassword=false;
+
         $scope.form = {
             createDate: new Date(),
             // username:"",
@@ -46,7 +93,7 @@ app.controller("account-ctrl", function ($scope, $http) {
             // email:"",
             // phone:"",
             // password:"",
-            image: "5.png",
+            image: "https://res.cloudinary.com/dcll6yp9s/image/upload/v1669087979/kbasp5qdf76f3j02mebr.png",
             gender: true,
             status: 1,
             role: {
@@ -58,34 +105,38 @@ app.controller("account-ctrl", function ($scope, $http) {
     }
 
     $scope.initialize = function () {
-
+        $scope.index = 1
         //load accounts
 
-        $http.get("/rest/admin/accounts/page",token).then(resp => {
-            $scope.accounts = resp.data;
+        $http.get("/rest/admin/accounts/page?page=1",token).then(resp => {
+            $scope.accounts = resp.data.content;
             $scope.reset();
-
+            $scope.totalPages =  resp.data.totalPages;
+            if ($scope.index = $scope.totalPages){
+                $scope.check_next = false;
+                $scope.check_last = false;
+            }
         }).catch(error => {
             console.log(error);
-
         });;
         $http.get("/rest/admin/accounts/roles",token).then(resp => {
-
             $scope.roles = resp.data;
+            console.log($scope.roles)
         }).catch(error => {
             console.log(error);
         });
-        $scope.getTotalPages();
+
         // alert("Load du lieu tu db thanh cong")
 
     }
-    $scope.getTotalPages = function () {
-        $http.get("/rest/admin/accounts/getAll",token).then(function (response) {
-            $scope.totalPages = Math.ceil(response.data.length / 10);
-        }).catch(error => {
-            console.log(error);
-        });
-    }
+
+    // $scope.getTotalPages = function () {
+    //     $http.get("/rest/admin/accounts/getAll",token).then(function (response) {
+    //         $scope.totalPages = Math.ceil(response.data.length / 10);
+    //     }).catch(error => {
+    //         console.log(error);
+    //     });
+    // }
 
     $scope.initialize();
 
@@ -164,33 +215,55 @@ console.log("Kết thúc check trùng")
 
             })
             if (a == 1) {
+                var formData = new FormData();
+                angular.forEach($scope.files, function(image) {
+                    formData.append('image', image);
+                });
+                formData.append("username",$scope.form.username);
+                formData.append("fullName",$scope.form.fullName);
+                formData.append("gender",$scope.form.gender);
+                formData.append("email",$scope.form.email);
+                formData.append("status",$scope.form.status);
+                formData.append("password", $scope.form.password);
+                formData.append("phone",$scope.form.phone);
+                formData.append("role",$scope.idrole_form);
+                let req = {
+                    method: 'POST',
+                    url: '/rest/admin/accounts/create',
+                    headers: {
+                        'Content-Type': undefined,
+                        Authorization: `Bearer `+jwtToken
+                        // or  'Content-Type':'application/json'
+                    },
+                    data: formData
+                }
                 console.log("Bắt đầu thêm mới")
-
-                var account = angular.copy($scope.form);
-                $http.post('/rest/admin/accounts/create', account,token).then(resp => {
-
-                    resp.data.createDate = new Date(resp.data.createDate)
-                    $scope.accounts.push(resp.data);
-                    Toast.fire({
-                        icon: 'success',
-                        title: 'Thêm mới thành công!',
-                    })
+                let timerInterval
+                Swal.fire({
+                    title: 'Đang thêm  mới vui lòng chờ!',
+                    html: 'Vui lòng chờ <b></b> milliseconds.',
+                    timer: 2000,
+                    timerProgressBar: true,
+                    didOpen: () => {
+                        Swal.showLoading()
+                        const b = Swal.getHtmlContainer().querySelector('b')
+                        timerInterval = setInterval(() => {
+                            b.textContent = Swal.getTimerLeft()
+                        }, 100)
+                    },
+                    willClose: () => {
+                        clearInterval(timerInterval)
+                    }
+                });
+                $http(req).then(response => {
+                    console.log("ddd " + response);
+                    $scope.message("thêm mới thành công");
                     $scope.reset();
-
-                    // alert("Create success!");
                 }).catch(error => {
-                    Toast.fire({
-                        icon: 'error',
-                        title: 'Thêm mới thất bại!',
-                    })
-                    // alert("Error create!")
-                    console.log("Error", error)
-                })
-
+                    $scope.error('thêm mới thất bại');
+                });
             }
-            console.log("Kết thúc thêm ")
-
-
+            console.log("Kết thúc thêm")
         });
     }
     //Kiểm tra form
@@ -226,26 +299,53 @@ console.log("Kết thúc check trùng")
     $scope.update = function () {
         var account = angular.copy($scope.form);
         console.log(account.username)
-        $http.put(`/rest/admin/accounts/${account.username}`, account,token).then(resp => {
-            var index = $scope.accounts.findIndex(a => a.username == account.username);
-            $scope.accounts[index] = account;
-            Toast.fire({
-                icon: 'success',
-                title: 'Cập nhật thành công!',
-            })
-            $scope.initialize();
-
-            // alert("Update success!");
+        var formData = new FormData();
+        angular.forEach($scope.files, function(image) {
+            formData.append('image', image);
+        });
+        formData.append("fullName",$scope.form.fullName);
+        formData.append("gender",$scope.form.gender);
+        formData.append("email",$scope.form.email);
+        formData.append("status",$scope.form.status);
+        formData.append("phone",$scope.form.phone);
+        formData.append("role",$scope.idrole_form);
+        let req = {
+            method: 'POST',
+            url: '/rest/admin/accounts/update?username='+account.username,
+            headers: {
+                'Content-Type': undefined,
+                Authorization: `Bearer `+jwtToken
+                // or  'Content-Type':'application/json'
+            },
+            data: formData
+        }
+        console.log("Bắt đầu cập nhật")
+        let timerInterval
+        Swal.fire({
+            title: 'Đang cập nhật vui lòng chờ!',
+            html: 'Vui lòng chờ <b></b> milliseconds.',
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: () => {
+                Swal.showLoading()
+                const b = Swal.getHtmlContainer().querySelector('b')
+                timerInterval = setInterval(() => {
+                    b.textContent = Swal.getTimerLeft()
+                }, 100)
+            },
+            willClose: () => {
+                clearInterval(timerInterval)
+            }
+        });
+        $http(req).then(response => {
+            console.log("ddd " + response);
+            $scope.message("cập nhật thành công");
+            $scope.reset();
         }).catch(error => {
-            // alert("Update Error!")
-            Toast.fire({
-                icon: 'error',
-                title: 'Cập nhật thất bại!',
-            })
-            console.log("Error", error)
-        })
-
+            $scope.error('cập nhật thất bại');
+        });
     }
+
 
     //xóa account
     $scope.delete = function (account) {
@@ -268,49 +368,47 @@ console.log("Kết thúc check trùng")
             console.log("Error", error)
         })
     }
-    var urlImage = `http://localhost:8080/rest/files/images/img`;
-    $scope.url = function (fileName) {
-        return `${urlImage}/` + `${fileName}`;
-    }
-    $scope.fileNames = [];
-    $scope.listFile = function () {
-        $http.get(urlImage,token).then(res => {
-            $scope.fileNames = res.data;
-            console.log('ok', res);
-        }).catch(err => {
-            console.log('Load files failse', err);
-        })
-    }
+    // var urlImage = `http://localhost:8080/rest/files/images/img`;
+    // $scope.url = function (fileName) {
+    //     return `${urlImage}/` + `${fileName}`;
+    // }
+    // $scope.fileNames = [];
+    // $scope.listFile = function () {
+    //     $http.get(urlImage,token).then(res => {
+    //         $scope.fileNames = res.data;
+    //         console.log('ok', res);
+    //     }).catch(err => {
+    //         console.log('Load files failse', err);
+    //     })
+    // }
     //upload hình
-    $scope.uploadFile = function (files) {
-        var form = new FormData();
-        form.append('file', files[0]);
-        $http.post(urlImage, form,token, {
-            transformRequest: angular.identity,
-            headers: { 'Content-Type': undefined }
-        }).then(res => {
-            $scope.form.image = res.data.name;
-            console.log('image', res);
-        }).catch(err => {
-            console.log('err', err);
-        })
+    $scope.upLoadFile = function (files) {
+        $scope.files = files;
+        console.log($scope.files);
+        // $http.post(urlImage, form,token, {
+        //     transformRequest: angular.identity,
+        //     headers: { 'Content-Type': undefined }
+        // }).then(res => {
+        //     $scope.form.image = res.data.name;
+        //     console.log('image', res);
+        // }).catch(err => {
+        //     console.log('err', err);
+        // })
     }
     const pathAPI = "/rest/admin/accounts";
     // pagination
     $scope.next = function () {
         $scope.check_first = true;
         $scope.index++;
-        if ($scope.index >= $scope.totalPages) {
-            $scope.index = 0;
-            $scope.check_first = false;
-            $scope.check_last = true;
-        }
-        if ($scope.index == $scope.totalPages - 1) {
+
+        if ($scope.index == $scope.totalPages) {
             $scope.check_first = true;
             $scope.check_last = false;
+            $scope.check_next = false;
+            $scope.check_prev = true;
         }
         $http.get(pathAPI + `/page?page=` + $scope.index,token).then(res => {
-            $scope.accounts = res.data;
+            $scope.accounts = res.data.content;
             console.log('Load accounts success', res.data)
         }).catch(err => {
             console.log('Load accounts false', err.data);
@@ -319,17 +417,15 @@ console.log("Kết thúc check trùng")
     $scope.prev = function () {
         $scope.check_last = true;
         $scope.index--;
-        if ($scope.index < 0) {
-            $scope.index = $scope.totalPages - 1;
-            $scope.check_first = true;
-            $scope.check_last = false;
-        }
-        if ($scope.index == 0) {
+
+        if ($scope.index == 1) {
             $scope.check_first = false;
             $scope.check_last = true;
+            $scope.check_prev = false;
+            $scope.check_next = true;
         }
         $http.get(pathAPI + `/page?page=` + $scope.index,token).then(res => {
-            $scope.accounts = res.data;
+            $scope.accounts = res.data.content;
             console.log('Load accounts success', res.data)
         }).catch(err => {
             console.log('Load accounts failse', err.data);
@@ -337,10 +433,12 @@ console.log("Kết thúc check trùng")
     }
     $scope.first = function () {
         $scope.check_first = false;
+        $scope.check_next = true;
+        $scope.check_prev = false;
         $scope.check_last = true;
-        $scope.index = 0;
+        $scope.index = 1;
         $http.get(pathAPI + `/page?page=` + $scope.index,token).then(res => {
-            $scope.accounts = res.data;
+            $scope.accounts = res.data.content;
             console.log('Load accounts success', res.data)
         }).catch(err => {
             console.log('Load accounts failse', err.data);
@@ -348,10 +446,12 @@ console.log("Kết thúc check trùng")
     }
     $scope.last = function () {
         $scope.check_first = true;
+        $scope.check_next = false;
+        $scope.check_prev = true;
         $scope.check_last = false;
-        $scope.index = $scope.totalPages - 1;
+        $scope.index = $scope.totalPages;
         $http.get(pathAPI + `/page?page=` + $scope.index,token).then(res => {
-            $scope.accounts = res.data;
+            $scope.accounts = res.data.content;
             console.log('Load accounts success', res.data)
         }).catch(err => {
             console.log('Load accounts failse', err.data);
@@ -359,7 +459,7 @@ console.log("Kết thúc check trùng")
     }
     $scope.getPageAccounts = function () {
         $http.get(pathAPI + `/page?page=` + $scope.index,token).then(res => {
-            $scope.accounts = res.data;
+            $scope.accounts = res.data.content;
             console.log('Load accounts success', res.data)
         }).catch(err => {
             console.log('Load accounts failse', err.data);

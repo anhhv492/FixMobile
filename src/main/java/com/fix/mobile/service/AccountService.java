@@ -26,9 +26,9 @@ public interface AccountService {
 
     List<AccountResponDTO> findAll();
 
-    Page<AccountResponDTO> findAll(Pageable pageable);
+    Page<AccountResponDTO> findAll(Integer status, Pageable pageable);
 
-    AccountDTO update(AccountDTO accountDTO, String username);
+    AccountResponDTO update(AccountRequestDTO accountDTO, String username);
 
     Account findByName(String username);
 
@@ -43,4 +43,5 @@ public interface AccountService {
 
     Page<Account> getByPage(int pageNumber, int maxRecord, String share);
 
+    AccountResponDTO updateImage(AccountRequestDTO accountRequestDTO);
 }

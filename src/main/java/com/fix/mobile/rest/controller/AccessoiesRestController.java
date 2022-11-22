@@ -13,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -48,12 +49,11 @@ public class AccessoiesRestController {
 	@Autowired
 	private Cloudinary cloud;
 
-
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@GetMapping
 	public List<Ram> findall(){
 		return ramService.findAll();
 	}
-
 
 	@PostMapping
 	public Ram create(@RequestBody Ram ram){

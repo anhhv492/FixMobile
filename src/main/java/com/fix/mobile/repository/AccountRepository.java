@@ -22,4 +22,6 @@ public interface AccountRepository extends PagingAndSortingRepository<Account, S
 	@Query(value = "select * from accounts where status = 1 and (full_name like %?1% or username like %?1%)",nativeQuery = true)
 	Page<Account> findShowSale(String share, Pageable pageable);
 
+	Page<Account> findAllByStatus(Integer status, Pageable pageable);
+
 }

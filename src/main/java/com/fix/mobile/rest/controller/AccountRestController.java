@@ -67,10 +67,11 @@ public class AccountRestController {
     @GetMapping("/page")
     public Page<AccountResponDTO> page(
             @RequestParam(name = "page" , defaultValue = "1") int page,
-            @RequestParam(name = "size" , defaultValue = "10") int size
+            @RequestParam(name = "size" , defaultValue = "10") int size,
+            @RequestParam(name = "status", defaultValue = "1") Integer status
     ){
         Pageable pageable = PageRequest.of(page - 1 , size);
-        return accountService.findAll(pageable);
+        return accountService.findAll(status,pageable);
     }
   
     @GetMapping("/roles")
@@ -83,9 +84,9 @@ public class AccountRestController {
     	return accountService.save(accountRequestDTO);
     }
     
-    @PutMapping("/update")
-    public AccountDTO update(@RequestParam("username") String username, @RequestBody AccountDTO accountDTO){
-        return accountService.update(accountDTO, username);
+    @PostMapping(value = "/update", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+    public AccountResponDTO update(@RequestParam("username") String username, @ModelAttribute AccountRequestDTO accountRequestDTO){
+        return accountService.update(accountRequestDTO, username);
     }
     
     @DeleteMapping("/{username}")
@@ -125,5 +126,10 @@ public class AccountRestController {
     @PostMapping("/updateAccountActive")
     public AccountDTO updateAccountActive(@RequestBody AccountDTO accountDTO){
         return accountService.updateAccountActive(accountDTO);
+    }
+
+    @PostMapping(value = "/updateImage", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+    public AccountResponDTO updateImage(@ModelAttribute AccountRequestDTO accountRequestDTO){
+        return accountService.updateImage(accountRequestDTO);
     }
 }

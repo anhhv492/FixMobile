@@ -15,24 +15,23 @@
                                 <label>Danh Mục</label>
                                 <br>
                                 <input type="radio" class="form-check-input"
-                                       ng-model="form.type" name="type" ng-value="false"> Sản Phẩm
+                                       ng-model="form.type" name="type" ng-value="false" checked> Sản Phẩm
                                 <input type="radio" class="form-check-input"
                                        checked ng-model="form.type" name="type" ng-value="true"> Phụ Kiện
                                 <br>
                             </div>
 
                             <div class="form-group mt-1">
-                                <label>Tên Danh Mục</label>
-                                <input ng-model="form.name" required class="form-control" placeholder="">
+                                <label>Tên thể loại</label>
+                                <input oninput="this.value = this.value.toUpperCase()" ng-model="form.name" required class="form-control" placeholder="">
                             </div>
 
                         </div>
                         <div class="form-group mt-4">
-                            <button type="submit" class="btn btn-success">
+                            <button type="submit" class="btn  {{checkSubmit == false ? 'btn-success' : 'btn-primary'}}">
                                 {{checkSubmit == false ? title.insert : title.update}}
                             </button>
-                            <button ng-if="checkSubmit" ng-click="refresh()" class="btn btn-warning">Hủy</button>
-                            <button type="reset" ng-click="refresh()" class="btn btn-primary">Làm mới</button>
+                            <button type="reset" ng-click="refresh()" class="btn btn-warning">Làm mới</button>
                         </div>
                     </form>
                 </div>
@@ -40,14 +39,37 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row mt-3">
         <div class="col-lg-12">
-            <table class="table table-striped table-hover">
+            <div class="table-header d-flex justify-content-between align-items-center p-2" style="background-color: #dee2e6">
+                <select class="form-select mb-1 w-25">
+                    <option selected ng-value="-1" disabled>Lọc theo danh mục</option>
+                    <option >chien
+                    </option>
+                </select>
+
+                <select class="form-select mb-1 w-25">
+                    <option selected ng-value="-1" disabled>Lọc theo trạng thái</option>
+                    <option >chien
+                    </option>
+                </select>
+
+                <input
+                        type="text"
+                        class="form-control"
+                        #searchTerm
+                        placeholder="Tìm kiếm..."
+                        style="max-width: 260px"
+                        (keyup)="onSearchChange(searchTerm.value)"
+                />
+            </div>
+            <table class="table table-striped  table-hover">
                 <thead>
                 <tr>
                     <th>STT</th>
-                    <th>Type</th>
+                    <th>Danh mục</th>
                     <th>Tên</th>
+                    <th>Trạng thái</th>
                     <th>Thao tác</th>
                 </thead>
                 <tbody>
@@ -55,7 +77,7 @@
                     <td>{{$index + 1}}</td>
                     <td>{{cate.type == true ? 'Phụ Kiện' : 'Sản Phẩm'}}</td>
                     <td>{{cate.name}}</td>
-
+                    <td>{{cate.status == true? 'Đang hoạt động':'Không hoạt động'}}</td>
                     <td>
                         <button ng-click="edit(cate)" class="btn btn-primary">Sửa</button>
                         <button ng-click="delete(cate)" class="btn btn-danger">Xóa</button>
@@ -67,17 +89,21 @@
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
                 <li class="page-item">
-                    <a class="page-link {{!check_first?'disabled':''}}" ng-click="first()">First</a>
+                    <a class="page-link {{!check_first?'disabled':''}}" ng-click="first()"><i
+                            class="fa fa-fast-backward" aria-hidden="true"></i></a>
                 </li>
                 <li class="page-item">
-                    <a class="page-link" ng-click="prev()">Previous</a>
+                    <a class="page-link {{!check_prev?'disabled':''}}" ng-click="prev()"><i class="fa fa-step-backward"
+                                                              aria-hidden="true"></i></a>
                 </li>
-                <li class="page-item"><a class="page-link" href="#">{{index+1}}/{{totalPages}}</a></li>
+                <li class="page-item"><a class="page-link" href="#">{{index}}/{{totalPages}}</a></li>
                 <li class="page-item">
-                    <a class="page-link" ng-click="next()">Next</a>
+                    <a class="page-link {{!check_next?'disabled':''}}" ng-click="next()"><i class="fa fa-step-forward"
+                                                              aria-hidden="true"></i></a>
                 </li>
                 <li class="page-item">
-                    <a class="page-link {{!check_last?'disabled':''}}" ng-click="last()">Last</a>
+                    <a class="page-link {{!check_last?'disabled':''}}" ng-click="last()"><i
+                            class="fa fa-fast-forward" aria-hidden="true"></i></a>
                 </li>
             </ul>
         </nav>

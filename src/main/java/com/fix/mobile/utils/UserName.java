@@ -12,6 +12,7 @@ public class UserName {
         String[] objects = principal.split(",",0);
         String username = objects[0].replace("org.springframework.security.core.userdetails.User","")
                 .replace("[","").replace("Username=","").trim();
+        System.out.println(username);
         return username;
     }
 }

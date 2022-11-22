@@ -279,7 +279,7 @@ app.controller('address-form-ctrl', function ($http, $scope, $window) {
     };
     $scope.setAddressDefault = function (addres) {
         $http.post(`${callApiAcounts}/setaddressdefault`,addres.idAddress, token).then(function () {
-            $window.location.href = '#!profile';
+            $window.location.href = '#!cart';
 
         }).catch(err=>{
             console.log(err)

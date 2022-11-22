@@ -38,7 +38,7 @@ app.controller("register-ctrl",function ($scope, $http){
             $scope.form = {
                 username:"",
                 createDate: new Date(),
-                image: "5.png",
+                image: "https://res.cloudinary.com/dcll6yp9s/image/upload/v1669087979/kbasp5qdf76f3j02mebr.png",
                 gender: true,
                 status: 1,
                 password:"",

@@ -1,11 +1,13 @@
 app.controller('ctrl_cate', function($scope, $http) {
     $scope.form = {};
     $scope.category = [];
-    $scope.index=0;
+    $scope.index=1;
     $scope.check_first=false;
     $scope.check_last=true;
+    $scope.check_prev = false;
+    $scope.check_next = true;
     $scope.totalPages=0;
-    $scope.currentPage = 0;
+    $scope.form.type = false;
     $scope.title={
         insert:'Thêm mới',
         update:'Cập nhật'
@@ -22,10 +24,9 @@ app.controller('ctrl_cate', function($scope, $http) {
     const pathAPI = "http://localhost:8080/rest/staff/category";
 
     $scope.getAll =function (){
-        $http.get(pathAPI+'/page/published?page=0',token).then(function(response) {
-            $scope.category = response.data.categories
+        $http.get(pathAPI+'/page',token).then(function(response) {
+            $scope.category = response.data.content;
             $scope.totalPages = response.data.totalPages;
-            $scope.currentPage = response.data.currentPage;
         }).catch(error=>{
             console.log(error);
         });
@@ -33,18 +34,15 @@ app.controller('ctrl_cate', function($scope, $http) {
 
     $scope.next=function(){
         $scope.check_first=true;
+        $scope.check_prev=true;
         $scope.index++;
-        if($scope.index>=$scope.totalPages){
-            $scope.index=0;
-            $scope.check_first=false;
-            $scope.check_last=true;
-        }
-        if($scope.index==$scope.totalPages-1){
+        if($scope.index==$scope.totalPages){
             $scope.check_first=true;
             $scope.check_last=false;
+            $scope.check_next = false;
         }
-        $http.get(pathAPI+'/page/published?page='+$scope.index,token).then(res=>{
-            $scope.category = res.data.categories;
+        $http.get(pathAPI+'/page?page='+$scope.index,token).then(res=>{
+            $scope.category = res.data.content;
             console.log('Load accessories success',res.data)
         }).catch(err=>{
             console.log('Load accessories failse',err.data);
@@ -53,18 +51,16 @@ app.controller('ctrl_cate', function($scope, $http) {
 
     $scope.prev=function(){
         $scope.check_last=true;
+        $scope.check_next = true;
         $scope.index--;
-        if($scope.index<0){
-            $scope.index=$scope.totalPages-1;
-            $scope.check_first=true;
-            $scope.check_last=false;
-        }
-        if($scope.index==0){
+
+        if($scope.index==1){
             $scope.check_first=false;
             $scope.check_last=true;
+            $scope.check_prev =false;
         }
-        $http.get(pathAPI+'/page/published?page='+$scope.index,token).then(res=>{
-            $scope.category = res.data.categories;
+        $http.get(pathAPI+'/page?page='+$scope.index,token).then(res=>{
+            $scope.category = res.data.content;
             console.log('Load accessories success',res.data)
         }).catch(err=>{
             console.log('Load accessories failse',err.data);
@@ -73,9 +69,11 @@ app.controller('ctrl_cate', function($scope, $http) {
     $scope.first=function(){
         $scope.check_first=false;
         $scope.check_last=true;
-        $scope.index=0;
-        $http.get(pathAPI+'/page/published?page='+$scope.index,token).then(res=>{
-            $scope.category = res.data.categories;
+        $scope.check_prev = false;
+        $scope.check_next = true;
+        $scope.index=1;
+        $http.get(pathAPI+'/page?page='+$scope.index,token).then(res=>{
+            $scope.category = res.data.content;
             console.log('Load accessories success',res.data)
         }).catch(err=>{
             console.log('Load accessories failse',err.data);
@@ -84,9 +82,11 @@ app.controller('ctrl_cate', function($scope, $http) {
     $scope.last=function(){
         $scope.check_first=true;
         $scope.check_last=false;
-        $scope.index=$scope.totalPages-1;
-        $http.get(pathAPI+'/page/published?page='+$scope.index,token).then(res=>{
-            $scope.category = res.data.categories;
+        $scope.check_next=false;
+        $scope.check_prev = true;
+        $scope.index=$scope.totalPages;
+        $http.get(pathAPI+'/page?page='+$scope.index,token).then(res=>{
+            $scope.category = res.data.content;
             console.log('Load accessories success',res.data)
         }).catch(err=>{
             console.log('Load accessories failse',err.data);
@@ -163,7 +163,7 @@ app.controller('ctrl_cate', function($scope, $http) {
                 }).then((result) => {
                     /* Read more about handling dismissals below */
                     if (result.dismiss === Swal.DismissReason.timer) {
-                        $http.delete(`${pathAPI}/delete/${category.idCategory}`,token).then(response=> {
+                        $http.delete(`${pathAPI}/delete?id=${category.idCategory}`,token).then(response=> {
                             const Toast = Swal.mixin({
                                 toast: true,
                                 position: 'top-end',
@@ -215,7 +215,7 @@ app.controller('ctrl_cate', function($scope, $http) {
     };
 
     $scope.onUpdate = function() {
-        $http.put(pathAPI+'/update/'+$scope.form.idCategory, $scope.form,token).then(response=> {
+        $http.put(pathAPI+'/update?id='+$scope.form.idCategory, $scope.form,token).then(response=> {
             const Toast = Swal.mixin({
                 toast: true,
                 position: 'top-end',
@@ -232,7 +232,15 @@ app.controller('ctrl_cate', function($scope, $http) {
                 icon: 'success',
                 title:'Cập nhật thành công!' ,
             })
+            $scope.index=1;
+            $scope.check_first=false;
+            $scope.check_last=true;
+            $scope.check_next=true;
+            $scope.check_prev = false;
+
+            $scope.getAll();
             $scope.refresh();
+
         }).catch(error=>{
             const Toast = Swal.mixin({
                 toast: true,
@@ -308,8 +316,8 @@ app.controller('ctrl_cate', function($scope, $http) {
 
     $scope.refresh = function() {
         $scope.form = {};
+        $scope.form.type = false;
         $scope.checkSubmit=false;
-        $scope.getAll();
     };
 
     $scope.getAll();

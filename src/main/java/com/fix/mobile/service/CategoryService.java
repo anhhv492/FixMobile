@@ -17,4 +17,6 @@ public interface CategoryService extends GenericService<Category, Integer> {
     List<Category> findByTypeProduct();
 
     List<Category> findByTypeSP();
+
+    Page<Category> page(Boolean status, Pageable pageable);
 }

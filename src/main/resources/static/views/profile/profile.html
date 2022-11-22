@@ -4,23 +4,23 @@
             <div class="card mb-4 col-lg-4">
                 <div class="card-body row d-flex align-content-center text-center">
                         <div class="col-12">
-                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
+                            <img src="{{accountActive.image}}"
                                  alt="avatar"
                                  class="rounded-circle img-fluid" style="width: 150px">
                         </div>
-                        <h5 class="col-12 my-3">John Smith</h5>
-                        <p class="col-12 text-muted">Dụng lượng file tối đa 1 MB</p>
+                        <h5 class="col-12 my-3">{{accountActive.fullName}}</h5>
+                        <p class="col-12 text-muted">Dụng lượng file tối đa 5 MB</p>
                         <p class="col-12 text-muted">Định dạng:.JPEG, .PNG</p>
                         <div class="upload-btn-wrapper col-12 d-flex justify-content-center mb-2">
                             <button type="button" class="btn btn-outline-primary ms-1">Chọn ảnh</button>
-                            <input type="file" name="myfile" accept=".jpg,.jpeg,.png"/>
+                            <input type="file" name="myfile" onchange="angular.element(this).scope().upLoadFile(this.files)" accept=".jpg,.jpeg,.png"/>
                         </div>
                 </div>
             </div>
             <div class="col-lg-8">
                 <div class="card mb-4">
                     <div class="card-body">
-                        <form method="post" enctype="multipart/form-data" ng-submit="doSubmit()">
+                        <form method="post" enctype="multipart/form-data" name="myForm" ng-submit="doSubmit()">
                             <div class="row" >
                                 <div class="col-sm-3">
                                     <p class="mb-0">Tên đăng nhập</p>
@@ -35,7 +35,7 @@
                                     <p class="mb-0">Tên</p>
                                 </div>
                                 <div class="col-sm-9">
-                                    <input ng-model="accountActive.fullName" class="text-muted mb-0 input" value="{{accountActive.fullName}}">
+                                    <input ng-model="accountActive.fullName" required class="text-muted mb-0 input" value="{{accountActive.fullName}}">
                                 </div>
                             </div>
                             <hr>
@@ -46,6 +46,7 @@
                                 <div class="col-sm-9">
                                     <input ng-model="accountActive.email" class="text-muted mb-0 input" value="{{accountActive.email}}" required pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$">
                                 </div>
+
                             </div>
                             <hr>
                             <div class="row">
@@ -75,7 +76,7 @@
                                     <p class="mb-0">Mật khẩu</p>
                                 </div>
                                 <div class="col-sm-9 d-flex gap-3">
-                                    <a href="" style="color: blue">Đổi mật khẩu</a>
+                                    <a href="#!/changePassword" style="color: blue">Đổi mật khẩu</a>
                                 </div>
                             </div>
                             <hr>

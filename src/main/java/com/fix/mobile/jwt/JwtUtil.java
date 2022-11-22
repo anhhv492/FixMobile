@@ -86,9 +86,9 @@ public class JwtUtil {
             Jws<Claims> claimsJws = Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
             return true;
         }catch (SignatureException | MalformedJwtException | UnsupportedJwtException | IllegalArgumentException exception){
-            throw new BadCredentialsException("INVALID_CREDENTIALS",exception);
+            return false;
         }catch (ExpiredJwtException e){
-            throw e;
+            return false;
         }
     }
 }

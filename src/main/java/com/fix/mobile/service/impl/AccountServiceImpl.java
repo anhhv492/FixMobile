@@ -57,31 +57,36 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public AccountResponDTO save(AccountRequestDTO accountRequestDTO) {
         try {
-            Role role = roleRepository.findById(accountRequestDTO.getRole()).orElse(null);
-            Date date = new Date();
-            Account account = new Account();
-            account.setUsername(accountRequestDTO.getUsername());
-            account.setFullName(accountRequestDTO.getFullName());
-            account.setPassword(HashUtil.hash(accountRequestDTO.getPassword()));
-            account.setEmail(accountRequestDTO.getEmail());
-            account.setGender(accountRequestDTO.getGender());
-            account.setPhone(accountRequestDTO.getPhone());
-            account.setStatus(accountRequestDTO.getStatus());
-            account.setRole(role);
-            account.setCreateDate(date);
-            Map r = this.cloud.uploader().upload(accountRequestDTO.getImage().getBytes(),
-                    ObjectUtils.asMap(
-                            "cloud_name", "dcll6yp9s",
-                            "api_key", "916219768485447",
-                            "api_secret", "zUlI7pdWryWsQ66Lrc7yCZW0Xxg",
-                            "secure", true,
-                            "folders", "c202a2cae1893315d8bccb24fd1e34b816"
-                    ));
-            account.setImage(r.get("secure_url").toString());
-            Account accountSave = repository.save(account);
-            AccountResponDTO accountResponDTO = modelMapper.map(accountSave, AccountResponDTO.class);
-            accountResponDTO.setRole(accountSave.getRole().getIdRole());
-            return accountResponDTO;
+            Account accountCheck = findByUsername(accountRequestDTO.getUsername());
+            if (accountCheck != null && accountCheck.getUsername().equals(accountRequestDTO.getUsername())){
+                return null;
+            }else {
+                Role role = roleRepository.findById(accountRequestDTO.getRole()).orElse(null);
+                Date date = new Date();
+                Account account = new Account();
+                account.setUsername(accountRequestDTO.getUsername());
+                account.setFullName(accountRequestDTO.getFullName());
+                account.setPassword(HashUtil.hash(accountRequestDTO.getPassword()));
+                account.setEmail(accountRequestDTO.getEmail());
+                account.setGender(accountRequestDTO.getGender());
+                account.setPhone(accountRequestDTO.getPhone());
+                account.setStatus(accountRequestDTO.getStatus());
+                account.setRole(role);
+                account.setCreateDate(date);
+                Map r = this.cloud.uploader().upload(accountRequestDTO.getImage().getBytes(),
+                        ObjectUtils.asMap(
+                                "cloud_name", "dcll6yp9s",
+                                "api_key", "916219768485447",
+                                "api_secret", "zUlI7pdWryWsQ66Lrc7yCZW0Xxg",
+                                "secure", true,
+                                "folders", "c202a2cae1893315d8bccb24fd1e34b816"
+                        ));
+                account.setImage(r.get("secure_url").toString());
+                Account accountSave = repository.save(account);
+                AccountResponDTO accountResponDTO = modelMapper.map(accountSave, AccountResponDTO.class);
+                accountResponDTO.setRole(accountSave.getRole().getIdRole());
+                return accountResponDTO;
+            }
         } catch (Exception e) {
             System.err.println(e.getMessage());
             return null;
@@ -100,7 +105,9 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public void deleteById(String id) {
-        repository.deleteById(id);
+       Account account =   repository.findByName(id);
+       account.setStatus(0);
+       repository.save(account);
     }
 
     @Override
@@ -111,37 +118,48 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public List<AccountResponDTO> findAll() {
         List<Account> accountList = (List<Account>) repository.findAll();
-        List<AccountResponDTO> accountResponDTOList = new ArrayList<>();
-        AccountResponDTO accountResponDTO = new AccountResponDTO();
-        for (int i = 0; i < accountList.size(); i++) {
-            accountResponDTO.setUsername(accountList.get(i).getUsername());
-            accountResponDTO.setFullName(accountList.get(i).getFullName());
-            accountResponDTO.setPassword(accountList.get(i).getPassword());
-            accountResponDTO.setEmail(accountList.get(i).getEmail());
-            accountResponDTO.setGender(accountList.get(i).getGender());
-            accountResponDTO.setPhone(accountList.get(i).getPhone());
-            accountResponDTO.setStatus(accountList.get(i).getStatus());
-            accountResponDTO.setRole(accountList.get(i).getRole().getIdRole());
-            accountResponDTO.setCreateDate(accountList.get(i).getCreateDate());
-            accountResponDTO.setImage(accountList.get(i).getImage());
-            accountResponDTOList.add(accountResponDTO);
-        }
+        List<AccountResponDTO> accountResponDTOList = accountList.stream().map(
+                account -> modelMapper.map(account, AccountResponDTO.class)).collect(Collectors.toList());
 
         return accountResponDTOList;
     }
 
     @Override
-    public Page<AccountResponDTO> findAll(Pageable pageable) {
-        Page<Account> accountPage = repository.findAll(pageable);
+    public Page<AccountResponDTO> findAll(Integer status, Pageable pageable) {
+        Page<Account> accountPage = repository.findAllByStatus(status, pageable);
         Page<AccountResponDTO> accountResponDTOPage = accountPage.map(entityPage -> modelMapper.map(entityPage, AccountResponDTO.class));
         return accountResponDTOPage;
     }
 
     @Override
-    public AccountDTO update(AccountDTO accountDTO, String username) {
-        Account optional = findByName(username);
+    public AccountResponDTO update(AccountRequestDTO accountRequestDTO, String username) {
+        try {
 
-        return null;
+            Role role = roleRepository.findById(accountRequestDTO.getRole()).orElse(null);
+            Account account = repository.findByName(username);
+            account.setFullName(accountRequestDTO.getFullName());
+            account.setGender(accountRequestDTO.getGender());
+            account.setEmail(accountRequestDTO.getEmail());
+            account.setPhone(accountRequestDTO.getPhone());
+            account.setRole(role);
+            account.setStatus(accountRequestDTO.getStatus());
+            Map r = this.cloud.uploader().upload(accountRequestDTO.getImage().getBytes(),
+                    ObjectUtils.asMap(
+                            "cloud_name", "dcll6yp9s",
+                            "api_key", "916219768485447",
+                            "api_secret", "zUlI7pdWryWsQ66Lrc7yCZW0Xxg",
+                            "secure", true,
+                            "folders", "c202a2cae1893315d8bccb24fd1e34b816"
+                    ));
+            account.setImage(r.get("secure_url").toString());
+            Account accountSave = repository.save(account);
+            AccountResponDTO accountResponDTO = modelMapper.map(accountSave, AccountResponDTO.class);
+            accountResponDTO.setRole(accountSave.getRole().getIdRole());
+            return accountResponDTO;
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 
     @Override
@@ -189,5 +207,27 @@ public class AccountServiceImpl implements AccountService {
         Page<Account> page = repository.findShowSale(share,pageable);
         return page;
 
+    }
+
+    @Override
+    public AccountResponDTO updateImage(AccountRequestDTO accountRequestDTO) {
+        try {
+            Account account = repository.findByName(UserName.getUserName());
+            Map r = this.cloud.uploader().upload(accountRequestDTO.getImage().getBytes(),
+                    ObjectUtils.asMap(
+                            "cloud_name", "dcll6yp9s",
+                            "api_key", "916219768485447",
+                            "api_secret", "zUlI7pdWryWsQ66Lrc7yCZW0Xxg",
+                            "secure", true,
+                            "folders", "c202a2cae1893315d8bccb24fd1e34b816"
+                    ));
+            account.setImage(r.get("secure_url").toString());
+            Account accountSave = repository.save(account);
+            AccountResponDTO accountResponDTO = modelMapper.map(accountSave, AccountResponDTO.class);
+            return accountResponDTO;
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 }
