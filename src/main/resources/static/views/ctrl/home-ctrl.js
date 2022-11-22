@@ -12,7 +12,6 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                  Authorization: `Bearer `+jwtToken
              }
          }
-
     $scope.cateAccessories=[];
     $scope.cateProducts=[];
     $scope.item= {};
@@ -35,15 +34,9 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
     $scope.getAcountActive = function () {
         $http.get(urlAccount+`/getAccountActive`, token).then(function (respon){
             $scope.accountActive = respon.data;
-            $rootScope.account = token;
             console.log($scope.accountActive.username)
         }).catch(err => {
-            Swal.fire({
-                icon: 'error',
-                text: 'Bạn chưa đăng nhập !!!',
-            })
-            console.log(err)
-            $window.location.href='#!login';
+            $rootScope.account = null;
         })
     }
 
@@ -98,8 +91,9 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                 let itemCart = $rootScope.carts.find(
                     it=>it.idAccessory===item.idAccessory
                 );
+                let data= res.data;
                 $http.get(`${urlAccessory}/amount/${item.idAccessory}`).then(res=>{
-                    if(itemCart.qty>=res.data) {
+                    if(itemCart && itemCart.qty>=res.data) {
                         const Toast = Swal.mixin({
                             toast: true,
                             position: 'top-end',
@@ -116,13 +110,11 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                             title: 'Số lượng sản phẩm không đủ!'
                         })
                     }else{
-                        let data= res.data;
                         if(!$scope.accessoryItem){
                             data.qty=1;
                             $rootScope.carts.push(data);
                         }else{
                             $scope.accessoryItem.qty++;
-                            console.log("addCart2",$scope.accessoryItem)
                         }
                         const Toast = Swal.mixin({
                             toast: true,
@@ -143,17 +135,33 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                         $rootScope.saveLocalStorage();
                         $rootScope.qtyCart++;
                     }
+                }).catch(err=>{
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 1500,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                    })
+
+                    Toast.fire({
+                        icon: 'error',
+                        title: 'Thêm thất bại!'
+                    })
                 })
-            }).catch(err=>{
-                console.log("error",err)
             })
         }else{
             $http.get(`${urlProduct}/${item.idProduct}`,token).then(res=>{
                 let itemCart = $rootScope.carts.find(
                     it=>it.idProduct===item.idProduct
                 );
+                let data= res.data;
                 $http.get(`${urlImei}/amount/${item.idProduct}`).then(res=>{
-                    if(itemCart.qty>=res.data) {
+                    if(itemCart&&itemCart.qty>=res.data) {
                         const Toast = Swal.mixin({
                             toast: true,
                             position: 'top-end',
@@ -170,38 +178,49 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                             title: 'Số lượng sản phẩm không đủ!'
                         })
                     }else{
-                        console.log("cartAccessory",res)
-                        let data= res.data;
-                        if(!$scope.productItem){
-                            data.qty=1;
-                            $rootScope.carts.push(data);
-                        }else{
-                            $scope.productItem.qty++;
-                            console.log("addCart2",$scope.productItem)
-                        }
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: 'top-end',
-                            showConfirmButton: false,
-                            timer: 1500,
-                            timerProgressBar: true,
-                            didOpen: (toast) => {
-                                toast.addEventListener('mouseenter', Swal.stopTimer)
-                                toast.addEventListener('mouseleave', Swal.resumeTimer)
-                            }
-                        })
-
-                        Toast.fire({
-                            icon: 'success',
-                            title: 'Thêm thành công!'
-                        })
-                        $rootScope.saveLocalStorage();
-                        $rootScope.qtyCart++;
+                    if(!$scope.productItem){
+                        data.qty=1;
+                        $rootScope.carts.push(data);
+                    }else{
+                        $scope.productItem.qty++;
                     }
-                })
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 1500,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                    })
 
-            }).catch(err=>{
-                console.log("error",err)
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'Thêm thành công!'
+                    })
+                    $rootScope.saveLocalStorage();
+                    $rootScope.qtyCart++;
+                }
+                }).catch(err=>{
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 1500,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                    })
+
+                    Toast.fire({
+                        icon: 'error',
+                        title: 'Thêm thất bại!'
+                    })
+                })
             })
         }
     }
@@ -250,7 +269,6 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
          })
      }
     $scope.getAcountActive();
-    $scope.getAccount();
 
 })
 

@@ -8,7 +8,6 @@ app.controller('login-ctrl',function($rootScope,$scope,$http,$window){
     localStorage.removeItem('jwtToken');
     $scope.onLogin = function () {
         $http.post(pathAPI, $scope.form).then(respon =>{
-
             Swal.fire({
                 position: 'top-end',
                 icon: 'success',
@@ -18,8 +17,10 @@ app.controller('login-ctrl',function($rootScope,$scope,$http,$window){
             })
             localStorage.setItem('jwtToken', respon.data.token);
             $scope.jwt = localStorage.getItem('jwtToken')
+            $rootScope.account=respon.data;
             $window.location.href = '#!home/index';
         }).catch(error => {
+            $rootScope.account=null;
             Swal.fire({
                 position: 'top-end',
                 icon: 'error',
@@ -31,6 +32,7 @@ app.controller('login-ctrl',function($rootScope,$scope,$http,$window){
     }
 
     $scope.logOut= function () {
+        $rootScope.account=null;
         localStorage.removeItem('jwtToken');
     }
 })
