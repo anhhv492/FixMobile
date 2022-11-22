@@ -17,6 +17,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
     $scope.item= {};
     $rootScope.carts=[];
     $rootScope.qtyCart=0;
+    $rootScope.account = jwtToken;
     $scope.getAcountActive = function () {
         $http.get(urlAccount+`/getAccountActive`, token).then(function (respon){
             $scope.accountActive = respon.data;

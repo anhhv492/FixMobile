@@ -6,6 +6,7 @@ import com.fix.mobile.service.*;
 import com.fix.mobile.utils.UserName;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -87,14 +88,16 @@ public class GuestRestController {
     }
     @GetMapping("/product/cate-product/{id}")
     public List<Product> findByCateProductId(@PathVariable("id") Integer id){
-        System.out.println("get product");
         Optional<Category> cate = categoryService.findById(id);
         if(cate.isEmpty()){
             return null;
         }
         List<Product> products = productService.findByCategoryAndStatus(cate);
-        for (Product product : products) {
-            System.out.println(product.getName());
+        for (int i = 0; i < products.size(); i++) {
+            List<ImayProduct> imayProducts = imayProductService.findByProductAndStatus(products.get(i),1);
+            if(imayProducts.size() == 0){
+                products.remove(i);
+            }
         }
         return products;
     }
@@ -110,17 +113,16 @@ public class GuestRestController {
         logger.info("-- Order: "+order.getIdOrder());
         return order;
     }
-    @PostMapping("/order-detail/add")
+    @PostMapping("/order/detail/add")
     public JsonNode cartItems(@RequestBody JsonNode carts){
         account = accountService.findByUsername(UserName.getUserName());
-        OrderDetail orderDetail =null;
-        BigDecimal price = new BigDecimal(0);
+        OrderDetail orderDetail;
         for (int i=0;i<carts.size();i++){
             if(carts.get(i).get("qty").asInt()<=0){
                 return null;
             }else{
                 orderDetail = new OrderDetail();
-                if(carts.get(i).get("idAccessory").asInt()>-1){
+                if(carts.get(i).get("idAccessory")!=null){
                     Optional<Accessory> accessory = accessoryService.findById(carts.get(i).get("idAccessory").asInt());
                     if(accessory.isPresent()){
                         orderDetail.setAccessory(accessory.get());
@@ -131,18 +133,18 @@ public class GuestRestController {
                         accessory.get().setQuantity(accessory.get().getQuantity()-carts.get(i).get("qty").asInt());
                         accessoryService.update(accessory.get(),accessory.get().getIdAccessory());
                     }
-                } else if (carts.get(i).get("idProduct").asInt()>-1){
+                } else if (carts.get(i).get("idProduct")!=null){
                     Optional<Product> product = productService.findById(carts.get(i).get("idProduct").asInt());
                     List<ImayProduct> imayProducts = imayProductService.findByProductAndStatus(product.get(),1);
                     if(product.isPresent()){
-                        for (int j=0;j<carts.get(i).get("qty").asInt()-1;j++){
-                            imayProducts.get(j).setStatus(0);
+                        for (ImayProduct imayProduct : imayProducts) {
+                            imayProduct.setStatus(0);
                         }
                         orderDetail.setProduct(product.get());
                         orderDetail.setOrder(order);
                         orderDetail.setQuantity(carts.get(i).get("qty").asInt());
                         orderDetail.setPrice(product.get().getPrice());
-//                        orderDetailService.save(orderDetail);
+                        orderDetailService.save(orderDetail);
                     }
                 }
             }

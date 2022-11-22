@@ -39,6 +39,7 @@ public class Order {
     @Column(name = "type")
     private Boolean type;
 
+
     @ManyToOne
     @JoinColumn(name = "username")
     private Account account;

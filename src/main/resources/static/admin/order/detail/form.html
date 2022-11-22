@@ -22,11 +22,11 @@
   </tr>
   <tr ng-repeat="orderDetail in orderDetails" ng-if="orderDetail.product">
     <td>{{orderDetail.product.name}}</td>
-    <td>{{orderDetail.product.color}}</td>
+    <td>{{orderDetail.product.color.name}}</td>
     <td>{{orderDetail.product.category.name}}</td>
     <td>{{orderDetail.product.price|number}}</td>
     <td>{{orderDetail.quantity}}</td>
-    <td><img width="80px" height="80px" src="/images/accessories/{{orderDetail.product.image}}"></td>
+    <td><img width="80px" height="80px" src="{{orderDetail.product.images[0].name}}"></td>
     <td>{{orderDetail.quantity*orderDetail.price|number}}</td>
   </tr>
   </tbody>

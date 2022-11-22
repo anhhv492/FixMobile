@@ -40,7 +40,7 @@ app.controller('buy-success-ctrl',function($scope,$window,$timeout){
                         no-repeat
                      `
                 })
-                localStorage.clear();
+                localStorage.removeItem("cart");
                 console.log('Buy cart Paypal success!')
             }
         })

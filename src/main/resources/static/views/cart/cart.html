@@ -45,8 +45,8 @@
                                     </button>
                                 </div>
                             </td>
-                            <td ng-if="item.idAccessory">{{item.color}}</td>
-                            <td ng-if="item.idProduct">{{item.color.name}}</td>
+                            <td class="align-middle" ng-if="item.idAccessory">{{item.color}}</td>
+                            <td class="align-middle" ng-if="item.idProduct">{{item.color.name}}</td>
                             <td class="align-middle">
                                 <p class="mb-0" style="font-weight: 500;">{{item.price*item.qty|number}}</p>
                             </td>
@@ -131,8 +131,10 @@
                                     <h5 class="mb-2">Tổng tiền</h5>
                                     <h5 class="mb-2">{{totals()|number}}đ</h5>
                                 </div>
-
-                                <button type="button" class="btn btn-primary btn-block btn-lg" ng-if="checkBuy!=null"
+                                <a class="btn btn-primary btn-block btn-lg" href="#!login" ng-if="!account">
+                                    Thanh toán
+                                </a>
+                                <button type="button" class="btn btn-primary btn-block btn-lg" ng-if="checkBuy!=null && account"
                                     ng-click="buyCart()">
                                     Thanh toán
                                 </button>

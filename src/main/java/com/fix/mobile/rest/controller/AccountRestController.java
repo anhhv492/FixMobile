@@ -100,7 +100,6 @@ public class AccountRestController {
         AccountDTO accountDTO = modelMapper.map(account, AccountDTO.class);
         return accountDTO;
     }
-
     @RequestMapping("/getdatasale/{page}")
     public Page<Account> getDataShowSale(
             @PathVariable ("page") Integer page,

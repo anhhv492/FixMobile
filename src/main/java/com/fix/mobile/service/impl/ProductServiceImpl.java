@@ -83,7 +83,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     public List<Product> findByCategoryAndStatus(Optional<Category> cate) {
-        return repository.findByCategoryAndStatus(cate.get(),1);
+        Optional<List<Product>> products= Optional.ofNullable(repository.findByCategoryAndStatus(cate.get(), 1));
+        return products.orElse(null);
     }
 
     @Override
