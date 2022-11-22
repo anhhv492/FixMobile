@@ -93,17 +93,16 @@
                             <div class="col-md-6 col-lg-4 col-xl-6">
                                 <div class="row">
                                     <div class="form-outline col-6">
-                                        <label class="form-label" for="typeName">Người nhận</label>
-                                        <input value="{{addressAccount.personTake}}" type="text" id="typeName" class="form-control" placeholder="Name" disabled/>
+                                        <label class="form-label">Người nhận</label>
+                                        <p class="alert alert-secondary" style="height: 50px">{{addressAccount.personTake}}</p>
                                     </div>
                                     <div class="form-outline col-6">
-                                        <label class="form-label" for="typeExp">Số điện thoại</label>
-                                        <input  value="{{addressAccount.phoneTake}}" type="text" id="typeExp" class="form-control" placeholder="SĐT" minlength="10" maxlength="15" disabled/>
+                                        <label class="form-label">Số điện thoại</label>
+                                        <p class="alert alert-secondary" style="height: 50px">{{addressAccount.phoneTake}}</p>
                                     </div>
                                     <div class="form-outline col-12 mt-2">
-                                        <label class="form-label" for="typeText1">Địa chỉ</label>
-                                        <input  class="form-control" ng-model="cart.address" type="text"
-                                                  id="typeText1" ng-value="addressAccount.addressDetail" disabled/>
+                                        <label class="form-label">Địa chỉ</label>
+                                        <p class="alert alert-secondary">{{addressAccount.addressDetail}}, {{addressAccount.addressTake}}</p>
                                     </div>
                                     <div class="form-outline col-12 mt-2">
                                         <label class="form-label" for="typeText2">Ghi chú</label>
@@ -113,7 +112,8 @@
                                 </div>
                             </div>
                             <div class="col-lg-4 col-xl-3">
-                                <a class="btn btn-outline-primary" href="#!address">Chọn địa chỉ</a>
+                                <a class="btn btn-outline-primary" href="#!login" ng-if="!account">Chọn địa chỉ</a>
+                                <a class="btn btn-outline-primary" href="#!address" ng-if="account">Chọn địa chỉ</a>
                                 <button class="btn btn-warning">Mã giảm giá</button>
                                 <div class="d-flex justify-content-between" style="font-weight: 500;">
                                     <p class="mb-2">Tổng đơn</p>

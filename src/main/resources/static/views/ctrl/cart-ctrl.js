@@ -139,6 +139,7 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window) {
                 console.log(err)
             })
         }
+        $scope.getShippingOder();
         if ($rootScope.carts[index].qty <= 0) {
             $rootScope.saveLocalStorage();
             $rootScope.loadLocalStorage();
@@ -214,6 +215,7 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window) {
                 console.log(err)
             })
         }
+        $scope.getShippingOder();
     }
     $scope.reduce = function (item) {
         if(item.idAccessory>-1) {
@@ -222,7 +224,6 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window) {
             var index = $rootScope.carts.findIndex(it => it.idProduct === item.idProduct)
         }
         $rootScope.carts[index].qty--;
-        $scope.getShippingOder();
         if ($rootScope.carts[index].qty <= 0) {
             $rootScope.saveLocalStorage();
             $rootScope.loadLocalStorage();
@@ -231,6 +232,7 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window) {
             $window.location.href = '#!cart';
             console.log('I was closed by the timer')
         }
+        $scope.getShippingOder();
         $rootScope.saveLocalStorage();
         $rootScope.loadLocalStorage();
         $rootScope.qtyCart--;
@@ -282,6 +284,7 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window) {
                         }).then(res => {
                             console.log("buy cart", res.data)
                             $scope.linkPaypal = res.data;
+                            $scope.cart.address = $scope.addressAccount.addressDetail+", "+$scope.addressAccount.addressTake;
                             $scope.cart.createDate = new Date();
                             $scope.cart.total = $scope.totals();
                             $scope.cart.status = 1;
@@ -350,22 +353,24 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window) {
         $scope.checkBuy = false;
     }
     $scope.getAddressAcountACtive = function () {
-        $http.get(urlAccounts + "/getAddress", token).then(function (respon) {
-            $scope.addressAccount = respon.data;
-            $scope.to_district_id = $scope.addressAccount.districtId;
-            $scope.to_ward_code = $scope.addressAccount.wardId;
-            $scope.getShippingOder();
-            console.log($scope.to_district_id, $scope.to_ward_code)
-            console.log($scope.addressDefault)
+        if($rootScope.account){
+            $http.get(urlAccounts + "/getAddress", token).then(function (respon) {
+                $scope.addressAccount = respon.data;
+                $scope.to_district_id = $scope.addressAccount.districtId;
+                $scope.to_ward_code = $scope.addressAccount.wardId;
+                $scope.getShippingOder();
+                console.log($scope.to_district_id, $scope.to_ward_code)
+                console.log($scope.addressDefault)
 
-        }).catch(err => {
-            Swal.fire({
-                icon: 'error',
-                text: 'Vui lòng thêm địa chỉ!!!',
+            }).catch(err => {
+                Swal.fire({
+                    icon: 'error',
+                    text: 'Vui lòng thêm địa chỉ!!!',
+                })
+                console.log(err)
+                $window.location.href = '#!address';
             })
-            console.log(err)
-            $window.location.href = '#!address';
-        })
+        }
     }
     $scope.getShippingOder = function () {
         $http.get(urlShippingOder + "?from_district_id=1542&service_id=53320&to_district_id="
