@@ -3,6 +3,7 @@ package com.fix.mobile.rest.controller;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fix.mobile.entity.*;
 import com.fix.mobile.service.*;
+import com.fix.mobile.utils.UserName;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -33,6 +34,7 @@ public class GuestRestController {
     private OrderDetailService orderDetailService;
     
     Order order = null;
+    Account account = null;
     @GetMapping("/category/getAll")
     public List<Category> getAll(){
         return categoryService.findAll();
@@ -41,6 +43,17 @@ public class GuestRestController {
     @GetMapping("/cate")
     public List<Category> findByCate(){
         return categoryService.findByType();
+    }
+    @GetMapping("/imei/amount/{id}")
+    public Integer getAmountImei(@PathVariable("id") Integer id){
+        Product product = productService.findById(id).get();
+        List<ImayProduct> imeis= imayProductService.findByProductAndStatus(product,1);
+        return imeis.size();
+    }
+    @GetMapping("/accessory/amount/{id}")
+    public Integer getAmountAccessory(@PathVariable("id") Integer id){
+        Accessory accessory = accessoryService.findById(id).get();
+        return accessory.getQuantity();
     }
     //find accessory by id
     @GetMapping(value="/accessory/{id}")
@@ -86,8 +99,8 @@ public class GuestRestController {
         return products;
     }
     @PostMapping("/order/add")
-    public Order order(@RequestBody Order order, Principal principal){
-        Account account = accountService.findByUsername(principal.getName());
+    public Order order(@RequestBody Order order){
+        account = accountService.findByUsername(UserName.getUserName());
         if(order.getAddress()==null||account==null){
             return null;
         }
@@ -98,8 +111,8 @@ public class GuestRestController {
         return order;
     }
     @PostMapping("/order-detail/add")
-    public JsonNode cartItems(@RequestBody JsonNode carts,Principal principal){
-        System.out.println(order.getIdOrder()+"id order");
+    public JsonNode cartItems(@RequestBody JsonNode carts){
+        account = accountService.findByUsername(UserName.getUserName());
         OrderDetail orderDetail =null;
         BigDecimal price = new BigDecimal(0);
         for (int i=0;i<carts.size();i++){
@@ -134,7 +147,7 @@ public class GuestRestController {
                 }
             }
         }
-        logger.info("-- OrderDetail success: "+principal.getName());
+        logger.info("-- OrderDetail success: "+account.getUsername());
         return carts;
     }
     @GetMapping(value ="/findByProductCode/{productCode}")

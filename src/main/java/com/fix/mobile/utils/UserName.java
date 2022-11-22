@@ -1,6 +1,7 @@
 package com.fix.mobile.utils;
 
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 
 public class UserName {
 
@@ -12,6 +13,7 @@ public class UserName {
         String[] objects = principal.split(",",0);
         String username = objects[0].replace("org.springframework.security.core.userdetails.User","")
                 .replace("[","").replace("Username=","").trim();
+        System.out.println("tai khoan login: "+username);
         return username;
     }
 }
