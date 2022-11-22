@@ -43,7 +43,8 @@ public class SaleServiceImpl implements SaleService {
 
     @Override
     public Sale update(Sale sale) {
-        System.out.println(sale.toString());
+        sale.setUserpdate(1);
+        sale.setUpdateTime(new Date());
         return dao.save(sale);
     }
 

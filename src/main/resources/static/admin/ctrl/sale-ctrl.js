@@ -18,6 +18,11 @@ app.controller("sale_ctrl", function ($scope, $http) {
     $scope.check_first=false;
     $scope.check_last=true;
 
+    $scope.indextable=0;
+    $scope.totalPagestable=0;
+    $scope.check_firsttable=false;
+    $scope.check_lasttable=true;
+
     //validate start
     $scope.hiddenTableAll = false;
     $scope.hiddenValueMin = false;
@@ -88,7 +93,17 @@ app.controller("sale_ctrl", function ($scope, $http) {
 
     }
     //addSale end
-
+    $scope.shareTBS = function(){
+        var url ="";
+        if ($scope.saleadd.typeSale == 1) {
+            url = urlprd;
+        }else if($scope.saleadd.userType == 1){
+            url = urlacc;
+        }else if($scope.saleadd.typeSale == 4){
+            url = urlacsr;
+        }
+        $scope.getDataTable(url, $scope.shareTbS);
+    }
     //get data table start
     $scope.getDataTable =function (urlDataTable,shear){
         $http.get(`${urlDataTable}/`+$scope.index+"?share="+shear,token).then(function(response) {
@@ -100,7 +115,26 @@ app.controller("sale_ctrl", function ($scope, $http) {
     }
     //get data table end
     $scope.next=function(urlDataTable,shear){
-
+        if(urlDataTable == 'all'){
+            $scope.check_firsttable = true;
+            $scope.indextable++;
+            if ($scope.indextable >= $scope.totalPagestable) {
+                $scope.indextable = 0;
+                $scope.check_firsttable = false;
+                $scope.check_lasttable = true;
+            }
+            if ($scope.indextable == $scope.totalPagestable - 1) {
+                $scope.check_firsttable = true;
+                $scope.check_lasttable = false;
+            }
+            var urlGetDataTableSale=`/admin/rest/sale/getall/`+$scope.indextable+`?stt=`+idxstt+`&share=&type=`;
+            $http.get(urlGetDataTableSale).then(function(response) {
+                $scope.dataTableSale = response.data.content;
+                $scope.totalPagestable=response.data.totalPages;
+            }).catch(error=>{
+                console.log(error);
+            });
+        }else {
             $scope.check_first = true;
             $scope.index++;
             if ($scope.index >= $scope.totalPages) {
@@ -112,15 +146,6 @@ app.controller("sale_ctrl", function ($scope, $http) {
                 $scope.check_first = true;
                 $scope.check_last = false;
             }
-        if(urlDataTable == 'all'){
-            var urlGetDataTableSale=`/admin/rest/sale/getall/`+$scope.index+`?stt=`+idxstt+`&share=&type=`;
-            $http.get(urlGetDataTableSale).then(function(response) {
-                $scope.dataTableSale = response.data.content;
-                $scope.totalPages=response.data.totalPages;
-            }).catch(error=>{
-                console.log(error);
-            });
-        }else {
             if (urlDataTable == 'phụ kiện') {
                 urlDataTable = urlacsr;
             } else if (urlDataTable == 'sản phẩm') {
@@ -132,6 +157,26 @@ app.controller("sale_ctrl", function ($scope, $http) {
         }
     }
     $scope.prev=function(urlDataTable,shear){
+        if(urlDataTable == 'all'){
+            $scope.check_lasttable = true;
+            $scope.indextable--;
+            if ($scope.indextable < 0) {
+                $scope.indextable = $scope.totalPagestable - 1;
+                $scope.check_firsttable = true;
+                $scope.check_lasttable = false;
+            }
+            if ($scope.indextable == 0) {
+                $scope.check_firsttable = false;
+                $scope.check_lasttable = true;
+            }
+            var urlGetDataTableSale=`/admin/rest/sale/getall/`+$scope.indextable+`?stt=`+idxstt+`&share=&type=`;
+            $http.get(urlGetDataTableSale).then(function(response) {
+                $scope.dataTableSale = response.data.content;
+                $scope.totalPagestable=response.data.totalPages;
+            }).catch(error=>{
+                console.log(error);
+            });
+        }else {
             $scope.check_last = true;
             $scope.index--;
             if ($scope.index < 0) {
@@ -143,15 +188,6 @@ app.controller("sale_ctrl", function ($scope, $http) {
                 $scope.check_first = false;
                 $scope.check_last = true;
             }
-        if(urlDataTable == 'all'){
-            var urlGetDataTableSale=`/admin/rest/sale/getall/`+$scope.index+`?stt=`+idxstt+`&share=&type=`;
-            $http.get(urlGetDataTableSale).then(function(response) {
-                $scope.dataTableSale = response.data.content;
-                $scope.totalPages=response.data.totalPages;
-            }).catch(error=>{
-                console.log(error);
-            });
-        }else {
             if (urlDataTable == 'phụ kiện') {
                 urlDataTable = urlacsr;
             } else if (urlDataTable == 'sản phẩm') {
@@ -192,7 +228,6 @@ app.controller("sale_ctrl", function ($scope, $http) {
             } else if ($scope.saleadd.typeSale == 3) {
                 checkid = $scope.dataTable[id].username;
             } else if ($scope.saleadd.typeSale == 4) {
-
                 checkid = $scope.dataTable[id].idAccessory;
             }
         }
@@ -292,11 +327,11 @@ app.controller("sale_ctrl", function ($scope, $http) {
 //showmemu
     $scope.showDataTableSale=function (stt){
         $scope.dataTableSale=[];
-        $scope.index=0;
-        var urlGetDataTableSale=`/admin/rest/sale/getall/`+$scope.index+`?stt=`+stt+`&share=&type=`;
+        $scope.indextable=0;
+        var urlGetDataTableSale=`/admin/rest/sale/getall/`+$scope.indextable+`?stt=`+stt+`&share=&type=`;
         $http.get(urlGetDataTableSale).then(function(response) {
             $scope.dataTableSale = response.data.content;
-            $scope.totalPages=response.data.totalPages;
+            $scope.totalPagestable=response.data.totalPages;
         }).catch(error=>{
             console.log(error);
         });
@@ -351,7 +386,6 @@ app.controller("sale_ctrl", function ($scope, $http) {
         let listDetail = angular.copy($scope.seLected);
         if($scope.saleadd.typeSale==0||$scope.saleadd.typeSale==2){
             $http.post(urlsale, item,token).then(resp => {
-                console.log(item);
                 swal.fire({
                     icon: 'success',
                     showConfirmButton: false,
@@ -371,7 +405,6 @@ app.controller("sale_ctrl", function ($scope, $http) {
             $http.post(urlsale, item,token).then(resp => {
                 let urlsaledetail = `/admin/rest/sale/updatedetail/`+$scope.saleadd.typeSale+`/`+$scope.saleadd.idSale;
                 $http.post(urlsaledetail,listDetail,token).then(resp => {
-                    console.log(urlsaledetail);
                     $scope.clear();
                     swal.fire({
                         icon: 'success',

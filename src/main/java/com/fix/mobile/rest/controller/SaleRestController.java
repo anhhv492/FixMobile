@@ -29,7 +29,8 @@ public class SaleRestController {
     }
     @RequestMapping("/update")
     public Sale updateSale(@RequestBody Sale sale){
-        System.out.println(sale.toString());
+        System.out.println(sale.toString()+sale.getIdSale());
+        saleDetailSV.deleteSaleDetai(sale.getIdSale());
         return saleSV.update(sale);
     }
 
@@ -41,11 +42,12 @@ public class SaleRestController {
         }
     }
 
-    @RequestMapping("/updatedetail/{idx}")
+    @RequestMapping("/updatedetail/{idx}/{id}")
     public void updatedetail(@PathVariable(name="idx") Integer idx,
+                             @PathVariable(name="id") Integer id,
                                @RequestBody ArrayList<String> listID){
         for (int i=0;i<listID.size();i++){
-            saleDetailSV.createSaleDetail(listID.get(i),idx);
+            saleDetailSV.updateSaleDetail(listID.get(i),idx,id);
         }
     }
     @RequestMapping("/getall/{page}")

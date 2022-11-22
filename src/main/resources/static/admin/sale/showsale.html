@@ -115,10 +115,9 @@
 
                     <!-- table all -->
                     <div ng-show="hiddenTableAll">
-                        <form class="">
-                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                            <button class="btn btn-outline-success" type="submit">Search</button>
-                        </form>
+                        <!-- share table -->
+                            <input class="form-control me-2" type="search" placeholder="Search" ng-keyup="shareTBS()" ng-model="shareTbS" aria-label="Search">
+                        <!-- share table -->
                         <table class="table">
                             <thead>
                             <tr>
@@ -295,7 +294,7 @@
                     </div>
                     <div class="col-1">
                         <li class="page-item ms-1 me-1 pt-1 ">
-                            <h4>{{index + 1}}/{{totalPages}}</h4>
+                            <h4>{{indextable + 1}}/{{totalPagestable}}</h4>
                         </li>
                     </div>
                     <div class="col-1">

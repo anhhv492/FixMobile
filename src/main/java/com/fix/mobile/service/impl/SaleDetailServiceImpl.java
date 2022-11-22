@@ -79,7 +79,25 @@ public class SaleDetailServiceImpl implements SaleDetailService {
     }
 
     @Override
+    public void deleteSaleDetai(Integer id) {
+        repository.deleteByIdSale(id);
+    }
+
+    @Override
     public List<SaleDetail> findByid(Sale sale) {
         return repository.findBySale(sale);
+    }
+
+    @Override
+    public void updateSaleDetail(String s, Integer idx, Integer id) {
+        if(idx==1){
+            repository.updateSaleDetailProduct(id,s);
+        }
+        if (idx==3){
+            repository.updateSaleDetailusername(id,s);
+        }
+        if (idx==4){
+            repository.updateSaleDetailAccessory(id,s);
+        }
     }
 }
