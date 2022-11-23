@@ -2,7 +2,10 @@ package com.fix.mobile.controller;
 
 import com.fix.mobile.entity.Account;
 import com.fix.mobile.service.AccountService;
+import com.fix.mobile.utils.UserName;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,14 +27,9 @@ public class LoginController {
 
 	@GetMapping("/rest/account")
 	@ResponseBody
-	public Account login(Principal principal) {
-		if(principal == null) {
-			return null;
-		}
-		Account account = accountService.findByUsername(principal.getName());
-		System.out.println("Username đang login: " + account.getUsername());
+	public Account account() {
+		Account account = accountService.findByUsername(UserName.getUserName());
 		return account;
-
 	}
 	@RequestMapping("/security/login/success")
 	public String loginSuccess(Model model) {
