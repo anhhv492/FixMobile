@@ -16,6 +16,8 @@ public interface SaleService {
 
     public List<Sale> getall(Integer status);
 
+    public Sale findByid(Integer id);
+
 
     Page<Sale> getByPage(int pageNumber, int maxRecord, Integer Status, String share,String type);
 }
