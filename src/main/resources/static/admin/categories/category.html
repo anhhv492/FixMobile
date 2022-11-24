@@ -1,38 +1,59 @@
 <div class="col-sm-9 col-sm-offset-3 col-lg-12" xmlns:allowInvalid="http://www.w3.org/1999/xhtml"
      xmlns:updateOn="http://www.w3.org/1999/xhtml" xmlns:debounce="http://www.w3.org/1999/xhtml">
-    <div class="row">
+    <div class="row offset-3">
         <div class="col-lg-12">
             <h1 class="page-header mr-2">{{checkSubmit == false ? title.insert : title.update}} danh mục</h1>
         </div>
     </div><!--/.row-->
-    <div class="row">
+    <div class="row offset-3">
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <form role="form" method="post" class="row"
+                    <form role="form" method="post" class="row" name="myForm"
                           ng-submit="doSubmit()" enctype="multipart/form-data">
                         <div class="col-md-6">
-                            <div class="form-group mt-2">
-                                <label>Danh Mục</label>
-                                <br>
-                                <input type="radio" class="form-check-input"
-                                       ng-model="form.type" name="type" ng-value="0" checked> Sản Phẩm
-                                <input type="radio" class="form-check-input"
-                                       checked ng-model="form.type" name="type" ng-value="1"> Phụ Kiện
-                                <br>
+                            <div class="row">
+                                <div class="form-group mt-3 col-6">
+                                    <label>Danh Mục</label>
+                                    <br>
+                                    <input type="radio" class="form-check-input"
+                                           ng-model="form.type" name="type" ng-value="0" checked> Sản Phẩm
+                                    <input type="radio" class="form-check-input"
+                                           checked ng-model="form.type" name="type" ng-value="1"> Phụ Kiện
+                                    <br>
+                                </div>
+                                <div class="form-group mt-3 col-6">
+                                    <label>Trạng thái</label>
+                                    <select class="form-select mb-1" id="selectStatus">
+                                        <option selected value="" disabled>Chọn trạng thái</option>
+                                        <option value="0">Không hoạt động</option>
+                                        <option value="1">Đang hoạt động</option>
+                                    </select>
+                                </div>
                             </div>
 
-                            <div class="form-group mt-1">
+                            <div class="form-group mt-3">
                                 <label>Tên thể loại</label>
-                                <input oninput="this.value = this.value.toUpperCase()" ng-model="form.name" required class="form-control" placeholder="">
+                                <input oninput="this.value = this.value.toUpperCase()"
+                                       ng-model="form.name" type="text" required class="form-control" placeholder=""
+                                       ng-minlength="3" ng-maxlength="250" name="name"
+                                       required>
+                                <span ng-show="myForm.$submitted || myForm.name.$dirty" style="color: red">
+                                        <span class="error" ng-show="myForm.name.$error.required"> <i
+                                                class="fa fa-exclamation-circle"></i>Tên thể loại không được trống</span>
+                                        <span class="error"
+                                              ng-show="((myForm.name.$error.minlength
+                                              || myForm.name.$error.maxlength) || myForm.name.$error.$dirty)">
+                                                <i class="fa fa-exclamation-circle"></i>Tên thể loại phải từ 3-250 ký tự</span>
+                                    </span>
                             </div>
 
                         </div>
                         <div class="form-group mt-4">
-                            <button type="submit" class="btn  {{checkSubmit == false ? 'btn-success' : 'btn-primary'}}">
+                            <button type="submit" class="btn   {{checkSubmit == false ? 'btn-success' : 'btn-primary'}}" ng-disabled="myForm.$invalid">
                                 {{checkSubmit == false ? title.insert : title.update}}
                             </button>
-                            <button type="reset" ng-click="refresh()" class="btn btn-warning">Làm mới</button>
+                            <button type="reset"  ng-click="refresh()" class="btn btn-warning">Làm mới</button>
                         </div>
                     </form>
                 </div>

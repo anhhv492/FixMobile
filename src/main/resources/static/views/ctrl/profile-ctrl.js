@@ -10,6 +10,8 @@ app.controller('profile-ctl', function ($scope,$http, $window) {
             Authorization: `Bearer `+jwtToken
         }
     }
+
+
     $scope.message = function (mes){
         const Toast = Swal.mixin({
             toast: true,
@@ -45,6 +47,26 @@ app.controller('profile-ctl', function ($scope,$http, $window) {
             icon: 'error',
             title: err,
         })
+    }
+
+    $scope.form = function () {
+        alert("Chạy method form")
+        var account = angular.copy($scope.form);
+
+        if (account.fullName.trim() == null) {
+            alert("Họ và tên không được để trống khoản trống")
+            return null;
+        }
+        if (account.phone.trim() == null) {
+            alert("Số điện thoại không được để trống")
+            return null;
+        }
+        if (account.email.trim() == null) {
+            alert("Email không được để trống")
+            return null;
+        }
+        return account;
+
     }
 
     $scope.getAcountActive = function () {

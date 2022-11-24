@@ -23,7 +23,6 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category save(Category entity) {
-        entity.setStatus(1);
         return repository.save(entity);
     }
 
@@ -110,6 +109,15 @@ public class CategoryServiceImpl implements CategoryService {
             }
         }
 
+    }
+
+    @Override
+    public void deleteByListId(List<Integer> idList) {
+        for (int i = 0; i < idList.size(); i++) {
+            Category category = repository.findById(idList.get(i)).orElse(null);
+            category.setStatus(0);
+            repository.save(category);
+        }
     }
 
 }

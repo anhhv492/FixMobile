@@ -31,19 +31,16 @@ public class CategoryRestController {
     }
 
     @PostMapping("/create")
-    public Category create(@RequestBody CategoryDTO categoryDTO, Category category){
-        BeanUtils.copyProperties(categoryDTO, category);
+    public Category create(@RequestBody Category category){
         return categoryService.save(category);
     }
 
     @PutMapping("/update")
-    public Category updaate(@RequestParam("id") Integer id,@RequestBody CategoryDTO categoryDTO, Category category){
-        category =  categoryService.findById(id).get();
-        BeanUtils.copyProperties(categoryDTO, category);
-        return categoryService.save(category);
+    public Category updaate(@RequestParam("id") Integer id,@RequestBody Category category){
+        return categoryService.update(category, id);
     }
 
-    @DeleteMapping("/delete")
+    @PostMapping("/delete")
     public void delete(@RequestParam("id") Integer id){
         categoryService.deleteById(id);
     }

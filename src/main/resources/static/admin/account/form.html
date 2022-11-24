@@ -45,14 +45,14 @@
                             <span ng-show="myForm.$submitted || myForm.status.$dirty">
                                         <span class="error" ng-show="myForm.status.$error.required"> <i
                                                 class="fa fa-exclamation-circle"></i>Phải chọn trạng thái </span>
-                                    </span><br><br>
+                                    </span>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-sm-6 -p-0">
-                    <div class="row  mb-1">
+                    <div class="row  mb-4">
                         <div class="col-sm-3">
                             <label class="card-title mb-0">Họ và Tên</label>
                         </div>
@@ -66,7 +66,7 @@
                                         <span class="error"
                                               ng-show="((myForm.fullName.$error.minlength || myForm.fullName.$error.maxlength) || myForm.fullName.$error.$dirty)">
                                                 <i class="fa fa-exclamation-circle"></i>Họ và tên từ 6-250 ký tự</span>
-                                    </span><br><br>
+                                    </span>
                         </div>
                     </div>
                 </div>
@@ -91,8 +91,8 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-sm-6 -p-0">
+            <div class="row mt-4">
+                <div class="col-sm-6 -p-0" >
                     <div class="row  mb-1">
                         <div class="col-sm-3">
                             <label class="card-title mb-0">Giới tính</label>
@@ -124,12 +124,12 @@
                             <span ng-show="myForm.$submitted || myForm.role.$dirty">
                                         <span class="error" ng-show="myForm.role.$error.required"> <i
                                                 class="fa fa-exclamation-circle"></i>Phải chọn chức vụ</span>
-                                    </span><br><br>
+                                    </span>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row  mt-4">
                 <div class="col-sm-6 -p-0">
 
                     <div class="row  mb-1">
@@ -170,7 +170,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row  mt-4">
                 <div ng-hide="hidePassword" class="col-sm-6 -p-0">
 
                     <div class="row  mb-1">
@@ -189,7 +189,7 @@
                                                 <i class="fa fa-exclamation-circle"></i>Mật khẩu tối thiểu 3-250 ký tự</span>
                                 <!-- <span class="error" ng-show="myForm.password.$error.pattern"> <i
                                     class="fa fa-exclamation-circle"></i>Tối thiểu ba ký tự, ít nhất một chữ cái, một số và một ký tự đặc biệt</span> -->
-                                    </span><br><br>
+                                    </span>
                         </div>
                     </div>
                 </div>
@@ -206,7 +206,7 @@
                                             <span class="error" ng-show="myForm.creatDate.$error.pattern"> <i
                                                     class="fa fa-exclamation-circle"></i>Ngày tạo không được để
                                                 trống</span>
-                                        </span><br><br>
+                                        </span>
                             </div>
                         </div>
                     </div>

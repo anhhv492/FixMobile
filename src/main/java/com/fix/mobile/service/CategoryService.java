@@ -19,4 +19,6 @@ public interface CategoryService extends GenericService<Category, Integer> {
     List<Category> findByTypeSP();
 
     Page<Category> page(String name, Integer type, Integer status, Pageable pageable);
+
+    void deleteByListId(List<Integer> idList);
 }

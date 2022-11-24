@@ -67,13 +67,24 @@
                 <div class="card mb-4">
                     <div class="card-body">
                         <form method="post"
-                              ng-submit="doSubmit()" enctype="multipart/form-data">
+                              ng-submit="doSubmit()" name="myForm" enctype="multipart/form-data">
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <p class="mb-0">Người nhận</p>
+                                    <p class="mb-0">Họ và tên người nhận</p>
                                 </div>
                                 <div class="col-sm-9">
-                                    <input ng-model="form.personTake" class="text-muted mb-0 input" value="admin">
+                                    <input ng-model="form.personTake" type="text" name="personTake" class="text-muted mb-0 input"
+                                           ng-minlength="6" ng-maxlength="250"
+                                           required placeholder="Ví dụ: Trần Văn A">
+                                    <span ng-show="myForm.$submitted || myForm.personTake.$dirty" style="color: red">
+                                        <span class="error" ng-show="myForm.personTake.$error.required"
+                                        > <i
+                                                class="fa fa-exclamation-circle"></i>Họ và tên người nhận không được trống</span>
+                                        <span class="error"
+                                              ng-show="((myForm.personTake.$error.minlength || myForm.personTake.$error.maxlength)
+                                              || myForm.personTake.$error.$dirty)">
+                                                <i class="fa fa-exclamation-circle"></i>Họ và tên người nhận từ 6-250 ký tự</span>
+                                    </span>
                                 </div>
                             </div>
                             <hr>
@@ -82,7 +93,19 @@
                                     <p class="mb-0">Số điện thoại</p>
                                 </div>
                                 <div class="col-sm-9">
-                                    <input ng-model="form.phoneTake" class="text-muted mb-0 input" value="Johnatan Smith">
+                                    <input ng-model="form.phoneTake" class="text-muted mb-0 input"
+                                           pattern="(84|0[3|5|7|8|9])+([0-9]{8})\b"
+                                           ng-minlength="0" ng-maxlength="10" name="phoneTake" required type="text"
+                                           placeholder="Số điện thoại liên lạc">
+                                    <span ng-show="myForm.$submitted || myForm.phoneTake.$dirty" style="color: red">
+                                        <span class="error" ng-show="myForm.phoneTake.$error.required"
+                                        > <i
+                                                class="fa fa-exclamation-circle"></i>Số điện thoại không được
+                                            trống</span>
+                                            <span class="error" ng-show="myForm.phoneTake.$error.pattern"
+                                            > <i
+                                                    class="fa fa-exclamation-circle"></i>Số điện thoại sai đinh dạng</span>
+                                    </span>
                                 </div>
                             </div>
 
@@ -118,11 +141,22 @@
                                     <p class="mb-0">Địa chỉ cụ thể</p>
                                 </div>
                                 <div class="col-sm-9">
-                                    <input ng-model="form.addressDetail" class="text-muted mb-0 input" value="....">
+                                    <input ng-model="form.addressDetail" name="addressDetail" class="text-muted mb-0 input"
+                                           ng-minlength="6" ng-maxlength="250"
+                                           required type="text" placeholder="Ví dụ : số 111 ngọa long">
+                                    <span ng-show="myForm.$submitted || myForm.addressDetail.$dirty" style="color: red">
+                                        <span class="error" ng-show="myForm.addressDetail.$error.required"
+                                        > <i
+                                                class="fa fa-exclamation-circle"></i>Địa chỉ cụ thể không được trống</span>
+                                        <span class="error"
+                                              ng-show="((myForm.addressDetail.$error.minlength || myForm.addressDetail.$error.maxlength)
+                                              || myForm.addressDetail.$error.$dirty)">
+                                                <i class="fa fa-exclamation-circle"></i>Địa chỉ cụ thể phải từ 6-250 ký tự</span>
+                                    </span>
                                 </div>
                             </div>
                             <hr>
-                            <button type="submit" class="btn btn-outline-primary ms-1 mt-3 offset-2">
+                            <button type="submit" ng-disabled="myForm.$invalid" class="btn btn-outline-primary ms-1 mt-3 offset-2">
                                 {{checkSubmit == false ? title.insert : title.update}}
                             </button>
                         </form>

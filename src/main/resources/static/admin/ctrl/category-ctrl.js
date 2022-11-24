@@ -15,6 +15,8 @@ app.controller('ctrl_cate', function($scope, $http) {
     $scope.checkSubmit=false;
     $scope.typeValue = -1;
     $scope.statusValue = -1;
+    $scope.valueSelectStatus = 1;
+    $scope.listId = [];
 
     const jwtToken = localStorage.getItem("jwtToken")
     const token = {
@@ -39,10 +41,30 @@ app.controller('ctrl_cate', function($scope, $http) {
             console.log(error);
         });
     }
-
+    var select_Status = document.getElementById("selectStatus");
     var filter_Status = document.getElementById("filterStatus");
     var filter_Type = document.getElementById("filterType");
     var search = document.getElementById("search");
+
+    $scope.clickCheckBox = function (id) {
+        if ($scope.listId.length == 0){
+            $scope.listId.push(id)
+            console.log($scope.listId)
+        }else {
+            $scope.listId = $scope.listId.filter((item)=>item !== id)
+            console.log($scope.listId)
+        }
+    }
+
+
+    select_Status.value = 1;
+
+    select_Status.onchange = function () {
+        if (this.value != ""){
+            $scope.valueSelectStatus = this.value;
+        }
+    }
+
     filter_Type.onchange = function () {
         if (this.value != ""){
             $scope.typeValue = this.value;
@@ -145,7 +167,8 @@ app.controller('ctrl_cate', function($scope, $http) {
 
     $scope.onSave = function() {
 
-        $http.post(pathAPI+"/create", $scope.form,token).then(response => {
+        $http.post(pathAPI+"/create", $scope.form,
+            $scope.form.status= $scope.valueSelectStatus,token).then(response => {
             const Toast = Swal.mixin({
                 toast: true,
                 position: 'top-end',
@@ -213,7 +236,7 @@ app.controller('ctrl_cate', function($scope, $http) {
                 }).then((result) => {
                     /* Read more about handling dismissals below */
                     if (result.dismiss === Swal.DismissReason.timer) {
-                        $http.delete(`${pathAPI}/delete?id=${category.idCategory}`,token).then(response=> {
+                        $http.post(`${pathAPI}/delete?id=`+category.idCategory,token).then(response=> {
                             const Toast = Swal.mixin({
                                 toast: true,
                                 position: 'top-end',
@@ -262,10 +285,13 @@ app.controller('ctrl_cate', function($scope, $http) {
     $scope.edit = function(category) {
         $scope.form = angular.copy(category);
         $scope.checkSubmit=true;
+        select_Status.value = $scope.form.status;
+        $scope.valueSelectStatus = $scope.form.status;
     };
 
     $scope.onUpdate = function() {
-        $http.put(pathAPI+'/update?id='+$scope.form.idCategory, $scope.form,token).then(response=> {
+        $http.put(pathAPI+'/update?id='+$scope.form.idCategory,
+            $scope.form,$scope.form.status= $scope.valueSelectStatus,token).then(response=> {
             const Toast = Swal.mixin({
                 toast: true,
                 position: 'top-end',
@@ -378,6 +404,8 @@ app.controller('ctrl_cate', function($scope, $http) {
         $scope.typeValue = -1;
         $scope.statusValue = -1;
         search.value = "";
+        select_Status.value = 1;
+        $scope.valueSelectStatus = 1;
 
     };
 
