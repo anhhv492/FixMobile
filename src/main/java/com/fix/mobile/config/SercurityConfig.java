@@ -133,10 +133,10 @@ public class SercurityConfig{
     	http.csrf().disable();
     	
 		http.authorizeHttpRequests().antMatchers("/admin/*",
-//						"/rest/admin/accounts/getAccountActive",
-//						"/rest/admin/accounts/setaddressdefault",
-//						"/rest/admin/accounts/getAddress",
-//						"/rest/admin/accounts/updateAccountActive",
+						"/rest/admin/accounts/getAccountActive",
+						"/rest/admin/accounts/setaddressdefault",
+						"/rest/admin/accounts/getAddress",
+						"/rest/admin/accounts/updateAccountActive",
 						"/rest/admin/registers").permitAll()//Phân quyền sử dụng
 //		.antMatchers("/order/**").authenticated()
 //		.antMatchers("/rest/admin/**","/rest/staff/**").hasAnyRole("STAFF","ADMIN")
