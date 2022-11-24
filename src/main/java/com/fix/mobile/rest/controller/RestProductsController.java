@@ -151,8 +151,9 @@ public class RestProductsController {
 		productService.deleteById(id);
 	}
 
-	@PutMapping("/{id}")
+	@PutMapping(value ="/{id}")
 	public Product update(@PathVariable("id") Integer id, @RequestBody Product product){
+		System.out.println("dddddddddddddddddddddddd");
 		return productService.update(product,id);
 	}
 

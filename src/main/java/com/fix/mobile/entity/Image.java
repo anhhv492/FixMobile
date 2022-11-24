@@ -29,5 +29,14 @@ public class Image {
         return product;
     }
 
+    @ManyToOne
+    @JoinColumn(name = "id_productChange")
+    private ProductChange productChange;
+
+    @JsonBackReference
+    public ProductChange getProductChange(){
+        return productChange;
+    }
+
 
 }
