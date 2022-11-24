@@ -4,8 +4,9 @@ use fix_mobile;
 
 CREATE TABLE categories (
 	id_category int NOT NULL auto_increment primary key,
-    type binary not null,
-	name nvarchar(255) not null
+    type int not null,
+	name nvarchar(255) not null,
+	status int null
 ) ;
 CREATE TABLE capacity (
 	id_capacity int NOT NULL auto_increment primary key,
@@ -216,31 +217,31 @@ insert into fix_mobile.roles(name) values ('GUEST');
 -- SQLINES DEMO *** OR EVALUATION USE ONLY
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
 insert into fix_mobile.categories(type, name)
-values (1,'Sạc');
+values (1,'Sạc',1);
 insert into fix_mobile.categories(type, name)
-values (1,'Tai nghe dây');
+values (1,'Tai nghe dây',1);
 insert into fix_mobile.categories(type, name)
-values (1,'Tai nghe không dây');
+values (1,'Tai nghe không dây',1);
 insert into fix_mobile.categories(type, name)
-values (1,'Ốp lưng IPhone 5');
+values (1,'Ốp lưng IPhone 5',1);
 insert into fix_mobile.categories(type, name)
-values (1,'Ốp lưng IPhone 6');
+values (1,'Ốp lưng IPhone 6',1);
 insert into fix_mobile.categories(type, name)
-values (1,'Ốp lưng IPhone 7');
+values (1,'Ốp lưng IPhone 7',1);
 insert into fix_mobile.categories(type, name)
-values (1,'Ốp lưng IPhone 8');
+values (1,'Ốp lưng IPhone 8',1);
 insert into fix_mobile.categories(type, name)
-values (1,'Ốp lưng IPhone X');
+values (1,'Ốp lưng IPhone X',1);
 insert into fix_mobile.categories(type, name)
-values (0,'IPhone 5');
+values (0,'IPhone 5',1);
 insert into fix_mobile.categories(type, name)
-values (0,'IPhone 6');
+values (0,'IPhone 6',1);
 insert into fix_mobile.categories(type, name)
-values (0,'IPhone 7');
+values (0,'IPhone 7',1);
 insert into fix_mobile.categories(type, name)
-values (0,'IPhone 8');
+values (0,'IPhone 8',1);
 insert into fix_mobile.categories(type, name)
-values (0,'IPhone X');
+values (0,'IPhone X',1);
 
 -- SQLINES DEMO *** OR EVALUATION USE ONLY
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
