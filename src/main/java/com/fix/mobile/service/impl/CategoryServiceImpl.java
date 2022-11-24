@@ -23,7 +23,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category save(Category entity) {
-        entity.setStatus(true);
+        entity.setStatus(1);
         return repository.save(entity);
     }
 
@@ -35,7 +35,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void deleteById(Integer id) {
         Category category = repository.findById(id).orElse(null);
-        category.setStatus(false);
+        category.setStatus(0);
         repository.save(category);
     }
 
@@ -58,14 +58,15 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category update(Category entity, Integer id) {
-        Optional<Category> optional = findById(id) ;
+        Optional<Category> optional = findById(id);
         if (optional.isPresent()) {
             return save(entity);
         }
         return null;
     }
+
     public List<Category> findByType() {
-        return repository.findByType(true);
+        return repository.findByType(1);
     }
 
 
@@ -77,13 +78,38 @@ public class CategoryServiceImpl implements CategoryService {
     public List<Category> findByTypeProduct() {
         return null;
     }
+
     public List<Category> findByTypeSP() {
-        return repository.findByType(false);
+        return repository.findByType(0);
     }
 
     @Override
-    public Page<Category>  page(Boolean status, Pageable pageable) {
-        return repository.findByStatus(status, pageable);
+    public Page<Category> page(String name, Integer type, Integer status, Pageable pageable) {
+        if (name == "" && status == -1 && type == -1){
+            return repository.findByStatus(1, pageable);
+        }
+        else if (name == null || name == "") {
+            if (type == -1) {
+                return repository.findByStatus(status, pageable);
+            } else if (status == -1) {
+                return repository.findByType(type, pageable);
+            } else if (type != -1 && status != -1){
+                return repository.findByTypeAndStatus(type, status, pageable);
+            }else {
+                return repository.findByStatus(1, pageable);
+            }
+        }else {
+            if (status == -1 && type== -1){
+                return repository.findByNameContaining(name, pageable);
+            } else if (status == -1) {
+                return repository.findByNameContainingAndType(name, type, pageable);
+            } else if (type == -1) {
+                return repository.findByNameContainingAndStatus(name, status, pageable);
+            }else {
+                return repository.findByNameContainingAndTypeAndStatus(name, type, status, pageable);
+            }
+        }
+
     }
 
 }

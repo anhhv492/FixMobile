@@ -20,13 +20,13 @@ public class Category {
     private Integer idCategory;
 
     @Column(name = "type")
-    private Boolean type;
+    private Integer type;
 
     @Column(name = "name")
     private String name;
 
     @Column(name = "status")
-    private Boolean status;
+    private Integer status;
     @JsonIgnore
     @OneToMany(mappedBy = "category")
     private List<Product> products;

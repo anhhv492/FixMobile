@@ -1,4 +1,5 @@
-<div class="col-sm-9 col-sm-offset-3 col-lg-12">
+<div class="col-sm-9 col-sm-offset-3 col-lg-12" xmlns:allowInvalid="http://www.w3.org/1999/xhtml"
+     xmlns:updateOn="http://www.w3.org/1999/xhtml" xmlns:debounce="http://www.w3.org/1999/xhtml">
     <div class="row">
         <div class="col-lg-12">
             <h1 class="page-header mr-2">{{checkSubmit == false ? title.insert : title.update}} danh mục</h1>
@@ -15,9 +16,9 @@
                                 <label>Danh Mục</label>
                                 <br>
                                 <input type="radio" class="form-check-input"
-                                       ng-model="form.type" name="type" ng-value="false" checked> Sản Phẩm
+                                       ng-model="form.type" name="type" ng-value="0" checked> Sản Phẩm
                                 <input type="radio" class="form-check-input"
-                                       checked ng-model="form.type" name="type" ng-value="true"> Phụ Kiện
+                                       checked ng-model="form.type" name="type" ng-value="1"> Phụ Kiện
                                 <br>
                             </div>
 
@@ -41,26 +42,27 @@
 
     <div class="row mt-3">
         <div class="col-lg-12">
-            <div class="table-header d-flex justify-content-between align-items-center p-2" style="background-color: #dee2e6">
-                <select class="form-select mb-1 w-25">
-                    <option selected ng-value="-1" disabled>Lọc theo danh mục</option>
-                    <option >chien
-                    </option>
+            <div  class="table-header d-flex justify-content-between align-items-center p-2" style="background-color: #dee2e6">
+                <select id="filterType" class="form-select mb-1 w-25">
+                    <option selected value="" disabled>Lọc theo danh mục</option>
+                    <option value="0">Sản Phẩm</option>
+                    <option value="1">Phụ Kiện</option>
                 </select>
 
-                <select class="form-select mb-1 w-25">
-                    <option selected ng-value="-1" disabled>Lọc theo trạng thái</option>
-                    <option >chien
-                    </option>
+                <select class="form-select mb-1 w-25" id="filterStatus">
+                    <option selected value="" disabled>Lọc theo trạng thái</option>
+                    <option value="0">Không hoạt động</option>
+                    <option value="1">Đang hoạt động</option>
                 </select>
 
                 <input
                         type="text"
                         class="form-control"
-                        #searchTerm
                         placeholder="Tìm kiếm..."
                         style="max-width: 260px"
-                        (keyup)="onSearchChange(searchTerm.value)"
+                        id="search"
+                        debounce = "1000"
+                        ng-model-options="{ debounce: 800 }"
                 />
             </div>
             <table class="table table-striped  table-hover">
@@ -75,9 +77,9 @@
                 <tbody>
                 <tr ng-repeat="cate in category">
                     <td>{{$index + 1}}</td>
-                    <td>{{cate.type == true ? 'Phụ Kiện' : 'Sản Phẩm'}}</td>
+                    <td>{{cate.type == 1 ? 'Phụ Kiện' : 'Sản Phẩm'}}</td>
                     <td>{{cate.name}}</td>
-                    <td>{{cate.status == true? 'Đang hoạt động':'Không hoạt động'}}</td>
+                    <td>{{cate.status == 1? 'Đang hoạt động':'Không hoạt động'}}</td>
                     <td>
                         <button ng-click="edit(cate)" class="btn btn-primary">Sửa</button>
                         <button ng-click="delete(cate)" class="btn btn-danger">Xóa</button>

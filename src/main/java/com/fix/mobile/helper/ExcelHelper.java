@@ -106,7 +106,7 @@ public class ExcelHelper {
                                 System.out.println("khong ton tai");
                                 Category category1 = new Category();
                                 category1.setName(cc.getStringCellValue());
-                                category1.setType(true);
+                                category1.setType(1);
                                 categoryService.save(category1);
                                 category = categoryService.findByName("Sạc");
                             }else{

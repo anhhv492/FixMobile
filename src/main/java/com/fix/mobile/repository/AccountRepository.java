@@ -7,6 +7,7 @@ import com.fix.mobile.entity.Account;
 
 import java.util.List;
 
+import com.fix.mobile.entity.Role;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
@@ -23,5 +24,19 @@ public interface AccountRepository extends PagingAndSortingRepository<Account, S
 	Page<Account> findShowSale(String share, Pageable pageable);
 
 	Page<Account> findAllByStatus(Integer status, Pageable pageable);
+
+	Page<Account> findByRole_IdRole(Integer role, Pageable pageable);
+
+	Page<Account> findByUsernameContaining(String username, Pageable pageable);
+
+	Page<Account> findByUsernameContainingAndStatus(String username, Integer status, Pageable pageable);
+
+	Page<Account> findByUsernameContainingAndRole_IdRole(String username, Integer idRole, Pageable pageable);
+
+	Page<Account> findByUsernameContainingAndRole_IdRoleAndStatus(String username, Integer idRole, Integer status, Pageable pageable);
+
+	Page<Account> findByRole_IdRoleAndStatus(Integer idRole, Integer status, Pageable pageable);
+
+	 Account findByUsername(String username);
 
 }

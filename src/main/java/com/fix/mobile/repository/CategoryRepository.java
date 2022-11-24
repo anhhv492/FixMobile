@@ -12,10 +12,20 @@ import java.util.Optional;
 @Repository
 public interface CategoryRepository extends PagingAndSortingRepository<Category, Integer> {
     //anhhv
-    List<Category> findByType(Boolean type);
+    List<Category> findByType(Integer type);
 
-    Page<Category> findByStatus(Boolean status, Pageable pageable);
+    Page<Category> findByStatus(Integer status, Pageable pageable);
+    Page<Category> findByType(Integer type, Pageable pageable);
 
+    Page<Category> findByNameContaining(String name, Pageable pageable);
+
+    Page<Category> findByNameContainingAndStatus(String name,Integer status, Pageable pageable);
+
+    Page<Category> findByNameContainingAndType(String name,Integer type, Pageable pageable);
+
+    Page<Category> findByNameContainingAndTypeAndStatus(String name,Integer type, Integer status, Pageable pageable);
+
+    Page<Category> findByTypeAndStatus(Integer type, Integer status, Pageable pageable);
     Page<Category> findByName(String name, Pageable pageable);
     Optional<Category> findByName(String name);
 }

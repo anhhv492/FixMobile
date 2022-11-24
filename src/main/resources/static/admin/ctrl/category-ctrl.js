@@ -7,12 +7,14 @@ app.controller('ctrl_cate', function($scope, $http) {
     $scope.check_prev = false;
     $scope.check_next = true;
     $scope.totalPages=0;
-    $scope.form.type = false;
+    $scope.form.type = 0;
     $scope.title={
         insert:'Thêm mới',
         update:'Cập nhật'
     };
     $scope.checkSubmit=false;
+    $scope.typeValue = -1;
+    $scope.statusValue = -1;
 
     const jwtToken = localStorage.getItem("jwtToken")
     const token = {
@@ -27,9 +29,57 @@ app.controller('ctrl_cate', function($scope, $http) {
         $http.get(pathAPI+'/page',token).then(function(response) {
             $scope.category = response.data.content;
             $scope.totalPages = response.data.totalPages;
+            $scope.check_last = true;
+            $scope.check_next = true;
+            if ($scope.index == $scope.totalPages){
+                $scope.check_last =false;
+                $scope.check_next = false;
+            }
         }).catch(error=>{
             console.log(error);
         });
+    }
+
+    var filter_Status = document.getElementById("filterStatus");
+    var filter_Type = document.getElementById("filterType");
+    var search = document.getElementById("search");
+    filter_Type.onchange = function () {
+        if (this.value != ""){
+            $scope.typeValue = this.value;
+            $http.get(pathAPI+'/page?type='+this.value+'&status='+$scope.statusValue,token).then(function(response) {
+                $scope.category = response.data.content;
+                $scope.totalPages = response.data.totalPages;
+                $scope.check_last =true;
+                $scope.check_next = true;
+                if ($scope.index == $scope.totalPages){
+                    $scope.check_last =false;
+                    $scope.check_next = false;
+                }
+
+            }).catch(error=>{
+                console.log(error);
+            });
+
+        }
+    }
+
+    filter_Status.onchange = function () {
+        if (this.value != ""){
+            $scope.statusValue = this.value;
+            $http.get(pathAPI+'/page?status='+this.value+'&type='+$scope.typeValue,token).then(function(response) {
+                $scope.category = response.data.content;
+                $scope.totalPages = response.data.totalPages;
+                $scope.check_last =true;
+                $scope.check_next = true;
+                if ($scope.index == $scope.totalPages){
+                    $scope.check_last =false;
+                    $scope.check_next = false;
+                }
+
+            }).catch(error=>{
+                console.log(error);
+            });
+        }
     }
 
     $scope.next=function(){
@@ -316,9 +366,59 @@ app.controller('ctrl_cate', function($scope, $http) {
 
     $scope.refresh = function() {
         $scope.form = {};
-        $scope.form.type = false;
+        $scope.form.type = 0;
         $scope.checkSubmit=false;
+        $scope.getAll();
+        if ($scope.totalPages > $scope.index){
+            $scope.check_next = true;
+            $scope.check_last = true;
+        }
+        filter_Type.value = "";
+        filter_Status.value = "";
+        $scope.typeValue = -1;
+        $scope.statusValue = -1;
+        search.value = "";
+
     };
+
+    function debounce(cb, interval, immediate) {
+        var timeout;
+
+        return function() {
+            var context = this, args = arguments;
+            var later = function() {
+                timeout = null;
+                if (!immediate) cb.apply(context, args);
+            };
+
+            var callNow = immediate && !timeout;
+
+            clearTimeout(timeout);
+            timeout = setTimeout(later, interval);
+
+            if (callNow) cb.apply(context, args);
+        };
+    };
+
+    function keyPressCallback() {
+        var input = document.getElementById('search');
+        $http.get(pathAPI+'/page?name='+input.value+'&type='+$scope.typeValue+'&status='+$scope.statusValue,token).then(function(response) {
+            $scope.category = response.data.content;
+            $scope.totalPages = response.data.totalPages;
+            $scope.check_last =true;
+            $scope.check_next = true;
+            if ($scope.index == $scope.totalPages){
+                $scope.check_last =false;
+                $scope.check_next = false;
+            }
+
+        }).catch(error=>{
+            console.log(error);
+        });
+    }
+    search.onkeypress = debounce(keyPressCallback, 500);
+
+
 
     $scope.getAll();
 });

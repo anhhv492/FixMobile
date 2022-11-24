@@ -347,7 +347,7 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window) {
         $scope.checkBuy = false;
     }
     $scope.getAddressAcountACtive = function () {
-        if($rootScope.account){
+        if($rootScope.account != null){
             $http.get(urlAccounts + "/getAddress", token).then(function (respon) {
                 $scope.addressAccount = respon.data;
                 $scope.to_district_id = $scope.addressAccount.districtId;

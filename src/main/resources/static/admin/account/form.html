@@ -115,10 +115,11 @@
                             <label class="card-title mb-0">Chức vụ</label>
                         </div>
                         <div class="col-sm-9">
-                            <select ng-model="form.role" class="form-select mb-1" id="role" name="role" required>
-                                <option disabled>Chọn chức vụ</option>
-                                <option ng-repeat="role in roles" value="{{role.idRole}}">{{role.name}}
-                                </option>
+                            <select class="form-select mb-1" id="role" name="role" required>
+                                <option selected value="" disabled>Chọn chức vụ</option>
+                                <option value="1">ADMIN</option>
+                                <option value="2">STAFF</option>
+                                <option value="3">USER</option>
                             </select>
                             <span ng-show="myForm.$submitted || myForm.role.$dirty">
                                         <span class="error" ng-show="myForm.role.$error.required"> <i
@@ -229,25 +230,26 @@
         <div class="panel panel-default">
             <div class="panel-body">
                 <div class="table-header d-flex justify-content-between align-items-center p-2" style="background-color: #dee2e6">
-                    <select class="form-select mb-1 w-25">
-                        <option selected ng-value="-1" disabled>Lọc theo danh mục</option>
-                        <option >chien
-                        </option>
+                    <select class="form-select mb-1 w-25" id="filterRole">
+                        <option selected value="" disabled>Lọc theo chức vụ</option>
+                        <option value="1">ADMIN</option>
+                        <option value="2">STAFF</option>
+                        <option value="3">USER</option>
                     </select>
 
-                    <select class="form-select mb-1 w-25">
-                        <option selected ng-value="-1" disabled>Lọc theo trạng thái</option>
-                        <option >chien
-                        </option>
+                    <select class="form-select mb-1 w-25" id="filterstatus" name="filterstatus">
+                        <option selected value="" disabled>Lọc theo trạng thái</option>
+                        <option value="0">Không hoạt động</option>
+                        <option value="1">Đang hoạt động</option>
                     </select>
 
                     <input
                             type="text"
                             class="form-control"
-                            #searchTerm
+
                             placeholder="Tìm kiếm..."
                             style="max-width: 260px"
-                            (keyup)="onSearchChange(searchTerm.value)"
+                            id="search"
                     />
                 </div>
                 <table class="table table-striped">

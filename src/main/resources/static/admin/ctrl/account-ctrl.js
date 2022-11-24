@@ -13,8 +13,14 @@ app.controller("account-ctrl", function ($scope, $http) {
     $scope.idrole_form= "";
     $scope.b;
     $scope.hideUpdate=true;
+    $scope.valueRole = 0;
+    $scope.valueStatus = -1;
+    $scope.valueSearch = "";
     var role = document.getElementById("role");
-
+    var filter_Status = document.getElementById("filterstatus");
+    var filter_Role = document.getElementById("filterRole");
+    var search = document.getElementById("search");
+    role.value = 3;
 
     const jwtToken = localStorage.getItem("jwtToken")
     const token = {
@@ -42,6 +48,40 @@ app.controller("account-ctrl", function ($scope, $http) {
             $scope.idrole_form = this.value;
         }
     }
+
+    filter_Status.onchange = function (){
+        if (this.value != ""){
+            $http.get("/rest/admin/accounts/page?status="+this.value+"&role="+$scope.valueRole+"&search="+$scope.valueSearch,token).then(resp => {
+                $scope.accounts = resp.data.content;
+                $scope.valueStatus = this.value;
+                $scope.totalPages =  resp.data.totalPages;
+                if ($scope.index = $scope.totalPages){
+                    $scope.check_next = false;
+                    $scope.check_last = false;
+                }
+            }).catch(error => {
+                console.log(error);
+            });
+        }
+    }
+
+    filter_Role.onchange= function () {
+        if (this.value != null){
+            $http.get("/rest/admin/accounts/page?role="+this.value+"&status="+$scope.valueStatus+"&search="+$scope.valueSearch,token).then(resp => {
+                $scope.accounts = resp.data.content;
+                $scope.valueRole = this.value;
+                $scope.totalPages =  resp.data.totalPages;
+                if ($scope.index = $scope.totalPages){
+                    $scope.check_next = false;
+                    $scope.check_last = false;
+                }
+            }).catch(error => {
+                console.log(error);
+            });
+        }
+    }
+
+
 
     $scope.message = function (mes){
         const Toast = Swal.mixin({
@@ -85,6 +125,11 @@ app.controller("account-ctrl", function ($scope, $http) {
     $scope.hideCreate=false;
     $scope.hideUpdate=true;
     $scope.hidePassword=false;
+    filter_Role.value = "";
+    filter_Status.value="";
+    $scope.valueSearch = "";
+    $scope.valueStatus = -1;
+    $scope.valueRole = 0;
 
         $scope.form = {
             createDate: new Date(),
@@ -96,13 +141,46 @@ app.controller("account-ctrl", function ($scope, $http) {
             image: "https://res.cloudinary.com/dcll6yp9s/image/upload/v1669087979/kbasp5qdf76f3j02mebr.png",
             gender: true,
             status: 1,
-            role: {
-                idRole: 3,
-                name: "USER"
-            },
+            role: 3
         }
         $scope.getPageAccounts();
     }
+
+    function debounce(cb, interval, immediate) {
+        var timeout;
+
+        return function() {
+            var context = this, args = arguments;
+            var later = function() {
+                timeout = null;
+                if (!immediate) cb.apply(context, args);
+            };
+
+            var callNow = immediate && !timeout;
+
+            clearTimeout(timeout);
+            timeout = setTimeout(later, interval);
+
+            if (callNow) cb.apply(context, args);
+        };
+    };
+
+    function keyPressCallback() {
+        var input = document.getElementById('search');
+        $http.get("/rest/admin/accounts/page?search="+input.value+"&role="+$scope.valueRole+"&status="+$scope.valueStatus,token).then(resp => {
+            $scope.accounts = resp.data.content;
+            $scope.valueSearch = input.value;
+            $scope.totalPages =  resp.data.totalPages;
+            if ($scope.index = $scope.totalPages){
+                $scope.check_next = false;
+                $scope.check_last = false;
+            }
+        }).catch(error => {
+            console.log(error);
+        });
+    }
+
+    search.onkeypress = debounce(keyPressCallback, 500);
 
     $scope.initialize = function () {
         $scope.index = 1
@@ -147,6 +225,8 @@ app.controller("account-ctrl", function ($scope, $http) {
         $scope.hideCreate=true;
         $scope.hidePassword=true;
         $scope.form = angular.copy(account);
+        console.log(account.role)
+        role.value = account.role;
         $scope.form.createDate = new Date(account.createDate)
         console.log(account.createDate + account.username)
         console.log(account.image)
@@ -308,7 +388,7 @@ console.log("Kết thúc check trùng")
         formData.append("email",$scope.form.email);
         formData.append("status",$scope.form.status);
         formData.append("phone",$scope.form.phone);
-        formData.append("role",$scope.idrole_form);
+        formData.append("role",role.value);
         let req = {
             method: 'POST',
             url: '/rest/admin/accounts/update?username='+account.username,
@@ -458,7 +538,7 @@ console.log("Kết thúc check trùng")
         })
     }
     $scope.getPageAccounts = function () {
-        $http.get(pathAPI + `/page?page=` + $scope.index,token).then(res => {
+        $http.get(pathAPI + `/page?status=1`,token).then(res => {
             $scope.accounts = res.data.content;
             console.log('Load accounts success', res.data)
         }).catch(err => {

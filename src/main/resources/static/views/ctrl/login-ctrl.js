@@ -19,7 +19,6 @@ app.controller('login-ctrl',function($rootScope,$scope,$http,$window){
             $scope.jwt = localStorage.getItem('jwtToken')
             $rootScope.account=respon.data;
             $window.location.href = '#!home/index';
-            $window.location.reload();
         }).catch(error => {
             $rootScope.account=null;
             Swal.fire({

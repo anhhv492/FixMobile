@@ -26,7 +26,7 @@ public interface AccountService {
 
     List<AccountResponDTO> findAll();
 
-    Page<AccountResponDTO> findAll(Integer status, Pageable pageable);
+    Page<AccountResponDTO> findAll(String search,Integer role, Integer status, Pageable pageable);
 
     AccountResponDTO update(AccountRequestDTO accountDTO, String username);
 

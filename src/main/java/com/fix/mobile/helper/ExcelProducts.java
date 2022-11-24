@@ -126,7 +126,7 @@ public class ExcelProducts {
 								System.out.println("khong ton tai");
 								Category category1 = new Category();
 								category1.setName(cc.getStringCellValue());
-								category1.setType(true);
+								category1.setType(1);
 								categoryService.save(category1);
 							}else{
 								System.out.println("ton tai");

@@ -68,10 +68,12 @@ public class AccountRestController {
     public Page<AccountResponDTO> page(
             @RequestParam(name = "page" , defaultValue = "1") int page,
             @RequestParam(name = "size" , defaultValue = "10") int size,
-            @RequestParam(name = "status", defaultValue = "1") Integer status
+            @RequestParam(name = "status", defaultValue = "1") Integer status,
+            @RequestParam(name = "role", defaultValue = "0") Integer role,
+            @RequestParam(name = "search", required = false) String search
     ){
         Pageable pageable = PageRequest.of(page - 1 , size);
-        return accountService.findAll(status,pageable);
+        return accountService.findAll(search, role ,status ,pageable);
     }
   
     @GetMapping("/roles")

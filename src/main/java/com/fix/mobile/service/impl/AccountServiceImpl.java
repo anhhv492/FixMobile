@@ -58,9 +58,9 @@ public class AccountServiceImpl implements AccountService {
     public AccountResponDTO save(AccountRequestDTO accountRequestDTO) {
         try {
             Account accountCheck = findByUsername(accountRequestDTO.getUsername());
-            if (accountCheck != null && accountCheck.getUsername().equals(accountRequestDTO.getUsername())){
+            if (accountCheck != null && accountCheck.getUsername().equals(accountRequestDTO.getUsername())) {
                 return null;
-            }else {
+            } else {
                 Role role = roleRepository.findById(accountRequestDTO.getRole()).orElse(null);
                 Date date = new Date();
                 Account account = new Account();
@@ -105,9 +105,9 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public void deleteById(String id) {
-       Account account =   repository.findByName(id);
-       account.setStatus(0);
-       repository.save(account);
+        Account account = repository.findByName(id);
+        account.setStatus(0);
+        repository.save(account);
     }
 
     @Override
@@ -125,10 +125,45 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Page<AccountResponDTO> findAll(Integer status, Pageable pageable) {
-        Page<Account> accountPage = repository.findAllByStatus(status, pageable);
-        Page<AccountResponDTO> accountResponDTOPage = accountPage.map(entityPage -> modelMapper.map(entityPage, AccountResponDTO.class));
-        return accountResponDTOPage;
+    public Page<AccountResponDTO> findAll(String search, Integer role, Integer status, Pageable pageable) {
+        if (search == "" && status == -1 && role == 0){
+            Page<Account> accountPage = repository.findAllByStatus(1, pageable);
+            Page<AccountResponDTO> accountResponDTOPage = accountPage.map(entityPage -> modelMapper.map(entityPage, AccountResponDTO.class));
+            return accountResponDTOPage;
+        }
+        else if (search == null || search == "") {
+            if (status != -1 && role == 0) {
+                Page<Account> accountPage = repository.findAllByStatus(status, pageable);
+                Page<AccountResponDTO> accountResponDTOPage = accountPage.map(entityPage -> modelMapper.map(entityPage, AccountResponDTO.class));
+                return accountResponDTOPage;
+            } else if (role != null && role != 0 && status == -1) {
+                Page<Account> accountPage = repository.findByRole_IdRole(role, pageable);
+                Page<AccountResponDTO> accountResponDTOPage = accountPage.map(entityPage -> modelMapper.map(entityPage, AccountResponDTO.class));
+                return accountResponDTOPage;
+            } else {
+                Page<Account> accountPage = repository.findByRole_IdRoleAndStatus(role, status, pageable);
+                Page<AccountResponDTO> accountResponDTOPage = accountPage.map(entityPage -> modelMapper.map(entityPage, AccountResponDTO.class));
+                return accountResponDTOPage;
+            }
+        } else {
+            if (status == -1 && role == 0) {
+                Page<Account> accountPage = repository.findByUsernameContaining(search, pageable);
+                Page<AccountResponDTO> accountResponDTOPage = accountPage.map(entityPage -> modelMapper.map(entityPage, AccountResponDTO.class));
+                return accountResponDTOPage;
+            } else if (status != -1 && role == 0) {
+                Page<Account> accountPage = repository.findByUsernameContainingAndStatus(search, status, pageable);
+                Page<AccountResponDTO> accountResponDTOPage = accountPage.map(entityPage -> modelMapper.map(entityPage, AccountResponDTO.class));
+                return accountResponDTOPage;
+            } else if (role != null && role != 0 && status == -1) {
+                Page<Account> accountPage = repository.findByUsernameContainingAndRole_IdRole(search, role, pageable);
+                Page<AccountResponDTO> accountResponDTOPage = accountPage.map(entityPage -> modelMapper.map(entityPage, AccountResponDTO.class));
+                return accountResponDTOPage;
+            } else {
+                Page<Account> accountPage = repository.findByUsernameContainingAndRole_IdRoleAndStatus(search, role, status, pageable);
+                Page<AccountResponDTO> accountResponDTOPage = accountPage.map(entityPage -> modelMapper.map(entityPage, AccountResponDTO.class));
+                return accountResponDTOPage;
+            }
+        }
     }
 
     @Override
@@ -136,7 +171,7 @@ public class AccountServiceImpl implements AccountService {
         try {
 
             Role role = roleRepository.findById(accountRequestDTO.getRole()).orElse(null);
-            Account account = repository.findByName(username);
+            Account account = repository.findByUsername(username);
             account.setFullName(accountRequestDTO.getFullName());
             account.setGender(accountRequestDTO.getGender());
             account.setEmail(accountRequestDTO.getEmail());
@@ -156,7 +191,7 @@ public class AccountServiceImpl implements AccountService {
             AccountResponDTO accountResponDTO = modelMapper.map(accountSave, AccountResponDTO.class);
             accountResponDTO.setRole(accountSave.getRole().getIdRole());
             return accountResponDTO;
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             return null;
         }
@@ -202,9 +237,10 @@ public class AccountServiceImpl implements AccountService {
         AccountDTO accountDTORes = modelMapper.map(account, AccountDTO.class);
         return accountDTORes;
     }
+
     public Page<Account> getByPage(int pageNumber, int maxRecord, String share) {
         Pageable pageable = PageRequest.of(pageNumber, maxRecord);
-        Page<Account> page = repository.findShowSale(share,pageable);
+        Page<Account> page = repository.findShowSale(share, pageable);
         return page;
 
     }
@@ -225,7 +261,7 @@ public class AccountServiceImpl implements AccountService {
             Account accountSave = repository.save(account);
             AccountResponDTO accountResponDTO = modelMapper.map(accountSave, AccountResponDTO.class);
             return accountResponDTO;
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             return null;
         }

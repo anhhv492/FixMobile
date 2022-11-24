@@ -8,7 +8,7 @@ import java.util.List;
 @Data
 public class CategoryDTO extends AbstractDTO<Integer> {
 
-    private Boolean type;
+    private Integer type;
     private String name;
 
 }

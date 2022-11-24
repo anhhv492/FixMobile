@@ -52,13 +52,14 @@ public class CategoryRestController {
 
     @GetMapping("/page")
     public Page<Category> page (
-
             @RequestParam(name = "page" , defaultValue = "1") int page,
             @RequestParam(name = "size" , defaultValue = "10") int size,
-            @RequestParam(name = "status", defaultValue = "1") Boolean status
+            @RequestParam(name = "status", defaultValue = "1") Integer status,
+            @RequestParam(name = "type", defaultValue = "-1") Integer type,
+            @RequestParam(name = "name", required = false) String name
     ){
         Pageable pageable = PageRequest.of(page - 1 , size);
-        return categoryService.page(status, pageable);
+        return categoryService.page(name, type, status, pageable);
     }
 
 
