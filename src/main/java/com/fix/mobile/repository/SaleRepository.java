@@ -41,4 +41,6 @@ public interface SaleRepository extends PagingAndSortingRepository<Sale, Integer
 
     Page<Sale> findByNameContains(String name,Pageable pageable); // all name
     Page<Sale> findByVoucherContains(String voucher,Pageable pageable); // all voucher
+
+    Sale findByIdSale(Integer id);
 }

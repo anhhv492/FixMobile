@@ -82,6 +82,7 @@ public class Account {
     @OneToMany(mappedBy = "account")
     private List<ProductChange> productChanges;
 
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "address_id" , referencedColumnName = "id_address")
     private Address address_id;
@@ -99,10 +100,5 @@ public class Account {
         this.role = role;
         this.phone = phone;
     }
-	
-	
-    
 
-	
-   
 }

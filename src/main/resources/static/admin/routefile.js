@@ -52,6 +52,7 @@ app.config(function($routeProvider){
             controller: "sale_ctrl"
         })
         .when("/showsale",{
+        
             templateUrl:"/admin/sale/showsale.html",
             controller: "sale_ctrl"
         })

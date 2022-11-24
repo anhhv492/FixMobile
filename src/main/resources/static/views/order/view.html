@@ -23,16 +23,16 @@
                 <span class="text-warning">Chưa thanh toán</span>
             </td>
             <td ng-if="order.status==1">
-                <span class="text-warning">Đã thanh toán</span>
+                <span class="text-info">Đã thanh toán</span>
             </td>
             <td ng-if="order.status==2">
                 <span class="text-primary">Đang giao hàng</span>
             </td>
             <td ng-if="order.status==3">
-                <span class="text-success">Hoàn tất</span>
+                <span class="text-success">Hoàn tất giao dịch</span>
             </td>
             <td ng-if="order.status==4">
-                <span class="text-dark">Hoàn đơn</span>
+                <span class="text-dark">Hoàn lại đơn</span>
             </td>
             <td>
                 <a href="#!order-detail" ng-click="getOrder(order.idOrder)" class="btn btn-default">

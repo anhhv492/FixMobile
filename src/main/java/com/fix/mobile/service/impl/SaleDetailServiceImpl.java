@@ -1,5 +1,6 @@
 package com.fix.mobile.service.impl;
 
+import com.fix.mobile.entity.Sale;
 import com.fix.mobile.service.SaleDetailService;
 import com.fix.mobile.repository.SaleDetailRepository;
 import com.fix.mobile.entity.SaleDetail;
@@ -65,7 +66,38 @@ public class SaleDetailServiceImpl implements SaleDetailService {
     }
 
     @Override
-    public void createSaleDetail(Integer id) {
-        repository.creatSaleDetail(id);
+    public void createSaleDetail(String idthem, Integer idx) {
+        if(idx==1){
+             repository.creatSaleDetailProduct(idthem);
+        }
+        if (idx==3){
+             repository.creatSaleDetailusername(idthem);
+        }
+        if (idx==4){
+             repository.creatSaleDetailAccessory(idthem);
+        }
+    }
+
+    @Override
+    public void deleteSaleDetai(Integer id) {
+        repository.deleteByIdSale(id);
+    }
+
+    @Override
+    public List<SaleDetail> findByid(Sale sale) {
+        return repository.findBySale(sale);
+    }
+
+    @Override
+    public void updateSaleDetail(String s, Integer idx, Integer id) {
+        if(idx==1){
+            repository.updateSaleDetailProduct(id,s);
+        }
+        if (idx==3){
+            repository.updateSaleDetailusername(id,s);
+        }
+        if (idx==4){
+            repository.updateSaleDetailAccessory(id,s);
+        }
     }
 }

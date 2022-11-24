@@ -3,8 +3,10 @@ package com.fix.mobile.rest.controller;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fix.mobile.entity.*;
 import com.fix.mobile.service.*;
+import com.fix.mobile.utils.UserName;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -27,9 +29,13 @@ public class GuestRestController {
     private OrderService orderService;
     @Autowired
     private AccountService accountService;
-    Order order = null;
+    @Autowired
+    private ImayProductService imayProductService;
     @Autowired
     private OrderDetailService orderDetailService;
+    
+    Order order = null;
+    Account account = null;
     @GetMapping("/category/getAll")
     public List<Category> getAll(){
         return categoryService.findAll();
@@ -39,11 +45,34 @@ public class GuestRestController {
     public List<Category> findByCate(){
         return categoryService.findByType();
     }
+    @GetMapping("/imei/amount/{id}")
+    public Integer getAmountImei(@PathVariable("id") Integer id){
+        Product product = productService.findById(id).get();
+        List<ImayProduct> imeis= imayProductService.findByProductAndStatus(product,1);
+        return imeis.size();
+    }
+    @GetMapping("/accessory/amount/{id}")
+    public Integer getAmountAccessory(@PathVariable("id") Integer id){
+        Accessory accessory = accessoryService.findById(id).get();
+        return accessory.getQuantity();
+    }
+    //find accessory by id
     @GetMapping(value="/accessory/{id}")
     public Accessory findById(@PathVariable("id") Integer id){
         Optional<Accessory> accessory = accessoryService.findById(id);
         if(accessory.isPresent()){
             return accessory.get();
+        }
+        return null;
+    }
+
+    //find product by id
+    @GetMapping(value="/product/{id}")
+    public Product findProductById(@PathVariable("id") Integer id){
+        Optional<Product> product = productService.findById(id);
+        if(product.isPresent()){
+            System.out.println(product.get().getName());
+            return product.get();
         }
         return null;
     }
@@ -59,20 +88,22 @@ public class GuestRestController {
     }
     @GetMapping("/product/cate-product/{id}")
     public List<Product> findByCateProductId(@PathVariable("id") Integer id){
-        System.out.println("get product");
         Optional<Category> cate = categoryService.findById(id);
         if(cate.isEmpty()){
             return null;
         }
         List<Product> products = productService.findByCategoryAndStatus(cate);
-        for (Product product : products) {
-            System.out.println(product.getName());
+        for (int i = 0; i < products.size(); i++) {
+            List<ImayProduct> imayProducts = imayProductService.findByProductAndStatus(products.get(i),1);
+            if(imayProducts.size() == 0){
+                products.remove(i);
+            }
         }
         return products;
     }
     @PostMapping("/order/add")
-    public Order order(@RequestBody Order order, Principal principal){
-        Account account = accountService.findByUsername(principal.getName());
+    public Order order(@RequestBody Order order){
+        account = accountService.findByUsername(UserName.getUserName());
         if(order.getAddress()==null||account==null){
             return null;
         }
@@ -82,45 +113,44 @@ public class GuestRestController {
         logger.info("-- Order: "+order.getIdOrder());
         return order;
     }
-    @PostMapping("/order-detail/add")
-    public JsonNode cartItems(@RequestBody JsonNode productList,Principal principal){
-        System.out.println(order.getIdOrder()+"id order");
-        OrderDetail orderDetail =null;
-        BigDecimal price = new BigDecimal(0);
-        for (int i=0;i<productList.size();i++){
-            if(productList.get(i).get("qty").asInt()<=0){
+    @PostMapping("/order/detail/add")
+    public JsonNode cartItems(@RequestBody JsonNode carts){
+        account = accountService.findByUsername(UserName.getUserName());
+        OrderDetail orderDetail;
+        for (int i=0;i<carts.size();i++){
+            if(carts.get(i).get("qty").asInt()<=0){
                 return null;
             }else{
                 orderDetail = new OrderDetail();
-                if(productList.get(i).get("idAccessory").asInt()>-1){
-                    Optional<Accessory> accessory = accessoryService.findById(productList.get(i).get("idAccessory").asInt());
+                if(carts.get(i).get("idAccessory")!=null){
+                    Optional<Accessory> accessory = accessoryService.findById(carts.get(i).get("idAccessory").asInt());
                     if(accessory.isPresent()){
                         orderDetail.setAccessory(accessory.get());
                         orderDetail.setOrder(order);
-                        orderDetail.setQuantity(productList.get(i).get("qty").asInt());
+                        orderDetail.setQuantity(carts.get(i).get("qty").asInt());
                         orderDetail.setPrice(accessory.get().getPrice());
                         orderDetailService.save(orderDetail);
-                        accessory.get().setQuantity(accessory.get().getQuantity()-productList.get(i).get("qty").asInt());
+                        accessory.get().setQuantity(accessory.get().getQuantity()-carts.get(i).get("qty").asInt());
                         accessoryService.update(accessory.get(),accessory.get().getIdAccessory());
                     }
-                } else if (productList.get(i).get("idProduct").asInt()>-1){
-                    Optional<Product> product = productService.findById(productList.get(i).get("idProduct").asInt());
+                } else if (carts.get(i).get("idProduct")!=null){
+                    Optional<Product> product = productService.findById(carts.get(i).get("idProduct").asInt());
+                    List<ImayProduct> imayProducts = imayProductService.findByProductAndStatus(product.get(),1);
                     if(product.isPresent()){
+                        for (ImayProduct imayProduct : imayProducts) {
+                            imayProduct.setStatus(0);
+                        }
                         orderDetail.setProduct(product.get());
                         orderDetail.setOrder(order);
-                        orderDetail.setQuantity(productList.get(i).get("qty").asInt());
+                        orderDetail.setQuantity(carts.get(i).get("qty").asInt());
                         orderDetail.setPrice(product.get().getPrice());
-                        orderDetailService.save(orderDetail);
-                        price =new BigDecimal(product.get().getPrice().doubleValue());
-                        orderDetail.setPrice(price);
-                        orderDetail.setAccessory(null);
                         orderDetailService.save(orderDetail);
                     }
                 }
             }
         }
-        logger.info("-- OrderDetail success: "+principal.getName());
-        return productList;
+        logger.info("-- OrderDetail success: "+account.getUsername());
+        return carts;
     }
     @GetMapping(value ="/findByProductCode/{productCode}")
     public Optional<Product> findByProductCode(@PathVariable("productCode") Integer productCode) {
