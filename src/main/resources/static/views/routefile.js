@@ -24,18 +24,16 @@ app.config(function($routeProvider){
         })
         .when("/order-detail",{
             templateUrl:"order/detail/view.html",
-            controller: "order-detail-ctrl"
+            controller: "order-detail-ctrl",
         })
 
         .when("/product",{
             templateUrl:"product/product.html",
             controller: "home-ctrl",
-            controller: "product",
             controller: "view_product_ctrl"
 
         })
         .when("/login",{
-
             templateUrl:"/views/login/form.html",
             controller: "login-ctrl" 
         })

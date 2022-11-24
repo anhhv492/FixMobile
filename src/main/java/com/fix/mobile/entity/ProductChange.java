@@ -1,9 +1,13 @@
 package com.fix.mobile.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -43,4 +47,16 @@ public class ProductChange {
     @JsonIgnore
     @OneToMany(mappedBy = "productChange")
     private List<ChangeDetail> changeDetails;
+
+    @OneToMany(mappedBy = "productChange")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Image> images;
+
+    @JsonManagedReference
+    public List<Image> getImages(){
+        return images;
+    }
+
+    @Transient
+    private List<MultipartFile> files;
 }

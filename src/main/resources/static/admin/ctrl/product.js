@@ -176,6 +176,7 @@ app.controller('product', function($scope, $http) {
         $scope.formProduct.capacity ={
             idCapacity: $scope.formProduct.capacity
         };
+
         $http.put(pathAPI+'/'+$scope.formProduct.idProduct, $scope.formProduct,token).then(response=> {
             $scope.message("cập nhật thành công"+ $scope.formProduct.name);
             $scope.refresh();
@@ -249,13 +250,7 @@ app.controller('product', function($scope, $http) {
         $scope.files = files;
         console.log($scope.files);
     }
-    const headers = {
-        headers: {
-            'Content-Type':'multipart/form-data',
-            Authorization: `Bearer `+jwtToken
-        },
-        data: { test: true }
-    }
+
     // thêm mới
     $scope.onSave = function() {
         var formData = new FormData();
@@ -491,7 +486,6 @@ app.controller('product', function($scope, $http) {
             angular.forEach($scope.imeis, function(name) {
                 form.append('name', name.value);
                 console.log('vvvvv '+ name.value);
-                debugger;
             });
         }
         form.append('name',$scope.formProduct.name );
@@ -509,7 +503,7 @@ app.controller('product', function($scope, $http) {
             $scope.message('Đã thêm '+ $scope.formProduct.name);
             console.log('ddadadasdsssssssssssssss '+ $scope.formProduct.name)
             $scope.formProduct = {}
-            $scope.imeis=null;
+            $scope.imeis.splice('')
         }).catch(error=>{
             $scope.error('thêm mới thất bại');
         })
@@ -550,9 +544,6 @@ app.controller('product', function($scope, $http) {
         })
     }
 
-    $scope.addInput  = function (){
-
-    }
     $scope.getProducts();
 
     $scope.addImei = function (){
