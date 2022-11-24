@@ -11,7 +11,7 @@
         </div>
         <div class="mb-3">
             <label for="" class="form-label">Tên chương trình</label>
-            <input type="text" ng-model="saleadd.name" class="form-control" placeholder="" aria-describedby="helpId">
+            <input type="text" ng-model="saleadd.name" ng-value="saleadd.name" class="form-control" placeholder="" aria-describedby="helpId">
         </div>
         <div class="mb-3">
             <label for="" class="form-label">Phương thức giảm giá</label>
@@ -22,7 +22,7 @@
         </div>
         <div class="mb-3" ng-show="hiddenDiscountMethod">
             <label for="" class="form-label">Mã giảm giá</label>
-            <input type="text" ng-model="saleadd.voucher" class="form-control" placeholder="" aria-describedby="helpId">
+            <input type="text" ng-model="saleadd.voucher" ng-value="saleadd.voucher" class="form-control" placeholder="" aria-describedby="helpId">
         </div>
         <div class="mb-3">
             <label for="" class="form-label">Kiểu giảm giá</label>
@@ -34,25 +34,25 @@
         <div class="mb-3">
             <div class="row g-2">
                 <div class="col-md">
-                    <label for="" class="form-label">Mức giảm giá</label>
+                    <label for="" class="form-label" >Mức giảm giá</label>
                     <div class="input-group" ng-show="hiddenMoneySale">
-                        <input type="input" class="form-control" ng-model="saleadd.moneySale">
-                        <span class="input-group-text">VNĐ</span>
+                        <input type="input" class="form-control" ng-model="saleadd.moneySale" ng-value="saleadd.moneySale">
+                        <span class="input-group-text" >VNĐ</span>
                     </div>
                     <div class="input-group" ng-show="hiddenPercentSale">
-                        <input type="number" min="0" max="100" class="form-control" ng-model="saleadd.percentSale">
+                        <input type="number" min="0" max="100" class="form-control" ng-model="saleadd.percentSale" ng-value="saleadd.percentSale">
                         <span class="input-group-text">%</span>
                     </div>
                 </div>
                 <div class="col-md">
                     <label for="" class="form-label">Số lượng</label>
-                    <input type="text" maxlength="6" ng-model="saleadd.quantity" class="form-control" placeholder="" aria-describedby="helpId">
+                    <input type="text" maxlength="6" ng-model="saleadd.quantity" ng-value="saleadd.quantity" class="form-control" placeholder="" aria-describedby="helpId">
                 </div>
             </div>
         </div>
         <div class="mb-3" ng-show="hiddenValueMin">
             <label for="" class="form-label">Giá trị đơn hàng tối thiểu</label>
-            <input type="text" ng-model="saleadd.valueMin" class="form-control" placeholder="" aria-describedby="helpId">
+            <input type="text" ng-model="saleadd.valueMin" ng-value="saleadd.valueMin"  class="form-control" placeholder="" aria-describedby="helpId">
         </div>
     <div class="mb-3" ng-show="hiddenUserType">
         <label for="" class="form-label">Đối tượng giảm giá</label>
@@ -67,11 +67,11 @@
             <div class="row g-2">
                 <div class="col-md">
                         <label for="" class="form-label">Thời gian bắt đầu</label>
-                        <input type="datetime-local"  class="form-control" ng-model="saleadd.createStart">
+                        <input type="datetime-local" ng-value="saleadd.createStart"  class="form-control" ng-model="saleadd.createStart">
                 </div>
                 <div class="col-md">
                         <label for="" class="form-label">Thời gian kết thúc</label>
-                        <input type="datetime-local"  class="form-control" ng-model="saleadd.createEnd">
+                        <input type="datetime-local" ng-value="saleadd.createEnd"  class="form-control" ng-model="saleadd.createEnd">
                 </div>
             </div>
         </div>
@@ -121,7 +121,7 @@
                         </div>
                         <div class="col-1">
                             <li class="page-item ms-2 me-2">
-                                <button class="btn btn-default" ng-click="prev()"><i class="fa fa-step-backward" aria-hidden="true"></i></button>
+                                <button class="btn btn-default" ng-click="prev(nameOnTable)"><i class="fa fa-step-backward" aria-hidden="true"></i></button>
                                 <!--            <p class="btn btn-success" disabled ng-show="!check_first">Trang trước</p>-->
                             </li>
                         </div>
@@ -132,7 +132,7 @@
                         </div>
                         <div class="col-1">
                             <li class="page-item ms-2 me-2">
-                                <button class="btn btn-default" ng-click="next()"><i class="fa fa-step-forward" aria-hidden="true"></i></button>
+                                <button class="btn btn-default" ng-click="next(nameOnTable)"><i class="fa fa-step-forward" aria-hidden="true"></i></button>
                                 <!--            <p class="btn btn-success" disabled ng-show="!check_last">Trang sau</p>-->
                             </li>
                         </div>

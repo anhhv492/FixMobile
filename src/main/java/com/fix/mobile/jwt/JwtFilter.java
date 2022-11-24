@@ -25,15 +25,20 @@ public class JwtFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {
-            String jwtToken = jwtByRequest(request);
-            if (StringUtils.hasText(jwtToken) && jwtUtil.validateToken(jwtToken)) {
-                UserDetails userDetails = new User(jwtUtil.getUsernameByToken(jwtToken), ""
-                        , jwtUtil.getRoleByToken(jwtToken));
-                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
-                        = new UsernamePasswordAuthenticationToken(userDetails,
-                        null, userDetails.getAuthorities());
-                SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-            }
+//            String jwtToken = jwtByRequest(request);
+//            if (StringUtils.hasText(jwtToken) && jwtUtil.validateToken(jwtToken)) {
+//                UserDetails userDetails = new User(jwtUtil.getUsernameByToken(jwtToken), ""
+//                        , jwtUtil.getRoleByToken(jwtToken));
+//                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
+//                        = new UsernamePasswordAuthenticationToken(userDetails,
+//                        null, userDetails.getAuthorities());
+//                SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+//            }
+        } catch (ExpiredJwtException e) {
+            request.setAttribute("Exception", e);
+        } catch (BadCredentialsException e) {
+            request.setAttribute("Exception", e);
+            throw e;
         } catch (Exception e) {
             System.out.println(e);
         }

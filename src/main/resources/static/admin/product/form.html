@@ -61,8 +61,6 @@
                                         <input ng-model="formProduct.price" required type="number" class="form-control">
                                     </div>
 
-
-
                                     <div ng-if="checkSubmit==false" class="form-group mt-1">
                                         <label>Thêm file Excel</label>
                                         <input type="file"  class="form-control"
@@ -86,7 +84,6 @@
                                     <div  ng-if="checkButton" class="form-group mt-1">
                                         <label>Hình ảnh</label>
                                         <br>
-
                                         <input
                                                 onchange="angular.element(this).scope().uploadFile(this.files)"
                                                 type="file" name="files"

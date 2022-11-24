@@ -81,14 +81,14 @@ public class JwtUtil {
         return roles;
     }
 
-    public boolean validateToken(String token){
-        try {
-            Jws<Claims> claimsJws = Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
-            return true;
-        }catch (SignatureException | MalformedJwtException | UnsupportedJwtException | IllegalArgumentException exception){
-            return false;
-        }catch (ExpiredJwtException e){
-            return false;
-        }
-    }
+//    public boolean validateToken(String token){
+//        try {
+//            Jws<Claims> claimsJws = Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
+//            return true;
+//        }catch (SignatureException | MalformedJwtException | UnsupportedJwtException | IllegalArgumentException exception){
+//            throw new BadCredentialsException("INVALID_CREDENTIALS",exception);
+//        }catch (ExpiredJwtException e){
+//            throw e;
+//        }
+//    }
 }

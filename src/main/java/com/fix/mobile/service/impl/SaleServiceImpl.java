@@ -43,7 +43,9 @@ public class SaleServiceImpl implements SaleService {
 
     @Override
     public Sale update(Sale sale) {
-        return null;
+        sale.setUserpdate(1);
+        sale.setUpdateTime(new Date());
+        return dao.save(sale);
     }
 
     @Override
@@ -54,6 +56,11 @@ public class SaleServiceImpl implements SaleService {
     @Override
     public List<Sale> getall(Integer status) {
         return null;
+    }
+
+    @Override
+    public Sale findByid(Integer id) {
+        return dao.findByIdSale(id);
     }
 
     public void validate_Date(Sale sale) {
