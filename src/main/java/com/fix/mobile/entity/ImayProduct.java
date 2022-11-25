@@ -29,7 +29,8 @@ public class ImayProduct {
 	@JoinColumn(name = "id_product")
 	private Product product;
 
-	@OneToOne(mappedBy = "imei")
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "id_detail")
 	private OrderDetail orderDetail;
 	public ImayProduct( String name, int status, Product product) {
 		this.name = name;

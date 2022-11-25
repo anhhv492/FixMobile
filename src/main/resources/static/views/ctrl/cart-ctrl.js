@@ -1,4 +1,4 @@
-app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window) {
+app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window,$timeout) {
     var urlOrder = `http://localhost:8080/rest/guest/order`;
     var urlImei = `http://localhost:8080/rest/guest/imei`;
     var urlAccessory = `http://localhost:8080/rest/guest/accessory`;
@@ -96,12 +96,10 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window) {
                     item.qty = res.data;
                     $rootScope.saveLocalStorage();
                     $rootScope.loadLocalStorage();
-                    $scope.getShippingOder();
                 }else{
                     $rootScope.carts[index].qty=item.qty;
                     $rootScope.saveLocalStorage();
                     $rootScope.loadLocalStorage();
-                    $scope.getShippingOder();
                 }
             }).catch(err=>{
                 console.log(err)
@@ -128,18 +126,15 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window) {
                     item.qty = res.data;
                     $rootScope.saveLocalStorage();
                     $rootScope.loadLocalStorage();
-                    $scope.getShippingOder();
                 }else{
                     $rootScope.carts[index].qty=item.qty;
                     $rootScope.saveLocalStorage();
                     $rootScope.loadLocalStorage();
-                    $scope.getShippingOder();
                 }
             }).catch(err=>{
                 console.log(err)
             })
         }
-        $scope.getShippingOder();
         if ($rootScope.carts[index].qty <= 0) {
             $rootScope.saveLocalStorage();
             $rootScope.loadLocalStorage();
@@ -147,6 +142,7 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window) {
             $window.location.href = '#!cart';
             console.log('I was closed by the timer')
         }
+        $scope.getShippingOder();
     }
     $scope.raise = function (item) {
         if(item.idAccessory>-1) {
@@ -170,13 +166,11 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window) {
                     })
                     item.qty = res.data;
                     $rootScope.loadLocalStorage();
-                    $scope.getShippingOder();
                 }else{
                     $rootScope.qtyCart++;
                     $rootScope.carts[index].qty++;
                     $rootScope.saveLocalStorage();
                     $rootScope.loadLocalStorage();
-                    $scope.getShippingOder();
                 }
             }).catch(err=>{
                 console.log(err)
@@ -208,7 +202,6 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window) {
                     $rootScope.qtyCart++;
                     $rootScope.saveLocalStorage();
                     $rootScope.loadLocalStorage();
-                    $scope.getShippingOder();
                     console.log('add', item.qty)
                 }
             }).catch(err=>{
@@ -227,16 +220,15 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window) {
         if ($rootScope.carts[index].qty <= 0) {
             $rootScope.saveLocalStorage();
             $rootScope.loadLocalStorage();
-            $scope.getShippingOder();
             $rootScope.carts.splice(index, 1);
             $window.location.href = '#!cart';
             console.log('I was closed by the timer')
         }
-        $scope.getShippingOder();
         $rootScope.saveLocalStorage();
         $rootScope.loadLocalStorage();
         $rootScope.qtyCart--;
         console.log('add', item.qty)
+        $scope.getShippingOder();
     }
     $scope.totalPrice = function () {
         let total = 0;
@@ -246,7 +238,7 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window) {
         return total;
     }
     $scope.totals = function () {
-        return $scope.totalPrice() + $scope.ship;
+        return $scope.totalPrice();
     }
     $scope.totalShip = function () {
         let ship = 50000;
@@ -257,6 +249,7 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window) {
         localStorage.clear();
     }
     $scope.buyCart = function () {
+        $scope.getShippingOder();
         if (!$rootScope.account) {
             $window.location.href = '/login';
         } else {
@@ -284,9 +277,10 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window) {
                         }).then(res => {
                             console.log("buy cart", res.data)
                             $scope.linkPaypal = res.data;
+                            $scope.cart.personTake= $scope.addressAccount.personTake;
+                            $scope.cart.phoneTake= $scope.addressAccount.phoneTake;
                             $scope.cart.address = $scope.addressAccount.addressDetail+", "+$scope.addressAccount.addressTake;
-                            $scope.cart.createDate = new Date();
-                            $scope.cart.total = $scope.totals();
+                            $scope.cart.total = $scope.totals()+$scope.ship;
                             $scope.cart.status = 1;
                             $scope.cart.type = false;
                             $http.post(urlOrder + '/add', $scope.cart,token).then(res => {
@@ -313,9 +307,10 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window) {
                         })
 
                     } else {
-                        $scope.cart.createDate = new Date();
+                        $scope.cart.personTake= $scope.addressAccount.personTake;
+                        $scope.cart.phoneTake= $scope.addressAccount.phoneTake;
                         $scope.cart.address = $scope.addressAccount.addressDetail+", "+$scope.addressAccount.addressTake;
-                        $scope.cart.total = $scope.totals();
+                        $scope.cart.total = $scope.totals()+$scope.ship;
                         $scope.cart.status = 0;
                         $scope.cart.type = false;
                         $http.post(urlOrder + '/add', $scope.cart,token).then(res => {
@@ -370,15 +365,10 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window) {
         $http.get(urlShippingOder + "?from_district_id=1542&service_id=53320&to_district_id="
             + $scope.to_district_id + "&to_ward_code=" + $scope.to_ward_code
             + "&weight=200&insurance_value=" + $scope.totalPrice(), token).then(function (respon) {
-            $scope.ship = respon.data.data.total;
-            console.log(respon.data.data.total)
+            $scope.ship = respon.data.total;
+            console.log('ship',respon.data.total)
         }).catch(err => {
-            $http.get(urlShippingOder + "?from_district_id=1542&service_id=53321&to_district_id="
-                + $scope.to_district_id + "&to_ward_code=" + $scope.to_ward_code
-                + "&weight=200&insurance_value=" + $scope.totalPrice(), token).then(function (respon) {
-                $scope.ship = respon.data.data.total;
-                console.log(respon.data.data.total)
-            })
+                console.log('error ship',err)
         })
     }
     $scope.getAddressAcountACtive();

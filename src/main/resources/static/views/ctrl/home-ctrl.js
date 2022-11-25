@@ -30,6 +30,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
     }
 
     $scope.logoff = function () {
+        localStorage.removeItem("jwtToken");
         $rootScope.account = null;
     }
     $scope.getCategories = function(){
