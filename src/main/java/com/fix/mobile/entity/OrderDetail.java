@@ -37,6 +37,10 @@ public class OrderDetail {
     @JoinColumn(name = "id_product")
     private Product product;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_imei")
+    private ImayProduct imei;
+
     @ManyToOne
     @JoinColumn(name = "id_accessory")
     private Accessory accessory;
