@@ -22,7 +22,7 @@
   </tr>
   <tr ng-repeat="orderDetail in orderDetails" ng-if="orderDetail.product">
     <td>{{orderDetail.product.name}}</td>
-    <td>{{orderDetail.product.color}}</td>
+    <td>{{orderDetail.product.color.name}}</td>
     <td>{{orderDetail.product.category.name}}</td>
     <td>{{orderDetail.product.price|number}}</td>
     <td>{{orderDetail.quantity}}</td>

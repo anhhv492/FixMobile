@@ -29,6 +29,7 @@ public class ImayProduct {
 	@JoinColumn(name = "id_product")
 	private Product product;
 
+	@JsonIgnore
 	@OneToOne(mappedBy = "imei")
 	private OrderDetail orderDetail;
 	public ImayProduct( String name, int status, Product product) {

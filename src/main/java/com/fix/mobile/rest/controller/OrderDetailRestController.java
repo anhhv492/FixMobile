@@ -31,10 +31,15 @@ public class OrderDetailRestController {
     private OrderDetailService orderDetailService;
 
     @GetMapping(value="/rest/staff/order/detail/{id}")
-    public List<OrderDetail> getAllByAccount(@PathVariable("id") Integer id){
+    public List<OrderDetail> getAllStaffByAccount(@PathVariable("id") Integer id){
         Optional<Order> order = orderService.findById(id);
         List<OrderDetail> orderDetails = orderDetailService.findAllByOrder(order.get());
         return orderDetails;
     }
-
+    @GetMapping(value="/rest/user/order/detail/{id}")
+    public List<OrderDetail> getAllUserByAccount(@PathVariable("id") Integer id){
+        Optional<Order> order = orderService.findById(id);
+        List<OrderDetail> orderDetails = orderDetailService.findAllByOrder(order.get());
+        return orderDetails;
+    }
 }

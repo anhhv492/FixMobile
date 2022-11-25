@@ -1,32 +1,21 @@
-<table class="table table-bordered table-hover container">
+<table class="table table-bordered table-hover tabl container">
   <thead>
   <tr>
     <th>Sản phẩm</th>
     <th>Màu</th>
     <th>Thể loại</th>
     <th>Giá (VNĐ)</th>
-    <th>Số lượng</th>
+    <th>Mã máy</th>
     <th>Hình ảnh</th>
-    <th>Tổng (VNĐ)</th>
-    <th>Thao tác</th>
   </tr>
   </thead>
   <tbody>
-  <tr ng-repeat="orderDetail in orderDetails" ng-if="orderDetail.accessory">
-    <td>{{orderDetail.accessory.name}}</td>
-    <td>{{orderDetail.accessory.color}}</td>
-    <td>{{orderDetail.accessory.category.name}}</td>
-    <td>{{orderDetail.price|number}}</td>
-    <td>{{orderDetail.quantity}}</td>
-    <td><img width="80px" height="80px" src="/images/accessories/{{orderDetail.accessory.image}}"></td>
-    <td>{{orderDetail.quantity*orderDetail.price|number}}</td>
-  </tr>
   <tr ng-repeat="orderDetail in orderDetails" ng-if="orderDetail.product">
     <td>{{orderDetail.product.name}}</td>
     <td>{{orderDetail.product.color.name}}</td>
     <td>{{orderDetail.product.category.name}}</td>
     <td>{{orderDetail.price|number}}</td>
-    <td>{{orderDetail.quantity}}</td>
+    <td>{{orderDetail.product.imei.name}}</td>
     <td><img width="80px" height="80px" src="{{orderDetail.product.images[0].name}}"></td>
     <td>{{orderDetail.quantity*orderDetail.price|number}}</td>
     <td>

@@ -58,5 +58,10 @@ public class OrderRestController {
         }
         return null;
     }
-
+    @GetMapping(value="/rest/user/order")
+    public List<Order> getAllByAccount(){
+        Account account = accountService.findByUsername(UserName.getUserName());
+        List<Order> orders = orderService.findAllByAccount(account);
+        return orders;
+    }
 }
