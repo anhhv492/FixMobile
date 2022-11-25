@@ -17,9 +17,9 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window,$timeou
     $scope.categories = {};
     $scope.cart = {};
 
-    $scope.to_district_id = null;
-    $scope.to_ward_code = null;
-    $scope.ship = null;
+    $scope.to_district_id = "";
+    $scope.to_ward_code = ""
+    $scope.ship = "";
     $scope.counts = function () {
         return $rootScope.carts
             .map(item => item.qty)
@@ -365,10 +365,15 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window,$timeou
         $http.get(urlShippingOder + "?from_district_id=1542&service_id=53320&to_district_id="
             + $scope.to_district_id + "&to_ward_code=" + $scope.to_ward_code
             + "&weight=200&insurance_value=" + $scope.totalPrice(), token).then(function (respon) {
-            $scope.ship = respon.data.total;
-            console.log('ship',respon.data.total)
+            $scope.ship = respon.data.data.total;
+            console.log(respon.data.data.total)
         }).catch(err => {
-                console.log('error ship',err)
+            $http.get(urlShippingOder + "?from_district_id=1542&service_id=53321&to_district_id="
+                + $scope.to_district_id + "&to_ward_code=" + $scope.to_ward_code
+                + "&weight=200&insurance_value=" + $scope.totalPrice(), token).then(function (respon) {
+                $scope.ship = respon.data.data.total;
+                console.log(respon.data.data.total)
+            })
         })
     }
     $scope.getAddressAcountACtive();
