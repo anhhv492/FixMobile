@@ -211,7 +211,7 @@ CREATE TABLE imayproduct (
     id_imay int NOT NULL auto_increment primary key,
 	name varchar(255),
 	id_product int not null,
-	id_detail int not null,
+	id_detail int null,
 	status int default(0), 
 	foreign key(id_product) references products(id_product),
 	foreign key(id_detail) references order_detail(id_detail)
