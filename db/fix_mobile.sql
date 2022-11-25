@@ -140,6 +140,8 @@ CREATE TABLE orders (
 	type binary not null,
 	username nvarchar(50) NOT NULL,
     money_sale decimal(10,0) null,
+	person_take nvarchar(50) NOT NULL,
+	phone_take nvarchar(15) NOT NULL,
     id_sale int null,
 	foreign key(username) references accounts(username),
 	foreign key(id_sale) references sale(id_sale)
