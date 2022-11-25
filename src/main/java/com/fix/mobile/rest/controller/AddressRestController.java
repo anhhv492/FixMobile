@@ -89,7 +89,7 @@ public class AddressRestController {
             @RequestParam("weight") String weight,
             @RequestParam("insurance_value") String insurance_value
     ){
-        return addressService.getShippingOrder(from_district_id, service_id, to_district_id,
-                to_ward_code, weight, insurance_value);
+        return ResponseEntity.ok().body(addressService.getShippingOrder(from_district_id, service_id, to_district_id,
+                to_ward_code, weight, insurance_value));
     }
 }
