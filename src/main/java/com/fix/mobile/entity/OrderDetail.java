@@ -37,10 +37,6 @@ public class OrderDetail {
     @JoinColumn(name = "id_product")
     private Product product;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_imei")
-    private ImayProduct imei;
-
     @ManyToOne
     @JoinColumn(name = "id_accessory")
     private Accessory accessory;
@@ -52,4 +48,8 @@ public class OrderDetail {
     @JsonIgnore
     @OneToMany(mappedBy = "orderDetail")
     private List<ProductReturn> productReturns;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "orderDetail")
+    private List<ImayProduct> imeis;
 }
