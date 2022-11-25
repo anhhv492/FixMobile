@@ -17,9 +17,9 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window,$timeou
     $scope.categories = {};
     $scope.cart = {};
 
-    $scope.to_district_id = "";
-    $scope.to_ward_code = ""
-    $scope.ship = "";
+    $scope.to_district_id = null;
+    $scope.to_ward_code = null;
+    $scope.ship = null;
     $scope.counts = function () {
         return $rootScope.carts
             .map(item => item.qty)
