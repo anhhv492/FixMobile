@@ -238,7 +238,7 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window,$timeou
         return total;
     }
     $scope.totals = function () {
-        return $scope.totalPrice() + $scope.ship;
+        return $scope.totalPrice();
     }
     $scope.totalShip = function () {
         let ship = 50000;
@@ -277,8 +277,9 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window,$timeou
                         }).then(res => {
                             console.log("buy cart", res.data)
                             $scope.linkPaypal = res.data;
+                            $scope.cart.personTake= $scope.addressAccount.personTake;
+                            $scope.cart.phoneTake= $scope.addressAccount.phoneTake;
                             $scope.cart.address = $scope.addressAccount.addressDetail+", "+$scope.addressAccount.addressTake;
-                            $scope.cart.createDate = new Date();
                             $scope.cart.total = $scope.totals()+$scope.ship;
                             $scope.cart.status = 1;
                             $scope.cart.type = false;
@@ -306,9 +307,10 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window,$timeou
                         })
 
                     } else {
-                        $scope.cart.createDate = new Date();
+                        $scope.cart.personTake= $scope.addressAccount.personTake;
+                        $scope.cart.phoneTake= $scope.addressAccount.phoneTake;
                         $scope.cart.address = $scope.addressAccount.addressDetail+", "+$scope.addressAccount.addressTake;
-                        $scope.cart.total = $scope.totals();
+                        $scope.cart.total = $scope.totals()+$scope.ship;
                         $scope.cart.status = 0;
                         $scope.cart.type = false;
                         $http.post(urlOrder + '/add', $scope.cart,token).then(res => {

@@ -1,13 +1,7 @@
 package com.fix.mobile.rest.controller;
 
-import com.fix.mobile.entity.Accessory;
-import com.fix.mobile.entity.Account;
-import com.fix.mobile.entity.Order;
-import com.fix.mobile.entity.OrderDetail;
-import com.fix.mobile.service.AccessoryService;
-import com.fix.mobile.service.AccountService;
-import com.fix.mobile.service.OrderDetailService;
-import com.fix.mobile.service.OrderService;
+import com.fix.mobile.entity.*;
+import com.fix.mobile.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,19 +16,23 @@ import java.util.Optional;
 @CrossOrigin("*")
 public class OrderDetailRestController {
     @Autowired
-    private AccessoryService accessoryService;
-    @Autowired
-    private AccountService accountService;
-    @Autowired
     private OrderService orderService;
     @Autowired
     private OrderDetailService orderDetailService;
+    @Autowired
+    private ImayProductService imeiProductService;
 
     @GetMapping(value="/rest/staff/order/detail/{id}")
     public List<OrderDetail> getAllStaffByAccount(@PathVariable("id") Integer id){
         Optional<Order> order = orderService.findById(id);
         List<OrderDetail> orderDetails = orderDetailService.findAllByOrder(order.get());
         return orderDetails;
+    }
+    @GetMapping(value="/rest/staff/order/detail/imei/{id}")
+    public List<ImayProduct> getImeis(@PathVariable("id") Integer id){
+        OrderDetail orderDetail = orderDetailService.findById(id).get();
+        List<ImayProduct> imeis = imeiProductService.findByOrderDetail(orderDetail);
+        return imeis;
     }
     @GetMapping(value="/rest/user/order/detail/{id}")
     public List<OrderDetail> getAllUserByAccount(@PathVariable("id") Integer id){

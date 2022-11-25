@@ -30,10 +30,6 @@ app.config(function($routeProvider){
             templateUrl:"/admin/order/detail/form.html",
             controller: "order-admin-detail-ctrl"
         })
-        .when("/detail-product",{
-            templateUrl:"/admin/order/detail/detail-product.html",
-            controller: "order-admin-detail-ctrl"
-        })
         // thuộc tính
         .when("/createcapacity",{
             templateUrl:"/admin/capacity/createcapacity.html",

@@ -39,6 +39,12 @@ public class Order {
     @Column(name = "type")
     private Boolean type;
 
+    @Column(name = "person_take")
+    private String personTake;
+
+    @Column(name = "phone_take")
+    private String phoneTake;
+
     @Column(name = "money_sale")
     private BigDecimal moneySale;
 

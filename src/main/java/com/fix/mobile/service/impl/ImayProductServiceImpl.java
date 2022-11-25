@@ -1,5 +1,6 @@
 package com.fix.mobile.service.impl;
 
+import com.fix.mobile.entity.OrderDetail;
 import com.fix.mobile.entity.Product;
 import com.fix.mobile.repository.ImayProductRepository;
 import com.fix.mobile.entity.ImayProduct;
@@ -72,5 +73,10 @@ public class ImayProductServiceImpl implements ImayProductService {
 	@Override
 	public List<ImayProduct> findByProductAndStatus(Product product, int status) {
 		return repository.findByProductAndStatus(product,status);
+	}
+
+	@Override
+	public List<ImayProduct> findByOrderDetail(OrderDetail orderDetail) {
+		return repository.findByOrderDetail(orderDetail);
 	}
 }
