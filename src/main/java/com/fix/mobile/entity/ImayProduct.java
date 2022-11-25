@@ -1,10 +1,12 @@
 package com.fix.mobile.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -27,6 +29,8 @@ public class ImayProduct {
 	@JoinColumn(name = "id_product")
 	private Product product;
 
+	@OneToOne(mappedBy = "imei")
+	private OrderDetail orderDetail;
 	public ImayProduct( String name, int status, Product product) {
 		this.name = name;
 		this.status = status;

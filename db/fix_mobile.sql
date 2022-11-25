@@ -82,6 +82,14 @@ CREATE TABLE products (
 	foreign key(id_image) references images(id_image)
 ) ;
 
+CREATE TABLE imayproduct (
+    id_imay int NOT NULL auto_increment primary key,
+	name varchar(255),
+	id_product int not null,
+	status int default(0), 
+	foreign key(id_product) references products(id_product)
+);
+
 CREATE TABLE accessories (
 	id_accessory int NOT NULL auto_increment primary key,
 	name nvarchar(255) NOT NULL,
@@ -138,7 +146,10 @@ CREATE TABLE orders (
 	status int DEFAULT(0) not null,
 	type binary not null,
 	username nvarchar(50) NOT NULL,
-	foreign key(username) references accounts(username)
+    money_sale decimal(10,0) null,
+    id_sale int null,
+	foreign key(username) references accounts(username),
+	foreign key(id_sale) references sale(id_sale)
 );
 
 CREATE TABLE order_detail (
@@ -146,9 +157,11 @@ CREATE TABLE order_detail (
 	quantity int not null,
 	price decimal(10,0) not null,
 	status binary DEFAULT(0),
+	id_imei int null,
 	id_order int NOT NULL, 
 	id_product int NULL,
 	id_accessory int NULL,
+	foreign key(id_imei) references imayproduct(id_imay),
 	foreign key(id_order) references orders(id_order),
 	foreign key(id_product) references products(id_product),
 	foreign key(id_accessory) references accessories(id_accessory)
@@ -201,13 +214,6 @@ CREATE TABLE change_detail (
 	foreign key(id_product) references products(id_product),
 	foreign key(id_order_detail) references order_detail(id_detail),
 	foreign key(id_change) references product_change(id_change)
-);
-CREATE TABLE imayproduct (
-    id_imay int NOT NULL auto_increment primary key,
-	name varchar(255),
-	id_product int not null,
-	status int default(0), 
-	foreign key(id_product) references products(id_product)
 );
 insert into fix_mobile.roles(name) values ('ADMIN');
 insert into fix_mobile.roles(name) values ('STAFF');

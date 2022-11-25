@@ -138,7 +138,9 @@ public class GuestRestController {
                     List<ImayProduct> imayProducts = imayProductService.findByProductAndStatus(product.get(),1);
                     if(product.isPresent()){
                         for (ImayProduct imayProduct : imayProducts) {
+                            orderDetail.setImei(imayProduct);
                             imayProduct.setStatus(0);
+                            imayProductService.update(imayProduct,imayProduct.getIdImay());
                         }
                         orderDetail.setProduct(product.get());
                         orderDetail.setOrder(order);
