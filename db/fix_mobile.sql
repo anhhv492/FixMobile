@@ -1,5 +1,5 @@
 -- SQLINES DEMO *** ix_mobile;
--- create database fix_mobile;
+create database fix_mobile;
 use fix_mobile;
 
 CREATE TABLE categories (
@@ -150,11 +150,9 @@ CREATE TABLE order_detail (
 	quantity int not null,
 	price decimal(10,0) not null,
 	status binary DEFAULT(0),
-	id_imei int null,
 	id_order int NOT NULL, 
 	id_product int NULL,
 	id_accessory int NULL,
-	foreign key(id_imei) references imayproduct(id_imay),
 	foreign key(id_order) references orders(id_order),
 	foreign key(id_product) references products(id_product),
 	foreign key(id_accessory) references accessories(id_accessory)
