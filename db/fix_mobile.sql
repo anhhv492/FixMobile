@@ -1,11 +1,12 @@
 -- SQLINES DEMO *** ix_mobile;
--- create database fix_mobile;
+create database fix_mobile;
 use fix_mobile;
 
 CREATE TABLE categories (
 	id_category int NOT NULL auto_increment primary key,
-    type binary not null,
-	name nvarchar(255) not null
+    type int not null,
+	name nvarchar(255) not null,
+	status int null
 ) ;
 CREATE TABLE capacity (
 	id_capacity int NOT NULL auto_increment primary key,
@@ -34,7 +35,7 @@ CREATE TABLE roles (
 CREATE TABLE accounts (
 	username nvarchar(50) PRIMARY KEY not null,
 	password nvarchar(100) not null,
-    	full_name nvarchar(100) not null,
+	full_name nvarchar(100) not null,
 	gender binary default(0) not null,
 	email nvarchar(100) not null,
 	phone nvarchar(20) not null,
@@ -48,8 +49,8 @@ CREATE TABLE accounts (
 CREATE TABLE address (
 	id_address int NOT NULL auto_increment primary key,
    	address_detail nvarchar(255) not null,
-    	person_take nvarchar(50) not null,
-    	phone_take nvarchar(20) not null,
+	person_take nvarchar(50) not null,
+	phone_take nvarchar(20) not null,
 	id_province VARCHAR(40) NULL,
 	id_district VARCHAR(40) NULL,
 	id_ward VARCHAR(40) NULL,
@@ -138,7 +139,12 @@ CREATE TABLE orders (
 	status int DEFAULT(0) not null,
 	type binary not null,
 	username nvarchar(50) NOT NULL,
-	foreign key(username) references accounts(username)
+    money_sale decimal(10,0) null,
+	person_take nvarchar(50) NOT NULL,
+	phone_take nvarchar(15) NOT NULL,
+    id_sale int null,
+	foreign key(username) references accounts(username),
+	foreign key(id_sale) references sale(id_sale)
 );
 
 CREATE TABLE order_detail (
@@ -202,12 +208,15 @@ CREATE TABLE change_detail (
 	foreign key(id_order_detail) references order_detail(id_detail),
 	foreign key(id_change) references product_change(id_change)
 );
+
 CREATE TABLE imayproduct (
     id_imay int NOT NULL auto_increment primary key,
 	name varchar(255),
 	id_product int not null,
+	id_detail int null,
 	status int default(0), 
-	foreign key(id_product) references products(id_product)
+	foreign key(id_product) references products(id_product),
+	foreign key(id_detail) references order_detail(id_detail)
 );
 insert into fix_mobile.roles(name) values ('ADMIN');
 insert into fix_mobile.roles(name) values ('STAFF');
@@ -215,32 +224,34 @@ insert into fix_mobile.roles(name) values ('USER');
 insert into fix_mobile.roles(name) values ('GUEST');
 -- SQLINES DEMO *** OR EVALUATION USE ONLY
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
-insert into fix_mobile.categories(type, name)
-values (1,'Sạc');
-insert into fix_mobile.categories(type, name)
-values (1,'Tai nghe dây');
-insert into fix_mobile.categories(type, name)
-values (1,'Tai nghe không dây');
-insert into fix_mobile.categories(type, name)
-values (1,'Ốp lưng IPhone 5');
-insert into fix_mobile.categories(type, name)
-values (1,'Ốp lưng IPhone 6');
-insert into fix_mobile.categories(type, name)
-values (1,'Ốp lưng IPhone 7');
-insert into fix_mobile.categories(type, name)
-values (1,'Ốp lưng IPhone 8');
-insert into fix_mobile.categories(type, name)
-values (1,'Ốp lưng IPhone X');
-insert into fix_mobile.categories(type, name)
-values (0,'IPhone 5');
-insert into fix_mobile.categories(type, name)
-values (0,'IPhone 6');
-insert into fix_mobile.categories(type, name)
-values (0,'IPhone 7');
-insert into fix_mobile.categories(type, name)
-values (0,'IPhone 8');
-insert into fix_mobile.categories(type, name)
-values (0,'IPhone X');
+
+insert into fix_mobile.categories(type, name,status)
+values (1,'Sạc',1);
+insert into fix_mobile.categories(type, name,status)
+values (1,'Tai nghe dây',1);
+insert into fix_mobile.categories(type, name,status)
+values (1,'Tai nghe không dây',1);
+insert into fix_mobile.categories(type, name,status)
+values (1,'Ốp lưng IPhone 5',1);
+insert into fix_mobile.categories(type, name,status)
+values (1,'Ốp lưng IPhone 6',1);
+insert into fix_mobile.categories(type, name,status)
+values (1,'Ốp lưng IPhone 7',1);
+insert into fix_mobile.categories(type, name,status)
+values (1,'Ốp lưng IPhone 8',1);
+insert into fix_mobile.categories(type, name,status)
+values (1,'Ốp lưng IPhone X',1);
+insert into fix_mobile.categories(type, name,status)
+values (0,'IPhone 5',1);
+insert into fix_mobile.categories(type, name,status)
+values (0,'IPhone 6',1);
+insert into fix_mobile.categories(type, name,status)
+values (0,'IPhone 7',1);
+insert into fix_mobile.categories(type, name,status)
+values (0,'IPhone 8',1);
+insert into fix_mobile.categories(type, name,status)
+values (0,'IPhone X',1);
+
 
 -- SQLINES DEMO *** OR EVALUATION USE ONLY
 -- SQLINES LICENSE FOR EVALUATION USE ONLY

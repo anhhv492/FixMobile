@@ -48,7 +48,7 @@ public class Sale {
     @Column(name = "percent_sale")
     private Integer percentSale;
 
-    @Column(name = "quantity")
+    @Column(name = "quantity_use")
     private Integer quantity;
 
     @Column(name = "create_time")
@@ -78,4 +78,8 @@ public class Sale {
     @JsonIgnore
     @OneToMany(mappedBy = "sale")
     private List<SaleDetail> saleDetails;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "sale")
+    private List<Order> orders;
 }

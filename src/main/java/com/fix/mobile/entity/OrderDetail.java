@@ -48,4 +48,8 @@ public class OrderDetail {
     @JsonIgnore
     @OneToMany(mappedBy = "orderDetail")
     private List<ProductReturn> productReturns;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "orderDetail")
+    private List<ImayProduct> imeis;
 }

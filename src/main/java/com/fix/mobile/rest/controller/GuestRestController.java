@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.security.Principal;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -108,6 +109,7 @@ public class GuestRestController {
             return null;
         }
         this.order = order;
+        order.setCreateDate(new Date());
         order.setAccount(account);
         orderService.save(order);
         logger.info("-- Order: "+order.getIdOrder());
@@ -137,14 +139,16 @@ public class GuestRestController {
                     Optional<Product> product = productService.findById(carts.get(i).get("idProduct").asInt());
                     List<ImayProduct> imayProducts = imayProductService.findByProductAndStatus(product.get(),1);
                     if(product.isPresent()){
-                        for (ImayProduct imayProduct : imayProducts) {
-                            imayProduct.setStatus(0);
-                        }
                         orderDetail.setProduct(product.get());
                         orderDetail.setOrder(order);
                         orderDetail.setQuantity(carts.get(i).get("qty").asInt());
                         orderDetail.setPrice(product.get().getPrice());
                         orderDetailService.save(orderDetail);
+                        for (int j = 0; j < carts.get(i).get("qty").asInt(); j++) {
+                            imayProducts.get(j).setOrderDetail(orderDetail);
+                            imayProducts.get(j).setStatus(0);
+                            imayProductService.update(imayProducts.get(j),imayProducts.get(j).getIdImay());
+                        }
                     }
                 }
             }

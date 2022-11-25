@@ -39,10 +39,21 @@ public class Order {
     @Column(name = "type")
     private Boolean type;
 
+    @Column(name = "person_take")
+    private String personTake;
+
+    @Column(name = "phone_take")
+    private String phoneTake;
+
+    @Column(name = "money_sale")
+    private BigDecimal moneySale;
 
     @ManyToOne
     @JoinColumn(name = "username")
     private Account account;
+    @ManyToOne
+    @JoinColumn(name = "id_sale")
+    private Sale sale;
 
     //
     @JsonIgnore

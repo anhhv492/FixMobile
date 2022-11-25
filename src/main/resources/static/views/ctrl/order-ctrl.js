@@ -1,4 +1,4 @@
-app.controller('order-ctrl',function($rootScope,$scope,$http,$window){
+app.controller('order-ctrl',function($rootScope,$scope,$http){
     var urlOrder=`http://localhost:8080/rest/user/order`;
     $scope.orders=[];
     $rootScope.idOrder=null;
