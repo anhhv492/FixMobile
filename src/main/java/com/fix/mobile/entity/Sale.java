@@ -78,4 +78,8 @@ public class Sale {
     @JsonIgnore
     @OneToMany(mappedBy = "sale")
     private List<SaleDetail> saleDetails;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "sale")
+    private List<Order> orders;
 }
