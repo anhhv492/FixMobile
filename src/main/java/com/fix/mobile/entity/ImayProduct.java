@@ -29,8 +29,8 @@ public class ImayProduct {
 	@JoinColumn(name = "id_product")
 	private Product product;
 
-	@JsonIgnore
-	@OneToOne(mappedBy = "imei")
+	@ManyToOne
+	@JoinColumn(name = "id_detail")
 	private OrderDetail orderDetail;
 	public ImayProduct( String name, int status, Product product) {
 		this.name = name;
