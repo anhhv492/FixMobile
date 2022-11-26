@@ -43,28 +43,13 @@ app.controller('login-ctrl',function($rootScope,$scope,$http,$window){
     $scope.onLogin = function () {
         $http.post(pathAPI, $scope.form).then(respon =>{
             $scope.message('Đăng nhập thành công');
-            Swal.fire({
-                position: 'top-end',
-                icon: 'success',
-                title: 'Đăng nhập thành công',
-                showConfirmButton: false,
-                timer: 1500
-            })
             localStorage.setItem('jwtToken', respon.data.token);
             $scope.jwt = localStorage.getItem('jwtToken')
             $rootScope.account=respon.data;
             $window.location.href = '#!home/index';
         }).catch(error => {
-
             $scope.error('Đăng nhập thất bại');
             $rootScope.account=null;
-            Swal.fire({
-                position: 'top-end',
-                icon: 'error',
-                title: 'Đăng nhập thất bại',
-                showConfirmButton: false,
-                timer: 1500
-            })
         })
     }
 
