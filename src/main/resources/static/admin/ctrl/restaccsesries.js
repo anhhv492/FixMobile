@@ -78,7 +78,6 @@ app.controller("restaccsesries", function ($scope, $http) {
             $scope.reset();
             $scope.message("Đã thêm thành công");
             $scope.initialize();
-            console.log(resp);
         }).catch(error => {
             $scope.error("thêm mới thất bại");
         })
