@@ -24,7 +24,8 @@ CREATE TABLE color (
 CREATE TABLE images (
 	id_image int NOT NULL auto_increment primary key,
 	name nvarchar(255) not null,
-	id_product int null
+	id_product int null,
+	id_product_change int null,
 ) ;
 
 CREATE TABLE roles (
@@ -45,7 +46,7 @@ CREATE TABLE accounts (
 	id_role int not null,
 	address_id int NULL,
 	foreign key(id_role) references roles(id_role)
-) ;
+);
 CREATE TABLE address (
 	id_address int NOT NULL auto_increment primary key,
    	address_detail nvarchar(255) not null,
@@ -64,17 +65,17 @@ CREATE TABLE address (
 
 CREATE TABLE products (
 	id_product int NOT NULL auto_increment primary key,
-	name nvarchar(255) NOT NULL,
-	create_date date NOT NULL,
-	camera nvarchar(100) NOT NULL,
-	price decimal(10,0) NOT NULL,
-	size nvarchar(100) NOT NULL,
+	name nvarchar(255)  NULL,
+	create_date date  NULL,
+	camera nvarchar(100)  NULL,
+	price decimal(10,0)  NULL,
+	size nvarchar(100)  NULL,
 	note nvarchar(255),
 	status int default(0),
-	id_ram int NOT NULL,
-	id_color int NOT NULL,
+	id_ram int  NULL,
+	id_color int NOT  NULL,
 	id_capacity int NOT NULL,
-	id_category int NOT NULL,
+	id_category int NOT  NULL,
 	id_image int  NULL,
 	foreign key(id_ram) references ram(id_ram),
 	foreign key(id_color) references color(id_color),
