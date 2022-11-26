@@ -1,6 +1,7 @@
 package com.fix.mobile.repository;
 
 import com.fix.mobile.entity.ImayProduct;
+import com.fix.mobile.entity.OrderDetail;
 import com.fix.mobile.entity.Product;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -13,4 +14,6 @@ public interface ImayProductRepository extends PagingAndSortingRepository<ImayPr
     List<ImayProduct> findByProduct(Product product);
 
     List<ImayProduct> findByProductAndStatus(Product product, int status);
+
+    List<ImayProduct> findByOrderDetail(OrderDetail orderDetail);
 }

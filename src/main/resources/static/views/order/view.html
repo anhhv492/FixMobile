@@ -5,7 +5,7 @@
     <table class="table table-bordered table-hover container">
         <thead>
         <tr>
-            <th>STT</th>
+            <th>Mã hóa đơn</th>
             <th>Địa chỉ</th>
             <th>Ngày mua</th>
             <th>Tổng giá (VNĐ)</th>
@@ -15,7 +15,7 @@
         </thead>
         <tbody>
         <tr ng-repeat="order in orders">
-            <td>{{$index+1}}</td>
+            <td>{{order.idOrder}}</td>
             <td>{{order.address}}</td>
             <td>{{order.createDate|date:'dd/MM/yyyy'}}</td>
             <td>{{order.total|number}}</td>

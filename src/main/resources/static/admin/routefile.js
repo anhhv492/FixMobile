@@ -47,12 +47,8 @@ app.config(function($routeProvider){
             templateUrl:"/admin/images/createimages.html",
             controller: "restaccsesries"
         })
+
         .when("/sale",{
-            templateUrl:"/admin/sale/sale.html",
-            controller: "sale_ctrl"
-        })
-        .when("/showsale",{
-        
             templateUrl:"/admin/sale/showsale.html",
             controller: "sale_ctrl"
         })

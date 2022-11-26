@@ -1,5 +1,5 @@
 -- SQLINES DEMO *** ix_mobile;
--- create database fix_mobile;
+create database fix_mobile;
 use fix_mobile;
 
 CREATE TABLE categories (
@@ -24,7 +24,8 @@ CREATE TABLE color (
 CREATE TABLE images (
 	id_image int NOT NULL auto_increment primary key,
 	name nvarchar(255) not null,
-	id_product int null
+	id_product int null,
+	id_product_change int null
 ) ;
 
 CREATE TABLE roles (
@@ -45,7 +46,7 @@ CREATE TABLE accounts (
 	id_role int not null,
 	address_id int NULL,
 	foreign key(id_role) references roles(id_role)
-) ;
+);
 CREATE TABLE address (
 	id_address int NOT NULL auto_increment primary key,
    	address_detail nvarchar(255) not null,
@@ -64,17 +65,17 @@ CREATE TABLE address (
 
 CREATE TABLE products (
 	id_product int NOT NULL auto_increment primary key,
-	name nvarchar(255) NOT NULL,
-	create_date date NOT NULL,
-	camera nvarchar(100) NOT NULL,
-	price decimal(10,0) NOT NULL,
-	size nvarchar(100) NOT NULL,
+	name nvarchar(255)  NULL,
+	create_date date  NULL,
+	camera nvarchar(100)  NULL,
+	price decimal(10,0)  NULL,
+	size nvarchar(100)  NULL,
 	note nvarchar(255),
 	status int default(0),
-	id_ram int NOT NULL,
-	id_color int NOT NULL,
+	id_ram int  NULL,
+	id_color int NOT  NULL,
 	id_capacity int NOT NULL,
-	id_category int NOT NULL,
+	id_category int NOT  NULL,
 	id_image int  NULL,
 	foreign key(id_ram) references ram(id_ram),
 	foreign key(id_color) references color(id_color),
@@ -140,6 +141,8 @@ CREATE TABLE orders (
 	type binary not null,
 	username nvarchar(50) NOT NULL,
     money_sale decimal(10,0) null,
+	person_take nvarchar(50) NOT NULL,
+	phone_take nvarchar(15) NOT NULL,
     id_sale int null,
 	foreign key(username) references accounts(username),
 	foreign key(id_sale) references sale(id_sale)
@@ -150,11 +153,9 @@ CREATE TABLE order_detail (
 	quantity int not null,
 	price decimal(10,0) not null,
 	status binary DEFAULT(0),
-	id_imei int null,
 	id_order int NOT NULL, 
 	id_product int NULL,
 	id_accessory int NULL,
-	foreign key(id_imei) references imayproduct(id_imay),
 	foreign key(id_order) references orders(id_order),
 	foreign key(id_product) references products(id_product),
 	foreign key(id_accessory) references accessories(id_accessory)
@@ -213,7 +214,7 @@ CREATE TABLE imayproduct (
     id_imay int NOT NULL auto_increment primary key,
 	name varchar(255),
 	id_product int not null,
-	id_detail int not null,
+	id_detail int null,
 	status int default(0), 
 	foreign key(id_product) references products(id_product),
 	foreign key(id_detail) references order_detail(id_detail)
