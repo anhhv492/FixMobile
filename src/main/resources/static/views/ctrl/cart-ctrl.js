@@ -51,6 +51,7 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window,$timeou
                 $rootScope.qtyCart -= item.qty;
                 $rootScope.saveLocalStorage();
                 $rootScope.loadLocalStorage();
+                $scope.loadMoneyShip();
                 const Toast = Swal.mixin({
                     toast: true,
                     position: 'top-end',
@@ -96,11 +97,12 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window,$timeou
                     item.qty = res.data;
                     $rootScope.saveLocalStorage();
                     $rootScope.loadLocalStorage();
-                    $scope.getShippingOder();
+                    $scope.loadMoneyShip();
                 } else {
                     $rootScope.carts[index].qty = item.qty;
                     $rootScope.saveLocalStorage();
                     $rootScope.loadLocalStorage();
+                    $scope.loadMoneyShip();
                 }
             }).catch(err => {
                 console.log(err)
@@ -127,25 +129,24 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window,$timeou
                     item.qty = res.data;
                     $rootScope.saveLocalStorage();
                     $rootScope.loadLocalStorage();
-                    $scope.getShippingOder();
+                    $scope.loadMoneyShip();
                 } else {
                     $rootScope.carts[index].qty = item.qty;
-
                     $rootScope.saveLocalStorage();
                     $rootScope.loadLocalStorage();
+                    $scope.loadMoneyShip();
                 }
             }).catch(err => {
                 console.log(err)
             })
         }
         if ($rootScope.carts[index].qty <= 0) {
+            $rootScope.carts[index].qty = 1;
             $rootScope.saveLocalStorage();
             $rootScope.loadLocalStorage();
-            $rootScope.carts.splice(index, 1);
-            $window.location.href = '#!cart';
+            $scope.loadMoneyShip();
             console.log('I was closed by the timer')
         }
-        $scope.getShippingOder();
     }
     $scope.raise = function (item) {
         if (item.idAccessory > -1) {
@@ -168,15 +169,14 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window,$timeou
                         title: 'Số lượng sản phẩm không đủ!'
                     })
                     item.qty = res.data;
+                    $rootScope.saveLocalStorage();
                     $rootScope.loadLocalStorage();
-                    $scope.getShippingOder();
-
                 }else{
-
                     $rootScope.qtyCart++;
                     $rootScope.carts[index].qty++;
                     $rootScope.saveLocalStorage();
                     $rootScope.loadLocalStorage();
+                    $scope.loadMoneyShip();
                 }
             }).catch(err => {
                 console.log(err)
@@ -203,18 +203,19 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window,$timeou
                     item.qty = res.data;
                     $rootScope.saveLocalStorage();
                     $rootScope.loadLocalStorage();
+                    $scope.loadMoneyShip();
                 } else {
                     $rootScope.carts[index].qty++;
                     $rootScope.qtyCart++;
                     $rootScope.saveLocalStorage();
                     $rootScope.loadLocalStorage();
+                    $scope.loadMoneyShip();
                     console.log('add', item.qty)
                 }
             }).catch(err => {
                 console.log(err)
             })
         }
-        $scope.getShippingOder();
     }
     $scope.reduce = function (item) {
         if (item.idAccessory > -1) {
@@ -226,15 +227,16 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window,$timeou
         if ($rootScope.carts[index].qty <= 0) {
             $rootScope.saveLocalStorage();
             $rootScope.loadLocalStorage();
+            $scope.loadMoneyShip();
             $rootScope.carts.splice(index, 1);
             $window.location.href = '#!cart';
             console.log('I was closed by the timer')
         }
         $rootScope.saveLocalStorage();
         $rootScope.loadLocalStorage();
+        $scope.loadMoneyShip();
         $rootScope.qtyCart--;
         console.log('add', item.qty)
-        $scope.getShippingOder();
     }
     $scope.totalPrice = function () {
         let total = 0;
@@ -389,7 +391,12 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window,$timeou
             console.log(respon.data.body.data.total)
         })
     }
+    $scope.loadMoneyShip= function () {
+        $timeout(function () {
+            $scope.getShippingOder();
+        }, 2000);
+    }
     $scope.getAddressAcountACtive();
-
+    $scope.loadMoneyShip();
     $rootScope.loadLocalStorage();
 })
