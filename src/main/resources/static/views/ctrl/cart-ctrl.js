@@ -396,6 +396,11 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window,$timeou
             $scope.getShippingOder();
         }, 2000);
     }
+    $scope.loadMoneyShip= function () {
+        $timeout(function () {
+            $scope.getShippingOder();
+        }, 2000);
+    }
     $scope.getAddressAcountACtive();
     $scope.loadMoneyShip();
     $rootScope.loadLocalStorage();

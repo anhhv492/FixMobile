@@ -31,7 +31,7 @@ app.controller('rest_accessory', function($scope, $http) {
     }
     $scope.getTotalPages =function (){
         $http.get(pathAPI,token).then(function(response) {
-            $scope.totalPages = Math.ceil(response.data.length/10);
+            $scope.totalPages = Math.ceil(response.data.length/5);
         }).catch(error=>{
             console.log(error);
         });
@@ -266,9 +266,9 @@ app.controller('rest_accessory', function($scope, $http) {
         })
     }
     $scope.uploadFile = function(files){
-        var form = new FormData();
+        let form = new FormData();
         form.append('file',files[0]);
-        $http.post(urlImage,form,token,{
+        $http.post(urlImage,form,{
             transformRequest: angular.identity,
             headers: {'Content-Type': undefined}
         }).then(res=>{
@@ -279,13 +279,13 @@ app.controller('rest_accessory', function($scope, $http) {
         })
     }
     $scope.readExcel = function(files){
-        var form = new FormData();
+        let form = new FormData();
         form.append('file',files[0]);
         let timerInterval
         Swal.fire({
             title: 'Đang thêm hàng loạt!',
             html: 'Vui lòng chờ <b></b> milliseconds.',
-            timer: 3500,
+            timer: 3000,
             timerProgressBar: true,
             didOpen: () => {
                 Swal.showLoading()
@@ -299,7 +299,7 @@ app.controller('rest_accessory', function($scope, $http) {
             }
         }).then((result) => {
             if (result.dismiss === Swal.DismissReason.timer) {
-                $http.post(pathAPI+'/read-excel',form,token,{
+                $http.post('http://localhost:8080/rest/files/images/read-excel',form,{
                     transformRequest: angular.identity,
                     headers: {'Content-Type': undefined}
                 }).then(res=>{

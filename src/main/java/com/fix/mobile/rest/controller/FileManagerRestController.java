@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.websocket.server.PathParam;
 
+import com.fix.mobile.helper.ExcelHelper;
 import com.fix.mobile.service.FileManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,10 +24,23 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 @RequestMapping("/rest/files/images")
 public class FileManagerRestController {
 	@Autowired
+	private ExcelHelper excelHelper;
+	@Autowired
 	FileManagerService fileService;
 	@GetMapping("{folder}/{file}")
 	public byte[] download(@PathVariable("folder") String folder,@PathVariable("file") String file) {
 		return fileService.read(folder,file);
+	}
+	@PostMapping("/read-excel")
+	public Boolean readExcel(@PathVariable("file") MultipartFile file) throws Exception{
+		System.out.println("readExcel");
+		try{
+			Boolean checkExcel = excelHelper.readExcel(file);
+			return checkExcel;
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		return null;
 	}
 	@PostMapping("/{folder}")
 	public JsonNode upload(@PathVariable("folder") String folder,@PathParam("file") MultipartFile file) {
