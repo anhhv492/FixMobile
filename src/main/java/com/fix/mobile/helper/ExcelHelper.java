@@ -10,6 +10,7 @@ import com.fix.mobile.service.impl.CategoryServiceImpl;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
@@ -36,6 +37,7 @@ import java.util.Optional;
 
 @Service
 public class ExcelHelper {
+    Logger LOGGER = Logger.getLogger(ExcelHelper.class);
     @Autowired
     private CategoryService categoryService;
     @Autowired
@@ -54,6 +56,7 @@ public class ExcelHelper {
     private String note=null;
     private String folder = "accessories";
     public Boolean readExcel(MultipartFile files) {
+        LOGGER.info("readExcel");
         File dir = new File(System.getProperty("user.dir")+"/excels");
         try {
             File savedFile = new File(dir,files.getOriginalFilename());
