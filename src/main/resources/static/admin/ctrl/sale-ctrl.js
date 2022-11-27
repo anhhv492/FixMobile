@@ -12,7 +12,7 @@ app.controller("sale_ctrl", function ($scope, $http) {
     $scope.saleadd = {};
     $scope.saleedit = {};
     $scope.dataTable = [];
-    $scope.seLected = [];
+    $scope.seLected =[];
     $scope.index=0;
     $scope.totalPages=0;
     $scope.check_first=false;
@@ -213,6 +213,7 @@ app.controller("sale_ctrl", function ($scope, $http) {
                 if ($scope.seLected[i] == checkid) {
                     check = false;
                     $scope.seLected.splice(i, 1);
+                    console.log('id sale là ' +checkid)
                 }
             }
             if (check) {

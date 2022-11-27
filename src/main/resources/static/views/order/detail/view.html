@@ -13,7 +13,7 @@
   </thead>
   <tbody>
   <tr ng-repeat="orderDetail in orderDetails" ng-if="orderDetail.accessory">
-    <td> <input type="checkbox" name="" ng-checked="checkSelect(orderDetail.idAccessory)" ng-click="checkSelected(orderDetail.idAccessory)"> </td>
+    <td> <input type="checkbox" name="" ng-checked="checkSelect(orderDetail.accessory.idAccessory)" ng-click="checkSelected(orderDetail.accessory.idAccessory)"> </td>
     <td>{{orderDetail.accessory.name}}</td>
     <td>{{orderDetail.accessory.color}}</td>
     <td>{{orderDetail.accessory.category.name}}</td>
@@ -36,68 +36,41 @@
   </tbody>
 </table>
 <div class="container glyphicon-zoom-in">
+  <form role="formProductChange" method="post" class="row" name="myForm"
+        enctype="multipart/form-data">
+    <div class="col-md-6">
+      <div class="form-group mt-1">
+        <div  class="form-group mt-1">
+          <label>Hình Ảnh Tình Trạng Máy</label>
+          <input onchange="angular.element(this).scope().uploadFileChange(this.files)"
+                  type="file" name="files"
+                  class="form-control" multiple>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="form-group mt-1">
+        <div  class="form-group mt-1">
+          <label>Nhập Email</label>
+          <input type="email" ng-model="formProductChange.email" class="form-control">
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-8">
+      <div class="form-group mt-1">
+        <label>Lý do đổi hàng</label>
+        <textarea ng-model="formProductChange.note" class="form-control" rows="3" required></textarea>
+      </div>
+    </div>
+
+  </form>
   <button style="width: 180px" class="btn btn-primary">
     Trả hàng hoàn tiền
   </button>
   <button data-bs-toggle="modal"
           data-bs-target="#exampleModal"
           ng-click="editProductChange(orderDetail)"
-          class="btn btn-secondary">Đổi hàng </button>
+          class="btn btn-secondary">Đổi hàng</button>
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Nhập thông tin</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form role="formProductChange" method="post" class="row" name="myForm"
-               enctype="multipart/form-data">
-          <div class="col-md-6">
-            <div class="form-group mt-1">
-              <label>Tên sản phẩm</label>
-              <input ng-model="formProductChange.accessory.name" class="form-control" placeholder="Tên sản phẩm" required>
-            </div>
-
-<!--            <div class="form-group mt-1">-->
-<!--              <label >Thể loại </label>-->
-<!--              <input ng-model="formProductChange.accessory.category.name" class="form-control" required>-->
-<!--            </div>-->
-
-            <div class="form-group mt-1">
-              <label >Tên người mua </label>
-              <input ng-model="formProductChange.order.account.username" class="form-control" placeholder="Tên người mua" required>
-            </div>
-
-          </div>
-          <div class="col-md-6">
-            <div class="form-group mt-1">
-              <label>Giá</label>
-              <input ng-model="formProductChange.price" required type="number" class="form-control">
-            </div>
-
-            <div  class="form-group mt-1">
-              <label>Hình Ảnh Tình Trạng Máy</label>
-              <input
-                      onchange="angular.element(this).scope().uploadFileChange(this.files)"
-                      type="file" name="files"
-                      class="form-control" multiple>
-            </div>
-
-            <div class="form-group mt-1">
-              <label>Lý do đổi hàng</label>
-              <textarea ng-model="formProductChange.note" class="form-control" rows="3" required></textarea>
-            </div>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" ng-click="saveProductChange()" ng-disabled="myForm.$invalid" class="btn btn-primary">Send</button>
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>

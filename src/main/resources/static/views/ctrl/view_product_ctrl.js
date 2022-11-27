@@ -37,4 +37,5 @@ app.controller('view_product_ctrl', function ($scope,$http){
             console.log(error);
         });
     }
+
 })

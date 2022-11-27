@@ -5,7 +5,7 @@ app.controller('order-detail-ctrl',function($rootScope,$scope,$http){
     // $scope.saleadd = {};
     $scope.idCheckBox = {};
     $scope.seLected = [];
-
+    $scope.index = 0;
     const jwtToken = localStorage.getItem("jwtToken")
     const token = {
         headers: {
@@ -57,24 +57,32 @@ app.controller('order-detail-ctrl',function($rootScope,$scope,$http){
     }
     //$scope.files={};
     $scope.checkSelected= function (id){
+        console.log('sdsadasadsa '+id)
         var check = true;
-        for(var i=0;i<$scope.seLected.length;i++){
-            if($scope.seLected[i]==id){
-                check = false;
-                $scope.seLected.splice(i,1);
+            for(var i=0;i<$scope.seLected.length;i++){
+                if($scope.seLected[i]==id){
+                    check = false;
+                    console.log('đã kt id ' + id)
+                    $scope.seLected.splice(i,1);
+                }
             }
-        }
-        if (check){
-            $scope.seLected.push(id);
-        }
+            if (check){
+                $scope.seLected.push(id);
+
+                console.log('đã push ' + id.account);
+            }
+
+
     }
     $scope.checkSelect=function (id){
-        for(var i=0;i<$scope.seLected.length;i++){
-            if($scope.seLected[i]==id){
+        for (var i = 0; i < $scope.seLected.length; i++) {
+            if ($scope.seLected[i] == id) {
+                console.log('đã kiểm tra id là: '+ id)
                 return true;
             }
         }
     }
+
     $scope.uploadFileChange = function(files){
         $scope.files = files;
         console.log($scope.files);
