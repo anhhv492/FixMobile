@@ -13,7 +13,7 @@
   </thead>
   <tbody>
   <tr ng-repeat="orderDetail in orderDetails" ng-if="orderDetail.accessory">
-    <td> <input type="checkbox" name="" ng-checked="checkSelect(orderDetail.accessory.idAccessory)" ng-click="checkSelected(orderDetail.accessory.idAccessory)"> </td>
+    <td> <input type="checkbox" name="" ng-checked="checkSelect(orderDetail)" ng-click="checkSelected(orderDetail)"> </td>
     <td>{{orderDetail.accessory.name}}</td>
     <td>{{orderDetail.accessory.color}}</td>
     <td>{{orderDetail.accessory.category.name}}</td>
@@ -24,7 +24,7 @@
 
   </tr>
   <tr ng-repeat="orderDetail in orderDetails" ng-if="orderDetail.product">
-    <td> <input type="checkbox" name="" ng-checked="checkSelect(orderDetail.idProduct)" ng-click="checkSelected(orderDetail.idProduct)" > </td>
+    <td> <input type="checkbox" name="" ng-checked="checkSelect(orderDetail)" ng-click="checkSelected(orderDetail)"> </td>
     <td>{{orderDetail.product.name}}</td>
     <td>{{orderDetail.product.color.name}}</td>
     <td>{{orderDetail.product.category.name}}</td>
@@ -68,9 +68,6 @@
   <button style="width: 180px" class="btn btn-primary">
     Trả hàng hoàn tiền
   </button>
-  <button data-bs-toggle="modal"
-          data-bs-target="#exampleModal"
-          ng-click="editProductChange(orderDetail)"
-          class="btn btn-secondary">Đổi hàng</button>
+  <button  ng-click="saveProductChange()"  class="btn btn-secondary">Đổi hàng</button>
 </div>
 
