@@ -41,6 +41,7 @@ public interface SaleRepository extends PagingAndSortingRepository<Sale, Integer
 
     Page<Sale> findByNameContains(String name,Pageable pageable); // all name
     Page<Sale> findByVoucherContains(String voucher,Pageable pageable); // all voucher
-
+    @Query(value = "select * from sale where now()>create_end",nativeQuery = true)
+    List<Sale> findAllByDate();
     Sale findByIdSale(Integer id);
 }

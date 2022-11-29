@@ -93,11 +93,18 @@ public class AccessoryRestController {
 		LOGGER.info("update: "+accessory);
 		return accessoryService.update(accessory,id);
 	}
-	@PostMapping("/read-excel")
-	public Boolean readExcel(@PathParam("file") MultipartFile file) throws Exception{
-		Boolean checkExcel= excelHelper.readExcel(file);
-		return checkExcel;
-	}
+
+//	@PostMapping("/read-excel")
+//	public Boolean readExcel(@PathVariable("file") MultipartFile file) throws Exception{
+//		System.out.println("readExcel");
+//		try{
+//			Boolean checkExcel = excelHelper.readExcel(file);
+//			return checkExcel;
+//		}catch (Exception e){
+//			e.printStackTrace();
+//		}
+//		return null;
+//	}
 
 	@RequestMapping("/getdatasale/{page}")
 	public Page<Accessory> getDataShowSale(

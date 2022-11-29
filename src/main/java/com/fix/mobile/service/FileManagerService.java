@@ -41,6 +41,7 @@ public class FileManagerService {
 		}
 		try {
 			String filename = file.getOriginalFilename();
+			System.out.println("filename: "+filename);
 			System.out.println("save run b2");
 			File savedFile = new File(dir,filename);
 			if(!savedFile.exists()) {

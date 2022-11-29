@@ -68,11 +68,7 @@ app.controller('order-detail-ctrl',function($rootScope,$scope,$http){
             }
             if (check){
                 $scope.seLected.push(id);
-
-                console.log('đã push ' + id.account);
             }
-
-
     }
     $scope.checkSelect=function (id){
         for (var i = 0; i < $scope.seLected.length; i++) {
@@ -93,7 +89,7 @@ app.controller('order-detail-ctrl',function($rootScope,$scope,$http){
     }
     $scope.saveProductChange = function (){
         Swal.fire({
-            title: 'Bạn có chắc muốn trà máy : '+$scope.formProductChange.accessory.name+'?',
+            title: 'Bạn có chắc muốn trà máy : ',
             text: "Đổi trả hàng có thể mất thêm phí !",
             icon: 'warning',
             showCancelButton: true,
@@ -124,17 +120,13 @@ app.controller('order-detail-ctrl',function($rootScope,$scope,$http){
                         angular.forEach($scope.files, function(file) {
                             formData.append('files', file);
                         });
-                        formData.append('account', $scope.formProductChange.account);
-                        formData.append('note', $scope.formProductChange.note);
-                        formData.append('price', $scope.formProductChange.price);
-                        // formData.append('price',$scope.formProductChange.name);
-                        let req = {
+                            let req = {
                             method: 'POST',
                             url: '/rest/productchange/save',
                             headers: {
                                 'Content-Type': undefined,
                             },
-                            data: formData
+                            data:formData
                         }
                         Swal.fire({
                             title: 'Đang gửi yêu cầu đến admin' +'!',
@@ -152,11 +144,10 @@ app.controller('order-detail-ctrl',function($rootScope,$scope,$http){
                                 clearInterval(timerInterval)
                             }
                         })
-                        $http(req).then(response => {
+                        $http(req,$scope.seLected).then(response => {
                             console.log("ddd " + response);
                             $scope.message("Gửi yêu cầu đổi trả thành công");
                             // $scope.refresh();
-                            $('#exampleModal').modal('hide');
                         }).catch(error => {
                             $scope.error('gửi  yêu cầu đổi trả thất bại');
                             console.log('I was closed by the timer'+ formData)

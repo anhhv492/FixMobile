@@ -2,6 +2,7 @@ package com.fix.mobile.rest.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fix.mobile.entity.*;
+import com.fix.mobile.repository.SaleRepository;
 import com.fix.mobile.service.*;
 import com.fix.mobile.utils.UserName;
 import org.apache.log4j.Logger;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.security.Principal;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -34,6 +36,8 @@ public class GuestRestController {
     private ImayProductService imayProductService;
     @Autowired
     private OrderDetailService orderDetailService;
+    @Autowired
+    private SaleRepository saleService;
     
     Order order = null;
     Account account = null;
@@ -155,6 +159,11 @@ public class GuestRestController {
         }
         logger.info("-- OrderDetail success: "+account.getUsername());
         return carts;
+    }
+    @GetMapping("/cart/sale")
+    public List<Sale> getSaleByAccount(@PathVariable("id") Integer id){
+        List<Sale> sales = saleService.findAllByDate();
+        return sales;
     }
     @GetMapping(value ="/findByProductCode/{productCode}")
     public Optional<Product> findByProductCode(@PathVariable("productCode") Integer productCode) {
