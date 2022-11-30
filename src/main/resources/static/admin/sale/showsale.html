@@ -27,7 +27,7 @@
                     <div class="mb-3">
                         <label for="" class="form-label">Tên chương trình</label>
                         <input type="text" ng-model="saleadd.name" ng-value="saleadd.name" class="form-control"
-                               placeholder="" aria-describedby="helpId">
+                               placeholder="" aria-describedby="helpId" pattern="^[a-z0-9_-]{5,250}$">
                     </div>
                     <div class="mb-3">
                         <label for="" class="form-label">Phương thức giảm giá</label>
@@ -40,7 +40,7 @@
                     <div class="mb-3" ng-show="hiddenDiscountMethod">
                         <label for="" class="form-label">Mã giảm giá</label>
                         <input type="text" ng-model="saleadd.voucher" ng-value="saleadd.voucher" class="form-control"
-                               placeholder="" aria-describedby="helpId">
+                               placeholder="" aria-describedby="helpId" pattern="^[a-z0-9_-]{5,250}$">
                     </div>
                     <div class="mb-3">
                         <label for="" class="form-label">Kiểu giảm giá</label>
@@ -55,19 +55,19 @@
                             <div class="col-md">
                                 <label for="" class="form-label">Mức giảm giá</label>
                                 <div class="input-group" ng-show="hiddenMoneySale">
-                                    <input type="input" class="form-control" ng-model="saleadd.moneySale"
+                                    <input type="number" min="10000" maxlength="9" class="form-control" ng-model="saleadd.moneySale"
                                            ng-value="saleadd.moneySale">
                                     <span class="input-group-text">VNĐ</span>
                                 </div>
                                 <div class="input-group" ng-show="hiddenPercentSale">
-                                    <input type="number" min="0" max="100" class="form-control"
+                                    <input type="number" min="1" max="100" class="form-control"
                                            ng-model="saleadd.percentSale" ng-value="saleadd.percentSale">
                                     <span class="input-group-text">%</span>
                                 </div>
                             </div>
                             <div class="col-md">
                                 <label for="" class="form-label">Số lượng</label>
-                                <input type="text" maxlength="6" ng-model="saleadd.quantity" ng-value="saleadd.quantity"
+                                <input type="number" min="1" maxlength="6" ng-model="saleadd.quantity" ng-value="saleadd.quantity"
                                        class="form-control" placeholder="" aria-describedby="helpId">
                             </div>
                         </div>
@@ -186,10 +186,10 @@
                     </div>
                     <!-- end table all -->
 
-                    <button type="button" class="btn btn-success"  ng-click="addSale()" data-bs-dismiss="modal">Tạo</button>
+                    <button type="button" class="btn btn-success"  ng-click="addSale()">Tạo</button>
 
                     <!-- add -->
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button id="clossmodal" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary" ng-click="updateSale()">Save changes</button>
                 </div>
             </div>

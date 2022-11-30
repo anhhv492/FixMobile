@@ -46,6 +46,8 @@ app.controller("sale_ctrl", function ($scope, $http) {
         let listDetail = angular.copy($scope.seLected);
         if($scope.saleadd.typeSale==0||$scope.saleadd.typeSale==2){
             $http.post(urlsale, item,token).then(resp => {
+                document.getElementById("clossmodal").click();
+                $scope.clear();
                 swal.fire({
                     icon: 'success',
                     showConfirmButton: false,
@@ -54,10 +56,11 @@ app.controller("sale_ctrl", function ($scope, $http) {
                 });
                 $scope.clear();
             }).catch(error => {
+                console.log(error)
                 swal.fire({
                     icon: 'error',
                     showConfirmButton: false,
-                    title: 'Thêm Mới Thành Công',
+                    title: error.data.message,
                     timer: 5000
                 });
             })
@@ -65,7 +68,7 @@ app.controller("sale_ctrl", function ($scope, $http) {
             $http.post(urlsale, item,token).then(resp => {
                 let urlsaledetail = `/admin/rest/sale/adddetail/`+$scope.saleadd.typeSale;
                 $http.post(urlsaledetail,listDetail,token).then(resp => {
-                    console.log(urlsaledetail);
+                    document.getElementById("clossmodal").click();
                     $scope.clear();
                     swal.fire({
                         icon: 'success',
@@ -77,7 +80,7 @@ app.controller("sale_ctrl", function ($scope, $http) {
                     swal.fire({
                         icon: 'error',
                         showConfirmButton: false,
-                        title: 'Thêm Mới Thất Bại',
+                        title: error.data.message,
                         timer: 5000
                     });
                 })
@@ -85,7 +88,7 @@ app.controller("sale_ctrl", function ($scope, $http) {
                 swal.fire({
                     icon: 'error',
                     showConfirmButton: false,
-                    title: 'Thêm Mới Thành Công',
+                    title: error.data.message,
                     timer: 5000
                 });
             })
@@ -387,10 +390,11 @@ app.controller("sale_ctrl", function ($scope, $http) {
         let listDetail = angular.copy($scope.seLected);
         if($scope.saleadd.typeSale==0||$scope.saleadd.typeSale==2){
             $http.post(urlsale, item,token).then(resp => {
+                document.getElementById("clossmodal").click();
                 swal.fire({
                     icon: 'success',
                     showConfirmButton: false,
-                    title: 'Thêm Mới Thành Công',
+                    title: 'Cập nhập Thành Công',
                     timer: 1000
                 });
                 $scope.clear();
@@ -398,7 +402,7 @@ app.controller("sale_ctrl", function ($scope, $http) {
                 swal.fire({
                     icon: 'error',
                     showConfirmButton: false,
-                    title: 'Thêm Mới Thành Công',
+                    title: error.data.message,
                     timer: 5000
                 });
             })
@@ -406,18 +410,19 @@ app.controller("sale_ctrl", function ($scope, $http) {
             $http.post(urlsale, item,token).then(resp => {
                 let urlsaledetail = `/admin/rest/sale/updatedetail/`+$scope.saleadd.typeSale+`/`+$scope.saleadd.idSale;
                 $http.post(urlsaledetail,listDetail,token).then(resp => {
+                    document.getElementById("clossmodal").click();
                     $scope.clear();
                     swal.fire({
                         icon: 'success',
                         showConfirmButton: false,
-                        title: 'Thêm Mới Thành Công',
+                        title: 'Cập nhập Thành Công',
                         timer: 1000
                     })
                 }).catch(error => {
                     swal.fire({
                         icon: 'error',
                         showConfirmButton: false,
-                        title: 'Thêm Mới Thất Bại',
+                        title: error.data.message,
                         timer: 5000
                     });
                 })
@@ -425,12 +430,13 @@ app.controller("sale_ctrl", function ($scope, $http) {
                 swal.fire({
                     icon: 'error',
                     showConfirmButton: false,
-                    title: 'Thêm Mới Thành Công',
+                    title: error.data.message,
                     timer: 5000
                 });
             })
         }
     }
+    $scope.showDataTableSale(0);
     // update Sale end
 
 })

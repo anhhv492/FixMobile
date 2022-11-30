@@ -5,7 +5,7 @@ import com.fix.mobile.repository.SaleDetailRepository;
 import com.fix.mobile.repository.SaleRepository;
 import com.fix.mobile.service.SaleService;
 import com.fix.mobile.entity.Sale;
-//import org.springframework.security.core.Authentication; cuongnd edit
+import org.springframework.security.core.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -31,20 +31,21 @@ public class SaleServiceImpl implements SaleService {
     SaleDetailRepository dao1;
 
     @Override
-    public Sale add(Sale sale) {
-//        vaildate_NULL(sale);
+    public Sale add(Sale salee) {
+        vaildate_NULL_DEFAULT(salee);
+        Sale sale = setNULL(salee);
         sale.setIdSale(null);
-        sale.setValueMin(null);
         sale.setCreateTime(new Date());
-        sale.setUpdateTime(null);
         sale.setUserCreate(1); //cuongnd edit
+        sale.setUpdateTime(null);
+        sale.setUserUpdate(null);
         return dao.save(sale);
     }
 
     @Override
     public Sale update(Sale sale) {
-        sale.setUserpdate(1);
-        sale.setCreateEnd(new Date());
+        vaildate_NULL_DEFAULT(sale);
+        sale.setUserUpdate(1);
         sale.setUpdateTime(new Date());
         return dao.save(sale);
     }
@@ -71,41 +72,38 @@ public class SaleServiceImpl implements SaleService {
             if (sale.getCreateStart().before(day)) {
                 throw new StaleStateException("Thời gian bắt đầu không thể trước " + viewDate.format(day));
             }
-            if (sale.getCreateEnd().before(sale.getCreateStart())) {
-                throw new StaleStateException("Thời gian kết thúc không thể trước Thời gian bắt đầu");
-            }
         } else {
             Sale saleud = dao.findById(sale.getIdSale()).get();
             if(saleud.getCreateStart().before(day)) {
-                if (!saleud.getCreateStart().equals(sale.getCreateStart())) {
+                if (saleud.getCreateStart() == (sale.getCreateStart())) {
                     throw new StaleStateException("Không thể sửa Thời gian bắt đầu");
                 }
                 if (sale.getCreateEnd().before(day)) {
                     throw new StaleStateException("Thời gian kết thúc không thể trước " + viewDate.format(day));
                 }
             }
-            if (sale.getCreateStart().before(day)) {
-                throw new StaleStateException("Thời gian bắt đầu không thể trước " + viewDate.format(day));
-            }
-            if (sale.getCreateEnd().before(sale.getCreateStart())) {
-                throw new StaleStateException("Thời gian kết thúc không thể trước Thời gian bắt đầu");
-            }
+        }
+        if (sale.getCreateStart() == sale.getCreateEnd()){
+            throw new StaleStateException("Thời gian kết thúc không thể bằng Thời gian bắt đầu");
+        }
+        if (sale.getCreateStart().after(sale.getCreateEnd())){
+            throw new StaleStateException("Thời gian kết thúc không thể trước Thời gian bắt đầu");
         }
     }
 
-    public void vaildate_NULL(Sale sale){
+    private void vaildate_NULL_DEFAULT(Sale sale){
         if(sale.getTypeSale()==null){
             throw new StaleStateException("Bạn phải chọn loại giảm giá");
         }
         if(sale.getName()==null){
-            throw new StaleStateException("Bạn không thể bỏ trống Tên chương trình");
+            throw new StaleStateException("Tên chương trình sai định dạng");
         }
         if(sale.getDiscountMethod() == null){
             throw new StaleStateException("Bạn phải chọn Phương thức giảm giá");
         }
         if(sale.getDiscountMethod() == 0){
             if(sale.getVoucher() == null ){
-                throw new StaleStateException("Bạn không thể bỏ trống Mã giảm giá");
+                throw new StaleStateException("Mã giảm giá sai định dạng");
             }
         }
         if(sale.getDiscountType() == null){
@@ -113,53 +111,34 @@ public class SaleServiceImpl implements SaleService {
         }
         if(sale.getDiscountType() == 0){
             if(sale.getMoneySale() == null){
-                throw new StaleStateException("Bạn không thể bỏ trống Mức giảm giá");
+                throw new StaleStateException("Mức giảm giá sai định dạng");
             }
         }
         if(sale.getDiscountType() == 1){
             if(sale.getPercentSale() == null){
-                throw new StaleStateException("Bạn không thể bỏ trống Mức giảm giá");
+                throw new StaleStateException("Mức giảm giá sai định dạng");
             }
         }
         if(sale.getQuantity() == null){
-            throw new StaleStateException("Bạn không thể bỏ trống Số lượng");
+            throw new StaleStateException("Số lượng sai định dạng");
         }
         if(sale.getCreateStart() == null){
-            throw new StaleStateException("Bạn không thể bỏ trống Thời gian bắt đầu");
+            throw new StaleStateException("Thời gian bắt đầu sai định dạng");
         }
         if(sale.getCreateEnd() == null){
-            throw new StaleStateException("Bạn không thể bỏ trống Thời gian kết thúc");
+            throw new StaleStateException("Thời gian kết thúc sai định dạng");
         }
         if(sale.getTypeSale() == 2 ){
             if(sale.getValueMin() == null ){
-                throw new StaleStateException("Bạn không thể bỏ trống Giá trị đơn hàng tối thiểu");
+                throw new StaleStateException("Giá trị đơn hàng tối thiểu sai định dạng");
             }
         }
-    }
-
-    public void validate_NumberANDLength(Sale sale){
-        if(sale.getName().length() > 250 ){
-            throw new StaleStateException("Tên chương trình được nhập tối đa 250 kí tự");
-        }
-        if(sale.getVoucher().length() > 250 ){
-            throw new StaleStateException("Mã giảm giá được nhập tối đa 250 kí tự");
-        }
-        //validate quantity
-        try {
-            int so =sale.getQuantity();
-            if(sale.getQuantity() <= 0 ){
-                throw new StaleStateException("Số lượng được nhập phải lớn hơn 0 đơn vị");
+        if(sale.getTypeSale() == 3 ){
+            if(sale.getUserType() == null ){
+                throw new StaleStateException("Bạn phải chọn đối tượng giảm giá");
             }
-            if(sale.getQuantity() >= 1000000 ){
-                throw new StaleStateException("Số lượng được nhập tối đa 999999 đơn vị");
-            }
-        }catch (NumberFormatException e){
-            throw new StaleStateException("Số lượng bạn nhập chưa phải là số");
         }
-        //validateMucGG
-
-
-
+        validate_Date(sale);
     }
 
     @Override
@@ -211,6 +190,24 @@ public class SaleServiceImpl implements SaleService {
             }
         }
         return null;
+    }
+    private Sale setNULL(Sale sale){
+        if(sale.getDiscountMethod()==1){
+            sale.setVoucher(null);
+        }
+        if(sale.getDiscountType()==0){
+            sale.setPercentSale(null);
+        }
+        if(sale.getDiscountType()==1){
+            sale.setMoneySale(null);
+        }
+        if(sale.getTypeSale()!=2){
+            sale.setValueMin(null);
+        }
+        if(sale.getTypeSale()!=4){
+            sale.setUserType(null);
+        }
+        return sale;
     }
 }
 
