@@ -79,7 +79,8 @@
                                     </div>
                                     <div class="form-group mt-1">
                                         <label>Giá</label>
-                                        <input ng-model="formProduct.price" required type="number" class="form-control" name="price">
+                                        <input ng-model="formProduct.price" required type="number"
+                                               class="form-control" name="price" min="1">
                                         <span ng-show="myForm.$submitted || myForm.price.$dirty" style="color: red">
                                         <span class="error" ng-show="myForm.price.$error.required"> <i
                                                 class="fa fa-exclamation-circle"></i>Giá sản phẩm không được trống</span>

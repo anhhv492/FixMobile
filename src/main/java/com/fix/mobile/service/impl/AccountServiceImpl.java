@@ -5,6 +5,7 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.fix.mobile.dto.Account.AccountRequestDTO;
 import com.fix.mobile.dto.Account.AccountResponDTO;
+import com.fix.mobile.dto.Account.UpdatePasswordDTO;
 import com.fix.mobile.dto.AccountDTO;
 import com.fix.mobile.dto.AddressDTO;
 import com.fix.mobile.entity.Address;
@@ -265,5 +266,12 @@ public class AccountServiceImpl implements AccountService {
             System.out.println(e.getMessage());
             return null;
         }
+    }
+
+    @Override
+    public void updatePassword(UpdatePasswordDTO updatePasswordDTO) {
+        Account account = repository.findByUsername(UserName.getUserName());
+        account.setPassword(HashUtil.hash(updatePasswordDTO.getPassword()));
+        repository.save(account);
     }
 }

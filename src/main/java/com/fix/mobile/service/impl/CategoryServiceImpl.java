@@ -23,7 +23,12 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category save(Category entity) {
-        return repository.save(entity);
+        if (repository.getCategoryByTypeAndName(entity.getType(), entity.getName()).orElse(null) != null){
+            return null;
+        }else {
+            return repository.save(entity);
+        }
+
     }
 
     @Override

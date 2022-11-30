@@ -169,23 +169,42 @@ app.controller('ctrl_cate', function($scope, $http) {
 
         $http.post(pathAPI+"/create", $scope.form,
             $scope.form.status= $scope.valueSelectStatus,token).then(response => {
-            const Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
-            })
+            if (response != null){
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                })
 
-            Toast.fire({
-                icon: 'success',
-                title: 'Thêm mới thành công!',
-            })
-            $scope.refresh();
+                Toast.fire({
+                    icon: 'success',
+                    title: 'Thêm mới thành công!',
+                })
+                $scope.refresh();
+            }else {
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                })
+
+                Toast.fire({
+                    icon: 'error',
+                    title: 'Tên thể loại đã tồn tại!',
+                })
+            }
         }).catch(error => {
             const Toast = Swal.mixin({
                 toast: true,
@@ -201,7 +220,7 @@ app.controller('ctrl_cate', function($scope, $http) {
 
             Toast.fire({
                 icon: 'error',
-                title: 'Thêm mới thất bại!',
+                title: 'Tên thể loại đã tồn tại!',
             })
         });
     };
