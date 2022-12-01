@@ -31,8 +31,12 @@ public class SaleRestController {
     }
     @RequestMapping("/update")
     public Sale updateSale(@RequestBody Sale sale){
-        System.out.println(sale.toString()+sale.getIdSale());
         saleDetailSV.deleteSaleDetai(sale.getIdSale());
+        return saleSV.update(sale);
+    }
+    @RequestMapping("/delete")
+    public Sale deleteSale(@RequestBody Sale sale){
+        sale.setQuantity(0);
         return saleSV.update(sale);
     }
 private void checkList(List list,Integer idx){

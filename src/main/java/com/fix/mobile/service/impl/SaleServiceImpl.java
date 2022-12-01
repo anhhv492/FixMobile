@@ -65,7 +65,13 @@ public class SaleServiceImpl implements SaleService {
         return dao.findByIdSale(id);
     }
 
-    public void validate_Date(Sale sale) {
+    private void validate_Coincide(Sale sale) { //check trùng
+        if(dao.findByVoucher(sale.getVoucher())!=null){
+            throw new StaleStateException("voucher đã có mời nhập voucher khác");
+        }
+    }
+
+    private void validate_Date(Sale sale) {
         SimpleDateFormat viewDate = new SimpleDateFormat("MM/dd/yyyy hh:mm a", Locale.US);
         Date day = new Date();
         if (sale.getIdSale() == null) {
@@ -147,7 +153,7 @@ public class SaleServiceImpl implements SaleService {
         if (null == type) {
             if (null == share) {
                 if (0 == status) {
-                    Page<Sale> page = dao.findAll(pageable);
+                    Page<Sale> page = dao.findAllSale(pageable);
                     return page;
                 } else if (1 == status) {//đang diễn ra
                     Page<Sale> page = dao.findGoingOn(pageable);
