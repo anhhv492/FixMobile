@@ -186,8 +186,9 @@
                     </div>
                     <!-- end table all -->
                     <button type="button"  ng-if="saleadd.idSale==null" class="btn btn-success"  ng-click="addSale()">Thêm mới</button>
-                    <button type="button"  ng-if="saleadd.idSale!=null" class="btn btn-warning" ng-click="updateSale()">Cập nhật</button>
+                    <button type="button"  ng-if="saleadd.idSale!=null && compareDate(saleadd.createStart,saleadd.createEnd,saleadd.quantity) != 2 && compareDate(saleadd.createStart,saleadd.createEnd,saleadd.quantity) != 3" class="btn btn-warning" ng-click="updateSale()">Cập nhật</button>
                     <button type="button"  ng-if="saleadd.idSale!=null && compareDate(saleadd.createStart,saleadd.createEnd,saleadd.quantity) != 2 && compareDate(saleadd.createStart,saleadd.createEnd,saleadd.quantity) != 3" class="btn btn-danger" ng-click="deleteSale()">Dừng Sale</button>
+                    <button type="button"  ng-if="saleadd.idSale!=null" class="btn btn-info" ng-click="coppySale()">Sao chép</button>
                     <!-- add -->
                     <button id="clossmodal" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 

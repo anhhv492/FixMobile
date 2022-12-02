@@ -43,57 +43,71 @@ app.controller("sale_ctrl", function ($scope, $http) {
 
     //add sale start
     $scope.addSale = function () {
-        let item = angular.copy($scope.saleadd);
-        let urlsale = `/admin/rest/sale/add`;
-        let listDetail = angular.copy($scope.seLected);
-        if ($scope.saleadd.typeSale == 0 || $scope.saleadd.typeSale == 2) {
-            $http.post(urlsale, item, token).then(resp => {
-                swal.fire({
-                    icon: 'success',
-                    showConfirmButton: false,
-                    title: 'Thêm Mới Thành Công',
-                    timer: 1000
-                });
-                document.getElementById("clossmodal").click();
-                $scope.clear();
-            }).catch(error => {
-                console.log(error)
-                swal.fire({
-                    icon: 'error',
-                    showConfirmButton: false,
-                    title: error.data.message,
-                    timer: 5000
-                });
-            })
-        } else {
-            $http.post(urlsale, item, token).then(resp => {
-                let urlsaledetail = `/admin/rest/sale/adddetail/` + $scope.saleadd.typeSale;
-                $http.post(urlsaledetail, listDetail, token).then(resp => {
-                    document.getElementById("clossmodal").click();
-                    $scope.clear();
-                    swal.fire({
-                        icon: 'success',
-                        showConfirmButton: false,
-                        title: 'Thêm Mới Thành Công',
-                        timer: 1000
+        Swal.fire({
+            title: 'Xác nhận thêm mới',
+            text: "Lưu ý: Khi thêm mới Sale trực tiếp hệ thống sẽ tự động áp dụng mã có mức giảm giá cao nhất.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Thêm ngay',
+            cancelButtonText: 'Xem lại',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                let item = angular.copy($scope.saleadd);
+                let urlsale = `/admin/rest/sale/add`;
+                let listDetail = angular.copy($scope.seLected);
+                if ($scope.saleadd.typeSale == 0 || $scope.saleadd.typeSale == 2) {
+                    $http.post(urlsale, item, token).then(resp => {
+                        swal.fire({
+                            icon: 'success',
+                            showConfirmButton: false,
+                            title: 'Thêm Mới Thành Công',
+                            timer: 1000
+                        });
+                        document.getElementById("clossmodal").click();
+                        $scope.clear();
+                    }).catch(error => {
+                        console.log(error)
+                        swal.fire({
+                            icon: 'error',
+                            showConfirmButton: false,
+                            title: error.data.message,
+                            timer: 5000
+                        });
                     })
-                }).catch(error => {
-                    swal.fire({
-                        icon: 'error',
-                        showConfirmButton: false,
-                        title: error.data.message,
-                        timer: 5000
-                    });
-                })
-            }).catch(error => {
-                swal.fire({
-                    icon: 'error',
-                    showConfirmButton: false,
-                    title: error.data.message,
-                    timer: 5000
-                });
-            })
-        }
+                } else {
+                    $http.post(urlsale, item, token).then(resp => {
+                        let urlsaledetail = `/admin/rest/sale/adddetail/` + $scope.saleadd.typeSale;
+                        $http.post(urlsaledetail, listDetail, token).then(resp => {
+                            document.getElementById("clossmodal").click();
+                            $scope.clear();
+                            swal.fire({
+                                icon: 'success',
+                                showConfirmButton: false,
+                                title: 'Thêm Mới Thành Công',
+                                timer: 1000
+                            })
+                        }).catch(error => {
+                            swal.fire({
+                                icon: 'error',
+                                showConfirmButton: false,
+                                title: error.data.message,
+                                timer: 5000
+                            });
+                        })
+                    }).catch(error => {
+                        swal.fire({
+                            icon: 'error',
+                            showConfirmButton: false,
+                            title: error.data.message,
+                            timer: 5000
+                        });
+                    })
+                }
+            }
+        })
+
 
     }
     //addSale end
@@ -443,25 +457,44 @@ app.controller("sale_ctrl", function ($scope, $http) {
     // update Sale end
 
     $scope.deleteSale = function () {
-        let item = angular.copy($scope.saleadd);
-        let urlsale = `/admin/rest/sale/delete`;
-        $http.post(urlsale, item, token).then(resp => {
-            document.getElementById("clossmodal").click();
-            swal.fire({
-                icon: 'success',
-                showConfirmButton: false,
-                title: 'Dừng Sale Thành Công',
-                timer: 1000
-            });
-            $scope.clear();
-        }).catch(error => {
-            swal.fire({
-                icon: 'error',
-                showConfirmButton: false,
-                title: error.data.message,
-                timer: 5000
-            });
+        Swal.fire({
+            title: 'Bạn chắc chắn muốn dừng Sale này chứ?',
+            text: "Hệ thống sẽ tự cập nhật số lượng về 0",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Dừng ngay',
+            cancelButtonText: 'Xem lại',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                let item = angular.copy($scope.saleadd);
+                let urlsale = `/admin/rest/sale/delete`;
+                $http.post(urlsale, item, token).then(resp => {
+                    document.getElementById("clossmodal").click();
+                    swal.fire({
+                        icon: 'success',
+                        showConfirmButton: false,
+                        title: 'Dừng Sale Thành Công',
+                        timer: 1000
+                    });
+                    $scope.clear();
+                }).catch(error => {
+                    swal.fire({
+                        icon: 'error',
+                        showConfirmButton: false,
+                        title: error.data.message,
+                        timer: 5000
+                    });
+                })
+            }
         })
+
+    }
+    $scope.coppySale = function () {
+        $scope.saleadd.idSale=null;
+        $scope.saleadd.voucher="";
+        $scope.saleadd.name="";
     }
 
 })
