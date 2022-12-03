@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -27,17 +28,17 @@ public class ProductChange {
     @Column(name = "imei")
     private Integer imei;
 
-    @Column(name = "data_change")
-    private Integer dataChange;
+    @Column(name = "date_change")
+    private Date dateChange;
 
     @Column(name = "note")
     private String note;
 
-    @Column(name = "price")
-    private BigDecimal price;
+    @Column(name = "email")
+    private String email;
 
     @Column(name = "status")
-    private Boolean status;
+    private int  status;
 
     @ManyToOne
     @JoinColumn(name = "username")

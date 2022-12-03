@@ -14,7 +14,7 @@ import java.sql.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "customerorders")
+@Table(name = "reportcustomer")
 @Immutable
 @Entity
 public class ReportPaymentModel {

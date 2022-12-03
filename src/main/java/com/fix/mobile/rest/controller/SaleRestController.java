@@ -45,7 +45,7 @@ public class SaleRestController {
     @RequestMapping("/updatedetail/{idx}/{id}")
     public void updatedetail(@PathVariable(name="idx") Integer idx,
                              @PathVariable(name="id") Integer id,
-                               @RequestBody ArrayList<String> listID){
+                             @RequestBody ArrayList<String> listID){
         for (int i=0;i<listID.size();i++){
             saleDetailSV.updateSaleDetail(listID.get(i),idx,id);
         }
