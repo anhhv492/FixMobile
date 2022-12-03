@@ -2,7 +2,6 @@ package com.fix.mobile.rest.controller;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
-import com.fix.mobile.config.MyUserDetails;
 import com.fix.mobile.config.WebConfigrutation;
 import com.fix.mobile.dto.ChangeDetailDTO;
 import com.fix.mobile.dto.OrderDetailDTO;
