@@ -1,6 +1,12 @@
 <div class="main">
     <div class="mb-1">
-        <h1 class="h3 d-inline align-middle">Quản lý tài khoản</h1>
+        <div class="row mt-4">
+            <h1 class="page-header text-center
+             text-body">Quản lý tài khoản</h1>
+
+        <div>
+
+
         <div hidden>
             <input type="checkbox" ng-model="hideUpdate">
             <input type="checkbox" ng-model="hideUsername">
@@ -10,7 +16,7 @@
 
 
     </div>
-    <div class="container">
+    <div class="container mt-5">
         <form modelAttribute="account" name="myForm" class="cen" novalidate>
             <div class="row">
                 <div class="col-sm-6 -p-0">
@@ -21,13 +27,13 @@
                         <div class="col-sm-9">
                             <input ng-disabled="hideUsername" ng-model="form.username" name="username" type="text"
                                    class="form-control" pattern="^[a-zA-Z0-9_-]{3,100}$"
-                                   required placeholder="Ví dụ: tranvana">
+                                   required placeholder="Ví dụ: tranvana" maxlength="250">
                             <span ng-show="myForm.$submitted || myForm.username.$dirty">
                                         <span class="error" ng-show="myForm.username.$error.required"> <i
                                                 class="fa fa-exclamation-circle"></i>Tên tài khoản không được trống</span>
                                         <span class="error" ng-show="myForm.username.$error.pattern"> <i
                                                 class="fa fa-exclamation-circle"></i>Tên tài khoản gồm 3-100 ký tự theo định dạng</span>
-                                    </span>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -59,7 +65,7 @@
                         <div class="col-sm-9">
                             <input ng-model="form.fullName" name="fullName" type="text" class="form-control"
                                    ng-minlength="6" ng-maxlength="250"
-                                   required placeholder="Ví dụ: Trần Văn A">
+                                   required placeholder="Ví dụ: Trần Văn A" maxlength="250">
                             <span ng-show="myForm.$submitted || myForm.fullName.$dirty">
                                         <span class="error" ng-show="myForm.fullName.$error.required"> <i
                                                 class="fa fa-exclamation-circle"></i>Họ và Tên không được trống</span>
@@ -79,7 +85,7 @@
                             <input ng-model="form.phone" name="phone" required type="text" class="form-control"
                                    pattern="(84|0[3|5|7|8|9])+([0-9]{8})\b"
                                    ng-minlength="0" ng-maxlength="10" placeholder="Số điện thoại liên lạc"
-                                   required>
+                                   required maxlength="10">
                             <span ng-show="myForm.$submitted || myForm.phone.$dirty">
                                         <span class="error" ng-show="myForm.phone.$error.required"> <i
                                                 class="fa fa-exclamation-circle"></i>Số điện thoại không được
@@ -91,7 +97,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row mt-4">
+            <div class="row ">
                 <div class="col-sm-6 -p-0" >
                     <div class="row  mb-1">
                         <div class="col-sm-3">
@@ -117,9 +123,9 @@
                         <div class="col-sm-9">
                             <select class="form-select mb-1" id="role" name="role" required>
                                 <option selected value="" disabled>Chọn chức vụ</option>
-                                <option value="1">ADMIN</option>
-                                <option value="2">STAFF</option>
-                                <option value="3">USER</option>
+                                <option value="1">ADMIN - Người quản lý</option>
+                                <option value="2">STAFF - Nhân viên</option>
+                                <option value="3">USER - Người dùng</option>
                             </select>
                             <span ng-show="myForm.$submitted || myForm.role.$dirty">
                                         <span class="error" ng-show="myForm.role.$error.required"> <i
@@ -129,7 +135,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row  mt-4">
+            <div class="row ">
                 <div class="col-sm-6 -p-0">
 
                     <div class="row  mb-1">
@@ -139,7 +145,7 @@
                         <div class="col-sm-9">
                             <input ng-model="form.email" type="email" name="email" class="form-control" required
                                    pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"
-                                   placeholder="Ví dụ: abc@gmail.com">
+                                   placeholder="Ví dụ: abc@gmail.com" maxlength="250">
                             <span ng-show="myForm.$submitted || myForm.email.$dirty">
                                         <span class="error" ng-show="myForm.email.$error.required"> <i
                                                 class="fa fa-exclamation-circle"></i>Email không được trống</span>
@@ -170,16 +176,15 @@
                     </div>
                 </div>
             </div>
-            <div class="row  mt-4">
+            <div class="row ">
                 <div ng-hide="hidePassword" class="col-sm-6 -p-0">
-
                     <div class="row  mb-1">
                         <div class="col-sm-3">
                             <label class="card-title mb-0">Mật khẩu</label>
                         </div>
                         <div class="col-sm-9">
                             <input ng-model="form.password" type="password" name="password" class="form-control"
-                                   required placeholder="Mật khẩu" ng-minlength="3" ng-maxlength="250">
+                                   required placeholder="Mật khẩu" ng-minlength="3" ng-maxlength="250" maxlength="250">
                             <!-- pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{3,250}$" -->
                             <span ng-show="myForm.$submitted || myForm.password.$dirty">
                                         <span class="error" ng-show="myForm.password.$error.required"> <i
@@ -187,19 +192,17 @@
                                         <span class="error"
                                               ng-show="((myForm.password.$error.minlength || myForm.password.$error.maxlength) || myForm.fullName.$error.$dirty)">
                                                 <i class="fa fa-exclamation-circle"></i>Mật khẩu tối thiểu 3-250 ký tự</span>
-                                <!-- <span class="error" ng-show="myForm.password.$error.pattern"> <i
-                                    class="fa fa-exclamation-circle"></i>Tối thiểu ba ký tự, ít nhất một chữ cái, một số và một ký tự đặc biệt</span> -->
-                                    </span>
+                                </span>
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-6 -p-0">
-                    <div class="row  mb-1">
+                    <div class="row mb-1">
                         <div class="col-sm-3">
                             <label class="card-title mb-0">Ngày tạo</label>
                         </div>
+                        
                         <div class="col-sm-9">
-                            <div class="mb-1">
                                 <input disabled ng-model="form.createDate" name="creatDate" type="date"
                                        class="form-control">
                                 <span ng-show="myForm.$submitted || myForm.creatDate.$dirty">
@@ -207,7 +210,7 @@
                                                     class="fa fa-exclamation-circle"></i>Ngày tạo không được để
                                                 trống</span>
                                         </span>
-                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -223,7 +226,7 @@
             <button ng-hide="hideUpdate" class="btn btn-primary" ng-disabled="myForm.$invalid" ng-click="update()"><b
                     class="glyphicon glyphicon-save"></b>Cập nhật
             </button>
-            <button class="btn btn-danger" ng-click="reset()"><b class="glyphicon glyphicon-trash"></b>Xóa form</button>
+            <button class="btn btn-warning" ng-click="reset()"><b class="glyphicon glyphicon-trash"></b>Làm mới</button>
         </div>
     </div>
     <div class="row ">
@@ -265,7 +268,7 @@
                         <th>Ngày tạo</th>
                         <th>Trạng thái</th>
                         <th>Chức vụ</th>
-                        <th>Hành động</th>
+                        <th>Thao tác</th>
 
                     </tr>
                     </thead>
@@ -283,12 +286,13 @@
                         <td>{{acc.role}}</td>
                         <td>
                             <div class="btn-group btn-group-xs">
-                                <button ng-click="edit(acc)"
-                                        class="btn btn-warning glyphicon glyphicon-edit">Sửa
+                                <button ng-click="edit(acc)"  class="btn btn-primary"data-bs-toggle="tooltip" data-bs-placement="bottom" title="Tooltip on bottom">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                    </svg>
                                 </button>
-                                <button ng-click="delete(acc)"
-                                        class="btn btn-danger glyphicon glyphicon-trash">Xóa
-                                </button>
+
                             </div>
                         </td>
                     </tr>
