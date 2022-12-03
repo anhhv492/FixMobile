@@ -4,10 +4,12 @@ import com.fix.mobile.entity.Sale;
 import com.fix.mobile.entity.SaleDetail;
 import com.fix.mobile.service.SaleDetailService;
 import com.fix.mobile.service.SaleService;
+import org.hibernate.StaleStateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Path;
@@ -29,14 +31,31 @@ public class SaleRestController {
     }
     @RequestMapping("/update")
     public Sale updateSale(@RequestBody Sale sale){
-        System.out.println(sale.toString()+sale.getIdSale());
         saleDetailSV.deleteSaleDetai(sale.getIdSale());
         return saleSV.update(sale);
     }
-
+    @RequestMapping("/delete")
+    public Sale deleteSale(@RequestBody Sale sale){
+        sale.setQuantity(0);
+        return saleSV.update(sale);
+    }
+private void checkList(List list,Integer idx){
+    if(list.size()==0){
+        String mess="";
+        if(idx==1){
+            mess="sản phẩm";
+        }else if(idx==3){
+            mess="người dùng";
+        }else if(idx==4){
+            mess="phụ kiện";
+        }
+        throw new StaleStateException("Bạn phải chọn dữ liệu "+mess+" ở bảng");
+    }
+}
     @RequestMapping("/adddetail/{idx}")
     public void addDetailSale1(@PathVariable(name="idx") Integer idx,
                                @RequestBody ArrayList<String> listID){
+        checkList(listID,idx);
         for (int i=0;i<listID.size();i++){
             saleDetailSV.createSaleDetail(listID.get(i),idx);
         }
@@ -46,6 +65,7 @@ public class SaleRestController {
     public void updatedetail(@PathVariable(name="idx") Integer idx,
                              @PathVariable(name="id") Integer id,
                                @RequestBody ArrayList<String> listID){
+        checkList(listID,idx);
         for (int i=0;i<listID.size();i++){
             saleDetailSV.updateSaleDetail(listID.get(i),idx,id);
         }
@@ -68,13 +88,8 @@ public class SaleRestController {
         return saleDetailSV.findByid(sale);
     }
 
-//    @RequestMapping("demotb")
-//    public ResponseEntity<Sale> login(@RequestBody Sale sale) {
-//        log.info("Begin login");
-//        try {
-//            // Thực hiện login
-//        } finally {
-//            log.info("Done");
-//        }
-//    }
+    @RequestMapping("/demotb")
+    public String login(Authentication auth) {
+        return auth.toString();
+    }
 }
