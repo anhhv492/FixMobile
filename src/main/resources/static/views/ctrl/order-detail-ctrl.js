@@ -56,6 +56,7 @@ app.controller('order-detail-ctrl',function($rootScope,$scope,$http){
         })
     }
     //$scope.files={};
+
     $scope.checkSelected= function (id){
         console.log('sdsadasadsa '+id)
         var check = true;
@@ -79,14 +80,12 @@ app.controller('order-detail-ctrl',function($rootScope,$scope,$http){
         }
     }
 
+
     $scope.uploadFileChange = function(files){
         $scope.files = files;
         console.log($scope.files);
     }
-    $scope.editProductChange = function (formProductChange){
-        $scope.formProductChange = angular.copy(formProductChange);
-        console.log( 'dsdsadsadsav '+$scope.formProductChange.name)
-    }
+
     $scope.saveProductChange = function (){
         Swal.fire({
             title: 'Bạn có chắc muốn trà máy : ',
@@ -120,13 +119,16 @@ app.controller('order-detail-ctrl',function($rootScope,$scope,$http){
                         angular.forEach($scope.files, function(file) {
                             formData.append('files', file);
                         });
-                            let req = {
+                        formData.append("note",$scope.formProductChange.note);
+                        formData.append("email",$scope.formProductChange.email);
+
+                        let req = {
                             method: 'POST',
                             url: '/rest/productchange/save',
                             headers: {
                                 'Content-Type': undefined,
                             },
-                            data:formData
+                            data: formData
                         }
                         Swal.fire({
                             title: 'Đang gửi yêu cầu đến admin' +'!',
@@ -144,16 +146,23 @@ app.controller('order-detail-ctrl',function($rootScope,$scope,$http){
                                 clearInterval(timerInterval)
                             }
                         })
-                        $http(req,$scope.seLected).then(response => {
-                            console.log("ddd " + response);
+                        $http(req).then(response => {
+                            console.log("ddd " + response.data);
                             $scope.message("Gửi yêu cầu đổi trả thành công");
                             // $scope.refresh();
+
                         }).catch(error => {
                             $scope.error('gửi  yêu cầu đổi trả thất bại');
                             console.log('I was closed by the timer'+ formData)
                         });
 
                     }
+                    let details = angular.copy($scope.seLected);
+                    $http.post('/rest/productchange/saveRequest',details).then(resp =>{
+                        console.log('đã post '+ details);
+                    }).catch(error => {
+                        console.log('I was closed by the timer'+ formData)
+                    });
                 })
 
             }
