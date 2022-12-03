@@ -1,6 +1,5 @@
 package com.fix.mobile.service.impl;
 
-import com.fix.mobile.entity.ChangeDetail;
 import com.fix.mobile.service.ProductChangeService;
 import com.fix.mobile.repository.ProductChangeRepository;
 import com.fix.mobile.entity.ProductChange;
@@ -63,11 +62,4 @@ public class ProductChangeServiceImpl implements ProductChangeService {
         }
         return null;
     }
-
-    @Override
-    public List<ProductChange> listProductChange() {
-        return repository.findProductChange();
-    }
-
-
 }
