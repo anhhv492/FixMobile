@@ -6,8 +6,10 @@ import com.fix.mobile.dto.ImayProductDTO;
 import com.fix.mobile.entity.*;
 import com.fix.mobile.helper.ExcelProducts;
 import com.fix.mobile.payload.SaveProductRequest;
+import com.fix.mobile.repository.ProductRepository;
 import com.fix.mobile.service.*;
 import org.apache.log4j.Logger;
+import org.hibernate.StaleStateException;
 import org.hibernate.annotations.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,10 +21,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.validation.Valid;
 import javax.websocket.server.PathParam;
 import java.util.*;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
 @RestController
 @RequestMapping(value= "/rest/admin/product")
@@ -55,6 +60,7 @@ public class RestProductsController {
 
 	@Autowired private ImayProductService imayService;
 
+	@Autowired private ProductRepository repose;
 
 	@GetMapping("/getAllRam")
 	public List<Ram> findAllRam(){
@@ -151,10 +157,26 @@ public class RestProductsController {
 		productService.deleteById(id);
 	}
 
-	@PutMapping(value ="/{id}")
-	public Product update(@PathVariable("id") Integer id, @RequestBody Product product){
-		System.out.println("dddddddddddddddddddddddd");
-		return productService.update(product,id);
+	@RequestMapping(path="/updateProduct", method = POST)
+	public void update(@RequestParam("id") Integer id,
+					   @ModelAttribute SaveProductRequest saveProductRequest) {
+	        Optional<Product> p = productService.findById(id);
+			if(p!=null){
+				p.orElseThrow().setName(saveProductRequest.getName());
+				p.orElseThrow().setNote(saveProductRequest.getNote());
+				p.orElseThrow().setSize(saveProductRequest.getSize());
+				p.orElseThrow().setCategory(saveProductRequest.getCategory());
+				p.orElseThrow().setColor(saveProductRequest.getColor());
+				p.orElseThrow().setRam(saveProductRequest.getRam());
+				p.orElseThrow().setCapacity(saveProductRequest.getCapacity());
+				p.orElseThrow().setCamera(saveProductRequest.getCamera());
+				p.orElseThrow().setStatus(saveProductRequest.getStatus());
+				p.orElseThrow().setPrice(saveProductRequest.getPrice());
+				productService.save(p.get());
+			}else{
+				throw new StaleStateException("Bản ghi này không tòn tại");
+			}
+
 	}
 
    

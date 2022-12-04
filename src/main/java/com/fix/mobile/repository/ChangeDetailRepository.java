@@ -14,4 +14,5 @@ public interface ChangeDetailRepository extends PagingAndSortingRepository<Chang
 	@Query(value = "insert into change_detail(id_order_detail,id_change) values(?1,(select id_change from product_change order by id_change  desc limit 1))",nativeQuery = true)
 	void createChangeDetails(String id);
 
+
 }
