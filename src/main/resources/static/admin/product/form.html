@@ -90,7 +90,7 @@
                                     <div ng-if="checkSubmit==false" class="form-group mt-1">
                                         <label>Thêm file Excel</label>
                                         <input type="file"  class="form-control"
-                                               onchange="angular.element(this).scope().xcellData(this.files)" name="file" required>
+                                               onchange="angular.element(this).scope().xcellData(this.files)" name="file">
                                         <span ng-show="myForm.$submitted || myForm.file.$dirty" style="color: red">
                                         <span class="error" ng-show="myForm.file.$error.required"> <i
                                                 class="fa fa-exclamation-circle"></i>Vui lòng chọn ảnh</span>

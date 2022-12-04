@@ -38,6 +38,15 @@ public class GuestRestController {
     private OrderDetailService orderDetailService;
     @Autowired
     private SaleRepository saleService;
+
+    @Autowired
+    private  CapacityService capacityService;
+
+    @Autowired
+    private RamService ramService;
+
+    @Autowired
+    private ColorService colorService;
     
     Order order = null;
     Account account = null;
@@ -170,5 +179,28 @@ public class GuestRestController {
         Optional<Product> product = productService.findById(productCode);
 
         return Optional.of(product.get());
+    }
+
+    @GetMapping("/getAllCapacity")
+    public List<Capacity> getAllCapacity(){
+        return capacityService.findAll();
+    }
+
+    @GetMapping("/getAllRam")
+    public List<Ram> getAllRam(){
+        return ramService.findAll();
+    }
+
+    @GetMapping("/getAllColor")
+    public List<Color> getAllColor(){
+        return colorService.findAll();
+    }
+
+
+    @GetMapping("/getProductByNameAndCapacityAndColor")
+    public List<Product> getProduct(@RequestParam("name") String name,
+                              @RequestParam("capacity") Integer capacity,
+                              @RequestParam("color") Integer color){
+        return productService.findByNameAndCapacityAndColor(name, capacity, color);
     }
 }

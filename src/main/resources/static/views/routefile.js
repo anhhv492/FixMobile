@@ -12,11 +12,12 @@ app.config(function($routeProvider){
         })
         .when("/accessory/detail",{
             templateUrl:"accessory/list_detail.html",
-            controller: "home-ctrl"
+            controller: "home-ctrl",
+            controller: "view_product_ctrl"
         })
         .when("/product/detail",{
             templateUrl:"product/list_detail.html",
-            controller: "home-ctrl"
+            controller: "home-ctrl",
         })
         .when("/order",{
             templateUrl:"order/view.html",

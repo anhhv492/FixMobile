@@ -258,6 +258,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
      $scope.getOneProduct = function (productCode){
          $http.get(`${urlOneProduct}/findByProductCode/${productCode.idProduct}`).then(res=>{
              $rootScope.productCode = res.data;
+             localStorage.setItem('product', $rootScope.productCode.idProduct);
              console.log(productCode);
          }).catch(err=>{
              console.log("error",err);

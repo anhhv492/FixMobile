@@ -213,7 +213,7 @@ public class RestProductsController {
 	}
 
 	@GetMapping(value ="/findByProductCode")
-	public Optional<Product> findByProductCode(Integer productCode) {
+	public Optional<Product> findByProductCode(@RequestParam("id") Integer productCode) {
 		Optional<Product> product = null;
 		if (productCode == null) ;
 			product = productService.findById(productCode);

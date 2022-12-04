@@ -74,15 +74,20 @@ public class AccountServiceImpl implements AccountService {
                 account.setStatus(accountRequestDTO.getStatus());
                 account.setRole(role);
                 account.setCreateDate(date);
-                Map r = this.cloud.uploader().upload(accountRequestDTO.getImage().getBytes(),
-                        ObjectUtils.asMap(
-                                "cloud_name", "dcll6yp9s",
-                                "api_key", "916219768485447",
-                                "api_secret", "zUlI7pdWryWsQ66Lrc7yCZW0Xxg",
-                                "secure", true,
-                                "folders", "c202a2cae1893315d8bccb24fd1e34b816"
-                        ));
-                account.setImage(r.get("secure_url").toString());
+                if (accountRequestDTO.getImage() == null){
+                    account.setImage("https://res.cloudinary.com/dcll6yp9s/image/upload/v1669087979/kbasp5qdf76f3j02mebr.png");
+                }else {
+                    Map r = this.cloud.uploader().upload(accountRequestDTO.getImage().getBytes(),
+                            ObjectUtils.asMap(
+                                    "cloud_name", "dcll6yp9s",
+                                    "api_key", "916219768485447",
+                                    "api_secret", "zUlI7pdWryWsQ66Lrc7yCZW0Xxg",
+                                    "secure", true,
+                                    "folders", "c202a2cae1893315d8bccb24fd1e34b816"
+                            ));
+                    account.setImage(r.get("secure_url").toString());
+                }
+
                 Account accountSave = repository.save(account);
                 AccountResponDTO accountResponDTO = modelMapper.map(accountSave, AccountResponDTO.class);
                 accountResponDTO.setRole(accountSave.getRole().getIdRole());
