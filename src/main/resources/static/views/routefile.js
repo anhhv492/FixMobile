@@ -62,6 +62,11 @@ app.config(function($routeProvider){
             controller: "home-ctrl",
 
         })
+        .when("/forgetPassword",{
+            templateUrl:"forgetPassword/form.html",
+            controller: "forgetPassword-ctrl",
+
+        })
 
 
 });
