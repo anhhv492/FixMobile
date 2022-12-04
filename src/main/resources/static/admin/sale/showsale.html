@@ -1,5 +1,5 @@
 <main ng-controller="sale_ctrl">
-    <button class="btn btn-success" style="width:100%" data-bs-toggle="modal" data-bs-target="#exampleModaladd">Thêm
+    <button class="btn btn-success" style="width:100%" data-bs-toggle="modal" ng-click="clear()" data-bs-target="#exampleModaladd">Thêm
         mới
     </button>
     <!-- Modal add -->
@@ -14,9 +14,9 @@
                 <div class="modal-body">
                     <!-- add -->
                     <div class="mb-3">
-                        <label for="" class="form-label">Loại giảm giá</label>
+                        <label for="" class="form-label" >Loại giảm giá</label>
                         <select class="form-select form-select-lg" ng-change="onChangeTypeSale()"
-                                ng-model="saleadd.typeSale" id="typeSale">
+                                ng-model="saleadd.typeSale" id="typeSale" ng-disabled="saleadd.idSale!=null">
                             <option ng-value="0">Toàn Bộ Cửa Hàng</option>
                             <option ng-value="1">Theo Sản Phẩm</option>
                             <option ng-value="2">Theo Đơn Hàng</option>
@@ -27,12 +27,12 @@
                     <div class="mb-3">
                         <label for="" class="form-label">Tên chương trình</label>
                         <input type="text" ng-model="saleadd.name" ng-value="saleadd.name" class="form-control"
-                               placeholder="" aria-describedby="helpId">
+                               placeholder="" aria-describedby="helpId" pattern="^[a-z0-9_-]{5,250}$" ng-disabled="saleadd.idSale!=null">
                     </div>
                     <div class="mb-3">
                         <label for="" class="form-label">Phương thức giảm giá</label>
                         <select class="form-select form-select-lg" ng-change="onChangeDiscountMethod()"
-                                ng-model="saleadd.discountMethod">
+                                ng-model="saleadd.discountMethod" ng-disabled="saleadd.idSale!=null">
                             <option ng-value="0">theo voucher</option>
                             <option ng-value="1">trực tiếp</option>
                         </select>
@@ -40,12 +40,12 @@
                     <div class="mb-3" ng-show="hiddenDiscountMethod">
                         <label for="" class="form-label">Mã giảm giá</label>
                         <input type="text" ng-model="saleadd.voucher" ng-value="saleadd.voucher" class="form-control"
-                               placeholder="" aria-describedby="helpId">
+                               placeholder="" aria-describedby="helpId" pattern="^[a-z0-9_-]{5,250}$" ng-disabled="saleadd.idSale!=null">
                     </div>
                     <div class="mb-3">
                         <label for="" class="form-label">Kiểu giảm giá</label>
                         <select class="form-select form-select-lg" ng-change="onChangeDiscountType()"
-                                ng-model="saleadd.discountType" name="">
+                                ng-model="saleadd.discountType" name="" ng-disabled="saleadd.idSale!=null">
                             <option ng-value="0">theo tiền mặt</option>
                             <option ng-value="1">theo %</option>
                         </select>
@@ -54,20 +54,20 @@
                         <div class="row g-2">
                             <div class="col-md">
                                 <label for="" class="form-label">Mức giảm giá</label>
-                                <div class="input-group" ng-show="hiddenMoneySale">
-                                    <input type="input" class="form-control" ng-model="saleadd.moneySale"
-                                           ng-value="saleadd.moneySale">
+                                <div class="input-group" ng-show="hiddenMoneySale" >
+                                    <input type="number" min="10000" maxlength="9" class="form-control" ng-model="saleadd.moneySale"
+                                           ng-value="saleadd.moneySale" ng-disabled="saleadd.idSale!=null">
                                     <span class="input-group-text">VNĐ</span>
                                 </div>
                                 <div class="input-group" ng-show="hiddenPercentSale">
-                                    <input type="number" min="0" max="100" class="form-control"
-                                           ng-model="saleadd.percentSale" ng-value="saleadd.percentSale">
+                                    <input type="number" min="1" max="100" class="form-control"
+                                           ng-model="saleadd.percentSale" ng-value="saleadd.percentSale" ng-disabled="saleadd.idSale!=null">
                                     <span class="input-group-text">%</span>
                                 </div>
                             </div>
                             <div class="col-md">
                                 <label for="" class="form-label">Số lượng</label>
-                                <input type="text" maxlength="6" ng-model="saleadd.quantity" ng-value="saleadd.quantity"
+                                <input type="number" min="1" maxlength="6" ng-model="saleadd.quantity" ng-value="saleadd.quantity"
                                        class="form-control" placeholder="" aria-describedby="helpId">
                             </div>
                         </div>
@@ -89,16 +89,16 @@
                     <div class="mb-3" id="">
                         <div class="row g-2">
                             <div class="col-md">
-                                <label for="" class="form-label">Thời gian bắt đầu</label>
+                                <label for="" class="form-label" >Thời gian bắt đầu</label>
 <!--                                <input type="datetime-local" ng-value="2018-06-12T19:30" class="form-control"-->
 <!--                                       ng-model="saleadd.createStart">-->
                                 <input type="datetime-local" class="form-control"
-                                       ng-model="saleadd.createStart " >
+                                       ng-model="saleadd.createStart " ng-disabled="saleadd.idSale!=null && compareDate(saleadd.createStart,saleadd.createEnd,saleadd.quantity) != 0">
                             </div>
                             <div class="col-md">
                                 <label for="" class="form-label">Thời gian kết thúc</label>
                                 <input type="datetime-local" class="form-control"
-                                       ng-model="saleadd.createEnd">
+                                       ng-model="saleadd.createEnd" ng-disabled="saleadd.idSale!=null && compareDate(saleadd.createStart,saleadd.createEnd,saleadd.quantity) != 0 && compareDate(saleadd.createStart,saleadd.createEnd,saleadd.quantity) != 1">
                             </div>
                         </div>
                     </div>
@@ -126,7 +126,7 @@
                                 <th scope="col">Tên {{nameOnTable}}</th>
                             </tr>
                             </thead>
-                            <tbody
+                            <tbody>
                             <tr ng-repeat="dta in dataTable">
                                 <th scope="row"><input type="checkbox" ng-checked="checkSelect($index)"
                                                        ng-click="checkSelected($index)"></th>
@@ -185,12 +185,13 @@
                         </nav>
                     </div>
                     <!-- end table all -->
-
-                    <button type="button" class="btn btn-success"  ng-click="addSale()" data-bs-dismiss="modal">Tạo</button>
-
+                    <button type="button"  ng-if="saleadd.idSale==null" class="btn btn-success"  ng-click="addSale()">Thêm mới</button>
+                    <button type="button"  ng-if="saleadd.idSale!=null && compareDate(saleadd.createStart,saleadd.createEnd,saleadd.quantity) != 2 && compareDate(saleadd.createStart,saleadd.createEnd,saleadd.quantity) != 3" class="btn btn-warning" ng-click="updateSale()">Cập nhật</button>
+                    <button type="button"  ng-if="saleadd.idSale!=null && compareDate(saleadd.createStart,saleadd.createEnd,saleadd.quantity) != 2 && compareDate(saleadd.createStart,saleadd.createEnd,saleadd.quantity) != 3" class="btn btn-danger" ng-click="deleteSale()">Dừng Sale</button>
+                    <button type="button"  ng-if="saleadd.idSale!=null" class="btn btn-info" ng-click="coppySale()">Sao chép</button>
                     <!-- add -->
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" ng-click="updateSale()">Save changes</button>
+                    <button id="clossmodal" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
                 </div>
             </div>
         </div>

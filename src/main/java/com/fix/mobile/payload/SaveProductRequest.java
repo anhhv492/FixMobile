@@ -14,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SaveProductRequest {
+	private Integer idProduct;
 	private String name;
 	private List<MultipartFile> files;
 	private Date createDate;

@@ -62,4 +62,9 @@ public class ChangeDetailServiceImpl implements ChangeDetailService {
         }
         return null;
     }
+
+    @Override
+    public void createChangeDetails(String id) {
+        repository.createChangeDetails(id);
+    }
 }

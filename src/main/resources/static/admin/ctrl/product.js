@@ -28,7 +28,7 @@ app.controller('product', function($scope, $http) {
             toast: true,
             position: 'top-end',
             showConfirmButton: false,
-            timer: 3500,
+            timer: 2000,
             timerProgressBar: true,
             didOpen: (toast) => {
                 toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -163,26 +163,66 @@ app.controller('product', function($scope, $http) {
         $scope.checkSubmit=true;
         $scope.checkButton=false;
     };
-    $scope.onUpdate = function() {
-        $scope.formProduct.category ={
-            idCategory: $scope.formProduct.category
-        };
-        $scope.formProduct.ram ={
-            idRam: $scope.formProduct.ram
-        };
-        $scope.formProduct.color ={
-            idColor: $scope.formProduct.color
-        };
-        $scope.formProduct.capacity ={
-            idCapacity: $scope.formProduct.capacity
-        };
+    let head = {
+        headers: {
+            'Content-Type':'application/json',
+            Authorization: `Bearer `+jwtToken
 
-        $http.put(pathAPI+'/'+$scope.formProduct.idProduct, $scope.formProduct,token).then(response=> {
-            $scope.message("cập nhật thành công"+ $scope.formProduct.name);
+        }
+    }
+
+    $scope.onUpdate = function() {
+        var formData = new FormData();
+        angular.forEach($scope.files, function(file) {
+            formData.append('files', file);
+        });
+        formData.append('idProduct', $scope.formProduct.idProduct);
+        formData.append('name', $scope.formProduct.name);
+        formData.append('note', $scope.formProduct.note);
+        formData.append('size', $scope.formProduct.size);
+        formData.append('price',$scope.formProduct.price);
+        formData.append('camera',$scope.formProduct.camera);
+        formData.append('status',$scope.formProduct.status=1)
+        formData.append( 'category',$scope.formProduct.category)
+        formData.append('ram',$scope.formProduct.ram)
+        formData.append('color',$scope.formProduct.color)
+        formData.append('capacity',$scope.formProduct.capacity)
+        let req = {
+            method: 'POST',
+            url: '/rest/admin/product/updateProduct?id=' +$scope.formProduct.idProduct,
+            headers: {
+                'Content-Type': undefined,
+                Authorization: `Bearer `+jwtToken
+                // or  'Content-Type':'application/json'
+            },
+            data: formData
+        }
+        let timerInterval
+        Swal.fire({
+            title: 'Đang thêm  mới vui lòng chờ!',
+            html: 'Vui lòng chờ <b></b> milliseconds.',
+            timer: 5500,
+            timerProgressBar: true,
+            didOpen: () => {
+                Swal.showLoading()
+                const b = Swal.getHtmlContainer().querySelector('b')
+                timerInterval = setInterval(() => {
+                    b.textContent = Swal.getTimerLeft()
+                }, 100)
+            },
+            willClose: () => {
+                clearInterval(timerInterval)
+            }
+        });
+        $http(req).then(response => {
+            console.log("ddd " + response.data);
+            $scope.message("Cập nhật sản phẩm thành công");
             $scope.refresh();
-        }).catch(error=>{
-            $scope.error('cập nhật thất bại');
-        })
+            $scope.getProducts();
+        }).catch(error => {
+            $scope.error('Cập nhật thất bại');
+        });
+
     };
     $scope.doSubmit = function() {
         if($scope.formProduct.idProduct) {
@@ -210,6 +250,7 @@ app.controller('product', function($scope, $http) {
                 }
             })
         }else{
+
             let timerInterval
             Swal.fire({
                 title: 'Đang lưu mới!',
@@ -250,6 +291,7 @@ app.controller('product', function($scope, $http) {
         $scope.files = files;
         console.log($scope.files);
     }
+
 
     // thêm mới
     $scope.onSave = function() {

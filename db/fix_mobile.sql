@@ -25,7 +25,7 @@ CREATE TABLE images (
 	id_image int NOT NULL auto_increment primary key,
 	name nvarchar(255) not null,
 	id_product int null,
-	id_product_change int null,
+	id_product_change int null
 ) ;
 
 CREATE TABLE roles (

@@ -33,7 +33,16 @@
                                     </div>
                                     <div class="form-group mt-1">
                                         <label>Tên sản phẩm</label>
-                                        <input ng-model="formProduct.name" class="form-control" placeholder="Tên sản phẩm" required>
+                                        <input ng-model="formProduct.name" class="form-control" name="name" placeholder="Tên sản phẩm"
+                                               ng-minlength="6" ng-maxlength="250" required>
+                                        <span ng-show="myForm.$submitted || myForm.name.$dirty" style="color: red">
+                                        <span class="error" ng-show="myForm.name.$error.required"> <i
+                                                class="fa fa-exclamation-circle"></i>Tên sản phẩm không được trống</span>
+                                        <span class="error"
+                                              ng-show="((myForm.name.$error.minlength
+                                              || myForm.name.$error.maxlength) || myForm.name.$error.$dirty)">
+                                                <i class="fa fa-exclamation-circle"></i>Tên sản phẩm phải từ 6-250 ký tự</span>
+                                    </span>
                                     </div>
                                     <div class="form-group mt-1">
                                         <label >Ram </label>
@@ -41,6 +50,10 @@
                                             <option ng-repeat="cate in rams" ng-value="cate.idRam">{{cate.name}}
                                             </option>
                                         </select>
+                                        <span ng-show="myForm.$submitted || myForm.ram.$dirty" style="color: red">
+                                        <span class="error" ng-show="myForm.ram.$error.required"> <i
+                                                class="fa fa-exclamation-circle"></i>Phải chọn Ram </span>
+                                    </span>
                                     </div>
                                     <div class="form-group mt-1">
                                             <label >Màu </label>
@@ -48,6 +61,10 @@
                                                 <option ng-repeat="color in colors" ng-value="color.idColor">{{color.name}}
                                                 </option>
                                             </select>
+                                        <span ng-show="myForm.$submitted || myForm.color.$dirty" style="color: red">
+                                        <span class="error" ng-show="myForm.color.$error.required"> <i
+                                                class="fa fa-exclamation-circle"></i>Phải chọn màu sắc </span>
+                                    </span>
                                     </div>
                                     <div class="form-group mt-1">
                                         <label>Dung lượng</label>
@@ -55,16 +72,29 @@
                                             <option ng-repeat="capa in capacitys"  ng-value="capa.idCapacity">{{capa.name}}
                                             </option>
                                         </select>
+                                        <span ng-show="myForm.$submitted || myForm.capacity.$dirty" style="color: red">
+                                        <span class="error" ng-show="myForm.capacity.$error.required"> <i
+                                                class="fa fa-exclamation-circle"></i>Phải chọn dung lượng </span>
+                                    </span>
                                     </div>
                                     <div class="form-group mt-1">
                                         <label>Giá</label>
-                                        <input ng-model="formProduct.price" required type="number" class="form-control">
+                                        <input ng-model="formProduct.price" required type="number"
+                                               class="form-control" name="price" min="1">
+                                        <span ng-show="myForm.$submitted || myForm.price.$dirty" style="color: red">
+                                        <span class="error" ng-show="myForm.price.$error.required"> <i
+                                                class="fa fa-exclamation-circle"></i>Giá sản phẩm không được trống</span>
+                                        </span>
                                     </div>
 
                                     <div ng-if="checkSubmit==false" class="form-group mt-1">
                                         <label>Thêm file Excel</label>
                                         <input type="file"  class="form-control"
-                                               onchange="angular.element(this).scope().xcellData(this.files)" >
+                                               onchange="angular.element(this).scope().xcellData(this.files)" name="file" required>
+                                        <span ng-show="myForm.$submitted || myForm.file.$dirty" style="color: red">
+                                        <span class="error" ng-show="myForm.file.$error.required"> <i
+                                                class="fa fa-exclamation-circle"></i>Vui lòng chọn ảnh</span>
+                                        </span>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -93,17 +123,29 @@
 
                                     <div class="form-group mt-1">
                                         <label>Kích thước</label>
-                                        <input ng-model="formProduct.size" class="form-control" placeholder="nhập kích thước" required>
+                                        <input ng-model="formProduct.size" class="form-control" name="size" placeholder="nhập kích thước" required>
+                                        <span ng-show="myForm.$submitted || myForm.size.$dirty" style="color: red">
+                                        <span class="error" ng-show="myForm.size.$error.required"> <i
+                                                class="fa fa-exclamation-circle"></i>Kích thước sản phẩm không được trống</span>
+                                        </span>
                                     </div>
 
                                     <div class="form-group mt-1">
                                         <label>Mô tả sản phẩm</label>
-                                        <textarea ng-model="formProduct.note" class="form-control" rows="3" required></textarea>
+                                        <textarea ng-model="formProduct.note" class="form-control" rows="3" name="note" ng-minlength="6" ng-maxlength="250" required></textarea>
+                                        <span ng-show="myForm.$submitted || myForm.note.$dirty" style="color: red">
+                                        <span class="error" ng-show="myForm.note.$error.required"> <i
+                                                class="fa fa-exclamation-circle"></i>Mô tả sản phẩm không được trống</span>
+                                            <span class="error"
+                                                  ng-show="((myForm.note.$error.minlength
+                                              || myForm.note.$error.maxlength) || myForm.note.$error.$dirty)">
+                                                <i class="fa fa-exclamation-circle"></i>Mô tả phải từ 6-250 ký tự</span>
+                                        </span>
                                     </div>
 
                                     <div class="form-group mt-4">
                                         <button type="submit"  class="btn btn-success" ng-disabled="myForm.$invalid">{{checkSubmit==false?title.insert:title.update}}</button>
-                                        <button type="button" ng-if="checkSubmit" ng-click="refresh()" class="btn btn-warning">Hủy</button>
+                                        <button type="button" ng-if="checkSubmit" ng-click="refresh()" class="btn btn-warning">Làm mới</button>
                                     </div>
                                 </div>
                             </form>
@@ -143,9 +185,15 @@
                                <td><img class="img-responsive" width="80px" height="80px"
                                         src="{{product.images.length>0?product.images[0].name:''}}"></td>
                                <td>
-                                   <button class="btn btn-default"
-                                           ng-click="edit(product)"><i class="fa fa-pencil-square" aria-hidden="true"> Sửa</i></button>
-                                   <button class="btn btn-default" ng-click="delete(product)"><i class="fa fa-trash"> Xóa</i></button>
+                                   <button
+                                           ng-click="edit(product)"  class="btn btn-primary"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                       <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                       <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                   </svg>
+                                   </button>
+                                   <button  ng-click="delete(product)"class="btn btn-danger"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                       <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                                   </svg></button>
                                </td>
                            </tr>
                            </tbody>
@@ -226,7 +274,7 @@
                                 </div>
                                 <div class="form-group mt-4">
                                     <button type="submit"  class="btn btn-success"  ng-disabled="myFormImay.$invalid">{{checkSubmit==false?title.insert:title.update}}</button>
-                                    <button type="button" ng-if="checkSubmit" ng-click="refresh()" class="btn btn-warning">Hủy</button>
+                                    <button type="button" ng-if="checkSubmit" ng-click="refresh()" class="btn btn-warning">Làm mới</button>
                                     <button type="button" class="btn btn-success" ng-click="addImei()">add input</button>
                                     <button type="button" class="btn btn-success" ng-click="removeImei()" >remove input</button>
                                 </div>

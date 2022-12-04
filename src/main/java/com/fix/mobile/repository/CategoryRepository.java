@@ -28,4 +28,6 @@ public interface CategoryRepository extends PagingAndSortingRepository<Category,
     Page<Category> findByTypeAndStatus(Integer type, Integer status, Pageable pageable);
     Page<Category> findByName(String name, Pageable pageable);
     Optional<Category> findByName(String name);
+
+    Optional<Category> getCategoryByTypeAndName(Integer type, String name);
 }

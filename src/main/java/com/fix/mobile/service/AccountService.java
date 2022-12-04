@@ -3,6 +3,7 @@ package com.fix.mobile.service;
 
 import com.fix.mobile.dto.Account.AccountRequestDTO;
 import com.fix.mobile.dto.Account.AccountResponDTO;
+import com.fix.mobile.dto.Account.UpdatePasswordDTO;
 import com.fix.mobile.dto.AccountDTO;
 import com.fix.mobile.dto.AddressDTO;
 import com.fix.mobile.entity.Account;
@@ -44,4 +45,6 @@ public interface AccountService {
     Page<Account> getByPage(int pageNumber, int maxRecord, String share);
 
     AccountResponDTO updateImage(AccountRequestDTO accountRequestDTO);
+
+    void updatePassword(UpdatePasswordDTO updatePasswordDTO);
 }

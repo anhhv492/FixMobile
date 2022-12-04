@@ -1,27 +1,28 @@
 app.controller("sale_ctrl", function ($scope, $http) {
     let urlprd = "http://localhost:8080/rest/admin/product/getdatasale";
-    let urlacsr="http://localhost:8080/rest/admin/accessory/getdatasale";
-    let urlacc="http://localhost:8080/rest/admin/accounts/getdatasale";
+    let urlacsr = "http://localhost:8080/rest/admin/accessory/getdatasale";
+    let urlacc = "http://localhost:8080/rest/admin/accounts/getdatasale";
 
     const jwtToken = localStorage.getItem("jwtToken")
     const token = {
         headers: {
-            Authorization: `Bearer `+jwtToken
+            Authorization: `Bearer ` + jwtToken
         }
     }
     $scope.saleadd = {};
     $scope.saleedit = {};
     $scope.dataTable = [];
-    $scope.seLected =[];
-    $scope.index=0;
-    $scope.totalPages=0;
-    $scope.check_first=false;
-    $scope.check_last=true;
+    $scope.dataTableSale = {};
+    $scope.seLected = [];
+    $scope.index = 0;
+    $scope.totalPages = 0;
+    $scope.check_first = false;
+    $scope.check_last = true;
 
-    $scope.indextable=0;
-    $scope.totalPagestable=0;
-    $scope.check_firsttable=false;
-    $scope.check_lasttable=true;
+    $scope.indextable = 0;
+    $scope.totalPagestable = 0;
+    $scope.check_firsttable = false;
+    $scope.check_lasttable = true;
 
     //validate start
     $scope.hiddenTableAll = false;
@@ -30,92 +31,109 @@ app.controller("sale_ctrl", function ($scope, $http) {
     $scope.hiddenMoneySale = true;
     $scope.hiddenPercentSale = false;
     $scope.hiddenUserType = false;
-    $scope.saleadd.typeSale= 0;
-    $scope.saleadd.discountMethod=0;
-    $scope.saleadd.discountType=0;
-    $scope.saleadd.userType=0
-    var d= new Date();
-    d.setSeconds(0,0);
-    $scope.saleadd.createStart= new Date(d);
-    $scope.saleadd.createEnd= new Date(d);
+    $scope.saleadd.typeSale = 0;
+    $scope.saleadd.discountMethod = 0;
+    $scope.saleadd.discountType = 0;
+    $scope.saleadd.userType = 0
+    var d = new Date();
+    d.setSeconds(0, 0);
+    $scope.saleadd.idSale = null;
+    $scope.saleadd.createStart = new Date(d);
+    $scope.saleadd.createEnd = new Date(d);
 
     //add sale start
-    $scope.addSale = function (){
-        let item = angular.copy($scope.saleadd);
-        let urlsale = `/admin/rest/sale/add`;
-        let listDetail = angular.copy($scope.seLected);
-        if($scope.saleadd.typeSale==0||$scope.saleadd.typeSale==2){
-            $http.post(urlsale, item,token).then(resp => {
-                swal.fire({
-                    icon: 'success',
-                    showConfirmButton: false,
-                    title: 'Thêm Mới Thành Công',
-                    timer: 1000
-                });
-                $scope.clear();
-            }).catch(error => {
-                swal.fire({
-                    icon: 'error',
-                    showConfirmButton: false,
-                    title: 'Thêm Mới Thành Công',
-                    timer: 5000
-                });
-            })
-        }else{
-            $http.post(urlsale, item,token).then(resp => {
-                let urlsaledetail = `/admin/rest/sale/adddetail/`+$scope.saleadd.typeSale;
-                $http.post(urlsaledetail,listDetail,token).then(resp => {
-                    console.log(urlsaledetail);
-                    $scope.clear();
-                    swal.fire({
-                        icon: 'success',
-                        showConfirmButton: false,
-                        title: 'Thêm Mới Thành Công',
-                        timer: 1000
+    $scope.addSale = function () {
+        Swal.fire({
+            title: 'Xác nhận thêm mới',
+            text: "Lưu ý: Khi thêm mới Sale trực tiếp hệ thống sẽ tự động áp dụng mã có mức giảm giá cao nhất.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Thêm ngay',
+            cancelButtonText: 'Xem lại',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                let item = angular.copy($scope.saleadd);
+                let urlsale = `/admin/rest/sale/add`;
+                let listDetail = angular.copy($scope.seLected);
+                if ($scope.saleadd.typeSale == 0 || $scope.saleadd.typeSale == 2) {
+                    $http.post(urlsale, item, token).then(resp => {
+                        swal.fire({
+                            icon: 'success',
+                            showConfirmButton: false,
+                            title: 'Thêm Mới Thành Công',
+                            timer: 1000
+                        });
+                        document.getElementById("clossmodal").click();
+                        $scope.clear();
+                    }).catch(error => {
+                        console.log(error)
+                        swal.fire({
+                            icon: 'error',
+                            showConfirmButton: false,
+                            title: error.data.message,
+                            timer: 5000
+                        });
                     })
-                }).catch(error => {
-                    swal.fire({
-                        icon: 'error',
-                        showConfirmButton: false,
-                        title: 'Thêm Mới Thất Bại',
-                        timer: 5000
-                    });
-                })
-            }).catch(error => {
-                swal.fire({
-                    icon: 'error',
-                    showConfirmButton: false,
-                    title: 'Thêm Mới Thành Công',
-                    timer: 5000
-                });
-            })
-        }
+                } else {
+                    $http.post(urlsale, item, token).then(resp => {
+                        let urlsaledetail = `/admin/rest/sale/adddetail/` + $scope.saleadd.typeSale;
+                        $http.post(urlsaledetail, listDetail, token).then(resp => {
+                            document.getElementById("clossmodal").click();
+                            $scope.clear();
+                            swal.fire({
+                                icon: 'success',
+                                showConfirmButton: false,
+                                title: 'Thêm Mới Thành Công',
+                                timer: 1000
+                            })
+                        }).catch(error => {
+                            swal.fire({
+                                icon: 'error',
+                                showConfirmButton: false,
+                                title: error.data.message,
+                                timer: 5000
+                            });
+                        })
+                    }).catch(error => {
+                        swal.fire({
+                            icon: 'error',
+                            showConfirmButton: false,
+                            title: error.data.message,
+                            timer: 5000
+                        });
+                    })
+                }
+            }
+        })
+
 
     }
     //addSale end
-    $scope.shareTBS = function(){
-        var url ="";
+    $scope.shareTBS = function () {
+        var url = "";
         if ($scope.saleadd.typeSale == 1) {
             url = urlprd;
-        }else if($scope.saleadd.userType == 1){
+        } else if ($scope.saleadd.userType == 1) {
             url = urlacc;
-        }else if($scope.saleadd.typeSale == 4){
+        } else if ($scope.saleadd.typeSale == 4) {
             url = urlacsr;
         }
         $scope.getDataTable(url, $scope.shareTbS);
     }
     //get data table start
-    $scope.getDataTable =function (urlDataTable,shear){
-        $http.get(`${urlDataTable}/`+$scope.index+"?share="+shear,token).then(function(response) {
+    $scope.getDataTable = function (urlDataTable, shear) {
+        $http.get(`${urlDataTable}/` + $scope.index + "?share=" + shear, token).then(function (response) {
             $scope.dataTable = response.data.content;
             $scope.totalPages = response.data.totalPages;
-        }).catch(error=>{
+        }).catch(error => {
             console.log(error);
         });
     }
     //get data table end
-    $scope.next=function(urlDataTable,shear){
-        if(urlDataTable == 'all'){
+    $scope.next = function (urlDataTable, shear) {
+        if (urlDataTable == 'all') {
             $scope.check_firsttable = true;
             $scope.indextable++;
             if ($scope.indextable >= $scope.totalPagestable) {
@@ -127,14 +145,14 @@ app.controller("sale_ctrl", function ($scope, $http) {
                 $scope.check_firsttable = true;
                 $scope.check_lasttable = false;
             }
-            var urlGetDataTableSale=`/admin/rest/sale/getall/`+$scope.indextable+`?stt=`+idxstt+`&share=&type=`;
-            $http.get(urlGetDataTableSale).then(function(response) {
+            var urlGetDataTableSale = `/admin/rest/sale/getall/` + $scope.indextable + `?stt=` + idxstt + `&share=&type=`;
+            $http.get(urlGetDataTableSale).then(function (response) {
                 $scope.dataTableSale = response.data.content;
-                $scope.totalPagestable=response.data.totalPages;
-            }).catch(error=>{
+                $scope.totalPagestable = response.data.totalPages;
+            }).catch(error => {
                 console.log(error);
             });
-        }else {
+        } else {
             $scope.check_first = true;
             $scope.index++;
             if ($scope.index >= $scope.totalPages) {
@@ -156,8 +174,8 @@ app.controller("sale_ctrl", function ($scope, $http) {
             $scope.getDataTable(urlDataTable, shear);
         }
     }
-    $scope.prev=function(urlDataTable,shear){
-        if(urlDataTable == 'all'){
+    $scope.prev = function (urlDataTable, shear) {
+        if (urlDataTable == 'all') {
             $scope.check_lasttable = true;
             $scope.indextable--;
             if ($scope.indextable < 0) {
@@ -169,14 +187,14 @@ app.controller("sale_ctrl", function ($scope, $http) {
                 $scope.check_firsttable = false;
                 $scope.check_lasttable = true;
             }
-            var urlGetDataTableSale=`/admin/rest/sale/getall/`+$scope.indextable+`?stt=`+idxstt+`&share=&type=`;
-            $http.get(urlGetDataTableSale).then(function(response) {
+            var urlGetDataTableSale = `/admin/rest/sale/getall/` + $scope.indextable + `?stt=` + idxstt + `&share=&type=`;
+            $http.get(urlGetDataTableSale).then(function (response) {
                 $scope.dataTableSale = response.data.content;
-                $scope.totalPagestable=response.data.totalPages;
-            }).catch(error=>{
+                $scope.totalPagestable = response.data.totalPages;
+            }).catch(error => {
                 console.log(error);
             });
-        }else {
+        } else {
             $scope.check_last = true;
             $scope.index--;
             if ($scope.index < 0) {
@@ -198,8 +216,8 @@ app.controller("sale_ctrl", function ($scope, $http) {
             $scope.getDataTable(urlDataTable, shear);
         }
     }
-    $scope.checkSelected=function (id){
-        if($scope.dataTable.length!=0){
+    $scope.checkSelected = function (id) {
+        if ($scope.dataTable.length != 0) {
             var checkid = '';
             if ($scope.saleadd.typeSale == 1) {
                 checkid = $scope.dataTable[id].idProduct;
@@ -213,7 +231,7 @@ app.controller("sale_ctrl", function ($scope, $http) {
                 if ($scope.seLected[i] == checkid) {
                     check = false;
                     $scope.seLected.splice(i, 1);
-                    console.log('id sale là ' +checkid)
+                    console.log('id sale là ' + checkid)
                 }
             }
             if (check) {
@@ -221,9 +239,9 @@ app.controller("sale_ctrl", function ($scope, $http) {
             }
         }
     }
-    $scope.checkSelect=function (id){
+    $scope.checkSelect = function (id) {
         var checkid = '';
-        if($scope.dataTable.length!=0) {
+        if ($scope.dataTable.length != 0) {
             if ($scope.saleadd.typeSale == 1) {
                 checkid = $scope.dataTable[id].idProduct;
             } else if ($scope.saleadd.typeSale == 3) {
@@ -238,59 +256,61 @@ app.controller("sale_ctrl", function ($scope, $http) {
             }
         }
     }
-    $scope.clear=function (){
+    $scope.clear = function () {
         $scope.saleedit = {}
         $scope.dataTable = [];
         $scope.seLected = [];
-        $scope.index=0;
-        $scope.totalPages=0;
-        $scope.check_first=false;
-        $scope.check_last=true;
+        $scope.index = 0;
+        $scope.totalPages = 0;
+        $scope.check_first = false;
+        $scope.check_last = true;
         $scope.saleadd = {};
-        $scope.saleadd.typeSale= 0;
-        $scope.saleadd.discountMethod=0;
-        $scope.saleadd.discountType=0;
-        $scope.saleadd.userType=0
+        $scope.saleadd.typeSale = 0;
+        $scope.saleadd.discountMethod = 0;
+        $scope.saleadd.discountType = 0;
+        $scope.saleadd.userType = 0;
+        $scope.saleadd.idSale = null;
         $scope.iNit();
     }
-    $scope.iNit=function (){
+    $scope.iNit = function () {
         $scope.onChangeTypeSale();
         $scope.onChangeDiscountMethod();
         $scope.onChangeDiscountType();
+        $scope.showDataTableSale(0);
     }
-    $scope.onChangeTypeSale=function (){
-        if($scope.saleadd.typeSale == '0'){
+    $scope.onChangeTypeSale = function () {
+        if ($scope.saleadd.typeSale == '0') {
             $scope.dataTable = [];
-            $scope.totalPages=0;
-            $scope.check_first=false;
-            $scope.check_last=true;
+            $scope.totalPages = 0;
+            $scope.check_first = false;
+            $scope.check_last = true;
             $scope.nameOnTable = "";
             $scope.hiddenTableAll = false;
             $scope.hiddenValueMin = false;
             $scope.hiddenUserType = false;
-            $scope.saleadd.typeSale= 0;
-        }else if($scope.saleadd.typeSale == '1'){
-            $scope.saleadd.typeSale= 1;
+            $scope.saleadd.typeSale = 0;
+        } else if ($scope.saleadd.typeSale == '1') {
+            $scope.saleadd.typeSale = 1;
             $scope.hiddenTableAll = true;
             $scope.hiddenValueMin = false;
             $scope.hiddenUserType = false;
             $scope.nameOnTable = "sản phẩm"
             $scope.getDataTable(urlprd);
-        }else if($scope.saleadd.typeSale == '2'){
-            $scope.saleadd.typeSale= 2;
+        } else if ($scope.saleadd.typeSale == '2') {
+            $scope.saleadd.typeSale = 2;
             $scope.hiddenTableAll = false;
             $scope.hiddenValueMin = true;
             $scope.hiddenUserType = false;
             $scope.nameOnTable = ""
-        }else if($scope.saleadd.typeSale == '3'){
-            $scope.saleadd.typeSale= 3;
+        } else if ($scope.saleadd.typeSale == '3') {
+            $scope.saleadd.typeSale = 3;
             $scope.hiddenTableAll = false;
             $scope.hiddenValueMin = false;
             $scope.hiddenUserType = true;
             $scope.nameOnTable = "user"
             $scope.getDataTable(urlacc);
-        }else if($scope.saleadd.typeSale == '4'){
-            $scope.saleadd.typeSale= 4;
+        } else if ($scope.saleadd.typeSale == '4') {
+            $scope.saleadd.typeSale = 4;
             $scope.hiddenTableAll = true;
             $scope.hiddenValueMin = false;
             $scope.hiddenUserType = false;
@@ -301,96 +321,97 @@ app.controller("sale_ctrl", function ($scope, $http) {
         $scope.onChangeDiscountType();
     }
 
-    $scope.onChangeDiscountMethod=function (){
-        if($scope.saleadd.discountMethod ==0){
+    $scope.onChangeDiscountMethod = function () {
+        if ($scope.saleadd.discountMethod == 0) {
             $scope.hiddenDiscountMethod = true;
-        }else if($scope.saleadd.discountMethod==1){
+        } else if ($scope.saleadd.discountMethod == 1) {
             $scope.hiddenDiscountMethod = false;
         }
     }
-    $scope.onChangeDiscountType=function (){
-        if($scope.saleadd.discountType==0){
+    $scope.onChangeDiscountType = function () {
+        if ($scope.saleadd.discountType == 0) {
             $scope.hiddenMoneySale = true;
             $scope.hiddenPercentSale = false;
-        }else if($scope.saleadd.discountType==1){
+        } else if ($scope.saleadd.discountType == 1) {
             $scope.hiddenMoneySale = false;
             $scope.hiddenPercentSale = true;
         }
     }
-    $scope.onChangeUserType=function (){
-        if($scope.saleadd.userType==0){
+    $scope.onChangeUserType = function () {
+        if ($scope.saleadd.userType == 0) {
             $scope.hiddenTableAll = false;
-        }else if($scope.saleadd.userType==1){
+        } else if ($scope.saleadd.userType == 1) {
             $scope.hiddenTableAll = true;
         }
     }
- var idxstt;
+    var idxstt;
 //showmemu
-    $scope.showDataTableSale=function (stt){
-        $scope.dataTableSale=[];
-        $scope.indextable=0;
-        var urlGetDataTableSale=`/admin/rest/sale/getall/`+$scope.indextable+`?stt=`+stt+`&share=&type=`;
-        $http.get(urlGetDataTableSale).then(function(response) {
+    $scope.showDataTableSale = function (stt) {
+        $scope.dataTableSale = [];
+        $scope.indextable = 0;
+        var urlGetDataTableSale = `/admin/rest/sale/getall/` + $scope.indextable + `?stt=` + stt + `&share=&type=`;
+        $http.get(urlGetDataTableSale).then(function (response) {
             $scope.dataTableSale = response.data.content;
-            $scope.totalPagestable=response.data.totalPages;
-        }).catch(error=>{
+            $scope.totalPagestable = response.data.totalPages;
+        }).catch(error => {
             console.log(error);
         });
         return idxstt = stt;
     }
-    $scope.compareDate=function (dateStart, dateEnd, quantity){
+    $scope.compareDate = function (dateStart, dateEnd, quantity) {
         var newDate = new Date();
         var startDate = new Date(dateStart);
         var endDate = new Date(dateEnd);
-        if(endDate < newDate){
+        if (endDate < newDate) {
             return 2;
         }
-        if(quantity==0){
+        if (quantity == 0) {
             return 3;
         }
-        if(startDate > newDate){
+        if (startDate > newDate) {
             return 0;
         }
-        if( startDate < newDate && endDate > newDate){
+        if (startDate < newDate && endDate > newDate) {
             return 1;
         }
     }
 
-    $scope.showdetailSale=function (id){
-       var url= `http://localhost:8080/admin/rest/sale/getsale/`+id;
-        $http.get(url).then(function(response) {
+    $scope.showdetailSale = function (id) {
+        var url = `http://localhost:8080/admin/rest/sale/getsale/` + id;
+        $http.get(url).then(function (response) {
             $scope.saleadd = response.data;
-            $scope.saleadd.createStart= new Date(response.data.createStart);
+            $scope.saleadd.createStart = new Date(response.data.createStart);
             $scope.saleadd.createEnd = new Date(response.data.createEnd);
-            var url1="http://localhost:8080/admin/rest/sale/getsaledetail/"+id;
-            $http.get(url1).then(function(response1) {
-                $scope.seLected=[];
-                for (var i =0 ; i<response1.data.length;i++) {
+            var url1 = "http://localhost:8080/admin/rest/sale/getsaledetail/" + id;
+            $http.get(url1).then(function (response1) {
+                $scope.seLected = [];
+                for (var i = 0; i < response1.data.length; i++) {
                     if ($scope.saleadd.typeSale == 1) {
                         $scope.seLected.push(response1.data[i].idProduct);
-                    }else if($scope.saleadd.userType == 1){
+                    } else if ($scope.saleadd.userType == 1) {
                         $scope.seLected.push(response1.data[i].username);
-                    }else if($scope.saleadd.typeSale == 4){
+                    } else if ($scope.saleadd.typeSale == 4) {
                         $scope.seLected.push(response1.data[i].idAccessory);
                     }
                 }
                 $scope.iNit();
             })
-        }).catch(error=>{
+        }).catch(error => {
             console.log(error);
         });
     }
     // update Sale start
-    $scope.updateSale=function (){
+    $scope.updateSale = function () {
         let item = angular.copy($scope.saleadd);
         let urlsale = `/admin/rest/sale/update`;
         let listDetail = angular.copy($scope.seLected);
-        if($scope.saleadd.typeSale==0||$scope.saleadd.typeSale==2){
-            $http.post(urlsale, item,token).then(resp => {
+        if ($scope.saleadd.typeSale == 0 || $scope.saleadd.typeSale == 2) {
+            $http.post(urlsale, item, token).then(resp => {
+                document.getElementById("clossmodal").click();
                 swal.fire({
                     icon: 'success',
                     showConfirmButton: false,
-                    title: 'Thêm Mới Thành Công',
+                    title: 'Cập nhập Thành Công',
                     timer: 1000
                 });
                 $scope.clear();
@@ -398,26 +419,27 @@ app.controller("sale_ctrl", function ($scope, $http) {
                 swal.fire({
                     icon: 'error',
                     showConfirmButton: false,
-                    title: 'Thêm Mới Thành Công',
+                    title: error.data.message,
                     timer: 5000
                 });
             })
-        }else{
-            $http.post(urlsale, item,token).then(resp => {
-                let urlsaledetail = `/admin/rest/sale/updatedetail/`+$scope.saleadd.typeSale+`/`+$scope.saleadd.idSale;
-                $http.post(urlsaledetail,listDetail,token).then(resp => {
+        } else {
+            $http.post(urlsale, item, token).then(resp => {
+                let urlsaledetail = `/admin/rest/sale/updatedetail/` + $scope.saleadd.typeSale + `/` + $scope.saleadd.idSale;
+                $http.post(urlsaledetail, listDetail, token).then(resp => {
+                    document.getElementById("clossmodal").click();
                     $scope.clear();
                     swal.fire({
                         icon: 'success',
                         showConfirmButton: false,
-                        title: 'Thêm Mới Thành Công',
+                        title: 'Cập nhập Thành Công',
                         timer: 1000
                     })
                 }).catch(error => {
                     swal.fire({
                         icon: 'error',
                         showConfirmButton: false,
-                        title: 'Thêm Mới Thất Bại',
+                        title: error.data.message,
                         timer: 5000
                     });
                 })
@@ -425,13 +447,55 @@ app.controller("sale_ctrl", function ($scope, $http) {
                 swal.fire({
                     icon: 'error',
                     showConfirmButton: false,
-                    title: 'Thêm Mới Thành Công',
+                    title: error.data.message,
                     timer: 5000
                 });
             })
         }
     }
+    $scope.showDataTableSale(0);
     // update Sale end
+
+    $scope.deleteSale = function () {
+        Swal.fire({
+            title: 'Bạn chắc chắn muốn dừng Sale này chứ?',
+            text: "Hệ thống sẽ tự cập nhật số lượng về 0",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Dừng ngay',
+            cancelButtonText: 'Xem lại',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                let item = angular.copy($scope.saleadd);
+                let urlsale = `/admin/rest/sale/delete`;
+                $http.post(urlsale, item, token).then(resp => {
+                    document.getElementById("clossmodal").click();
+                    swal.fire({
+                        icon: 'success',
+                        showConfirmButton: false,
+                        title: 'Dừng Sale Thành Công',
+                        timer: 1000
+                    });
+                    $scope.clear();
+                }).catch(error => {
+                    swal.fire({
+                        icon: 'error',
+                        showConfirmButton: false,
+                        title: error.data.message,
+                        timer: 5000
+                    });
+                })
+            }
+        })
+
+    }
+    $scope.coppySale = function () {
+        $scope.saleadd.idSale=null;
+        $scope.saleadd.voucher="";
+        $scope.saleadd.name="";
+    }
 
 })
 

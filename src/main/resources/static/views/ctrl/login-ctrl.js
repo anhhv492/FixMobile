@@ -8,7 +8,7 @@ app.controller('login-ctrl',function($rootScope,$scope,$http,$window){
             toast: true,
             position: 'top-end',
             showConfirmButton: false,
-            timer: 3500,
+            timer: 1500,
             timerProgressBar: true,
             didOpen: (toast) => {
                 toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -41,6 +41,7 @@ app.controller('login-ctrl',function($rootScope,$scope,$http,$window){
 
     localStorage.removeItem('jwtToken');
     $scope.onLogin = function () {
+        console.log(pathAPI)
         $http.post(pathAPI, $scope.form).then(respon =>{
             $scope.message('Đăng nhập thành công');
             localStorage.setItem('jwtToken', respon.data.token);

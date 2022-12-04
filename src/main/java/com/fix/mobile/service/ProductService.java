@@ -1,7 +1,6 @@
 package com.fix.mobile.service;
 
 
-import com.fix.mobile.entity.Accessory;
 import com.fix.mobile.entity.Category;
 import com.fix.mobile.entity.Product;
 import org.springframework.data.domain.Page;
