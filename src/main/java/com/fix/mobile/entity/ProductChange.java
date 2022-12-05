@@ -26,7 +26,7 @@ public class ProductChange {
     private Integer idChange;
 
     @Column(name = "imei")
-    private Integer imei;
+    private String imei;
 
     @Column(name = "date_change")
     private Date dateChange;
