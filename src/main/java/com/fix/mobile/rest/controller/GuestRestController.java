@@ -108,13 +108,16 @@ public class GuestRestController {
     }
     @PostMapping("/order/add")
     public Order order(@RequestBody Order order){
+        System.out.println("b1: "+account.getUsername());
         account = accountService.findByUsername(UserName.getUserName());
+        System.out.println("b2: "+account.getUsername());
         if(order.getAddress()==null||account==null){
             return null;
         }
         this.order = order;
         order.setCreateDate(new Date());
         order.setAccount(account);
+        System.out.println("b3: "+account.getUsername());
         orderService.save(order);
         logger.info("-- Order: "+order.getIdOrder());
         return order;
@@ -170,5 +173,11 @@ public class GuestRestController {
         Optional<Product> product = productService.findById(productCode);
 
         return Optional.of(product.get());
+    }
+    @GetMapping(value ="/ss")
+    public String ss() {
+
+        account = accountService.findByUsername(UserName.getUserName());
+        return account.getUsername();
     }
 }
