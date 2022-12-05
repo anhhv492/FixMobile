@@ -45,14 +45,25 @@ public class SaleServiceImpl implements SaleService {
     @Override
     public Sale update(Sale sale) {
         vaildate_NULL_DEFAULT(sale);
-        sale.setUserUpdate(1);
-        sale.setUpdateTime(new Date());
-        return dao.save(sale);
+        Sale saleUpdate = dao.findByIdSale(sale.getIdSale());
+        saleUpdate.setPercentSale(sale.getPercentSale());
+        saleUpdate.setMoneySale(sale.getMoneySale());
+        saleUpdate.setQuantity(sale.getQuantity());
+        saleUpdate.setCreateStart(sale.getCreateStart());
+        saleUpdate.setDetailSale(sale.getDetailSale());
+        if(saleUpdate.getCreateStart().after(new Date())){
+            saleUpdate.setCreateEnd(sale.getCreateEnd());
+        }
+        if(saleUpdate.getCreateEnd().after(new Date())){
+            saleUpdate.setCreateEnd(sale.getCreateEnd());
+        }
+        saleUpdate = setNULL(saleUpdate);
+        return dao.save(saleUpdate);
     }
 
     @Override
-    public Sale delete(Integer id) {
-        return null;
+    public void delete(Integer id) {
+        dao.deleteById(id);
     }
 
     @Override
@@ -65,9 +76,18 @@ public class SaleServiceImpl implements SaleService {
         return dao.findByIdSale(id);
     }
 
+    @Override
+    public Integer getLimit1Sale() {
+        return dao.getLimit1Sale();
+    }
+
     private void validate_Coincide(Sale sale) { //check trùng
-        if(dao.findByVoucher(sale.getVoucher())!=null){
-            throw new StaleStateException("voucher đã có mời nhập voucher khác");
+        if(sale.getIdSale() == null){
+            if(sale.getVoucher() != null){
+                if(dao.findByVoucher(sale.getVoucher()).isPresent()){
+                    throw new StaleStateException("voucher đã có mời nhập voucher khác");
+                }
+            }
         }
     }
 
@@ -89,7 +109,7 @@ public class SaleServiceImpl implements SaleService {
                 }
             }
         }
-        if (sale.getCreateStart() == sale.getCreateEnd()){
+        if (sale.getCreateStart().equals(sale.getCreateEnd())){
             throw new StaleStateException("Thời gian kết thúc không thể bằng Thời gian bắt đầu");
         }
         if (sale.getCreateStart().after(sale.getCreateEnd())){
@@ -145,6 +165,7 @@ public class SaleServiceImpl implements SaleService {
             }
         }
         validate_Date(sale);
+        validate_Coincide(sale);
     }
 
     @Override
@@ -210,7 +231,7 @@ public class SaleServiceImpl implements SaleService {
         if(sale.getTypeSale()!=2){
             sale.setValueMin(null);
         }
-        if(sale.getTypeSale()!=4){
+        if(sale.getTypeSale()!=3){
             sale.setUserType(null);
         }
         return sale;

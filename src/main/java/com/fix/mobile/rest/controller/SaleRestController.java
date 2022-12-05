@@ -31,7 +31,6 @@ public class SaleRestController {
     }
     @RequestMapping("/update")
     public Sale updateSale(@RequestBody Sale sale){
-        saleDetailSV.deleteSaleDetai(sale.getIdSale());
         return saleSV.update(sale);
     }
     @RequestMapping("/delete")
@@ -39,7 +38,7 @@ public class SaleRestController {
         sale.setQuantity(0);
         return saleSV.update(sale);
     }
-private void checkList(List list,Integer idx){
+private void checkList(List list,Integer idx,Integer id){
     if(list.size()==0){
         String mess="";
         if(idx==1){
@@ -49,13 +48,16 @@ private void checkList(List list,Integer idx){
         }else if(idx==4){
             mess="phụ kiện";
         }
+        if(id==null){
+            saleSV.delete(saleSV.getLimit1Sale());
+        }
         throw new StaleStateException("Bạn phải chọn dữ liệu "+mess+" ở bảng");
     }
 }
     @RequestMapping("/adddetail/{idx}")
     public void addDetailSale1(@PathVariable(name="idx") Integer idx,
                                @RequestBody ArrayList<String> listID){
-        checkList(listID,idx);
+        checkList(listID,idx,null);
         for (int i=0;i<listID.size();i++){
             saleDetailSV.createSaleDetail(listID.get(i),idx);
         }
@@ -64,8 +66,9 @@ private void checkList(List list,Integer idx){
     @RequestMapping("/updatedetail/{idx}/{id}")
     public void updatedetail(@PathVariable(name="idx") Integer idx,
                              @PathVariable(name="id") Integer id,
-                               @RequestBody ArrayList<String> listID){
-        checkList(listID,idx);
+                             @RequestBody ArrayList<String> listID){
+        checkList(listID,idx,id);
+        saleDetailSV.deleteSaleDetai(id);
         for (int i=0;i<listID.size();i++){
             saleDetailSV.updateSaleDetail(listID.get(i),idx,id);
         }
