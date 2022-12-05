@@ -65,7 +65,7 @@ private void checkList(List list,Integer idx){
     public void updatedetail(@PathVariable(name="idx") Integer idx,
                              @PathVariable(name="id") Integer id,
                                @RequestBody ArrayList<String> listID){
-        checkList(listID,idx);
+                                checkList(listID,idx);
         for (int i=0;i<listID.size();i++){
             saleDetailSV.updateSaleDetail(listID.get(i),idx,id);
         }

@@ -133,15 +133,15 @@ CREATE TABLE sale_detail (
 
 CREATE TABLE orders (
 	id_order int NOT NULL auto_increment primary key, 
-	create_date date not null,
-	total decimal(10,0) not null,
+	create_date date  null,
+	total decimal(10,0)  null,
 	note nvarchar(255) NULL,
-	address nvarchar(255) not null,
-	status int DEFAULT(0) not null,
-	type binary not null,
-	username nvarchar(50) NOT NULL,
+	address nvarchar(255)  null,
+	status int DEFAULT(0)  null,
+	type binary  null,
+	username nvarchar(50)  NULL,
     money_sale decimal(10,0) null,
-	person_take nvarchar(50) NOT NULL,
+	person_take nvarchar(50)  NULL,
 	phone_take nvarchar(15) NOT NULL,
     id_sale int null,
 	foreign key(username) references accounts(username),
@@ -150,32 +150,15 @@ CREATE TABLE orders (
 
 CREATE TABLE order_detail (
 	id_detail int NOT NULL auto_increment primary key, 
-	quantity int not null,
-	price decimal(10,0) not null,
+	quantity int  null,
+	price decimal(10,0) null,
 	status binary DEFAULT(0),
-	id_order int NOT NULL, 
+	id_order int  NULL, 
 	id_product int NULL,
 	id_accessory int NULL,
 	foreign key(id_order) references orders(id_order),
 	foreign key(id_product) references products(id_product),
 	foreign key(id_accessory) references accessories(id_accessory)
-);
-CREATE TABLE insurance (
-	id_insurance int NOT NULL auto_increment primary key, 
-	name int not null,
-	date_start date NOT NULL,
-	date_end date NOT NULL,
-    quantity int not null,
-    price decimal(10,0) NOT NULL
-);
-CREATE TABLE insurance_detail(
-	id_detail int NOT NULL auto_increment primary key,
-    id_insurance int NOT NULL, 
-    id_product int NOT NULL,
-	username nvarchar(50) not null,
-	foreign key(id_insurance) references insurance(id_insurance),
-	foreign key(id_product) references products(id_product),
-	foreign key(username) references accounts(username)
 );
 
 CREATE TABLE product_return (
@@ -191,12 +174,12 @@ CREATE TABLE product_return (
 
 CREATE TABLE product_change (
 	id_change int NOT NULL auto_increment primary key,
-	imei int NOT NULL, 
-	data_change int NOT NULL,
-	note nvarchar(255) NOT NULL,
-	price decimal(10,0) NOT NULL,
-	status binary default(0) NOT NULL,
-	username nvarchar(50) not null,
+	imei int  NULL, 
+	data_change int  NULL,
+	note nvarchar(255)  NULL,
+	email varchar(255) null,
+	status int default(0)  NULL,
+	username nvarchar(50)  null,
 	foreign key(username) references accounts(username)
 );
 
@@ -204,10 +187,12 @@ CREATE TABLE change_detail (
 	id_change_detail int NOT NULL auto_increment primary key,
 	id_product int NOT NULL,
 	id_order_detail int NOT NULL, 
-	id_change int NOT NULL,
+	id_change int  NULL,
 	foreign key(id_product) references products(id_product),
 	foreign key(id_order_detail) references order_detail(id_detail),
-	foreign key(id_change) references product_change(id_change)
+	foreign key(id_change) references product_change(id_change),
+	foreign key(id_change) references accessories(id_accessory)
+
 );
 
 CREATE TABLE imayproduct (
@@ -219,6 +204,7 @@ CREATE TABLE imayproduct (
 	foreign key(id_product) references products(id_product),
 	foreign key(id_detail) references order_detail(id_detail)
 );
+
 insert into fix_mobile.roles(name) values ('ADMIN');
 insert into fix_mobile.roles(name) values ('STAFF');
 insert into fix_mobile.roles(name) values ('USER');
