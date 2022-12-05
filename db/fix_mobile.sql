@@ -175,7 +175,7 @@ CREATE TABLE product_return (
 CREATE TABLE product_change (
 	id_change int NOT NULL auto_increment primary key,
 	imei int  NULL, 
-	data_change date NULL,
+	date_change date  NULL,
 	note nvarchar(255)  NULL,
 	email varchar(255) null,
 	status int default(0)  NULL,
