@@ -69,6 +69,7 @@ private void checkList(List list,Integer idx,Integer id){
                              @RequestBody ArrayList<String> listID){
         checkList(listID,idx,id);
         saleDetailSV.deleteSaleDetai(id);
+        
         for (int i=0;i<listID.size();i++){
             saleDetailSV.updateSaleDetail(listID.get(i),idx,id);
         }

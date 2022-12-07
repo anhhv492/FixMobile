@@ -16,31 +16,69 @@
             </div>
             <h3 class="text-center mb-4">Bạn chưa có tài khoản?</h3>
                <!-- action="/register/save" method="POST" -->
-            <form class="register-form" ng-controller="register-ctrl"  modelAttribute="account">
+            <form class="register-form" name="myForm" ng-controller="register-ctrl"  modelAttribute="account">
               <div class="form-group">
                 <label for="username"> Tên tài khoản</label>
                 <input id="username" type="text" class="form-control rounded-left" ng-model="form.username" path="username"
-                  name="username" placeholder="Tên tài khoản" required>
+                  name="username" placeholder="Tên tài khoản" pattern="^[a-zA-Z0-9_-]{3,100}$"
+                       required  maxlength="250">
+                  <span ng-show="myForm.$submitted || myForm.username.$dirty">
+                                        <span class="error" ng-show="myForm.username.$error.required"> <i
+                                                class="fa fa-exclamation-circle"></i>Tên tài khoản không được trống</span>
+                                        <span class="error" ng-show="myForm.username.$error.pattern"> <i
+                                                class="fa fa-exclamation-circle"></i>Tên tài khoản gồm 3-100 ký tự theo định dạng</span>
+                  </span>
               </div>
               <div class="form-group">
                 <label for="fullName"> Họ tên</label>
                 <input id="fullName" type="text" class="form-control rounded-left" ng-model="form.fullName" path="fullName"
-                  name="fullName" placeholder="Họ tên" required>
+                  name="fullName" placeholder="Họ tên" ng-minlength="6" ng-maxlength="250"
+                       required  maxlength="250">
+                  <span ng-show="myForm.$submitted || myForm.fullName.$dirty">
+                                        <span class="error" ng-show="myForm.fullName.$error.required"> <i
+                                                class="fa fa-exclamation-circle"></i>Họ và Tên không được trống</span>
+                                        <span class="error"
+                                              ng-show="((myForm.fullName.$error.minlength || myForm.fullName.$error.maxlength) || myForm.fullName.$error.$dirty)">
+                                                <i class="fa fa-exclamation-circle"></i>Họ và tên từ 6-250 ký tự</span>
+                                    </span>
               </div>
               <div class="form-group ">
                 <label for="password"> Mật khẩu</label>
                 <input id="password" type="password" class="form-control rounded-left" ng-model="form.password" path="password"
-                  name="password" placeholder="Mật khẩu" required>
+                  name="password" placeholder="Mật khẩu" required  ng-minlength="3" ng-maxlength="250" maxlength="250">
+                  <span ng-show="myForm.$submitted || myForm.password.$dirty">
+                                        <span class="error" ng-show="myForm.password.$error.required"> <i
+                                                class="fa fa-exclamation-circle"></i>Mật khẩu không được trống</span>
+                                        <span class="error"
+                                              ng-show="((myForm.password.$error.minlength || myForm.password.$error.maxlength) || myForm.fullName.$error.$dirty)">
+                                                <i class="fa fa-exclamation-circle"></i>Mật khẩu tối thiểu 3-250 ký tự</span>
+                  </span>
               </div>
               <div class="form-group">
                 <label for="email"> Email</label>
                 <input id="email" type="text" class="form-control rounded-left" ng-model="form.email" path="email" name="email"
-                  placeholder="abc@gmail.com" required>
+                  placeholder="abc@gmail.com" pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"
+                        maxlength="250">
+                  <span ng-show="myForm.$submitted || myForm.email.$dirty">
+                                        <span class="error" ng-show="myForm.email.$error.required"> <i
+                                                class="fa fa-exclamation-circle"></i>Email không được trống</span>
+                                                <span class="error" ng-show="myForm.email.$error.pattern"> <i
+                                                        class="fa fa-exclamation-circle"></i>Email sai đinh dạng</span>
+                                    </span>
               </div>
               <div class="form-group">
                 <label for="phone"> Số điện thoại</label>
                 <input id="phone" type="text" class="form-control rounded-left" ng-model="form.phone" path="phone" name="phone"
-                  placeholder="Số điện thoại" required>
+                  placeholder="Số điện thoại" pattern="(84|0[3|5|7|8|9])+([0-9]{8})\b"
+                       ng-minlength="0" ng-maxlength="10"
+                       required maxlength="10">
+                  <span ng-show="myForm.$submitted || myForm.phone.$dirty">
+                                        <span class="error" ng-show="myForm.phone.$error.required"> <i
+                                                class="fa fa-exclamation-circle"></i>Số điện thoại không được
+                                            trống</span>
+                                            <span class="error" ng-show="myForm.phone.$error.pattern"> <i
+                                                    class="fa fa-exclamation-circle"></i>Số điện thoại sai đinh dạng</span>
+                                    </span>
               </div>
               <div class="form-group" hidden>
                 
@@ -123,7 +161,7 @@
              
               <div class="form-group">
                 <button type="submit" class="btn btn-primary rounded submit p-3
-                 px-5 " ng-click="create()">Đăng ký</button>
+                 px-5 " ng-disabled="myForm.$invalid"  ng-click="create()">Đăng ký</button>
               </div>
               <div class="row mb-5"></div>
             </form>
@@ -133,3 +171,25 @@
     </div>
   </section>
 </body>
+<style>
+    input.ng-invalid.ng-touched {
+        border: 2px solid red;
+    }
+
+    textarea.ng-invalid.ng-touched {
+        border: 2px solid red;
+    }
+
+    select.ng-invalid.ng-touched {
+        border: 2px solid red;
+    }
+
+    button:hover {
+        box-shadow: 0 0 5px rgb(119, 119, 145);
+    }
+
+    .error {
+        padding-left: 10px;
+        color: red;
+    }
+</style>

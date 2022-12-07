@@ -171,4 +171,10 @@ public class GuestRestController {
 
         return Optional.of(product.get());
     }
+    @GetMapping(value ="/ss")
+    public String ss() {
+
+        account = accountService.findByUsername(UserName.getUserName());
+        return account.getUsername();
+    }
 }

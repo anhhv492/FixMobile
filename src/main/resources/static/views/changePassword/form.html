@@ -14,7 +14,7 @@
                         <div class="form-group d-flex col-lg-12">
                             <input type="{{inputType}}" class="form-control rounded-left" path="newPassword"
                                    name="newPassword" placeholder="Mật khẩu mới" ng-model="form.password"
-                                   required ng-minlength="6" ng-maxlength="250">
+                                   required maxlength="250">
                         </div>
                         <span ng-show="form1.$submitted || form1.newPassword.$dirty" style="color: red">
                                         <span class="error" ng-show="form1.newPassword.$error.required"> <i
@@ -27,7 +27,7 @@
                         <div class="form-group d-flex mt-2">
                             <input type="{{inputType}}" class="form-control rounded-left" path="confirmPassword"
                                    name="confirmPassword" placeholder="Xác nhận mật khẩu" ng-model="form.password_verify"
-                                   required ng-minlength="6" ng-maxlength="250">
+                                   required maxlength="250">
                         </div>
                         <span ng-show="form1.$submitted || form1.confirmPassword.$dirty" style="color: red">
                                         <span class="error" ng-show="form1.confirmPassword.$error.required"> <i
