@@ -58,7 +58,7 @@
                 <label for="email"> Email</label>
                 <input id="email" type="text" class="form-control rounded-left" ng-model="form.email" path="email" name="email"
                   placeholder="abc@gmail.com" pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"
-                        maxlength="250">
+                        maxlength="250" required>
                   <span ng-show="myForm.$submitted || myForm.email.$dirty">
                                         <span class="error" ng-show="myForm.email.$error.required"> <i
                                                 class="fa fa-exclamation-circle"></i>Email không được trống</span>
