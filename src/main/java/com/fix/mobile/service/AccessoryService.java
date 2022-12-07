@@ -1,5 +1,6 @@
 package com.fix.mobile.service;
 
+import com.fix.mobile.dto.AccessoryDTO;
 import com.fix.mobile.entity.Accessory;
 import com.fix.mobile.entity.Category;
 import com.fix.mobile.entity.Sale;
@@ -13,4 +14,7 @@ public interface AccessoryService extends GenericService<Accessory, Integer> {
 
     Page<Accessory> getByPage(int pageNumber, int maxRecord, String share);
 
+    Accessory save(AccessoryDTO accessoryDTO);
+
+    List<Accessory> getTop4();
 }

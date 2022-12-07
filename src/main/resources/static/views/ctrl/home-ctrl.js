@@ -264,7 +264,8 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
              console.log("error",err);
          })
      }
-    $scope.getAcountActive();
-
+     if ($rootScope.account != null){
+         $scope.getAcountActive();
+     }
 })
 

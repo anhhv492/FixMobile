@@ -203,4 +203,14 @@ public class GuestRestController {
                               @RequestParam("color") Integer color){
         return productService.findByNameAndCapacityAndColor(name, capacity, color);
     }
+
+    @GetMapping("/getTop4")
+    public List<Accessory> getTop4(){
+        return accessoryService.getTop4();
+    }
+
+    @GetMapping("/getOneAccessory")
+    public Accessory getOneAccessory(@RequestParam("id") Integer id){
+        return accessoryService.findById(id).orElse(null);
+    }
 }

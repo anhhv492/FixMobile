@@ -46,5 +46,5 @@ public interface AccountService {
 
     AccountResponDTO updateImage(AccountRequestDTO accountRequestDTO);
 
-    void updatePassword(UpdatePasswordDTO updatePasswordDTO);
+    Boolean updatePassword(UpdatePasswordDTO updatePasswordDTO);
 }

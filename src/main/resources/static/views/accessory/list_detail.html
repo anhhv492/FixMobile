@@ -5,7 +5,7 @@
     <div class="alert alert-warning container" ng-if="detailAccessories.length<=0">Sản phẩm này đã hết hàng!</div>
     <div class="item col-xs-4 col-md-2 " ng-repeat="accessory in detailAccessories" ng-if="detailAccessories.length>0">
         <div class="thumbnail row p-3">
-            <img class="group list-group-image" src="/images/accessories/{{accessory.image}}" height="220px" width="250px" />
+            <img class="group list-group-image" src="{{accessory.image}}" height="220px" width="250px" />
             <div class="caption mt-2">
                 <h5 class="group inner list-group-item-heading">
                     {{accessory.name}}</h5>
@@ -15,7 +15,7 @@
                             {{accessory.price|number}}VNĐ</p>
                     </div>
                     <div class="btn-group">
-                        <a class="btn btn-details" href="#!product" ng-click="">Details {{accessory.idAccessory}}</a>
+                        <a class="btn btn-details" href="#!accessoryDetail" ng-click="getOneAccessory(accessory.idAccessory)">Details</a>
                         <a class="btn btn-success" ng-click="addCart(accessory)">Add to cart</a>
                     </div>
                 </div>

@@ -136,7 +136,8 @@ public class AccountRestController {
     }
 
     @PostMapping("/updatePassword")
-    public void updatePassword (@RequestBody UpdatePasswordDTO updatePasswordDTO){
-        accountService.updatePassword(updatePasswordDTO);
+    public Boolean updatePassword (@RequestBody UpdatePasswordDTO updatePasswordDTO){
+
+         return accountService.updatePassword(updatePasswordDTO);
     }
 }

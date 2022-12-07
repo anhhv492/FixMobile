@@ -15,6 +15,7 @@ app.controller('view_product_ctrl', function ($scope,$http){
     $scope.colorId = 1;
     $scope.capacityId = 1;
     $scope.listProduct =[];
+    $scope.productAddCart = {};
 
     const getAllRam = "http://localhost:8080/rest/guest/getAllRam";
     const getAllCapacity = "http://localhost:8080/rest/guest/getAllCapacity";
@@ -101,11 +102,10 @@ app.controller('view_product_ctrl', function ($scope,$http){
             $scope.displayProduct.name = $scope.oneProduct.name;
             $scope.displayProduct.price = $scope.oneProduct.price;
             $scope.displayProduct.describe = $scope.oneProduct.note;
-            $scope.displayProduct.imageDefault = $scope.oneProduct.images[0].name;
-            $scope.displayProduct.imageDefault1 = $scope.oneProduct.images[1].name;
-            $scope.displayProduct.imageDefault2 = $scope.oneProduct.images[2].name;
-            $scope.displayProduct.imageDefault3 = $scope.oneProduct.images[3].name;
-
+            for (let i = 0; i < 4; i++) {
+                $scope.displayProduct.imageDefault = $scope.oneProduct.images[i].name;
+            }
+            $scope.productAddCart = response.data;
             console.log($scope.oneProduct)
         }).catch(error=>{
             console.log("Sản phẩm chưa có nhiều ảnh!!!");
@@ -113,7 +113,7 @@ app.controller('view_product_ctrl', function ($scope,$http){
     }
 
     if (productId == null){
-        $scope.displayProduct();
+
     }else {
         $scope.getOneProduct(productId);
     }
@@ -148,6 +148,11 @@ app.controller('view_product_ctrl', function ($scope,$http){
             $scope.displayProduct.price = $scope.listProduct[0].price;
             console.log($scope.displayProduct.price);
             console.log($scope.listProduct);
+            if (respon.data != []){
+                $scope.productAddCart = respon.data[0];
+            }else {
+                $scope.getOneProduct(productId);
+            }
         }).catch(err => {
             console.log("Hết Hàng")
         })

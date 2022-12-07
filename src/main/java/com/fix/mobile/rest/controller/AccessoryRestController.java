@@ -1,5 +1,6 @@
 package com.fix.mobile.rest.controller;
 
+import com.fix.mobile.dto.AccessoryDTO;
 import com.fix.mobile.entity.Accessory;
 import com.fix.mobile.entity.Category;
 import com.fix.mobile.helper.ExcelHelper;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -69,11 +71,11 @@ public class AccessoryRestController {
 		return accessories;
 	}
 
-	@PostMapping
-	public Accessory save(@RequestBody Accessory accessory) throws Exception{
-		LOGGER.info("save: "+accessory);
+	@PostMapping(value = "/create", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+	public Accessory save(@ModelAttribute AccessoryDTO accessoryDTO) throws Exception{
+		LOGGER.info("save: "+accessoryDTO);
 //		googleDriveService.upLoadFile(accessory.getImage(), accessory.getImage(), "image/png");
-		return accessoryService.save(accessory);
+		return accessoryService.save(accessoryDTO);
 	}
 	//change status accessory
 	@PutMapping("/change/{id}")

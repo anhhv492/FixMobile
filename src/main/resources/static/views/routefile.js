@@ -13,7 +13,8 @@ app.config(function($routeProvider){
         .when("/accessory/detail",{
             templateUrl:"accessory/list_detail.html",
             controller: "home-ctrl",
-            controller: "view_product_ctrl"
+            controller: "view_product_ctrl",
+            controller: "view_accessory_ctrl"
         })
         .when("/product/detail",{
             templateUrl:"product/list_detail.html",
@@ -32,6 +33,11 @@ app.config(function($routeProvider){
             templateUrl:"product/product.html",
             controller: "home-ctrl",
             controller: "view_product_ctrl"
+
+        })
+        .when("/accessoryDetail",{
+            templateUrl:"accessory/view_detail.html",
+            controller: "view_accessory_ctrl"
 
         })
         .when("/login",{
@@ -58,11 +64,7 @@ app.config(function($routeProvider){
             templateUrl:"/views/changePassword/form.html",
             controller: "changePassword-ctrl"
         })
-        .when("/productDetail",{
-            templateUrl:"accessory/view_detail.html",
-            controller: "home-ctrl",
 
-        })
 
 
 });

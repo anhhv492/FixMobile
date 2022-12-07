@@ -12,6 +12,19 @@
                     <h3 class="text-center mb-4">Đổi mật khẩu</h3>
                     <form method="post" class="changePassword-form row" name="form1">
                         <div class="form-group d-flex col-lg-12">
+                            <input type="{{inputType}}" class="form-control rounded-left" path="oldPassword"
+                                   name="oldPassword" placeholder="Mật khẩu cũ" ng-model="form.oldPassword"
+                                   required ng-minlength="3" ng-maxlength="250">
+                        </div>
+                        <span ng-show="form1.$submitted || form1.oldPassword.$dirty" style="color: red">
+                                        <span class="error" ng-show="form1.oldPassword.$error.required"> <i
+                                                class="fa fa-exclamation-circle"></i>Vui lòng không để trống</span>
+                                        <span class="error"
+                                              ng-show="((form1.oldPassword.$error.minlength
+                                              || form1.oldPassword.$error.maxlength) || form1.oldPassword.$error.$dirty)">
+                                                <i class="fa fa-exclamation-circle"></i>Mật khẩu phải từ 3-250 ký tự</span>
+                                    </span>
+                        <div class="form-group d-flex col-lg-12">
                             <input type="{{inputType}}" class="form-control rounded-left" path="newPassword"
                                    name="newPassword" placeholder="Mật khẩu mới" ng-model="form.password"
                                    required ng-minlength="6" ng-maxlength="250">
