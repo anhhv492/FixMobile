@@ -12,12 +12,13 @@ public interface SaleService {
 
     public Sale update(Sale sale);
 
-    public Sale delete(Integer id);
+    public void delete(Integer id);
 
     public List<Sale> getall(Integer status);
 
     public Sale findByid(Integer id);
 
+    public Integer getLimit1Sale();
 
     Page<Sale> getByPage(int pageNumber, int maxRecord, Integer Status, String share,String type);
 }

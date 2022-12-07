@@ -1,32 +1,35 @@
-<table class="table-bordered table-hover container">
+<h3 class="text-center text-primary text-opacity-50">Danh sách hàng cần trả</h3>
+
+<div class="mt-2 col-2 offset-10">
+    <button ng-click="edit(product)" class="btn btn-secondary">Xác nhận</button>
+    <button ng-click="edit(product)" class="btn btn-secondary">Hủy bỏ</button>
+</div>
+<table class="table table-bordered table-hover container mt-2">
     <thead>
     <tr>
-        <th>STT</th>
-        <th>Tài khoản</th>
-        <th>Giá</th>
+        <th>Chọn</th>
+        <th>Khách hàng</th>
+        <th>Ngày đổi trả</th>
         <th>Tình trạng máy</th>
+        <th>Ảnh sản phẩm</th>
         <th>Imay máy</th>
-        <th>Tổng giá (VNĐ)</th>
+        <th>Sản phẩm</th>
         <th>Trạng thái</th>
-        <th>Thao tác</th>
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="order in orders">
-        <td>{{$index+1}}</td>
-        <td>{{order.account.username}}</td>
-        <td>{{order.account.fullName}}</td>
-        <td>{{order.address}}</td>
-        <td>{{order.createDate|date:'dd/MM/yyyy'}}</td>
-        <td>{{order.total|number}}</td>
-        <td>
-            <button ng-click="edit(product)"><i class="fa fa-pencil-square" aria-hidden="true">Xác nhận</i></button>
-        </td>
-        <td>
-            <a href="#!order-detail" ng-click="getOrder(order.idOrder)" class="btn btn-default">
-                <i class="fa fa-info-circle" aria-hidden="true"></i> Chi tiết
-            </a>
-        </td>
+    <tr ng-repeat="prChange in listProductChange">
+        <td><input type="checkbox" name="" ng-checked="checkSelect(orderDetail.idDetail)"
+                   ng-click="checkSelected(orderDetail.idDetail)"></td>
+        <td>{{prChange.orderDetail.order.account.username}}</td>
+        <td>{{prChange.productChange.dateChange | date:'dd/MM/yyyy h:mm:a'}}</td>
+        <td>{{prChange.productChange.note}}</td>
+        <td><img class="img-responsive" width="80px" height="80px"
+            src="{{prChange.productChange.images.length>0?prChange.productChange.images[0].name:''}}"></td>
+        <td>{{prChange.orderDetail.product.listImay[0].name}}</td>
+        <td>{{prChange.orderDetail.product.name}}</td>
+        <td>{{prChange.status==0?'Hủy yêu cầu':'Chờ xác nhận'}}</td>
+
     </tr>
     </tbody>
 </table>

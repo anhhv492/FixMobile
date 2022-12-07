@@ -1,10 +1,8 @@
 package com.fix.mobile.repository;
 
 
-import com.fix.mobile.entity.ImayProduct;
 import com.fix.mobile.entity.Category;
 import com.fix.mobile.entity.Product;
-import org.hibernate.query.NativeQuery;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
@@ -28,6 +26,7 @@ public interface ProductRepository extends PagingAndSortingRepository<Product, I
 
     @Query(value = "select  * from  products p where p.price <= 200000 order by p.id_product desc limit 8",nativeQuery = true)
     List<Product> findByProductLitmitPrice();
+
 
 
 

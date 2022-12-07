@@ -10,6 +10,7 @@ import javax.servlet.ServletContext;
 
 import com.fix.mobile.dto.Account.AccountRequestDTO;
 import com.fix.mobile.dto.Account.AccountResponDTO;
+import com.fix.mobile.dto.Account.UpdatePasswordDTO;
 import com.fix.mobile.dto.AccountDTO;
 import com.fix.mobile.dto.AddressDTO;
 import com.fix.mobile.utils.UserName;
@@ -132,5 +133,10 @@ public class AccountRestController {
     @PostMapping(value = "/updateImage", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
     public AccountResponDTO updateImage(@ModelAttribute AccountRequestDTO accountRequestDTO){
         return accountService.updateImage(accountRequestDTO);
+    }
+
+    @PostMapping("/updatePassword")
+    public void updatePassword (@RequestBody UpdatePasswordDTO updatePasswordDTO){
+        accountService.updatePassword(updatePasswordDTO);
     }
 }
