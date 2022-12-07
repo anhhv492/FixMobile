@@ -48,4 +48,6 @@ public interface SaleRepository extends PagingAndSortingRepository<Sale, Integer
     @Query(value = "select * from sale where now()>create_end",nativeQuery = true)
     List<Sale> findAllByDate();
     Sale findByIdSale(Integer id);
+    @Query(value = "select id_sale from sale order by id_sale  desc limit 1",nativeQuery = true)
+    Integer getLimit1Sale();
 }
