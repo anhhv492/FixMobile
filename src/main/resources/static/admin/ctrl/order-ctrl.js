@@ -10,7 +10,7 @@ app.controller('order-admin-ctrl',function($rootScope,$scope,$http,$window){
         {id : 1, name : "Đã thanh toán"},
         {id : 2, name : "Đang giao hàng"},
         {id : 3, name : "Hoàn tất giao dịch"},
-        {id : 4, name : "Hoàn la đơn"},
+        {id : 4, name : "Hoàn lại đơn"},
     ];
     const jwtToken = localStorage.getItem("jwtToken")
     const token = {

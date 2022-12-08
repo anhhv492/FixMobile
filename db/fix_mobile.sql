@@ -133,7 +133,7 @@ CREATE TABLE sale_detail (
 
 CREATE TABLE orders (
 	id_order int NOT NULL auto_increment primary key, 
-	create_date date  null,
+	create_date datetime null,
 	total decimal(10,0)  null,
 	note nvarchar(255) NULL,
 	address nvarchar(255)  null,

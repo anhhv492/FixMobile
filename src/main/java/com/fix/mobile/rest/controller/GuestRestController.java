@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import java.math.BigDecimal;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -89,6 +91,11 @@ public class GuestRestController {
             return null;
         }
         List<Accessory> accessories = accessoryService.findByCategoryAndStatus(cate);
+        for (int i = 0; i < accessories.size(); i++) {
+            if(accessories.get(i).getQuantity() == 0){
+                accessories.remove(i);
+            }
+        }
         return accessories;
     }
     @GetMapping("/product/cate-product/{id}")
@@ -112,8 +119,9 @@ public class GuestRestController {
         if(order.getAddress()==null||account==null){
             return null;
         }
+        Date date = new Date();
         this.order = order;
-        order.setCreateDate(new Date());
+        order.setCreateDate(date);
         order.setAccount(account);
         orderService.save(order);
         logger.info("-- Order: "+order.getIdOrder());
@@ -160,6 +168,7 @@ public class GuestRestController {
         logger.info("-- OrderDetail success: "+account.getUsername());
         return carts;
     }
+
     @GetMapping("/cart/sale")
     public List<Sale> getSaleByAccount(@PathVariable("id") Integer id){
         List<Sale> sales = saleService.findAllByDate();
@@ -170,11 +179,5 @@ public class GuestRestController {
         Optional<Product> product = productService.findById(productCode);
 
         return Optional.of(product.get());
-    }
-    @GetMapping(value ="/ss")
-    public String ss() {
-
-        account = accountService.findByUsername(UserName.getUserName());
-        return account.getUsername();
     }
 }
