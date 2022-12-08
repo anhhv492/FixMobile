@@ -4,7 +4,7 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window,$timeou
     var urlAccessory = `http://localhost:8080/rest/guest/accessory`;
     var urlProduct= `http://localhost:8080/rest/guest/product`;
     var urlOrderDetail = `http://localhost:8080/rest/guest/order/detail`;
-    var urlAccounts = `http://localhost:8080/rest/admin/accounts`;
+    var urlAccount = `http://localhost:8080/rest/admin/accounts`;
     var urlShippingOder = `http://localhost:8080/rest/user/address/getShipping-order`;
     const jwtToken = localStorage.getItem("jwtToken")
     const token = {
@@ -459,9 +459,9 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window,$timeou
     $scope.checkBuyCOD = function () {
         $scope.checkBuy = false;
     }
-    $scope.getAddressAcountACtive = function () {
+    $scope.getAddressAcountActive = function () {
         if ($rootScope.account != null) {
-            $http.get(urlAccounts + "/getAddress", token).then(function (respon) {
+            $http.get(urlAccount + "/getAddress", token).then(function (respon) {
                 $scope.addressAccount = respon.data;
                 $scope.to_district_id = $scope.addressAccount.districtId;
                 $scope.to_ward_code = $scope.addressAccount.wardId;
@@ -505,12 +505,8 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window,$timeou
             $scope.getShippingOder();
         }, 2000);
     }
-    $scope.loadMoneyShip= function () {
-        $timeout(function () {
-            $scope.getShippingOder();
-        }, 2000);
-    }
-    $scope.getAddressAcountACtive();
+    $scope.getAddressAcountActive();
     $scope.loadMoneyShip();
+    $rootScope.loadQtyCart();
     $rootScope.loadLocalStorage();
 })
