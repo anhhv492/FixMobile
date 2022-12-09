@@ -90,10 +90,10 @@ public class AccessoryRestController {
 		return accessoryRepository.save(accessory);
 	}
 	//update accessory
-	@PutMapping("/{id}")
-	public Accessory update(@PathVariable("id") Integer id, @RequestBody Accessory accessory){
-		LOGGER.info("update: "+accessory);
-		return accessoryService.update(accessory,id);
+	@PostMapping(value = "/update", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+	public Accessory update(@RequestParam("id") Integer id, @ModelAttribute AccessoryDTO accessoryDTO){
+		LOGGER.info("update: "+accessoryDTO);
+		return accessoryService.update(id, accessoryDTO);
 	}
 
 //	@PostMapping("/read-excel")

@@ -16,5 +16,7 @@ public interface AccessoryService extends GenericService<Accessory, Integer> {
 
     Accessory save(AccessoryDTO accessoryDTO);
 
+    Accessory update(Integer id, AccessoryDTO accessoryDTO);
+
     List<Accessory> getTop4();
 }

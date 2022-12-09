@@ -114,7 +114,6 @@ public class AccessoryServiceImpl implements AccessoryService {
           accessory.setNote(accessoryDTO.getNote());
           accessory.setCategory(category);
           accessory.setCreateDate(date);
-          System.out.println(accessory.getCreateDate());
           if (accessoryDTO.getQuantity()<=0){
               accessory.setStatus(false);
           }else{
@@ -138,6 +137,44 @@ public class AccessoryServiceImpl implements AccessoryService {
           System.err.println(e.getMessage());
           return null;
       }
+    }
+
+    @Override
+    public Accessory update(Integer id, AccessoryDTO accessoryDTO) {
+       try {
+           Category category = categoryRepository.findById(accessoryDTO.getCategory()).orElse(null);
+           Accessory optional = findById(id).orElse(null);
+           if (optional != null) {
+               if (optional.getQuantity()<=0){
+                   optional.setStatus(false);
+               }else{
+                   optional.setStatus(true);
+               }
+               optional.setName(accessoryDTO.getName());
+               optional.setQuantity(accessoryDTO.getQuantity());
+               optional.setPrice(accessoryDTO.getPrice());
+               optional.setColor(accessoryDTO.getColor());
+               optional.setNote(accessoryDTO.getNote());
+               optional.setCategory(category);
+               if (accessoryDTO.getImage() == null){
+                   optional.setImage("https://res.cloudinary.com/dcll6yp9s/image/upload/v1669087979/kbasp5qdf76f3j02mebr.png");
+               }else {
+                   Map r = this.cloud.uploader().upload(accessoryDTO.getImage().getBytes(),
+                           ObjectUtils.asMap(
+                                   "cloud_name", "dcll6yp9s",
+                                   "api_key", "916219768485447",
+                                   "api_secret", "zUlI7pdWryWsQ66Lrc7yCZW0Xxg",
+                                   "secure", true,
+                                   "folders", "c202a2cae1893315d8bccb24fd1e34b816"
+                           ));
+                   optional.setImage(r.get("secure_url").toString());
+               }
+               return save(optional);
+           }
+           return null;
+       }catch (Exception e) {
+           return null;
+       }
     }
 
     @Override

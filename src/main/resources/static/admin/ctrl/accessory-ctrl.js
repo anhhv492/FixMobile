@@ -119,7 +119,7 @@ app.controller('rest_accessory', function($scope, $http) {
             }
         });
         $http(req).then(response => {
-
+            console.log(response.data);
             $scope.message("thêm mới thành công");
             $scope.reset();
         }).catch(error => {
@@ -186,50 +186,53 @@ app.controller('rest_accessory', function($scope, $http) {
         document.getElementById('manage-tab').click();
     };
     $scope.onUpdate = function() {
-        if(!$scope.form.image){
-            $scope.form.image='logo-mobile.png';
+        var accessory = angular.copy($scope.form);
+        console.log(accessory.username)
+        var formData = new FormData();
+        angular.forEach($scope.files, function(image) {
+            formData.append('image', image);
+        });
+        formData.append("name",$scope.form.name);
+        formData.append("quantity",$scope.form.quantity);
+        formData.append("color",$scope.form.color);
+        formData.append("price",$scope.form.price);
+        formData.append("note",$scope.form.note);
+        formData.append("category", $scope.form.category);
+        let req = {
+            method: 'POST',
+            url: '/rest/admin/accessory/update?id='+accessory.idAccessory,
+            headers: {
+                'Content-Type': undefined,
+                Authorization: `Bearer `+jwtToken
+                // or  'Content-Type':'application/json'
+            },
+            data: formData
         }
-        $scope.form.category ={
-            idCategory: $scope.form.category
-        };
-        $http.put(pathAPI+'/'+$scope.form.idAccessory, $scope.form,token).then(response=> {
-            const Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
-            })
-
-            Toast.fire({
-                icon: 'success',
-                title:'Cập nhật thành công!' ,
-            })
-
-            document.getElementById('list-tab').click();
-            $scope.refresh();
-        }).catch(error=>{
-            const Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
-            })
-            console.log('error', error);
-            Toast.fire({
-                icon: 'error',
-                title: 'Cập nhật thất bại!',
-            })
-        })
+        console.log("Bắt đầu cập nhật")
+        let timerInterval
+        Swal.fire({
+            title: 'Đang cập nhật vui lòng chờ!',
+            html: 'Vui lòng chờ <b></b> milliseconds.',
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: () => {
+                Swal.showLoading()
+                const b = Swal.getHtmlContainer().querySelector('b')
+                timerInterval = setInterval(() => {
+                    b.textContent = Swal.getTimerLeft()
+                }, 100)
+            },
+            willClose: () => {
+                clearInterval(timerInterval)
+            }
+        });
+        $http(req).then(response => {
+            console.log("ddd " + response);
+            $scope.message("cập nhật thành công");
+            $scope.reset();
+        }).catch(error => {
+            $scope.error('cập nhật thất bại');
+        });
     };
     // submit form
     $scope.doSubmit = function() {
