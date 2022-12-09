@@ -1,43 +1,45 @@
-<table class="table table-bordered table-hover tabl container">
-  <thead>
-  <tr>
-    <th>Sản phẩm</th>
-    <th>Màu</th>
-    <th>Thể loại</th>
-    <th>Giá (VNĐ)</th>
-    <th>Số lượng</th>
-    <th>Hình ảnh</th>
-    <th>Tổng (VNĐ)</th>
-    <th>Chi tiết</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr ng-repeat="orderDetail in orderDetails" ng-if="orderDetail.accessory">
-    <td>{{orderDetail.accessory.name}}</td>
-    <td>{{orderDetail.accessory.color}}</td>
-    <td>{{orderDetail.accessory.category.name}}</td>
-    <td>{{orderDetail.price|number}}</td>
-    <td>{{orderDetail.quantity}}</td>
-    <td><img width="80px" height="80px" src="/images/accessories/{{orderDetail.accessory.image}}"></td>
-    <td>{{orderDetail.quantity*orderDetail.price|number}}</td>
-  </tr>
-  <tr ng-repeat="orderDetail in orderDetails" ng-if="orderDetail.product">
-    <td>{{orderDetail.product.name}}</td>
-    <td>{{orderDetail.product.color.name}}</td>
-    <td>{{orderDetail.product.category.name}}</td>
-    <td>{{orderDetail.price|number}}</td>
-    <td>{{orderDetail.quantity}}</td>
-    <td><img width="80px" height="80px" src="{{orderDetail.product.images[0].name}}"></td>
-    <td>{{orderDetail.quantity*orderDetail.price|number}}</td>
-    <td>
-      <button ng-click="imeiPro(orderDetail.idDetail)" class="btn btn-default"
-              data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-        <i class="fa fa-info-circle" aria-hidden="true"></i> Hiển thị
-      </button>
-    </td>
-  </tr>
-  </tbody>
-</table>
+<div class="table-responsive">
+  <table class="table table-bordered table-hover tabl container">
+    <thead>
+    <tr>
+      <th>Sản phẩm</th>
+      <th>Màu</th>
+      <th>Thể loại</th>
+      <th>Giá (VNĐ)</th>
+      <th>Số lượng</th>
+      <th>Hình ảnh</th>
+      <th>Tổng (VNĐ)</th>
+      <th>Chi tiết</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="orderDetail in orderDetails" ng-if="orderDetail.accessory">
+      <td>{{orderDetail.accessory.name}}</td>
+      <td>{{orderDetail.accessory.color}}</td>
+      <td>{{orderDetail.accessory.category.name}}</td>
+      <td>{{orderDetail.price|number}}</td>
+      <td>{{orderDetail.quantity}}</td>
+      <td><img width="80px" height="80px" src="/images/accessories/{{orderDetail.accessory.image}}"></td>
+      <td>{{orderDetail.quantity*orderDetail.price|number}}</td>
+    </tr>
+    <tr ng-repeat="orderDetail in orderDetails" ng-if="orderDetail.product">
+      <td>{{orderDetail.product.name}}</td>
+      <td>{{orderDetail.product.color.name}}</td>
+      <td>{{orderDetail.product.category.name}}</td>
+      <td>{{orderDetail.price|number}}</td>
+      <td>{{orderDetail.quantity}}</td>
+      <td><img width="80px" height="80px" src="{{orderDetail.product.images[0].name}}"></td>
+      <td>{{orderDetail.quantity*orderDetail.price|number}}</td>
+      <td>
+        <button ng-click="imeiPro(orderDetail.idDetail)" class="btn btn-default"
+                data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+          <i class="fa fa-info-circle" aria-hidden="true"></i> Hiển thị
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
