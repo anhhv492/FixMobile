@@ -1,16 +1,12 @@
 package com.fix.mobile.rest.controller;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.ServletContext;
 
-import com.fix.mobile.dto.Account.AccountRequestDTO;
-import com.fix.mobile.dto.Account.AccountResponDTO;
-import com.fix.mobile.dto.Account.UpdatePasswordDTO;
+import com.fix.mobile.dto.account.AccountRequestDTO;
+import com.fix.mobile.dto.account.AccountResponDTO;
+import com.fix.mobile.dto.account.UpdatePasswordDTO;
 import com.fix.mobile.dto.AccountDTO;
 import com.fix.mobile.dto.AddressDTO;
 import com.fix.mobile.utils.UserName;
@@ -18,24 +14,14 @@ import org.modelmapper.ModelMapper;
 import com.fix.mobile.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 
 import com.fix.mobile.entity.Account;
-import com.fix.mobile.help.HashUtil;
-import com.fix.mobile.repository.AccountRepository;
-import com.fix.mobile.repository.CategoryRepository;
 import com.fix.mobile.service.AccountService;
 import com.fix.mobile.service.RoleService;
-
-
-import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")

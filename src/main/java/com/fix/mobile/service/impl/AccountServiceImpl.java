@@ -3,9 +3,9 @@ package com.fix.mobile.service.impl;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
-import com.fix.mobile.dto.Account.AccountRequestDTO;
-import com.fix.mobile.dto.Account.AccountResponDTO;
-import com.fix.mobile.dto.Account.UpdatePasswordDTO;
+import com.fix.mobile.dto.account.AccountRequestDTO;
+import com.fix.mobile.dto.account.AccountResponDTO;
+import com.fix.mobile.dto.account.UpdatePasswordDTO;
 import com.fix.mobile.dto.AccountDTO;
 import com.fix.mobile.dto.AddressDTO;
 import com.fix.mobile.entity.Address;
@@ -22,7 +22,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;

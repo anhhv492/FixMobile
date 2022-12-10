@@ -1,4 +1,4 @@
-package com.fix.mobile.dto.Account;
+package com.fix.mobile.dto.account;
 
 import lombok.Data;
 

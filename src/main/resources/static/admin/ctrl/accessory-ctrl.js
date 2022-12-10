@@ -105,7 +105,7 @@ app.controller('rest_accessory', function($scope, $http) {
         Swal.fire({
             title: 'Đang thêm  ảnh vui lòng chờ!',
             html: 'Vui lòng chờ <b></b> milliseconds.',
-            timer: 2000,
+            timer: 3000,
             timerProgressBar: true,
             didOpen: () => {
                 Swal.showLoading()

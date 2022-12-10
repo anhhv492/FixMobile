@@ -2,13 +2,14 @@ package com.fix.mobile.service.impl;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
-import com.fix.mobile.dto.AccessoryDTO;
+import com.fix.mobile.dto.accessory.AccessoryDTO;
+import com.fix.mobile.dto.accessory.AccessoryResponDTO;
 import com.fix.mobile.entity.Category;
-import com.fix.mobile.entity.Sale;
 import com.fix.mobile.repository.AccessoryRepository;
 import com.fix.mobile.repository.CategoryRepository;
 import com.fix.mobile.service.AccessoryService;
 import com.fix.mobile.entity.Accessory;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -18,8 +19,6 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Date;
-import java.sql.Timestamp;
-import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -33,9 +32,15 @@ public class AccessoryServiceImpl implements AccessoryService {
     private CategoryRepository categoryRepository;
 
     @Autowired
+    private ModelMapper modelMapper;
+
+    @Autowired
     private Cloudinary cloud;
-    public AccessoryServiceImpl(AccessoryRepository repository) {
+
+    public AccessoryServiceImpl(AccessoryRepository repository, CategoryRepository categoryRepository, ModelMapper modelMapper) {
         this.repository = repository;
+        this.categoryRepository = categoryRepository;
+        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -102,7 +107,7 @@ public class AccessoryServiceImpl implements AccessoryService {
     }
 
     @Override
-    public Accessory save(AccessoryDTO accessoryDTO) {
+    public AccessoryResponDTO save(AccessoryDTO accessoryDTO) {
       try {
           Date date = new Date();
           Category category = categoryRepository.findById(accessoryDTO.getCategory()).orElse(null);
@@ -132,7 +137,10 @@ public class AccessoryServiceImpl implements AccessoryService {
                       ));
               accessory.setImage(r.get("secure_url").toString());
           }
-          return repository.save(accessory);
+          Accessory accessorySave =  repository.save(accessory);
+          AccessoryResponDTO accessoryResponDTOSave = modelMapper.map(accessorySave, AccessoryResponDTO.class);
+          accessoryResponDTOSave.setCategory(accessorySave.getCategory().getIdCategory());
+          return  accessoryResponDTOSave;
       }catch (Exception e){
           System.err.println(e.getMessage());
           return null;
@@ -140,7 +148,7 @@ public class AccessoryServiceImpl implements AccessoryService {
     }
 
     @Override
-    public Accessory update(Integer id, AccessoryDTO accessoryDTO) {
+    public AccessoryResponDTO update(Integer id, AccessoryDTO accessoryDTO) {
        try {
            Category category = categoryRepository.findById(accessoryDTO.getCategory()).orElse(null);
            Accessory optional = findById(id).orElse(null);
@@ -169,7 +177,10 @@ public class AccessoryServiceImpl implements AccessoryService {
                            ));
                    optional.setImage(r.get("secure_url").toString());
                }
-               return save(optional);
+               Accessory accessorySave =  repository.save(optional);
+               AccessoryResponDTO accessoryResponDTOSave = modelMapper.map(accessorySave, AccessoryResponDTO.class);
+               accessoryResponDTOSave.setCategory(accessorySave.getCategory().getIdCategory());
+               return  accessoryResponDTOSave;
            }
            return null;
        }catch (Exception e) {

@@ -1,9 +1,9 @@
 package com.fix.mobile.service;
 
 
-import com.fix.mobile.dto.Account.AccountRequestDTO;
-import com.fix.mobile.dto.Account.AccountResponDTO;
-import com.fix.mobile.dto.Account.UpdatePasswordDTO;
+import com.fix.mobile.dto.account.AccountRequestDTO;
+import com.fix.mobile.dto.account.AccountResponDTO;
+import com.fix.mobile.dto.account.UpdatePasswordDTO;
 import com.fix.mobile.dto.AccountDTO;
 import com.fix.mobile.dto.AddressDTO;
 import com.fix.mobile.entity.Account;
