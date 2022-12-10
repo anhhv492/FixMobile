@@ -1,5 +1,5 @@
 const app = angular.module('app-buy', ['ngRoute']);
-app.controller('buy-success-ctrl',function($scope,$window,$timeout){
+app.controller('buy-success-ctrl',function($scope,$window,$timeout,$rootScope){
 
     const jwtToken = localStorage.getItem("jwtToken")
     const token = {
@@ -41,7 +41,7 @@ app.controller('buy-success-ctrl',function($scope,$window,$timeout){
                         no-repeat
                      `
                 })
-                localStorage.removeItem("cart");
+                localStorage.removeItem($rootScope.name);
                 console.log('Buy cart Paypal success!')
             }
         })

@@ -9,7 +9,7 @@
       <th>Số lượng</th>
       <th>Hình ảnh</th>
       <th>Tổng (VNĐ)</th>
-      <th>Chi tiết</th>
+      <th>Thao tác</th>
     </tr>
     </thead>
     <tbody>
@@ -31,28 +31,37 @@
       <td><img width="80px" height="80px" src="{{orderDetail.product.images[0].name}}"></td>
       <td>{{orderDetail.quantity*orderDetail.price|number}}</td>
       <td>
-        <button ng-click="imeiPro(orderDetail.idDetail)" class="btn btn-default"
+        <button ng-click="imeiPro(orderDetail)" class="btn btn-default"
                 data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-          <i class="fa fa-info-circle" aria-hidden="true"></i> Hiển thị
+          <i class="fa fa-pencil" aria-hidden="true"></i>
+          <span ng-if="orderDetail.order.status<2">Sửa</span>
+          <span ng-if="orderDetail.order.status>=2">Xem</span>
         </button>
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Mã máy - {{nameProduct}}</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div ng-repeat="it in imeis2" ng-if="imeis2">
+                 {{$index+1}}, {{it.name}}
+                  <select class="form-select mt-3" ng-model="form.idImei" ng-change="setImei(orderDetail.idDetail,it.idImay)"
+                  ng-if="orderDetail.order.status<2">
+                    <option ng-repeat="imei in imeis" ng-value="imei.idImay" >{{imei.idImay}}, {{imei.name}}</option>
+                  </select>
+                </div>
+<!--                <div id="somediv"></div>-->
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="closeMd">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </td>
     </tr>
     </tbody>
   </table>
-</div>
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">Mã máy - {{nameProduct}}</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body ">
-        <p class="alert-secondary" ng-repeat="imei in imeis">{{$index+1}}, {{imei.name}}</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
 </div>

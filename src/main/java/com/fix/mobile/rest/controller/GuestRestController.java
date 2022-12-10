@@ -169,6 +169,7 @@ public class GuestRestController {
         return carts;
     }
 
+
     @GetMapping("/cart/sale")
     public List<Sale> getSaleByAccount(@PathVariable("id") Integer id){
         List<Sale> sales = saleService.findAllByDate();

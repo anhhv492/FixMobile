@@ -23,7 +23,7 @@ app.controller('buy-cod-success-ctrl',function($scope,$window,$timeout){
                 no-repeat
              `
         })
-        localStorage.removeItem("cart");
+        localStorage.removeItem($rootScope.name);
         console.log('Buy cart Paypal success!')
         $timeout(function () {
             $window.location.href = 'http://localhost:8080/views/index.html#!/home/index',token;
