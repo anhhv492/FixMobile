@@ -4,6 +4,10 @@ app.controller('order-admin-ctrl',function($rootScope,$scope,$http,$window){
     $rootScope.idOrder=null;
     $scope.form= {};
     $scope.showUpdate=false;
+    $scope.checkHoTen=false;
+    $scope.checkNgayMua=false;
+    $scope.checkTongGia=false;
+    $scope.checkTrangThai=false;
     $scope.status = [
         {id : '', name : "Thay đổi"},
         {id : 0, name : "Chưa thanh toán"},
@@ -43,6 +47,18 @@ app.controller('order-admin-ctrl',function($rootScope,$scope,$http,$window){
         }).catch(error=>{
             console.log('error update',error);
         });
+    }
+    $scope.hoTen=function(){
+        $scope.checkHoTen=!$scope.checkHoTen;
+    }
+    $scope.ngayMua=function(){
+        $scope.checkNgayMua=!$scope.checkNgayMua;
+    }
+    $scope.tongGia=function(){
+        $scope.checkTongGia=!$scope.checkTongGia;
+    }
+    $scope.trangThai=function(){
+        $scope.checkTrangThai=!$scope.checkTrangThai;
     }
     $scope.status.id='';
     $scope.getAll();
