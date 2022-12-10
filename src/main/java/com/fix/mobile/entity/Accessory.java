@@ -64,4 +64,9 @@ public class Accessory {
         this.note = note;
         this.category = category;
     }
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "accessory")
+    private List<ChangeDetail> changeDetails;
+
 }

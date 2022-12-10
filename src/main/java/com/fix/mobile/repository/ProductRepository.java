@@ -1,8 +1,13 @@
 package com.fix.mobile.repository;
 
 
+
 import com.fix.mobile.entity.*;
 import org.hibernate.query.NativeQuery;
+
+import com.fix.mobile.entity.Category;
+import com.fix.mobile.entity.Product;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
@@ -29,5 +34,6 @@ public interface ProductRepository extends PagingAndSortingRepository<Product, I
 
 
     List<Product> findByNameAndCapacityAndColor(String name, Capacity capacity, Color color );
+
 
 }

@@ -27,14 +27,22 @@
                             <span class="fa fa-user-o"></span>
                         </div>
                         <h3 class="text-center mb-4">Bạn đã có tài khoản?</h3>
-                        <form  method="post" class="login-form">
+                        <form  method="post" name="myForm" class="login-form">
                             <div class="form-group">
                                 <input ng-model="form.username" type="text" class="form-control rounded-left" path="username" name="username" placeholder="Tên tài khoản"
-                                    required>
+                                       required  maxlength="250">
+                                <span ng-show="myForm.$submitted || myForm.username.$dirty">
+                                        <span class="error" ng-show="myForm.username.$error.required"> <i
+                                                class="fa fa-exclamation-circle"></i>Tên tài khoản không được trống</span>
+                                </span>
                             </div>
-                            <div class="form-group d-flex">
+                            <div class="form-group ">
                                 <input ng-model="form.password" type="password" class="form-control rounded-left" path="password" name="password" placeholder="Mật khẩu"
-                                    required>
+                                       required  maxlength="250">
+                                <span ng-show="myForm.$submitted || myForm.password.$dirty">
+                                        <span class="error" ng-show="myForm.password.$error.required"> <i
+                                                class="fa fa-exclamation-circle"></i>Mật khẩu không được trống</span>
+                                 </span>
                             </div>
                             <div class="form-group col-6-offset-2 mb-0 ">
                                 <div class="">
@@ -44,7 +52,7 @@
                                     </label>
                                 </div>
                                 <div class=" text-center">
-                                    <a href="#">Quên mật khẩu</a>
+                                    <a href="/forgetPassword">Quên mật khẩu</a>
                                 </div>
                                 <div class="text-center ">
                                     <a href="/register">Bạn chưa có tài khoản?</a>
@@ -65,10 +73,25 @@
             </div>
         </div>
     </section>
-    <!-- <script src="/templates/js/jquery.min.js"></script>
-    <script src="/templates/js/popper.js"></script>
-    <script src="/templates/js/bootstrap.min.js"></script>
-    <script src="/templates/js/main.js"></script> -->
-      <!--    <script src="/ctrl/login-ctrl.js"></script> -->
-<!-- </body>
-</html> -->
+ <style>
+     /*input.ng-invalid.ng-touched {*/
+     /*    border: 2px solid red;*/
+     /*}*/
+
+     /*textarea.ng-invalid.ng-touched {*/
+     /*    border: 2px solid red;*/
+     /*}*/
+
+     /*select.ng-invalid.ng-touched {*/
+     /*    border: 2px solid red;*/
+     /*}*/
+
+     button:hover {
+         box-shadow: 0 0 5px rgb(119, 119, 145);
+     }
+
+     .error {
+         padding-left: 10px;
+         color: red;
+     }
+ </style>

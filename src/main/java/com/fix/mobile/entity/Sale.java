@@ -61,7 +61,7 @@ public class Sale {
     private Integer userCreate;
 
     @Column(name = "user_update")
-    private Integer userpdate;
+    private Integer userUpdate;
 
     @Column(name = "detail_sale")
     private String detailSale;

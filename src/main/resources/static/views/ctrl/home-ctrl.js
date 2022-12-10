@@ -18,12 +18,17 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
     $rootScope.carts=[];
     $rootScope.qtyCart=0;
     $rootScope.account = jwtToken;
+    $rootScope.name="";
+    $scope.accountActive= {};
+
     $scope.getAcountActive = function () {
 
         $http.get(urlAccount+`/getAccountActive`, token).then(function (respon){
             $scope.accountActive = respon.data;
+            $rootScope.name = $scope.accountActive.username;
             console.log($scope.accountActive.username)
         }).catch(err => {
+            $scope.accountActive = null;
             $rootScope.account = null;
         })
 
@@ -66,8 +71,19 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
             })
         }
     }
+    $rootScope.carts2=[];
+    $scope.addCart2=function(item){
+        $rootScope.carts2=$rootScope.carts;
+        $rootScope.carts.push(item);
+        $rootScope.qtyCart++;
+        $rootScope.saveLocalStorage();
+        $rootScope.loadLocalStorage();
+
+    }
     $scope.addCart=function(item){
         console.log("qty",$scope.qtyCart);
+        let json = localStorage.getItem($rootScope.name);
+        $rootScope.carts=json? JSON.parse(json):[];
         $scope.accessoryItem = $rootScope.carts.find(
             it=>it.idAccessory===item.idAccessory
         );
@@ -167,13 +183,13 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                             title: 'Số lượng sản phẩm không đủ!'
                         })
                     }else{
-                    if(!$scope.productItem){
-                        data.qty=1;
-                        $rootScope.carts.push(data);
-                    }else{
-                        $scope.productItem.qty++;
-                    }
-                    const Toast = Swal.mixin({
+                        if(!$scope.productItem){
+                            data.qty=1;
+                            $rootScope.carts.push(data);
+                        }else{
+                            $scope.productItem.qty++;
+                        }
+                        const Toast = Swal.mixin({
                         toast: true,
                         position: 'top-end',
                         showConfirmButton: false,
@@ -214,10 +230,12 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
         }
     }
     $rootScope.saveLocalStorage=function(){
-        let json = JSON.stringify(angular.copy($rootScope.carts));
-        localStorage.setItem("cart",json);
+        let json = JSON.stringify($rootScope.carts);
+        localStorage.setItem($rootScope.name,json);
     }
     $rootScope.loadLocalStorage = function(){
+        let json = localStorage.getItem($rootScope.name);
+        $rootScope.carts=json? JSON.parse(json):[];
         for (let i = 0; i < $rootScope.carts.length; i++) {
             $rootScope.carts.find(item=>{
                 if(item.idAccessory){
@@ -235,10 +253,9 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                 }
             })
         }
-        let json = localStorage.getItem("cart");
-        $rootScope.carts=json? JSON.parse(json):[];
     }
     $rootScope.loadQtyCart=function(){
+        $rootScope.qtyCart=0;
         if($rootScope.carts){
             $rootScope.carts.forEach(item=>{
                 $rootScope.qtyCart+=item.qty;
@@ -246,12 +263,21 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
         }
     }
 
+    $rootScope.productCode = {};
+    $scope.getOneProduct = function (productCode){
+        $http.get(`${urlOneProduct}/findByProductCode/${productCode.idProduct}`).then(res=>{
+            $rootScope.productCode = res.data;
+            console.log(productCode);
+        }).catch(err=>{
+            console.log("error",err);
+        })
+    }
+
     $scope.overPro=false;
     $scope.overAccess=false;
     $scope.getCategories();
-
-    $rootScope.loadLocalStorage();
     $rootScope.loadQtyCart();
+
 
 
      $rootScope.productCode = {};
@@ -267,5 +293,9 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
      if ($rootScope.account != null){
          $scope.getAcountActive();
      }
+
+    $rootScope.loadLocalStorage();
+
+
 })
 

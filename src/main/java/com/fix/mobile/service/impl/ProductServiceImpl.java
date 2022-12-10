@@ -1,5 +1,6 @@
 package com.fix.mobile.service.impl;
 
+
 import com.fix.mobile.entity.*;
 import com.fix.mobile.repository.CapacityRepository;
 import com.fix.mobile.repository.ColorRepository;
@@ -8,6 +9,12 @@ import com.fix.mobile.service.ProductService;
 import com.fix.mobile.repository.ProductRepository;
 import com.fix.mobile.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.fix.mobile.entity.Category;
+import com.fix.mobile.service.ProductService;
+import com.fix.mobile.repository.ProductRepository;
+import com.fix.mobile.entity.Product;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -23,11 +30,13 @@ import java.util.Optional;
 public class ProductServiceImpl implements ProductService {
     private final ProductRepository repository;
 
+
     @Autowired
     private CapacityRepository capacityRepository;
 
     @Autowired
     private ColorRepository colorRepository;
+
 
     public ProductServiceImpl(ProductRepository repository) {
         this.repository = repository;
