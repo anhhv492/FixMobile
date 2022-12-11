@@ -58,6 +58,10 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
         if(item.type){
             $http.get(`${urlAccessory}/cate-access/${item.idCategory}`, token).then(res=>{
                 $rootScope.detailAccessories=res.data;
+                $scope.priceSale=[];
+                for(var i=0; i<res.data.length;i++){
+                    $scope.getSale(res.data[i].price,'',res.data.idAccessory)
+                }
             }).catch(err=>{
                 $rootScope.detailAccessories=null;
                 console.log("error",err)
@@ -272,7 +276,19 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
             console.log("error",err);
         })
     }
-
+    $scope.getSale=function (money,  idPrd,  idAcsr){
+        var urlSale=`http://localhost:8080/admin/rest/sale/getbigsale?money=`+money+`&idPrd=`+idPrd+`&idAcsr=`+idAcsr;
+        $http.get(urlSale, token).then(resp => {
+            if(resp.data.moneySale == null) {
+                $scope.priceSale.push(money - (money * resp.data.percentSale/100));
+            }else if(resp.data.percentSale == null){
+                $scope.priceSale.push(money - resp.data.moneySale);
+            }else{ $scope.priceSale.push(0)}
+        }).catch(error => {
+           console.log(error + "hahha");
+            $scope.priceSale.push(0)
+        })
+    }
     $scope.overPro=false;
     $scope.overAccess=false;
     $scope.getCategories();
