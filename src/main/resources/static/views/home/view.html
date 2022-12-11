@@ -71,7 +71,8 @@
                     </div>
                     <h2><a href="single-product.html">{{p.name}}</a></h2>
                     <div class="product-carousel-price">
-                      <ins>{{p.price}}</ins> <del>$100.00</del>
+                      <p ng-if="priceSale[$index]==0">{{p.price|number}} VNĐ</p>
+                      <p ng-if="priceSale[$index]!=0"> <del>{{p.price|number}} VNĐ </del> &nbsp; {{priceSale[$index]|number}} VNĐ</p>
                     </div>
                 </div>
             </div>
@@ -100,7 +101,8 @@
               </div>
               <h2><a href="single-product.html">{{p1.name}}</a></h2>
               <div class="product-carousel-price">
-                <ins>{{p1.price}}</ins> VND
+                <p ng-if="priceSale1[$index]==0">{{p1.price|number}} VNĐ</p>
+                <p ng-if="priceSale1[$index]!=0"> <del>{{p1.price|number}} VNĐ </del> &nbsp; {{priceSale1[$index]|number}} VNĐ</p>
               </div>
 
     </div>

@@ -20,7 +20,7 @@ public interface SaleDetailRepository extends PagingAndSortingRepository<SaleDet
     @Query(value = "insert into sale_detail(id_sale,id_accessory) values((select id_sale from sale order by id_sale  desc limit 1),?1)",nativeQuery = true)
     void creatSaleDetailAccessory(String idthem);
     @Modifying
-    @Query(value = "insert into sale_detail(id_sale,username) values((select id_sale from sale order by id_sale  desc limit 1),'?1')",nativeQuery = true)
+    @Query(value = "insert into sale_detail(id_sale,username) values((select id_sale from sale order by id_sale  desc limit 1), ?1)",nativeQuery = true)
     void creatSaleDetailusername(String idthem);
     @Modifying
     @Query(value = "insert into sale_detail(id_sale,id_product) values(?1,?2)",nativeQuery = true)

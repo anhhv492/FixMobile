@@ -29,7 +29,7 @@
                         <h3 class="text-center mb-4">Bạn đã có tài khoản?</h3>
                         <form  method="post" name="myForm" class="login-form">
                             <div class="form-group">
-                                <input ng-model="form.username" type="text" class="form-control rounded-left" path="username" name="username" placeholder="Tên tài khoản"
+                                <input oninput="this.value = this.value.toLowerCase().trim()" ng-model="form.username" type="text" class="form-control rounded-left" path="username" name="username" placeholder="Tên tài khoản"
                                        required  maxlength="250">
                                 <span ng-show="myForm.$submitted || myForm.username.$dirty">
                                         <span class="error" ng-show="myForm.username.$error.required"> <i
@@ -52,7 +52,7 @@
                                     </label>
                                 </div>
                                 <div class=" text-center">
-                                    <a href="#">Quên mật khẩu</a>
+                                    <a href="/forgetPassword">Quên mật khẩu</a>
                                 </div>
                                 <div class="text-center ">
                                     <a href="/register">Bạn chưa có tài khoản?</a>

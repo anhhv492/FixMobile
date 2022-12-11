@@ -34,7 +34,7 @@ app.controller("sale_ctrl", function ($scope, $http) {
     $scope.saleadd.typeSale = 0;
     $scope.saleadd.discountMethod = 0;
     $scope.saleadd.discountType = 0;
-    $scope.saleadd.userType = 0
+    $scope.saleadd.userType = 0;
     var d = new Date();
     d.setSeconds(0, 0);
     $scope.saleadd.idSale = null;
@@ -57,7 +57,7 @@ app.controller("sale_ctrl", function ($scope, $http) {
                 let item = angular.copy($scope.saleadd);
                 let urlsale = `/admin/rest/sale/add`;
                 let listDetail = angular.copy($scope.seLected);
-                if ($scope.saleadd.typeSale == 0 || $scope.saleadd.typeSale == 2) {
+                if ($scope.saleadd.typeSale == 0 || $scope.saleadd.typeSale == 2 || $scope.saleadd.userType == 0 ) {
                     $http.post(urlsale, item, token).then(resp => {
                         swal.fire({
                             icon: 'success',
@@ -231,7 +231,6 @@ app.controller("sale_ctrl", function ($scope, $http) {
                 if ($scope.seLected[i] == checkid) {
                     check = false;
                     $scope.seLected.splice(i, 1);
-                    console.log('id sale là ' + checkid)
                 }
             }
             if (check) {
@@ -276,6 +275,7 @@ app.controller("sale_ctrl", function ($scope, $http) {
         $scope.onChangeTypeSale();
         $scope.onChangeDiscountMethod();
         $scope.onChangeDiscountType();
+        $scope.onChangeUserType()
         $scope.showDataTableSale(0);
     }
     $scope.onChangeTypeSale = function () {
@@ -362,18 +362,20 @@ app.controller("sale_ctrl", function ($scope, $http) {
         var newDate = new Date();
         var startDate = new Date(dateStart);
         var endDate = new Date(dateEnd);
+        var idx=0;
         if (endDate < newDate) {
-            return 2;
-        }
+            idx= 2;
+        }else
         if (quantity == 0) {
-            return 3;
-        }
+            idx= 3;
+        }else
         if (startDate > newDate) {
-            return 0;
-        }
+            idx= 0;
+        }else
         if (startDate < newDate && endDate > newDate) {
-            return 1;
+            idx= 1;
         }
+        return idx
     }
 
     $scope.showdetailSale = function (id) {
@@ -389,7 +391,8 @@ app.controller("sale_ctrl", function ($scope, $http) {
                     if ($scope.saleadd.typeSale == 1) {
                         $scope.seLected.push(response1.data[i].idProduct);
                     } else if ($scope.saleadd.userType == 1) {
-                        $scope.seLected.push(response1.data[i].username);
+                        $scope.seLected.push(response1.data[i].userName);
+
                     } else if ($scope.saleadd.typeSale == 4) {
                         $scope.seLected.push(response1.data[i].idAccessory);
                     }
@@ -496,6 +499,18 @@ app.controller("sale_ctrl", function ($scope, $http) {
         $scope.saleadd.voucher="";
         $scope.saleadd.name="";
     }
+    $scope.getSale=function (money,  idPrd,  idAcsr){
+        // var urlSale=`/admin/rest/sale/getbigsale?money=`+money+`&idPrd=`+idPrd+`&idAcsr=`+idAcsr;
+        let urlSale = `http://localhost:8080/admin/rest/sale/getbigsale?money=&idPrd=3&idAcsr=`
+        $http.get(urlSale, token).then(resp => {
+            console.log(resp.data+"hihihihi");
+            debugger
+        }).catch(error => {
+            console.log(error + "hahha");
+        })
+        console.log(urlSale);
+    }
+    $scope.getSale('','','');
 
 })
 

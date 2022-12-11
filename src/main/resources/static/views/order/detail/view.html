@@ -1,4 +1,6 @@
+
 <div class="container">
+<div class="table-responsive">
   <table class="table  table-bordered table-hover container">
     <thead>
     <tr>
@@ -23,8 +25,8 @@
       <td>{{orderDetail.price|number}}</td>
       <td>{{orderDetail.quantity}}</td>
       <td><img width="80px" height="80px" src="/images/accessories/{{orderDetail.accessory.image}}" class="pt-2"></td>
+      <td><img width="80px" height="80px" src="{{orderDetail.accessory.image}}" class="pt-2"></td>
       <td>{{orderDetail.quantity*orderDetail.price|number}}</td>
-
     </tr>
     <tr ng-repeat="orderDetail in orderDetails" ng-if="orderDetail.product">
       <td> <input type="checkbox" name="" ng-checked="checkSelect(orderDetail.idDetail)"
@@ -46,6 +48,26 @@
     </tbody>
   </table>
   <!-- Button trigger modal -->
+    </tr>
+    </tbody>
+  </table>
+</div>
+<div class="container glyphicon-zoom-in">
+  <form role="formProductChange" method="post" class="row" name="myForm"
+        enctype="multipart/form-data">
+    <div class="col-md-6">
+      <div class="form-group mt-1">
+        <div  class="upload-btn-wrapper form-group mt-1">
+          <button type="button" class="btn btn-outline-primary ms-1">Chọn ảnh</button>
+          <input onchange="angular.element(this).scope().uploadFileChange(this.files)"
+                  type="file" name="files"
+                 accept=".jpg,.jpeg,.png" multiple >
+        </div>
+        <img style="filter: drop-shadow(0 0 5px rgb(119, 119, 145));" width="105px"
+             src="/images/accessories/{{form.image}}">
+      </div>
+    </div>
+
 
 
   <!-- Modal -->

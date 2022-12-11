@@ -1,5 +1,6 @@
 app.controller('changePassword-ctrl',function($rootScope,$scope,$http,$window){
     $scope.form = {
+        oldPassword:'',
         password: '',
         password_verify: ''
     }
@@ -58,14 +59,22 @@ app.controller('changePassword-ctrl',function($rootScope,$scope,$http,$window){
 
     $scope.changePassword = function () {
         if ($scope.form.password_verify === $scope.form.password){
-            $http.post(callApi,$scope.form,token).then(function () {
-                Swal.fire(
-                    'Đổi mật khẩu thành công!',
-                    'Vui lòng đăng nhập lại!',
-                    'success'
-                )
-                $window.location.href = '#!login';
+            $http.post(callApi,$scope.form,token).then(function (respon) {
+               if (respon.data == true){
+                   Swal.fire(
+                       'Đổi mật khẩu thành công!',
+                       'Vui lòng đăng nhập lại!',
+                       'success'
+                   )
+                   $window.location.href = '#!login';
 
+               }else {
+                   Swal.fire({
+                       icon: 'error',
+                       title: 'Lỗi',
+                       text: 'Mật khẩu cũ không đúng!!',
+                   })
+               }
             })
         }else {
             Swal.fire({

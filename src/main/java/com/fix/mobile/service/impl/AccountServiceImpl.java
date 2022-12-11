@@ -3,9 +3,9 @@ package com.fix.mobile.service.impl;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
-import com.fix.mobile.dto.Account.AccountRequestDTO;
-import com.fix.mobile.dto.Account.AccountResponDTO;
-import com.fix.mobile.dto.Account.UpdatePasswordDTO;
+import com.fix.mobile.dto.account.AccountRequestDTO;
+import com.fix.mobile.dto.account.AccountResponDTO;
+import com.fix.mobile.dto.account.UpdatePasswordDTO;
 import com.fix.mobile.dto.AccountDTO;
 import com.fix.mobile.dto.AddressDTO;
 import com.fix.mobile.entity.Address;
@@ -22,7 +22,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -74,15 +73,20 @@ public class AccountServiceImpl implements AccountService {
                 account.setStatus(accountRequestDTO.getStatus());
                 account.setRole(role);
                 account.setCreateDate(date);
-                Map r = this.cloud.uploader().upload(accountRequestDTO.getImage().getBytes(),
-                        ObjectUtils.asMap(
-                                "cloud_name", "dcll6yp9s",
-                                "api_key", "916219768485447",
-                                "api_secret", "zUlI7pdWryWsQ66Lrc7yCZW0Xxg",
-                                "secure", true,
-                                "folders", "c202a2cae1893315d8bccb24fd1e34b816"
-                        ));
-                account.setImage(r.get("secure_url").toString());
+                if (accountRequestDTO.getImage() == null){
+                    account.setImage("https://res.cloudinary.com/dcll6yp9s/image/upload/v1669087979/kbasp5qdf76f3j02mebr.png");
+                }else {
+                    Map r = this.cloud.uploader().upload(accountRequestDTO.getImage().getBytes(),
+                            ObjectUtils.asMap(
+                                    "cloud_name", "dcll6yp9s",
+                                    "api_key", "916219768485447",
+                                    "api_secret", "zUlI7pdWryWsQ66Lrc7yCZW0Xxg",
+                                    "secure", true,
+                                    "folders", "c202a2cae1893315d8bccb24fd1e34b816"
+                            ));
+                    account.setImage(r.get("secure_url").toString());
+                }
+
                 Account accountSave = repository.save(account);
                 AccountResponDTO accountResponDTO = modelMapper.map(accountSave, AccountResponDTO.class);
                 accountResponDTO.setRole(accountSave.getRole().getIdRole());
@@ -179,15 +183,19 @@ public class AccountServiceImpl implements AccountService {
             account.setPhone(accountRequestDTO.getPhone());
             account.setRole(role);
             account.setStatus(accountRequestDTO.getStatus());
-            Map r = this.cloud.uploader().upload(accountRequestDTO.getImage().getBytes(),
-                    ObjectUtils.asMap(
-                            "cloud_name", "dcll6yp9s",
-                            "api_key", "916219768485447",
-                            "api_secret", "zUlI7pdWryWsQ66Lrc7yCZW0Xxg",
-                            "secure", true,
-                            "folders", "c202a2cae1893315d8bccb24fd1e34b816"
-                    ));
-            account.setImage(r.get("secure_url").toString());
+            if (accountRequestDTO.getImage() == null){
+                account.setImage(account.getImage());
+            }else {
+                Map r = this.cloud.uploader().upload(accountRequestDTO.getImage().getBytes(),
+                        ObjectUtils.asMap(
+                                "cloud_name", "dcll6yp9s",
+                                "api_key", "916219768485447",
+                                "api_secret", "zUlI7pdWryWsQ66Lrc7yCZW0Xxg",
+                                "secure", true,
+                                "folders", "c202a2cae1893315d8bccb24fd1e34b816"
+                        ));
+                account.setImage(r.get("secure_url").toString());
+            }
             Account accountSave = repository.save(account);
             AccountResponDTO accountResponDTO = modelMapper.map(accountSave, AccountResponDTO.class);
             accountResponDTO.setRole(accountSave.getRole().getIdRole());
@@ -269,9 +277,15 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void updatePassword(UpdatePasswordDTO updatePasswordDTO) {
+    public Boolean updatePassword(UpdatePasswordDTO updatePasswordDTO) {
         Account account = repository.findByUsername(UserName.getUserName());
-        account.setPassword(HashUtil.hash(updatePasswordDTO.getPassword()));
-        repository.save(account);
+        if (HashUtil.verify(updatePasswordDTO.getOldPassword(), account.getPassword())== false){
+            return false;
+        }else {
+            account.setPassword(HashUtil.hash(updatePasswordDTO.getPassword()));
+            repository.save(account);
+            return true;
+        }
+
     }
 }

@@ -16,7 +16,6 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "sale")
-@ToString
 public class Sale {
 
     @Id
@@ -48,7 +47,7 @@ public class Sale {
     @Column(name = "percent_sale")
     private Integer percentSale;
 
-    @Column(name = "quantity_use")
+    @Column(name = "quantity")
     private Integer quantity;
 
     @Column(name = "create_time")
@@ -58,10 +57,10 @@ public class Sale {
     private Date updateTime;
 
     @Column(name = "user_create")
-    private Integer userCreate;
+    private String userCreate;
 
     @Column(name = "user_update")
-    private Integer userUpdate;
+    private String userUpdate;
 
     @Column(name = "detail_sale")
     private String detailSale;

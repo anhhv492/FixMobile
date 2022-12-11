@@ -1,6 +1,7 @@
 package com.fix.mobile.rest.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fix.mobile.dto.ColorProductResponDTO;
 import com.fix.mobile.entity.*;
 import com.fix.mobile.repository.SaleRepository;
 import com.fix.mobile.service.*;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import java.math.BigDecimal;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -38,6 +41,15 @@ public class GuestRestController {
     private OrderDetailService orderDetailService;
     @Autowired
     private SaleRepository saleService;
+
+    @Autowired
+    private  CapacityService capacityService;
+
+    @Autowired
+    private RamService ramService;
+
+    @Autowired
+    private ColorService colorService;
     
     Order order = null;
     Account account = null;
@@ -89,6 +101,11 @@ public class GuestRestController {
             return null;
         }
         List<Accessory> accessories = accessoryService.findByCategoryAndStatus(cate);
+        for (int i = 0; i < accessories.size(); i++) {
+            if(accessories.get(i).getQuantity() == 0){
+                accessories.remove(i);
+            }
+        }
         return accessories;
     }
     @GetMapping("/product/cate-product/{id}")
@@ -112,8 +129,9 @@ public class GuestRestController {
         if(order.getAddress()==null||account==null){
             return null;
         }
+        Date date = new Date();
         this.order = order;
-        order.setCreateDate(new Date());
+        order.setCreateDate(date);
         order.setAccount(account);
         orderService.save(order);
         logger.info("-- Order: "+order.getIdOrder());
@@ -160,6 +178,8 @@ public class GuestRestController {
         logger.info("-- OrderDetail success: "+account.getUsername());
         return carts;
     }
+
+
     @GetMapping("/cart/sale")
     public List<Sale> getSaleByAccount(@PathVariable("id") Integer id){
         List<Sale> sales = saleService.findAllByDate();
@@ -171,10 +191,42 @@ public class GuestRestController {
 
         return Optional.of(product.get());
     }
-    @GetMapping(value ="/ss")
-    public String ss() {
 
-        account = accountService.findByUsername(UserName.getUserName());
-        return account.getUsername();
+    @GetMapping("/getAllCapacity")
+    public List<Capacity> getAllCapacity(){
+        return capacityService.findAll();
+    }
+
+    @GetMapping("/getAllRam")
+    public List<Ram> getAllRam(){
+        return ramService.findAll();
+    }
+
+    @GetMapping("/getAllColor")
+    public List<Color> getAllColor(){
+        return colorService.findAll();
+    }
+
+
+    @GetMapping("/getProductByNameAndCapacityAndColor")
+    public List<Product> getProduct(@RequestParam("name") String name,
+                              @RequestParam("capacity") Integer capacity,
+                              @RequestParam("color") Integer color){
+        return productService.findByNameAndCapacityAndColor(name, capacity, color);
+    }
+
+    @GetMapping("/getTop4")
+    public List<Accessory> getTop4(){
+        return accessoryService.getTop4();
+    }
+
+    @GetMapping("/getOneAccessory")
+    public Accessory getOneAccessory(@RequestParam("id") Integer id){
+        return accessoryService.findById(id).orElse(null);
+    }
+
+    @GetMapping("/getColorProductByName")
+    public List<ColorProductResponDTO> getColorProductByName(@RequestParam("name") String name){
+        return productService.getColorProductByName(name);
     }
 }

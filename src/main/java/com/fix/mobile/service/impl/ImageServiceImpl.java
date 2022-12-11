@@ -1,9 +1,12 @@
 package com.fix.mobile.service.impl;
 
+import com.fix.mobile.dto.ImeiProductResponDTO;
 import com.fix.mobile.service.ImageService;
 import com.fix.mobile.repository.ImageRepository;
 import com.fix.mobile.entity.Image;
 import com.fix.mobile.service.ImageService;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -18,8 +21,12 @@ import java.util.Optional;
 public class ImageServiceImpl implements ImageService {
     private final ImageRepository repository;
 
-    public ImageServiceImpl(ImageRepository repository) {
+    @Autowired
+    private ModelMapper modelMapper;
+
+    public ImageServiceImpl(ImageRepository repository, ModelMapper modelMapper) {
         this.repository = repository;
+        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -62,4 +69,5 @@ public class ImageServiceImpl implements ImageService {
         }
         return null;
     }
+
 }

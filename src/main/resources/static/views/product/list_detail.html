@@ -7,7 +7,7 @@
     </div>
     <div class="item col-xs-4 col-md-2 " ng-repeat="product in detailProducts" ng-if="detailProducts.length>0">
         <div class="thumbnail row p-3">
-            <img class="group list-group-image" src="{{product.images.length>0?product.images[0].name:''}}"" height="220px" width="250px" />
+            <img class="group list-group-image" src="{{product.images.length>0?product.images[0].name:''}}" height="220px" width="250px" />
             <div class="caption mt-2">
                 <h5 class="group inner list-group-item-heading">
                     {{product.name}}</h5>
@@ -17,7 +17,7 @@
                             {{product.price|number}}VNĐ</p>
                     </div>
                     <div class="btn-group">
-                        <a class="btn btn-details" href="http://www.jquery2dotnet.com">Details</a>
+                        <a class="btn btn-details" href="#!product" ng-click="getOneProduct(product)">Details</a>
                         <a class="btn btn-success" ng-click="addCart(product)">Add to cart</a>
                     </div>
                 </div>

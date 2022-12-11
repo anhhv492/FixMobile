@@ -1,3 +1,4 @@
+
 <div class="well well-sm row d-flex justify-content-center">
     <div class="row btn-group text-center">
         <h2 class="text-success">{{cateDetail.name}}</h2>?
@@ -13,153 +14,277 @@
                     <div class="col-xs-12 col-md-6">
                         <p class="lead">
                             {{p.price|number}}VNĐ</p>
+<div class="container mt-3 mb-3">
+    <div class="single-product-area bg-white">
+        <div class="container">
+            <div class="row">
+                <div>
+                    <div>
+                        <div>
+                            <div class="row g-0">
+                                <div class="col-md-6 border-end">
+                                    <div class="d-flex flex-column justify-content-center">
+                                        <div class="main_image"><img src="{{displayAccessory.imageDefault}}"
+                                                                     id="main_product_image" width="350"></div>
+                                        <div class="thumbnail_images">
+                                            <ul id="thumbnail">
+                                                <li><img ng-click="changeImage(1)" id="image_product_change"
+                                                         src="{{displayAccessory.imageDefault}}" width="70"></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="p-3 right-side">
+                                        <div class="d-flex justify-content-between align-items-center"><h3>
+                                            {{displayAccessory.name}}</h3>
+                                        </div>
+                                        <div class="mt-2 pr-3 content"><p>{{displayAccessory.describe}}</p></div>
+                                        <h3>{{displayAccessory.price | number}} VNĐ</h3>
+                                        <div class="ratings d-flex flex-row align-items-center">
+                                            <div class="d-flex flex-row"><i class='bx bxs-star'></i> <i
+                                                    class='bx bxs-star'></i> <i class='bx bxs-star'></i> <i
+                                                    class='bx bxs-star'></i> <i class='bx bx-star'></i></div>
+                                            <span>441 reviews</span></div>
+                                        <div class="d-flex flex-row mt-5 gap-3">
+                                            <button class="btn btn-outline-dark" ng-click="addCart(accessoryAddCart)" style="height: 70px; width: 100%">Add to Cart</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
-                    <div class="btn-group">
-                        <a class="btn btn-details" href="#!product" ng-click="getOneProduct(p)">Details</a>
-                        <a class="btn btn-success" ng-click="addCart(p)">Add to cart</a>
+                    <div class="product-content-right">
+                        <h2><a href="">Top 4</a></h2>
+                    </div>
+                    <div class="row">
+                        <div class="wrapper">
+                            <div class="container">
+                                <div class="row g-1">
+                                    <div class="col-md-3" ng-repeat="acce in listTop4">
+
+                                        <div class="card p-3">
+
+                                            <div class="text-center" style="width: 200px; height: 200px">
+
+                                                <img class= "img-fluid" src="{{acce.image}}">
+
+                                            </div>
+
+                                            <div class="product-details">
+
+
+                                                <span class="font-weight-bold d-block">{{acce.price|number}} VNĐ</span>
+                                                <span>{{acce.name}}</span>
+
+
+                                                <div class="buttons d-flex flex-row">
+                                                    <a class="cart" href="#!accessoryDetail" ng-click="getOneAccessory(acce.idAccessory)">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                             fill="currentColor" class="bi bi-ticket-detailed"
+                                                             viewBox="0 0 16 16">
+                                                            <path d="M4 5.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5Zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5ZM5 7a1 1 0 0 0 0 2h6a1 1 0 1 0 0-2H5Z"/>
+                                                            <path d="M0 4.5A1.5 1.5 0 0 1 1.5 3h13A1.5 1.5 0 0 1 16 4.5V6a.5.5 0 0 1-.5.5 1.5 1.5 0 0 0 0 3 .5.5 0 0 1 .5.5v1.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 11.5V10a.5.5 0 0 1 .5-.5 1.5 1.5 0 1 0 0-3A.5.5 0 0 1 0 6V4.5ZM1.5 4a.5.5 0 0 0-.5.5v1.05a2.5 2.5 0 0 1 0 4.9v1.05a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-1.05a2.5 2.5 0 0 1 0-4.9V4.5a.5.5 0 0 0-.5-.5h-13Z"/>
+                                                        </svg>
+                                                    </a>
+                                                    <button class="btn btn-success cart-button btn-block"
+                                                            ng-click="addCart(acce)">Add to cart
+                                                    </button>
+                                                </div>
+
+                                                <div class="weight">
+                                                    <small style="color: lightslategray">Còn {{acce.quantity|number}} sản phẩm</small>
+                                                </div>
+
+                                            </div>
+
+
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
 </div>
+</div>
+</div>
+
+</div>
 <style>
-    .glyphicon { margin-right:5px; }
-    .category{
-        position:relative;
-        top:-5px;
-        left:10px;
-        color:#20e3b2;
-        font-weight:200;
-        margin-bottom:-20px;
-    }
-    .well{
-        background:transparent;
-        border-style:none;
-    }
-    .well .btn{
-        border-style:none;
+    body {
 
-    }
-    .well .col-md-3:hover{
-        box-shadow: 1px 5px 25px #ccc;
-
-    }
-    .well .thumbnail
-    {
-        margin-bottom: 0px;
-        padding: 0px;
-        -webkit-border-radius: 0px;
-        -moz-border-radius: 0px;
-        border-radius: 0px;
-
-    }
-    .well .inner{
-        margin-left:0px;
-    }
-    .well .item{
-        width:250px;
-        padding:0;
-        margin-top:5px;
-        margin:15px;
-        box-shadow: 1px 5px 15px #CCC;
+        background: #eee;
     }
 
-    .well .item.list-group-item
-    {
-        float: none;
-        width: 100%;
+
+    .wrapper {
+
+        margin-top: 30px;
+    }
+
+    .card {
+
+        border: 1px solid #eee;
+        cursor: pointer;
+    }
+
+
+    .weight {
+
+        margin-top: -65px;
+        transition: all 0.5s;
+    }
+
+    .weight small {
+
+        color: #e2dede;
+    }
+
+    .buttons {
+        padding: 10px;
+        background-color: #d6d4d44f;
+        border-radius: 4px;
+        position: relative;
+        margin-top: 7px;
+        opacity: 0;
+        transition: all 0.8s;
+    }
+
+    .dot {
+        height: 14px;
+        width: 14px;
+        background-color: green;
+        border-radius: 50%;
+        position: absolute;
+        left: 27%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 8px;
+        color: #fff;
+        opacity: 0;
+    }
+
+    .cart-button {
+        height: 48px
+    }
+
+    .cart-button:focus {
+        box-shadow: none
+    }
+
+    .cart {
+        position: relative;
+        height: 48px !important;
+        width: 50px;
+        margin-right: 8px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         background-color: #fff;
-        margin-bottom: 10px;
-    }
-    .well .item.list-group-item:nth-of-type(odd):hover,.item.list-group-item:hover
-    {
-        box-shadow: 0px 1px 25px #ccc;
-    }
-
-    .well .item.list-group-item .list-group-image
-    {
-        margin-right:5px;
-
-    }
-    .well .item.list-group-item .thumbnail
-    {
-        margin-bottom: 0px;
-
-    }
-    .well .item.list-group-item .caption
-    {
-        padding: 9px 9px 0px 9px;
+        padding: 11px;
+        border-radius: 5px;
+        font-size: 14px;
+        transition: 1s ease-in-out;
+        overflow: hidden;
 
     }
 
-
-    .well .item.list-group-item:before, .item.list-group-item:after
-    {
-        display: table;
-        content: " ";
+    .cart-button.clicked span.dot {
+        animation: item 0.3s ease-in forwards
     }
 
-    .well  .item.list-group-item img
-    {
-        float: left;
-    }
-    .well .item.list-group-item:after
-    {
-        clear: both;
-    }
-    .well .btn-success,.btn-details{
-        margin-top:30px;
-        margin-bottom:10px;
-    }
-    .well  .btn-details{
-        background:transparent;
-        border-style:solid;
-        border-color:lightgrey;
-        border-radius:0%;
-        width:125px;
-        top:11px;
-        left:2px;
-        color:black;
-        height:33px;
-    }
-    .well .btn-details:hover{
-        background:lightgrey;
-        color:white;
-    }
-    .well .lead{
-        position:absolute;
-        font-weight:700;
-        font-size:18px;
-    }
-
-    .well .btn-success{
-        overflow:hidden;
-        border-radius:0%;
-        border-style:none;
-        width:125px;
-        right:2px;
-        top:11px;
-        height:33px;
-        background: linear-gradient(to right, #0cebeb, #20e3b2, #29ffc6);
-    }
-
-    .well .btn-success:hover{
-        background:#29ffc6  ;
-        color:white;
-    }
-    @keyframes scalewidth {
+    @keyframes item {
         0% {
-            width: 0%;
+            opacity: 1;
+            top: 30%;
+            left: 30%
         }
-        100%{
-            width : 100%;
+
+        25% {
+            opacity: 1;
+            left: 26%;
+            top: 0%
         }
+
+        50% {
+            opacity: 1;
+            left: 23%;
+            top: -22%
+        }
+
+        75% {
+            opacity: 1;
+            left: 19%;
+            top: -18%
+        }
+
+        100% {
+            opacity: 1;
+            left: 14%;
+            top: 28%
+        }
+    }
+
+
+    .card:hover .buttons {
+
+        opacity: 1;
+    }
+
+
+    .card:hover .weight {
+
+        margin-top: 10px;
+    }
+
+    .card:hover {
+
+        transform: scale(1.04);
+        z-index: 2;
+        overflow: hidden;
+    }
+
+    label.radio {
+        cursor: pointer
+    }
+
+    label.radio input {
+        position: absolute;
+        top: 0;
+        left: 0;
+        visibility: hidden;
+        pointer-events: none
+    }
+
+    label.radio span {
+        padding: 2px 9px;
+        border: 2px solid black;
+        display: inline-block;
+        color: black;
+        border-radius: 3px;
+        text-transform: uppercase
+    }
+
+    label.radio input:checked + span {
+        border-color: black;
+        background-color: black;
+        color: #fff
+    }
+    .btn {
+
+        border-radius: 0;
     }
 </style>
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('#list').click(function(event){event.preventDefault();$('#products .item').addClass('list-group-item');});
-        $('#grid').click(function(event){event.preventDefault();$('#products .item').removeClass('list-group-item');$('#products .item').addClass('grid-group-item');});
-    });
-</script>
