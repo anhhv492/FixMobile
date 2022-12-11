@@ -1,10 +1,13 @@
 package com.fix.mobile.service.impl;
 
+import com.fix.mobile.dto.ImeiProductResponDTO;
 import com.fix.mobile.entity.OrderDetail;
 import com.fix.mobile.entity.Product;
 import com.fix.mobile.repository.ImayProductRepository;
 import com.fix.mobile.entity.ImayProduct;
 import com.fix.mobile.service.ImayProductService;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -19,8 +22,12 @@ import java.util.Optional;
 public class ImayProductServiceImpl implements ImayProductService {
 	private final ImayProductRepository repository;
 
-	public ImayProductServiceImpl(ImayProductRepository repository) {
+	@Autowired
+	private ModelMapper modelMapper;
+
+	public ImayProductServiceImpl(ImayProductRepository repository, ModelMapper modelMapper) {
 		this.repository = repository;
+		this.modelMapper = modelMapper;
 	}
 
 	@Override
@@ -35,7 +42,11 @@ public class ImayProductServiceImpl implements ImayProductService {
 
 	@Override
 	public void deleteById(Integer id) {
-		repository.deleteById(id);
+		ImayProduct imayProduct = repository.findById(id).orElse(null);
+		if (imayProduct != null){
+			imayProduct.setStatus(0);
+			repository.save(imayProduct);
+		}
 	}
 
 	@Override
@@ -78,5 +89,20 @@ public class ImayProductServiceImpl implements ImayProductService {
 	@Override
 	public List<ImayProduct> findByOrderDetail(OrderDetail orderDetail) {
 		return repository.findByOrderDetail(orderDetail);
+	}
+
+	@Override
+	public Page<ImeiProductResponDTO> findAll(Pageable pageable, Integer status) {
+		if (status != 0) {
+			Page<ImayProduct> imayProductsPage = repository.findAllByStatus(pageable, status);
+			Page<ImeiProductResponDTO> imeiProductResponDTOS = imayProductsPage.map(imayProduct
+					-> modelMapper.map(imayProduct, ImeiProductResponDTO.class));
+			return imeiProductResponDTOS;
+		}else {
+			Page<ImayProduct> imayProductsPages = repository.findAll(pageable);
+			Page<ImeiProductResponDTO> imeiProductRespon = imayProductsPages.map(imayProduct
+					-> modelMapper.map(imayProduct, ImeiProductResponDTO.class));
+			return imeiProductRespon;
+		}
 	}
 }

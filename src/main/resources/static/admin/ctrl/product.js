@@ -1,5 +1,7 @@
 app.controller('product', function($scope, $http) {
     const pathAPI = "http://localhost:8080/rest/admin/product";
+    const callApiPage = "http://localhost:8080/rest/admin/product/pageImei?page="
+    const callDeleteImei = "http://localhost:8080/rest/admin/product/deleteImeiById?id="
     $scope.formProduct = {};
     $scope.imeis = []
     $scope.products = [];
@@ -9,10 +11,16 @@ app.controller('product', function($scope, $http) {
     $scope.capacitys=[];
     $scope.rams=[];
     $scope.index=0;
+    $scope.imeisPage=1;
     $scope.check_first=false;
     $scope.check_last=true;
+    $scope.check_first_imei=false;
+    $scope.check_last_imei=true;
     $scope.totalPages=0;
     $scope.currentPage = 0;
+    $scope.pageImei = [];
+    $scope.totalPagesImei =0;
+    $scope.currentPageImei = 0;
     $scope.title={
         insert:'Thêm mới',
         update:'Cập nhật'
@@ -599,4 +607,104 @@ app.controller('product', function($scope, $http) {
             $scope.imeis.indexOf('')
         )
     }
+
+    $scope.pageImeiFt = function (page) {
+        $http.get(callApiPage+page,token).then(respon => {
+            $scope.pageImei = respon.data.content;
+            $scope.totalPagesImei = respon.data.totalPages;
+            $scope.currentPageImei = respon.data.pageable.pageNumber +1;
+            console.log($scope.pageImei);
+        }).catch(err=>{
+            console.log('Load Imei failse',err.data);
+        })
+    }
+
+    $scope.deleteImei = function(imeiForm) {
+        Swal.fire({
+            title: 'Bạn có chắc muốn xóa: '+imeiForm.name+'?',
+            text: "Xóa không thể khôi phục lại!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                let timerInterval
+                Swal.fire({
+                    title: 'Đang xóa: '+imeiForm.name+'!',
+                    html: 'Vui lòng chờ <b></b> milliseconds.',
+                    timer: 1500,
+                    timerProgressBar: true,
+                    didOpen: () => {
+                        Swal.showLoading()
+                        const b = Swal.getHtmlContainer().querySelector('b')
+                        timerInterval = setInterval(() => {
+                            b.textContent = Swal.getTimerLeft()
+                        }, 100)
+                    },
+                    willClose: () => {
+                        clearInterval(timerInterval)
+                    }
+                }).then((result) => {
+                    /* Read more about handling dismissals below */
+                    if (result.dismiss === Swal.DismissReason.timer) {
+                        $http.post(callDeleteImei+imeiForm.idImay,token).then(response=> {
+                            $scope.pageImei.splice($scope.pageImei.indexOf(imeiForm), 1);
+                            $scope.message('Đã xóa thành công Imei');
+
+                        }).catch(error=>{
+                            $scope.error('xóa thất bại');
+                        });
+                        console.log('I was closed by the timer')
+                    }
+                })
+
+            }
+        })
+
+    };
+    $scope.nextPageImei=function(){
+        $scope.check_first_imei=true;
+        $scope.imeisPage++;
+        if($scope.imeisPage>=$scope.totalPagesImei){
+            $scope.index=0;
+            $scope.check_first_imei=false;
+            $scope.check_last_imei=true;
+        }
+        if($scope.imeisPage==$scope.totalPagesImei){
+            $scope.check_first_imei=true;
+            $scope.check_last_imei=false;
+        }
+        $scope.pageImeiFt($scope.imeisPage);
+    }
+
+    $scope.prevPageImei=function(){
+        $scope.check_last_imei=true;
+        $scope.imeisPage--;
+        if($scope.imeisPage<1){
+            $scope.imeisPage=$scope.totalPagesImei;
+            $scope.check_first_imei=true;
+            $scope.check_last_imei=false;
+        }
+        if($scope.imeisPage==1){
+            $scope.check_first_imei=false;
+            $scope.check_last_imei=true;
+        }
+        $scope.pageImeiFt($scope.imeisPage);
+    }
+    $scope.firstPageImei=function(){
+        $scope.check_first_imei=false;
+        $scope.check_last_imei=true;
+        $scope.imeisPage=1;
+        $scope.pageImeiFt($scope.imeisPage);
+    }
+
+    $scope.lastPageImei=function(){
+        $scope.check_first_imei=true;
+        $scope.check_last_imei=false;
+        $scope.imeisPage=$scope.totalPages;
+        $scope.pageImeiFt($scope.imeisPage);
+    }
+    $scope.pageImeiFt($scope.imeisPage);
 });

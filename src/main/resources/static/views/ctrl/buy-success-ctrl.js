@@ -1,5 +1,5 @@
 const app = angular.module('app-buy', ['ngRoute']);
-app.controller('buy-success-ctrl',function($scope,$window,$timeout){
+app.controller('buy-success-ctrl',function($scope,$window,$timeout,$rootScope){
 
     const jwtToken = localStorage.getItem("jwtToken")
     const token = {
@@ -29,6 +29,7 @@ app.controller('buy-success-ctrl',function($scope,$window,$timeout){
             if (result.dismiss === Swal.DismissReason.timer) {
                 Swal.fire({
                     title: 'Thanh toán thành công!',
+                    text:'Quý khách sẽ được chuyển đến trang chủ sau giây lát',
                     width: 600,
                     padding: '3em',
                     color: '#716add',
@@ -40,7 +41,7 @@ app.controller('buy-success-ctrl',function($scope,$window,$timeout){
                         no-repeat
                      `
                 })
-                localStorage.removeItem("cart");
+                localStorage.removeItem($rootScope.name);
                 console.log('Buy cart Paypal success!')
             }
         })

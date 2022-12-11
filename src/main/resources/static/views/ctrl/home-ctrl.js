@@ -293,8 +293,25 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
     $scope.overAccess=false;
     $scope.getCategories();
     $rootScope.loadQtyCart();
+
+
+
+     $rootScope.productCode = {};
+     $scope.getOneProduct = function (productCode){
+         $http.get(`${urlOneProduct}/findByProductCode/${productCode.idProduct}`).then(res=>{
+             $rootScope.productCode = res.data;
+             localStorage.setItem('product', $rootScope.productCode.idProduct);
+             console.log(productCode);
+         }).catch(err=>{
+             console.log("error",err);
+         })
+     }
+     if ($rootScope.account != null){
+         $scope.getAcountActive();
+     }
+
     $rootScope.loadLocalStorage();
-    $scope.getAcountActive();
+
 
 })
 

@@ -1,51 +1,121 @@
-<table class="table table-bordered table-hover container">
-    <thead>
-    <tr>
-        <th>Mã hóa đơn</th>
-        <th>Tài khoản</th>
-        <th>Họ tên</th>
-        <th>Số điện thoại</th>
-        <th>Địa chỉ nhận</th>
-        <th>Ngày mua</th>
-        <th>Tổng giá (VNĐ)</th>
-        <th>Trạng thái</th>
-        <th>Thao tác</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr ng-repeat="order in orders">
-        <td>{{order.idOrder}}</td>
-        <td>{{order.account.username}}</td>
-        <td>{{order.personTake}}</td>
-        <td>{{order.phoneTake}}</td>
-        <td>{{order.address}}</td>
-        <td>{{order.createDate|date:'dd/MM/yyyy HH:mm:ss'}}</td>
-        <td>{{order.total|number}}</td>
-        <td>
+<ul class="nav nav-tabs container" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+        <p class="nav-link text-dark">
+            Lọc:</p>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane"
+                type="button" role="tab">
+            Tổng tiền</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane"
+                type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">
+            Thời gian</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane"
+                type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">
+            Trạng thái</button>
+    </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+
+    </div>
+    <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+        ...
+    </div>
+    <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
+        ...
+    </div>
+</div>
+<div class="table-responsive">
+    <table class="table table-bordered table-hover container">
+        <thead>
+        <tr>
+            <th>Mã hóa đơn</th>
+            <th>Tài khoản</th>
+            <th>
+                <button class="btn btn-default" ng-click="hoTen()" ng-if="!checkHoTen">
+                    <strong>Họ tên</strong>
+                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                </button>
+                <button class="btn btn-default" ng-click="hoTen()" ng-if="checkHoTen">
+                    <strong>Họ tên</strong>
+                    <i class="fa fa-caret-up" aria-hidden="true"></i>
+                </button>
+            </th>
+            <th>Số điện thoại</th>
+            <th>Địa chỉ nhận</th>
+            <th>
+                <button class="btn btn-default" ng-click="ngayMua()" ng-if="!checkNgayMua">
+                    <strong>Ngày mua</strong>
+                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                </button>
+                <button class="btn btn-default" ng-click="ngayMua()" ng-if="checkNgayMua">
+                    <strong>Ngày mua</strong>
+                    <i class="fa fa-caret-up" aria-hidden="true"></i>
+                </button>
+            </th>
+            <th>
+                <button class="btn btn-default" ng-click="tongGia()" ng-if="!checkTongGia">
+                    <strong>Tổng giá (VNĐ)</strong>
+                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                </button>
+                <button class="btn btn-default" ng-click="tongGia()" ng-if="checkTongGia">
+                    <strong>Tổng giá (VNĐ)</strong>
+                    <i class="fa fa-caret-up" aria-hidden="true"></i>
+                </button>
+            </th>
+            <th>
+                <button class="btn btn-default" ng-click="trangThai()" ng-if="!checkTrangThai">
+                    <strong>Trạng thái</strong>
+                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                </button>
+                <button class="btn btn-default" ng-click="trangThai()" ng-if="checkTrangThai">
+                    <strong>Trạng thái</strong>
+                    <i class="fa fa-caret-up" aria-hidden="true"></i>
+                </button>
+            </th>
+            <th>Thao tác</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="order in orders">
+            <td>{{order.idOrder}}</td>
+            <td>{{order.account.username}}</td>
+            <td>{{order.personTake}}</td>
+            <td>{{order.phoneTake}}</td>
+            <td>{{order.address}}</td>
+            <td>{{order.createDate|date:'dd/MM/yyyy HH:mm:ss'}}</td>
+            <td>{{order.total|number}}</td>
+            <td>
         <span ng-if="order.status==0">
             <span class="text-warning">Chưa thanh toán</span>
         </span>
-        <span ng-if="order.status==1">
+                <span ng-if="order.status==1">
             <span class="text-info">Đã thanh toán</span>
         </span>
-        <span ng-if="order.status==2">
+                <span ng-if="order.status==2">
             <span class="text-primary">Đang giao hàng</span>
         </span>
-        <span ng-if="order.status==3">
+                <span ng-if="order.status==3">
             <span class="text-success">Hoàn tất</span>
         </span>
-        <span ng-if="order.status==4">
+                <span ng-if="order.status==4">
             <span class="text-dark">Hoàn đơn</span>
         </span>
-            <select ng-model="form.status" ng-change="updateStatus(order.idOrder)" class="form-select" >
-                <option ng-repeat="item in status" ng-value="item.id">{{item.name}}</option>
-            </select>
-        </td>
-        <td>
-            <a href="#!order-detail" ng-click="getOrder(order.idOrder)" class="btn btn-default">
-                <i class="fa fa-info-circle" aria-hidden="true"></i> Chi tiết
-            </a>
-        </td>
-    </tr>
-    </tbody>
-</table>
+                <select ng-model="form.status" ng-change="updateStatus(order.idOrder)" class="form-select" >
+                    <option ng-repeat="item in status" ng-value="item.id">{{item.name}}</option>
+                </select>
+            </td>
+            <td>
+                <a href="#!order-detail" ng-click="getOrder(order.idOrder)" class="btn btn-default">
+                    <i class="fa fa-info-circle" aria-hidden="true"></i> Chi tiết
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

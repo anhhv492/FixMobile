@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -28,7 +28,7 @@ public class Accessory {
     private Integer quantity;
 
     @Column(name = "create_date")
-    private java.sql.Date createDate;
+    private Date createDate;
 
     @Column(name = "color")
     private String color;

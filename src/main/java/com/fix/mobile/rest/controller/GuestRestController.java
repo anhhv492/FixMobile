@@ -1,6 +1,7 @@
 package com.fix.mobile.rest.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fix.mobile.dto.ColorProductResponDTO;
 import com.fix.mobile.entity.*;
 import com.fix.mobile.repository.SaleRepository;
 import com.fix.mobile.service.*;
@@ -40,6 +41,15 @@ public class GuestRestController {
     private OrderDetailService orderDetailService;
     @Autowired
     private SaleRepository saleService;
+
+    @Autowired
+    private  CapacityService capacityService;
+
+    @Autowired
+    private RamService ramService;
+
+    @Autowired
+    private ColorService colorService;
     
     Order order = null;
     Account account = null;
@@ -169,6 +179,7 @@ public class GuestRestController {
         return carts;
     }
 
+
     @GetMapping("/cart/sale")
     public List<Sale> getSaleByAccount(@PathVariable("id") Integer id){
         List<Sale> sales = saleService.findAllByDate();
@@ -179,5 +190,43 @@ public class GuestRestController {
         Optional<Product> product = productService.findById(productCode);
 
         return Optional.of(product.get());
+    }
+
+    @GetMapping("/getAllCapacity")
+    public List<Capacity> getAllCapacity(){
+        return capacityService.findAll();
+    }
+
+    @GetMapping("/getAllRam")
+    public List<Ram> getAllRam(){
+        return ramService.findAll();
+    }
+
+    @GetMapping("/getAllColor")
+    public List<Color> getAllColor(){
+        return colorService.findAll();
+    }
+
+
+    @GetMapping("/getProductByNameAndCapacityAndColor")
+    public List<Product> getProduct(@RequestParam("name") String name,
+                              @RequestParam("capacity") Integer capacity,
+                              @RequestParam("color") Integer color){
+        return productService.findByNameAndCapacityAndColor(name, capacity, color);
+    }
+
+    @GetMapping("/getTop4")
+    public List<Accessory> getTop4(){
+        return accessoryService.getTop4();
+    }
+
+    @GetMapping("/getOneAccessory")
+    public Accessory getOneAccessory(@RequestParam("id") Integer id){
+        return accessoryService.findById(id).orElse(null);
+    }
+
+    @GetMapping("/getColorProductByName")
+    public List<ColorProductResponDTO> getColorProductByName(@RequestParam("name") String name){
+        return productService.getColorProductByName(name);
     }
 }

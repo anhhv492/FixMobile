@@ -1,42 +1,44 @@
-<table class="table  table-bordered table-hover container">
-  <thead>
-  <tr>
-    <th>Chọn</th>
-    <th>Sản phẩm</th>
-    <th>Màu</th>
-    <th>Thể loại</th>
-    <th>Giá (VNĐ)</th>
-    <th>Số lượng</th>
-    <th>Hình ảnh</th>
-    <th>Tổng (VNĐ)</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr ng-repeat="orderDetail in orderDetails" ng-if="orderDetail.accessory">
-    <td> <input type="checkbox" name="" ng-checked="checkSelect(orderDetail.idDetail)"
-             ng-click="checkSelected(orderDetail.idDetail)"> </td>
-    <td>{{orderDetail.accessory.name}}</td>
-    <td>{{orderDetail.accessory.color}}</td>
-    <td>{{orderDetail.accessory.category.name}}</td>
-    <td>{{orderDetail.price|number}}</td>
-    <td>{{orderDetail.quantity}}</td>
-    <td><img width="80px" height="80px" src="/images/accessories/{{orderDetail.accessory.image}}" class="pt-2"></td>
-    <td>{{orderDetail.quantity*orderDetail.price|number}}</td>
+<div class="table-responsive">
+  <table class="table  table-bordered table-hover container">
+    <thead>
+    <tr>
+      <th>Chọn</th>
+      <th>Sản phẩm</th>
+      <th>Màu</th>
+      <th>Thể loại</th>
+      <th>Giá (VNĐ)</th>
+      <th>Số lượng</th>
+      <th>Hình ảnh</th>
+      <th>Tổng (VNĐ)</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="orderDetail in orderDetails" ng-if="orderDetail.accessory">
+      <td> <input type="checkbox" name="" ng-checked="checkSelect(orderDetail.idDetail)"
+                  ng-click="checkSelected(orderDetail.idDetail)"> </td>
+      <td>{{orderDetail.accessory.name}}</td>
+      <td>{{orderDetail.accessory.color}}</td>
+      <td>{{orderDetail.accessory.category.name}}</td>
+      <td>{{orderDetail.price|number}}</td>
+      <td>{{orderDetail.quantity}}</td>
+      <td><img width="80px" height="80px" src="{{orderDetail.accessory.image}}" class="pt-2"></td>
+      <td>{{orderDetail.quantity*orderDetail.price|number}}</td>
 
-  </tr>
-  <tr ng-repeat="orderDetail in orderDetails" ng-if="orderDetail.product">
-    <td> <input type="checkbox" name="" ng-checked="checkSelect(orderDetail.idDetail)"
-                ng-click="checkSelected(orderDetail.idDetail)"></td>
-    <td>{{orderDetail.product.name}}</td>
-    <td>{{orderDetail.product.color.name}}</td>
-    <td>{{orderDetail.product.category.name}}</td>
-    <td>{{orderDetail.product.price|number}}</td>
-    <td>{{orderDetail.quantity}}</td>
-    <td><img width="80px" height="80px" src="{{orderDetail.product.images[0].name}}" class="pt-2"></td>
-    <td>{{orderDetail.quantity*orderDetail.price|number}}</td>
-  </tr>
-  </tbody>
-</table>
+    </tr>
+    <tr ng-repeat="orderDetail in orderDetails" ng-if="orderDetail.product">
+      <td> <input type="checkbox" name="" ng-checked="checkSelect(orderDetail.idDetail)"
+                  ng-click="checkSelected(orderDetail.idDetail)"></td>
+      <td>{{orderDetail.product.name}}</td>
+      <td>{{orderDetail.product.color.name}}</td>
+      <td>{{orderDetail.product.category.name}}</td>
+      <td>{{orderDetail.product.price|number}}</td>
+      <td>{{orderDetail.quantity}}</td>
+      <td><img width="80px" height="80px" src="{{orderDetail.product.images[0].name}}" class="pt-2"></td>
+      <td>{{orderDetail.quantity*orderDetail.price|number}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
 <div class="container glyphicon-zoom-in">
   <form role="formProductChange" method="post" class="row" name="myForm"
         enctype="multipart/form-data">

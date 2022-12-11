@@ -231,6 +231,22 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window,$timeou
             $scope.loadMoneyShip();
             $rootScope.carts.splice(index, 1);
             $window.location.href = '#!cart';
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+
+            Toast.fire({
+                icon: 'success',
+                title: 'Xóa thành công!'
+            })
             console.log('I was closed by the timer')
         }
         $rootScope.saveLocalStorage();
@@ -432,7 +448,7 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window,$timeou
                             $http.post(urlOrder + '/add', $scope.cart, token).then(res => {
                                 if (res.data) {
                                     $http.post(urlOrderDetail + '/add', $rootScope.carts, token).then(res => {
-                                        $window.location.href = '/views/cart/buy-success.html';
+                                        $window.location.href = '/views/cart/buy-cod-success.html';
                                     }).catch(err => {
                                         console.log("err orderDetail", err)
                                     })

@@ -1,9 +1,21 @@
 package com.fix.mobile.service.impl;
 
+
+import com.fix.mobile.dto.ColorProductResponDTO;
+import com.fix.mobile.entity.*;
+import com.fix.mobile.repository.CapacityRepository;
+import com.fix.mobile.repository.ColorRepository;
+import com.fix.mobile.service.CapacityService;
+import com.fix.mobile.service.ProductService;
+import com.fix.mobile.repository.ProductRepository;
+import com.fix.mobile.service.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.fix.mobile.entity.Category;
 import com.fix.mobile.service.ProductService;
 import com.fix.mobile.repository.ProductRepository;
 import com.fix.mobile.entity.Product;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -11,6 +23,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +31,13 @@ import java.util.Optional;
 @Transactional
 public class ProductServiceImpl implements ProductService {
     private final ProductRepository repository;
+
+
+    @Autowired
+    private CapacityRepository capacityRepository;
+
+    @Autowired
+    private ColorRepository colorRepository;
 
 
     public ProductServiceImpl(ProductRepository repository) {
@@ -96,7 +116,25 @@ public class ProductServiceImpl implements ProductService {
         return repository.findByProductLitmitPrice();
     }
 
+    @Override
+    public List<Product> findByNameAndCapacityAndColor(String name, Integer capacity, Integer color) {
+        Color colorfind = colorRepository.findById(color).orElse(null);
+        Capacity capacityfind = capacityRepository.findById(capacity).orElse(null);
+        return repository.findByNameAndCapacityAndColor(name, capacityfind, colorfind);
+    }
 
+    @Override
+    public List<ColorProductResponDTO> getColorProductByName(String name) {
+        List<Product> productList = repository.findColorByNameProduct(name);
+
+        List<ColorProductResponDTO> colorProductResponDTOList = new ArrayList<>();
+        for (int i = 0; i < productList.size(); i++) {
+            ColorProductResponDTO colorProductResponDTO = new ColorProductResponDTO();
+            colorProductResponDTO.setColor(productList.get(i).getColor().getIdColor());
+            colorProductResponDTOList.add(colorProductResponDTO);
+        }
+        return colorProductResponDTOList;
+    }
 
 
 }

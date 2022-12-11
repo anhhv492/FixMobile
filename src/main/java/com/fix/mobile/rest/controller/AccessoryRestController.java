@@ -1,5 +1,7 @@
 package com.fix.mobile.rest.controller;
 
+import com.fix.mobile.dto.accessory.AccessoryDTO;
+import com.fix.mobile.dto.accessory.AccessoryResponDTO;
 import com.fix.mobile.entity.Accessory;
 import com.fix.mobile.entity.Category;
 import com.fix.mobile.helper.ExcelHelper;
@@ -11,10 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.websocket.server.PathParam;
 import java.util.List;
 import java.util.Optional;
 
@@ -69,11 +70,12 @@ public class AccessoryRestController {
 		return accessories;
 	}
 
-	@PostMapping
-	public Accessory save(@RequestBody Accessory accessory) throws Exception{
-		LOGGER.info("save: "+accessory);
+	@PostMapping(value = "/create", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+	public AccessoryResponDTO save(
+			@ModelAttribute AccessoryDTO accessoryDTO) throws Exception{
+		LOGGER.info("save: "+accessoryDTO);
 //		googleDriveService.upLoadFile(accessory.getImage(), accessory.getImage(), "image/png");
-		return accessoryService.save(accessory);
+		return accessoryService.save(accessoryDTO);
 	}
 	//change status accessory
 	@PutMapping("/change/{id}")
@@ -88,10 +90,10 @@ public class AccessoryRestController {
 		return accessoryRepository.save(accessory);
 	}
 	//update accessory
-	@PutMapping("/{id}")
-	public Accessory update(@PathVariable("id") Integer id, @RequestBody Accessory accessory){
-		LOGGER.info("update: "+accessory);
-		return accessoryService.update(accessory,id);
+	@PostMapping(value = "/update", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+	public AccessoryResponDTO update(@RequestParam("id") Integer id, @ModelAttribute AccessoryDTO accessoryDTO){
+		LOGGER.info("update: "+accessoryDTO);
+		return accessoryService.update(id, accessoryDTO);
 	}
 
 //	@PostMapping("/read-excel")

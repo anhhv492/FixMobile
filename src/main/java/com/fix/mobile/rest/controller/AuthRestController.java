@@ -42,20 +42,6 @@ public class AuthRestController {
     @Autowired
     JwtUtil jwtUtil;
 
-
-
-
-    @PostMapping("/singUp")
-    public ResponseEntity<?> singUp(@RequestBody SingUpDTO singUpDTO){
-
-        Date date = new Date();
-        Role role =  roleService.findById(3).get();
-        Account account = new Account(singUpDTO.getUsername(),singUpDTO.getPassword()
-                ,singUpDTO.getFullName(),  singUpDTO.getGender(), singUpDTO.getEmail() , date, role, singUpDTO.getPhone());
-        accountService.save(account);
-        return ResponseEntity.ok().body(singUpDTO);
-    }
-
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginDTO loginDto) throws Exception {
         try {
