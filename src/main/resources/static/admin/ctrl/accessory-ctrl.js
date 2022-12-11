@@ -120,11 +120,9 @@ app.controller('rest_accessory', function($scope, $http) {
         });
         $http(req).then(response => {
             console.log(response.data);
-            $scope.message("thêm mới thành công");
+            $scope.message("Thêm mới thành công");
             $scope.reset();
-        }).catch(error => {
-            $scope.error('thêm mới thất bại');
-        });
+        })
     };
     $scope.changeStatus = function(accessory) {
         Swal.fire({
@@ -228,11 +226,24 @@ app.controller('rest_accessory', function($scope, $http) {
         });
         $http(req).then(response => {
             console.log("ddd " + response);
-            $scope.message("cập nhật thành công");
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 1500,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+
+            Toast.fire({
+                icon: 'success',
+                title: 'Cập nhật thành công!'
+            })
             $scope.reset();
-        }).catch(error => {
-            $scope.error('cập nhật thất bại');
-        });
+        })
     };
     // submit form
     $scope.doSubmit = function() {

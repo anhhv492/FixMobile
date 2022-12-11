@@ -19,7 +19,7 @@
             <form class="register-form" name="myForm" ng-controller="register-ctrl"  modelAttribute="account">
               <div class="form-group">
                 <label for="username"> Tên tài khoản</label>
-                <input id="username" type="text" class="form-control rounded-left" ng-model="form.username" path="username"
+                <input oninput="this.value = this.value.toLowerCase().trim()" id="username" type="text" class="form-control rounded-left" ng-model="form.username" path="username"
                   name="username" placeholder="Tên tài khoản" pattern="^[a-zA-Z0-9_-]{3,100}$"
                        required  maxlength="250">
                   <span ng-show="myForm.$submitted || myForm.username.$dirty">
