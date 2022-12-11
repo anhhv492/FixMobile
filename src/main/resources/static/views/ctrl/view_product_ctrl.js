@@ -18,6 +18,7 @@ app.controller('view_product_ctrl', function ($scope,$http){
     $scope.productAddCart = {};
     $scope.chechkColor = true;
     $scope.colorByNamePr =[];
+    $scope.namePr = "";
 
     const getAllRam = "http://localhost:8080/rest/guest/getAllRam";
     const getAllCapacity = "http://localhost:8080/rest/guest/getAllCapacity";
@@ -88,15 +89,7 @@ app.controller('view_product_ctrl', function ($scope,$http){
         })
     }
 
-    $scope.getColorByNamePr = function (){
-        $http.get(getColor+$scope.displayProduct.name).then(function (response) {
-            $scope.colorByNamePr = response.data;
-            console.log($scope.colorByNamePr);
-            console.log(response.data)
-        }).catch(err => {
-            console.log(err);
-        })
-    }
+
 
 
 
@@ -127,11 +120,32 @@ app.controller('view_product_ctrl', function ($scope,$http){
         });
     }
 
+    $scope.getColorByNamePr = function (id){
+        $http.get('/rest/admin/product/findByProductCode?id='+id,token).then(function(response) {
+            $scope.namePr = response.data.name;
+            console.log($scope.namePr)
+            $http.get('/rest/guest/getColorProductByName?name='+$scope.namePr).then(function (response) {
+                $scope.colorByNamePr = response.data;
+                for (let i = 0; i < $scope.allColor.length; i++) {
+                    for (let j = 0; j < $scope.colorByNamePr.length; j++) {
+                        if ($scope.allColor[i].idColor == $scope.colorByNamePr[j].color){
+                                
+                        }
+                    }
+                }
+            }).catch(err => {
+                console.log(err);
+            })
+        }).catch(error=>{
+            console.log("Lỗi!!!");
+        });
+    }
+
     if (productId == null){
 
     }else {
         $scope.getOneProduct(productId);
-        $scope.getColorByNamePr();
+        $scope.getColorByNamePr(productId);
     }
 
 
