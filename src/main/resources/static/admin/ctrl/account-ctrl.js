@@ -296,6 +296,7 @@ console.log("Kết thúc check trùng")
             })
             if (a == 1) {
                 var formData = new FormData();
+                angular.forEach()
                 angular.forEach($scope.files, function(image) {
                     formData.append('image', image);
                 });
@@ -307,6 +308,7 @@ console.log("Kết thúc check trùng")
                 formData.append("password", $scope.form.password);
                 formData.append("phone",$scope.form.phone);
                 formData.append("role",$scope.idrole_form);
+
                 let req = {
                     method: 'POST',
                     url: '/rest/admin/accounts/create',
@@ -404,7 +406,7 @@ console.log("Kết thúc check trùng")
         Swal.fire({
             title: 'Đang cập nhật vui lòng chờ!',
             html: 'Vui lòng chờ <b></b> milliseconds.',
-            timer: 2000,
+            timer: 1000,
             timerProgressBar: true,
             didOpen: () => {
                 Swal.showLoading()
@@ -464,7 +466,7 @@ console.log("Kết thúc check trùng")
     //upload hình
     $scope.upLoadFile = function (files) {
         $scope.files = files;
-        console.log($scope.files);
+        console.log("SCope.file : " + $scope.files);
         // $http.post(urlImage, form,token, {
         //     transformRequest: angular.identity,
         //     headers: { 'Content-Type': undefined }
