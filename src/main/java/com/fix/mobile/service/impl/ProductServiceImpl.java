@@ -1,6 +1,7 @@
 package com.fix.mobile.service.impl;
 
 
+import com.fix.mobile.dto.ColorProductResponDTO;
 import com.fix.mobile.entity.*;
 import com.fix.mobile.repository.CapacityRepository;
 import com.fix.mobile.repository.ColorRepository;
@@ -22,6 +23,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -119,6 +121,19 @@ public class ProductServiceImpl implements ProductService {
         Color colorfind = colorRepository.findById(color).orElse(null);
         Capacity capacityfind = capacityRepository.findById(capacity).orElse(null);
         return repository.findByNameAndCapacityAndColor(name, capacityfind, colorfind);
+    }
+
+    @Override
+    public List<ColorProductResponDTO> getColorProductByName(String name) {
+        List<Product> productList = repository.findColorByNameProduct(name);
+
+        List<ColorProductResponDTO> colorProductResponDTOList = new ArrayList<>();
+        for (int i = 0; i < productList.size(); i++) {
+            ColorProductResponDTO colorProductResponDTO = new ColorProductResponDTO();
+            colorProductResponDTO.setColor(productList.get(i).getColor().getIdColor());
+            colorProductResponDTOList.add(colorProductResponDTO);
+        }
+        return colorProductResponDTOList;
     }
 
 

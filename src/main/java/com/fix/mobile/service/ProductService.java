@@ -1,6 +1,7 @@
 package com.fix.mobile.service;
 
 
+import com.fix.mobile.dto.ColorProductResponDTO;
 import com.fix.mobile.entity.Category;
 import com.fix.mobile.entity.Product;
 import org.springframework.data.domain.Page;
@@ -19,5 +20,7 @@ public interface ProductService extends GenericService<Product, Integer> {
 	List<Product> findByProductLitmitPrice();
 
     List<Product> findByNameAndCapacityAndColor(String name, Integer capacity, Integer color);
+
+    List<ColorProductResponDTO> getColorProductByName(String name);
 }
 

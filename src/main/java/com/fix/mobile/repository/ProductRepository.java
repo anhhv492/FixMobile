@@ -32,6 +32,9 @@ public interface ProductRepository extends PagingAndSortingRepository<Product, I
     @Query(value = "select  * from  products p where p.price <= 200000 order by p.id_product desc limit 8",nativeQuery = true)
     List<Product> findByProductLitmitPrice();
 
+    @Query(value = "select * from products p where p.name = :name ", nativeQuery = true)
+    List<Product> findColorByNameProduct(String name);
+
 
     List<Product> findByNameAndCapacityAndColor(String name, Capacity capacity, Color color );
 

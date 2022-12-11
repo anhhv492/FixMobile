@@ -1,6 +1,7 @@
 package com.fix.mobile.rest.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fix.mobile.dto.ColorProductResponDTO;
 import com.fix.mobile.entity.*;
 import com.fix.mobile.repository.SaleRepository;
 import com.fix.mobile.service.*;
@@ -221,5 +222,10 @@ public class GuestRestController {
     @GetMapping("/getOneAccessory")
     public Accessory getOneAccessory(@RequestParam("id") Integer id){
         return accessoryService.findById(id).orElse(null);
+    }
+
+    @GetMapping("/getColorProductByName")
+    public List<ColorProductResponDTO> getColorProductByName(@RequestParam("name") String name){
+        return productService.getColorProductByName(name);
     }
 }

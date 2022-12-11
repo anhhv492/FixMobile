@@ -3,6 +3,7 @@ package com.fix.mobile.rest.controller;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.fix.mobile.dto.ImayProductDTO;
+import com.fix.mobile.dto.ImeiProductResponDTO;
 import com.fix.mobile.entity.*;
 import com.fix.mobile.helper.ExcelProducts;
 import com.fix.mobile.payload.SaveProductRequest;
@@ -240,6 +241,21 @@ public class RestProductsController {
 		if (productCode == null) ;
 			product = productService.findById(productCode);
 		return product;
+	}
+
+	@GetMapping("/pageImei")
+	public Page<ImeiProductResponDTO> pageImei (
+			@RequestParam(name = "page" , defaultValue = "1") int page,
+			@RequestParam(name = "size" , defaultValue = "10") int size,
+			@RequestParam(name = "status", defaultValue = "1") Integer status
+	){
+		Pageable pageable = PageRequest.of(page - 1 , size);
+		return imayService.findAll(pageable, status);
+	}
+
+	@PostMapping("/deleteImeiById")
+	public void deleteImei(@RequestParam("id") Integer id){
+		imayService.deleteById(id);
 	}
 
 }

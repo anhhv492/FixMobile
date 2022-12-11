@@ -16,10 +16,13 @@ app.controller('view_product_ctrl', function ($scope,$http){
     $scope.capacityId = 1;
     $scope.listProduct =[];
     $scope.productAddCart = {};
+    $scope.chechkColor = true;
+    $scope.colorByNamePr =[];
 
     const getAllRam = "http://localhost:8080/rest/guest/getAllRam";
     const getAllCapacity = "http://localhost:8080/rest/guest/getAllCapacity";
     const getAllColor = "http://localhost:8080/rest/guest/getAllColor";
+    const getColor  = "http://localhost:8080/rest/guest/getColorProductByName?name="
 
 
 
@@ -85,6 +88,17 @@ app.controller('view_product_ctrl', function ($scope,$http){
         })
     }
 
+    $scope.getColorByNamePr = function (){
+        $http.get(getColor+$scope.displayProduct.name).then(function (response) {
+            $scope.colorByNamePr = response.data;
+            console.log($scope.colorByNamePr);
+            console.log(response.data)
+        }).catch(err => {
+            console.log(err);
+        })
+    }
+
+
 
     $scope.getColor();
     $scope.getCapacity();
@@ -106,6 +120,7 @@ app.controller('view_product_ctrl', function ($scope,$http){
                 $scope.displayProduct.imageDefault = $scope.oneProduct.images[i].name;
             }
             $scope.productAddCart = response.data;
+
             console.log($scope.oneProduct)
         }).catch(error=>{
             console.log("Sản phẩm chưa có nhiều ảnh!!!");
@@ -116,6 +131,7 @@ app.controller('view_product_ctrl', function ($scope,$http){
 
     }else {
         $scope.getOneProduct(productId);
+        $scope.getColorByNamePr();
     }
 
 
