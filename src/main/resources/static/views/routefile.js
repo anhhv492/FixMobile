@@ -62,6 +62,10 @@ app.config(function($routeProvider){
             controller: "home-ctrl",
 
         })
+        .when("/productchange",{
+            templateUrl:"order/detail/productchange.html",
+            controller: "productchange-ctrl",
+        })
 
 
 });

@@ -1,8 +1,7 @@
 <h3 class="text-center text-primary text-opacity-50">Danh sách hàng cần trả</h3>
-
 <div class="mt-2 col-2 offset-10">
-    <button ng-click="edit(product)" class="btn btn-secondary">Xác nhận</button>
-    <button ng-click="edit(product)" class="btn btn-secondary">Hủy bỏ</button>
+    <button ng-click="postRequest()" class="btn btn-secondary">Xác nhận</button>
+    <button ng-click="putRequest()" class="btn btn-secondary">Hủy bỏ</button>
 </div>
 <table class="table table-bordered table-hover container mt-2">
     <thead>
@@ -11,25 +10,44 @@
         <th>Khách hàng</th>
         <th>Ngày đổi trả</th>
         <th>Tình trạng máy</th>
-        <th>Ảnh sản phẩm</th>
-        <th>Imay máy</th>
+        <th>Ảnh tình trạng máy</th>
         <th>Sản phẩm</th>
         <th>Trạng thái</th>
     </tr>
     </thead>
     <tbody>
     <tr ng-repeat="prChange in listProductChange">
-        <td><input type="checkbox" name="" ng-checked="checkSelect(orderDetail.idDetail)"
-                   ng-click="checkSelected(orderDetail.idDetail)"></td>
-        <td>{{prChange.orderDetail.order.account.username}}</td>
-        <td>{{prChange.productChange.dateChange | date:'dd/MM/yyyy h:mm:a'}}</td>
-        <td>{{prChange.productChange.note}}</td>
+        <td><input type="checkbox" name="" ng-checked="checkSelect(prChange)"
+                   ng-click="checkSelected(prChange.idChange)"></td>
+        <td>{{prChange.account.username}}</td>
+        <td>{{prChange.dateChange | date:'dd/MM/yyyy h:mm:a'}}</td>
+        <td>{{prChange.note}}</td>
         <td><img class="img-responsive" width="80px" height="80px"
-            src="{{prChange.productChange.images.length>0?prChange.productChange.images[0].name:''}}"></td>
-        <td>{{prChange.orderDetail.product.listImay[0].name}}</td>
-        <td>{{prChange.orderDetail.product.name}}</td>
+            src="{{prChange.images.length>0?prChange.images[0].name:''}}"></td>
+        <td>
+             <button ng-click="getAllProductChangeDetails(prChange.idPro)" class="btn btn-default"
+                          data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                <i class="fa fa-info-circle" aria-hidden="true"></i> Chi tiết
+             </button>
+        </td>
         <td>{{prChange.status==0?'Hủy yêu cầu':'Chờ xác nhận'}}</td>
 
     </tr>
     </tbody>
 </table>
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Sản phẩm - {{nameProduct}}</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body ">
+                <p class="alert-secondary" ng-repeat="imei in imeis">{{$index+1}}, {{imei.name}}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
