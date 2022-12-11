@@ -12,7 +12,9 @@
                 <div class="row">
                     <div class="col-xs-12 col-md-6">
                         <p class="lead">
-                            {{accessory.price|number}}VNĐ</p>
+                            <p ng-if="priceSale[$index]==0">{{accessory.price|number}} VNĐ</p>
+                            <p ng-if="priceSale[$index]!=0"> <del>{{accessory.price|number}} VNĐ &nbsp; </del>{{priceSale[$index]|number}} VNĐ</p>
+                        </p>
                     </div>
                     <div class="btn-group">
                         <a class="btn btn-details" href="#!accessoryDetail" ng-click="getOneAccessory(accessory.idAccessory)">Details</a>

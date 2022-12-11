@@ -499,6 +499,18 @@ app.controller("sale_ctrl", function ($scope, $http) {
         $scope.saleadd.voucher="";
         $scope.saleadd.name="";
     }
+    $scope.getSale=function (money,  idPrd,  idAcsr){
+        // var urlSale=`/admin/rest/sale/getbigsale?money=`+money+`&idPrd=`+idPrd+`&idAcsr=`+idAcsr;
+        let urlSale = `http://localhost:8080/admin/rest/sale/getbigsale?money=&idPrd=3&idAcsr=`
+        $http.get(urlSale, token).then(resp => {
+            console.log(resp.data+"hihihihi");
+            debugger
+        }).catch(error => {
+            console.log(error + "hahha");
+        })
+        console.log(urlSale);
+    }
+    $scope.getSale('','','');
 
 })
 
