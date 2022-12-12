@@ -18,19 +18,22 @@
     <tbody>
     <tr ng-repeat="prChange in listProductChange">
         <td><input type="checkbox" name="" ng-checked="checkSelect(prChange)"
-                   ng-click="checkSelected(prChange.idChange)"></td>
+                   ng-click="checkSelected(prChange.idChange)" ></td>
         <td>{{prChange.account.username}}</td>
         <td>{{prChange.dateChange | date:'dd/MM/yyyy h:mm:a'}}</td>
         <td>{{prChange.note}}</td>
         <td><img class="img-responsive" width="80px" height="80px"
             src="{{prChange.images.length>0?prChange.images[0].name:''}}"></td>
         <td>
-             <button ng-click="getAllProductChangeDetails(prChange.idPro)" class="btn btn-default"
+             <button ng-click="getAllProductChangeDetails(prChange.idChange)" class="btn btn-default"
                           data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                 <i class="fa fa-info-circle" aria-hidden="true"></i> Chi tiết
              </button>
         </td>
-        <td>{{prChange.status==0?'Hủy yêu cầu':'Chờ xác nhận'}}</td>
+        <td ng-if="prChange.status==0">Hủy yêu cầu</td>
+        <td ng-if="prChange.status==1">Chờ xác nhận</td>
+        <td ng-if="prChange.status==2">Đã xác nhận</td>
+
 
     </tr>
     </tbody>

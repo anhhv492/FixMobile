@@ -67,17 +67,13 @@ public class ProductChangeRestController {
 	public void saveRequest(@ModelAttribute ChangeDetailDTO changeDetails){
 		try {
 		    if(changeDetails!=null){
-				for ( String  s :  changeDetails.getImaysp()) {
 					ChangeDetail change= new ChangeDetail();
-					change.setImaysp(s);
 					change.setProduct(changeDetails.getProduct());
 					change.setOrderDetail(change.getOrderDetail());
-					changeDetailsService.createChangeDetails(changeDetails.getOrderDetail().getIdDetail(),s);
-				}
+					changeDetailsService.createChangeDetails(changeDetails.getOrderDetail().getIdDetail());
 			}else;
 		}catch (Exception e ){
 			e.getMessage();
-			e.printStackTrace();
 		}
 	}
 
@@ -96,9 +92,12 @@ public class ProductChangeRestController {
 		return listProduct;
 	}
 
-	@RequestMapping(value= "/getPrChangeDetails/{idChange}")
-	public List<ChangeDetail> listPrChangeDetails(@PathVariable("idChange") String id) {
+	@RequestMapping(value= "/getPrChangeDetails",  method =  RequestMethod.GET )
+	public List<ChangeDetail> listPrChangeDetails(@RequestParam("productChange") Integer  id) {
 		List<ChangeDetail> listPrChangeDetails = changeDetailsService.findPrChangeDetails(id);
+		if(listPrChangeDetails.isEmpty()){
+			return null;
+		}
 		return listPrChangeDetails;
 	}
 	@RequestMapping(value= "/getPrChangeByUser/{username}", method =  RequestMethod.GET)

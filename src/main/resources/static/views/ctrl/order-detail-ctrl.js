@@ -164,6 +164,12 @@ app.controller('order-detail-ctrl',function($rootScope,$scope,$http){
                                 })
                                 $http(req).then(response => {
                                     console.log("ddd " + response.data);
+                                    $http.post(`/rest/productchange/saveRequest`,
+                                        $scope.formProductChange).then(resp=>{
+                                        console.log(resp.data)
+                                    }).catch(error=>{
+                                        console.log(error);
+                                    })
                                     $scope.message("Gửi yêu cầu đổi trả thành công");
                                     $('#staticBackdrop').modal('hide');
                                 }).catch(error => {

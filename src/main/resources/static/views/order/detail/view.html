@@ -28,7 +28,7 @@
       <td>{{orderDetail.quantity*orderDetail.price|number}}</td>
     </tr>
     <tr ng-repeat="orderDetail in orderDetails" ng-if="orderDetail.product">
-      <td> <input type="checkbox" name="" ng-checked="checkSelect(orderDetail.idDetail)"
+      <td> <input type="checkbox" name=""
                   ng-click="checkSelected(orderDetail.idDetail)"></td>
       <td>{{orderDetail.product.name}}</td>
       <td>{{orderDetail.product.color.name}}</td>
@@ -70,8 +70,8 @@
                 <tr >
                   <th scope="row">
                     <div class="d-flex align-items-center">
-                      <div class="flex-column ms-4">
-                         <h4 class="mb-2">{{formDetails.product.name}}</h4>
+                      <div class="flex-column ms-4" >
+                         <h4  class="mb-2" ng-model="formProductChange.formDetails">{{formDetails.product.name}}</h4>
                          <p> thể loại : {{formDetails.product.category.name}}  </p>
                          <span class="mb-0 text-success">ghi chú: {{formDetails.product.note}}</span>
                       </div>
