@@ -146,11 +146,10 @@ app.controller('product', function($scope, $http) {
                         clearInterval(timerInterval)
                     }
                 }).then((result) => {
-                    /* Read more about handling dismissals below */
                     if (result.dismiss === Swal.DismissReason.timer) {
-                        $http.delete(`${pathAPI}/delete/${formProduct.idProduct}`,token).then(response=> {
-                        $scope.products.splice($scope.products.indexOf(formProduct), 1);
-                        $scope.message('Đã xóa thành công sản phẩm');
+                        $http.post(`${pathAPI}/delete?id=${formProduct.idProduct}`,token).then(response=> {
+                        $scope.message('Đã cập nhật trạng thái  sản phẩm thành hết hàng');
+                        $scope.getProducts();
                     }).catch(error=>{
                         $scope.error('xóa thất bại');
                     });
@@ -190,7 +189,7 @@ app.controller('product', function($scope, $http) {
         formData.append('size', $scope.formProduct.size);
         formData.append('price',$scope.formProduct.price);
         formData.append('camera',$scope.formProduct.camera);
-        formData.append('status',$scope.formProduct.status=1)
+        formData.append('status',$scope.formProduct.status)
         formData.append( 'category',$scope.formProduct.category)
         formData.append('ram',$scope.formProduct.ram)
         formData.append('color',$scope.formProduct.color)
@@ -356,7 +355,7 @@ app.controller('product', function($scope, $http) {
     };
 
 
-    // pagination
+    // pagination phân trang
     $scope.next=function(){
         $scope.check_first=true;
         $scope.index++;
