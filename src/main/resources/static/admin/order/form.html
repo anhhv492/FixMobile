@@ -58,6 +58,7 @@
                     <i class="fa fa-caret-up" aria-hidden="true"></i>
                 </button>
             </th>
+            <th>Tiền ship</th>
             <th>
                 <button class="btn btn-default" ng-click="tongGia()" ng-if="!checkTongGia">
                     <strong>Tổng giá (VNĐ)</strong>
@@ -68,6 +69,7 @@
                     <i class="fa fa-caret-up" aria-hidden="true"></i>
                 </button>
             </th>
+            <th>Ghi chú</th>
             <th>
                 <button class="btn btn-default" ng-click="trangThai()" ng-if="!checkTrangThai">
                     <strong>Trạng thái</strong>
@@ -89,29 +91,37 @@
             <td>{{order.phoneTake}}</td>
             <td>{{order.address}}</td>
             <td>{{order.createDate|date:'dd/MM/yyyy HH:mm:ss'}}</td>
+            <td>{{order.moneyShip|number}}</td>
             <td>{{order.total|number}}</td>
+            <td>{{order.note}}</td>
             <td>
-        <span ng-if="order.status==0">
-            <span class="text-warning">Chưa thanh toán</span>
+        <span ng-if="order.status==0 && order.statusBuy==0">
+            <span class="text-warning">Chưa thanh toán (Chờ xác nhận)</span>
         </span>
-                <span ng-if="order.status==1">
-            <span class="text-info">Đã thanh toán</span>
+        <span ng-if="order.status==0 && order.statusBuy==1">
+            <span class="text-info">Đã thanh toán (Chờ xác nhận)</span>
         </span>
-                <span ng-if="order.status==2">
+        <span ng-if="order.status==1">
+            <span class="text-primary">Xác nhận</span>
+        </span>
+        <span ng-if="order.status==2">
             <span class="text-primary">Đang giao hàng</span>
         </span>
-                <span ng-if="order.status==3">
-            <span class="text-success">Hoàn tất</span>
+        <span ng-if="order.status==3">
+            <span class="text-success">Hoàn tất giao dịch</span>
         </span>
-                <span ng-if="order.status==4">
-            <span class="text-dark">Hoàn đơn</span>
+        <span ng-if="order.status==4">
+            <span class="text-dark">Hủy đơn</span>
+        </span>
+        <span ng-if="order.status==5">
+            <span class="text-dark">Hoàn trả</span>
         </span>
                 <select ng-model="form.status" ng-change="updateStatus(order.idOrder)" class="form-select" >
                     <option ng-repeat="item in status" ng-value="item.id">{{item.name}}</option>
                 </select>
             </td>
             <td>
-                <a href="#!order-detail" ng-click="getOrder(order.idOrder)" class="btn btn-default">
+                <a href="#!order-detail" ng-click="getOrder(order)" class="btn btn-default">
                     <i class="fa fa-info-circle" aria-hidden="true"></i> Chi tiết
                 </a>
             </td>

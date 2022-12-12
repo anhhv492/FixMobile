@@ -50,6 +50,12 @@ public class OrderRestController {
         Collections.sort(orders,comparator);
         return orders;
     }
+
+    @GetMapping(value="/rest/staff/order/{id}")
+    public Order findOrderById(@PathVariable("id") Integer id){
+        Order order = orderService.findById(id).get();
+        return order;
+    }
     @GetMapping(value="/cart-accessory/{id}")
     public Accessory findById(@PathVariable("id") Integer id){
         Optional<Accessory> accessory = accessoryService.findById(id);
@@ -62,6 +68,25 @@ public class OrderRestController {
     public List<Order> getAllByAccount(){
         Account account = accountService.findByUsername(UserName.getUserName());
         List<Order> orders = orderService.findAllByAccount(account);
+        Comparator comparator = new Comparator<Order>() {
+            @Override
+            public int compare(Order o1, Order o2) {
+                return o2.getIdOrder().compareTo(o1.getIdOrder());
+            }
+        };
+        Collections.sort(orders,comparator);
         return orders;
+    }
+
+    @PostMapping("/rest/user/order/change")
+    public Order orderChange(@RequestBody Order order){
+        Order orderOld = orderService.findById(order.getIdOrder()).get();
+        if(orderOld.getStatus()<2){
+            orderOld.setStatus(4);
+            orderOld.setNote(order.getNote());
+            orderService.update(orderOld,orderOld.getIdOrder());
+            return order;
+        }
+        return null;
     }
 }

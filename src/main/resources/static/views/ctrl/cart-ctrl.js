@@ -387,7 +387,9 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window,$timeou
                                 $scope.cart.phoneTake= $scope.addressAccount.phoneTake;
                                 $scope.cart.address = $scope.addressAccount.addressDetail+", "+$scope.addressAccount.addressTake;
                                 $scope.cart.total = $scope.totals()+$scope.ship;
-                                $scope.cart.status = 1;
+                                $scope.cart.status = 0;
+                                $scope.cart.statusBuy = 1;
+                                $scope.cart.moneyShip = $scope.ship;
                                 $scope.cart.type = false;
                                 $http.post(urlOrder + '/add', $scope.cart, token).then(res => {
                                     if (res.data) {
@@ -428,6 +430,8 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window,$timeou
                             $scope.cart.address = $scope.addressAccount.addressDetail+", "+$scope.addressAccount.addressTake;
                             $scope.cart.total = $scope.totals()+$scope.ship;
                             $scope.cart.status = 0;
+                            $scope.cart.statusBuy = 0;
+                            $scope.cart.moneyShip = $scope.ship;
                             $scope.cart.type = false;
                             $http.post(urlOrder + '/add', $scope.cart, token).then(res => {
                                 if (res.data) {

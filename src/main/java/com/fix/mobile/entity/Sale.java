@@ -48,7 +48,7 @@ public class Sale {
     @Column(name = "percent_sale")
     private Integer percentSale;
 
-    @Column(name = "quantity_use")
+    @Column(name = "quantity")
     private Integer quantity;
 
     @Column(name = "create_time")
