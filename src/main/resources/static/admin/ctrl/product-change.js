@@ -46,8 +46,8 @@ app.controller('product-change',function($rootScope,$scope,$http){
             console.log(error);
         })
     }
-    $scope.getAllProductChangeDetails=function(getOneProduct){
-        $http.get(`/rest/productchange/getPrChangeDetails/${getOneProduct.idChange}`).then(resp=>{
+    $scope.getAllProductChangeDetails=function(id){
+        $http.get(`/rest/productchange/getPrChangeDetails?id=${id}`).then(resp=>{
             $scope.listProductChange = resp.data;
             console.log('dsadsadsdsadas '+$scope.listProductChange);
         }).catch(error=>{
@@ -80,52 +80,23 @@ app.controller('product-change',function($rootScope,$scope,$http){
     }
 
     $scope.postRequest = function(){
-        Swal.fire({
-            title: 'Vui lòng chờ trong giây lát' + '!',
-            html: 'Vui lòng chờ <b></b> milliseconds.',
-            timer: 3500,
-            timerProgressBar: true,
-            didOpen: () => {
-                Swal.showLoading()
-                const b = Swal.getHtmlContainer().querySelector('b')
-                timerInterval = setInterval(() => {
-                    b.textContent = Swal.getTimerLeft()
-                }, 100)
-            },
-            willClose: () => {
-                clearInterval(timerInterval)
-            }
-        })
-        if($scope.seLected.length  == 0){
+        if($scope.seLected.length == 0){
             $scope.error("Hãy chọn yêu cầu để xác nhận");
             return null;
+        }else{
+            $http.post(`/rest/admin/productchange/comfirmRequest`,$scope.seLected).then(response => {
+                console.log("ddd " + response.data);
+                $scope.message("Đã xác nhận yêu cầu");
+                $scope.seLected=[];
+                $scope.getAllProductChange();
+            }).catch(error => {
+                $scope.error('lỗi có bug rồi');
+            });
         }
-        $http.post(`/rest/admin/productchange/comfirmRequest`,$scope.seLected).then(response => {
-            console.log("ddd " + response.data);
-            $scope.message("Đã xác nhận yêu cầu");
-            $scope.getAllProductChange();
-        }).catch(error => {
-            $scope.error('lỗi có bug rồi');
-        });
+
     }
 
     $scope.putRequest = function(){
-        Swal.fire({
-            title: 'Vui lòng chờ trong giây lát' + '!',
-            html: 'Vui lòng chờ <b></b> milliseconds.',
-            timer: 3500,
-            timerProgressBar: true,
-            didOpen: () => {
-                Swal.showLoading()
-                const b = Swal.getHtmlContainer().querySelector('b')
-                timerInterval = setInterval(() => {
-                    b.textContent = Swal.getTimerLeft()
-                }, 100)
-            },
-            willClose: () => {
-                clearInterval(timerInterval)
-            }
-        })
         if($scope.seLected.length  == 0){
             $scope.error("Hãy chọn yêu cầu để xác nhận");
             return null;
@@ -133,6 +104,7 @@ app.controller('product-change',function($rootScope,$scope,$http){
         $http.post(`/rest/admin/productchange/cancelRequest`,$scope.seLected).then(response => {
             console.log("ddd " + response.data);
             $scope.message("Đã hủy yêu cầu");
+            $scope.seLected=[];
             $scope.getAllProductChange();
         }).catch(error => {
             $scope.error('lỗi có bug rồi');
