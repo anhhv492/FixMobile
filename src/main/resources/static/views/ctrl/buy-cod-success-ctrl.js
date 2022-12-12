@@ -1,6 +1,6 @@
 const app = angular.module('app-buy', ['ngRoute']);
-app.controller('buy-cod-success-ctrl',function($scope,$window,$timeout){
-
+app.controller('buy-cod-success-ctrl',function($scope,$window,$timeout,$http){
+    var urlAccount = `http://localhost:8080/rest/admin/accounts`;
     const jwtToken = localStorage.getItem("jwtToken")
     const token = {
         headers: {
@@ -23,11 +23,13 @@ app.controller('buy-cod-success-ctrl',function($scope,$window,$timeout){
                 no-repeat
              `
         })
-        localStorage.removeItem($rootScope.name);
-        console.log('Buy cart Paypal success!')
+
+        $http.get(urlAccount+`/getAccountActive`, token).then(function (respon){
+            localStorage.removeItem(respon.data.username);
+        })
         $timeout(function () {
             $window.location.href = 'http://localhost:8080/views/index.html#!/home/index',token;
-        }, 5500);
+        }, 4000);
     }
     $scope.show();
 })
