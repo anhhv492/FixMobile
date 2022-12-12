@@ -84,7 +84,7 @@ app.controller("register-ctrl",function ($scope, $http,$window){
                         icon: 'success',
                         title: 'Đăng ký thành công!',
                     })
-                    $window.location.href = '#!login';
+                    $window.location.href = '#!home/index';
                     $scope.reset();
                     // alert("Create success!");
                 }).catch(error => {
