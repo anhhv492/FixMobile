@@ -142,6 +142,7 @@ public class GuestRestController {
     public JsonNode cartItems(@RequestBody JsonNode carts){
         account = accountService.findByUsername(UserName.getUserName());
         OrderDetail orderDetail;
+        BigDecimal price =null;
         for (int i=0;i<carts.size();i++){
             if(carts.get(i).get("qty").asInt()<=0){
                 return null;
@@ -154,7 +155,8 @@ public class GuestRestController {
                         orderDetail.setOrder(order);
                         orderDetail.setStatus(order.getStatus());
                         orderDetail.setQuantity(carts.get(i).get("qty").asInt());
-                        orderDetail.setPrice(accessory.get().getPrice());
+                        price = new BigDecimal(carts.get(i).get("price").asDouble());
+                        orderDetail.setPrice(price);
                         orderDetailService.save(orderDetail);
                         accessory.get().setQuantity(accessory.get().getQuantity()-carts.get(i).get("qty").asInt());
                         accessoryService.update(accessory.get(),accessory.get().getIdAccessory());
@@ -167,7 +169,8 @@ public class GuestRestController {
                         orderDetail.setOrder(order);
                         orderDetail.setStatus(order.getStatus());
                         orderDetail.setQuantity(carts.get(i).get("qty").asInt());
-                        orderDetail.setPrice(product.get().getPrice());
+                        price = new BigDecimal(carts.get(i).get("price").asDouble());
+                        orderDetail.setPrice(price);
                         orderDetailService.save(orderDetail);
 //                        for (int j = 0; j < carts.get(i).get("qty").asInt(); j++) {
 //                            imayProducts.get(j).setOrderDetail(orderDetail);
