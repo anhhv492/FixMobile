@@ -1,5 +1,5 @@
 app.controller('product', function($scope, $http) {
-    const pathAPI = "http://localhost:8080/rest/admin/product";
+    const pathAPI = "/rest/admin/product";
     const callApiPage = "http://localhost:8080/rest/admin/product/pageImei?page="
     const callDeleteImei = "http://localhost:8080/rest/admin/product/deleteImeiById?id="
     $scope.formProduct = {};
@@ -560,6 +560,7 @@ app.controller('product', function($scope, $http) {
     $scope.xcellDataImay = function (files){
         var form = new FormData();
         form.append('file',files[0]);
+
         let timerInterval
         Swal.fire({
             title: 'Đang thêm hàng loạt!',
@@ -578,12 +579,13 @@ app.controller('product', function($scope, $http) {
             }
         }).then((result) => {
             if (result.dismiss === Swal.DismissReason.timer) {
-                $http.post(pathAPI+'/readExcelImay',form,token,{
+                $http.post(pathAPI+'/readExcelImay',form,{
                     transformRequest: angular.identity,
                     headers: {'Content-Type': undefined}
                 }).then(res=>{
                     $scope.message("Thêm hàng loạt dữ liệu thành công")
                     console.log('excel',res);
+                    debugger
                 }).catch(err=>{
                     $scope.error("thêm mới hàng loạt thất bại")
                     console.log('err',err);

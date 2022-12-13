@@ -20,7 +20,8 @@ public interface ProductChangeRepository extends PagingAndSortingRepository<Prod
 	@Query("select pr from ProductChange pr where pr.account = ?1")
 	public List<ProductChange> findByAccount(String username);
 
-
+	@Query("select pr from ProductChange pr where pr.status = 2 and pr.idChange = ?1")
+	public List<ProductChange> findByStatusSendEmail(Integer idChange);
 
 
 

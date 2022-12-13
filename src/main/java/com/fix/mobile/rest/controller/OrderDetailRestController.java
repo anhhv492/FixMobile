@@ -51,13 +51,11 @@ public class OrderDetailRestController {
         return imayProducts;
 
     }
-    @GetMapping("/rest/staff/order/detail/imei/add/{idDetail}/{idImeiOld}/{idImeiNew}")
+    @GetMapping("/rest/staff/order/detail/imei/add/{idDetail}/{idImeiNew}")
     public List<ImayProduct> addOrderDetailImei(@PathVariable("idDetail") String idDetail,
-                                                @PathVariable("idImeiOld") String idImeiOld,
                                                 @PathVariable("idImeiNew") String idImeiNew){
-        System.out.println("--id: "+idImeiOld+ " id2: "+idDetail+"--"+idImeiNew);
+        System.out.println("--id: "+idImeiNew+ " id2: "+idDetail+"--");
         Integer idDetailInt = Integer.parseInt(idDetail);
-        Integer idImeiOldInt = Integer.parseInt(idImeiOld);
         Integer idImeiNewInt = Integer.parseInt(idImeiNew);
         OrderDetail orderDetail = orderDetailService.findById(idDetailInt).get();
 
@@ -66,12 +64,16 @@ public class OrderDetailRestController {
         imayProductNew.setOrderDetail(orderDetail);
         imeiProductService.update(imayProductNew,imayProductNew.getIdImay());
 
-        ImayProduct imayProductOld = imeiProductService.findById(idImeiOldInt).get();
-        imayProductOld.setStatus(1);
-        imayProductOld.setOrderDetail(null);
-        imeiProductService.update(imayProductOld,imayProductOld.getIdImay());
-
-        List<ImayProduct> imayProducts = imeiProductService.findByProductAndStatus(productDT,1);
+        List<ImayProduct> imayProducts = imeiProductService.findByProductAndStatus(imayProductNew.getProduct(),1);
+        return imayProducts;
+    }
+    @DeleteMapping("/rest/staff/order/detail/imei/remove/{id}")
+    public List<ImayProduct> changeImei(@PathVariable("id") Integer idImei){
+        ImayProduct imayProduct = imeiProductService.findById(idImei).get();
+        imayProduct.setStatus(1);
+        imayProduct.setOrderDetail(null);
+        imeiProductService.update(imayProduct,imayProduct.getIdImay());
+        List<ImayProduct> imayProducts = imeiProductService.findByProductAndStatus(imayProduct.getProduct(),1);
         return imayProducts;
     }
 }

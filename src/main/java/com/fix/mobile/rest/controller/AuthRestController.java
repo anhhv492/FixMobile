@@ -9,6 +9,7 @@ import com.fix.mobile.jwt.JwtUtil;
 import com.fix.mobile.service.AccountService;
 import com.fix.mobile.service.RoleService;
 import com.fix.mobile.service.UserService;
+import com.fix.mobile.utils.UserName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -47,6 +48,9 @@ public class AuthRestController {
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword()));
+
+            UserName.accounts = accountService.findByUsername(UserName.getUserName());
+
         }catch (DisabledException e){
             throw new Exception("USER_DISABLED", e);
         }catch (BadCredentialsException e){

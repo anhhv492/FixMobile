@@ -27,7 +27,7 @@ public class OrderDetail {
     private BigDecimal price;
 
     @Column(name = "status")
-    private Boolean status;
+    private int status;
 
     @ManyToOne
     @JoinColumn(name = "id_order")
