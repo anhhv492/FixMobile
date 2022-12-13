@@ -152,6 +152,7 @@ public class GuestRestController {
                     if(accessory.isPresent()){
                         orderDetail.setAccessory(accessory.get());
                         orderDetail.setOrder(order);
+                        orderDetail.setStatus(order.getStatus());
                         orderDetail.setQuantity(carts.get(i).get("qty").asInt());
                         orderDetail.setPrice(accessory.get().getPrice());
                         orderDetailService.save(orderDetail);
@@ -164,6 +165,7 @@ public class GuestRestController {
                     if(product.isPresent()){
                         orderDetail.setProduct(product.get());
                         orderDetail.setOrder(order);
+                        orderDetail.setStatus(order.getStatus());
                         orderDetail.setQuantity(carts.get(i).get("qty").asInt());
                         orderDetail.setPrice(product.get().getPrice());
                         orderDetailService.save(orderDetail);

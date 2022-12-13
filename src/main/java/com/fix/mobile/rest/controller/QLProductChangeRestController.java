@@ -29,9 +29,8 @@ public class QLProductChangeRestController {
 				ProductChange product = productChangeService.findByStatus(s);
 				product.setStatus(2);
 				productChangeService.save(product);
-				mailServices.SendEmail("cuongndph14605@fpt.edu.vn","Duycuong1");
+				mailServices.SendEmail("top1zukavietnam@gmail.com","kzbtzovffrqbkonf",s);
 				System.out.println("gửi mail thành công");
-
 			}else{
 				System.out.println("null lỗi");
 			}
@@ -45,8 +44,12 @@ public class QLProductChangeRestController {
 		for ( Integer  s :  idProductChange) {
 			if(s !=null) {
 				ProductChange product = productChangeService.findByStatus(s);
-				product.setStatus(0);
-				productChangeService.save(product);
+				if(product.getStatus()==1){
+					product.setStatus(0);
+					productChangeService.save(product);
+				}else if(product.getStatus()==2){
+					System.out.println("không thể hủy ");
+				}
 			}
 		}
 	}
