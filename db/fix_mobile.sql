@@ -108,7 +108,7 @@ CREATE TABLE sale (
 	value_min decimal(10,0),
 	money_sale decimal(10,0),
 	percent_sale int,
-	quantity_use int,
+	quantity int,
 	create_time datetime,
 	update_time datetime ,
 	user_update int ,
