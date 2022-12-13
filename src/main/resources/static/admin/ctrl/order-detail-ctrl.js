@@ -57,6 +57,7 @@ app.controller('order-admin-detail-ctrl',function($rootScope,$scope,$http,$compi
                         icon: 'success',
                         title: 'Xóa thành công!'
                     })
+
                     document.getElementById("closeMd").click();
                 }).catch(error=>{
                     const Toast = Swal.mixin({
@@ -87,6 +88,9 @@ app.controller('order-admin-detail-ctrl',function($rootScope,$scope,$http,$compi
             $scope.imeis=resp.data;
             $http.get(urlOrderDetail+'/imei2/'+orderDetail.idDetail,token).then(resp=>{
                 $scope.imeis2=resp.data;
+                if($scope.imeis2.length>=orderDetail.quantity) {
+                    $scope.imeis=null;
+                }
             })
             // for (let i = 0; i < orderDetail.quantity; i++) {
             //     $scope.selects+=
@@ -106,7 +110,6 @@ app.controller('order-admin-detail-ctrl',function($rootScope,$scope,$http,$compi
             // let element = angular.element($('#somediv'));
             // element.html($scope.selects);
             // $compile(element)($scope);
-
             $scope.nameProduct=resp.data[0].product.name;
             console.log('data',resp.data);
         }).catch(error=>{
@@ -136,6 +139,7 @@ app.controller('order-admin-detail-ctrl',function($rootScope,$scope,$http,$compi
                     title: 'Thêm thành công!'
                 })
                 $scope.getImeis();
+
                 document.getElementById("closeMd").click();
         }).catch(error=>{
             console.log(error);

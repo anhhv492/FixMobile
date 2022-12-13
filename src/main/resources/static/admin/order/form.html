@@ -93,7 +93,8 @@
             <td>{{order.createDate|date:'dd/MM/yyyy HH:mm:ss'}}</td>
             <td>{{order.moneyShip|number}}</td>
             <td>{{order.total|number}}</td>
-            <td>{{order.note}}</td>
+            <td ng-if="order.note">{{order.note}}</td>
+            <td ng-if="!order.note">Không có</td>
             <td>
         <span ng-if="order.status==0 && order.statusBuy==0">
             <span class="text-warning">Chưa thanh toán (Chờ xác nhận)</span>
