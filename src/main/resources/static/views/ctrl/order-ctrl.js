@@ -47,6 +47,7 @@ app.controller('order-ctrl',function($rootScope,$scope,$http){
                             'Click để tiếp tục.',
                             'success'
                         )
+                        $scope.getAllByUser();
                     }).catch(error=>{
                         Swal.fire(
                             'Hủy đơn hàng thất bại!',

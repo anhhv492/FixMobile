@@ -29,6 +29,9 @@ public class OrderRestController {
     @PutMapping(value="/rest/staff/order")
     public Order update(@RequestBody Order order){
         Order orderOld = orderService.findById(order.getIdOrder()).get();
+        if(order.getStatus()<orderOld.getStatus()){
+            return null;
+        }
         orderOld.setStatus(order.getStatus());
         Account account = accountService.findByUsername(UserName.getUserName());
         if(account.getRole().getName().equals("ADMIN")||account.getRole().getName().equals("STAFF")){
