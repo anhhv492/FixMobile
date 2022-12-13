@@ -20,29 +20,94 @@
     </li>
 </ul>
 <div class="tab-content" id="myTabContent">
-    <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+    <div class="tab-pane fade show active container" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
         <div class="row">
-            Tu
-            <select class="form-select" ng-model="">
-                <option ng-value="0">Tất cả</option>
-            </select>
-            <select class="form-select" ng-model="">
-                <option ng-value="0">Tất cả</option>
-            </select>
+            <div class="col-3">
+                Từ giá
+                <select class="form-select" ng-model="">
+                    <option ng-value="0">Tất cả</option>
+                    <option ng-value="1">Từ thấp đến cao</option>
+                    <option ng-value="2">Từ cao đến thấp</option>
+                </select>
+            </div>
+            <div class="col-3">
+                Đến giá
+                <select class="form-select" ng-model="">
+                    <option ng-value="0">Tất cả</option>
+                    <option ng-value="1">Từ thấp đến cao</option>
+                    <option ng-value="2">Từ cao đến thấp</option>
+                </select>
+            </div>
+            <div class="col-3 offset-2">
+                <span>Theo giá</span>
+                <select class="form-select" ng-model="">
+                    <option ng-value="0">Tất cả</option>
+                    <option ng-value="1">Từ thấp đến cao</option>
+                    <option ng-value="2">Từ cao đến thấp</option>
+                </select>
+            </div>
         </div>
+        <div class="row mt-2">
+            <div class="col-2">
+                <button class="btn btn-primary">Lọc</button>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
         <div class="row">
+            <div class="col-3">
+                Từ ngày
+                <input type="date" class="form-control" >
+            </div>
+            <div class="col-3">
+                Đến ngày
+                <input type="date" class="form-control" >
+            </div>
+            <div class="col-3 offset-2">
+                <span>Theo ngày</span>
+                <select class="form-select" ng-model="">
+                    <option ng-value="0">Tất cả</option>
+                    <option ng-value="1">Từ thấp đến cao</option>
+                    <option ng-value="2">Từ cao đến thấp</option>
+                </select>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-2">
+                <button class="btn btn-primary">Lọc</button>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
+        <div class="row container" >
+            <span>Sắp xếp</span>
             <select class="form-select" ng-model="">
                 <option ng-value="0">Tất cả</option>
                 <option ng-value="1">Từ thấp đến cao</option>
                 <option ng-value="2">Từ cao đến thấp</option>
             </select>
+            <div class="col-3 offset-2">
+                <span>Sắp xếp</span>
+                <select class="form-select" ng-model="">
+                    <option ng-value="0">Tất cả</option>
+                    <option ng-value="1">Từ thấp đến cao</option>
+                    <option ng-value="2">Từ cao đến thấp</option>
+                </select>
+            </div>
+            <div class="col-3 offset-2">
+                <span>Sắp xếp</span>
+                <select class="form-select" ng-model="">
+                    <option ng-value="0">Tất cả</option>
+                    <option ng-value="1">Từ thấp đến cao</option>
+                    <option ng-value="2">Từ cao đến thấp</option>
+                </select>
+            </div>
         </div>
-    </div>
-    <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-        ...
-    </div>
-    <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
-        ...
+        <div class="row mt-2">
+            <div class="col-2">
+                <button class="btn btn-primary">Lọc</button>
+            </div>
+        </div>
     </div>
 </div>
 <div class="table-responsive">
