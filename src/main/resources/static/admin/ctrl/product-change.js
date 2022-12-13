@@ -98,7 +98,7 @@ app.controller('product-change',function($rootScope,$scope,$http){
 
     $scope.putRequest = function(){
         if($scope.seLected.length  == 0){
-            $scope.error("Hãy chọn yêu cầu để xác nhận");
+            $scope.error("Vui lòng chọn yêu cầu hủy");
             return null;
         }
         $http.post(`/rest/admin/productchange/cancelRequest`,$scope.seLected).then(response => {

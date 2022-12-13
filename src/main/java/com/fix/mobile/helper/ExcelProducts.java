@@ -3,6 +3,7 @@ package com.fix.mobile.helper;
 import com.fix.mobile.entity.*;
 import com.fix.mobile.payload.SaveProductRequest;
 import com.fix.mobile.service.*;
+import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
@@ -172,10 +173,12 @@ public class ExcelProducts {
 	}
 
 	public Boolean readExcelImay(MultipartFile files) {
-		File dir = new File(System.getProperty("user.dir"));
+		File dir = new File(System.getProperty("user.dir")+"/excels");
 		try {
 			File savedFile = new File(dir,files.getOriginalFilename());
-			if(!savedFile.exists()){
+			if(!dir.exists()) {
+				dir.mkdirs();
+			}else if(!savedFile.exists()){
 				files.transferTo(savedFile);
 			}else{
 				savedFile.delete();
@@ -196,11 +199,7 @@ public class ExcelProducts {
 							System.out.println(cc.getStringCellValue() + ", ");
 							nameImay = cc.getStringCellValue();
 						}
-						if (cc.getColumnIndex() == 1 && cc.getCellType() == CellType.NUMERIC) {
-							System.out.println(cc.getNumericCellValue() + ", ");
-							statusImay = Integer.valueOf((int) cc.getNumericCellValue());
-						}
-						if (cc.getColumnIndex() == 2 && cc.getCellType() == CellType.STRING) {
+						if (cc.getColumnIndex() == 1  && cc.getCellType() == CellType.STRING) {
 							System.out.println("product " + cc.getStringCellValue() + ", ");
 							product =  productService.findByName(cc.getStringCellValue());
 							if (!product.isPresent()){
@@ -209,13 +208,8 @@ public class ExcelProducts {
 							}else if(product==null){
 								System.out.println("đã null");
 							}
-							else;
 							ImayProduct imay = new ImayProduct(nameImay,statusImay,product.get());
-							if(imay!=null){
-								imayService.save(imay);
-							}else{
-								System.out.println("lỗi");
-							}
+							imayService.save(imay);
 						}
 					}
 				}

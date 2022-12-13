@@ -1,4 +1,4 @@
-app.controller('order-detail-ctrl',function($rootScope,$scope,$http){
+app.controller('order-detail-ctrl',function($window,$rootScope,$scope,$http){
     var urlOrder=`http://localhost:8080/rest/user/order/detail`;
     $scope.orderDetails=[];
     $scope.formProductChange={};
@@ -38,7 +38,7 @@ app.controller('order-detail-ctrl',function($rootScope,$scope,$http){
             toast: true,
             position: 'top-end',
             showConfirmButton: false,
-            timer: 3500,
+            timer: 1000,
             timerProgressBar: true,
             didOpen: (toast) => {
                 toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -55,7 +55,7 @@ app.controller('order-detail-ctrl',function($rootScope,$scope,$http){
             toast: true,
             position: 'top-end',
             showConfirmButton: false,
-            timer: 1500,
+            timer: 1000,
             timerProgressBar: true,
             didOpen: (toast) => {
                 toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -97,12 +97,41 @@ app.controller('order-detail-ctrl',function($rootScope,$scope,$http){
         $scope.files = files;
         console.log($scope.files);
     }
-
-
-    $scope.findPChangeDetails = function (id){
-
+// get accouunt
+    $scope.accountActive = {};
+    $scope.getAcountActive = function () {
+        $http.get(`/rest/admin/accounts/getAccountActive`, token).then(function (respon){
+            $scope.accountActive = respon.data;
+            $rootScope.name = $scope.accountActive.username;
+            console.log($scope.accountActive.username)
+        }).catch(err => {
+        })
     }
+    $scope.getAcountActive();
 
+    $scope.findPChangeDetails = function (id){}
+
+    $scope.saveProductChangeDetail = function (){
+        var form = new FormData();
+        angular.forEach($scope.files, function(file) {
+            form.append('files', file);
+        });
+        form.append("orderDetail", $scope.formDetails.idDetail);
+        let req = {
+            method: 'POST',
+            url: '/rest/productchange/saveRequest',
+            headers: {
+                'Content-Type': undefined,
+                Authorization: `Bearer `+jwtToken
+            },
+            data: form,
+        }
+        $http(req).then(resp=>{
+            console.log(resp.data+ " data");
+        }).catch(error=>{
+            console.log(error);
+        })
+    }
     $scope.saveProductChange = function (){
         Swal.fire({
             title: 'Thực hiện gửi yêu cầu đổi trả ?',
@@ -113,6 +142,14 @@ app.controller('order-detail-ctrl',function($rootScope,$scope,$http){
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
                 if (result.isConfirmed) {
+                       if($scope.files == null){
+                           $scope.error('chưa chọn ảnh tình trạng máy');
+                           return null;
+                       }
+                       else  if($scope.formProductChange.quantity > $scope.formDetails.quantity){
+                           $scope.error('Số lượng nhập vào không đúng vui lòng nhập lại');
+                           return null;
+                        }
                         let timerInterval
                         Swal.fire({
                             title: 'Tạo yêu cầu thành công' + '!',
@@ -136,13 +173,15 @@ app.controller('order-detail-ctrl',function($rootScope,$scope,$http){
                                     formData.append('files', file);
                                 });
                                 formData.append("note", $scope.formProductChange.note);
-                                formData.append("email", $scope.formProductChange.email);
+                                formData.append("email", $scope.accountActive.email);
                                 formData.append("quantity",$scope.formProductChange.quantity);
+                                formData.append("account",$scope.accountActive.username);
                                 let req = {
                                     method: 'POST',
                                     url: '/rest/productchange/save',
                                     headers: {
                                         'Content-Type': undefined,
+                                         Authorization: `Bearer `+jwtToken
                                     },
                                     data: formData
                                 }
@@ -164,24 +203,20 @@ app.controller('order-detail-ctrl',function($rootScope,$scope,$http){
                                 })
                                 $http(req).then(response => {
                                     console.log("ddd " + response.data);
-                                    $http.post(`/rest/productchange/saveRequest`,
-                                        $scope.formProductChange).then(resp=>{
-                                        console.log(resp.data)
-                                    }).catch(error=>{
-                                        console.log(error);
-                                    })
+                                    $scope.saveProductChangeDetail();
                                     $scope.message("Gửi yêu cầu đổi trả thành công");
                                     $('#staticBackdrop').modal('hide');
+                                    $scope.formProductChange={};
+                                    $scope.files=null;
+                                    $window.location = '/views/index.html#!/order';
                                 }).catch(error => {
                                     $scope.error('gửi  yêu cầu đổi trả thất bại');
                                     console.log('I was closed by the timer' + formData)
                                 });
 
                             }
-
                         })
                     }
-
         })
     }
     $scope.getAllByOrder();

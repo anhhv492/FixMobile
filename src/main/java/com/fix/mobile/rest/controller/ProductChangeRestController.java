@@ -6,6 +6,7 @@ import com.fix.mobile.dto.ChangeDetailDTO;
 import com.fix.mobile.dto.ProductChangeDTO;
 import com.fix.mobile.entity.*;
 import com.fix.mobile.service.*;
+import com.fix.mobile.utils.UserName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -22,22 +23,22 @@ public class ProductChangeRestController {
 	@Autowired private ChangeDetailService changeDetailsService;
 	@Autowired private Cloudinary cloud;
 	@Autowired private ImageService imageService;
-	@Autowired private AccountService accountService;
 
+	@Autowired private AccountService accountService;
 	@Autowired private OrderDetailService  orderDetailsService;
 	@RequestMapping(value = "/findProductChange/{idDetail}",method = RequestMethod.GET)
 	public OrderDetail findByProductChange (@PathVariable("idDetail") Integer idOrderDetails){
 			Optional<OrderDetail> orderDetails =  orderDetailsService.findById(idOrderDetails);
 			return orderDetails.get();
 	}
+	// đẩy hóa đơn đổi
 	@RequestMapping(value="/save", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
 	public void requestProductChange(
 			@ModelAttribute ProductChangeDTO productchange){
 		try {
 			if(productchange !=null){
-				Account acc= accountService.findByUsername("nam");
 				ProductChange p = new ProductChange();
-				p.setAccount(acc);
+				p.setAccount(productchange.getAccount());
 				p.setDateChange(new Date());
 				p.setNote(productchange.getNote());
 				p.setEmail(productchange.getEmail());
@@ -63,14 +64,18 @@ public class ProductChangeRestController {
 		}
 	}
 
-	@RequestMapping("/saveRequest")
+	// đẩy hóa đơn đổi chi tiết
+	@RequestMapping(path = "/saveRequest",method = RequestMethod.POST,
+			consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
 	public void saveRequest(@ModelAttribute ChangeDetailDTO changeDetails){
 		try {
 		    if(changeDetails!=null){
-					ChangeDetail change= new ChangeDetail();
-					change.setProduct(changeDetails.getProduct());
-					change.setOrderDetail(change.getOrderDetail());
-					changeDetailsService.createChangeDetails(changeDetails.getOrderDetail().getIdDetail());
+				ChangeDetail change= new ChangeDetail();
+				change.setOrderDetail(changeDetails.getOrderDetail());
+				changeDetailsService.createChangeDetails(changeDetails.getOrderDetail().getIdDetail());
+				Optional<OrderDetail> orderDetails =  orderDetailsService.findById(changeDetails.getOrderDetail().getIdDetail());
+				orderDetails.orElseThrow().setStatus(0);
+				orderDetailsService.save(orderDetails.get());
 			}else;
 		}catch (Exception e ){
 			e.getMessage();
@@ -100,6 +105,7 @@ public class ProductChangeRestController {
 		}
 		return listPrChangeDetails;
 	}
+
 	@RequestMapping(value= "/getPrChangeByUser/{username}", method =  RequestMethod.GET)
 	public List<ProductChange> findByUser(@RequestParam("username") String user) {
 		List<ProductChange> listPrChangeDetails = productChangeSerivce.findByUsername(user);
