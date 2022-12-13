@@ -69,5 +69,25 @@ public class ProductChangeServiceImpl implements ProductChangeService {
         return repository.findProductChange();
     }
 
+    @Override
+    public List<ProductChange> findAllProductChange() {
+        return repository.findAllProductChange();
+    }
+
+    @Override
+    public ProductChange findByStatus(Integer idPrChange) {
+        if(idPrChange != null){
+            return repository.findByStatus(idPrChange);
+        }return null;
+    }
+
+    @Override
+    public List<ProductChange> findByUsername(String username) {
+        if(username != null){
+            return repository.findByAccount(username);
+        }
+        return null;
+    }
+
 
 }

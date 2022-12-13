@@ -32,6 +32,8 @@ public class ChangeDetail {
     @JoinColumn(name = "id_accessory")
     private Accessory accessory;
 
+    @Column(name = "imaysp")
+    private String imaysp;
 
 
 }

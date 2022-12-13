@@ -172,14 +172,15 @@
                                <th>Thao tác</th>
                            </thead>
                            <tbody>
-                           <tr ng-repeat="product in products">
+                           <tr ng-repeat="product in products" >
                                <td>{{$index + 1}}</td>
                                <td>{{product.name}}</td>
                                <td>{{product.category.name}}</td>
                                <td>{{product.capacity.name}}</td>
                                <td>{{product.color.name}}</td>
                                <td>{{product.price|number}}</td>
-                               <td>{{product.status== 1?'Còn hàng':'Hết hàng'}}</td>
+                               <td ng-if="product.status== 1">Còn hàng</td>
+                               <td ng-if="product.status== 0">Hết hàng</td>
                                <td>{{product.note}}</td>
                                <td style="width: 100px">{{product.createDate | date:'dd/MM/yyyy'}}</td>
                                <td><img class="img-responsive" width="80px" height="80px"

@@ -1,14 +1,15 @@
 <main ng-controller="sale_ctrl">
-    <button class="btn btn-success" style="width:100%" data-bs-toggle="modal" ng-click="clear()" data-bs-target="#exampleModaladd">Thêm
-        mới
+    <button class="btn btn-success" style="width:100%" data-bs-toggle="modal" ng-click="clear()"
+            data-bs-target="#exampleModaladd">Thêm mới
     </button>
+    <button ng-click="getSale('','','')">ahihi</button>
     <!-- Modal add -->
     <div class="modal fade" id="exampleModaladd" tabindex="-1" data-bs-backdrop="static"
          aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Thêm mới sale</h5>
+                    <h5 class="modal-title" id="exampleModalLabel"> <p ng-if="saleadd.idSale==null">Thêm mới sale</p> <p ng-if="saleadd.idSale!=null">Chi tiết sale</p></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -232,6 +233,7 @@
             <th scope="col">Giảm giá</th>
             <th scope="col">Số lượng sử dụng còn lại</th>
             <th scope="col">Trạng thái | Thời gian lưu Mã giảm giá</th>
+            <th scope="col">Người hành động | Mốc thời gian</th>
             <th scope="col">Thao tác</th>
         </tr>
         </thead>
@@ -268,6 +270,13 @@
                 </p>
                 <p><span>{{ sales.createStart | date:'MM/dd/yyyy h:mma'}}</span> -
                     <span>{{ sales.createEnd | date:'MM/dd/yyyy h:mma'}}</span></p>
+            </td>
+            <td>
+                <p>Người tạo: {{sales.userCreate}}</p>
+                <p>Thời gian tạo: {{sales.createTime| date:'MM/dd/yyyy h:mma'}}</p>
+                <p ng-if="!sales.userUpdate">chưa cập nhật</p>
+                <p ng-if="sales.userUpdate">người sửa: {{sales.userUpdate}}</p>
+                <p ng-if="sales.updateTime">Thời gian sửa {{sales.updateTime | date:'MM/dd/yyyy h:mma'}}</p>
             </td>
             <td>
                 <p class="btn btn-info" ng-click="showdetailSale(sales.idSale)" data-bs-toggle="modal" data-bs-target="#exampleModaladd">Chi tiết</p>

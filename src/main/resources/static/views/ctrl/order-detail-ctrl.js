@@ -1,12 +1,12 @@
 app.controller('order-detail-ctrl',function($rootScope,$scope,$http){
     var urlOrder=`http://localhost:8080/rest/user/order/detail`;
-
     $scope.orderDetails=[];
     $scope.formProductChange={};
-    // $scope.saleadd = {};
     $scope.idCheckBox = {};
     $scope.seLected = [];
     $scope.index = 0;
+    $scope.formDetails= {};
+
     const jwtToken = localStorage.getItem("jwtToken")
     const token = {
         headers: {
@@ -21,6 +21,18 @@ app.controller('order-detail-ctrl',function($rootScope,$scope,$http){
             console.log(error);
         })
     }
+
+    $scope.getProductChange=function(formProductChange){
+        $http.get(`/rest/productchange/findProductChange/${formProductChange.idDetail}`  ,
+            token).then(resp=>{
+            console.log($scope.formDetails.idDetail)
+            $scope.formDetails = resp.data;
+            console.log(resp.data)
+        }).catch(error=>{
+            console.log(error);
+        })
+    }
+
     $scope.message = function (mes){
         const Toast = Swal.mixin({
             toast: true,
@@ -56,7 +68,6 @@ app.controller('order-detail-ctrl',function($rootScope,$scope,$http){
             title: err,
         })
     }
-    //$scope.files={};
 
     $scope.checkSelected= function (id){
         console.log('sdsadasadsa '+id)
@@ -87,100 +98,84 @@ app.controller('order-detail-ctrl',function($rootScope,$scope,$http){
         console.log($scope.files);
     }
 
-    $scope.saveProductChange = function (){
 
+    $scope.findPChangeDetails = function (id){
+
+    }
+
+    $scope.saveProductChange = function (){
         Swal.fire({
-            title: 'Bạn có chắc muốn trả máy : ',
-            text: "Đổi trả hàng có thể mất thêm phí !",
+            title: 'Thực hiện gửi yêu cầu đổi trả ?',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
-            if($scope.seLected.length == 0){
-                $scope.error('Phải chọn sản phẩm cần trả');
-                return null;
-            }else if($scope.files == null){
-                $scope.error('Chửa chọn hình ảnh tình trạng sản phẩm');
-                return null;
-            }
-            else {
                 if (result.isConfirmed) {
-                    let timerInterval
-                    Swal.fire({
-                        title: 'Tạo yêu cầu thành công' +'!',
-                        html: 'Vui lòng chờ <b></b> milliseconds.',
-                        timer: 1500,
-                        timerProgressBar: true,
-                        didOpen: () => {
-                            Swal.showLoading()
-                            const b = Swal.getHtmlContainer().querySelector('b')
-                            timerInterval = setInterval(() => {
-                                b.textContent = Swal.getTimerLeft()
-                            }, 100)
-                        },
-                        willClose: () => {
-                            clearInterval(timerInterval)
-                        }
-                    }).then((result) => {
-                        if (result.dismiss === Swal.DismissReason.timer) {
-
-                            var formData = new FormData();
-                            angular.forEach($scope.files, function(file) {
-                                formData.append('files', file);
-                                console.log(file);
-                            });
-                            formData.append("note",$scope.formProductChange.note);
-                            formData.append("email",$scope.formProductChange.email);
-
-                            let req = {
-                                method: 'POST',
-                                url: '/rest/productchange/save',
-                                headers: {
-                                    'Content-Type': undefined,
-                                },
-                                data: formData
+                        let timerInterval
+                        Swal.fire({
+                            title: 'Tạo yêu cầu thành công' + '!',
+                            html: 'Vui lòng chờ <b></b> milliseconds.',
+                            timer: 1500,
+                            timerProgressBar: true,
+                            didOpen: () => {
+                                Swal.showLoading()
+                                const b = Swal.getHtmlContainer().querySelector('b')
+                                timerInterval = setInterval(() => {
+                                    b.textContent = Swal.getTimerLeft()
+                                }, 100)
+                            },
+                            willClose: () => {
+                                clearInterval(timerInterval)
                             }
-                            Swal.fire({
-                                title: 'Đang gửi yêu cầu đến admin' +'!',
-                                html: 'Vui lòng chờ <b></b> milliseconds.',
-                                timer: 3500,
-                                timerProgressBar: true,
-                                didOpen: () => {
-                                    Swal.showLoading()
-                                    const b = Swal.getHtmlContainer().querySelector('b')
-                                    timerInterval = setInterval(() => {
-                                        b.textContent = Swal.getTimerLeft()
-                                    }, 100)
-                                },
-                                willClose: () => {
-                                    clearInterval(timerInterval)
+                        }).then((result) => {
+                            if (result.dismiss === Swal.DismissReason.timer) {
+                                var formData = new FormData();
+                                angular.forEach($scope.files, function(file) {
+                                    formData.append('files', file);
+                                });
+                                formData.append("note", $scope.formProductChange.note);
+                                formData.append("email", $scope.formProductChange.email);
+                                formData.append("quantity",$scope.formProductChange.quantity);
+                                let req = {
+                                    method: 'POST',
+                                    url: '/rest/productchange/save',
+                                    headers: {
+                                        'Content-Type': undefined,
+                                    },
+                                    data: formData
                                 }
-                            })
-                            $http(req).then(response => {
-                                console.log("ddd " + response.data);
-                                $scope.message("Gửi yêu cầu đổi trả thành công");
-                                // $scope.refresh();
+                                Swal.fire({
+                                    title: 'Đang gửi yêu cầu đến admin' + '!',
+                                    html: 'Vui lòng chờ <b></b> milliseconds.',
+                                    timer: 3500,
+                                    timerProgressBar: true,
+                                    didOpen: () => {
+                                        Swal.showLoading()
+                                        const b = Swal.getHtmlContainer().querySelector('b')
+                                        timerInterval = setInterval(() => {
+                                            b.textContent = Swal.getTimerLeft()
+                                        }, 100)
+                                    },
+                                    willClose: () => {
+                                        clearInterval(timerInterval)
+                                    }
+                                })
+                                $http(req).then(response => {
+                                    console.log("ddd " + response.data);
+                                    $scope.message("Gửi yêu cầu đổi trả thành công");
+                                    $('#staticBackdrop').modal('hide');
+                                }).catch(error => {
+                                    $scope.error('gửi  yêu cầu đổi trả thất bại');
+                                    console.log('I was closed by the timer' + formData)
+                                });
 
-                            }).catch(error => {
-                                $scope.error('gửi  yêu cầu đổi trả thất bại');
-                                console.log('I was closed by the timer'+ formData)
-                            });
+                            }
 
-                        }
-                        let details = angular.copy($scope.seLected);
-                        $http.post('/rest/productchange/saveRequest',details).then(resp =>{
-                            console.log('đã post '+ details);
-                        }).catch(error => {
-                            console.log('I was closed by the timer'+ formData)
-                        });
+                        })
+                    }
 
-                    })
-
-                }
-
-            }
         })
     }
     $scope.getAllByOrder();

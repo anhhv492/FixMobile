@@ -1,0 +1,32 @@
+<div class="container">
+    <h2 class="text-center text-dark text-black-50">Những mặt hàng đã đổi</h2>
+    <table class="table  table-bordered table-hover container">
+        <thead>
+        <tr>
+            <th>Sản phẩm</th>
+            <th>Màu</th>
+            <th>Thể loại</th>
+            <th>Số lượng</th>
+            <th>Tổng (VNĐ)</th>
+            <th>Trang thái</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="orderDetail in orderDetails" ng-if="orderDetail.product">
+            <td>{{orderDetail.product.name}}</td>
+            <td>{{orderDetail.product.color.name}}</td>
+            <td>{{orderDetail.product.category.name}}</td>
+            <td><img width="80px" height="80px" src="{{orderDetail.product.images[0].name}}" class="pt-2"></td>
+            <td>{{orderDetail.quantity*orderDetail.price|number}}</td>
+            <td>
+                <button ng-click="getProductChange(orderDetail)" class="btn btn-default"
+                        data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                    <i class="fa fa-info-circle" aria-hidden="true"></i> Chọn số lượng
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+
+</div>

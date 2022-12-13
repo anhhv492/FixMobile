@@ -70,6 +70,10 @@ app.config(function($routeProvider){
             controller: "forgetPassword-ctrl",
 
         })
+        .when("/productchange",{
+            templateUrl:"order/detail/productchange.html",
+            controller: "productchange-ctrl",
+        })
 
 
 

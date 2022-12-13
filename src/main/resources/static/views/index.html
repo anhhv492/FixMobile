@@ -304,112 +304,114 @@
 <div class="app" ng-controller="home-ctrl">
     <header id="header">
         <!-- header top -->
-        <section class="ftco-section">
-            <nav class="navbar navbar-expand-lg ftco_navbar ftco-navbar-light">
-                <div class="container">
-                    <div class="col-lg-3 col-md-4 col-sm-12 header__logo">
-                        <h1 class="header__heading">
-                            <a href="#!home/index" class="btn header__logo-link">
-                                <img src="/images/logo-mobile.png" alt="Logo" class="header__logo-img">
-                            </a>
-                        </h1>
-                    </div>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
-                            aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="fa fa-bars"></span> Menu
-                    </button>
-                    <div class="collapse navbar-collapse" id="ftco-nav">
-                        <ul class="navbar-nav ml-auto mr-md-3">
-                            <li class="nav-item active"><a href="#!home/index" class="nav-link">Home</a></li>
-                            <li class="nav-item"><a href="#" class="nav-link">Accessories</a></li>
-                            <li class="nav-item"><a href="#!product" class="nav-link">Shop</a></li>
-                            <li class="nav-item"><a href="#" class="nav-link">Products</a></li>
-                            <li class="nav-item"><a href="#!contact" class="nav-link">Contact</a></li>
-                            <li class="dropdown nav-item d-md-flex align-items-center">
-                                <button class="dropdown-toggle nav-link d-flex align-items-center justify-content-center icon-cart p-0"
-                                        id="dropdown04" data-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa fa-user-circle fa-2x" aria-hidden="true"></i>
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown04">
-                                    <div ng-if="account">
-                                        <a href="#!profile" class="dropdown-item">Thông tin tài khoản</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a href="#!order" class="dropdown-item">Lịch sử mua hàng</a>
-
-                                        <div class="dropdown-divider"></div>
-                                    </div>
-                                    <div ng-if="!account">
-                                        <a href="#!login" class="dropdown-item">Đăng nhập</a>
-                                        <a href="#!register" class="dropdown-item">Đăng ký</a>
-                                    </div>
-                                    <div ng-if="account">
-                                        <a href="#!changePassword" class="dropdown-item">Đổi mật khẩu</a>
-                                        <a ng-click="logoff()" href="/security/logoff" class="dropdown-item">Đăng
-                                            xuất</a>
-                                        <div class="dropdown-divider"></div>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <div class="container-fluid">
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                            aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <a href=""></a>
-                            <li class="nav-item dropdown" ng-mouseover="overPro=true" ng-mouseleave="overPro=false">
-                                <a class="nav-link dropdown-toggle" href="#" id="dropdownPro" role="button"
-                                   data-bs-toggle="dropdown"
-                                   aria-expanded="false">
-                                    Danh mục điện thoại
+            <section class="ftco-section" >
+                <nav class="navbar navbar-expand-lg ftco_navbar ftco-navbar-light">
+                    <div class="container">
+                        <div class="col-lg-3 col-md-4 col-sm-12 header__logo">
+                            <h1 class="header__heading">
+                                <a href="#!home/index" class="btn header__logo-link">
+                                    <img src="/images/logo-mobile.png" alt="Logo" class="header__logo-img">
                                 </a>
-                                <ul class="dropdown-menu {{overPro?'show':''}}" aria-labelledby="dropdownPro">
-                                    <li ng-repeat="catePro in cateProducts">
-
-                                        <a class="dropdown-item" href="#!product/detail" ng-click="getDetail(catePro)">{{catePro.name}}</a>
-
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="nav-item dropdown" ng-mouseover="overAccess=true"
-                                ng-mouseleave="overAccess=false">
-                                <a class="nav-link dropdown-toggle" href="#" id="dropdownAccess" role="button"
-                                   data-bs-toggle="dropdown" aria-expanded="false">
-                                    Danh mục phụ kiện
-                                </a>
-                                <ul class="dropdown-menu {{overAccess?'show':''}}" aria-labelledby="dropdownAccess">
-                                    <li ng-repeat="cateAccess in cateAccessories">
-                                        <a class="dropdown-item" href="#!accessory/detail"
-                                           ng-click="getDetail(cateAccess)">{{cateAccess.name}}</a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                        <form class="d-flex">
-                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                            <button class="btn btn-outline-success" type="submit">Search</button>
-                        </form>
-                        <div class="col-1">
-                            <a href="#!cart" class="btn">
-                                <i class="fa fa-shopping-cart"></i>
-                                <span class="position-absolute top-0 translate-middle badge rounded-pill bg-danger">
-                                        {{qtyCart}}
-                                        </span>
-                            </a>
+                            </h1>
+                        </div>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="fa fa-bars"></span> Menu
+                        </button>
+                        <div class="collapse navbar-collapse" id="ftco-nav">
+                            <ul class="navbar-nav ml-auto mr-md-3">
+                                <li class="nav-item active"><a href="#!home/index" class="nav-link">Home</a></li>
+                                <li class="nav-item"><a href="#" class="nav-link">Accessories</a></li>
+                                <li class="nav-item"><a href="#!product" class="nav-link">Shop</a></li>
+                                <li class="nav-item"><a href="#" class="nav-link">Products</a></li>
+                                <li class="nav-item"><a href="#!contact" class="nav-link">Contact</a></li>
+                                <li class="dropdown nav-item d-md-flex align-items-center">
+                                    <button class="dropdown-toggle nav-link d-flex align-items-center justify-content-center icon-cart p-0" id="dropdown04" data-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa fa-user-circle fa-2x" aria-hidden="true" style="     padding-left: 10px; " ></i>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown04">
+                                        <div ng-if="account">
+                                            <a href="/admin/index.html#!/product" class="dropdown-item">Quản trị tài khoản</a>
+                                            <a href="#!profile" class="dropdown-item">Thông tin tài khoản</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a href="#!order" class="dropdown-item">Lịch sử mua hàng</a>
+                                            <a href="#!productchange" class="dropdown-item">Lịch sử hàng đã đổi</a>
+                                            <div class="dropdown-divider"></div>
+                                        </div>
+                                        <div ng-if="!account">
+                                            <a href="#!login" class="dropdown-item">Đăng nhập</a>
+                                            <a href="#!register" class="dropdown-item">Đăng ký</a>
+                                        </div>
+                                        <div ng-if="account">
+                                            <a href="#!changePassword" class="dropdown-item">Đổi mật khẩu</a>
+                                            <a ng-click="logoff()" href="/security/logoff" class="dropdown-item">Đăng xuất</a>
+                                            <div class="dropdown-divider"></div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
                         </div>
                     </div>
-                </div>
-            </nav>
-        </section>
+                </nav>
+                <section>
+                <section class="ftco-section">
+                                            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                                                <div class="container-fluid">
+                                                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                                                            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                                                            aria-expanded="false" aria-label="Toggle navigation">
+                                                        <span class="navbar-toggler-icon"></span>
+                                                    </button>
+                                                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                                            <a href=""></a>
+                                                            <li class="nav-item dropdown" ng-mouseover="overPro=true" ng-mouseleave="overPro=false">
+                                                                <a class="nav-link dropdown-toggle" href="#" id="dropdownPro" role="button"
+                                                                   data-bs-toggle="dropdown"
+                                                                   aria-expanded="false">
+                                                                    Danh mục điện thoại
+                                                                </a>
+                                                                <ul class="dropdown-menu {{overPro?'show':''}}" aria-labelledby="dropdownPro">
+                                                                    <li ng-repeat="catePro in cateProducts">
+
+                                                                        <a class="dropdown-item" href="#!product/detail" ng-click="getDetail(catePro)">{{catePro.name}}</a>
+
+                                                                    </li>
+                                                                </ul>
+                                                            </li>
+                                                            <li class="nav-item dropdown" ng-mouseover="overAccess=true"
+                                                                ng-mouseleave="overAccess=false">
+                                                                <a class="nav-link dropdown-toggle" href="#" id="dropdownAccess" role="button"
+                                                                   data-bs-toggle="dropdown" aria-expanded="false">
+                                                                    Danh mục phụ kiện
+                                                                </a>
+                                                                <ul class="dropdown-menu {{overAccess?'show':''}}" aria-labelledby="dropdownAccess">
+                                                                    <li ng-repeat="cateAccess in cateAccessories">
+                                                                        <a class="dropdown-item" href="#!accessory/detail"
+                                                                           ng-click="getDetail(cateAccess)">{{cateAccess.name}}</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </li>
+                                                        </ul>
+                                                        <form class="d-flex">
+                                                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                                                            <button class="btn btn-outline-success" type="submit">Search</button>
+                                                        </form>
+                                                        <div class="col-1">
+                                                            <a href="#!cart" class="btn">
+                                                                <i class="fa fa-shopping-cart"></i>
+                                                                <span class="position-absolute top-0 translate-middle badge rounded-pill bg-danger">
+                                                            {{qtyCart}}
+                                                            </span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </nav>
+                                        </section>
 
     </header>
+
+
     <div ng-view></div>
     <footer ng-include="'home/footer.html'"></footer>
 </div>
@@ -446,6 +448,38 @@
 
 <script src="ctrl/changePassword-ctrl.js"></script>
 <script src="ctrl/product_change.js"></script>
+
+
+<!-- Bootstrap JS form CDN -->
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+<script src="ctrl/home-ctrl.js"></script>
+<script src="ctrl/view_product_ctrl.js"></script>
+<script src="ctrl/product.js"></script>
+<script src="ctrl/nav-ctrl.js"></script>
+<script src="ctrl/cart-ctrl.js"></script>
+<script src="ctrl/detail-ctrl.js"></script>
+
+<script src="ctrl/order-ctrl.js"></script>
+<script src="ctrl/order-detail-ctrl.js"></script>
+<script src="ctrl/login-ctrl.js"></script>
+<script src="ctrl/register-ctrl.js"></script>
+
+<script src="ctrl/profile-ctrl.js"></script>
+<script src="/js/jq.js"></script>
+<script src="/js/index.js"></script>
+<script src="/js/product.js"></script>
+
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/popper.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/main.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<script src="ctrl/address-form-ctrl.js"></script>
+
+<script src="ctrl/changePassword-ctrl.js"></script>
+<script src="ctrl/product_change.js"></script>
+<script src="ctrl/productchange-ctrl.js"></script>
 
 
 </body>

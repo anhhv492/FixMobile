@@ -67,4 +67,6 @@ public class OrderDetailServiceImpl implements OrderDetailService {
     public List<OrderDetail> findAllByOrder(Order order) {
         return repository.findAllByOrder(order);
     }
+
+
 }
