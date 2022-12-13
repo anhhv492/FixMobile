@@ -30,7 +30,7 @@
                                             {{displayProduct.name}}</h3>
                                         </div>
                                         <div class="mt-2 pr-3 content"><p>{{displayProduct.describe}}</p></div>
-                                        <h3>{{displayProduct.price|number}} VNĐ</h3>
+                                        <h3>{{displayProduct.price | number}} VNĐ</h3>
                                         <div class="ratings d-flex flex-row align-items-center">
                                             <div class="d-flex flex-row"><i class='bx bxs-star'></i> <i
                                                     class='bx bxs-star'></i> <i class='bx bxs-star'></i> <i
@@ -38,7 +38,7 @@
                                             <span>441 reviews</span></div>
                                         <div class="sizes mt-5">
                                             <h6 class="text-uppercase">Màu sắc</h6>
-                                            <label class="radio me-1" ng-repeat="co in allColor" >
+                                            <label class="radio me-1" ng-repeat="co in allColor">
                                                 <input type="radio" id="color" ng-click="getColorId(co.idColor)"
                                                        name="color" value="{{co.idColor}}" checked>
                                                 <span>{{co.name}}</span>
@@ -54,7 +54,9 @@
                                             </label>
                                         </div>
                                         <div class="d-flex flex-row mt-5 gap-3">
-                                            <button class="btn btn-outline-dark" ng-click="addCart(productAddCart)" style="height: 70px; width: 100%">Add to Cart</button>
+                                            <button class="btn btn-outline-dark" ng-click="addCart(productAddCart)"
+                                                    style="height: 70px; width: 100%">Add to Cart
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -75,19 +77,20 @@
 
                                             <div class="text-center" style="width: 200px; height: 200px">
 
-                                                <img src="{{pros.images[0].name}}">
+                                                <img src="{{pros.image}}">
 
                                             </div>
 
                                             <div class="product-details">
 
 
-                                                <span class="font-weight-bold d-block">{{pros.price|number}} VNĐ</span>
+                                                <span class="font-weight-bold d-block">{{pros.price | number}} VNĐ</span>
                                                 <span>{{pros.name}}</span>
 
 
                                                 <div class="buttons d-flex flex-row">
-                                                    <a class="cart" href="#!product" ng-click="getOneProduct(pros.idProduct)">
+                                                    <a class="cart" href="#!product"
+                                                       ng-click="getOneProduct(pros.idProduct)">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                              fill="currentColor" class="bi bi-ticket-detailed"
                                                              viewBox="0 0 16 16">
@@ -101,7 +104,8 @@
                                                 </div>
 
                                                 <div class="weight">
-                                                    <!--                                                    <small>1 piece 2.5kg</small>-->
+                                                    <small style="color: lightslategray">Còn
+                                                        {{pros.totail | number}} sản phẩm</small>
                                                 </div>
 
                                             </div>
@@ -290,8 +294,9 @@
         background-color: black;
         color: #fff
     }
+
     .btn {
-        
+
         border-radius: 0;
     }
 </style>

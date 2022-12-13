@@ -2,6 +2,7 @@ package com.fix.mobile.rest.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fix.mobile.dto.ColorProductResponDTO;
+import com.fix.mobile.dto.ProductResponDTO;
 import com.fix.mobile.entity.*;
 import com.fix.mobile.repository.SaleRepository;
 import com.fix.mobile.service.*;
@@ -68,6 +69,16 @@ public class GuestRestController {
         List<ImayProduct> imeis= imayProductService.findByProductAndStatus(product,1);
         return imeis.size();
     }
+
+    @GetMapping("/productCount")
+    public List<ProductResponDTO> productCount(){
+        return productService.getProductCount();
+    }
+
+    @GetMapping("/findByPriceExits")
+    public List<ProductResponDTO> findByPriceExits(){
+        return productService.findByPriceExits();
+    }
     @GetMapping("/accessory/amount/{id}")
     public Integer getAmountAccessory(@PathVariable("id") Integer id){
         Accessory accessory = accessoryService.findById(id).get();
@@ -109,19 +120,19 @@ public class GuestRestController {
         return accessories;
     }
     @GetMapping("/product/cate-product/{id}")
-    public List<Product> findByCateProductId(@PathVariable("id") Integer id){
+    public List<ProductResponDTO> findByCateProductId(@PathVariable("id") Integer id){
         Optional<Category> cate = categoryService.findById(id);
         if(cate.isEmpty()){
             return null;
         }
-        List<Product> products = productService.findByCategoryAndStatus(cate);
-        for (int i = 0; i < products.size(); i++) {
-            List<ImayProduct> imayProducts = imayProductService.findByProductAndStatus(products.get(i),1);
+        List<ProductResponDTO> productResponDTOList = productService.findByCategoryAndStatus(cate.get());
+        for (int i = 0; i < productResponDTOList.size(); i++) {
+            List<ImayProduct> imayProducts = imayProductService.findByProductAndStatus(productResponDTOList.get(i),1);
             if(imayProducts.size() == 0){
-                products.remove(i);
+                productResponDTOList.remove(i);
             }
         }
-        return products;
+        return productResponDTOList;
     }
     @PostMapping("/order/add")
     public Order order(@RequestBody Order order){

@@ -1,10 +1,12 @@
 package com.fix.mobile.service.impl;
 
 import com.fix.mobile.dto.ImeiProductResponDTO;
+import com.fix.mobile.dto.ProductResponDTO;
 import com.fix.mobile.entity.OrderDetail;
 import com.fix.mobile.entity.Product;
 import com.fix.mobile.repository.ImayProductRepository;
 import com.fix.mobile.entity.ImayProduct;
+import com.fix.mobile.repository.ProductRepository;
 import com.fix.mobile.service.ImayProductService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,9 @@ import java.util.Optional;
 @Transactional
 public class ImayProductServiceImpl implements ImayProductService {
 	private final ImayProductRepository repository;
+
+	@Autowired
+	private ProductRepository productRepository;
 
 	@Autowired
 	private ModelMapper modelMapper;
@@ -104,5 +109,11 @@ public class ImayProductServiceImpl implements ImayProductService {
 					-> modelMapper.map(imayProduct, ImeiProductResponDTO.class));
 			return imeiProductRespon;
 		}
+	}
+
+	@Override
+	public List<ImayProduct> findByProductAndStatus(ProductResponDTO productResponDTO, int status) {
+		Product product = productRepository.findById(productResponDTO.getIdProduct()).orElse(null);
+		return repository.findByProductAndStatus(product,status);
 	}
 }

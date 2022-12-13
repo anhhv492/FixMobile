@@ -6,6 +6,7 @@ app.controller('view_product_ctrl', function ($scope,$http){
             Authorization: `Bearer `+jwtToken
         }
     }
+
     $scope.productView = [];
     $scope.viewByPrice= [];
     $scope.allRam= [];
@@ -18,11 +19,12 @@ app.controller('view_product_ctrl', function ($scope,$http){
     $scope.productAddCart = {};
     $scope.chechkColor = true;
     $scope.colorByNamePr =[];
+    $scope.namePr = "";
+
 
     const getAllRam = "http://localhost:8080/rest/guest/getAllRam";
     const getAllCapacity = "http://localhost:8080/rest/guest/getAllCapacity";
     const getAllColor = "http://localhost:8080/rest/guest/getAllColor";
-    const getColor  = "http://localhost:8080/rest/guest/getColorProductByName?name="
 
 
 
@@ -49,8 +51,8 @@ app.controller('view_product_ctrl', function ($scope,$http){
 
     // top 4 sp
     $scope.getTopProduct = function (){
-        $http.get(`/rest/admin/product/findByProduct`,token).then(function(response) {
-            $scope.productView = response.data;
+        $http.get(`/rest/guest/productCount`,token).then(function(response) {
+             $scope.productView = response.data;
             $scope.priceSale=[];
             for(var i=0; i<response.data.length;i++){
                 $scope.getSale(response.data[i].price,response.data.idProduct,'')
@@ -62,7 +64,7 @@ app.controller('view_product_ctrl', function ($scope,$http){
         });
     }
     $scope.getTopProductPrice = function (){
-        $http.get(`/rest/admin/product/findByPriceExits`,token).then(function(response) {
+        $http.get(`/rest/guest/findByPriceExits`,token).then(function(response) {
             $scope.viewByPrice = response.data;
             $scope.priceSale1=[];
             for(var i=0; i<response.data.length;i++){
@@ -98,15 +100,7 @@ app.controller('view_product_ctrl', function ($scope,$http){
         })
     }
 
-    $scope.getColorByNamePr = function (){
-        $http.get(getColor+$scope.displayProduct.name).then(function (response) {
-            $scope.colorByNamePr = response.data;
-            console.log($scope.colorByNamePr);
-            console.log(response.data)
-        }).catch(err => {
-            console.log(err);
-        })
-    }
+
 
 
 
@@ -137,6 +131,26 @@ app.controller('view_product_ctrl', function ($scope,$http){
         });
     }
 
+    $scope.getColorByNamePr = function (id) {
+        $http.get('/rest/admin/product/findByProductCode?id=' + id, token).then(function (response) {
+            $scope.namePr = response.data.name;
+            console.log($scope.namePr)
+            $http.get('/rest/guest/getColorProductByName?name=' + $scope.namePr).then(function (response) {
+                $scope.colorByNamePr = response.data;
+                for (let i = 0; i < $scope.allColor.length; i++) {
+                    for (let j = 0; j < $scope.colorByNamePr.length; j++) {
+                        if ($scope.allColor[i].idColor == $scope.colorByNamePr[j].color) {
+
+                        }
+                    }
+                }
+            }).catch(err => {
+                console.log(err);
+            })
+        }).catch(error => {
+            console.log("Lỗi!!!");
+        });
+    }
 
     $scope.getSale=function (money,  idPrd,  idAcsr){
         var urlSale=`http://localhost:8080/admin/rest/sale/getbigsale?money=`+money+`&idPrd=`+idPrd+`&idAcsr=`+idAcsr;
@@ -167,11 +181,9 @@ app.controller('view_product_ctrl', function ($scope,$http){
         })
     }
 
-    if (productId == null){
-
-    }else {
+    if (productId != null){
         $scope.getOneProduct(productId);
-        $scope.getColorByNamePr();
+        $scope.getColorByNamePr(productId);
     }
 
 

@@ -2,12 +2,11 @@ package com.fix.mobile.service.impl;
 
 
 import com.fix.mobile.dto.ColorProductResponDTO;
+import com.fix.mobile.dto.ProductResponDTO;
 import com.fix.mobile.entity.*;
-import com.fix.mobile.repository.CapacityRepository;
-import com.fix.mobile.repository.ColorRepository;
+import com.fix.mobile.repository.*;
 import com.fix.mobile.service.CapacityService;
 import com.fix.mobile.service.ProductService;
-import com.fix.mobile.repository.ProductRepository;
 import com.fix.mobile.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -32,6 +31,8 @@ import java.util.Optional;
 public class ProductServiceImpl implements ProductService {
     private final ProductRepository repository;
 
+    @Autowired
+    private ImayProductRepository imayProductRepository;
 
     @Autowired
     private CapacityRepository capacityRepository;
@@ -101,9 +102,24 @@ public class ProductServiceImpl implements ProductService {
         return repository.findByName(name);
     }
 
-    public List<Product> findByCategoryAndStatus(Optional<Category> cate) {
-        Optional<List<Product>> products= Optional.ofNullable(repository.findByCategoryAndStatus(cate.get(), 1));
-        return products.orElse(null);
+    public List<ProductResponDTO> findByCategoryAndStatus(Category cate) {
+        int totail;
+        List<Product> products= repository.findByCategoryAndStatus(cate, 1);
+        List<ProductResponDTO> productResponDTOList = new ArrayList<>();
+        if (products != null){
+            for (int i = 0; i < products.size(); i++) {
+                ProductResponDTO productResponDTO = new ProductResponDTO();
+                List<ImayProduct> imeis = imayProductRepository.findByProductAndStatus(products.get(i), 1);
+                totail = imeis.size();
+                productResponDTO.setIdProduct(products.get(i).getIdProduct());
+                productResponDTO.setName(products.get(i).getName());
+                productResponDTO.setImage(products.get(i).getImages().get(0).getName());
+                productResponDTO.setPrice(products.get(i).getPrice());
+                productResponDTO.setTotail(totail);
+                productResponDTOList.add(productResponDTO);
+            }
+        }
+        return null;
     }
 
     @Override
@@ -134,6 +150,44 @@ public class ProductServiceImpl implements ProductService {
             colorProductResponDTOList.add(colorProductResponDTO);
         }
         return colorProductResponDTOList;
+    }
+
+    @Override
+    public List<ProductResponDTO> getProductCount() {
+        int totail;
+        List<Product> productList = repository.findByProductLimit();
+        List<ProductResponDTO> productResponDTOList = new ArrayList<>();
+        for (int i = 0; i < productList.size(); i++) {
+            ProductResponDTO productResponDTO = new ProductResponDTO();
+            List<ImayProduct> imeis = imayProductRepository.findByProductAndStatus(productList.get(i), 1);
+             totail = imeis.size();
+             productResponDTO.setIdProduct(productList.get(i).getIdProduct());
+             productResponDTO.setName(productList.get(i).getName());
+            productResponDTO.setImage(productList.get(i).getImages().get(0).getName());
+            productResponDTO.setPrice(productList.get(i).getPrice());
+            productResponDTO.setTotail(totail);
+            productResponDTOList.add(productResponDTO);
+        }
+        return productResponDTOList;
+    }
+
+    @Override
+    public List<ProductResponDTO> findByPriceExits() {
+        int totail;
+        List<Product> productList = repository.findByProductLitmitPrice();
+        List<ProductResponDTO> productResponDTOList = new ArrayList<>();
+        for (int i = 0; i < productList.size(); i++) {
+            ProductResponDTO productResponDTO = new ProductResponDTO();
+            List<ImayProduct> imeis = imayProductRepository.findByProductAndStatus(productList.get(i), 1);
+            totail = imeis.size();
+            productResponDTO.setIdProduct(productList.get(i).getIdProduct());
+            productResponDTO.setName(productList.get(i).getName());
+            productResponDTO.setImage(productList.get(i).getImages().get(0).getName());
+            productResponDTO.setPrice(productList.get(i).getPrice());
+            productResponDTO.setTotail(totail);
+            productResponDTOList.add(productResponDTO);
+        }
+        return productResponDTOList;
     }
 
 
