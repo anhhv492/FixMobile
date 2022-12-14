@@ -4,6 +4,7 @@ app.controller('view_accessory_ctrl', function ($scope,$http){
     $scope.accessoryAddCart = {};
     const callApiTop = "http://localhost:8080/rest/guest/getTop4";
     const callApiOneAccessory = "http://localhost:8080/rest/guest/getOneAccessory";
+    const accessId = localStorage.getItem("accessCodeHome");
 
     $scope.displayAccessory = {
         name : "",
@@ -25,8 +26,12 @@ app.controller('view_accessory_ctrl', function ($scope,$http){
             $scope.displayAccessory.describe = $scope.oneAccessory.note;
             $scope.displayAccessory.imageDefault = $scope.oneAccessory.image;
             $scope.accessoryAddCart = respon.data;
-            console.log($scope.oneAccessory + id)
+            console.log($scope.oneAccessory.name + id)
         })
+    }
+
+    if (accessId != null){
+        $scope.getOneAccessory(accessId);
     }
 
     $scope.getTop4();
