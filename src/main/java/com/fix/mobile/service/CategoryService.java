@@ -21,4 +21,6 @@ public interface CategoryService extends GenericService<Category, Integer> {
     Page<Category> page(String name, Integer type, Integer status, Pageable pageable);
 
     void deleteByListId(List<Integer> idList);
+
+    List<Category> findAllBybStatus();
 }

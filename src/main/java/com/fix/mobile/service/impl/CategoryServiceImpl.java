@@ -125,4 +125,9 @@ public class CategoryServiceImpl implements CategoryService {
         }
     }
 
+    @Override
+    public List<Category> findAllBybStatus() {
+        return repository.findAllByStatus(1);
+    }
+
 }

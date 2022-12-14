@@ -54,7 +54,7 @@
                                             </label>
                                         </div>
                                         <div class="d-flex flex-row mt-5 gap-3">
-                                            <button class="btn btn-outline-dark" ng-click="addCart(productAddCart)"
+                                            <button class="btn btn-outline-dark" ng-click="addProductCart(oneProduct)"
                                                     style="height: 70px; width: 100%">Add to Cart
                                             </button>
                                         </div>
@@ -80,10 +80,10 @@
                                             <div class="product-details">
                                                 <span class="font-weight-bold d-block">{{pros.price | number}}VND</span>
                                                 <p ng-if="pric0eSale[$index]!=-1 && priceSale[$index]!=0">
-                                                    <del>{{product.price | number}} VNĐ</del> &nbsp; {{priceSale[$index] | number}} VNĐ
+                                                    <del>{{pros.price | number}} VNĐ</del> &nbsp; {{priceSale[$index] | number}} VNĐ
                                                 </p>
                                                 <p ng-if="priceSale[$index]!=-1 && priceSale[$index]==0">
-                                                    <del>{{product.price | number}} VNĐ</del> &nbsp; Free
+                                                    <del>{{pros.price | number}} VNĐ</del> &nbsp; Free
                                                 </p>
                                                 <span>{{pros.name}}</span>
 
@@ -98,7 +98,7 @@
                                                         </svg>
                                                     </a>
                                                     <button class="btn btn-success cart-button btn-block"
-                                                            ng-click="addCart(pros)">Add to cart
+                                                            ng-click="addProductCart(pros)">Add to cart
                                                     </button>
                                                 </div>
 

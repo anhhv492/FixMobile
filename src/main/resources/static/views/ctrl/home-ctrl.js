@@ -105,7 +105,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
         $scope.productItem = $rootScope.carts.find(
             it=>it.idProduct===item.idProduct
         );
-        if(item.category.type){
+        if(item.category){
             $http.get(`${urlAccessory}/${item.idAccessory}`).then(res=>{
                 let itemCart = $rootScope.carts.find(
                     it=>it.idAccessory===item.idAccessory
@@ -200,7 +200,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                     it=>it.idProduct===item.idProduct
                 );
                 let data= res.data;
-                debugger;
+
                 $http.get(`${urlImei}/amount/${item.idProduct}`).then(res=>{
                     if(itemCart&&itemCart.qty>=res.data) {
                         const Toast = Swal.mixin({
@@ -286,6 +286,106 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                 })
             })
         }
+    }
+
+    $scope.addProductCart = function (product) {
+        console.log("qty",$scope.qtyCart);
+        let json = localStorage.getItem($rootScope.name);
+        $rootScope.carts=json? JSON.parse(json):[];
+        $scope.productItem = $rootScope.carts.find(
+            it=>it.idProduct===product.idProduct
+        );
+
+        $http.get(`${urlProduct}/${product.idProduct}`,token).then(res=>{
+            let itemCart = $rootScope.carts.find(
+                it=>it.idProduct===product.idProduct
+            );
+            let data= res.data;
+
+            $http.get(`${urlImei}/amount/${product.idProduct}`).then(res=>{
+                if(itemCart&&itemCart.qty>=res.data) {
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 2000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                    })
+                    Toast.fire({
+                        icon: 'error',
+                        title: 'Số lượng sản phẩm không đủ!'
+                    })
+                }else{
+                    if(!$scope.productItem){
+                        data.qty=1;
+                        var money = data.price
+                        var urlSale=`http://localhost:8080/admin/rest/sale/getbigsale?money=`+money+`&idPrd=`+data.idProduct+`&idAcsr=0`;
+                        var total=0;
+                        $http.get(urlSale, token).then(resp => {
+                            console.log("hihi")
+                            if(resp.data.moneySale == null) {
+                                total= money - money*resp.data.percentSale/100;
+                            }else if(resp.data.percentSale == null){
+                                if(resp.data.moneySale<money){
+                                    total=0;
+                                }else {
+                                    total=money - resp.data.moneySale;
+                                }
+                            }else{total=money}
+                            console.log(total)
+                            data.price=total;
+                            console.log(data.price);
+                            $rootScope.carts.push(data);
+
+                        }).catch(error => {
+                            console.log(error)
+                        })
+                        $rootScope.carts.push(data);
+                    }else{
+                        $scope.productItem.qty++;
+                    }
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 1500,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                    })
+
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'Thêm thành công!'
+                    })
+                    $rootScope.saveLocalStorage();
+                    $rootScope.qtyCart++;
+                }
+            }).catch(err=>{
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 1500,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                })
+
+                Toast.fire({
+                    icon: 'error',
+                    title: 'Thêm thất bại!'
+                })
+            })
+        })
     }
     $rootScope.saveLocalStorage=function(){
         let json = JSON.stringify($rootScope.carts);

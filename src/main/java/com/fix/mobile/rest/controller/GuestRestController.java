@@ -56,7 +56,7 @@ public class GuestRestController {
     Account account = null;
     @GetMapping("/category/getAll")
     public List<Category> getAll(){
-        return categoryService.findAll();
+        return categoryService.findAllBybStatus();
     }
     //find category by accessory
     @GetMapping("/cate")
