@@ -21,6 +21,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
     $rootScope.account = jwtToken;
     $rootScope.name="";
     $scope.accountActive= {};
+    $scope.priceSale=[];
 
     $scope.getAcountActive = function () {
 
@@ -60,9 +61,13 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
             $http.get(`${urlAccessory}/cate-access/${item.idCategory}`, token).then(res=>{
                 $rootScope.detailAccessories=res.data;
                 $scope.priceSale=[];
+                console.log(res.data)
+                console.log($scope.priceSale)
+                console.log($scope.priceSale.length)
                 for(var i=0; i<res.data.length;i++){
-                    $scope.getSale(res.data[i].price,'',res.data.idAccessory)
+                    $scope.getSale(res.data[i].price,'',res.data[i].idAccessory)
                 }
+                console.log($scope.priceSale)
             }).catch(err=>{
                 $rootScope.detailAccessories=null;
                 console.log("error",err)
@@ -70,6 +75,10 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
         }else{
             $http.get(`${urlProduct}/cate-product/${item.idCategory}`, token).then(res=>{
                 $rootScope.detailProducts=res.data;
+                $scope.priceSale=[];
+                for(var i=0; i<res.data.length;i++){
+                    $scope.getSale(res.data[i].price,res.data[i].idProduct,'')
+                }
             }).catch(err=>{
                 $rootScope.detailProducts=null;
                 console.log("error",err)
@@ -122,7 +131,27 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                     }else{
                         if(!$scope.accessoryItem){
                             data.qty=1;
-                            $rootScope.carts.push(data);
+                            var money = data.price
+                            var urlSale=`http://localhost:8080/admin/rest/sale/getbigsale?money=`+money+`&idPrd=`+0+`&idAcsr=`+data.idAccessory;
+                            var total=0;
+                            $http.get(urlSale, token).then(resp => {
+                                console.log("hihi")
+                                if(resp.data.moneySale == null) {
+                                    total= money - money*resp.data.percentSale/100;
+                                }else if(resp.data.percentSale == null){
+                                    if(resp.data.moneySale<money){
+                                        total=0;
+                                    }else {
+                                        total=money - resp.data.moneySale;
+                                    }
+                                }else{total=money}
+                                console.log(total)
+                                data.price=total;
+                                console.log(data.price);
+                                $rootScope.carts.push(data);
+                            }).catch(error => {
+                                console.log(error)
+                            })
                         }else{
                             $scope.accessoryItem.qty++;
                         }
@@ -190,6 +219,27 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                     }else{
                         if(!$scope.productItem){
                             data.qty=1;
+                            var money = data.price
+                            var urlSale=`http://localhost:8080/admin/rest/sale/getbigsale?money=`+money+`&idPrd=`+data.idProduct+`&idAcsr=`;
+                            var total=0;
+                            $http.get(urlSale, token).then(resp => {
+                                console.log("hihi")
+                                if(resp.data.moneySale == null) {
+                                    total= money - money*resp.data.percentSale/100;
+                                }else if(resp.data.percentSale == null){
+                                    if(resp.data.moneySale<money){
+                                        total=0;
+                                    }else {
+                                        total=money - resp.data.moneySale;
+                                    }
+                                }else{total=money}
+                                console.log(total)
+                                data.price=total;
+                                console.log(data.price);
+                                $rootScope.carts.push(data);
+                            }).catch(error => {
+                                console.log(error)
+                            })
                             $rootScope.carts.push(data);
                         }else{
                             $scope.productItem.qty++;
@@ -283,11 +333,15 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
             if(resp.data.moneySale == null) {
                 $scope.priceSale.push(money - (money * resp.data.percentSale/100));
             }else if(resp.data.percentSale == null){
-                $scope.priceSale.push(money - resp.data.moneySale);
-            }else{ $scope.priceSale.push(0)}
+                if(resp.data.moneySale<money){
+                    $scope.priceSale.push(0);
+                }else {
+                    $scope.priceSale.push(money - resp.data.moneySale);
+                }
+            }else{ $scope.priceSale.push(-1)}
         }).catch(error => {
            console.log(error + "hahha");
-            $scope.priceSale.push(0)
+            $scope.priceSale.push(-1)
         })
     }
     $scope.overPro=false;

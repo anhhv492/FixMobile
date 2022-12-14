@@ -1,5 +1,5 @@
 <section class="h-100">
-    <div class="container h-100 py-5">
+    <div class="container h-100 py-5" ng-init="getpricesalecart()">
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col">
                 <div class="table-responsive">
@@ -114,12 +114,20 @@
                             <div class="col-lg-4 col-xl-3">
                                 <a class="btn btn-outline-primary" href="#!login" ng-if="!account">Chọn địa chỉ</a>
                                 <a class="btn btn-outline-primary" href="#!address" ng-if="account">Chọn địa chỉ</a>
-                                <button class="btn btn-outline-warning ms-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                <button class="btn btn-outline-warning ms-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop" ng-click="getVoucherSale(totals())">
                                     Mã giảm giá
                                 </button>
                                 <div class="d-flex justify-content-between" style="font-weight: 500;">
                                     <p class="mb-2">Tổng đơn</p>
                                     <p class="mb-2">{{totalPrice()|number}}đ</p>
+                                </div>
+                                <div ng-if="totalPriceSale1 != 0 " class="d-flex justify-content-between" style="font-weight: 500;">
+                                    <p class="mb-2">Giảm giá trực tiếp</p>
+                                    <p class="mb-2">{{totalPrice()-totalPriceSale1|number}}đ</p>
+                                </div>
+                                <div ng-if="priceSaleByVocher != 0" class="d-flex justify-content-between" style="font-weight: 500;">
+                                    <p class="mb-2">Giảm giá theo mã</p>
+                                    <p class="mb-2">{{priceSaleByVocher|number}}đ</p>
                                 </div>
 
                                 <div class="d-flex justify-content-between" style="font-weight: 500;">
@@ -152,14 +160,49 @@
     </div>
 </section>
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="staticBackdropLabel">Chọn mã giảm giá</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body ">
-
+                    <table class="table table-striped table-hover" >
+                        <thead>
+                            <tr>
+                                <th scope="col">Chọn</th>
+                                <th scope="col">Chương trình giảm giá</th>
+                                <th scope="col">Tiền được giảm</th>
+                                <th scope="col">Đơn hàng tối thiểu</th>
+                                <th scope="col">Hạn sử dụng</th>
+                            </tr>
+                        </thead>
+                        <tbody ng-repeat="sale in listVoucherSale">
+                            <tr>
+                                <th scope="row"><input type="radio" ng-model="getVoucherApply" ng-value="sale.idSale" ng-click="getSaleApply(getVoucherApply)" style="width: 40px;height: 40px" name="slecedSale"></th>
+                                <td>
+                                    <p ng-if="sale.typeSale==0">giảm giá toàn shop</p>
+                                    <p ng-if="sale.typeSale==1">giảm giá theo 1 số sản phẩm</p>
+                                    <p ng-if="sale.typeSale==4">giảm giá theo 1 số phụ kiện</p>
+                                    <p ng-if="sale.typeSale==2">giảm giá the đơn hàng </p>
+                                    <p ng-if="sale.typeSale==3 && sale.userType==0">giảm giá cho khách hàng mới</p>
+                                    <p ng-if="sale.typeSale==3 && sale.userType==1">giảm giá cho dành riêng cho bạn</p>
+                                </td>
+                                <td>
+                                    <p ng-if="sale.moneySale!=null">{{sale.moneySale}} VNĐ</p>
+                                    <p ng-if="sale.percentSale!=null">{{sale.percentSale}} %</p>
+                                </td>
+                                <td>
+                                    <p ng-if="sale.valueMin==null">0 VNĐ</p>
+                                    <p ng-if="sale.valueMin!=null">{{sale.valueMin}} VNĐ</p>
+                                </td>
+                                <td>
+                                    <p>Ngày bắt đầu {{sale.createStart| date:'MM/dd/yyyy h:mma'}}</p>
+                                    <p>Ngày kết thúc {{sale.createEnd| date:'MM/dd/yyyy h:mma'}}</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

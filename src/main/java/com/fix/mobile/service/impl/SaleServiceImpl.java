@@ -1,5 +1,9 @@
 package com.fix.mobile.service.impl;
 
+import com.fix.mobile.repository.AccountRepository;
+import com.fix.mobile.repository.OrderRepository;
+import com.fix.mobile.service.AccountService;
+import com.fix.mobile.service.OrderService;
 import org.hibernate.StaleStateException;
 import com.fix.mobile.repository.SaleDetailRepository;
 import com.fix.mobile.repository.SaleRepository;
@@ -26,6 +30,11 @@ public class SaleServiceImpl implements SaleService {
 
     @Autowired
     SaleDetailRepository dao1;
+    @Autowired
+    OrderRepository dao2;
+
+    @Autowired
+    AccountRepository dao3;
 
     @Override
     public Sale add(Sale salee) {
@@ -57,6 +66,11 @@ public class SaleServiceImpl implements SaleService {
         }
         saleUpdate = setNULL(saleUpdate);
         return dao.save(saleUpdate);
+    }
+
+    @Override
+    public Sale updateQuantity(Sale sale) {
+        return dao.save(sale);
     }
 
     @Override
@@ -169,6 +183,100 @@ public class SaleServiceImpl implements SaleService {
         return bigSale;
     }
 
+    @Override
+    public Sale getBigSale_Order(BigDecimal money) {
+        return dao.getBigSale_Order(money);
+    }
+
+    @Override
+    public void addApply_Sale( Integer idSale, String userName) {
+         dao.addSaleApply(idSale,userName);
+    }
+
+    @Override
+    public List<Sale> getSaleByVoucher(String userName, BigDecimal money, List<Integer> idPrd, List<Integer> idAcsr) {
+        List<Sale> listSaleByVoucher = new ArrayList<>();
+        if(null != dao.getVoucherAllShop()){
+            for (Sale x  : dao.getVoucherAllShop()) {
+                if(!new Sale().equals(x)){
+                    listSaleByVoucher.add(x);
+                }
+            }
+
+        }
+        if(null!=idAcsr){
+            for (int y : idAcsr ) {
+                if(null!= dao.getVoucherAccessory(y)){
+                    for (Sale x : dao.getVoucherAccessory(y)) {
+                        if (!new Sale().equals(x)) {
+                            listSaleByVoucher=SaleCheck(listSaleByVoucher,x.getIdSale());
+                            listSaleByVoucher.add(x);
+                        }
+                    }
+                }
+            }
+        }
+        if(null!=idPrd){
+            for (int y : idPrd ) {
+                if(null!= dao.getVoucherProduct(y)){
+                    for (Sale x : dao.getVoucherProduct(y)) {
+                        if (!new Sale().equals(x)) {
+                            listSaleByVoucher=SaleCheck(listSaleByVoucher,x.getIdSale());
+                            listSaleByVoucher.add(x);
+                        }
+                    }
+                }
+            }
+        }
+        if(null!= dao.getVoucherOrder(money)){
+            for (Sale x  : dao.getVoucherOrder(money)) {
+                if(!new Sale().equals(x)){
+                    listSaleByVoucher.add(x);
+                }
+            }
+        }
+        if(null!=userName) {
+            if (null != dao.getVoucherAccount(userName)) {
+                for (Sale x : dao.getVoucherAccount(userName)) {
+                    if (!new Sale().equals(x)) {
+                        listSaleByVoucher.add(x);
+                    }
+                }
+            }
+            if (null == dao2.findAllByAccount(dao3.findByUsername(userName))) {
+                if (null != dao.getVoucherAccountNew()) {
+                    for (Sale x : dao.getVoucherAccountNew()) {
+                        if (!new Sale().equals(x)) {
+                            listSaleByVoucher.add(x);
+                        }
+                    }
+                }
+            }
+            if(null!= dao.getVoucherUsed(userName)){
+                for (Integer x  : dao.getVoucherUsed(userName)) {
+                    for(int i=0;i<listSaleByVoucher.size();i++){
+                        if(x==listSaleByVoucher.get(i).getIdSale()){
+                            listSaleByVoucher.remove(i);
+                        }
+                    }
+                }
+            }
+        }
+        return listSaleByVoucher;
+    }
+
+    private List<Sale> SaleCheck(List<Sale> listSale, Integer idCheck){
+        if(0!=listSale.size()||null==listSale){
+            for (int i=0; i<listSale.size();i++){
+                if(listSale.get(i).getIdSale()==idCheck){
+                    listSale.remove(i);
+                }
+            }
+            return listSale;
+        }else{
+            return listSale;
+        }
+    }
     private void validate_Coincide(Sale sale) { //check trùng
         if(sale.getIdSale() == null){
             if(sale.getVoucher() != null){
