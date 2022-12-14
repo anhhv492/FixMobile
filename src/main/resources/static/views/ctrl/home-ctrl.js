@@ -5,6 +5,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
     var urlProduct=`http://localhost:8080/rest/guest/product`;
     var urlOneProduct = `http://localhost:8080/rest/guest`;
     var urlAccount = `http://localhost:8080/rest/admin/accounts`;
+    const callApiOneAccessoryHome = "http://localhost:8080/rest/guest/getOneAccessory";
 
      const jwtToken = localStorage.getItem("jwtToken")
      const token = {
@@ -322,14 +323,14 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
     }
 
     $rootScope.productCode = {};
-    $scope.getOneProduct = function (productCode){
-        $http.get(`${urlOneProduct}/findByProductCode/${productCode.idProduct}`).then(res=>{
-            $rootScope.productCode = res.data;
-            console.log(productCode);
-        }).catch(err=>{
-            console.log("error",err);
-        })
-    }
+    // $scope.getOneProduct = function (productCode){
+    //     $http.get(`${urlOneProduct}/findByProductCode/${productCode.idProduct}`).then(res=>{
+    //         $rootScope.productCode = res.data;
+    //         console.log(productCode);
+    //     }).catch(err=>{
+    //         console.log("error",err);
+    //     })
+    // }
     $scope.getSale=function (money,  idPrd,  idAcsr){
         var urlSale=`http://localhost:8080/admin/rest/sale/getbigsale?money=`+money+`&idPrd=`+idPrd+`&idAcsr=`+idAcsr;
         $http.get(urlSale, token).then(resp => {
@@ -356,18 +357,30 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
 
 
      $rootScope.productCode = {};
-     $scope.getOneProduct = function (productCode){
+     $scope.getOneProductHome = function (productCode){
          $http.get(`${urlOneProduct}/findByProductCode/${productCode.idProduct}`).then(res=>{
              $rootScope.productCode = res.data;
              localStorage.setItem('product', $rootScope.productCode.idProduct);
              console.log(productCode);
+             $window.location.reload();
+             $window.href = "#!product"
          }).catch(err=>{
              console.log("error",err);
          })
      }
+    $rootScope.accessCodeHome = {}
+    $scope.getOneAccessoryHome = function (id) {
+        $http.get(callApiOneAccessoryHome+"?id="+id).then(function (respon) {
+            $rootScope.accessCodeHome = respon.data;
+            console.log($rootScope.accessCodeHome.idAccessory)
+            localStorage.removeItem("accessCodeHome");
+            localStorage.setItem('accessCodeHome', $rootScope.accessCodeHome.idAccessory);
+        })
+    }
      if ($rootScope.account != null){
          $scope.getAcountActive();
      }
+
 
     $rootScope.loadLocalStorage();
 

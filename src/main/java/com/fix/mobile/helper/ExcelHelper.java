@@ -117,6 +117,7 @@ public class ExcelHelper {
                             }
                             System.out.println("-- excel: " + name + " " + image + " " + note+" ");
                             Accessory accessory = new Accessory(name,quantity,createDate,color,price,status,note,category.get());
+                            accessory.setImage("https://res.cloudinary.com/dcll6yp9s/image/upload/v1669087979/kbasp5qdf76f3j02mebr.png");
                             accessoryService.save(accessory);
                         }
                     }

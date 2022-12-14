@@ -339,10 +339,10 @@ console.log("Kết thúc check trùng")
                 });
                 $http(req).then(response => {
                     console.log("ddd " + response);
-                    $scope.message("thêm mới thành công");
+                    $scope.message("Thêm mới thành công");
                     $scope.reset();
                 }).catch(error => {
-                    $scope.error('thêm mới thất bại');
+                    $scope.error('Thêm mới thất bại');
                 });
             }
             console.log("Kết thúc thêm")
@@ -421,10 +421,10 @@ console.log("Kết thúc check trùng")
         });
         $http(req).then(response => {
             console.log("ddd " + response);
-            $scope.message("cập nhật thành công");
+            $scope.message("Cập nhật thành công");
             $scope.reset();
         }).catch(error => {
-            $scope.error('cập nhật thất bại');
+            $scope.error('Cập nhật thất bại');
         });
     }
 

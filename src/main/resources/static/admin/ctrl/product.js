@@ -1,5 +1,5 @@
 app.controller('product', function($scope, $http) {
-    const pathAPI = "http://localhost:8080/rest/admin/product";
+    const pathAPI = "/rest/admin/product";
     const callApiPage = "http://localhost:8080/rest/admin/product/pageImei?page="
     const callDeleteImei = "http://localhost:8080/rest/admin/product/deleteImeiById?id="
     $scope.formProduct = {};
@@ -146,11 +146,10 @@ app.controller('product', function($scope, $http) {
                         clearInterval(timerInterval)
                     }
                 }).then((result) => {
-                    /* Read more about handling dismissals below */
                     if (result.dismiss === Swal.DismissReason.timer) {
-                        $http.delete(`${pathAPI}/delete/${formProduct.idProduct}`,token).then(response=> {
-                        $scope.products.splice($scope.products.indexOf(formProduct), 1);
-                        $scope.message('Đã xóa thành công sản phẩm');
+                        $http.post(`${pathAPI}/delete?id=${formProduct.idProduct}`,token).then(response=> {
+                        $scope.message('Đã cập nhật trạng thái  sản phẩm thành hết hàng');
+                        $scope.getProducts();
                     }).catch(error=>{
                         $scope.error('xóa thất bại');
                     });
@@ -190,7 +189,7 @@ app.controller('product', function($scope, $http) {
         formData.append('size', $scope.formProduct.size);
         formData.append('price',$scope.formProduct.price);
         formData.append('camera',$scope.formProduct.camera);
-        formData.append('status',$scope.formProduct.status=1)
+        formData.append('status',$scope.formProduct.status)
         formData.append( 'category',$scope.formProduct.category)
         formData.append('ram',$scope.formProduct.ram)
         formData.append('color',$scope.formProduct.color)
@@ -356,7 +355,7 @@ app.controller('product', function($scope, $http) {
     };
 
 
-    // pagination
+    // pagination phân trang
     $scope.next=function(){
         $scope.check_first=true;
         $scope.index++;
@@ -561,6 +560,7 @@ app.controller('product', function($scope, $http) {
     $scope.xcellDataImay = function (files){
         var form = new FormData();
         form.append('file',files[0]);
+
         let timerInterval
         Swal.fire({
             title: 'Đang thêm hàng loạt!',
@@ -579,12 +579,13 @@ app.controller('product', function($scope, $http) {
             }
         }).then((result) => {
             if (result.dismiss === Swal.DismissReason.timer) {
-                $http.post(pathAPI+'/readExcelImay',form,token,{
+                $http.post(pathAPI+'/readExcelImay',form,{
                     transformRequest: angular.identity,
                     headers: {'Content-Type': undefined}
                 }).then(res=>{
                     $scope.message("Thêm hàng loạt dữ liệu thành công")
                     console.log('excel',res);
+                    debugger
                 }).catch(err=>{
                     $scope.error("thêm mới hàng loạt thất bại")
                     console.log('err',err);
