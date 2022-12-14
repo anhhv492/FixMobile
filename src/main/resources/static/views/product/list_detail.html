@@ -14,7 +14,10 @@
                 <div class="row">
                     <div class="col-xs-12 col-md-6">
                         <p class="lead">
-                            {{product.price|number}}VNĐ</p>
+                            <p ng-if="priceSale[$index]==-1">{{product.price|number}} VNĐ</p>
+                            <p ng-if="priceSale[$index]!=-1 && priceSale[$index]!=0"> <del>{{product.price|number}} VNĐ </del> &nbsp; {{priceSale[$index]|number}} VNĐ</p>
+                            <p ng-if="priceSale[$index]!=-1 && priceSale[$index]==0"> <del>{{product.price|number}} VNĐ </del> &nbsp; Free</p>
+                        </p>
                     </div>
                     <div class="btn-group">
                         <a class="btn btn-details" href="#!product" ng-click="getOneProduct(product)">Details</a>

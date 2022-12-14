@@ -262,8 +262,28 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window,$timeou
         })
         return total;
     }
+    $scope.totalPriceSale1 = 0;
+    $scope.totalPriceSale = function () {
+        if(undefined != $scope.priceSale){
+            $scope.totalPriceSale1 = 0;
+            for(var i=0;i<$scope.priceSale.length;i++){
+                if($scope.priceSale[i]!=-1){
+                     $scope.totalPriceSale1=$scope.totalPriceSale1+$scope.priceSale[i]
+                }else{
+                     $scope.totalPriceSale1=$scope.totalPriceSale1+$rootScope.carts[i].price
+                }
+            }
+            return $scope.totalPriceSale1;
+        }
+    }
     $scope.totals = function () {
-        return $scope.totalPrice();
+        console.log($scope.totalPrice())
+        if($scope.totalPriceSale1 !=0){
+            return $scope.totalPriceSale1-$scope.priceSaleByVocher;
+        }else{
+            return $scope.totalPrice()-$scope.priceSaleByVocher;
+        }
+
     }
     $scope.totalShip = function () {
         let ship = 50000;
@@ -448,6 +468,10 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window,$timeou
                             $http.post(urlOrder + '/add', $scope.cart, token).then(res => {
                                 if (res.data) {
                                     $http.post(urlOrderDetail + '/add', $rootScope.carts, token).then(res => {
+                                        var urladdsaleapply=`/admin/rest/sale/addsaleapply?idSale=`+$scope.getVoucherApply;
+                                        $http.post(urladdsaleapply, token).then(res => {
+
+                                        })
                                         $window.location.href = '/views/cart/buy-cod-success.html';
                                     }).catch(err => {
                                         console.log("err orderDetail", err)
@@ -525,4 +549,102 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window,$timeou
     $scope.loadMoneyShip();
     $rootScope.loadQtyCart();
     $rootScope.loadLocalStorage();
+    $scope.listVoucherSale=[];
+    $scope.getVoucherSale=function (money){
+        console.log(money)
+        let url = `http://localhost:8080/admin/rest/sale/getvoucher?money=`+money
+        $http.post(url, $rootScope.carts, token).then(res => {
+            $scope.listVoucherSale=res.data;
+            console.log($scope.listVoucherSale);
+        }).catch(err => {
+            console.log(err)
+        })
+    }
+    $scope.getVoucherApply=0;
+    $scope.listProductApplySale=[];
+    $scope.listAccessoryApplySale=[];
+    $scope.priceSaleByVocher=0;
+    $scope.getSaleApply=function (x){
+        $scope.getVoucherApply=x;
+        console.log(x);
+        let urlsale = `http://localhost:8080/admin/rest/sale/getsale/`+$scope.getVoucherApply;
+        $http.get(urlsale, token).then(res => {
+            var price=0;
+            if(res.data.typeSale==1 || res.data.typeSale==4 || (res.data.typeSale==3 && res.data.userType==1)){
+               let urlsaledetail=`http://localhost:8080/admin/rest/sale/getsaledetail/`+$scope.getVoucherApply;
+                $http.get(urlsaledetail, token).then(res1 => {
+
+                    console.log(res.data.typeSale)
+                    if(res.data.typeSale==1){
+                        price=0;
+                        for (var i=0;i<res1.data.length;i++) {
+                            $scope.listProductApplySale.push(res1.data[i].idProduct)
+                            $rootScope.carts.forEach(item => {
+                                if(item.idProduct == res1.data[i].idProduct){
+                                    price+=item.qty * item.price
+                                }
+                            })
+                        }
+                        if(null!=res.data.moneySale) {
+                            if (price <= res.data.moneySale) {
+                                $scope.priceSaleByVocher = price;
+                            }else{
+                                $scope.priceSaleByVocher=res.data.moneySale;
+                            }
+                        }
+                        if(null!=res.data.percentSale){
+                            $scope.priceSaleByVocher=price*res.data.percentSale/100;
+                        }
+                    }
+                    if(res.data.typeSale ==4 ){
+                        for (var i=0;i<res1.data.length;i++) {
+                            price=0;
+                            $scope.listAccessoryApplySale.push(res1.data[i].idAccessory)
+                            $rootScope.carts.forEach(item => {
+                                if(item.idAccessory == res1.data[i].idAccessory){
+                                    price+=item.qty * item.price;
+                                }
+                            })
+                            console.log(res.data.moneySale,res.data.percentSale,"hihihihihahhaha")
+                            console.log(price,$scope.priceSaleByVocher);
+                            if(0==price){
+                                $scope.priceSaleByVocher=$scope.priceSaleByVocher;
+                            }else{
+                                if(null!=res.data.moneySale) {
+                                    if (price <= res.data.moneySale) {
+                                        $scope.priceSaleByVocher = price;
+                                    }else{
+                                        $scope.priceSaleByVocher=res.data.moneySale;
+                                    }
+                                }
+                                if(null!=res.data.percentSale){
+                                    $scope.priceSaleByVocher=price*res.data.percentSale/100;
+                                }
+                            }
+                        }
+                    }
+
+                    console.log($rootScope.carts)
+                    console.log($scope.listProductApplySale);
+                    console.log($scope.listAccessoryApplySale)
+                }).catch(err => {
+                    console.log(err)
+                })
+            }else{
+                if(null!=res.data.moneySale) {
+                    if ($scope.totalPriceSale1 <= res.data.moneySale) {
+                        $scope.priceSaleByVocher = $scope.totalPriceSale1;
+                    }else{
+                        $scope.priceSaleByVocher=res.data.moneySale;
+                    }
+                }
+                if(null!=res.data.percentSale){
+                    $scope.priceSaleByVocher=$scope.totalPriceSale1*res.data.percentSale/100;
+                }
+            }
+            console.log($scope.priceSaleByVocher+"hihihihi")
+        }).catch(err => {
+            console.log(err)
+        })
+    }
 })

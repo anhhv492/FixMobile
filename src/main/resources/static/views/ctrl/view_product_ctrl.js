@@ -53,7 +53,7 @@ app.controller('view_product_ctrl', function ($scope,$http){
             $scope.productView = response.data;
             $scope.priceSale=[];
             for(var i=0; i<response.data.length;i++){
-                $scope.getSale(response.data[i].price,response.data.idProduct,'')
+                $scope.getSale(response.data[i].price,response.data[i].idProduct,0)
                 console.log($scope.priceSale);
             }
             console.log(response.data);
@@ -66,7 +66,7 @@ app.controller('view_product_ctrl', function ($scope,$http){
             $scope.viewByPrice = response.data;
             $scope.priceSale1=[];
             for(var i=0; i<response.data.length;i++){
-                $scope.getSale1(response.data[i].price,response.data.idProduct,'')
+                $scope.getSale1(response.data[i].price,response.data[i].idProduct,0)
                 console.log($scope.priceSale1+"hihi");
             }
         }).catch(error=>{
@@ -144,11 +144,15 @@ app.controller('view_product_ctrl', function ($scope,$http){
             if(resp.data.moneySale == null) {
                 $scope.priceSale.push(money - (money * resp.data.percentSale/100));
             }else if(resp.data.percentSale == null){
-                $scope.priceSale.push(money - resp.data.moneySale);
-            }else{ $scope.priceSale.push(0)}
+                if(resp.data.moneySale<money){
+                    $scope.priceSale.push(0);
+                }else {
+                    $scope.priceSale.push(money - resp.data.moneySale);
+                }
+            }else{ $scope.priceSale.push(-1)}
         }).catch(error => {
             console.log(error + "hahha");
-            $scope.priceSale.push(0)
+            $scope.priceSale.push(-1)
         })
     }
     $scope.getSale1=function (money,  idPrd,  idAcsr){
@@ -158,12 +162,15 @@ app.controller('view_product_ctrl', function ($scope,$http){
                 console.log("hihihihihi")
                 $scope.priceSale1.push(money - (money * resp.data.percentSale/100));
             }else if(resp.data.percentSale == null){
-                console.log(money - resp.data.moneySale)
-                $scope.priceSale1.push(money - resp.data.moneySale);
-            }else{ $scope.priceSale1.push(0)}
+                if(resp.data.moneySale<money){
+                    $scope.priceSale1.push(0);
+                }else {
+                    $scope.priceSale1.push(money - resp.data.moneySale);
+                }
+            }else{ $scope.priceSale1.push(-1)}
         }).catch(error => {
             console.log(error + "hahha");
-            $scope.priceSale1.push(0)
+            $scope.priceSale1.push(-1)
         })
     }
 
