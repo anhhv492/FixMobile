@@ -120,18 +120,16 @@ public class GuestRestController {
         return accessories;
     }
     @GetMapping("/product/cate-product/{id}")
-    public List<ProductResponDTO> findByCateProductId(@PathVariable("id") Integer id){
-        Optional<Category> cate = categoryService.findById(id);
-        if(cate.isEmpty()){
-            return null;
-        }
-        List<ProductResponDTO> productResponDTOList = productService.findByCategoryAndStatus(cate.get());
-        for (int i = 0; i < productResponDTOList.size(); i++) {
-            List<ImayProduct> imayProducts = imayProductService.findByProductAndStatus(productResponDTOList.get(i),1);
-            if(imayProducts.size() == 0){
-                productResponDTOList.remove(i);
-            }
-        }
+    public List<ProductResponDTO> findByCateProductId(@PathVariable("id") Integer id) throws Exception {
+
+        List<ProductResponDTO> productResponDTOList = productService.findByCategoryAndStatus(id);
+        if(productResponDTOList == null) throw new Exception("Product not found");
+//        for (int i = 0; i < productResponDTOList.size(); i++) {
+//            List<ImayProduct> imayProducts = imayProductService.findByProductAndStatus(productResponDTOList.get(i),1);
+//            if(imayProducts.size() == 0){
+//                productResponDTOList.remove(i);
+//            }
+//        }
         return productResponDTOList;
     }
     @PostMapping("/order/add")

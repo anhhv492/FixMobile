@@ -24,7 +24,7 @@ public interface ProductRepository extends PagingAndSortingRepository<Product, I
     
     Optional<Product> findByName(String name);
 
-    List<Product> findByCategoryAndStatus(Category cate, int status);
+    List<Product> findByCategoryAndStatus(Category category, int status);
 
     @Query(value ="select * from products  p  order by  p.id_product desc limit 4",nativeQuery = true)
     List<Product> findByProductLimit();
@@ -38,5 +38,7 @@ public interface ProductRepository extends PagingAndSortingRepository<Product, I
 
     List<Product> findByNameAndCapacityAndColor(String name, Capacity capacity, Color color );
 
+    @Query(value = "SELECT * FROM products p where p.id_category = :id and p.status = :status", nativeQuery = true)
+    List<Product> getProductByCategoryIdAndStatus(Integer id, Integer status);
 
 }
