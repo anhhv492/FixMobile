@@ -51,8 +51,7 @@ app.controller("restaccsesries", function ($scope, $http) {
     }
 
     // hàm ram
-    $scope.initialize = function () {
-        //load accounts
+    $scope.getAllRam = function () {
         $http.get("/rest/admin/accessoríes",token).then(resp => {
             $scope.items = resp.data;
             $scope.items.forEach(item => {
@@ -60,7 +59,6 @@ app.controller("restaccsesries", function ($scope, $http) {
             })
         });
     }
-
     $scope.onSubmitForm = function (event) {
         event.preventDefault();
     }
@@ -69,67 +67,32 @@ app.controller("restaccsesries", function ($scope, $http) {
         $scope.accseries ={
         }
     }
-    const pathAPI = "http://localhost:8080/rest/admin/accessoríes";
+
     $scope.create = function (){
         var item = angular.copy($scope.accseries);
         console.log(item);
-        $http.post("/rest/admin/accessoríes",item,token).then(resp => {
+        $http.post("/rest/admin/accessoríes",item).then(resp => {
             $scope.items.push(item);
             $scope.reset();
             $scope.message("Đã thêm thành công");
-            $scope.initialize();
+            $scope.getAllRam();
         }).catch(error => {
             $scope.error("thêm mới thất bại");
         })
     }
     $scope.delete = function(items) {
-        Swal.fire({
-            title: 'Bạn có chắc muốn xóa: '+ items.name+'?',
-            text: "Xóa không thể khôi phục lại!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                let timerInterval
-                Swal.fire({
-                    title: 'Đang xóa: '+items.name+'!',
-                    html: 'Vui lòng chờ <b></b> milliseconds.',
-                    timer: 800,
-                    timerProgressBar: true,
-                    didOpen: () => {
-                        Swal.showLoading()
-                        const b = Swal.getHtmlContainer().querySelector('b')
-                        timerInterval = setInterval(() => {
-                            b.textContent = Swal.getTimerLeft()
-                        }, 100)
-                    },
-                    willClose: () => {
-                        clearInterval(timerInterval)
-                    }
-                }).then((result) => {
-                    /* Read more about handling dismissals below */
-                    if (result.dismiss === Swal.DismissReason.timer) {
-                        $http.delete(`/rest/admin/accessoríes/delete/${items.idRam}`,token).then(response=> {
-                            $scope.items.splice($scope.items.indexOf(items), 1);
-                            $scope.message('xóa thành công');
-                            $scope.reset();
-                            $scope.initialize();
-                        }).catch(error=>{
-                            $scope.error('xóa thất bại');
-                        });
-                        console.log('I was closed by the timer')
-                    }
-                })
-
-            }
-        })
-
+            $http.delete(`/rest/admin/accessoríes/delete/${items.idRam}`,token).then(response=> {
+                $scope.items.splice($scope.items.indexOf(items), 1);
+                $scope.message('xóa thành công');
+                $scope.reset();
+                $scope.getAllRam();
+            }).catch(error=>{
+                $scope.error('xóa thất bại');
+            });
+            console.log('I was closed by the timer')
     };
 
-    $scope.initialize();
+    $scope.getAllRam();
     //hàm màu
     $scope.findAll = function () {
         $http.get("/rest/admin/accessoríes/getall",token).then(resp => {

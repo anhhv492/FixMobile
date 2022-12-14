@@ -49,7 +49,7 @@ public class AuthRestController {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword()));
 
-            UserName.accounts = accountService.findByUsername(UserName.getUserName());
+//            UserName.accounts = accountService.findByUsername(UserName.getUserName());
 
         }catch (DisabledException e){
             throw new Exception("USER_DISABLED", e);
