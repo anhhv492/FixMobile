@@ -5,25 +5,25 @@ use fix_mobile;
 CREATE TABLE categories (
 	id_category int NOT NULL auto_increment primary key,
     type int not null,
-	name nvarchar(255) not null,
+	name nvarchar(255)  null,
 	status int null
 ) ;
 CREATE TABLE capacity (
 	id_capacity int NOT NULL auto_increment primary key,
-	name nvarchar(100) not null
+	name nvarchar(100)  null
 ) ;
 CREATE TABLE ram (
 	id_ram int NOT NULL auto_increment primary key,
-	name nvarchar(100) not null
+	name nvarchar(100)  null
 ) ;
 
 CREATE TABLE color (
 	id_color int NOT NULL auto_increment primary key,
-	name nvarchar(100) not null
+	name nvarchar(100)  null
 ) ;
 CREATE TABLE images (
 	id_image int NOT NULL auto_increment primary key,
-	name nvarchar(255) not null,
+	name nvarchar(255)  null,
 	id_product int null,
 	id_product_change int null
 ) ;
@@ -36,10 +36,10 @@ CREATE TABLE roles (
 CREATE TABLE accounts (
 	username nvarchar(50) PRIMARY KEY not null,
 	password nvarchar(100) not null,
-	full_name nvarchar(100) not null,
-	gender binary default(0) not null,
+	full_name nvarchar(100)  null,
+	gender binary default(0)  null,
 	email nvarchar(100) not null,
-	phone nvarchar(20) not null,
+	phone nvarchar(20)  null,
 	create_date date,
 	image nvarchar(255) not null,
 	status binary DEFAULT(0) not null,
@@ -180,7 +180,9 @@ CREATE TABLE product_change (
 	email varchar(255) null,
 	status int default(0)  NULL,
 	username nvarchar(50)  null,
-	foreign key(username) references accounts(username)
+	id_order_detail int null,
+	foreign key(username) references accounts(username),
+	foreign key(id_order_detail) references order_detail(id_detail)
 );
 
 CREATE TABLE change_detail (
@@ -190,9 +192,7 @@ CREATE TABLE change_detail (
 	id_change int  NULL,
 	foreign key(id_product) references products(id_product),
 	foreign key(id_order_detail) references order_detail(id_detail),
-	foreign key(id_change) references product_change(id_change),
-	foreign key(id_change) references accessories(id_accessory)
-
+	foreign key(id_change) references product_change(id_change)
 );
 
 CREATE TABLE imayproduct (
