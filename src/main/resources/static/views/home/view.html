@@ -107,15 +107,13 @@
                             <div class="col-md-3" ng-repeat="pr1 in viewByPrice">
 
                                 <div class="card p-3">
-
                                     <div class="text-center" >
-                                        <img class="img-fluid" ng-src="{{pr1.images.length>0?pr1.images[0].name:''}}" />
+                                        <img class="img-fluid" src="{{pr1.image}}">
                                     </div>
 
                                     <div class="product-details">
                                         <span class="font-weight-bold d-block">{{pr1.price | number}} VNĐ</span>
                                         <span>{{pr1.name}}</span>
-
 
                                         <div class="buttons d-flex flex-row">
                                             <a class="cart" href="#!product"
