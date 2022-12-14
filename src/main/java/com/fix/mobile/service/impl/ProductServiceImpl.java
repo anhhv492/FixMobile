@@ -117,7 +117,7 @@ public class ProductServiceImpl implements ProductService {
                 productResponDTO.setName(products.get(i).getName());
                 if(productImage != null && productImage.getImages().size() > 0){
                     productResponDTO.setImage(productImage.getImages().get(0).getName());
-                } else productResponDTO.setImage(null);
+                } else productResponDTO.setImage("https://res.cloudinary.com/dcll6yp9s/image/upload/v1669970939/fugsyd4nw4ks0vb7kzyd.png");
                 productResponDTO.setPrice(products.get(i).getPrice());
                 productResponDTO.setTotail(totail);
                 productResponDTOList.add(productResponDTO);
@@ -161,11 +161,14 @@ public class ProductServiceImpl implements ProductService {
         List<ProductResponDTO> productResponDTOList = new ArrayList<>();
         for (int i = 0; i < productList.size(); i++) {
             ProductResponDTO productResponDTO = new ProductResponDTO();
+            Product productImage = repository.findById(productList.get(i).getIdProduct()).orElse(null);
             List<ImayProduct> imeis = imayProductRepository.findByProductAndStatus(productList.get(i), 1);
              totail = imeis.size();
              productResponDTO.setIdProduct(productList.get(i).getIdProduct());
              productResponDTO.setName(productList.get(i).getName());
-            productResponDTO.setImage(productList.get(i).getImages().get(0).getName());
+            if(productImage != null && productImage.getImages().size() > 0){
+                productResponDTO.setImage(productImage.getImages().get(0).getName());
+            } else productResponDTO.setImage("https://res.cloudinary.com/dcll6yp9s/image/upload/v1669970939/fugsyd4nw4ks0vb7kzyd.png");
             productResponDTO.setPrice(productList.get(i).getPrice());
             productResponDTO.setTotail(totail);
             productResponDTOList.add(productResponDTO);
@@ -180,11 +183,14 @@ public class ProductServiceImpl implements ProductService {
         List<ProductResponDTO> productResponDTOList = new ArrayList<>();
         for (int i = 0; i < productList.size(); i++) {
             ProductResponDTO productResponDTO = new ProductResponDTO();
+            Product productImage = repository.findById(productList.get(i).getIdProduct()).orElse(null);
             List<ImayProduct> imeis = imayProductRepository.findByProductAndStatus(productList.get(i), 1);
             totail = imeis.size();
             productResponDTO.setIdProduct(productList.get(i).getIdProduct());
             productResponDTO.setName(productList.get(i).getName());
-            productResponDTO.setImage(productList.get(i).getImages().get(0).getName());
+            if(productImage != null && productImage.getImages().size() > 0){
+                productResponDTO.setImage(productImage.getImages().get(0).getName());
+            } else productResponDTO.setImage("https://res.cloudinary.com/dcll6yp9s/image/upload/v1669970939/fugsyd4nw4ks0vb7kzyd.png");
             productResponDTO.setPrice(productList.get(i).getPrice());
             productResponDTO.setTotail(totail);
             productResponDTOList.add(productResponDTO);
