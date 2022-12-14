@@ -64,7 +64,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                 console.log($scope.priceSale)
                 console.log($scope.priceSale.length)
                 for(var i=0; i<res.data.length;i++){
-                    $scope.getSale(res.data[i].price,'',res.data[i].idAccessory)
+                    $scope.getSale(res.data[i].price,0,res.data[i].idAccessory)
                 }
                 console.log($scope.priceSale)
             }).catch(err=>{
@@ -76,7 +76,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                 $rootScope.detailProducts=res.data;
                 $scope.priceSale=[];
                 for(var i=0; i<res.data.length;i++){
-                    $scope.getSale(res.data[i].price,res.data[i].idProduct,'')
+                    $scope.getSale(res.data[i].price,res.data[i].idProduct,0)
                 }
             }).catch(err=>{
                 $rootScope.detailProducts=null;
@@ -92,6 +92,9 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
         $rootScope.saveLocalStorage();
         $rootScope.loadLocalStorage();
 
+    }
+    $scope.test=function (){
+        console.log($rootScope.carts)
     }
     $scope.addCart=function(item){
         console.log("qty",$scope.qtyCart);
@@ -131,7 +134,8 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                         if(!$scope.accessoryItem){
                             data.qty=1;
                             var money = data.price
-                            var urlSale=`http://localhost:8080/admin/rest/sale/getbigsale?money=`+money+`&idPrd=`+0+`&idAcsr=`+data.idAccessory;
+                            console.log('kkkkkk')
+                            var urlSale=`http://localhost:8080/admin/rest/sale/getbigsale?money=`+money+`&idPrd=`+'0'+`&idAcsr=`+data.idAccessory;
                             var total=0;
                             $http.get(urlSale, token).then(resp => {
                                 console.log("hihi")
@@ -146,11 +150,11 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                                 }else{total=money}
                                 console.log(total)
                                 data.price=total;
-                                console.log(data.price);
                                 $rootScope.carts.push(data);
                             }).catch(error => {
                                 console.log(error)
                             })
+                            $rootScope.carts.push(data);
                         }else{
                             $scope.accessoryItem.qty++;
                         }
@@ -329,6 +333,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
     $scope.getSale=function (money,  idPrd,  idAcsr){
         var urlSale=`http://localhost:8080/admin/rest/sale/getbigsale?money=`+money+`&idPrd=`+idPrd+`&idAcsr=`+idAcsr;
         $http.get(urlSale, token).then(resp => {
+            console.log(idAcsr+'bebebe')
             if(resp.data.moneySale == null) {
                 $scope.priceSale.push(money - (money * resp.data.percentSale/100));
             }else if(resp.data.percentSale == null){

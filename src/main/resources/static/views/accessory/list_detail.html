@@ -2,6 +2,7 @@
     <div class="row btn-group text-center">
         <h2 class="text-success">{{cateDetail.name}}</h2>
     </div>
+    <button ng-click="test()"></button>
     <div class="alert alert-warning container" ng-if="detailAccessories.length<=0">Sản phẩm này đã hết hàng!</div>
     <div class="item col-xs-4 col-md-2 " ng-repeat="accessory in detailAccessories" ng-if="detailAccessories.length>0">
         <div class="thumbnail row p-3">

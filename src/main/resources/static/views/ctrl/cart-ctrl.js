@@ -566,15 +566,12 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window,$timeou
     $scope.priceSaleByVocher=0;
     $scope.getSaleApply=function (x){
         $scope.getVoucherApply=x;
-        console.log(x);
         let urlsale = `http://localhost:8080/admin/rest/sale/getsale/`+$scope.getVoucherApply;
         $http.get(urlsale, token).then(res => {
             var price=0;
             if(res.data.typeSale==1 || res.data.typeSale==4 || (res.data.typeSale==3 && res.data.userType==1)){
                let urlsaledetail=`http://localhost:8080/admin/rest/sale/getsaledetail/`+$scope.getVoucherApply;
                 $http.get(urlsaledetail, token).then(res1 => {
-
-                    console.log(res.data.typeSale)
                     if(res.data.typeSale==1){
                         price=0;
                         for (var i=0;i<res1.data.length;i++) {
@@ -623,10 +620,6 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window,$timeou
                             }
                         }
                     }
-
-                    console.log($rootScope.carts)
-                    console.log($scope.listProductApplySale);
-                    console.log($scope.listAccessoryApplySale)
                 }).catch(err => {
                     console.log(err)
                 })
@@ -642,7 +635,6 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window,$timeou
                     $scope.priceSaleByVocher=$scope.totalPriceSale1*res.data.percentSale/100;
                 }
             }
-            console.log($scope.priceSaleByVocher+"hihihihi")
         }).catch(err => {
             console.log(err)
         })
