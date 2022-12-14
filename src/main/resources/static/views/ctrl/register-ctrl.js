@@ -23,7 +23,7 @@ app.controller("register-ctrl",function ($scope, $http,$window){
         $scope.form = {
             username:null,
             createDate: new Date(),
-            image: "5.png",
+            image: "https://res.cloudinary.com/dcll6yp9s/image/upload/v1669087979/kbasp5qdf76f3j02mebr.png",
             gender: true,
             status: 1,
             password: null,
@@ -61,18 +61,22 @@ app.controller("register-ctrl",function ($scope, $http,$window){
             console.log("Đọc dữ liệu trong list")
             $scope.accounts.forEach(acc => {
 
-                if ($scope.form.username == acc.username) {
-                    console.log($scope.form.username)
-                    console.log(acc.username)
-                    console.log(" trùng")
+                if ($scope.form.username == acc.username ) {
                     Toast.fire({
                         icon: 'error',
                         title: 'Tài khoản đã tồn tại',
                     })
-                    // alert("Tài khoản đã tồn tại")
                     return a = 0;
-
                 }
+                if ($scope.form.email == acc.email ) {
+                   Toast.fire({
+                        icon: 'error',
+                        title: 'Email đã tồn tại',
+                    })
+                    return a = 0;
+                }
+
+
             })
             if (a == 1) {
                 console.log("Bắt đầu thêm mới")
