@@ -49,7 +49,7 @@ public class AccessoiesRestController {
 	@Autowired
 	private Cloudinary cloud;
 
-	@PreAuthorize("hasAuthority('ADMIN')")
+//	@PreAuthorize("hasAuthority('ADMIN')")
 	@GetMapping
 	public List<Ram> findall(){
 		return ramService.findAll();
