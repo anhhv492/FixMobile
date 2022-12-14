@@ -59,10 +59,25 @@
     <section class="bestselling mt-5">
         <div class="container">
             <div class="row">
+                <div class="single-product mt-3 col-3" ng-repeat="p in productView" ng-value="p.idProduct">
+                    <img src="/images/product-1.jpg" alt="">
+                    <div class="product-hover">
+                      <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Add to cart</a>
+                      <a href="single-product.html" class="view-details-link mt-3"><i class="fa fa-link"></i> See details</a>
+                    </div>
+                    <h2><a href="single-product.html">{{p.name}}</a></h2>
+                    <div class="product-carousel-price">
+                      <p ng-if="priceSale[$index]==-1">{{p.price|number}} VNĐ</p>
+                      <p ng-if="priceSale[$index]!=-1 && priceSale[$index]!=0"> <del>{{p.price|number}} VNĐ </del> &nbsp; {{priceSale[$index]|number}} VNĐ</p>
+                      <p ng-if="priceSale[$index]!=-1 && priceSale[$index]==0"> <del>{{p.price|number}} VNĐ </del> &nbsp; Free</p>
+
+                    </div>
+
                 <div class="bestselling__heading-wrap">
                     <img src="/images/phone_top.png" alt="Sản phẩm bán chạy"
                          class="bestselling__heading-img">
                     <div class="bestselling__heading">Top bán chạy nhất tuần</div>
+
                 </div>
 
                 <div class="latest-product ">
@@ -74,9 +89,34 @@
 
                                         <div class="card p-3">
 
+<!-- product love -->
+  <div class="container ">
+    <div class="row bg-white">
+      <div class="text-center product__love-title ">
+        <h2 class="product__love-heading">
+          Có thể bạn thích
+        </h2>
+      </div>
+    </div>
+    <div class="row bg-white">
+
+      <div class="col-lg-3 single-product" ng-repeat="p1 in viewByPrice">
+              <img src="/images/product-1.jpg" alt="">
+              <div class="product-hover">
+                <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Add to cart</a>
+                <a href="single-product.html" class="view-details-link mt-2"><i class="fa fa-link"></i> See details</a>
+              </div>
+              <h2><a href="single-product.html">{{p1.name}}</a></h2>
+              <div class="product-carousel-price">
+                <p ng-if="priceSale1[$index]==-1">{{p1.price|number}} VNĐ</p>
+                <p ng-if="priceSale1[$index]!=-1 && priceSale1[$index]!=0"> <del>{{p1.price|number}} VNĐ </del> &nbsp; {{priceSale1[$index]|number}} VNĐ</p>
+                <p ng-if="priceSale1[$index]!=-1 && priceSale1[$index]==0"> <del>{{p1.price|number}} VNĐ </del> &nbsp; Free</p>
+              </div>
+
                                             <div class="text-center" style="width: 200px; height: 200px">
                                                 <img class="img-fluid" src="{{pr.image}}">
                                             </div>
+
 
                                             <div class="product-details">
 

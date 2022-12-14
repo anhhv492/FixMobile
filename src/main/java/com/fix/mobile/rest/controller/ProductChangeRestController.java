@@ -84,7 +84,7 @@ public class ProductChangeRestController {
 
 	@RequestMapping(value= "/getAll", method = RequestMethod.GET)
 	public List<ProductChange> listProductChange(){
-		List<ProductChange> listProduct =  productChangeSerivce.findAllProductChange();
+		List<ProductChange> listProduct =  productChangeSerivce.listProductChange();
 		if(listProduct.isEmpty()){
 			return null;
 		}Comparator<ProductChange> comparator =  new Comparator<ProductChange>() {
