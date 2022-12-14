@@ -15,7 +15,7 @@ public interface ProductService extends GenericService<Product, Integer> {
     Page<Product> findShowSale(int pageNumber, int maxRecord, String share);
 	Page<Product> getAll (Pageable page);
 	Optional<Product> findByName(String name);
-	List<ProductResponDTO> findByCategoryAndStatus(Category cate);
+	List<ProductResponDTO> findByCategoryAndStatus(Integer id);
 
 	List<Product> findByProductLimit();
 	List<Product> findByProductLitmitPrice();
