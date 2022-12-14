@@ -200,6 +200,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                     it=>it.idProduct===item.idProduct
                 );
                 let data= res.data;
+                debugger;
                 $http.get(`${urlImei}/amount/${item.idProduct}`).then(res=>{
                     if(itemCart&&itemCart.qty>=res.data) {
                         const Toast = Swal.mixin({

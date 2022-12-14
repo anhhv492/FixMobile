@@ -26,10 +26,10 @@ public interface ProductRepository extends PagingAndSortingRepository<Product, I
 
     List<Product> findByCategoryAndStatus(Category category, int status);
 
-    @Query(value ="select * from products  p  order by  p.id_product desc limit 4",nativeQuery = true)
+    @Query(value ="select * from products  p where p.status = 1 order by  p.id_product desc limit 4",nativeQuery = true)
     List<Product> findByProductLimit();
 
-    @Query(value = "select  * from  products p where p.price <= 200000 order by p.id_product desc limit 8",nativeQuery = true)
+    @Query(value = "select  * from  products p where p.price <= 200000 and p.status = 1 order by p.id_product desc limit 8",nativeQuery = true)
     List<Product> findByProductLitmitPrice();
 
     @Query(value = "select * from products p where p.name = :name ", nativeQuery = true)

@@ -2,48 +2,28 @@
     <div class="row btn-group text-center bg-white">
         <h2 class="text-success">{{cateDetail.name}}</h2>
     </div>
-    
+
     <div class="alert alert-warning container" ng-if="detailAccessories.length<=0">Sản phẩm này đã hết hàng!</div>
-    <div class="item col-xs-4 col-md-2 " ng-repeat="accessory in detailAccessories" ng-if="detailAccessories.length>0">
-        <div class="thumbnail row p-3">
-            <img class="group list-group-image" src="{{accessory.image}}" height="220px" width="250px" />
-            <div class="caption mt-2">
-                <h5 class="group inner list-group-item-heading">
-                    {{accessory.name}}</h5>
-                <div class="row">
-                    <div class="col-xs-12 col-md-6">
-                        <p class="lead">
-                            <p ng-if="priceSale[$index]==-1">{{accessory.price|number}} VNĐ</p>
-                            <p ng-if="priceSale[$index]!=-1 && priceSale[$index]!=0"> <del>{{accessory.price|number}} VNĐ </del> {{priceSale[$index]|number}} VNĐ</p>
-                            <p ng-if="priceSale[$index]!=-1 && priceSale[$index]==0"> <del>{{accessory.price|number}} VNĐ </del> Free</p>
-                        </p>
-                    </div>
-                    <div class="btn-group">
-                        <a class="btn btn-details" href="#!accessoryDetail" ng-click="getOneAccessory(accessory.idAccessory)">Details</a>
-                        <a class="btn btn-success" ng-click="addCart(accessory)">Add to cart</a>
-                   <div class="alert alert-warning container" ng-if="detailAccessories.length<=0">Sản phẩm này đã hết hàng! </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="row bg-white">
         <div class="wrapper mb-5">
             <div class="container">
                 <div class="row g-1">
                     <div class="col-md-3" ng-repeat="accessory in detailAccessories" ng-if="detailAccessories.length>0">
                         <div class="card p-3 mb-3">
-
                             <div class="text-center" style="width: 200px; height: 200px">
-                                <img src="{{accessory.images}}"  class="img-fluid">
+                                <img src="{{accessory.image}}" lass="img-fluid">
                             </div>
                             <div class="product-details">
-
-
-                                <span class="font-weight-bold d-block">{{accessory.price | number}} VNĐ</span>
+                                <p ng-if="priceSale[$index]==-1">{{accessory.price | number}} VNĐ</p>
+                                <p ng-if="priceSale[$index]!=-1 && priceSale[$index]!=0">
+                                    <del>{{accessory.price | number}} VNĐ</del>
+                                    {{priceSale[$index] | number}} VNĐ
+                                </p>
+                                <p ng-if="priceSale[$index]!=-1 && priceSale[$index]==0">
+                                    <del>{{accessory.price | number}} VNĐ</del>
+                                    Free
+                                </p>
                                 <span>{{accessory.name}}</span>
-
-
                                 <div class="buttons d-flex flex-row">
                                     <a class="cart" href="#!accessoryDetail"
                                        ng-click="getOneAccessoryHome(accessory.idAccessory)">
@@ -250,8 +230,15 @@
     }
 </style>
 <script type="text/javascript">
-    $(document).ready(function() {
-        $('#list').click(function(event){event.preventDefault();$('#products .item').addClass('list-group-item');});
-        $('#grid').click(function(event){event.preventDefault();$('#products .item').removeClass('list-group-item');$('#products .item').addClass('grid-group-item');});
+    $(document).ready(function () {
+        $('#list').click(function (event) {
+            event.preventDefault();
+            $('#products .item').addClass('list-group-item');
+        });
+        $('#grid').click(function (event) {
+            event.preventDefault();
+            $('#products .item').removeClass('list-group-item');
+            $('#products .item').addClass('grid-group-item');
+        });
     });
 </script>

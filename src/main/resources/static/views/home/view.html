@@ -54,16 +54,16 @@
     </div>
     <!-- score-top-->
     <!-- bestselling product -->
-    <section class="bestselling mt-5">
+    <section class="bestselling mt-3">
         <div class="container">
             <div class="text-center">
                 <img src="/images/phone_top.png" alt="Sản phẩm bán chạy"
                      class="bestselling__heading-img">
-                <div class="bestselling__heading">Top bán chạy nhất tuần</div>
+                <div class="">Top bán chạy nhất tuần</div>
             </div>
-            <div class="row">
+            <div class="row mt-5">
                 <div class="single-product mt-3 col-3" ng-repeat="p in productView" ng-value="p.idProduct">
-                    <img src="/images/product-1.jpg" alt="">
+                    <img class="img-responsive"  src="{{p.image}}">
                     <div class="product-hover">
                         <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Add to cart</a>
                         <a href="single-product.html" class="view-details-link mt-3"><i class="fa fa-link"></i> See
@@ -107,12 +107,20 @@
                             <div class="col-md-3" ng-repeat="pr1 in viewByPrice">
 
                                 <div class="card p-3">
-                                    <div class="text-center" >
-                                        <img class="img-fluid" src="{{pr1.image}}">
+                                    <div class="text-center">
+                                        <img class="img-responsive" src="{{pr1.image}}">
                                     </div>
 
                                     <div class="product-details">
-                                        <span class="font-weight-bold d-block">{{pr1.price | number}} VNĐ</span>
+                                        <p ng-if="priceSale[$index]==-1">{{pr1.price | number}} VNĐ</p>
+                                        <p ng-if="priceSale[$index]!=-1 && priceSale[$index]!=0">
+                                            <del>{{pr1.price | number}} VNĐ</del> &nbsp; {{priceSale[$index] | number}}
+                                            VNĐ
+                                        </p>
+                                        <p ng-if="priceSale[$index]!=-1 && priceSale[$index]==0">
+                                            <del>{{pr1.price | number}} VNĐ</del> &nbsp; Free
+                                        </p>
+
                                         <span>{{pr1.name}}</span>
 
                                         <div class="buttons d-flex flex-row">
@@ -159,8 +167,10 @@
 
         background: #eee;
     }
-
-
+    .img-responsive{
+         width: 150px;
+         height: 150px;
+     }
     .wrapper {
 
         margin-top: 30px;

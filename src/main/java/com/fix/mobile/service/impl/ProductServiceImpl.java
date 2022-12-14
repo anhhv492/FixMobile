@@ -115,11 +115,16 @@ public class ProductServiceImpl implements ProductService {
                 totail = imeis.size();
                 productResponDTO.setIdProduct(products.get(i).getIdProduct());
                 productResponDTO.setName(products.get(i).getName());
+                productResponDTO.setCategory(products.get(i).getCategory());
                 if(productImage != null && productImage.getImages().size() > 0){
                     productResponDTO.setImage(productImage.getImages().get(0).getName());
                 } else productResponDTO.setImage("https://res.cloudinary.com/dcll6yp9s/image/upload/v1669970939/fugsyd4nw4ks0vb7kzyd.png");
                 productResponDTO.setPrice(products.get(i).getPrice());
+                productResponDTO.setRam(products.get(i).getRam());
+                productResponDTO.setCapacity(products.get(i).getCapacity());
+                productResponDTO.setColor(products.get(i).getColor());
                 productResponDTO.setTotail(totail);
+
                 productResponDTOList.add(productResponDTO);
             }
             return productResponDTOList;

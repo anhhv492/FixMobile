@@ -44,7 +44,13 @@
                             </div>
 
                             <div class="product-details">
-                                <span class="font-weight-bold d-block">{{product.price | number}} VNĐ</span>
+                                <p ng-if="priceSale[$index]==-1">{{product.price | number}} VNĐ</p>
+                                <p ng-if="pric0eSale[$index]!=-1 && priceSale[$index]!=0">
+                                    <del>{{product.price | number}} VNĐ</del> &nbsp; {{priceSale[$index] | number}} VNĐ
+                                </p>
+                                <p ng-if="priceSale[$index]!=-1 && priceSale[$index]==0">
+                                    <del>{{product.price | number}} VNĐ</del> &nbsp; Free
+                                </p>
                                 <span>{{product.name}}</span>
                                 <div class="buttons d-flex flex-row">
                                     <a class="cart" href="#!product"
