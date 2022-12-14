@@ -8,22 +8,34 @@
 
     <div class="item col-xs-4 col-md-2 " ng-repeat="product in detailProducts" ng-if="detailProducts.length>0">
         <div class="thumbnail row p-3">
-            <img class="group list-group-image" src="{{product.images.length>0?product.images[0].name:''}}" height="220px" width="250px" />
+
+            <img class="img-responsive" width="80px" height="80px"
+                 src="/images1/item/gift-box.png"/>
             <div class="caption mt-2">
                 <h5 class="group inner list-group-item-heading">
                     {{product.name}}</h5>
                 <div class="row">
                     <div class="col-xs-12 col-md-6">
                         <p class="lead">
-                            <p ng-if="priceSale[$index]==-1">{{product.price|number}} VNĐ</p>
-                            <p ng-if="priceSale[$index]!=-1 && priceSale[$index]!=0"> <del>{{product.price|number}} VNĐ </del> &nbsp; {{priceSale[$index]|number}} VNĐ</p>
-                            <p ng-if="priceSale[$index]!=-1 && priceSale[$index]==0"> <del>{{product.price|number}} VNĐ </del> &nbsp; Free</p>
+                        <p ng-if="priceSale[$index]==-1">{{product.price | number}} VNĐ</p>
+                        <p ng-if="priceSale[$index]!=-1 && priceSale[$index]!=0">
+                            <del>{{product.price | number}} VNĐ</del> &nbsp; {{priceSale[$index] | number}} VNĐ
+                        </p>
+                        <p ng-if="priceSale[$index]!=-1 && priceSale[$index]==0">
+                            <del>{{product.price | number}} VNĐ</del> &nbsp; Free
+                        </p>
                         </p>
                     </div>
                     <div class="btn-group">
                         <a class="btn btn-details" href="#!product" ng-click="getOneProduct(product)">Details</a>
                         <a class="btn btn-success" ng-click="addCart(product)">Add to cart</a>
 
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row bg-white">
         <div class="wrapper mb-5">
             <div class="container">
@@ -31,18 +43,14 @@
                     <div class="col-md-3" ng-repeat="product in detailProducts">
 
                         <div class="card p-3 mb-3">
-
                             <div class="text-center" style="width: 200px; height: 200px">
-                                <img class="img-fluid" src="{{product.image}}">
+                                <img src="{{product.images.length>0?product.images[0].name:''}}" class="img-fluid"
+                                     height="220px" width="250px"/>
                             </div>
 
                             <div class="product-details">
-
-
                                 <span class="font-weight-bold d-block">{{product.price | number}} VNĐ</span>
                                 <span>{{product.name}}</span>
-
-
                                 <div class="buttons d-flex flex-row">
                                     <a class="cart" href="#!product"
                                        ng-click="getOneProductHome(product)">
@@ -65,8 +73,6 @@
                                 </div>
 
                             </div>
-
-
                         </div>
 
                     </div>
@@ -79,176 +85,183 @@
 
     </div>
 </div>
-<style>
-    body {
+                    <style>
+                        body {
 
-        background: #eee;
-    }
-
-
-    .wrapper {
-
-        margin-top: 30px;
-    }
-
-    .card {
-
-        border: 1px solid #eee;
-        cursor: pointer;
-    }
+                            background: #eee;
+                        }
 
 
-    .weight {
+                        .wrapper {
 
-        margin-top: -65px;
-        transition: all 0.5s;
-    }
+                            margin-top: 30px;
+                        }
 
-    .weight small {
+                        .card {
 
-        color: #e2dede;
-    }
-
-    .buttons {
-        padding: 10px;
-        background-color: #d6d4d44f;
-        border-radius: 4px;
-        position: relative;
-        margin-top: 7px;
-        opacity: 0;
-        transition: all 0.8s;
-    }
-
-    .dot {
-        height: 14px;
-        width: 14px;
-        background-color: green;
-        border-radius: 50%;
-        position: absolute;
-        left: 27%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 8px;
-        color: #fff;
-        opacity: 0;
-    }
-
-    .cart-button {
-        height: 48px
-    }
-
-    .cart-button:focus {
-        box-shadow: none
-    }
-
-    .cart {
-        position: relative;
-        height: 48px !important;
-        width: 50px;
-        margin-right: 8px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: #fff;
-        padding: 11px;
-        border-radius: 5px;
-        font-size: 14px;
-        transition: 1s ease-in-out;
-        overflow: hidden;
-
-    }
-
-    .cart-button.clicked span.dot {
-        animation: item 0.3s ease-in forwards
-    }
-
-    @keyframes item {
-        0% {
-            opacity: 1;
-            top: 30%;
-            left: 30%
-        }
-
-        25% {
-            opacity: 1;
-            left: 26%;
-            top: 0%
-        }
-
-        50% {
-            opacity: 1;
-            left: 23%;
-            top: -22%
-        }
-
-        75% {
-            opacity: 1;
-            left: 19%;
-            top: -18%
-        }
-
-        100% {
-            opacity: 1;
-            left: 14%;
-            top: 28%
-        }
-    }
+                            border: 1px solid #eee;
+                            cursor: pointer;
+                        }
 
 
-    .card:hover .buttons {
+                        .weight {
 
-        opacity: 1;
-    }
+                            margin-top: -65px;
+                            transition: all 0.5s;
+                        }
+
+                        .weight small {
+
+                            color: #e2dede;
+                        }
+
+                        .buttons {
+                            padding: 10px;
+                            background-color: #d6d4d44f;
+                            border-radius: 4px;
+                            position: relative;
+                            margin-top: 7px;
+                            opacity: 0;
+                            transition: all 0.8s;
+                        }
+
+                        .dot {
+                            height: 14px;
+                            width: 14px;
+                            background-color: green;
+                            border-radius: 50%;
+                            position: absolute;
+                            left: 27%;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            font-size: 8px;
+                            color: #fff;
+                            opacity: 0;
+                        }
+
+                        .cart-button {
+                            height: 48px
+                        }
+
+                        .cart-button:focus {
+                            box-shadow: none
+                        }
+
+                        .cart {
+                            position: relative;
+                            height: 48px !important;
+                            width: 50px;
+                            margin-right: 8px;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            background-color: #fff;
+                            padding: 11px;
+                            border-radius: 5px;
+                            font-size: 14px;
+                            transition: 1s ease-in-out;
+                            overflow: hidden;
+
+                        }
+
+                        .cart-button.clicked span.dot {
+                            animation: item 0.3s ease-in forwards
+                        }
+
+                        @keyframes item {
+                            0% {
+                                opacity: 1;
+                                top: 30%;
+                                left: 30%
+                            }
+
+                            25% {
+                                opacity: 1;
+                                left: 26%;
+                                top: 0%
+                            }
+
+                            50% {
+                                opacity: 1;
+                                left: 23%;
+                                top: -22%
+                            }
+
+                            75% {
+                                opacity: 1;
+                                left: 19%;
+                                top: -18%
+                            }
+
+                            100% {
+                                opacity: 1;
+                                left: 14%;
+                                top: 28%
+                            }
+                        }
 
 
-    .card:hover .weight {
+                        .card:hover .buttons {
 
-        margin-top: 10px;
-    }
+                            opacity: 1;
+                        }
 
-    .card:hover {
 
-        transform: scale(1.04);
-        z-index: 2;
-        overflow: hidden;
-    }
+                        .card:hover .weight {
 
-    label.radio {
-        cursor: pointer
-    }
+                            margin-top: 10px;
+                        }
 
-    label.radio input {
-        position: absolute;
-        top: 0;
-        left: 0;
-        visibility: hidden;
-        pointer-events: none
-    }
+                        .card:hover {
 
-    label.radio span {
-        padding: 2px 9px;
-        border: 2px solid black;
-        display: inline-block;
-        color: black;
-        border-radius: 3px;
-        text-transform: uppercase
-    }
+                            transform: scale(1.04);
+                            z-index: 2;
+                            overflow: hidden;
+                        }
 
-    label.radio input:checked + span {
-        border-color: black;
-        background-color: black;
-        color: #fff
-    }
+                        label.radio {
+                            cursor: pointer
+                        }
 
-    .btn {
+                        label.radio input {
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            visibility: hidden;
+                            pointer-events: none
+                        }
 
-        border-radius: 0;
-    }
-</style>
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('#list').click(function(event){event.preventDefault();$('#products .item').addClass('list-group-item');});
-        $('#grid').click(function(event){event.preventDefault();$('#products .item').removeClass('list-group-item');$('#products .item').addClass('grid-group-item');});
-    });
-</script>
+                        label.radio span {
+                            padding: 2px 9px;
+                            border: 2px solid black;
+                            display: inline-block;
+                            color: black;
+                            border-radius: 3px;
+                            text-transform: uppercase
+                        }
+
+                        label.radio input:checked + span {
+                            border-color: black;
+                            background-color: black;
+                            color: #fff
+                        }
+
+                        .btn {
+
+                            border-radius: 0;
+                        }
+                    </style>
+                    <script type="text/javascript">
+                        $(document).ready(function () {
+                            $('#list').click(function (event) {
+                                event.preventDefault();
+                                $('#products .item').addClass('list-group-item');
+                            });
+                            $('#grid').click(function (event) {
+                                event.preventDefault();
+                                $('#products .item').removeClass('list-group-item');
+                                $('#products .item').addClass('grid-group-item');
+                            });
+                        });
+                    </script>

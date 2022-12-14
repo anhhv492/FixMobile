@@ -21,20 +21,22 @@
                     <div class="btn-group">
                         <a class="btn btn-details" href="#!accessoryDetail" ng-click="getOneAccessory(accessory.idAccessory)">Details</a>
                         <a class="btn btn-success" ng-click="addCart(accessory)">Add to cart</a>
-                        
-    <div class="alert alert-warning container" ng-if="detailAccessories.length<=0">Sản phẩm này đã hết hàng! </div>
+                   <div class="alert alert-warning container" ng-if="detailAccessories.length<=0">Sản phẩm này đã hết hàng! </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row bg-white">
         <div class="wrapper mb-5">
             <div class="container">
                 <div class="row g-1">
                     <div class="col-md-3" ng-repeat="accessory in detailAccessories" ng-if="detailAccessories.length>0">
-
                         <div class="card p-3 mb-3">
 
                             <div class="text-center" style="width: 200px; height: 200px">
-                                <img class="img-fluid" src="{{accessory.image}}">
+                                <img class="img-fluid" src="/images1/item/gift-box.png">
                             </div>
-
                             <div class="product-details">
 
 
@@ -78,6 +80,7 @@
         </div>
 
     </div>
+
 </div>
 <style>
     body {

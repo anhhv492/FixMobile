@@ -52,189 +52,110 @@
             <span class="visually-hidden ">Next</span>
         </button>
     </div>
-
     <!-- score-top-->
-
     <!-- bestselling product -->
     <section class="bestselling mt-5">
         <div class="container">
+            <div class="text-center">
+                <img src="/images/phone_top.png" alt="Sản phẩm bán chạy"
+                     class="bestselling__heading-img">
+                <div class="bestselling__heading">Top bán chạy nhất tuần</div>
+            </div>
             <div class="row">
                 <div class="single-product mt-3 col-3" ng-repeat="p in productView" ng-value="p.idProduct">
                     <img src="/images/product-1.jpg" alt="">
                     <div class="product-hover">
-                      <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Add to cart</a>
-                      <a href="single-product.html" class="view-details-link mt-3"><i class="fa fa-link"></i> See details</a>
+                        <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Add to cart</a>
+                        <a href="single-product.html" class="view-details-link mt-3"><i class="fa fa-link"></i> See
+                            details</a>
                     </div>
                     <h2><a href="single-product.html">{{p.name}}</a></h2>
                     <div class="product-carousel-price">
-                      <p ng-if="priceSale[$index]==-1">{{p.price|number}} VNĐ</p>
-                      <p ng-if="priceSale[$index]!=-1 && priceSale[$index]!=0"> <del>{{p.price|number}} VNĐ </del> &nbsp; {{priceSale[$index]|number}} VNĐ</p>
-                      <p ng-if="priceSale[$index]!=-1 && priceSale[$index]==0"> <del>{{p.price|number}} VNĐ </del> &nbsp; Free</p>
-
+                        <p ng-if="priceSale[$index]==-1">{{p.price | number}} VNĐ</p>
+                        <p ng-if="priceSale[$index]!=-1 && priceSale[$index]!=0">
+                            <del>{{p.price | number}} VNĐ</del> &nbsp; {{priceSale[$index] | number}} VNĐ
+                        </p>
+                        <p ng-if="priceSale[$index]!=-1 && priceSale[$index]==0">
+                            <del>{{p.price | number}} VNĐ</del> &nbsp; Free
+                        </p>
                     </div>
 
-                <div class="bestselling__heading-wrap">
-                    <img src="/images/phone_top.png" alt="Sản phẩm bán chạy"
-                         class="bestselling__heading-img">
-                    <div class="bestselling__heading">Top bán chạy nhất tuần</div>
-
                 </div>
+            </div>
+        </div>
 
-                <div class="latest-product ">
-                    <div class="row">
-                        <div class="wrapper">
-                            <div class="container">
-                                <div class="row g-1">
-                                    <div class="col-md-3" ng-repeat="pr in productView">
-
-                                        <div class="card p-3">
-
-<!-- product love -->
-  <div class="container ">
-    <div class="row bg-white">
-      <div class="text-center product__love-title ">
-        <h2 class="product__love-heading">
-          Có thể bạn thích
-        </h2>
-      </div>
-    </div>
-    <div class="row bg-white">
-
-      <div class="col-lg-3 single-product" ng-repeat="p1 in viewByPrice">
-              <img src="/images/product-1.jpg" alt="">
-              <div class="product-hover">
-                <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Add to cart</a>
-                <a href="single-product.html" class="view-details-link mt-2"><i class="fa fa-link"></i> See details</a>
-              </div>
-              <h2><a href="single-product.html">{{p1.name}}</a></h2>
-              <div class="product-carousel-price">
-                <p ng-if="priceSale1[$index]==-1">{{p1.price|number}} VNĐ</p>
-                <p ng-if="priceSale1[$index]!=-1 && priceSale1[$index]!=0"> <del>{{p1.price|number}} VNĐ </del> &nbsp; {{priceSale1[$index]|number}} VNĐ</p>
-                <p ng-if="priceSale1[$index]!=-1 && priceSale1[$index]==0"> <del>{{p1.price|number}} VNĐ </del> &nbsp; Free</p>
-              </div>
-
-                                            <div class="text-center" style="width: 200px; height: 200px">
-                                                <img class="img-fluid" src="{{pr.image}}">
-                                            </div>
+    </section>
+    <div class="latest-product ">
 
 
-                                            <div class="product-details">
+        <!-- end bestselling product -->
+
+        <!-- product love -->
+        <div class="container mb-3">
+            <div class="row bg-white">
+                <div class="text-center product__love-title ">
+                    <h2 class="product__love-heading">
+                        Có thể bạn thích
+                    </h2>
+                </div>
+            </div>
+            <div class="row bg-white">
+
+                <div class="wrapper mb-5">
+                    <div class="container">
+                        <div class="row g-1">
+                            <div class="col-md-3" ng-repeat="pr1 in viewByPrice">
+
+                                <div class="card p-3">
+
+                                    <div class="text-center" >
+                                        <img class="img-fluid" ng-src="{{pr1.images.length>0?pr1.images[0].name:''}}" />
+                                    </div>
+
+                                    <div class="product-details">
+                                        <span class="font-weight-bold d-block">{{pr1.price | number}} VNĐ</span>
+                                        <span>{{pr1.name}}</span>
 
 
-                                                <span class="font-weight-bold d-block">{{pr.price | number}} VNĐ</span>
-                                                <span>{{pr.name}}</span>
-
-
-                                                <div class="buttons d-flex flex-row">
-                                                    <a class="cart" href="#!product"
-                                                       ng-click="getOneProductHome(pr)">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                                             height="16"
-                                                             fill="currentColor" class="bi bi-ticket-detailed"
-                                                             viewBox="0 0 16 16">
-                                                            <path d="M4 5.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5Zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5ZM5 7a1 1 0 0 0 0 2h6a1 1 0 1 0 0-2H5Z"/>
-                                                            <path d="M0 4.5A1.5 1.5 0 0 1 1.5 3h13A1.5 1.5 0 0 1 16 4.5V6a.5.5 0 0 1-.5.5 1.5 1.5 0 0 0 0 3 .5.5 0 0 1 .5.5v1.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 11.5V10a.5.5 0 0 1 .5-.5 1.5 1.5 0 1 0 0-3A.5.5 0 0 1 0 6V4.5ZM1.5 4a.5.5 0 0 0-.5.5v1.05a2.5 2.5 0 0 1 0 4.9v1.05a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-1.05a2.5 2.5 0 0 1 0-4.9V4.5a.5.5 0 0 0-.5-.5h-13Z"/>
-                                                        </svg>
-                                                    </a>
-                                                    <button class="btn btn-success cart-button btn-block"
-                                                            ng-click="addCart(pr)">Add to cart
-                                                    </button>
-                                                </div>
-
-                                                <div class="weight">
-                                                    <small style="color: lightslategray">Còn
-                                                        {{pr.totail | number}} sản phẩm</small>
-                                                </div>
-
-                                            </div>
-
-
+                                        <div class="buttons d-flex flex-row">
+                                            <a class="cart" href="#!product"
+                                               ng-click="getOneProductHome(pr1)">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                     height="16"
+                                                     fill="currentColor" class="bi bi-ticket-detailed"
+                                                     viewBox="0 0 16 16">
+                                                    <path d="M4 5.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5Zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5ZM5 7a1 1 0 0 0 0 2h6a1 1 0 1 0 0-2H5Z"/>
+                                                    <path d="M0 4.5A1.5 1.5 0 0 1 1.5 3h13A1.5 1.5 0 0 1 16 4.5V6a.5.5 0 0 1-.5.5 1.5 1.5 0 0 0 0 3 .5.5 0 0 1 .5.5v1.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 11.5V10a.5.5 0 0 1 .5-.5 1.5 1.5 0 1 0 0-3A.5.5 0 0 1 0 6V4.5ZM1.5 4a.5.5 0 0 0-.5.5v1.05a2.5 2.5 0 0 1 0 4.9v1.05a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-1.05a2.5 2.5 0 0 1 0-4.9V4.5a.5.5 0 0 0-.5-.5h-13Z"/>
+                                                </svg>
+                                            </a>
+                                            <button class="btn btn-success cart-button btn-block"
+                                                    ng-click="addCart(pr1)">Add to cart
+                                            </button>
                                         </div>
 
+                                        <div class="weight">
+                                            <small style="color: lightslategray">Còn
+                                                {{pr1.totail | number}} sản phẩm</small>
+                                        </div>
 
                                     </div>
-                                </div>
 
-                            </div>
-
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- end bestselling product -->
-
-    <!-- product love -->
-    <div class="container mb-3">
-        <div class="row bg-white">
-            <div class="text-center product__love-title ">
-                <h2 class="product__love-heading">
-                    Có thể bạn thích
-                </h2>
-            </div>
-        </div>
-        <div class="row bg-white">
-
-            <div class="wrapper mb-5">
-                <div class="container">
-                    <div class="row g-1">
-                        <div class="col-md-3" ng-repeat="pr1 in viewByPrice">
-
-                            <div class="card p-3">
-
-                                <div class="text-center" style="width: 200px; height: 200px">
-                                    <img class="img-fluid" src="{{pr1.image}}">
-                                </div>
-
-                                <div class="product-details">
-
-
-                                    <span class="font-weight-bold d-block">{{pr1.price | number}} VNĐ</span>
-                                    <span>{{pr1.name}}</span>
-
-
-                                    <div class="buttons d-flex flex-row">
-                                        <a class="cart" href="#!product"
-                                           ng-click="getOneProductHome(pr1)">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                                 height="16"
-                                                 fill="currentColor" class="bi bi-ticket-detailed"
-                                                 viewBox="0 0 16 16">
-                                                <path d="M4 5.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5Zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5ZM5 7a1 1 0 0 0 0 2h6a1 1 0 1 0 0-2H5Z"/>
-                                                <path d="M0 4.5A1.5 1.5 0 0 1 1.5 3h13A1.5 1.5 0 0 1 16 4.5V6a.5.5 0 0 1-.5.5 1.5 1.5 0 0 0 0 3 .5.5 0 0 1 .5.5v1.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 11.5V10a.5.5 0 0 1 .5-.5 1.5 1.5 0 1 0 0-3A.5.5 0 0 1 0 6V4.5ZM1.5 4a.5.5 0 0 0-.5.5v1.05a2.5 2.5 0 0 1 0 4.9v1.05a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-1.05a2.5 2.5 0 0 1 0-4.9V4.5a.5.5 0 0 0-.5-.5h-13Z"/>
-                                            </svg>
-                                        </a>
-                                        <button class="btn btn-success cart-button btn-block"
-                                                ng-click="addCart(pr1)">Add to cart
-                                        </button>
-                                    </div>
-
-                                    <div class="weight">
-                                        <small style="color: lightslategray">Còn
-                                            {{pr1.totail | number}} sản phẩm</small>
-                                    </div>
 
                                 </div>
 
 
                             </div>
-
-
                         </div>
+
                     </div>
+
 
                 </div>
 
-
             </div>
-
         </div>
     </div>
 </div>
-
 <style>
     body {
 
