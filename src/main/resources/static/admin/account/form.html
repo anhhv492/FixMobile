@@ -25,7 +25,7 @@
                             <label class="card-title mb-0">Tên tài khoản</label>
                         </div>
                         <div class="col-sm-9">
-                            <input ng-disabled="hideUsername" ng-model="form.username" name="username" type="text"
+                            <input oninput="this.value = this.value.toLowerCase().trim()" ng-disabled="hideUsername" ng-model="form.username" name="username" type="text"
                                    class="form-control" pattern="^[a-zA-Z0-9_-]{3,100}$"
                                    required placeholder="Ví dụ: tranvana" maxlength="250">
                             <span ng-show="myForm.$submitted || myForm.username.$dirty">

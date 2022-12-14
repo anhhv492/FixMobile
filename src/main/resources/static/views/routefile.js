@@ -12,9 +12,10 @@ app.config(function($routeProvider){
         })
         .when("/accessory/detail",{
             templateUrl:"accessory/list_detail.html",
+            controller: "view_accessory_ctrl",
             controller: "home-ctrl",
             controller: "view_product_ctrl",
-            controller: "view_accessory_ctrl"
+
         })
         .when("/product/detail",{
             templateUrl:"product/list_detail.html",
@@ -38,7 +39,6 @@ app.config(function($routeProvider){
         .when("/accessoryDetail",{
             templateUrl:"accessory/view_detail.html",
             controller: "view_accessory_ctrl"
-
         })
         .when("/login",{
             templateUrl:"/views/login/form.html",

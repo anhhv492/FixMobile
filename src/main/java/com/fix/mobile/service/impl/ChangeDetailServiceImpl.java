@@ -64,12 +64,12 @@ public class ChangeDetailServiceImpl implements ChangeDetailService {
     }
 
     @Override
-    public void createChangeDetails(Integer id, String imaysp) {
-        repository.createChangeDetails(id,imaysp);
+    public void createChangeDetails(Integer id) {
+        repository.createChangeDetails(id);
     }
 
     @Override
-    public List<ChangeDetail> findPrChangeDetails(String idPrChange) {
+    public List<ChangeDetail> findPrChangeDetails(Integer idPrChange) {
             return repository.findPrChangeDetails(idPrChange);
     }
 }

@@ -89,5 +89,10 @@ public class ProductChangeServiceImpl implements ProductChangeService {
         return null;
     }
 
+    @Override
+    public List<ProductChange> findByStatusSendEmail(Integer idChange) {
+        return repository.findByStatusSendEmail(idChange);
+    }
+
 
 }

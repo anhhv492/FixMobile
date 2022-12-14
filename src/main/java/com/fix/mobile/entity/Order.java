@@ -25,6 +25,9 @@ public class Order {
     @Column(name = "create_date")
     private Date createDate;
 
+    @Column(name = "time_receive")
+    private Date timeReceive;
+
     @Column(name = "total")
     private BigDecimal total;
 
@@ -33,6 +36,9 @@ public class Order {
 
     @Column(name = "status")
     private Integer status;
+
+    @Column(name = "status_buy")
+    private Integer statusBuy;
 
     @Column(name = "address")
     private String address;
@@ -45,6 +51,9 @@ public class Order {
 
     @Column(name = "phone_take")
     private String phoneTake;
+
+    @Column(name = "money_ship")
+    private BigDecimal moneyShip;
 
     @Column(name = "money_sale")
     private BigDecimal moneySale;

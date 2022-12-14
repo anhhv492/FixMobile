@@ -1,15 +1,18 @@
 <div class="alert alert-warning container" ng-if="orders.length<=0">
     Bạn chưa mua sản phẩm nào
 </div>
+<h5 class="text-center text-primary font-weight-bold mt-2">Đơn hàng</h5>
 <div class="table-responsive" ng-if="orders.length>0">
     <table class="table table-bordered table-hover container">
         <thead>
         <tr>
             <th>Mã hóa đơn</th>
             <th>Địa chỉ</th>
-            <th>Ngày mua</th>
             <th>Số điện thoại</th>
+            <th>Ngày mua</th>
+            <th>Tiền ship (VNĐ)</th>
             <th>Tổng giá (VNĐ)</th>
+            <th>Ghi chú</th>
             <th>Trạng thái</th>
             <th>Thao tác</th>
         </tr>
@@ -18,26 +21,38 @@
         <tr ng-repeat="order in orders">
             <td>{{order.idOrder}}</td>
             <td>{{order.address}}</td>
-            <td>{{order.createDate|date:'dd/MM/yyyy HH:mm:ss'}}</td>
             <td>{{order.phoneTake}}</td>
+            <td>{{order.createDate|date:'dd/MM/yyyy HH:mm:ss'}}</td>
+            <td>{{order.moneyShip|number}}</td>
             <td>{{order.total|number}}</td>
-            <td ng-if="order.status==0">
-                <span class="text-warning">Chưa thanh toán</span>
+            <td ng-if="order.note">{{order.note}}</td>
+            <td ng-if="!order.note">Không có</td>
+            <td ng-if="order.status==0 && order.statusBuy==0">
+                <span class="text-warning">Chờ xác nhận (Chưa thanh toán)</span>
+            </td>
+            <td ng-if="order.status==0 && order.statusBuy==1">
+                <span class="text-info">Chờ xác nhận (Đã thanh toán)</span>
             </td>
             <td ng-if="order.status==1">
-                <span class="text-info">Đã thanh toán</span>
+                <span class="text-primary">Xác nhận (Chờ đóng gói)</span>
             </td>
             <td ng-if="order.status==2">
-                <span class="text-primary">Đang giao hàng</span>
+                <span class="text-success">Đang giao hàng</span>
             </td>
             <td ng-if="order.status==3">
                 <span class="text-success">Hoàn tất giao dịch</span>
             </td>
             <td ng-if="order.status==4">
-                <span class="text-dark">Hoàn lại đơn</span>
+                <span class="text-dark">Hủy đơn</span>
+            </td>
+            <td ng-if="order.status==5">
+                <span class="text-dark">Hoàn trả</span>
             </td>
             <td>
-                <a href="#!order-detail" ng-click="getOrder(order.idOrder)" class="btn btn-default">
+                <a ng-click="huyDon(order.idOrder)" ng-if="order.status<2" class="btn btn-warning">
+                    <i class="fa fa-minus-circle" aria-hidden="true"></i> Hủy đơn
+                </a>
+                <a href="#!order-detail" ng-click="getOrder(order.idOrder)" class="btn btn-primary">
                     <i class="fa fa-info-circle" aria-hidden="true"></i> Chi tiết
                 </a>
             </td>

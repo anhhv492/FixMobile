@@ -124,9 +124,7 @@ public class AccessoryServiceImpl implements AccessoryService {
           }else{
               accessory.setStatus(true);
           }
-          if (accessoryDTO.getImage() == null){
-              accessory.setImage("https://res.cloudinary.com/dcll6yp9s/image/upload/v1669087979/kbasp5qdf76f3j02mebr.png");
-          }else {
+          if (accessoryDTO.getImage() == null) {
               Map r = this.cloud.uploader().upload(accessoryDTO.getImage().getBytes(),
                       ObjectUtils.asMap(
                               "cloud_name", "dcll6yp9s",

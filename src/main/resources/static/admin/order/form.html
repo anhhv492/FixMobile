@@ -20,14 +20,94 @@
     </li>
 </ul>
 <div class="tab-content" id="myTabContent">
-    <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
-
+    <div class="tab-pane fade show active container" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+        <div class="row">
+            <div class="col-3">
+                Từ giá
+                <select class="form-select" ng-model="">
+                    <option ng-value="0">Tất cả</option>
+                    <option ng-value="1">Từ thấp đến cao</option>
+                    <option ng-value="2">Từ cao đến thấp</option>
+                </select>
+            </div>
+            <div class="col-3">
+                Đến giá
+                <select class="form-select" ng-model="">
+                    <option ng-value="0">Tất cả</option>
+                    <option ng-value="1">Từ thấp đến cao</option>
+                    <option ng-value="2">Từ cao đến thấp</option>
+                </select>
+            </div>
+            <div class="col-3 offset-2">
+                <span>Theo giá</span>
+                <select class="form-select" ng-model="">
+                    <option ng-value="0">Tất cả</option>
+                    <option ng-value="1">Từ thấp đến cao</option>
+                    <option ng-value="2">Từ cao đến thấp</option>
+                </select>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-2">
+                <button class="btn btn-primary">Lọc</button>
+            </div>
+        </div>
     </div>
     <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-        ...
+        <div class="row">
+            <div class="col-3">
+                Từ ngày
+                <input type="date" class="form-control" >
+            </div>
+            <div class="col-3">
+                Đến ngày
+                <input type="date" class="form-control" >
+            </div>
+            <div class="col-3 offset-2">
+                <span>Theo ngày</span>
+                <select class="form-select" ng-model="">
+                    <option ng-value="0">Tất cả</option>
+                    <option ng-value="1">Từ thấp đến cao</option>
+                    <option ng-value="2">Từ cao đến thấp</option>
+                </select>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-2">
+                <button class="btn btn-primary">Lọc</button>
+            </div>
+        </div>
     </div>
     <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
-        ...
+        <div class="row container" >
+            <span>Sắp xếp</span>
+            <select class="form-select" ng-model="">
+                <option ng-value="0">Tất cả</option>
+                <option ng-value="1">Từ thấp đến cao</option>
+                <option ng-value="2">Từ cao đến thấp</option>
+            </select>
+            <div class="col-3 offset-2">
+                <span>Sắp xếp</span>
+                <select class="form-select" ng-model="">
+                    <option ng-value="0">Tất cả</option>
+                    <option ng-value="1">Từ thấp đến cao</option>
+                    <option ng-value="2">Từ cao đến thấp</option>
+                </select>
+            </div>
+            <div class="col-3 offset-2">
+                <span>Sắp xếp</span>
+                <select class="form-select" ng-model="">
+                    <option ng-value="0">Tất cả</option>
+                    <option ng-value="1">Từ thấp đến cao</option>
+                    <option ng-value="2">Từ cao đến thấp</option>
+                </select>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-2">
+                <button class="btn btn-primary">Lọc</button>
+            </div>
+        </div>
     </div>
 </div>
 <div class="table-responsive">
@@ -58,6 +138,7 @@
                     <i class="fa fa-caret-up" aria-hidden="true"></i>
                 </button>
             </th>
+            <th>Tiền ship</th>
             <th>
                 <button class="btn btn-default" ng-click="tongGia()" ng-if="!checkTongGia">
                     <strong>Tổng giá (VNĐ)</strong>
@@ -68,6 +149,7 @@
                     <i class="fa fa-caret-up" aria-hidden="true"></i>
                 </button>
             </th>
+            <th>Ghi chú</th>
             <th>
                 <button class="btn btn-default" ng-click="trangThai()" ng-if="!checkTrangThai">
                     <strong>Trạng thái</strong>
@@ -89,29 +171,38 @@
             <td>{{order.phoneTake}}</td>
             <td>{{order.address}}</td>
             <td>{{order.createDate|date:'dd/MM/yyyy HH:mm:ss'}}</td>
+            <td>{{order.moneyShip|number}}</td>
             <td>{{order.total|number}}</td>
+            <td ng-if="order.note">{{order.note}}</td>
+            <td ng-if="!order.note">Không có</td>
             <td>
-        <span ng-if="order.status==0">
-            <span class="text-warning">Chưa thanh toán</span>
+        <span ng-if="order.status==0 && order.statusBuy==0">
+            <span class="text-warning">Chưa thanh toán (Chờ xác nhận)</span>
         </span>
-                <span ng-if="order.status==1">
-            <span class="text-info">Đã thanh toán</span>
+        <span ng-if="order.status==0 && order.statusBuy==1">
+            <span class="text-info">Đã thanh toán (Chờ xác nhận)</span>
         </span>
-                <span ng-if="order.status==2">
+        <span ng-if="order.status==1">
+            <span class="text-primary">Xác nhận</span>
+        </span>
+        <span ng-if="order.status==2">
             <span class="text-primary">Đang giao hàng</span>
         </span>
-                <span ng-if="order.status==3">
-            <span class="text-success">Hoàn tất</span>
+        <span ng-if="order.status==3">
+            <span class="text-success">Hoàn tất giao dịch</span>
         </span>
-                <span ng-if="order.status==4">
-            <span class="text-dark">Hoàn đơn</span>
+        <span ng-if="order.status==4">
+            <span class="text-dark">Hủy đơn</span>
+        </span>
+        <span ng-if="order.status==5">
+            <span class="text-dark">Hoàn trả</span>
         </span>
                 <select ng-model="form.status" ng-change="updateStatus(order.idOrder)" class="form-select" >
                     <option ng-repeat="item in status" ng-value="item.id">{{item.name}}</option>
                 </select>
             </td>
             <td>
-                <a href="#!order-detail" ng-click="getOrder(order.idOrder)" class="btn btn-default">
+                <a href="#!order-detail" ng-click="getOrder(order)" class="btn btn-default">
                     <i class="fa fa-info-circle" aria-hidden="true"></i> Chi tiết
                 </a>
             </td>
