@@ -131,6 +131,7 @@ app.controller("account-ctrl", function ($scope, $http) {
     $scope.valueStatus = -1;
     $scope.valueRole = 0;
 
+
         $scope.form = {
             createDate: new Date(),
             // username:"",
@@ -138,7 +139,7 @@ app.controller("account-ctrl", function ($scope, $http) {
             // email:"",
             // phone:"",
             // password:"",
-            image: "https://res.cloudinary.com/dcll6yp9s/image/upload/v1669087979/kbasp5qdf76f3j02mebr.png",
+            image: "",
             gender: true,
             status: 1,
             role: 3
@@ -281,22 +282,25 @@ console.log("Kết thúc check trùng")
             $scope.accounts.forEach(acc => {
 
                 if ($scope.form.username == acc.username) {
-                    console.log($scope.form.username)
-                    console.log(acc.username)
-                    console.log(" trùng")
                     Toast.fire({
                         icon: 'error',
                         title: 'Tài khoản đã tồn tại ',
                     })
-                    // alert("Tài khoản đã tồn tại")
                     return a = 0;
 
+                }
+                if ($scope.form.email == acc.email ) {
+                    Toast.fire({
+                        icon: 'error',
+                        title: 'Email đã tồn tại',
+                    })
+                    return a = 0;
                 }
 
             })
             if (a == 1) {
                 var formData = new FormData();
-                angular.forEach()
+
                 angular.forEach($scope.files, function(image) {
                     formData.append('image', image);
                 });
