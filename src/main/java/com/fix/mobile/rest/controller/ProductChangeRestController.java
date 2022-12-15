@@ -42,6 +42,8 @@ public class ProductChangeRestController {
 				p.setDateChange(new Date());
 				p.setNote(productchange.getNote());
 				p.setEmail(productchange.getEmail());
+				p.setQuantity(productchange.getQuantity());
+				p.setOrderDetail(productchange.getOrderDetail());
 				p.setStatus(1);
 				productChangeSerivce.save(p);
 				for (MultipartFile multipartFile :  productchange.getFiles()) {
@@ -97,10 +99,11 @@ public class ProductChangeRestController {
 		return listProduct;
 	}
 
-	@RequestMapping(value= "/getPrChangeDetails",  method =  RequestMethod.GET )
-	public List<ChangeDetail> listPrChangeDetails(@RequestParam("productChange") Integer  id) {
-		List<ChangeDetail> listPrChangeDetails = changeDetailsService.findPrChangeDetails(id);
-		if(listPrChangeDetails.isEmpty()){
+	// get hóa đơn đổi trả chi tiết
+	@RequestMapping(value= "/getPrChangeDetails/{idChange}",  method =  RequestMethod.GET )
+	public ChangeDetail listPrChangeDetails(@PathVariable("idChange") ProductChange  idChange) {
+		ChangeDetail listPrChangeDetails = changeDetailsService.findPrChangeDetails(idChange);
+		if(listPrChangeDetails == null){
 			return null;
 		}
 		return listPrChangeDetails;

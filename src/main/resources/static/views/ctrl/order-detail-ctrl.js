@@ -132,6 +132,7 @@ app.controller('order-detail-ctrl',function($window,$rootScope,$scope,$http){
             console.log(error);
         })
     }
+    // thực hiện yêu cầu đổi trả
     $scope.saveProductChange = function (){
         Swal.fire({
             title: 'Thực hiện gửi yêu cầu đổi trả ?',
@@ -144,6 +145,9 @@ app.controller('order-detail-ctrl',function($window,$rootScope,$scope,$http){
                 if (result.isConfirmed) {
                        if($scope.files == null){
                            $scope.error('chưa chọn ảnh tình trạng máy');
+                           return null;
+                       }else if($scope.formProductChange.quantity == null){
+                           $scope.error('Vui lòng nhập số lượng máy cần đổi');
                            return null;
                        }
                        else  if($scope.formProductChange.quantity > $scope.formDetails.quantity){
@@ -176,6 +180,7 @@ app.controller('order-detail-ctrl',function($window,$rootScope,$scope,$http){
                                 formData.append("email", $scope.accountActive.email);
                                 formData.append("quantity",$scope.formProductChange.quantity);
                                 formData.append("account",$scope.accountActive.username);
+                                formData.append("orderDetail",$scope.formDetails.idDetail);
                                 let req = {
                                     method: 'POST',
                                     url: '/rest/productchange/save',
@@ -211,7 +216,6 @@ app.controller('order-detail-ctrl',function($window,$rootScope,$scope,$http){
                                     $window.location = '/views/index.html#!/order';
                                 }).catch(error => {
                                     $scope.error('gửi  yêu cầu đổi trả thất bại');
-                                    console.log('I was closed by the timer' + formData)
                                 });
 
                             }

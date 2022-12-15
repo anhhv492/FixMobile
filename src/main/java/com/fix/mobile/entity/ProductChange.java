@@ -40,6 +40,10 @@ public class ProductChange {
     @Column(name = "status")
     private int  status;
 
+    @Column(name = "quantity_change")
+    private int  quantity;
+
+
     @ManyToOne
     @JoinColumn(name = "username")
     private Account account;
