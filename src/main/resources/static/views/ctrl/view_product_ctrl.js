@@ -47,6 +47,10 @@ app.controller('view_product_ctrl', function ($scope,$http){
         imageDefault1 : "https://res.cloudinary.com/dcll6yp9s/image/upload/v1669970939/fugsyd4nw4ks0vb7kzyd.png",
         imageDefault2 : "https://res.cloudinary.com/dcll6yp9s/image/upload/v1669970939/fugsyd4nw4ks0vb7kzyd.png",
         imageDefault3 : "https://res.cloudinary.com/dcll6yp9s/image/upload/v1669970939/fugsyd4nw4ks0vb7kzyd.png",
+        camera : "",
+        ram: "",
+        capacity:"",
+        color:""
     }
 
     // top 4 sp
@@ -120,6 +124,10 @@ app.controller('view_product_ctrl', function ($scope,$http){
             $scope.displayProduct.name = $scope.oneProduct.name;
             $scope.displayProduct.price = $scope.oneProduct.price;
             $scope.displayProduct.describe = $scope.oneProduct.note;
+            $scope.displayProduct.camera = $scope.oneProduct.camera;
+            $scope.displayProduct.ram = $scope.oneProduct.ram.name;
+            $scope.displayProduct.color = $scope.oneProduct.color.name;
+            $scope.displayProduct.capacity = $scope.oneProduct.capacity.name;
             for (let i = 0; i < 4; i++) {
                 $scope.displayProduct.imageDefault = $scope.oneProduct.images[i].name;
             }

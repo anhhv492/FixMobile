@@ -11,6 +11,8 @@ app.controller('view_accessory_ctrl', function ($scope,$http){
         price : "",
         describe : "",
         imageDefault : "https://res.cloudinary.com/dcll6yp9s/image/upload/v1669970939/fugsyd4nw4ks0vb7kzyd.png",
+        color: "",
+        quantity:"",
     }
 
     $scope.getTop4 = function () {
@@ -25,6 +27,8 @@ app.controller('view_accessory_ctrl', function ($scope,$http){
             $scope.displayAccessory.price = $scope.oneAccessory.price;
             $scope.displayAccessory.describe = $scope.oneAccessory.note;
             $scope.displayAccessory.imageDefault = $scope.oneAccessory.image;
+            $scope.displayAccessory.color = $scope.oneAccessory.color;
+            $scope.displayAccessory.quantity = $scope.oneAccessory.quantity;
             $scope.accessoryAddCart = respon.data;
             console.log($scope.oneAccessory.name + id)
         })
