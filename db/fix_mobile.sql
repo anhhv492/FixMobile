@@ -181,6 +181,7 @@ CREATE TABLE product_change (
 	status int default(0)  NULL,
 	username nvarchar(50)  null,
 	id_order_detail int null,
+	quantity_change int null,
 	foreign key(username) references accounts(username),
 	foreign key(id_order_detail) references order_detail(id_detail)
 );

@@ -38,6 +38,7 @@ app.controller('product-change',function($rootScope,$scope,$http){
             title: err,
         })
     }
+
     $scope.getAllProductChange=function(){
         $http.get('/rest/productchange/getAll').then(resp=>{
             $scope.listProductChange = resp.data;
@@ -46,14 +47,23 @@ app.controller('product-change',function($rootScope,$scope,$http){
             console.log(error);
         })
     }
+    $scope.imeis = [];
     $scope.getAllProductChangeDetails=function(id){
-        $http.get(`/rest/productchange/getPrChangeDetails?id=${id}`).then(resp=>{
-            $scope.listProductChange = resp.data;
-            console.log('dsadsadsdsadas '+$scope.listProductChange);
+        $http.get(`/rest/productchange/getPrChangeDetails/${id}`).then(resp=>{
+            $scope.getOneProduct = resp.data;
+            console.log('dsadsadsdsadas '+resp.data);
+            $http.get(`/rest/staff/order/detail/imei2/${ $scope.getOneProduct.orderDetail.idDetail}`).then(res=>{
+                $scope.imeis=res.data;
+                console.log('dsadsadsdsadas '+ $scope.imeis[0].name);
+            }).catch(err=>{
+                console.log(err);
+            })
         }).catch(error=>{
             console.log(error);
         })
+
     }
+
     $scope.getAllProductChange();
     $scope.checkSelected= function (id){
         console.log('sdsadasadsa '+id)

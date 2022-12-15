@@ -1,6 +1,7 @@
 package com.fix.mobile.repository;
 
 import com.fix.mobile.entity.ChangeDetail;
+import com.fix.mobile.entity.ProductChange;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -16,7 +17,7 @@ public interface ChangeDetailRepository extends PagingAndSortingRepository<Chang
 	void createChangeDetails(Integer id);
 
 	@Query("select prChangeDetail from ChangeDetail  prChangeDetail where prChangeDetail.productChange = ?1")
-	public List<ChangeDetail> findPrChangeDetails(Integer idPrChange);
+	public ChangeDetail findPrChangeDetails(ProductChange idPrChange);
 
 
 }

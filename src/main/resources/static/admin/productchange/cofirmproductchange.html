@@ -8,9 +8,9 @@
     <tr>
         <th>Chọn</th>
         <th>Khách hàng</th>
+        <th>Liên hệ</th>
         <th>Ngày đổi trả</th>
         <th>Tình trạng máy</th>
-        <th>Ảnh tình trạng máy</th>
         <th>Sản phẩm</th>
         <th>Trạng thái</th>
     </tr>
@@ -18,38 +18,69 @@
     <tbody>
     <tr ng-repeat="prChange in listProductChange">
         <td><input type="checkbox" name="" ng-checked="checkSelect(prChange)"
-                   ng-click="checkSelected(prChange.idChange)" ></td>
+                   ng-click="checkSelected(prChange.idChange)"></td>
         <td>{{prChange.account.username}}</td>
+        <td>{{prChange.account.email}} <br> {{prChange.account.phone}}</td>
         <td>{{prChange.dateChange | date:'dd/MM/yyyy h:mm:a'}}</td>
         <td>{{prChange.note}}</td>
-        <td><img class="img-responsive" width="80px" height="80px"
-            src="{{prChange.images.length>0?prChange.images[0].name:''}}"></td>
         <td>
-             <button ng-click="getAllProductChangeDetails(prChange.idChange)" class="btn btn-default"
-                          data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                <i class="fa fa-info-circle" aria-hidden="true"></i> {{prChange.idChange}}
-             </button>
+            <button ng-click="getAllProductChangeDetails(prChange.idChange)" class="btn btn-default"
+                    data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                <i class="fa fa-info-circle" aria-hidden="true"></i> {{prChange.orderDetail.product.name}}
+            </button>
         </td>
         <td ng-if="prChange.status==0">Hủy yêu cầu</td>
         <td ng-if="prChange.status==1">Chờ xác nhận</td>
-        <td ng-if="prChange.status==2">Đã xác nhận</td>
-
+        <td ng-if="prChange.status==2">Đã xác nhận máy vui lòng chờ kiểm trả</td>
+        <td ng-if="prChange.status==3">Đã đổi thành công</td>
 
     </tr>
     </tbody>
 </table>
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">Sản phẩm - {{nameProduct}}</h1>
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Sản phẩm -
+                    {{getOneProduct.orderDetail.product.name}}
+                    ram {{getOneProduct.orderDetail.product.ram.name}},
+                    dung lượng máy {{getOneProduct.orderDetail.product.capacity.name}}
+                </h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body ">
-                <p class="alert-secondary" ng-repeat="imei in imeis">{{$index+1}}, {{imei.name}}</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <div class="modal-body">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Hình ảnh</th>
+                        <th scope="col">Đổi</th>
+                        <th scope="col">Mã máy</th>
+                        <th scope="col">Giá (VNĐ)</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><img src="{{getOneProduct.productChange.images.length>0?
+                                 getOneProduct.productChange.images[0].name : ''}}" class="img-fluid rounded-3"
+                                 style="width: 120px;height: 120px" alt="Book">
+                            <img src="{{getOneProduct.productChange.images.length>0?
+                                 getOneProduct.productChange.images[1].name : ''}}" class="img-fluid rounded-3"
+                                 style="width: 120px;height: 120px" alt="Book">
+                            <img src="{{getOneProduct.productChange.images.length>0?
+                                 getOneProduct.productChange.images[3].name : ''}}" class="img-fluid rounded-3"
+                                 style="width: 120px;height: 120px" alt="Book"> <br>
+                        </td>
+                        <td class="align-middle">số lượng: {{getOneProduct.productChange.quantity}}</td>
+                        <td>
+                            <span class="alert-info" ng-repeat="imei in imeis">{{imei.name}} <br></span>
+                        </td>
+                        <td class="align-middle">
+                            <p class="mb-0" style="font-weight: 500;">{{getOneProduct.orderDetail.price * getOneProduct.productChange.quantity}} VND</p>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

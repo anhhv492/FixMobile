@@ -21,23 +21,29 @@ public class QLProductChangeRestController {
 	@Autowired
 	private  sendMailService mailServices;
 
+	// xác nhận đổi chờ kiểm tra
 	@RequestMapping(value = "/comfirmRequest", method = RequestMethod.POST)
 	public void   comfirmRequest(
 			@RequestBody List<Integer>  idProductChange){
 		for ( Integer  s :  idProductChange) {
-			if(s !=null){
-				ProductChange product = productChangeService.findByStatus(s);
+			ProductChange product = productChangeService.findByStatus(s);
+			if(s !=null && product.getStatus()== 1){
 				product.setStatus(2);
 				productChangeService.save(product);
 				mailServices.SendEmail("top1zukavietnam@gmail.com","kzbtzovffrqbkonf",s);
 				System.out.println("gửi mail thành công");
-			}else{
+			}else if(s !=null && product.getStatus()== 2){
+				product.setStatus(3);
+				productChangeService.save(product);
+			}
+			else{
 				System.out.println("null lỗi");
 			}
 		}
 
 	}
 
+	// hủy đổi trả yêu cầu
 	@RequestMapping(value = "/cancelRequest", method = RequestMethod.POST)
 	public void   cancelRequest(
 			@RequestBody List<Integer>  idProductChange){

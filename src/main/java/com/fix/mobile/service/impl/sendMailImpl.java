@@ -26,17 +26,14 @@ public class sendMailImpl implements sendMailService {
 	@Autowired
 	private ProductChangeService productChangeService;
 
-	private static final String EMAIL_WELCOME_SUBJECT = "" +
-			"Dear xin chào anh chị yêu câu đổi trả hàng của anh chị đã" +
-			"được xác nhận vui lòng mang đến cửa hàng" +
-			"    <button ng-click=\"postRequest()\" type=\"button\" style=\"--" +
-			"text-color: blue \" class=\"btn btn-secondary\">Xác nhận</button>\n";
+
 
 	private static final String EMAIL_FORGOT_PASSWORD = "Online Entertainment - New password";
 
 	@Override
 	public void SendEmail( String user, String pass,Integer idchange) {
 		try {
+
 			Properties properties = new Properties();
 			properties.put("mail.smtp.host", "smtp.gmail.com");
 			properties.put("mail.smtp.port", "587");
@@ -55,13 +52,17 @@ public class sendMailImpl implements sendMailService {
 				System.out.println("null");
 			}else {
 					for ( ProductChange s: listProductSendMail) {
+						String EMAIL_WELCOME_SUBJECT =
+								"Dear anh chị yêu câu đổi trả hàng của anh chị đã" +
+								"được xác nhận vui lòng mang máy "+
+								s.getOrderDetail().getProduct().getName() +
+								" đến cửa hàng địa chỉ tại Nam Từ Liêm Hà Nôị";
 						msg.setFrom(new InternetAddress(user));
 						InternetAddress[] toAddresses = {new InternetAddress(s.getEmail())};
 						msg.setRecipients(Message.RecipientType.TO, toAddresses);
-						msg.setSubject("xin chào");
+						msg.setSubject("Xác nhận yêu câu đổi trả");
 						msg.setSentDate(new Date());
 						msg.setText(EMAIL_WELCOME_SUBJECT);
-						// sends the e-mail
 						Transport.send(msg);
 					}
 				}
@@ -94,7 +95,7 @@ public class sendMailImpl implements sendMailService {
 				msg.setRecipients(Message.RecipientType.TO, toAddresses);
 				msg.setSubject("xin chào");
 				msg.setSentDate(new Date());
-				msg.setText(EMAIL_WELCOME_SUBJECT);
+				msg.setText("");
 				// sends the e-mail
 				Transport.send(msg);
 			}

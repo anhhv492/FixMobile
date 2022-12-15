@@ -1,9 +1,6 @@
 package com.fix.mobile.dto;
 
-import com.fix.mobile.entity.Account;
-import com.fix.mobile.entity.ChangeDetail;
-import com.fix.mobile.entity.Image;
-import com.fix.mobile.entity.ProductChange;
+import com.fix.mobile.entity.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,8 +21,10 @@ public class ProductChangeDTO{
     private String note;
     private String email;
     private Boolean status;
+    private int  quantity;
     private Account account;
     private List<ChangeDetail> changeDetails;
     private List<Image> listImage;
     private List<MultipartFile> files;
+    private OrderDetail orderDetail;
 }
