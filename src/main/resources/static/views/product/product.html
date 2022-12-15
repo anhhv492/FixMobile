@@ -29,30 +29,12 @@
                                         <div class="d-flex justify-content-between align-items-center"><h3>
                                             {{displayProduct.name}}</h3>
                                         </div>
-                                        <div class="mt-2 pr-3 content"><p>{{displayProduct.describe}}</p></div>
                                         <h3>{{displayProduct.price | number}} VNĐ</h3>
-                                        <div class="ratings d-flex flex-row align-items-center">
-                                            <div class="d-flex flex-row"><i class='bx bxs-star'></i> <i
-                                                    class='bx bxs-star'></i> <i class='bx bxs-star'></i> <i
-                                                    class='bx bxs-star'></i> <i class='bx bx-star'></i></div>
-                                            <span>441 reviews</span></div>
-                                        <div class="sizes mt-5">
-                                            <h6 class="text-uppercase">Màu sắc</h6>
-                                            <label class="radio me-1" ng-repeat="co in allColor">
-                                                <input type="radio" id="color" ng-click="getColorId(co.idColor)"
-                                                       name="color" value="{{co.idColor}}" checked>
-                                                <span>{{co.name}}</span>
-                                            </label>
-                                        </div>
-                                        <div class="sizes mt-5">
-                                            <h6 class="text-uppercase">Bộ nhớ</h6>
-                                            <label class="radio me-1" ng-repeat="capa in allCapacity">
-                                                <input type="radio" name="capacity"
-                                                       ng-click="getCapacityId(capa.idCapacity)"
-                                                       value="{{capa.idCapacity}}" checked>
-                                                <span>{{capa.name}}</span>
-                                            </label>
-                                        </div>
+                                        <div class="mt-2 pr-3 content"><p style="font-size: 17px">Camera: {{displayProduct.camera}}</p></div>
+                                        <div class="mt-2 pr-3 content"><p style="font-size: 17px">Ram: {{displayProduct.ram}}</p></div>
+                                        <div class="mt-2 pr-3 content"><p style="font-size: 17px">Màu sắc: {{displayProduct.color}}</p></div>
+                                        <div class="mt-2 pr-3 content"><p style="font-size: 17px">Dung lượng: {{displayProduct.capacity}}</p></div>
+                                        <div class="mt-2 pr-3 content"><p style="font-size: 15px">Mô tả sản phẩm: {{displayProduct.describe}}</p></div>
                                         <div class="d-flex flex-row mt-5 gap-3">
                                             <button class="btn btn-outline-dark" ng-click="addProductCart(oneProduct)"
                                                     style="height: 70px; width: 100%">Add to Cart
