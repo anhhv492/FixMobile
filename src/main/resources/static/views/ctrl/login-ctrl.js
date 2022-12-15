@@ -48,7 +48,6 @@ app.controller('login-ctrl',function($rootScope,$scope,$http,$window){
             $scope.jwt = localStorage.getItem('jwtToken')
             $rootScope.account=respon.data;
             $window.location.href = '#!home/index';
-            location.reload();
         }).catch(error => {
             $scope.error('Đăng nhập thất bại');
             $rootScope.account=null;

@@ -190,8 +190,7 @@
         <span ng-if="order.status==5">
             <span class="text-dark">Hoàn trả</span>
         </span>
-                <select ng-model="form.status" ng-change="updateStatus(order.idOrder)" class="form-select"
-                        ng-if="order.status!=4&&order.status!=5&&order.status!=3">
+                <select ng-model="form.status" ng-change="updateStatus(order.idOrder)" class="form-select" >
                     <option ng-repeat="item in status" ng-value="item.id">{{item.name}}</option>
                 </select>
             </td>

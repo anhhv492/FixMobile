@@ -34,12 +34,6 @@ public class OrderRestController {
     @PutMapping(value="/rest/staff/order")
     public Order update(@RequestBody Order order){
         Order orderOld = orderService.findById(order.getIdOrder()).get();
-        if(order.getStatus()==4){
-            return null;
-        }
-        if((order.getStatus()-orderOld.getStatus())!=1){
-            return null;
-        }
         if(order.getStatus()<orderOld.getStatus()){
             return null;
         }

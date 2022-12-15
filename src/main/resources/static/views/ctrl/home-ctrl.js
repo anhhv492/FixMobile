@@ -5,15 +5,13 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
     var urlProduct=`http://localhost:8080/rest/guest/product`;
     var urlOneProduct = `http://localhost:8080/rest/guest`;
     var urlAccount = `http://localhost:8080/rest/admin/accounts`;
-    var urlCart = `http://localhost:8080/rest/guest/cart`;
 
-    const jwtToken = localStorage.getItem("jwtToken")
-    const token = {
-        headers: {
-         Authorization: `Bearer `+jwtToken
-        }
-    }
-    const secret='mum&x4mCrhnjVGwL';
+     const jwtToken = localStorage.getItem("jwtToken")
+     const token = {
+             headers: {
+                 Authorization: `Bearer `+jwtToken
+             }
+         }
     $scope.cateAccessories=[];
     $scope.cateProducts=[];
     $scope.item= {};
@@ -73,15 +71,19 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
             })
         }
     }
+    $rootScope.carts2=[];
+    $scope.addCart2=function(item){
+        $rootScope.carts2=$rootScope.carts;
+        $rootScope.carts.push(item);
+        $rootScope.qtyCart++;
+        $rootScope.saveLocalStorage();
+        $rootScope.loadLocalStorage();
+
+    }
     $scope.addCart=function(item){
         console.log("qty",$scope.qtyCart);
-        $http.get(urlAccount+`/getAccountActive`, token).then(function (respon){
-            let json = localStorage.getItem(respon.data.username);
-            $rootScope.carts=json? JSON.parse(json):[];
-        }).catch(err=>{
-            let json = localStorage.getItem("cart");
-            $rootScope.carts=json? JSON.parse(json):[];
-        })
+        let json = localStorage.getItem($rootScope.name);
+        $rootScope.carts=json? JSON.parse(json):[];
         $scope.accessoryItem = $rootScope.carts.find(
             it=>it.idAccessory===item.idAccessory
         );
@@ -229,23 +231,11 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
     }
     $rootScope.saveLocalStorage=function(){
         let json = JSON.stringify($rootScope.carts);
-        $http.get(urlAccount+`/getAccountActive`, token).then(function (respon){
-            localStorage.setItem(respon.data.username,json);
-        }).catch(err=>{
-            localStorage.setItem("cart",json);
-        })
-
+        localStorage.setItem($rootScope.name,json);
     }
     $rootScope.loadLocalStorage = function(){
-        $http.get(urlAccount+`/getAccountActive`, token).then(function (respon){
-            let json = localStorage.getItem(respon.data.username);
-            $rootScope.carts=json? JSON.parse(json):[];
-            $rootScope.loadQtyCart();
-        }).catch(err=>{
-            let json = localStorage.getItem("cart");
-            $rootScope.carts=json? JSON.parse(json):[];
-            $rootScope.loadQtyCart();
-        })
+        let json = localStorage.getItem($rootScope.name);
+        $rootScope.carts=json? JSON.parse(json):[];
         for (let i = 0; i < $rootScope.carts.length; i++) {
             $rootScope.carts.find(item=>{
                 if(item.idAccessory){
