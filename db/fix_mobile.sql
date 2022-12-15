@@ -62,7 +62,7 @@ CREATE TABLE address (
 	ward VARCHAR(1000) NULL,
 	foreign key(username) references accounts(username)
 ) ;
-
+select * from orders where create_date between 2022/12/14 and 2022/12/21;
 CREATE TABLE products (
 	id_product int NOT NULL auto_increment primary key,
 	name nvarchar(255)  NULL,
@@ -152,6 +152,10 @@ CREATE TABLE order_detail (
 	id_detail int NOT NULL auto_increment primary key, 
 	quantity int  null,
 	price decimal(10,0) null,
+	status binary DEFAULT(0),
+	id_order int NULL, 
+	id_sale int NULL, 
+	price_sale decimal(10,0) NULL, 
 	status int  DEFAULT(0) null,
 	id_order int  NULL, 
 	id_product int NULL,
@@ -204,6 +208,13 @@ CREATE TABLE imayproduct (
 	status int default(0), 
 	foreign key(id_product) references products(id_product),
 	foreign key(id_detail) references order_detail(id_detail)
+);
+
+CREATE TABLE apply_sale (
+	id_applysale int NOT NULL auto_increment primary key, 
+	id_sale int null,
+	id_order int NULL, 
+	user_apply nvarchar(100) NULL
 );
 
 insert into fix_mobile.roles(name) values ('ADMIN');
