@@ -1,6 +1,6 @@
 package com.fix.mobile.rest.controller;
 
-import com.fix.mobile.dto.Account.AccountResponDTO;
+import com.fix.mobile.dto.account.AccountResponDTO;
 import com.fix.mobile.entity.Accessory;
 import com.fix.mobile.entity.Account;
 import com.fix.mobile.entity.Order;
