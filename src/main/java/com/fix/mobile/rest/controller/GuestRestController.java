@@ -154,6 +154,7 @@ public class GuestRestController {
         account = accountService.findByUsername(UserName.getUserName());
         OrderDetail orderDetail;
         BigDecimal price =null;
+        BigDecimal priceSale =null;
         for (int i=0;i<carts.size();i++){
             if(carts.get(i).get("qty").asInt()<=0){
                 return null;
@@ -168,6 +169,9 @@ public class GuestRestController {
                         orderDetail.setQuantity(carts.get(i).get("qty").asInt());
                         price = new BigDecimal(carts.get(i).get("price").asDouble());
                         orderDetail.setPrice(price);
+                        priceSale= new BigDecimal(carts.get(i).get("priceSale").asDouble());
+                        orderDetail.setPriceSale(priceSale);
+                        orderDetail.setIdSale(carts.get(i).get("idSale").asInt());
                         orderDetailService.save(orderDetail);
                         accessory.get().setQuantity(accessory.get().getQuantity()-carts.get(i).get("qty").asInt());
                         accessoryService.update(accessory.get(),accessory.get().getIdAccessory());
@@ -182,6 +186,9 @@ public class GuestRestController {
                         orderDetail.setQuantity(carts.get(i).get("qty").asInt());
                         price = new BigDecimal(carts.get(i).get("price").asDouble());
                         orderDetail.setPrice(price);
+                        priceSale= new BigDecimal(carts.get(i).get("priceSale").asDouble());
+                        orderDetail.setPriceSale(priceSale);
+                        orderDetail.setIdSale(carts.get(i).get("idSale").asInt());
                         orderDetailService.save(orderDetail);
 //                        for (int j = 0; j < carts.get(i).get("qty").asInt(); j++) {
 //                            imayProducts.get(j).setOrderDetail(orderDetail);

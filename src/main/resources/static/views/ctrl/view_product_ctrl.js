@@ -1,4 +1,4 @@
-app.controller('view_product_ctrl', function ($scope,$http){
+app.controller('view_product_ctrl', function ($scope,$http,$rootScope){
     const jwtToken = localStorage.getItem("jwtToken")
     const productId = localStorage.getItem("product");
     const token = {
@@ -8,7 +8,6 @@ app.controller('view_product_ctrl', function ($scope,$http){
     }
 
     $scope.productView = [];
-    $scope.viewByPrice= [];
     $scope.allRam= [];
     $scope.allCapacity = [];
     $scope.allColor = [];
@@ -63,13 +62,29 @@ app.controller('view_product_ctrl', function ($scope,$http){
             console.log(error);
         });
     }
+    $scope.getPriceTopProduct=function (x){
+        $rootScope.viewByPrice[x].priceSale = 0;
+        var urlSale=`http://localhost:8080/admin/rest/sale/getbigsale?money=`+$rootScope.viewByPrice[x].price+`&idPrd=`+$rootScope.viewByPrice[x].idProduct+`&idAcsr=0`;
+        $http.get(urlSale, token).then(resp => {
+            if(resp.data.moneySale == null) {
+                $rootScope.viewByPrice[x].priceSale = $rootScope.viewByPrice[x].price * resp.data.percentSale/100;
+            }else if(resp.data.percentSale == null){
+                if(resp.data.moneySale > $rootScope.viewByPrice[x].price){
+                    $rootScope.viewByPrice[x].priceSale = $rootScope.viewByPrice[x].price;
+                }else {
+                    $rootScope.viewByPrice[x].priceSale =  resp.data.moneySale;
+                }
+            }
+        }).catch(error => {
+            console.log(error)
+        })
+    }
     $scope.getTopProductPrice = function (){
         $http.get(`/rest/guest/findByPriceExits`,token).then(function(response) {
-            $scope.viewByPrice = response.data;
-            $scope.priceSale1=[];
+            $rootScope.viewByPrice = response.data;
+            console.log($rootScope.viewByPrice);
             for(var i=0; i<response.data.length;i++){
-                $scope.getSale1(response.data[i].price,response.data[i].idProduct,0)
-                console.log($scope.priceSale1+"hihi");
+                $scope.getPriceTopProduct(i);
             }
         }).catch(error=>{
             console.log(error);

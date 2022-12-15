@@ -131,7 +131,7 @@ private void checkList(List list,Integer idx,Integer id){
 //        System.out.println(saleSV.getBigSale(userName,moneySale,idPrdSale,idAcsrSale));
         return saleSV.getBigSale(userName,moneySale,idPrd,idAcsr);
     }
-    @RequestMapping("/addsaleapply")
+    @PostMapping("/addsaleapply")
     public void getSaleOrder(
             @RequestParam(name="idSale") Integer idSale
     ){
@@ -149,9 +149,9 @@ private void checkList(List list,Integer idx,Integer id){
     }
 
     @RequestMapping("/getvoucher")
-    public List<Sale> getVoucher(@RequestParam(name="money") String money,@RequestBody JsonNode carts
+    public List<Sale> getVoucher(@RequestParam(name="money") BigDecimal money,@RequestBody JsonNode carts
     ) {
-        if(0==money.length()||null==money||"undefined".equals(money)||Integer.parseInt(money)<0){
+        if(null==money||"undefined".equals(money)){
             throw new StaleStateException("Đơn hàng của bạn phải > 0 để sử dụng giảm giá");
         }else {
             List<Integer> listIDAccessory = new ArrayList<>();
@@ -185,7 +185,7 @@ private void checkList(List list,Integer idx,Integer id){
             if (0 == listIDProduct.size()) {
                 listIDProduct = null;
             }
-            return saleSV.getSaleByVoucher(userName, new BigDecimal(Double.valueOf(money)), listIDProduct, listIDAccessory);
+            return saleSV.getSaleByVoucher(userName, new BigDecimal(String.valueOf(money)), listIDProduct, listIDAccessory);
         }
     }
 }

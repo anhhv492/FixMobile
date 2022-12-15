@@ -15,9 +15,8 @@
                 <div class="row">
                     <div class="col-xs-12 col-md-6">
                         <p class="lead">
-                            <p ng-if="priceSale[$index]==-1">{{product.price|number}} VNĐ</p>
-                            <p ng-if="priceSale[$index]!=-1 && priceSale[$index]!=0"> <del>{{product.price|number}} VNĐ </del> &nbsp; {{priceSale[$index]|number}} VNĐ</p>
-                            <p ng-if="priceSale[$index]!=-1 && priceSale[$index]==0"> <del>{{product.price|number}} VNĐ </del> &nbsp; Free</p>
+                            <p ng-if="product.priceSale==0">{{product.price|number}} VNĐ</p>
+                            <p ng-if="product.priceSale!=0"> <del>{{product.price|number}} VNĐ </del> &nbsp {{priceSale[$index]|number}} VNĐ</p>
                         </p>
                     </div>
                     <div class="btn-group">

@@ -192,7 +192,8 @@
                                 <div class="product-details">
 
 
-                                    <span class="font-weight-bold d-block">{{pr1.price | number}} VNĐ</span>
+                                    <span class="font-weight-bold d-block" ng-if="pr1.priceSale!=0"> <del>{{pr1.price | number}} VNĐ</del> {{pr1.price - pr1.priceSale | number}} VNĐ</span>
+                                    <span class="font-weight-bold d-block" ng-if="pr1.priceSale==0">{{pr1.price | number}} VNĐ</span>
                                     <span>{{pr1.name}}</span>
 
 

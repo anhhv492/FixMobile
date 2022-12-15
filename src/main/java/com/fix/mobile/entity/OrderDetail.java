@@ -29,6 +29,12 @@ public class OrderDetail {
     @Column(name = "status")
     private int status;
 
+    @Column(name="id_sale")
+    private int idSale;
+
+    @Column(name="price_sale")
+    private BigDecimal priceSale;
+
     @ManyToOne
     @JoinColumn(name = "id_order")
     private Order order;
