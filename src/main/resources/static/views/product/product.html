@@ -62,10 +62,10 @@
                                             <div class="product-details">
                                                 <span class="font-weight-bold d-block">{{pros.price | number}}VND</span>
                                                 <p ng-if="pric0eSale[$index]!=-1 && priceSale[$index]!=0">
-                                                    <del>{{pros.price | number}} VNĐ</del> &nbsp; {{priceSale[$index] | number}} VNĐ
+                                                    <del>{{product.price | number}} VNĐ</del> &nbsp; {{priceSale[$index] | number}} VNĐ
                                                 </p>
                                                 <p ng-if="priceSale[$index]!=-1 && priceSale[$index]==0">
-                                                    <del>{{pros.price | number}} VNĐ</del> &nbsp; Free
+                                                    <del>{{product.price | number}} VNĐ</del> &nbsp; Free
                                                 </p>
                                                 <span>{{pros.name}}</span>
 

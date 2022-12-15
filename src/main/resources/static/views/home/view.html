@@ -163,11 +163,15 @@
                         <div class="row g-1">
                             <div class="col-md-3" ng-repeat="pr1 in viewByPrice">
 
+                                    <span class="font-weight-bold d-block" ng-if="pr1.priceSale!=0"> <del>{{pr1.price | number}} VNĐ</del> {{pr1.price - pr1.priceSale | number}} VNĐ</span>
+                                    <span class="font-weight-bold d-block" ng-if="pr1.priceSale==0">{{pr1.price | number}} VNĐ</span>
+                                    <span>{{pr1.name}}</span>
+
                                 <div class="card p-3">
                                     <div class="text-center">
                                         <img class="img-responsive" src="{{pr1.image}}">
                                     </div>
-
+                                  
                                     <div class="product-details">
                                         <p ng-if="priceSale[$index]==-1">{{pr1.price | number}} VNĐ</p>
                                         <p ng-if="priceSale[$index]!=-1 && priceSale[$index]!=0">
