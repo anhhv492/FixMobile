@@ -3,6 +3,24 @@
         Sản phẩm này đã hết hàng!
     </div>
 
+    <div class="item col-xs-4 col-md-2 " ng-repeat="product in detailProducts" ng-if="detailProducts.length>0">
+        <div class="thumbnail row p-3">
+            <img class="group list-group-image" src="{{product.images.length>0?product.images[0].name:''}}" height="220px" width="250px" />
+            <div class="caption mt-2">
+                <h5 class="group inner list-group-item-heading">
+                    {{product.name}}</h5>
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <p class="lead">
+                            <p ng-if="product.priceSale==0">{{product.price|number}} VNĐ</p>
+                            <p ng-if="product.priceSale!=0"> <del>{{product.price|number}} VNĐ </del> &nbsp {{priceSale[$index]|number}} VNĐ</p>
+                        </p>
+                    </div>
+                    <div class="btn-group">
+                        <a class="btn btn-details" href="#!product" ng-click="getOneProduct(product)">Details</a>
+                        <a class="btn btn-success" ng-click="addCart(product)">Add to cart</a>
+
+
 <!--    <div class="item col-xs-4 col-md-2 " ng-repeat="product in detailProducts" ng-if="detailProducts.length>0">-->
 <!--        <div class="thumbnail row p-3">-->
 
@@ -32,6 +50,7 @@
 <!--            </div>-->
 <!--        </div>-->
 <!--    </div>-->
+                      
     <div class="row bg-white">
         <div class="wrapper mb-5">
             <div class="container">

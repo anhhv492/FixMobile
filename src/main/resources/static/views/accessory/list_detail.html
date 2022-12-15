@@ -1,5 +1,5 @@
 <div class="well well-sm row d-flex justify-content-center">
-    <div class="row btn-group text-center bg-white">
+    <div class="row btn-group text-center">
         <h2 class="text-success">{{cateDetail.name}}</h2>
     </div>
 
@@ -14,7 +14,7 @@
                                 <img src="{{accessory.image}}" lass="img-fluid">
                             </div>
                             <div class="product-details">
-                                <p ng-if="priceSale[$index]==-1">{{accessory.price | number}} VNĐ</p>
+<!--                                 <p ng-if="priceSale[$index]==-1">{{accessory.price | number}} VNĐ</p>
                                 <p ng-if="priceSale[$index]!=-1 && priceSale[$index]!=0">
                                     <del>{{accessory.price | number}} VNĐ</del>
                                     {{priceSale[$index] | number}} VNĐ
@@ -22,7 +22,9 @@
                                 <p ng-if="priceSale[$index]!=-1 && priceSale[$index]==0">
                                     <del>{{accessory.price | number}} VNĐ</del>
                                     Free
-                                </p>
+                                </p> -->
+                                <p ng-if="accessory.priceSale!=0"> <del>{{accessory.price|number}} VNĐ </del> {{accessory.price - accessory.priceSale|number}} VNĐ</p>
+                                <p ng-if="accessory.priceSale==0"> {{accessory.price|number}} VNĐ</p>
                                 <span>{{accessory.name}}</span>
                                 <div class="buttons d-flex flex-row">
                                     <a class="cart" href="#!accessoryDetail"
@@ -50,183 +52,145 @@
 
                         </div>
 
-
                     </div>
                 </div>
-
             </div>
-
-
         </div>
-
     </div>
 
 </div>
 <style>
-    body {
+    .glyphicon { margin-right:5px; }
+    .category{
+        position:relative;
+        top:-5px;
+        left:10px;
+        color:#20e3b2;
+        font-weight:200;
+        margin-bottom:-20px;
+    }
+    .well{
+        background:transparent;
+        border-style:none;
+    }
+    .well .btn{
+        border-style:none;
 
-        background: #eee;
+    }
+    .well .col-md-3:hover{
+        box-shadow: 1px 5px 25px #ccc;
+
+    }
+    .well .thumbnail
+    {
+        margin-bottom: 0px;
+        padding: 0px;
+        -webkit-border-radius: 0px;
+        -moz-border-radius: 0px;
+        border-radius: 0px;
+
+    }
+    .well .inner{
+        margin-left:0px;
+    }
+    .well .item{
+        width:250px;
+        padding:0;
+        margin-top:5px;
+        margin:15px;
+        box-shadow: 1px 5px 15px #CCC;
     }
 
-
-    .wrapper {
-
-        margin-top: 30px;
-    }
-
-    .card {
-
-        border: 1px solid #eee;
-        cursor: pointer;
-    }
-
-
-    .weight {
-
-        margin-top: -65px;
-        transition: all 0.5s;
-    }
-
-    .weight small {
-
-        color: #e2dede;
-    }
-
-    .buttons {
-        padding: 10px;
-        background-color: #d6d4d44f;
-        border-radius: 4px;
-        position: relative;
-        margin-top: 7px;
-        opacity: 0;
-        transition: all 0.8s;
-    }
-
-    .dot {
-        height: 14px;
-        width: 14px;
-        background-color: green;
-        border-radius: 50%;
-        position: absolute;
-        left: 27%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 8px;
-        color: #fff;
-        opacity: 0;
-    }
-
-    .cart-button {
-        height: 48px
-    }
-
-    .cart-button:focus {
-        box-shadow: none
-    }
-
-    .cart {
-        position: relative;
-        height: 48px !important;
-        width: 50px;
-        margin-right: 8px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+    .well .item.list-group-item
+    {
+        float: none;
+        width: 100%;
         background-color: #fff;
-        padding: 11px;
-        border-radius: 5px;
-        font-size: 14px;
-        transition: 1s ease-in-out;
-        overflow: hidden;
+        margin-bottom: 10px;
+    }
+    .well .item.list-group-item:nth-of-type(odd):hover,.item.list-group-item:hover
+    {
+        box-shadow: 0px 1px 25px #ccc;
+    }
+
+    .well .item.list-group-item .list-group-image
+    {
+        margin-right:5px;
+
+    }
+    .well .item.list-group-item .thumbnail
+    {
+        margin-bottom: 0px;
+
+    }
+    .well .item.list-group-item .caption
+    {
+        padding: 9px 9px 0px 9px;
 
     }
 
-    .cart-button.clicked span.dot {
-        animation: item 0.3s ease-in forwards
+
+    .well .item.list-group-item:before, .item.list-group-item:after
+    {
+        display: table;
+        content: " ";
     }
 
-    @keyframes item {
+    .well  .item.list-group-item img
+    {
+        float: left;
+    }
+    .well .item.list-group-item:after
+    {
+        clear: both;
+    }
+    .well .btn-success,.btn-details{
+        margin-top:30px;
+        margin-bottom:10px;
+    }
+    .well  .btn-details{
+        background:transparent;
+        border-style:solid;
+        border-color:lightgrey;
+        border-radius:0%;
+        width:125px;
+        top:11px;
+        left:2px;
+        color:black;
+        height:33px;
+    }
+    .well .btn-details:hover{
+        background:lightgrey;
+        color:white;
+    }
+    .well .lead{
+        position:absolute;
+        font-weight:700;
+        font-size:18px;
+    }
+
+    .well .btn-success{
+        overflow:hidden;
+        border-radius:0%;
+        border-style:none;
+        width:125px;
+        right:2px;
+        top:11px;
+        height:33px;
+        background: linear-gradient(to right, #0cebeb, #20e3b2, #29ffc6);
+    }
+
+    .well .btn-success:hover{
+        background:#29ffc6  ;
+        color:white;
+    }
+    @keyframes scalewidth {
         0% {
-            opacity: 1;
-            top: 30%;
-            left: 30%
+            width: 0%;
         }
-
-        25% {
-            opacity: 1;
-            left: 26%;
-            top: 0%
+        100%{
+            width : 100%;
         }
-
-        50% {
-            opacity: 1;
-            left: 23%;
-            top: -22%
-        }
-
-        75% {
-            opacity: 1;
-            left: 19%;
-            top: -18%
-        }
-
-        100% {
-            opacity: 1;
-            left: 14%;
-            top: 28%
-        }
-    }
-
-
-    .card:hover .buttons {
-
-        opacity: 1;
-    }
-
-
-    .card:hover .weight {
-
-        margin-top: 10px;
-    }
-
-    .card:hover {
-
-        transform: scale(1.04);
-        z-index: 2;
-        overflow: hidden;
-    }
-
-    label.radio {
-        cursor: pointer
-    }
-
-    label.radio input {
-        position: absolute;
-        top: 0;
-        left: 0;
-        visibility: hidden;
-        pointer-events: none
-    }
-
-    label.radio span {
-        padding: 2px 9px;
-        border: 2px solid black;
-        display: inline-block;
-        color: black;
-        border-radius: 3px;
-        text-transform: uppercase
-    }
-
-    label.radio input:checked + span {
-        border-color: black;
-        background-color: black;
-        color: #fff
-    }
-
-    .btn {
-
-        border-radius: 0;
     }
 </style>
 <script type="text/javascript">

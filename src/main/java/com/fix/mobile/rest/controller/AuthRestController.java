@@ -49,7 +49,6 @@ public class AuthRestController {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword()));
 
-
         }catch (DisabledException e){
             throw new Exception("USER_DISABLED", e);
         }catch (BadCredentialsException e){
@@ -59,7 +58,6 @@ public class AuthRestController {
         final UserDetails userDetails = userService.loadUserByUsername(loginDto.getUsername());
 
         System.out.println(userDetails.getAuthorities());
-
 
 
         final String token = jwtUtil.GenerateToken(userDetails);

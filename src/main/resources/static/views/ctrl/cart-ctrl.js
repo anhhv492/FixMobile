@@ -53,6 +53,10 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window,$timeou
                 $rootScope.saveLocalStorage();
                 $rootScope.loadLocalStorage();
                 $scope.loadMoneyShip();
+                $scope.priceSaleByVocher=0;
+                $scope.getVoucherApply=0;
+                $scope.totalPriceSale();
+                $scope.totalPrice();
                 const Toast = Swal.mixin({
                     toast: true,
                     position: 'top-end',
@@ -104,6 +108,10 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window,$timeou
                     $rootScope.saveLocalStorage();
                     $rootScope.loadLocalStorage();
                     $scope.loadMoneyShip();
+                    $scope.priceSaleByVocher=0;
+                    $scope.getVoucherApply=0;
+                    $scope.totalPriceSale();
+                    $scope.totalPrice();
                 }
             }).catch(err => {
                 console.log(err)
@@ -136,6 +144,10 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window,$timeou
                     $rootScope.saveLocalStorage();
                     $rootScope.loadLocalStorage();
                     $scope.loadMoneyShip();
+                    $scope.priceSaleByVocher=0;
+                    $scope.getVoucherApply=0;
+                    $scope.totalPriceSale();
+                    $scope.totalPrice();
                 }
             }).catch(err => {
                 console.log(err)
@@ -146,6 +158,10 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window,$timeou
             $rootScope.saveLocalStorage();
             $rootScope.loadLocalStorage();
             $scope.loadMoneyShip();
+            $scope.priceSaleByVocher=0;
+            $scope.getVoucherApply=0;
+            $scope.totalPriceSale();
+            $scope.totalPrice();
             console.log('I was closed by the timer')
         }
     }
@@ -178,6 +194,10 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window,$timeou
                     $rootScope.saveLocalStorage();
                     $rootScope.loadLocalStorage();
                     $scope.loadMoneyShip();
+                    $scope.priceSaleByVocher=0;
+                    $scope.getVoucherApply=0;
+                    $scope.totalPriceSale();
+                    $scope.totalPrice();
                 }
             }).catch(err => {
                 console.log(err)
@@ -210,6 +230,10 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window,$timeou
                     $rootScope.qtyCart++;
                     $rootScope.saveLocalStorage();
                     $rootScope.loadLocalStorage();
+                    $scope.priceSaleByVocher=0;
+                    $scope.getVoucherApply=0;
+                    $scope.totalPriceSale();
+                    $scope.totalPrice();
                     $scope.loadMoneyShip();
                     console.log('add', item.qty)
                 }
@@ -229,6 +253,10 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window,$timeou
             $rootScope.saveLocalStorage();
             $rootScope.loadLocalStorage();
             $scope.loadMoneyShip();
+            $scope.priceSaleByVocher=0;
+            $scope.getVoucherApply=0;
+            $scope.totalPriceSale();
+            $scope.totalPrice();
             $rootScope.carts.splice(index, 1);
             $window.location.href = '#!cart';
             const Toast = Swal.mixin({
@@ -254,6 +282,10 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window,$timeou
         $scope.loadMoneyShip();
         $rootScope.qtyCart--;
         console.log('add', item.qty)
+        $scope.priceSaleByVocher=0;
+        $scope.getVoucherApply=0;
+        $scope.totalPriceSale();
+        $scope.totalPrice();
     }
     $scope.totalPrice = function () {
         let total = 0;
@@ -264,15 +296,14 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window,$timeou
     }
     $scope.totalPriceSale1 = 0;
     $scope.totalPriceSale = function () {
-        if(undefined != $scope.priceSale){
-            $scope.totalPriceSale1 = 0;
-            for(var i=0;i<$scope.priceSale.length;i++){
-                if($scope.priceSale[i]!=-1){
-                     $scope.totalPriceSale1=$scope.totalPriceSale1+$scope.priceSale[i]
-                }else{
-                     $scope.totalPriceSale1=$scope.totalPriceSale1+$rootScope.carts[i].price
-                }
+        $scope.totalPriceSale1 = 0;
+        console.log();
+        console.log($rootScope.carts);
+        if(undefined != $rootScope.carts){
+            for(var i=0;i<$rootScope.carts.length;i++){
+                $scope.totalPriceSale1 = $scope.totalPriceSale1 + ($rootScope.carts[i].priceSale*$rootScope.carts[i].qty);
             }
+            console.log($scope.totalPriceSale1);
             return $scope.totalPriceSale1;
         }
     }
@@ -565,27 +596,21 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window,$timeou
         })
     }
     $scope.getVoucherApply=0;
-    $scope.listProductApplySale=[];
-    $scope.listAccessoryApplySale=[];
     $scope.priceSaleByVocher=0;
-    $scope.getSaleApply=function (x){
+    $scope.getSaleApply=function(x){
         $scope.getVoucherApply=x;
-        console.log(x);
         let urlsale = `http://localhost:8080/admin/rest/sale/getsale/`+$scope.getVoucherApply;
         $http.get(urlsale, token).then(res => {
             var price=0;
             if(res.data.typeSale==1 || res.data.typeSale==4 || (res.data.typeSale==3 && res.data.userType==1)){
                let urlsaledetail=`http://localhost:8080/admin/rest/sale/getsaledetail/`+$scope.getVoucherApply;
                 $http.get(urlsaledetail, token).then(res1 => {
-
-                    console.log(res.data.typeSale)
                     if(res.data.typeSale==1){
                         price=0;
                         for (var i=0;i<res1.data.length;i++) {
-                            $scope.listProductApplySale.push(res1.data[i].idProduct)
                             $rootScope.carts.forEach(item => {
                                 if(item.idProduct == res1.data[i].idProduct){
-                                    price+=item.qty * item.price
+                                    price+=item.qty * item.priceSale
                                 }
                             })
                         }
@@ -603,14 +628,11 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window,$timeou
                     if(res.data.typeSale ==4 ){
                         for (var i=0;i<res1.data.length;i++) {
                             price=0;
-                            $scope.listAccessoryApplySale.push(res1.data[i].idAccessory)
                             $rootScope.carts.forEach(item => {
                                 if(item.idAccessory == res1.data[i].idAccessory){
-                                    price+=item.qty * item.price;
+                                    price+=item.qty * item.priceSale;
                                 }
                             })
-                            console.log(res.data.moneySale,res.data.percentSale,"hihihihihahhaha")
-                            console.log(price,$scope.priceSaleByVocher);
                             if(0==price){
                                 $scope.priceSaleByVocher=$scope.priceSaleByVocher;
                             }else{
@@ -627,10 +649,6 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window,$timeou
                             }
                         }
                     }
-
-                    console.log($rootScope.carts)
-                    console.log($scope.listProductApplySale);
-                    console.log($scope.listAccessoryApplySale)
                 }).catch(err => {
                     console.log(err)
                 })
@@ -646,7 +664,12 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window,$timeou
                     $scope.priceSaleByVocher=$scope.totalPriceSale1*res.data.percentSale/100;
                 }
             }
-            console.log($scope.priceSaleByVocher+"hihihihi")
+            swal.fire({
+                icon: 'success',
+                showConfirmButton: false,
+                title: 'Thêm Mới Thành Công',
+                timer: 1000
+            })
         }).catch(err => {
             console.log(err)
         })
