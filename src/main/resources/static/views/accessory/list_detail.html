@@ -1,8 +1,4 @@
 <div class="well well-sm row d-flex justify-content-center">
-    <div class="row btn-group text-center">
-        <h2 class="text-success">{{cateDetail.name}}</h2>
-    </div>
-
     <div class="alert alert-warning container" ng-if="detailAccessories.length<=0">Sản phẩm này đã hết hàng!</div>
     <div class="row bg-white">
         <div class="wrapper mb-5">
@@ -14,15 +10,6 @@
                                 <img src="{{accessory.image}}" lass="img-fluid">
                             </div>
                             <div class="product-details">
-<!--                                 <p ng-if="priceSale[$index]==-1">{{accessory.price | number}} VNĐ</p>
-                                <p ng-if="priceSale[$index]!=-1 && priceSale[$index]!=0">
-                                    <del>{{accessory.price | number}} VNĐ</del>
-                                    {{priceSale[$index] | number}} VNĐ
-                                </p>
-                                <p ng-if="priceSale[$index]!=-1 && priceSale[$index]==0">
-                                    <del>{{accessory.price | number}} VNĐ</del>
-                                    Free
-                                </p> -->
                                 <p ng-if="accessory.priceSale!=0"> <del>{{accessory.price|number}} VNĐ </del> {{accessory.price - accessory.priceSale|number}} VNĐ</p>
                                 <p ng-if="accessory.priceSale==0"> {{accessory.price|number}} VNĐ</p>
                                 <span>{{accessory.name}}</span>
@@ -51,13 +38,11 @@
 
 
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 </div>
 <style>
     .glyphicon { margin-right:5px; }
