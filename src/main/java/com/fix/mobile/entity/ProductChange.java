@@ -40,14 +40,24 @@ public class ProductChange {
     @Column(name = "status")
     private int  status;
 
+    @Column(name = "quantity_change")
+    private int  quantity;
+
+
     @ManyToOne
     @JoinColumn(name = "username")
     private Account account;
+
+    @ManyToOne
+    @JoinColumn(name = "id_order_detail")
+    private OrderDetail orderDetail;
+
 
     //
     @JsonIgnore
     @OneToMany(mappedBy = "productChange")
     private List<ChangeDetail> changeDetails;
+
 
     @OneToMany(mappedBy = "productChange")
     @LazyCollection(LazyCollectionOption.FALSE)

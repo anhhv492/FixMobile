@@ -1,187 +1,106 @@
-<div class="container">
+<div class="container mt-3 mb-3">
     <div class="single-product-area bg-white">
         <div class="container">
             <div class="row">
-                <div class="col-md-4">
-                    <div class="single-sidebar">
-                        <h2 class="sidebar-title">Search Products</h2>
-                        <form action="">
-                            <input type="text" placeholder="Search products...">
-                            <input type="submit" value="Search">
-                        </form>
-                    </div>
-
-                    <div class="single-sidebar">
-                        <h2 class="sidebar-title">Products</h2>
-                        <div class="thubmnail-recent">
-                            <img src="/img/product-thumb-1.jpg" class="recent-thumb" alt="">
-                            <h2><a href="">Sony Smart TV - 2015</a></h2>
-                            <div class="product-sidebar-price">
-                                <ins>$700.00</ins> <del>$100.00</del>
-                            </div>
-                        </div>
-                        <div class="thubmnail-recent">
-                            <img src="/img/product-thumb-1.jpg" class="recent-thumb" alt="">
-                            <h2><a href="">Sony Smart TV - 2015</a></h2>
-                            <div class="product-sidebar-price">
-                                <ins>$700.00</ins> <del>$100.00</del>
-                            </div>
-                        </div>
-                        <div class="thubmnail-recent">
-                            <img src="/img/product-thumb-1.jpg" class="recent-thumb" alt="">
-                            <h2><a href="">Sony Smart TV - 2015</a></h2>
-                            <div class="product-sidebar-price">
-                                <ins>$700.00</ins> <del>$100.00</del>
-                            </div>
-                        </div>
-                        <div class="thubmnail-recent">
-                            <img src="/img/product-thumb-1.jpg" class="recent-thumb" alt="">
-                            <h2><a href="">Sony Smart TV - 2015</a></h2>
-                            <div class="product-sidebar-price">
-                                <ins>$700.00</ins> <del>$100.00</del>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="single-sidebar">
-                        <h2 class="sidebar-title">Recent Posts</h2>
-                        <ul>
-                            <li><a href="">Sony Smart TV - 2015</a></li>
-                            <li><a href="">Sony Smart TV - 2015</a></li>
-                            <li><a href="">Sony Smart TV - 2015</a></li>
-                            <li><a href="">Sony Smart TV - 2015</a></li>
-                            <li><a href="">Sony Smart TV - 2015</a></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="col-md-8">
-                    <div class="product-content-right">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="product-images">
-                                    <div class="product-main-img">
-                                        <img src="{{productCode.images.length>0?productCode.images[0].name:''}}" alt="">
-                                    </div>
-
-                                    <div class="product-gallery">
-                                        <img src="{{productCode.images.length>0?productCode.images[1].name:''}}" alt="">
-                                        <img src="{{productCode.images.length>0?productCode.images[2].name:''}}" alt="">
-                                        <img src="{{productCode.images.length>0?productCode.images[3].name:''}}" alt="">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-6">
-                                <div class="product-inner">
-                                    <h2 class="product-name">{{productCode.name}}</h2>
-                                    <div class="product-inner-price">
-                                        <ins>{{productCode.price | number}}</ins> <del>$100.00</del>
-                                    </div>
-
-                                    <form action="" class="cart">
-                                        <div class="quantity">
-                                            <input type="number" size="4" class="input-text qty text" title="Qty"
-                                                value="1" name="quantity" min="1" step="1">
+                <div>
+                    <div>
+                        <div>
+                            <div class="row g-0">
+                                <div class="col-md-6 border-end">
+                                    <div class="d-flex flex-column justify-content-center">
+                                        <div class="main_image"><img src="{{displayProduct.imageDefault}}"
+                                                                     id="main_product_image" width="350"></div>
+                                        <div class="thumbnail_images">
+                                            <ul id="thumbnail">
+                                                <li><img ng-click="changeImage(1)" id="image_product_change"
+                                                         src="{{displayProduct.imageDefault1}}" width="70"></li>
+                                                <li><img ng-click="changeImage(2)" id="image_product_change1"
+                                                         src="{{displayProduct.imageDefault2}}" width="70"></li>
+                                                <li><img ng-click="changeImage(3)" id="image_product_change2"
+                                                         src="{{displayProduct.imageDefault3}}" width="70"></li>
+                                                <li><img ng-click="changeImage(4)" id="image_product_change3"
+                                                         src="{{displayProduct.imageDefault}}" width="70"></li>
+                                            </ul>
                                         </div>
-                                        <button class="add_to_cart_button" type="submit">Add to cart</button>
-                                    </form>
-
-                                    <div class="product-inner-category">
-                                        <p>Category: <a href="">Summer</a>. Tags: <a href="">awesome</a>, <a
-                                                href="">best</a>, <a href="">sale</a>, <a href="">shoes</a>. </p>
                                     </div>
-
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="p-3 right-side">
+                                        <div class="d-flex justify-content-between align-items-center"><h3>
+                                            {{displayProduct.name}}</h3>
+                                        </div>
+                                        <h3>{{displayProduct.price | number}} VNĐ</h3>
+                                        <div class="mt-2 pr-3 content"><p style="font-size: 17px">Camera: {{displayProduct.camera}}</p></div>
+                                        <div class="mt-2 pr-3 content"><p style="font-size: 17px">Ram: {{displayProduct.ram}}</p></div>
+                                        <div class="mt-2 pr-3 content"><p style="font-size: 17px">Màu sắc: {{displayProduct.color}}</p></div>
+                                        <div class="mt-2 pr-3 content"><p style="font-size: 17px">Dung lượng: {{displayProduct.capacity}}</p></div>
+                                        <div class="mt-2 pr-3 content"><p style="font-size: 15px">Mô tả sản phẩm: {{displayProduct.describe}}</p></div>
+                                        <div class="d-flex flex-row mt-5 gap-3">
+                                            <button class="btn btn-outline-dark" ng-click="addProductCart(oneProduct)"
+                                                    style="height: 70px; width: 100%">Add to Cart
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-
-                        <h2><a href="">Sony Smart TV - 2015</a></h2>
-
-                        <div class="product-carousel-price">
-                            <ins>$700.00</ins> <del>$100.00</del>
-                        </div>
+                    </div>
+                    <div class="product-content-right">
+                        <h2><a href="">Top 4</a></h2>
                     </div>
                     <div class="row">
-                        <div class="single-product col-5">
-                            <div class="product-f-image">
-                                <img src="/img/product-2.jpg" alt="">
-                                <div class="product-hover">
-                                    <a href="" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Add to
-                                        cart</a>
-                                    <a href="" class="view-details-link"><i class="fa fa-link"></i> See details</a>
+                        <div class="wrapper">
+                            <div class="container">
+                                <div class="row g-1">
+                                    <div class="col-md-3" ng-repeat="pros in productView">
+                                        <div class="card p-3">
+                                            <div class="text-center" style="width: 200px; height: 200px">
+                                                <img src="{{pros.image}}">
+                                            </div>
+
+                                            <div class="product-details">
+                                                <span class="font-weight-bold d-block">{{pros.price | number}}VND</span>
+                                                <p ng-if="pric0eSale[$index]!=-1 && priceSale[$index]!=0">
+                                                    <del>{{product.price | number}} VNĐ</del> &nbsp; {{priceSale[$index] | number}} VNĐ
+                                                </p>
+                                                <p ng-if="priceSale[$index]!=-1 && priceSale[$index]==0">
+                                                    <del>{{product.price | number}} VNĐ</del> &nbsp; Free
+                                                </p>
+                                                <span>{{pros.name}}</span>
+
+                                                <div class="buttons d-flex flex-row">
+                                                    <a class="cart" href="#!product"
+                                                       ng-click="getOneProduct(pros.idProduct)">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                             fill="currentColor" class="bi bi-ticket-detailed"
+                                                             viewBox="0 0 16 16">
+                                                            <path d="M4 5.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5Zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5ZM5 7a1 1 0 0 0 0 2h6a1 1 0 1 0 0-2H5Z"/>
+                                                            <path d="M0 4.5A1.5 1.5 0 0 1 1.5 3h13A1.5 1.5 0 0 1 16 4.5V6a.5.5 0 0 1-.5.5 1.5 1.5 0 0 0 0 3 .5.5 0 0 1 .5.5v1.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 11.5V10a.5.5 0 0 1 .5-.5 1.5 1.5 0 1 0 0-3A.5.5 0 0 1 0 6V4.5ZM1.5 4a.5.5 0 0 0-.5.5v1.05a2.5 2.5 0 0 1 0 4.9v1.05a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-1.05a2.5 2.5 0 0 1 0-4.9V4.5a.5.5 0 0 0-.5-.5h-13Z"/>
+                                                        </svg>
+                                                    </a>
+                                                    <button class="btn btn-success cart-button btn-block"
+                                                            ng-click="addProductCart(pros)">Add to cart
+                                                    </button>
+                                                </div>
+
+                                                <div class="weight">
+                                                    <small style="color: lightslategray">Còn
+                                                        {{pros.totail | number}} sản phẩm</small>
+                                                </div>
+
+                                            </div>
+
+
+                                        </div>
+
+
+                                    </div>
                                 </div>
+
                             </div>
 
-                            <h2><a href="">Apple new mac book 2015 March :P</a></h2>
-                            <div class="product-carousel-price">
-                                <ins>$899.00</ins> <del>$999.00</del>
-                            </div>
-                        </div>
-                        <div class="single-product col-5">
-                            <div class="product-f-image">
-                                <img src="/img/product-3.jpg" alt="">
-                                <div class="product-hover">
-                                    <a href="" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Add to
-                                        cart</a>
-                                    <a href="" class="view-details-link"><i class="fa fa-link"></i> See details</a>
-                                </div>
-                            </div>
 
-                            <h2><a href="">Apple new i phone 6</a></h2>
-
-                            <div class="product-carousel-price">
-                                <ins>$400.00</ins> <del>$425.00</del>
-                            </div>
-                        </div>
-                        <div class="single-product col-5">
-                            <div class="product-f-image">
-                                <img src="/img/product-4.jpg" alt="">
-                                <div class="product-hover">
-                                    <a href="" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Add to
-                                        cart</a>
-                                    <a href="" class="view-details-link"><i class="fa fa-link"></i> See details</a>
-                                </div>
-                            </div>
-
-                            <h2><a href="">Sony playstation microsoft</a></h2>
-
-                            <div class="product-carousel-price">
-                                <ins>$200.00</ins> <del>$225.00</del>
-                            </div>
-                        </div>
-                        <div class="single-product col-5">
-                            <div class="product-f-image">
-                                <img src="/img/product-5.jpg" alt="">
-                                <div class="product-hover">
-                                    <a href="" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Add to
-                                        cart</a>
-                                    <a href="" class="view-details-link"><i class="fa fa-link"></i> See details</a>
-                                </div>
-                            </div>
-
-                            <h2><a href="">Sony Smart Air Condtion</a></h2>
-
-                            <div class="product-carousel-price">
-                                <ins>$1200.00</ins> <del>$1355.00</del>
-                            </div>
-                        </div>
-                        <div class="single-product col-5">
-                            <div class="product-f-image">
-                                <img src="/img/product-5.jpg" alt="">
-                                <div class="product-hover">
-                                    <a href="" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Add to
-                                        cart</a>
-                                    <a href="" class="view-details-link"><i class="fa fa-link"></i> See details</a>
-                                </div>
-                            </div>
-
-                            <h2><a href="">Samsung gallaxy note 4</a></h2>
-
-                            <div class="product-carousel-price">
-                                <ins>$400.00</ins>
-                            </div>
                         </div>
 
                     </div>
@@ -191,7 +110,170 @@
 
     </div>
 </div>
-</div>
-</div>
+<style>
+    body {
 
-</div>
+        background: #eee;
+    }
+
+
+    .wrapper {
+
+        margin-top: 30px;
+    }
+
+    .card {
+
+        border: 1px solid #eee;
+        cursor: pointer;
+    }
+
+
+    .weight {
+
+        margin-top: -65px;
+        transition: all 0.5s;
+    }
+
+    .weight small {
+
+        color: #e2dede;
+    }
+
+    .buttons {
+        padding: 10px;
+        background-color: #d6d4d44f;
+        border-radius: 4px;
+        position: relative;
+        margin-top: 7px;
+        opacity: 0;
+        transition: all 0.8s;
+    }
+
+    .dot {
+        height: 14px;
+        width: 14px;
+        background-color: green;
+        border-radius: 50%;
+        position: absolute;
+        left: 27%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 8px;
+        color: #fff;
+        opacity: 0;
+    }
+
+    .cart-button {
+        height: 48px
+    }
+
+    .cart-button:focus {
+        box-shadow: none
+    }
+
+    .cart {
+        position: relative;
+        height: 48px !important;
+        width: 50px;
+        margin-right: 8px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #fff;
+        padding: 11px;
+        border-radius: 5px;
+        font-size: 14px;
+        transition: 1s ease-in-out;
+        overflow: hidden;
+
+    }
+
+    .cart-button.clicked span.dot {
+        animation: item 0.3s ease-in forwards
+    }
+
+    @keyframes item {
+        0% {
+            opacity: 1;
+            top: 30%;
+            left: 30%
+        }
+
+        25% {
+            opacity: 1;
+            left: 26%;
+            top: 0%
+        }
+
+        50% {
+            opacity: 1;
+            left: 23%;
+            top: -22%
+        }
+
+        75% {
+            opacity: 1;
+            left: 19%;
+            top: -18%
+        }
+
+        100% {
+            opacity: 1;
+            left: 14%;
+            top: 28%
+        }
+    }
+
+
+    .card:hover .buttons {
+
+        opacity: 1;
+    }
+
+
+    .card:hover .weight {
+
+        margin-top: 10px;
+    }
+
+    .card:hover {
+
+        transform: scale(1.04);
+        z-index: 2;
+        overflow: hidden;
+    }
+
+    label.radio {
+        cursor: pointer
+    }
+
+    label.radio input {
+        position: absolute;
+        top: 0;
+        left: 0;
+        visibility: hidden;
+        pointer-events: none
+    }
+
+    label.radio span {
+        padding: 2px 9px;
+        border: 2px solid black;
+        display: inline-block;
+        color: black;
+        border-radius: 3px;
+        text-transform: uppercase
+    }
+
+    label.radio input:checked + span {
+        border-color: black;
+        background-color: black;
+        color: #fff
+    }
+
+    .btn {
+
+        border-radius: 0;
+    }
+</style>

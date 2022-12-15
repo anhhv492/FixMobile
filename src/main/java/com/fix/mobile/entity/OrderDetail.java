@@ -27,7 +27,13 @@ public class OrderDetail {
     private BigDecimal price;
 
     @Column(name = "status")
-    private Boolean status;
+    private int status;
+
+    @Column(name="id_sale")
+    private int idSale;
+
+    @Column(name="price_sale")
+    private BigDecimal priceSale;
 
     @ManyToOne
     @JoinColumn(name = "id_order")
@@ -52,4 +58,8 @@ public class OrderDetail {
     @JsonIgnore
     @OneToMany(mappedBy = "orderDetail")
     private List<ImayProduct> imeis;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "orderDetail")
+    private List<ProductChange> productChange;
 }

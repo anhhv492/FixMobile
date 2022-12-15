@@ -17,6 +17,42 @@ app.controller('rest_accessory', function($scope, $http) {
             Authorization: `Bearer `+jwtToken
         }
     }
+
+    $scope.message = function (mes){
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3500,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+        Toast.fire({
+            icon: 'success',
+            title: mes,
+        })
+    }
+    $scope.error =  function (err){
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+
+        Toast.fire({
+            icon: 'error',
+            title: err,
+        })
+    }
     $scope.checkSubmit=false;
     const now = new Date();
     $scope.loadAccessories =function (){
@@ -44,49 +80,49 @@ app.controller('rest_accessory', function($scope, $http) {
         });
     };
     $scope.onSave = function() {
-        $http.post(pathAPI+'/save-file', $scope.imageFile,token).then(response => {
-        })
-        $scope.form.status=false;
-        $scope.form.createDate=now;
-        $scope.form.category ={
-            idCategory: $scope.form.category
-        };
-        $http.post(pathAPI, $scope.form,token).then(response => {
-            const Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
-            })
-
-            Toast.fire({
-                icon: 'success',
-                title: 'Thêm mới thành công!',
-            })
-            $scope.refresh();
-        }).catch(error => {
-            const Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
-            })
-
-            Toast.fire({
-                icon: 'error',
-                title: 'Thêm mới thất bại!',
-            })
+        var formData = new FormData();
+        angular.forEach($scope.files, function(image) {
+            formData.append('image', image);
         });
+        formData.append("name",$scope.form.name);
+        formData.append("quantity",$scope.form.quantity);
+        formData.append("color",$scope.form.color);
+        formData.append("price",$scope.form.price);
+        formData.append("note",$scope.form.note);
+        formData.append("category", $scope.form.category);
+        let req = {
+            method: 'POST',
+            url: '/rest/admin/accessory/create',
+            headers: {
+                'Content-Type': undefined,
+                Authorization: `Bearer `+jwtToken
+                // or  'Content-Type':'application/json'
+            },
+            data: formData
+        }
+        console.log("Bắt đầu thêm mới")
+        let timerInterval
+        Swal.fire({
+            title: 'Đang thêm  ảnh vui lòng chờ!',
+            html: 'Vui lòng chờ <b></b> milliseconds.',
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: () => {
+                Swal.showLoading()
+                const b = Swal.getHtmlContainer().querySelector('b')
+                timerInterval = setInterval(() => {
+                    b.textContent = Swal.getTimerLeft()
+                }, 100)
+            },
+            willClose: () => {
+                clearInterval(timerInterval)
+            }
+        });
+        $http(req).then(response => {
+            console.log(response.data);
+            $scope.message("Thêm mới thành công");
+            $scope.reset();
+        })
     };
     $scope.changeStatus = function(accessory) {
         Swal.fire({
@@ -148,18 +184,53 @@ app.controller('rest_accessory', function($scope, $http) {
         document.getElementById('manage-tab').click();
     };
     $scope.onUpdate = function() {
-        if(!$scope.form.image){
-            $scope.form.image='logo-mobile.png';
+        var accessory = angular.copy($scope.form);
+        console.log(accessory.username)
+        var formData = new FormData();
+        angular.forEach($scope.files, function(image) {
+            formData.append('image', image);
+        });
+        formData.append("name",$scope.form.name);
+        formData.append("quantity",$scope.form.quantity);
+        formData.append("color",$scope.form.color);
+        formData.append("price",$scope.form.price);
+        formData.append("note",$scope.form.note);
+        formData.append("category", $scope.form.category);
+        let req = {
+            method: 'POST',
+            url: '/rest/admin/accessory/update?id='+accessory.idAccessory,
+            headers: {
+                'Content-Type': undefined,
+                Authorization: `Bearer `+jwtToken
+                // or  'Content-Type':'application/json'
+            },
+            data: formData
         }
-        $scope.form.category ={
-            idCategory: $scope.form.category
-        };
-        $http.put(pathAPI+'/'+$scope.form.idAccessory, $scope.form,token).then(response=> {
+        console.log("Bắt đầu cập nhật")
+        let timerInterval
+        Swal.fire({
+            title: 'Đang cập nhật vui lòng chờ!',
+            html: 'Vui lòng chờ <b></b> milliseconds.',
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: () => {
+                Swal.showLoading()
+                const b = Swal.getHtmlContainer().querySelector('b')
+                timerInterval = setInterval(() => {
+                    b.textContent = Swal.getTimerLeft()
+                }, 100)
+            },
+            willClose: () => {
+                clearInterval(timerInterval)
+            }
+        });
+        $http(req).then(response => {
+            console.log("ddd " + response);
             const Toast = Swal.mixin({
                 toast: true,
                 position: 'top-end',
                 showConfirmButton: false,
-                timer: 3000,
+                timer: 1500,
                 timerProgressBar: true,
                 didOpen: (toast) => {
                     toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -169,28 +240,9 @@ app.controller('rest_accessory', function($scope, $http) {
 
             Toast.fire({
                 icon: 'success',
-                title:'Cập nhật thành công!' ,
+                title: 'Cập nhật thành công!'
             })
-
-            document.getElementById('list-tab').click();
-            $scope.refresh();
-        }).catch(error=>{
-            const Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
-            })
-            console.log('error', error);
-            Toast.fire({
-                icon: 'error',
-                title: 'Cập nhật thất bại!',
-            })
+            $scope.reset();
         })
     };
     // submit form
@@ -266,17 +318,8 @@ app.controller('rest_accessory', function($scope, $http) {
         })
     }
     $scope.uploadFile = function(files){
-        let form = new FormData();
-        form.append('file',files[0]);
-        $http.post(urlImage,form,{
-            transformRequest: angular.identity,
-            headers: {'Content-Type': undefined}
-        }).then(res=>{
-            $scope.form.image=res.data.name;
-            console.log('image',res);
-        }).catch(err=>{
-            console.log('err',err);
-        })
+        $scope.files = files;
+        console.log($scope.files)
     }
     $scope.readExcel = function(files){
         let form = new FormData();

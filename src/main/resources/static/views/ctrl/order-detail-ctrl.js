@@ -1,12 +1,12 @@
-app.controller('order-detail-ctrl',function($rootScope,$scope,$http){
+app.controller('order-detail-ctrl',function($window,$rootScope,$scope,$http){
     var urlOrder=`http://localhost:8080/rest/user/order/detail`;
-
     $scope.orderDetails=[];
     $scope.formProductChange={};
-    // $scope.saleadd = {};
     $scope.idCheckBox = {};
     $scope.seLected = [];
     $scope.index = 0;
+    $scope.formDetails= {};
+
     const jwtToken = localStorage.getItem("jwtToken")
     const token = {
         headers: {
@@ -21,12 +21,24 @@ app.controller('order-detail-ctrl',function($rootScope,$scope,$http){
             console.log(error);
         })
     }
+
+    $scope.getProductChange=function(formProductChange){
+        $http.get(`/rest/productchange/findProductChange/${formProductChange.idDetail}`  ,
+            token).then(resp=>{
+            console.log($scope.formDetails.idDetail)
+            $scope.formDetails = resp.data;
+            console.log(resp.data)
+        }).catch(error=>{
+            console.log(error);
+        })
+    }
+
     $scope.message = function (mes){
         const Toast = Swal.mixin({
             toast: true,
             position: 'top-end',
             showConfirmButton: false,
-            timer: 3500,
+            timer: 1000,
             timerProgressBar: true,
             didOpen: (toast) => {
                 toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -43,7 +55,7 @@ app.controller('order-detail-ctrl',function($rootScope,$scope,$http){
             toast: true,
             position: 'top-end',
             showConfirmButton: false,
-            timer: 1500,
+            timer: 1000,
             timerProgressBar: true,
             didOpen: (toast) => {
                 toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -56,7 +68,6 @@ app.controller('order-detail-ctrl',function($rootScope,$scope,$http){
             title: err,
         })
     }
-    //$scope.files={};
 
     $scope.checkSelected= function (id){
         console.log('sdsadasadsa '+id)
@@ -86,101 +97,130 @@ app.controller('order-detail-ctrl',function($rootScope,$scope,$http){
         $scope.files = files;
         console.log($scope.files);
     }
+// get accouunt
+    $scope.accountActive = {};
+    $scope.getAcountActive = function () {
+        $http.get(`/rest/admin/accounts/getAccountActive`, token).then(function (respon){
+            $scope.accountActive = respon.data;
+            $rootScope.name = $scope.accountActive.username;
+            console.log($scope.accountActive.username)
+        }).catch(err => {
+        })
+    }
+    $scope.getAcountActive();
 
+    $scope.findPChangeDetails = function (id){}
+
+    $scope.saveProductChangeDetail = function (){
+        var form = new FormData();
+        angular.forEach($scope.files, function(file) {
+            form.append('files', file);
+        });
+        form.append("orderDetail", $scope.formDetails.idDetail);
+        let req = {
+            method: 'POST',
+            url: '/rest/productchange/saveRequest',
+            headers: {
+                'Content-Type': undefined,
+                Authorization: `Bearer `+jwtToken
+            },
+            data: form,
+        }
+        $http(req).then(resp=>{
+            console.log(resp.data+ " data");
+        }).catch(error=>{
+            console.log(error);
+        })
+    }
+    // thực hiện yêu cầu đổi trả
     $scope.saveProductChange = function (){
-
         Swal.fire({
-            title: 'Bạn có chắc muốn trả máy : ',
-            text: "Đổi trả hàng có thể mất thêm phí !",
+            title: 'Thực hiện gửi yêu cầu đổi trả ?',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
-            if($scope.seLected.length == 0){
-                $scope.error('Phải chọn sản phẩm cần trả');
-                return null;
-            }else if($scope.files == null){
-                $scope.error('Chửa chọn hình ảnh tình trạng sản phẩm');
-                return null;
-            }
-            else {
                 if (result.isConfirmed) {
-                    let timerInterval
-                    Swal.fire({
-                        title: 'Tạo yêu cầu thành công' +'!',
-                        html: 'Vui lòng chờ <b></b> milliseconds.',
-                        timer: 1500,
-                        timerProgressBar: true,
-                        didOpen: () => {
-                            Swal.showLoading()
-                            const b = Swal.getHtmlContainer().querySelector('b')
-                            timerInterval = setInterval(() => {
-                                b.textContent = Swal.getTimerLeft()
-                            }, 100)
-                        },
-                        willClose: () => {
-                            clearInterval(timerInterval)
+                       if($scope.files == null){
+                           $scope.error('chưa chọn ảnh tình trạng máy');
+                           return null;
+                       }else if($scope.formProductChange.quantity == null){
+                           $scope.error('Vui lòng nhập số lượng máy cần đổi');
+                           return null;
+                       }
+                       else  if($scope.formProductChange.quantity > $scope.formDetails.quantity){
+                           $scope.error('Số lượng nhập vào không đúng vui lòng nhập lại');
+                           return null;
                         }
-                    }).then((result) => {
-                        if (result.dismiss === Swal.DismissReason.timer) {
-
-                            var formData = new FormData();
-                            angular.forEach($scope.files, function(file) {
-                                formData.append('files', file);
-                                console.log(file);
-                            });
-                            formData.append("note",$scope.formProductChange.note);
-                            formData.append("email",$scope.formProductChange.email);
-
-                            let req = {
-                                method: 'POST',
-                                url: '/rest/productchange/save',
-                                headers: {
-                                    'Content-Type': undefined,
-                                },
-                                data: formData
+                        let timerInterval
+                        Swal.fire({
+                            title: 'Tạo yêu cầu thành công' + '!',
+                            html: 'Vui lòng chờ <b></b> milliseconds.',
+                            timer: 1500,
+                            timerProgressBar: true,
+                            didOpen: () => {
+                                Swal.showLoading()
+                                const b = Swal.getHtmlContainer().querySelector('b')
+                                timerInterval = setInterval(() => {
+                                    b.textContent = Swal.getTimerLeft()
+                                }, 100)
+                            },
+                            willClose: () => {
+                                clearInterval(timerInterval)
                             }
-                            Swal.fire({
-                                title: 'Đang gửi yêu cầu đến admin' +'!',
-                                html: 'Vui lòng chờ <b></b> milliseconds.',
-                                timer: 3500,
-                                timerProgressBar: true,
-                                didOpen: () => {
-                                    Swal.showLoading()
-                                    const b = Swal.getHtmlContainer().querySelector('b')
-                                    timerInterval = setInterval(() => {
-                                        b.textContent = Swal.getTimerLeft()
-                                    }, 100)
-                                },
-                                willClose: () => {
-                                    clearInterval(timerInterval)
+                        }).then((result) => {
+                            if (result.dismiss === Swal.DismissReason.timer) {
+                                var formData = new FormData();
+                                angular.forEach($scope.files, function(file) {
+                                    formData.append('files', file);
+                                });
+                                formData.append("note", $scope.formProductChange.note);
+                                formData.append("email", $scope.accountActive.email);
+                                formData.append("quantity",$scope.formProductChange.quantity);
+                                formData.append("account",$scope.accountActive.username);
+                                formData.append("orderDetail",$scope.formDetails.idDetail);
+                                let req = {
+                                    method: 'POST',
+                                    url: '/rest/productchange/save',
+                                    headers: {
+                                        'Content-Type': undefined,
+                                         Authorization: `Bearer `+jwtToken
+                                    },
+                                    data: formData
                                 }
-                            })
-                            $http(req).then(response => {
-                                console.log("ddd " + response.data);
-                                $scope.message("Gửi yêu cầu đổi trả thành công");
-                                // $scope.refresh();
+                                Swal.fire({
+                                    title: 'Đang gửi yêu cầu đến admin' + '!',
+                                    html: 'Vui lòng chờ <b></b> milliseconds.',
+                                    timer: 3500,
+                                    timerProgressBar: true,
+                                    didOpen: () => {
+                                        Swal.showLoading()
+                                        const b = Swal.getHtmlContainer().querySelector('b')
+                                        timerInterval = setInterval(() => {
+                                            b.textContent = Swal.getTimerLeft()
+                                        }, 100)
+                                    },
+                                    willClose: () => {
+                                        clearInterval(timerInterval)
+                                    }
+                                })
+                                $http(req).then(response => {
+                                    console.log("ddd " + response.data);
+                                    $scope.saveProductChangeDetail();
+                                    $scope.message("Gửi yêu cầu đổi trả thành công");
+                                    $('#staticBackdrop').modal('hide');
+                                    $scope.formProductChange={};
+                                    $scope.files=null;
+                                    $window.location = '/views/index.html#!/order';
+                                }).catch(error => {
+                                    $scope.error('gửi  yêu cầu đổi trả thất bại');
+                                });
 
-                            }).catch(error => {
-                                $scope.error('gửi  yêu cầu đổi trả thất bại');
-                                console.log('I was closed by the timer'+ formData)
-                            });
-
-                        }
-                        let details = angular.copy($scope.seLected);
-                        $http.post('/rest/productchange/saveRequest',details).then(resp =>{
-                            console.log('đã post '+ details);
-                        }).catch(error => {
-                            console.log('I was closed by the timer'+ formData)
-                        });
-
-                    })
-
-                }
-
-            }
+                            }
+                        })
+                    }
         })
     }
     $scope.getAllByOrder();

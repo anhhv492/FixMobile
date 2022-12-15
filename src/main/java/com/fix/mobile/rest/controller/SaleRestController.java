@@ -1,10 +1,13 @@
 package com.fix.mobile.rest.controller;
 
-import com.fix.mobile.entity.Sale;
-import com.fix.mobile.entity.SaleDetail;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fix.mobile.entity.*;
+import com.fix.mobile.service.AccountService;
 import com.fix.mobile.service.SaleDetailService;
 import com.fix.mobile.service.SaleService;
+import com.fix.mobile.utils.UserName;
 import org.hibernate.StaleStateException;
+import org.hibernate.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,6 +16,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Path;
+import javax.websocket.server.PathParam;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,16 +30,26 @@ public class SaleRestController {
     @Autowired
     SaleDetailService saleDetailSV;
 
-    @RequestMapping("/add")
+    @Autowired
+    AccountService accountService;
+
+    Account account = null;
+    @PostMapping("/add")
     public Sale addSale(@RequestBody Sale sale){
+        account = accountService.findByUsername(UserName.getUserName());
+        sale.setUserCreate(account.getUsername());
         return saleSV.add(sale);
     }
     @RequestMapping("/update")
     public Sale updateSale(@RequestBody Sale sale){
+        account = accountService.findByUsername(UserName.getUserName());
+        sale.setUserUpdate(account.getUsername());
         return saleSV.update(sale);
     }
     @RequestMapping("/delete")
     public Sale deleteSale(@RequestBody Sale sale){
+        account = accountService.findByUsername(UserName.getUserName());
+        sale.setUserUpdate(account.getUsername());
         sale.setQuantity(0);
         return saleSV.update(sale);
     }
@@ -69,7 +84,6 @@ private void checkList(List list,Integer idx,Integer id){
                              @RequestBody ArrayList<String> listID){
         checkList(listID,idx,id);
         saleDetailSV.deleteSaleDetai(id);
-        
         for (int i=0;i<listID.size();i++){
             saleDetailSV.updateSaleDetail(listID.get(i),idx,id);
         }
@@ -91,9 +105,87 @@ private void checkList(List list,Integer idx,Integer id){
         Sale sale = saleSV.findByid(id);
         return saleDetailSV.findByid(sale);
     }
+    @RequestMapping("/getbigsale")
+    public Sale getBigSale( @RequestParam(name="money") String money,
+                            @RequestParam(name="idPrd") Integer idPrd,
+                            @RequestParam(name="idAcsr") Integer idAcsr){
+        BigDecimal moneySale;
+        String userName;
+        account = accountService.findByUsername(UserName.getUserName());
+        if(null==account){
+            userName=null;
+        }else{
+            userName = account.getUsername();
+        }
+        if( 0 == money.length() || "undefined".equals(money) ||"".equals(money)){
+            moneySale=null;
+        }else{
+            moneySale = new BigDecimal(Double.valueOf(money));
+        }
+        if( 0==idPrd ){
+            idPrd=null;
+        }
+        if( 0 == idAcsr){
+            idAcsr=null;
+        }
+//        System.out.println(saleSV.getBigSale(userName,moneySale,idPrdSale,idAcsrSale));
+        return saleSV.getBigSale(userName,moneySale,idPrd,idAcsr);
+    }
+    @PostMapping("/addsaleapply")
+    public void getSaleOrder(
+            @RequestParam(name="idSale") Integer idSale
+    ){
+        String userName;
+        account = accountService.findByUsername(UserName.getUserName());
+        if(null==account){
+            userName=null;
+        }else{
+            userName = account.getUsername();
+        }
+        Sale updatequantity= saleSV.findByid(idSale);
+        updatequantity.setQuantity(updatequantity.getQuantity()-1);
+        saleSV.updateQuantity(updatequantity);
+        saleSV.addApply_Sale(idSale,userName);
+    }
 
-    @RequestMapping("/demotb")
-    public String login(Authentication auth) {
-        return auth.toString();
+    @RequestMapping("/getvoucher")
+    public List<Sale> getVoucher(@RequestParam(name="money") BigDecimal money,@RequestBody JsonNode carts
+    ) {
+        if(null==money||"undefined".equals(money)){
+            throw new StaleStateException("Đơn hàng của bạn phải > 0 để sử dụng giảm giá");
+        }else {
+            List<Integer> listIDAccessory = new ArrayList<>();
+            List<Integer> listIDProduct = new ArrayList<>();
+            String userName;
+            account = accountService.findByUsername(UserName.getUserName());
+            if (null == account) {
+                userName = null;
+            } else {
+                userName = account.getUsername();
+            }
+            if (0 == carts.size() || null == carts || "undefined".equals(carts)) {
+                listIDAccessory = null;
+                listIDProduct = null;
+            } else {
+                for (int i = 0; i < carts.size(); i++) {
+                    if (carts.get(i).get("qty").asInt() <= 0) {
+                        return null;
+                    } else {
+                        if (carts.get(i).get("idAccessory") != null) {
+                            listIDAccessory.add(carts.get(i).get("idAccessory").asInt());
+                        } else if (carts.get(i).get("idProduct") != null) {
+                            listIDProduct.add(carts.get(i).get("idProduct").asInt());
+                        }
+                    }
+                }
+            }
+            if (0 == listIDAccessory.size()) {
+                listIDAccessory = null;
+            }
+            if (0 == listIDProduct.size()) {
+                listIDProduct = null;
+            }
+            return saleSV.getSaleByVoucher(userName, new BigDecimal(String.valueOf(money)), listIDProduct, listIDAccessory);
+        }
     }
 }

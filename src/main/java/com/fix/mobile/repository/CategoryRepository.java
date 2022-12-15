@@ -30,4 +30,6 @@ public interface CategoryRepository extends PagingAndSortingRepository<Category,
     Optional<Category> findByName(String name);
 
     Optional<Category> getCategoryByTypeAndName(Integer type, String name);
+
+    List<Category> findAllByStatus(Integer status);
 }

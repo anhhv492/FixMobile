@@ -12,11 +12,14 @@ app.config(function($routeProvider){
         })
         .when("/accessory/detail",{
             templateUrl:"accessory/list_detail.html",
-            controller: "home-ctrl"
+            controller: "view_accessory_ctrl",
+            controller: "home-ctrl",
+            controller: "view_product_ctrl",
+
         })
         .when("/product/detail",{
             templateUrl:"product/list_detail.html",
-            controller: "home-ctrl"
+            controller: "home-ctrl",
         })
         .when("/order",{
             templateUrl:"order/view.html",
@@ -32,6 +35,10 @@ app.config(function($routeProvider){
             controller: "home-ctrl",
             controller: "view_product_ctrl"
 
+        })
+        .when("/accessoryDetail",{
+            templateUrl:"accessory/view_detail.html",
+            controller: "view_accessory_ctrl"
         })
         .when("/login",{
             templateUrl:"/views/login/form.html",
@@ -57,11 +64,17 @@ app.config(function($routeProvider){
             templateUrl:"/views/changePassword/form.html",
             controller: "changePassword-ctrl"
         })
-        .when("/productDetail",{
-            templateUrl:"accessory/view_detail.html",
-            controller: "home-ctrl",
+
+        .when("/forgetPassword",{
+            templateUrl:"forgetPassword/form.html",
+            controller: "forgetPassword-ctrl",
 
         })
+        .when("/productchange",{
+            templateUrl:"order/detail/productchange.html",
+            controller: "productchange-ctrl",
+        })
+
 
 
 });

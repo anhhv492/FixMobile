@@ -1,8 +1,101 @@
+<div class="container">
+    <div class="table-responsive">
+        <table class="table  table-bordered table-hover container">
+            <thead>
+            <tr>
+                <th>Sản phẩm</th>
+                <th>Màu</th>
+                <th>Thể loại</th>
+                <th>Giá (VNĐ)</th>
+                <th>Số lượng</th>
+                <th>Hình ảnh</th>
+                <th>Tổng (VNĐ)</th>
+                <th>Trạng thái</th>
+                <th>Chức năng</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="orderDetail in orderDetails" ng-if="orderDetail.accessory">
+                <td>{{orderDetail.accessory.name}}</td>
+                <td>{{orderDetail.accessory.color}}</td>
+                <td>{{orderDetail.accessory.category.name}}</td>
+                <td>{{orderDetail.price | number}}</td>
+                <td>{{orderDetail.quantity}}</td>
+                <td><img width="80px" height="80px" src="/images/accessories/{{orderDetail.accessory.image}}"
+                         class="pt-2"></td>
+                <td>{{orderDetail.quantity * orderDetail.price | number}}</td>
+            </tr>
+            <tr ng-repeat="orderDetail in orderDetails" ng-if="orderDetail.product">
+                <td>{{orderDetail.product.name}}</td>
+                <td>{{orderDetail.product.color.name}}</td>
+                <td>{{orderDetail.product.category.name}}</td>
+                <td>{{orderDetail.product.price | number}}</td>
+                <td>{{orderDetail.quantity}}</td>
+                <td><img width="80px" height="80px" src="{{orderDetail.product.images[0].name}}" class="pt-2"></td>
+                <td>{{orderDetail.quantity * orderDetail.price | number}}</td>
+                    <p ng-if="orderDetail.status == 0">Đang kiểm tra yêu cầu ...</p>
+                    <p ng-if="orderDetail.status == 1">Đã xác nhận đổi trả</p>
+                </td>
+                <td>
+                    <button ng-click="getProductChange(orderDetail)"
+                            ng-if="orderDetail.order.status == 3 && orderDetail.status == 1"
+                            class="btn btn-default"
+                            data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                        <i class="fa fa-info-circle" aria-hidden="true"></i> Đổi hàng
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <!-- Button trigger modal -->
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body ">
+                    <form role="formProductChange" method="post" class="row" name="myForm"
+                          enctype="multipart/form-data">
+                        <div class="col-md-12">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class="col">Sản phẩm</th>
+                                    <th scope="col">Số lượng</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <th scope="row">
+                                        <div class="d-flex align-items-center">
+                                            <div class="flex-column ms-4">
+                                                <h4 class="mb-2" ng-model="formProductChange.formDetails">
+                                                    {{formDetails.product.name}}</h4>
+                                                <p> thể loại : {{formDetails.product.category.name}} </p>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <td class="align-middle">
+                                        <div class="d-flex flex-row">
+                                            <input min="0" max="{{formDetails.quantity}}"
+                                                   ng-change="update(item)" type="number"
+                                                   ng-model="formProductChange.quantity"
+                                                   class="form-control form-control-sm" style="width: 100px;"/>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            
 <div class="table-responsive">
   <table class="table  table-bordered table-hover container">
     <thead>
     <tr>
-      <th>Chọn</th>
+<!--      <th>Chọn</th>-->
       <th>Sản phẩm</th>
       <th>Màu</th>
       <th>Thể loại</th>
@@ -11,12 +104,11 @@
       <th>Số lượng</th>
       <th>Hình ảnh</th>
       <th>Tổng (VNĐ)</th>
+      <th>Chức năng</th>
     </tr>
     </thead>
     <tbody>
     <tr ng-repeat="orderDetail in orderDetails" ng-if="orderDetail.accessory">
-      <td> <input type="checkbox" name="" ng-checked="checkSelect(orderDetail.idDetail)"
-                  ng-click="checkSelected(orderDetail.idDetail)"> </td>
       <td>{{orderDetail.accessory.name}}</td>
       <td>{{orderDetail.accessory.color}}</td>
       <td>{{orderDetail.accessory.category.name}}</td>
@@ -25,11 +117,10 @@
       <td>{{orderDetail.quantity}}</td>
       <td><img width="80px" height="80px" src="/images/accessories/{{orderDetail.accessory.image}}" class="pt-2"></td>
       <td>{{orderDetail.quantity*orderDetail.price|number}}</td>
-
     </tr>
     <tr ng-repeat="orderDetail in orderDetails" ng-if="orderDetail.product">
-      <td> <input type="checkbox" name="" ng-checked="checkSelect(orderDetail.idDetail)"
-                  ng-click="checkSelected(orderDetail.idDetail)"></td>
+<!--      <td> <input type="checkbox" name=""-->
+<!--                  ng-click="checkSelected(orderDetail.idDetail)"></td>-->
       <td>{{orderDetail.product.name}}</td>
       <td>{{orderDetail.product.color.name}}</td>
       <td>{{orderDetail.product.category.name}}</td>
@@ -38,43 +129,85 @@
       <td>{{orderDetail.quantity}}</td>
       <td><img width="80px" height="80px" src="{{orderDetail.product.images[0].name}}" class="pt-2"></td>
       <td>{{orderDetail.quantity*orderDetail.price|number}}</td>
+      <td>
+          <button ng-click="getProductChange(orderDetail)"
+                  ng-if="orderDetail.order.status == 1 && orderDetail.status == 1"
+                  class="btn btn-default"
+                  data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            <i class="fa fa-info-circle" aria-hidden="true"></i> Đổi hàng
+          </button>
+          <p ng-if="orderDetail.status == 0">Đang kiểm tra yêu cầu ...</p>
+        </td>
     </tr>
     </tbody>
   </table>
+  <!-- Button trigger modal -->
 </div>
-<div class="container glyphicon-zoom-in">
-  <form role="formProductChange" method="post" class="row" name="myForm"
-        enctype="multipart/form-data">
-    <div class="col-md-6">
-      <div class="form-group mt-1">
-        <div  class="upload-btn-wrapper form-group mt-1">
-          <button type="button" class="btn btn-outline-primary ms-1">Chọn ảnh</button>
-          <input onchange="angular.element(this).scope().uploadFileChange(this.files)"
-                  type="file" name="files"
-                 accept=".jpg,.jpeg,.png" multiple >
+  <!-- Modal -->
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <img style="filter: drop-shadow(0 0 5px rgb(119, 119, 145));" width="105px"
-             src="/images/accessories/{{form.image}}">
-      </div>
-    </div>
+        <div class="modal-body ">
+          <form role="formProductChange" method="post" class="row" name="myForm"
+                enctype="multipart/form-data">
+            <div class="col-md-12">
+              <table class="table">
+                <thead>
+                <tr>
+                  <th class="col">Sản phẩm</th>
+                  <th scope="col">Số lượng</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <th scope="row">
+                    <div class="d-flex align-items-center">
+                      <div class="flex-column ms-4" >
+                         <h4  class="mb-2" ng-model="formProductChange.formDetails">{{formDetails.product.name}}</h4>
+                         <p> thể loại : {{formDetails.product.category.name}}  </p>
+                      </div>
+                    </div>
+                  </th>
+                  <td class="align-middle">
+                    <div class="d-flex flex-row">
+                      <input min="0" max="{{formDetails.quantity}}"
+                             ng-change="update(item)" type="number"
+                             ng-model="formProductChange.quantity"
+                             class="form-control form-control-sm" style="width: 100px;"/>
+                    </div>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
 
-    <div class="col-md-8">
-      <div class="form-group mt-1">
-        <div  class="form-group mt-1">
-          <label>Nhập Email</label>
-          <input type="email"  ng-model="formProductChange.email"  class="form-control">
+                            <div class=" form-group mt-1">
+                                <input onchange="angular.element(this).scope().uploadFileChange(this.files)"
+                                       type="file" name="files"
+                                       accept=".jpg,.jpeg,.png" multiple>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="form-group mt-1">
+                                <label> email</label>
+                                <p class="alert alert-secondary">{{accountActive.email}}</p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="form-group mt-1">
+                                <label>Lý do đổi máy</label>
+                                <textarea ng-model="formProductChange.note" class="form-control" rows="3"
+                                          required></textarea>
+                            </div>
+                        </div>
+                    </form>
+                    <button ng-click="saveProductChange()" class="col-3 btn btn-secondary">Xác nhận</button>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-
-    <div class="col-md-8">
-      <div class="form-group mt-1">
-        <label>Lý do đổi hàng</label>
-        <textarea ng-model="formProductChange.note" class="form-control" rows="3" required></textarea>
-      </div>
-    </div>
-
-  </form>
-  <button  ng-click="saveProductChange()"  class="btn btn-secondary">Đổi trả hàng</button>
 </div>
-

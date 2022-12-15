@@ -1,4 +1,4 @@
-app.controller("register-ctrl",function ($scope, $http){
+app.controller("register-ctrl",function ($scope, $http,$window){
     $scope.accounts = [];
     $scope.roles = [];
     $scope.form = {};
@@ -84,6 +84,7 @@ app.controller("register-ctrl",function ($scope, $http){
                         icon: 'success',
                         title: 'Đăng ký thành công!',
                     })
+                    $window.location.href = '#!home/index';
                     $scope.reset();
                     // alert("Create success!");
                 }).catch(error => {

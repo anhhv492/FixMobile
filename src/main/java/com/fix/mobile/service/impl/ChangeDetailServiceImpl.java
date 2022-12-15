@@ -1,5 +1,6 @@
 package com.fix.mobile.service.impl;
 
+import com.fix.mobile.entity.ProductChange;
 import com.fix.mobile.service.ChangeDetailService;
 import com.fix.mobile.repository.ChangeDetailRepository;
 import com.fix.mobile.entity.ChangeDetail;
@@ -64,7 +65,12 @@ public class ChangeDetailServiceImpl implements ChangeDetailService {
     }
 
     @Override
-    public void createChangeDetails(String id) {
+    public void createChangeDetails(Integer id) {
         repository.createChangeDetails(id);
+    }
+
+    @Override
+    public ChangeDetail findPrChangeDetails(ProductChange idPrChange) {
+            return repository.findPrChangeDetails(idPrChange);
     }
 }

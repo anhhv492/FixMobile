@@ -9,6 +9,7 @@ import com.fix.mobile.jwt.JwtUtil;
 import com.fix.mobile.service.AccountService;
 import com.fix.mobile.service.RoleService;
 import com.fix.mobile.service.UserService;
+import com.fix.mobile.utils.UserName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -42,25 +43,12 @@ public class AuthRestController {
     @Autowired
     JwtUtil jwtUtil;
 
-
-
-
-    @PostMapping("/singUp")
-    public ResponseEntity<?> singUp(@RequestBody SingUpDTO singUpDTO){
-
-        Date date = new Date();
-        Role role =  roleService.findById(3).get();
-        Account account = new Account(singUpDTO.getUsername(),singUpDTO.getPassword()
-                ,singUpDTO.getFullName(),  singUpDTO.getGender(), singUpDTO.getEmail() , date, role, singUpDTO.getPhone());
-        accountService.save(account);
-        return ResponseEntity.ok().body(singUpDTO);
-    }
-
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginDTO loginDto) throws Exception {
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword()));
+
         }catch (DisabledException e){
             throw new Exception("USER_DISABLED", e);
         }catch (BadCredentialsException e){
@@ -70,7 +58,6 @@ public class AuthRestController {
         final UserDetails userDetails = userService.loadUserByUsername(loginDto.getUsername());
 
         System.out.println(userDetails.getAuthorities());
-
 
 
         final String token = jwtUtil.GenerateToken(userDetails);

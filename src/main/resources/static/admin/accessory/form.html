@@ -22,7 +22,7 @@
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <form role="form" method="post" class="row" name="myForm"
-                                  ng-submit="doSubmit()" enctype="multipart/form-data">
+                                  ng-submit="doSubmit()" modelAttribute="accessories" enctype="multipart/form-data">
                                 <div class="col-md-6">
                                     <div class="form-group mt-1">
                                         <label>Thể loại </label>
@@ -85,13 +85,13 @@
                                         <label>Hình ảnh</label>
                                         <br>
                                         <input onchange="angular.element(this).scope().uploadFile(this.files)"
-                                               ng-required="!form.image" name="image" ng-model="form.image" type="file" class="form-control">
+                                               name="image" ng-model="form.image" type="file" class="form-control">
                                         <br>
                                         <div class="mt-1">
                                             <img style="filter: drop-shadow(0 0 5px rgb(119, 119, 145));" width="105px"
-                                                 src="/images/logo-mobile.png" ng-if="!form.image">
+                                                 src="https://res.cloudinary.com/dcll6yp9s/image/upload/v1669087979/kbasp5qdf76f3j02mebr.png" ng-if="!form.image">
                                             <img style="filter: drop-shadow(0 0 5px rgb(119, 119, 145));" width="105px"
-                                                 src="/images/accessories/{{form.image}}">
+                                                 src="{{form.image}}">
                                         </div>
                                     </div>
                                     <div class="form-group mt-1">
@@ -147,7 +147,7 @@
                             <td>{{accessory.status==0?'Hết hàng':'Còn hàng'}}</td>
                             <td>{{accessory.note}}</td>
                             <td>{{accessory.createDate |date:'dd/MM/yyyy'}}</td>
-                            <td><img class="img-fluid" width="80px" height="80px" src="/images/accessories/{{accessory.image}}"></td>
+                            <td><img class="img-fluid" width="80px" height="80px" src="{{accessory.image}}"></td>
                             <td>
                                 <button class="btn btn-default" ng-click="edit(accessory)" data-bs-target="#tab-manage"
                                         aria-controls="home-tab-pane">

@@ -3,6 +3,7 @@ package com.fix.mobile.rest.controller;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.fix.mobile.dto.ImayProductDTO;
+import com.fix.mobile.dto.ImeiProductResponDTO;
 import com.fix.mobile.entity.*;
 import com.fix.mobile.helper.ExcelProducts;
 import com.fix.mobile.payload.SaveProductRequest;
@@ -152,13 +153,20 @@ public class RestProductsController {
 
  	}
 
-	@DeleteMapping("/delete/{id}")
-	public void delete(@PathVariable("id") Integer id){
-		productService.deleteById(id);
+	@RequestMapping(value = "/delete", method = POST)
+	public void delete(@RequestParam("id") Integer id){
+		Optional<Product> p = productService.findById(id);
+		if(p!=null){
+			p.orElseThrow().setStatus(0);
+			productService.save(p.get());
+
+		}else{
+			System.out.println("không tồn tại");
+		}
 	}
 
 	@RequestMapping(path="/updateProduct", method = POST)
-	public void update(@RequestParam("id") Integer id,
+	public void update(@RequestParam("id") Integer id ,
 					   @ModelAttribute SaveProductRequest saveProductRequest) {
 	        Optional<Product> p = productService.findById(id);
 			if(p!=null){
@@ -235,11 +243,26 @@ public class RestProductsController {
 	}
 
 	@GetMapping(value ="/findByProductCode")
-	public Optional<Product> findByProductCode(Integer productCode) {
+	public Optional<Product> findByProductCode(@RequestParam("id") Integer productCode) {
 		Optional<Product> product = null;
 		if (productCode == null) ;
 			product = productService.findById(productCode);
 		return product;
+	}
+
+	@GetMapping("/pageImei")
+	public Page<ImeiProductResponDTO> pageImei (
+			@RequestParam(name = "page" , defaultValue = "1") int page,
+			@RequestParam(name = "size" , defaultValue = "10") int size,
+			@RequestParam(name = "status", defaultValue = "1") Integer status
+	){
+		Pageable pageable = PageRequest.of(page - 1 , size);
+		return imayService.findAll(pageable, status);
+	}
+
+	@PostMapping("/deleteImeiById")
+	public void deleteImei(@RequestParam("id") Integer id){
+		imayService.deleteById(id);
 	}
 
 }

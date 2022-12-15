@@ -54,10 +54,13 @@ app.controller("sale_ctrl", function ($scope, $http) {
             cancelButtonText: 'Xem lại',
         }).then((result) => {
             if (result.isConfirmed) {
+                debugger
                 let item = angular.copy($scope.saleadd);
                 let urlsale = `/admin/rest/sale/add`;
                 let listDetail = angular.copy($scope.seLected);
-                if ($scope.saleadd.typeSale == 0 || $scope.saleadd.typeSale == 2 || $scope.saleadd.userType == 0 ) {
+                console.log($scope.saleadd.typeSale+'hahhahaah')
+                if ($scope.saleadd.typeSale == 0 || $scope.saleadd.typeSale == 2 || ($scope.saleadd.userType == 0 && $scope.saleadd.typeSale == 3) ) {
+                    console.log($scope.saleadd.typeSale+'hihihihi')
                     $http.post(urlsale, item, token).then(resp => {
                         swal.fire({
                             icon: 'success',
@@ -79,6 +82,7 @@ app.controller("sale_ctrl", function ($scope, $http) {
                 } else {
                     $http.post(urlsale, item, token).then(resp => {
                         let urlsaledetail = `/admin/rest/sale/adddetail/` + $scope.saleadd.typeSale;
+                        console.log(listDetail);
                         $http.post(urlsaledetail, listDetail, token).then(resp => {
                             document.getElementById("clossmodal").click();
                             $scope.clear();

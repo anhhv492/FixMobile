@@ -296,6 +296,7 @@ console.log("Kết thúc check trùng")
             })
             if (a == 1) {
                 var formData = new FormData();
+                angular.forEach()
                 angular.forEach($scope.files, function(image) {
                     formData.append('image', image);
                 });
@@ -307,6 +308,7 @@ console.log("Kết thúc check trùng")
                 formData.append("password", $scope.form.password);
                 formData.append("phone",$scope.form.phone);
                 formData.append("role",$scope.idrole_form);
+
                 let req = {
                     method: 'POST',
                     url: '/rest/admin/accounts/create',
@@ -337,10 +339,10 @@ console.log("Kết thúc check trùng")
                 });
                 $http(req).then(response => {
                     console.log("ddd " + response);
-                    $scope.message("thêm mới thành công");
+                    $scope.message("Thêm mới thành công");
                     $scope.reset();
                 }).catch(error => {
-                    $scope.error('thêm mới thất bại');
+                    $scope.error('Thêm mới thất bại');
                 });
             }
             console.log("Kết thúc thêm")
@@ -404,7 +406,7 @@ console.log("Kết thúc check trùng")
         Swal.fire({
             title: 'Đang cập nhật vui lòng chờ!',
             html: 'Vui lòng chờ <b></b> milliseconds.',
-            timer: 2000,
+            timer: 1000,
             timerProgressBar: true,
             didOpen: () => {
                 Swal.showLoading()
@@ -419,10 +421,10 @@ console.log("Kết thúc check trùng")
         });
         $http(req).then(response => {
             console.log("ddd " + response);
-            $scope.message("cập nhật thành công");
+            $scope.message("Cập nhật thành công");
             $scope.reset();
         }).catch(error => {
-            $scope.error('cập nhật thất bại');
+            $scope.error('Cập nhật thất bại');
         });
     }
 
@@ -464,7 +466,7 @@ console.log("Kết thúc check trùng")
     //upload hình
     $scope.upLoadFile = function (files) {
         $scope.files = files;
-        console.log($scope.files);
+        console.log("SCope.file : " + $scope.files);
         // $http.post(urlImage, form,token, {
         //     transformRequest: angular.identity,
         //     headers: { 'Content-Type': undefined }

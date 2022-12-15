@@ -1,5 +1,6 @@
 package com.fix.mobile.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -32,6 +33,8 @@ public class ImayProduct {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_detail")
 	private OrderDetail orderDetail;
+
+
 	public ImayProduct( String name, int status, Product product) {
 		this.name = name;
 		this.status = status;

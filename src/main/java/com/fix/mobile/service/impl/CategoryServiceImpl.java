@@ -39,6 +39,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void deleteById(Integer id) {
         Category category = repository.findById(id).orElse(null);
+        assert category != null;
         category.setStatus(0);
         repository.save(category);
     }
@@ -62,11 +63,12 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category update(Category entity, Integer id) {
-        Optional<Category> optional = findById(id);
-        if (optional.isPresent()) {
-            return save(entity);
-        }
-        return null;
+        Category category = repository.findById(id).orElse(null);
+        assert category != null;
+        category.setName(entity.getName());
+        category.setType(entity.getType());
+        category.setStatus(entity.getStatus());
+        return repository.save(category);
     }
 
     public List<Category> findByType() {
@@ -120,9 +122,15 @@ public class CategoryServiceImpl implements CategoryService {
     public void deleteByListId(List<Integer> idList) {
         for (int i = 0; i < idList.size(); i++) {
             Category category = repository.findById(idList.get(i)).orElse(null);
+            assert category != null;
             category.setStatus(0);
             repository.save(category);
         }
+    }
+
+    @Override
+    public List<Category> findAllBybStatus() {
+        return repository.findAllByStatus(1);
     }
 
 }
