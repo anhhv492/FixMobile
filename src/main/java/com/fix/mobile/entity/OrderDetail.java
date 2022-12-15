@@ -58,4 +58,8 @@ public class OrderDetail {
     @JsonIgnore
     @OneToMany(mappedBy = "orderDetail")
     private List<ImayProduct> imeis;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "orderDetail")
+    private List<ProductChange> productChange;
 }

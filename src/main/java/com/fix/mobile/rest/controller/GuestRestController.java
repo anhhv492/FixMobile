@@ -56,7 +56,7 @@ public class GuestRestController {
     Account account = null;
     @GetMapping("/category/getAll")
     public List<Category> getAll(){
-        return categoryService.findAll();
+        return categoryService.findAllBybStatus();
     }
     //find category by accessory
     @GetMapping("/cate")
@@ -120,18 +120,19 @@ public class GuestRestController {
         return accessories;
     }
     @GetMapping("/product/cate-product/{id}")
-    public List<ProductResponDTO> findByCateProductId(@PathVariable("id") Integer id){
+    public List<ProductResponDTO> findByCateProductId(@PathVariable("id") Integer id) throws Exception {
         Optional<Category> cate = categoryService.findById(id);
         if(cate.isEmpty()){
             return null;
         }
-        List<ProductResponDTO> productResponDTOList = productService.findByCategoryAndStatus(cate.get());
-        for (int i = 0; i < productResponDTOList.size(); i++) {
-            List<ImayProduct> imayProducts = imayProductService.findByProductAndStatus(productResponDTOList.get(i),1);
-            if(imayProducts.size() == 0){
-                productResponDTOList.remove(i);
-            }
-        }
+        List<ProductResponDTO> productResponDTOList = productService.findByCategoryAndStatus(cate.get().getIdCategory());
+        if(productResponDTOList == null) throw new Exception("Product not found");
+//        for (int i = 0; i < productResponDTOList.size(); i++) {
+//            List<ImayProduct> imayProducts = imayProductService.findByProductAndStatus(productResponDTOList.get(i),1);
+//            if(imayProducts.size() == 0){
+//                productResponDTOList.remove(i);
+//            }
+//        }
         return productResponDTOList;
     }
     @PostMapping("/order/add")
@@ -165,7 +166,7 @@ public class GuestRestController {
                     if(accessory.isPresent()){
                         orderDetail.setAccessory(accessory.get());
                         orderDetail.setOrder(order);
-                        orderDetail.setStatus(order.getStatus());
+                        orderDetail.setStatus(1);
                         orderDetail.setQuantity(carts.get(i).get("qty").asInt());
                         price = new BigDecimal(carts.get(i).get("price").asDouble());
                         orderDetail.setPrice(price);
@@ -182,7 +183,7 @@ public class GuestRestController {
                     if(product.isPresent()){
                         orderDetail.setProduct(product.get());
                         orderDetail.setOrder(order);
-                        orderDetail.setStatus(order.getStatus());
+                        orderDetail.setStatus(1);
                         orderDetail.setQuantity(carts.get(i).get("qty").asInt());
                         price = new BigDecimal(carts.get(i).get("price").asDouble());
                         orderDetail.setPrice(price);

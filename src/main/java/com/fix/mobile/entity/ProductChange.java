@@ -44,10 +44,16 @@ public class ProductChange {
     @JoinColumn(name = "username")
     private Account account;
 
+    @ManyToOne
+    @JoinColumn(name = "id_order_detail")
+    private OrderDetail orderDetail;
+
+
     //
     @JsonIgnore
     @OneToMany(mappedBy = "productChange")
     private List<ChangeDetail> changeDetails;
+
 
     @OneToMany(mappedBy = "productChange")
     @LazyCollection(LazyCollectionOption.FALSE)

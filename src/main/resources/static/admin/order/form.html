@@ -4,7 +4,12 @@
             Lọc:</p>
     </li>
     <li class="nav-item" role="presentation">
-        <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane"
+        <button class="nav-link active" id="acc-tab" data-bs-toggle="tab" data-bs-target="#acc-tab-pane"
+                type="button" role="tab">
+            Tài khoản</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane"
                 type="button" role="tab">
             Tổng tiền</button>
     </li>
@@ -20,62 +25,50 @@
     </li>
 </ul>
 <div class="tab-content" id="myTabContent">
-    <div class="tab-pane fade show active container" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+    <div class="tab-pane fade show active container" id="acc-tab-pane" role="tabpanel" aria-labelledby="acc-tab" tabindex="0">
         <div class="row">
-            <div class="col-3">
-                Từ giá
-                <select class="form-select" ng-model="">
-                    <option ng-value="0">Tất cả</option>
-                    <option ng-value="1">Từ thấp đến cao</option>
-                    <option ng-value="2">Từ cao đến thấp</option>
+            <div class="col-12 col-sm-3">
+                Tài khoản
+                <select class="form-select" ng-model="userSearch" ng-change="selectByUser()">
+                    <option ng-repeat="acc in accs" ng-value="acc.username">
+                        {{acc.username}}
+                    </option>
                 </select>
             </div>
-            <div class="col-3">
-                Đến giá
-                <select class="form-select" ng-model="">
-                    <option ng-value="0">Tất cả</option>
-                    <option ng-value="1">Từ thấp đến cao</option>
-                    <option ng-value="2">Từ cao đến thấp</option>
-                </select>
-            </div>
-            <div class="col-3 offset-2">
-                <span>Theo giá</span>
-                <select class="form-select" ng-model="">
-                    <option ng-value="0">Tất cả</option>
-                    <option ng-value="1">Từ thấp đến cao</option>
-                    <option ng-value="2">Từ cao đến thấp</option>
-                </select>
-            </div>
-        </div>
-        <div class="row mt-2">
-            <div class="col-2">
-                <button class="btn btn-primary">Lọc</button>
+            <div class="col-12 col-sm-3">
+                Họ tên
+                <input type="text" ng-model="nameSearch" class="form-control" ng-change="findByName()">
             </div>
         </div>
     </div>
-    <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+    <div class="tab-pane fade show container" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
         <div class="row">
-            <div class="col-3">
-                Từ ngày
-                <input type="date" class="form-control" >
+            <div class="col-12 col-sm-3">
+                Từ giá
+                <input type="number" ng-model="price1" class="form-control" >
             </div>
-            <div class="col-3">
-                Đến ngày
-                <input type="date" class="form-control" >
+            <div class="col-12 col-sm-3">
+                Đến giá
+                <input type="number" ng-model="price2" class="form-control" >
             </div>
-            <div class="col-3 offset-2">
-                <span>Theo ngày</span>
-                <select class="form-select" ng-model="">
-                    <option ng-value="0">Tất cả</option>
-                    <option ng-value="1">Từ thấp đến cao</option>
-                    <option ng-value="2">Từ cao đến thấp</option>
-                </select>
+            <div class="col-12 col-sm-3 mt-4">
+                <button class="btn btn-primary" ng-click="findByPrice()">Lọc</button>
             </div>
         </div>
-        <div class="row mt-2">
-            <div class="col-2">
-                <button class="btn btn-primary">Lọc</button>
-            </div>
+    </div>
+    <div class="tab-pane fade " id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+            <div class="row">
+                <div class="col-12 col-sm-3">
+                    Từ ngày
+                    <input type="date" ng-model="date1" class="form-control" >
+                </div>
+                <div class="col-12 col-sm-3">
+                    Đến ngày
+                    <input type="date" ng-model="date2" class="form-control" >
+                </div>
+                <div class="col-12 col-sm-2 mt-4">
+                    <button class="btn btn-primary" ng-click="findByDate()">Lọc</button>
+                </div>
         </div>
     </div>
     <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
@@ -110,7 +103,7 @@
         </div>
     </div>
 </div>
-<div class="table-responsive">
+<div class="table-responsive mt-2" ng-if="orders.length>0">
     <table class="table table-bordered table-hover container">
         <thead>
         <tr>
@@ -140,11 +133,11 @@
             </th>
             <th>Tiền ship</th>
             <th>
-                <button class="btn btn-default" ng-click="tongGia()" ng-if="!checkTongGia">
+                <button class="btn btn-default" ng-click="tongGiaTang()" ng-if="!checkTongGia">
                     <strong>Tổng giá (VNĐ)</strong>
                     <i class="fa fa-caret-down" aria-hidden="true"></i>
                 </button>
-                <button class="btn btn-default" ng-click="tongGia()" ng-if="checkTongGia">
+                <button class="btn btn-default" ng-click="tongGiaGiam()" ng-if="checkTongGia">
                     <strong>Tổng giá (VNĐ)</strong>
                     <i class="fa fa-caret-up" aria-hidden="true"></i>
                 </button>
@@ -210,3 +203,4 @@
         </tbody>
     </table>
 </div>
+<div class="alert alert-warning container" ng-if="orders.length<=0">Không có dữ liệu</div>
