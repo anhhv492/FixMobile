@@ -62,7 +62,7 @@ CREATE TABLE address (
 	ward VARCHAR(1000) NULL,
 	foreign key(username) references accounts(username)
 ) ;
-select * from orders where create_date between 2022/12/14 and 2022/12/21;
+
 CREATE TABLE products (
 	id_product int NOT NULL auto_increment primary key,
 	name nvarchar(255)  NULL,
