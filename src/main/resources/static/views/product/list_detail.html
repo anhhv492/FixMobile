@@ -3,237 +3,1164 @@
         Sản phẩm này đã hết hàng!
     </div>
 
-    <div class="row bg-white">
-        <div class="wrapper mb-5">
-            <div class="container">
-                <div class="row g-1">
-                    <div class="col-md-3" ng-repeat="product in detailProducts">
 
-                        <div class="card p-3 mb-3">
-                            <div class="text-center" style="width: 200px; height: 200px">
-                               <img class="img-fluid" src="{{product.image}}">
+    <main class="wrapperMain_content">
+        <link rel="preload" as="script"
+              href="//bizweb.sapocdn.net/100/460/476/themes/869615/assets/search_filter.js?1669866878969"/>
+        <script src="//bizweb.sapocdn.net/100/460/476/themes/869615/assets/search_filter.js?1669866878969"
+                type="text/javascript"></script>
+        <div class="section wrap_background">
+            <nav class="bread-crumb">
+                <div class="container">
+                    <ul class="breadcrumb">
+                        <li><strong><span> Tất cả sản phẩm</span></strong></li>
+                    </ul>
+                </div>
+            </nav>
+            <div class="container ">
+                <div class="bg_collection section">
+                    <div class="row">
+                        <aside class="dqdt-sidebar sidebar left-content col-lg-3 col-md-4 col-sm-4">
+                            <div class="row">
+                                <div class="col-12 col-lg-12">
+                                    <div class="filter-content aside-filter">
+                                        <div class="module-filter">
+                                            <h2 class="title-filter-top margin-top-0">
+                                                Lọc sản phẩm
+                                            </h2>
+                                        </div>
+                                        <div class="filter-container">
+                                            <div class="filter-container__selected-filter d-none" style="display: none;">
+                                                <div class="filter-container__selected-filter-header clearfix">
+                                                <span class="filter-container__selected-filter-header-title"><i
+                                                        class="fa fa-arrow-left hidden-sm-up"></i> Bạn chọn</span>
+                                                    <a href="javascript:void(0)" onclick="clearAllFiltered()"
+                                                       class="filter-container__clear-all">Bỏ hết <i
+                                                            class="fa fa-angle-right"></i></a>
+                                                </div>
+                                                <div class="filter-container__selected-filter-list">
+                                                    <ul></ul>
+                                                </div>
+                                            </div>
+                                            <!-- Lọc Thương hiệu -->
+                                            <!-- End Lọc Thương hiệu -->
+                                            <!-- Lọc giá -->
+                                            <aside class="aside-item filter-price f-left">
+                                                <div class="block-title">
+                                                    <h2 class="title-module ">Theo mức giá</h2>
+                                                </div>
+                                                <div class="aside-content margin-top-0 filter-group content_price">
+                                                    <ul>
+
+                                                        <li class="filter-item filter-item--check-box filter-item--green">
+						<span>
+							<label data-filter="100-000d" for="filter-duoi-100-000d">
+								<input type="checkbox" id="filter-duoi-100-000d" data-group="Khoảng giá"
+                                       data-field="price_min" data-text="Dưới 100.000đ" value="(<100000)"
+                                       data-operator="OR">
+								<i class="fa"></i>
+								Dưới 100.000đ
+							</label>
+						</span>
+                                                        </li>
+
+                                                        <li class="filter-item filter-item--check-box filter-item--green">
+						<span>
+							<label data-filter="200-000d" for="filter-100-000d-200-000d">
+								<input type="checkbox" id="filter-100-000d-200-000d" data-group="Khoảng giá"
+                                       data-field="price_min" data-text="100.000đ - 200.000đ"
+                                       value="(>=100000 AND <=200000)" data-operator="OR">
+								<i class="fa"></i>
+								Từ 100.000đ đến 200.000đ
+							</label>
+						</span>
+                                                        </li>
+
+                                                        <li class="filter-item filter-item--check-box filter-item--green">
+						<span>
+							<label data-filter="400-000d" for="filter-200-000d-400-000d">
+								<input type="checkbox" id="filter-200-000d-400-000d" data-group="Khoảng giá"
+                                       data-field="price_min" data-text="200.000đ - 400.000đ"
+                                       value="(>=200000 AND <=400000)" data-operator="OR">
+								<i class="fa"></i>
+								Từ 200.000đ đến 400.000đ
+							</label>
+						</span>
+                                                        </li>
+
+                                                        <li class="filter-item filter-item--check-box filter-item--green">
+						<span>
+							<label data-filter="600-000d" for="filter-400-000d-600-000d">
+								<input type="checkbox" id="filter-400-000d-600-000d" data-group="Khoảng giá"
+                                       data-field="price_min" data-text="400.000đ - 600.000đ"
+                                       value="(>=400000 AND <=600000)" data-operator="OR">
+								<i class="fa"></i>
+								Từ 400.000đ đến 600.000đ
+							</label>
+						</span>
+                                                        </li>
+
+                                                        <li class="filter-item filter-item--check-box filter-item--green">
+						<span>
+							<label data-filter="800-000d" for="filter-600-000d-800-000d">
+								<input type="checkbox" id="filter-600-000d-800-000d" data-group="Khoảng giá"
+                                       data-field="price_min" data-text="600.000đ - 800.000đ"
+                                       value="(>=600000 AND <=800000)" data-operator="OR">
+								<i class="fa"></i>
+								Từ 600.000đ đến 800.000đ
+							</label>
+						</span>
+                                                        </li>
+
+                                                        <li class="filter-item filter-item--check-box filter-item--green">
+						<span>
+							<label data-filter="1-000-000d" for="filter-800-000d-1-000-000d">
+								<input type="checkbox" id="filter-800-000d-1-000-000d" data-group="Khoảng giá"
+                                       data-field="price_min" data-text="800.000đ - 1.000.000đ"
+                                       value="(>=800000 AND <=1000000)" data-operator="OR">
+								<i class="fa"></i>
+								Từ 800.000đ đến 1 triệu
+							</label>
+						</span>
+                                                        </li>
+
+                                                        <li class="filter-item filter-item--check-box filter-item--green">
+						<span>
+							<label data-filter="2-000-000d" for="filter-1-000-000d-2-000-000d">
+								<input type="checkbox" id="filter-1-000-000d-2-000-000d" data-group="Khoảng giá"
+                                       data-field="price_min" data-text="1.000.000đ - 2.000.000đ"
+                                       value="(>=1000000 AND <=2000000)" data-operator="OR">
+								<i class="fa"></i>
+								Từ 1 đến 2 triệu
+							</label>
+						</span>
+                                                        </li>
+                                                        <li class="filter-item filter-item--check-box filter-item--green">
+						<span>
+							<label data-filter="2-000-000d" for="filter-tren2-000-000d">
+								<input type="checkbox" id="filter-tren2-000-000d" data-group="Khoảng giá"
+                                       data-field="price_min" data-text="Trên 2.000.000đ" value="(>2000000)"
+                                       data-operator="OR">
+								<i class="fa"></i>
+								Trên 2 triệu
+							</label>
+						</span>
+                                                        </li>
+
+
+                                                    </ul>
+                                                </div>
+                                            </aside>
+                                            <!-- End Lọc giá -->
+                                            <!-- Lọc Loại -->
+                                            <aside class="aside-item aside-itemxx filter-type">
+                                                <div class="block-title">
+                                                    <h2 class="title-module ">Tìm theo loại</h2>
+                                                </div>
+                                                <div class="aside-content filter-group">
+                                                    <ul>
+                                                        <li class="filter-item filter-item--check-box filter-item--green"
+                                                            ng-repeat="catePro in cateProducts">
+                                                        <span>
+                                                            <label for="filter-ceramic">
+                                                                <input type="checkbox" id="filter-ceramic" ng-click="getDetail(catePro)" data-group="PRODUCT_TYPE"
+                                                                       data-field="product_type.filter_key" data-text="" value="(&#34;Ceramic&#34;)"
+                                                                       data-operator="OR">
+                                                                <i class="fa"></i>
+                                                                <a class="" href="#!shop"  ng-click="getDetail(catePro)">{{catePro.name}}</a>
+                                                            </label>
+                                                        </span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </aside>
+                                            <!-- End Lọc Loại -->
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-12">
+                                    <aside class="aside-item blog-sidebar sidebar-category collection-category margin-bottom-25 clear-fix">
+                                        <div class="block-title">
+                                            <h2 class="title-module">Danh mục</h2>
+                                        </div>
+                                        <div class="aside-content">
+                                            <nav class="nav-category navbar-toggleable-md">
+                                                <ul class="nav navbar-pills">
+                                                    <li class="nav-item"><a class="nav-link" href="/">Trang chủ
+                                                    </a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a href="/collections/all" class="nav-link">
+                                                            Sản phẩm
+                                                        </a>
+                                                        <svg class="fa-plus svg-inline--fa fa-caret-down fa-w-10"
+                                                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                                                            <path d="M192 384c-8.188 0-16.38-3.125-22.62-9.375l-160-160c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L192 306.8l137.4-137.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-160 160C208.4 380.9 200.2 384 192 384z"/>
+                                                        </svg>
+                                                        <ul class="dropdown-menu">
+                                                            <li class="dropdown-submenu nav-item">
+                                                                <a class="nav-link" href="/bon-cau-lap-bon-cau">Bồn cầu, lắp
+                                                                    bồn cầu
+                                                                </a>
+                                                                <svg class="fa-plus svg-inline--fa fa-caret-down fa-w-10"
+                                                                     xmlns="http://www.w3.org/2000/svg"
+                                                                     viewBox="0 0 384 512">
+                                                                    <path d="M192 384c-8.188 0-16.38-3.125-22.62-9.375l-160-160c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L192 306.8l137.4-137.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-160 160C208.4 380.9 200.2 384 192 384z"/>
+                                                                </svg>
+                                                                <ul class="dropdown-menu">
+                                                                    <li class="nav-item lv3">
+                                                                        <a class="nav-link" href="/bon-cau">Bồn cầu
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="nav-item lv3">
+                                                                        <a class="nav-link" href="/nap-bon-cau">Nắp bồn cầu
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </li>
+                                                            <li class="nav-item">
+                                                                <a class="nav-link" href="/chau-rua-mat-voi-chau">Chậu rửa
+                                                                    mặt, vòi chậu
+                                                                </a>
+                                                            </li>
+                                                            <li class="dropdown-submenu nav-item">
+                                                                <a class="nav-link" href="/sen-tam-bon-tam">Sen tắm, bồn tắm
+                                                                </a>
+                                                                <svg class="fa-plus svg-inline--fa fa-caret-down fa-w-10"
+                                                                     xmlns="http://www.w3.org/2000/svg"
+                                                                     viewBox="0 0 384 512">
+                                                                    <path d="M192 384c-8.188 0-16.38-3.125-22.62-9.375l-160-160c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L192 306.8l137.4-137.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-160 160C208.4 380.9 200.2 384 192 384z"/>
+                                                                </svg>
+                                                                <ul class="dropdown-menu">
+                                                                    <li class="nav-item lv3">
+                                                                        <a class="nav-link" href="/sen-tam">Sen tắm
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="nav-item lv3">
+                                                                        <a class="nav-link" href="/bon-tam">Bồn tắm
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </li>
+                                                            <li class="nav-item">
+                                                                <a class="nav-link" href="/bon-tieu-khu-cong-cong">Bồn tiểu,
+                                                                    khu công cộng
+                                                                </a>
+                                                            </li>
+                                                            <li class="nav-item">
+                                                                <a class="nav-link" href="/phu-kien-nha-tam">Phụ kiện nhà
+                                                                    tắm
+                                                                </a>
+                                                            </li>
+                                                            <li class="nav-item">
+                                                                <a class="nav-link" href="/thiet-bi-nha-bep">Thiết bị nhà
+                                                                    bếp
+                                                                </a>
+                                                            </li>
+                                                            <li class="nav-item">
+                                                                <a class="nav-link" href="/thiet-bi-dien">Thiết bị điện
+                                                                </a>
+                                                            </li>
+                                                            <li class="nav-item">
+                                                                <a class="nav-link" href="/den-led-trang-tri">Đèn led trang
+                                                                    trí
+                                                                </a>
+                                                            </li>
+                                                            <li class="nav-item">
+                                                                <a class="nav-link" href="/thiet-bi-loc-nuoc">Thiết bị lọc
+                                                                    nước
+                                                                </a>
+                                                            </li>
+                                                            <li class="nav-item">
+                                                                <a class="nav-link" href="/cham-soc-nha-cua">Chăm sóc nhà
+                                                                    cửa
+                                                                </a>
+                                                            </li>
+                                                            <li class="nav-item">
+                                                                <a class="nav-link" href="/hang-outlet">Hàng outlet
+                                                                </a>
+                                                            </li>
+                                                            <li class="dropdown-submenu nav-item">
+                                                                <a class="nav-link" href="/son-noi-ngoai-that">Sơn nội ngoại
+                                                                    thất
+                                                                </a>
+                                                                <svg class="fa-plus svg-inline--fa fa-caret-down fa-w-10"
+                                                                     xmlns="http://www.w3.org/2000/svg"
+                                                                     viewBox="0 0 384 512">
+                                                                    <path d="M192 384c-8.188 0-16.38-3.125-22.62-9.375l-160-160c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L192 306.8l137.4-137.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-160 160C208.4 380.9 200.2 384 192 384z"/>
+                                                                </svg>
+                                                                <ul class="dropdown-menu">
+                                                                    <li class="nav-item lv3">
+                                                                        <a class="nav-link" href="/son-noi-that">Sơn nội
+                                                                            thất
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="nav-item lv3">
+                                                                        <a class="nav-link" href="/son-ngoai-that">Sơn ngoại
+                                                                            thất
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="nav-item lv3">
+                                                                        <a class="nav-link" href="/son-chong-tham">Sơn chống
+                                                                            thấm
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="nav-item lv3">
+                                                                        <a class="nav-link" href="/son-lot">Sơn lót
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="nav-item lv3">
+                                                                        <a class="nav-link" href="/son-bong">Sơn bóng
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </li>
+                                                            <li class="dropdown-submenu nav-item">
+                                                                <a class="nav-link" href="/gach-op-cac-loai">Gạch ốp các
+                                                                    loại
+                                                                </a>
+                                                                <svg class="fa-plus svg-inline--fa fa-caret-down fa-w-10"
+                                                                     xmlns="http://www.w3.org/2000/svg"
+                                                                     viewBox="0 0 384 512">
+                                                                    <path d="M192 384c-8.188 0-16.38-3.125-22.62-9.375l-160-160c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L192 306.8l137.4-137.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-160 160C208.4 380.9 200.2 384 192 384z"/>
+                                                                </svg>
+                                                                <ul class="dropdown-menu">
+                                                                    <li class="nav-item lv3">
+                                                                        <a class="nav-link" href="/gach-op-tuong">Gạch ốp
+                                                                            tường
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="nav-item lv3">
+                                                                        <a class="nav-link" href="/gach-chan-tuong">Gạch
+                                                                            chân tường
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="nav-item lv3">
+                                                                        <a class="nav-link" href="/gach-trang-tri">Gạch
+                                                                            trang trí
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="nav-item"><a class="nav-link" href="/yeu-thich">Yêu thích
+                                                    </a>
+                                                    </li>
+                                                    <li class="nav-item"><a class="nav-link" href="/san-pham-da-xem">Sản
+                                                        phẩm đã xem
+                                                    </a>
+                                                    </li>
+                                                    <li class="nav-item"><a class="nav-link" href="/landing-sale">Landing
+                                                        Sale
+                                                    </a>
+                                                    </li>
+                                                    <li class="nav-item"><a class="nav-link" href="/he-thong-cua-hang">Hệ
+                                                        thống cửa hàng
+                                                    </a>
+                                                    </li>
+                                                    <li class="nav-item"><a class="nav-link" href="/lien-he">Liên hệ
+                                                    </a>
+                                                    </li>
+                                                    <li class="nav-item"><a class="nav-link" href="/tin-tuc">Tin tức
+                                                    </a>
+                                                    </li>
+                                                    <li class="nav-item"><a class="nav-link" href="/du-an-thi-cong">Dự án
+                                                        thi công
+                                                    </a>
+                                                    </li>
+                                                    <li class="nav-item"><a class="nav-link" href="/tin-khuyen-mai">Tin
+                                                        khuyến mại
+                                                    </a>
+                                                    </li>
+                                                    <li class="nav-item"><a class="nav-link" href="/gioi-thieu">Giới thiệu
+                                                    </a>
+                                                    </li>
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                    </aside>
+                                </div>
+                            </div>
+                        </aside>
+                        <div class="main_container collection col-lg-9 col-md-12 col-sm-12">
+                            <div class="wrap-srt-title">
+                                <h1 class="title-module">Tất cả sản phẩm</h1>
+                                <div class="sortPagiBar">
+                                    <div class="sort-cate clearfix">
+                                        <div class="sort-cate-left">
+                                            <span>Sắp xếp: <em>Mặc định</em></span>
+                                            <ul>
+                                                <li class="btn-quick-sort alpha-asc">
+                                                    <a href="javascript:;" onclick="sortby('alpha-asc')"
+                                                       title="Tên A-Z"><i></i>Tên A-Z</a>
+                                                </li>
+                                                <li class="btn-quick-sort alpha-desc">
+                                                    <a href="javascript:;" onclick="sortby('alpha-desc')"
+                                                       title="Tên Z-A"><i></i>Tên Z-A</a>
+                                                </li>
+                                                <li class="btn-quick-sort price-asc">
+                                                    <a href="javascript:;" onclick="sortby('price-asc')"
+                                                       title="Giá thấp đến cao"><i></i>Giá tăng dần</a>
+                                                </li>
+                                                <li class="btn-quick-sort price-desc">
+                                                    <a href="javascript:;" onclick="sortby('price-desc')"
+                                                       title="Giá cao xuống thấp"><i></i>Giá giảm dần</a>
+                                                </li>
+                                                <li class="btn-quick-sort created-desc">
+                                                    <a href="javascript:;" onclick="sortby('created-desc')"
+                                                       title="Mới nhất"><i></i>Mới nhất</a>
+                                                </li>
+                                                <li class="btn-quick-sort created-asc">
+                                                    <a href="javascript:;" onclick="sortby('created-asc')"
+                                                       title="Cũ nhất"><i></i>Cũ nhất</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                    </div>
+                                </div>
                             </div>
 
-                            <div class="product-details">
-                                <p ng-if="priceSale[$index]==-1">{{product.price | number}} VNĐ</p>
-                                <p ng-if="pric0eSale[$index]!=-1 && priceSale[$index]!=0">
-                                    <del>{{product.price | number}} VNĐ</del> &nbsp; {{priceSale[$index] | number}} VNĐ
-                                </p>
-                                <p ng-if="priceSale[$index]!=-1 && priceSale[$index]==0">
-                                    <del>{{product.price | number}} VNĐ</del> &nbsp; Free
-                                </p>
-                                <span>{{product.name}}</span>
-                                <div class="buttons d-flex flex-row">
-                                    <a class="cart" href="#!product"
-                                       ng-click="getOneProductHome(product)">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                             height="16"
-                                             fill="currentColor" class="bi bi-ticket-detailed"
-                                             viewBox="0 0 16 16">
-                                            <path d="M4 5.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5Zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5ZM5 7a1 1 0 0 0 0 2h6a1 1 0 1 0 0-2H5Z"/>
-                                            <path d="M0 4.5A1.5 1.5 0 0 1 1.5 3h13A1.5 1.5 0 0 1 16 4.5V6a.5.5 0 0 1-.5.5 1.5 1.5 0 0 0 0 3 .5.5 0 0 1 .5.5v1.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 11.5V10a.5.5 0 0 1 .5-.5 1.5 1.5 0 1 0 0-3A.5.5 0 0 1 0 6V4.5ZM1.5 4a.5.5 0 0 0-.5.5v1.05a2.5 2.5 0 0 1 0 4.9v1.05a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-1.05a2.5 2.5 0 0 1 0-4.9V4.5a.5.5 0 0 0-.5-.5h-13Z"/>
-                                        </svg>
-                                    </a>
-                                    <button class="btn btn-success cart-button btn-block"
-                                            ng-click="addProductCart(product)">Add to cart
-                                    </button>
-                                </div>
+                            <div class="category-products products">
+                                <section class="products-view products-view-grid collection_reponsive">
+                                    <div class="row">
+                                        <div class="col-6 col-md-3 col-lg-3 product-col"
+                                             ng-repeat="p in detailProducts">
+                                            <div class="item_product_main">
+                                                <form action="/cart/add" method="post"
+                                                      class="variants product-action wishItem" data-cart-form
+                                                      data-id="product-actions-27234048" enctype="multipart/form-data">
+                                                    <a class="image_thumb" href="/san-pham-khong-co-anh"
+                                                       title="san pham khong co anh">
+                                                        <span class="label-sale">95%</span>
+                                                        <img width="199" height="199"
+                                                             src="{{p.image}}"
+                                                             alt="san pham khong co anh"
+                                                             class="lazyload img-responsive center-block"/>
+                                                    </a>
+                                                    <div class="info-product">
+                                                        <h3 class="product-name"><a href=""
+                                                                                    title="san pham khong co anh">{{p.name}}</a></h3>
+                                                        <div class="weight">
+                                                            <small style="color: lightslategray">Còn
+                                                                {{p.totail | number}} sản phẩm</small>
+                                                        </div>
+                                                        <div class="price-box">
+                                                            <span class="price">{{p.price}}</span>
+                                                            <span ng-if="priceSale[$index]==-1">{{p.price | number}} VNĐ</span>
+                                                            <span ng-if="pric0eSale[$index]!=-1 && priceSale[$index]!=0">
+															<del>{{p.price | number}} VNĐ</del> &nbsp; {{priceSale[$index] | number}} VNĐ
+														</span>
+                                                            <span ng-if="priceSale[$index]!=-1 && priceSale[$index]==0">
+															<del>{{p.price | number}} VNĐ</del> &nbsp; Free </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="action-cart">
+                                                        <button type="button" ng-click="addCart(p)"
+                                                                class="btn btn-lg btn-gray btn_buy"
+                                                                title="Mua ngay">
+                                                            <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                                                   xlink:href="#plusiconregular"></use></svg>
+                                                        </button>
+                                                    </div>
+                                                </form>
 
-                                <div class="weight">
-                                    <small style="color: lightslategray">Còn
-                                        {{product.totail | number}} sản phẩm</small>
-                                </div>
+                                            </div>
+                                        </div>
 
+                                    </div>
+                                    <div class="section pagenav ">
+
+                                        <nav class="clearfix relative nav_pagi w_100">
+                                            <ul class="pagination clearfix">
+
+                                                <li class="page-item disabled"><a class="page-link" href="#">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512">
+                                                        <path d="M192 448c-8.188 0-16.38-3.125-22.62-9.375l-160-160c-12.5-12.5-12.5-32.75 0-45.25l160-160c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25L77.25 256l137.4 137.4c12.5 12.5 12.5 32.75 0 45.25C208.4 444.9 200.2 448 192 448z"/>
+                                                    </svg>
+                                                </a></li>
+
+                                                <li class="active page-item disabled"><a class="page-link"
+                                                                                         href="javascript:;">1</a></li>
+                                                <li class="page-item"><a class="page-link" onclick="doSearch(2)"
+                                                                         href="javascript:;">2</a></li>
+
+                                                <li class="page-item hidden-xs"><a class="page-link" onclick="doSearch(2)"
+                                                                                   href="javascript:;">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512">
+                                                        <path d="M64 448c-8.188 0-16.38-3.125-22.62-9.375c-12.5-12.5-12.5-32.75 0-45.25L178.8 256L41.38 118.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0l160 160c12.5 12.5 12.5 32.75 0 45.25l-160 160C80.38 444.9 72.19 448 64 448z"/>
+                                                    </svg>
+                                                </a></li>
+                                            </ul>
+                                        </nav>
+
+                                    </div>
+                                </section>
                             </div>
+                            <div id="open-filters" class="open-filters d-lg-none d-xl-none">
+                                <svg class="i-bar-white" xmlns="http://www.w3.org/2000/svg"
+                                     xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="20" height="20" x="0"
+                                     y="0" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512"
+                                     xml:space="preserve"><g>
+							<g xmlns="http://www.w3.org/2000/svg">
+								<g>
+									<g>
+										<path d="M85.333,170.667c39.765,0,73.173-27.193,82.645-64h322.688c11.782,0,21.333-9.551,21.333-21.333     C512,73.551,502.449,64,490.667,64H167.979c-9.472-36.807-42.88-64-82.645-64C38.202,0,0,38.202,0,85.333     S38.202,170.667,85.333,170.667z M85.333,42.667c23.567,0,42.667,19.099,42.667,42.667S108.901,128,85.333,128     s-42.667-19.099-42.667-42.667S61.766,42.667,85.333,42.667z"
+                                              fill="#ffffff" data-original="#000000" style="" class=""/>
+                                        <path d="M426.667,341.333c-39.765,0-73.173,27.193-82.645,64H21.333C9.551,405.333,0,414.885,0,426.667S9.551,448,21.333,448     h322.688c9.472,36.807,42.88,64,82.645,64C473.798,512,512,473.798,512,426.667S473.798,341.333,426.667,341.333z      M426.667,469.333c-23.567,0-42.667-19.099-42.667-42.667S403.099,384,426.667,384s42.667,19.099,42.667,42.667     S450.234,469.333,426.667,469.333z"
+                                              fill="#ffffff" data-original="#000000" style="" class=""/>
+                                        <path d="M490.667,234.667H338.645c-9.472-36.807-42.88-64-82.645-64s-73.173,27.193-82.645,64H21.333     C9.551,234.667,0,244.218,0,256s9.551,21.333,21.333,21.333h152.021c9.472,36.807,42.88,64,82.645,64s73.173-27.193,82.645-64     h152.021c11.782,0,21.333-9.551,21.333-21.333S502.449,234.667,490.667,234.667z M256,298.667     c-23.567,0-42.667-19.099-42.667-42.667s19.099-42.667,42.667-42.667s42.667,19.099,42.667,42.667S279.567,298.667,256,298.667z"
+                                              fill="#ffffff" data-original="#000000" style="" class=""/>
+									</g>
+								</g>
+							</g>
+							</g></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+                                     xmlns:xlink="http://www.w3.org/1999/xlink" width="12" height="12" x="0" y="0"
+                                     viewBox="0 0 492 492" style="enable-background:new 0 0 14 14" xml:space="preserve"
+                                     class="i-close-white"><g xmlns="http://www.w3.org/2000/svg"><path d="M300.188,246L484.14,62.04c5.06-5.064,7.852-11.82,7.86-19.024c0-7.208-2.792-13.972-7.86-19.028L468.02,7.872    c-5.068-5.076-11.824-7.856-19.036-7.856c-7.2,0-13.956,2.78-19.024,7.856L246.008,191.82L62.048,7.872    c-5.06-5.076-11.82-7.856-19.028-7.856c-7.2,0-13.96,2.78-19.02,7.856L7.872,23.988c-10.496,10.496-10.496,27.568,0,38.052    L191.828,246L7.872,429.952c-5.064,5.072-7.852,11.828-7.852,19.032c0,7.204,2.788,13.96,7.852,19.028l16.124,16.116    c5.06,5.072,11.824,7.856,19.02,7.856c7.208,0,13.968-2.784,19.028-7.856l183.96-183.952l183.952,183.952    c5.068,5.072,11.824,7.856,19.024,7.856h0.008c7.204,0,13.96-2.784,19.028-7.856l16.12-16.116    c5.06-5.064,7.852-11.824,7.852-19.028c0-7.204-2.792-13.96-7.852-19.028L300.188,246z" fill="#ffffff" data-original="#000000" style="" class=""></path></g></svg>
+                            </div>
+
                         </div>
-
                     </div>
                 </div>
-
             </div>
-
 
         </div>
 
+
+    </main>
+
+    <nav class="bottom-nav d-block d-lg-none">
+        <ul class="container d-flex">
+            <li>
+                <a href="/">
+                    <svg class="icon">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#shopicon"></use>
+                    </svg>
+                </a>
+            </li>
+            <li>
+                <a href="/yeu-thich">
+                    <svg class="icon">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#wishlisthead"></use>
+                    </svg>
+                </a>
+            </li>
+            <li>
+                <a href="/cart">
+                    <svg class="icon">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#addcarticon"></use>
+                    </svg>
+                </a>
+            </li>
+            <li>
+                <a href="/account">
+                    <svg class="icon">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use>
+                    </svg>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+
+
+    <div class="backdrop__body-backdrop___1rvky"></div>
+    <div class="addThis_listSharing" style="display: block;">
+        <div class="listSharing_action">
+            <button type="button" class="addThis_close" data-dismiss="modal">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <g stroke="none" stroke-width="1" fill-rule="evenodd">
+                        <g transform="translate(-1341.000000, -90.000000)">
+                            <g transform="translate(1341.000000, 90.000000)">
+                                <polygon
+                                        points="19 6.4 17.6 5 12 10.6 6.4 5 5 6.4 10.6 12 5 17.6 6.4 19 12 13.4 17.6 19 19 17.6 13.4 12"></polygon>
+                            </g>
+                        </g>
+                    </g>
+                </svg>
+            </button>
+            <ul class="addThis_listing">
+                <li class="addThis_item">
+                    <a class="addThis_item--icon" href="tel:19006750" rel="nofollow" aria-label="phone">
+                        <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="22" cy="22" r="22" fill="url(#paint2_linear)"></circle>
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                  d="M14.0087 9.35552C14.1581 9.40663 14.3885 9.52591 14.5208 9.61114C15.3315 10.148 17.5888 13.0324 18.3271 14.4726C18.7495 15.2949 18.8903 15.9041 18.758 16.3558C18.6214 16.8415 18.3953 17.0971 17.384 17.9109C16.9786 18.239 16.5988 18.5756 16.5391 18.6651C16.3855 18.8866 16.2617 19.3212 16.2617 19.628C16.266 20.3395 16.7269 21.6305 17.3328 22.6232C17.8021 23.3944 18.6428 24.3828 19.4749 25.1413C20.452 26.0361 21.314 26.6453 22.2869 27.1268C23.5372 27.7488 24.301 27.9064 24.86 27.6466C25.0008 27.5826 25.1501 27.4974 25.1971 27.4591C25.2397 27.4208 25.5683 27.0202 25.9268 26.5772C26.618 25.7079 26.7759 25.5674 27.2496 25.4055C27.8513 25.201 28.4657 25.2563 29.0844 25.5716C29.5538 25.8145 30.5779 26.4493 31.2393 26.9095C32.1098 27.5187 33.9703 29.0355 34.2221 29.3381C34.6658 29.8834 34.7427 30.5821 34.4439 31.3534C34.1281 32.1671 32.8992 33.6925 32.0415 34.3444C31.2649 34.9323 30.7145 35.1581 29.9891 35.1922C29.3917 35.222 29.1442 35.1709 28.3804 34.8556C22.3893 32.3887 17.6059 28.7075 13.8081 23.65C11.8239 21.0084 10.3134 18.2688 9.28067 15.427C8.67905 13.7696 8.64921 13.0495 9.14413 12.2017C9.35753 11.8438 10.2664 10.9575 10.9278 10.4633C12.0288 9.64524 12.5365 9.34273 12.9419 9.25754C13.2193 9.19787 13.7014 9.24473 14.0087 9.35552Z"
+                                  fill="white"></path>
+                            <defs>
+                                <linearGradient id="paint2_linear" x1="22" y1="-7.26346e-09" x2="22.1219" y2="40.5458"
+                                                gradientUnits="userSpaceOnUse">
+                                    <stop offset="50%" stop-color="#e8434c"></stop>
+                                    <stop offset="100%" stop-color="#d61114"></stop>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                        <span class="tooltip-text">Gọi ngay cho chúng tôi</span>
+                    </a>
+                </li>
+                <li class="addThis_item">
+                    <a class="addThis_item--icon" href="https://zalo.me/19006750" target="_blank" rel="nofollow noreferrer"
+                       aria-label="zalo">
+                        <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="22" cy="22" r="22" fill="url(#paint4_linear)"></circle>
+                            <g clip-path="url(#clip0)">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                      d="M15.274 34.0907C15.7773 34.0856 16.2805 34.0804 16.783 34.0804C16.7806 34.0636 16.7769 34.0479 16.7722 34.0333C16.777 34.0477 16.7808 34.0632 16.7832 34.0798C16.8978 34.0798 17.0124 34.0854 17.127 34.0965H25.4058C26.0934 34.0965 26.7809 34.0977 27.4684 34.0989C28.8434 34.1014 30.2185 34.1039 31.5935 34.0965H31.6222C33.5357 34.0798 35.0712 32.5722 35.0597 30.7209V27.4784C35.0597 27.4582 35.0612 27.4333 35.0628 27.4071C35.0676 27.3257 35.0731 27.2325 35.0368 27.2345C34.9337 27.2401 34.7711 27.2757 34.7138 27.3311C34.2744 27.6145 33.8483 27.924 33.4222 28.2335C32.57 28.8525 31.7179 29.4715 30.7592 29.8817C27.0284 31.0993 23.7287 31.157 20.2265 30.3385C20.0349 30.271 19.9436 30.2786 19.7816 30.292C19.6773 30.3007 19.5436 30.3118 19.3347 30.3068C19.3093 30.3077 19.2829 30.3085 19.2554 30.3093C18.9099 30.3197 18.4083 30.3348 17.8088 30.6877C16.4051 31.1034 14.5013 31.157 13.5175 31.0147C13.522 31.0245 13.5247 31.0329 13.5269 31.0407C13.5236 31.0341 13.5204 31.0275 13.5173 31.0208C13.5036 31.0059 13.4864 30.9927 13.4696 30.98C13.4163 30.9393 13.3684 30.9028 13.46 30.8268C13.4867 30.8102 13.5135 30.7929 13.5402 30.7757C13.5937 30.7412 13.6472 30.7067 13.7006 30.6771C14.4512 30.206 15.1559 29.6905 15.6199 28.9311C16.2508 28.1911 15.9584 27.9025 15.4009 27.3524L15.3799 27.3317C12.6639 24.6504 11.8647 21.8054 12.148 17.9785C12.486 15.8778 13.4829 14.0708 14.921 12.4967C15.7918 11.5433 16.8288 10.7729 17.9632 10.1299C17.9796 10.1198 17.9987 10.1116 18.0182 10.1032C18.0736 10.0793 18.1324 10.0541 18.1408 9.98023C18.1475 9.92191 18.0507 9.90264 18.0163 9.90264C17.3698 9.90264 16.7316 9.89705 16.0964 9.89148C14.8346 9.88043 13.5845 9.86947 12.3041 9.90265C10.465 9.95254 8.78889 11.1779 8.81925 13.3614C8.82689 17.2194 8.82435 21.0749 8.8218 24.9296C8.82053 26.8567 8.81925 28.7835 8.81925 30.7104C8.81925 32.5007 10.2344 34.0028 12.085 34.0749C13.1465 34.1125 14.2107 34.1016 15.274 34.0907ZM13.5888 31.1403C13.5935 31.1467 13.5983 31.153 13.6032 31.1594C13.7036 31.2455 13.8031 31.3325 13.9021 31.4202C13.8063 31.3312 13.7072 31.2423 13.6035 31.1533C13.5982 31.1487 13.5933 31.1444 13.5888 31.1403ZM16.5336 33.8108C16.4979 33.7885 16.4634 33.7649 16.4337 33.7362C16.4311 33.7358 16.4283 33.7352 16.4254 33.7345C16.4281 33.7371 16.4308 33.7397 16.4335 33.7423C16.4632 33.7683 16.4978 33.79 16.5336 33.8108Z"
+                                      fill="white"></path>
+                                <path d="M17.6768 21.6754C18.5419 21.6754 19.3555 21.6698 20.1633 21.6754C20.6159 21.6809 20.8623 21.8638 20.9081 22.213C20.9597 22.6509 20.6961 22.9447 20.2034 22.9502C19.2753 22.9613 18.3528 22.9558 17.4247 22.9558C17.1554 22.9558 16.8919 22.9669 16.6226 22.9502C16.2903 22.9336 15.9637 22.8671 15.8033 22.5345C15.6429 22.2019 15.7575 21.9026 15.9752 21.631C16.8575 20.5447 17.7455 19.4527 18.6336 18.3663C18.6851 18.2998 18.7367 18.2333 18.7883 18.1723C18.731 18.0781 18.6508 18.1224 18.582 18.1169C17.9633 18.1114 17.3388 18.1169 16.72 18.1114C16.5768 18.1114 16.4335 18.0947 16.296 18.067C15.9695 17.995 15.7689 17.679 15.8434 17.3686C15.895 17.158 16.0669 16.9862 16.2846 16.9363C16.4221 16.903 16.5653 16.8864 16.7085 16.8864C17.7284 16.8809 18.7539 16.8809 19.7737 16.8864C19.9571 16.8809 20.1347 16.903 20.3123 16.9474C20.7019 17.0749 20.868 17.4241 20.7133 17.7899C20.5758 18.1058 20.3581 18.3774 20.1404 18.649C19.3899 19.5747 18.6393 20.4948 17.8888 21.4093C17.8258 21.4814 17.7685 21.5534 17.6768 21.6754Z"
+                                      fill="white"></path>
+                                <path d="M24.3229 18.7604C24.4604 18.5886 24.6036 18.4279 24.8385 18.3835C25.2911 18.2948 25.7151 18.5775 25.7208 19.021C25.738 20.1295 25.7323 21.2381 25.7208 22.3467C25.7208 22.6349 25.526 22.8899 25.2453 22.973C24.9588 23.0783 24.6322 22.9952 24.4432 22.7568C24.3458 22.6404 24.3057 22.6183 24.1682 22.7236C23.6468 23.1338 23.0567 23.2058 22.4207 23.0063C21.4009 22.6848 20.9827 21.9143 20.8681 20.9776C20.7478 19.9632 21.0973 19.0986 22.0369 18.5664C22.816 18.1175 23.6067 18.1563 24.3229 18.7604ZM22.2947 20.7836C22.3061 21.0275 22.3863 21.2603 22.5353 21.4543C22.8447 21.8534 23.4348 21.9365 23.8531 21.6372C23.9218 21.5873 23.9848 21.5263 24.0421 21.4543C24.363 21.033 24.363 20.3402 24.0421 19.9189C23.8817 19.7027 23.6296 19.5752 23.3603 19.5697C22.7301 19.5309 22.289 20.002 22.2947 20.7836ZM28.2933 20.8168C28.2474 19.3923 29.2157 18.3281 30.5907 18.2893C32.0517 18.245 33.1174 19.1928 33.1632 20.5785C33.209 21.9808 32.321 22.973 30.9517 23.106C29.4563 23.2502 28.2704 22.2026 28.2933 20.8168ZM29.7313 20.6838C29.7199 20.961 29.8058 21.2326 29.9777 21.4598C30.2928 21.8589 30.8829 21.9365 31.2955 21.6261C31.3585 21.5818 31.41 21.5263 31.4616 21.4709C31.7939 21.0496 31.7939 20.3402 31.4673 19.9189C31.3069 19.7083 31.0548 19.5752 30.7855 19.5697C30.1668 19.5364 29.7313 19.991 29.7313 20.6838ZM27.7891 19.7138C27.7891 20.573 27.7948 21.4321 27.7891 22.2912C27.7948 22.6848 27.474 23.0118 27.0672 23.0229C26.9985 23.0229 26.924 23.0174 26.8552 23.0007C26.5688 22.9287 26.351 22.6349 26.351 22.2857V17.8791C26.351 17.6186 26.3453 17.3636 26.351 17.1031C26.3568 16.6763 26.6375 16.3992 27.0615 16.3992C27.4969 16.3936 27.7891 16.6708 27.7891 17.1142C27.7948 17.9789 27.7891 18.8491 27.7891 19.7138Z"
+                                      fill="white"></path>
+                                <path d="M22.2947 20.7828C22.289 20.0013 22.7302 19.5302 23.3547 19.5634C23.6239 19.5745 23.876 19.702 24.0364 19.9181C24.3573 20.3339 24.3573 21.0322 24.0364 21.4535C23.7271 21.8526 23.1369 21.9357 22.7187 21.6364C22.65 21.5865 22.5869 21.5255 22.5296 21.4535C22.3864 21.2595 22.3062 21.0267 22.2947 20.7828ZM29.7314 20.683C29.7314 19.9957 30.1668 19.5357 30.7856 19.569C31.0549 19.5745 31.307 19.7075 31.4674 19.9181C31.794 20.3394 31.794 21.0544 31.4617 21.4701C31.1408 21.8636 30.545 21.9302 30.1382 21.6198C30.0752 21.5754 30.0236 21.52 29.9778 21.459C29.8059 21.2318 29.7257 20.9602 29.7314 20.683Z"
+                                      fill="#0068FF"></path>
+                            </g>
+                            <defs>
+                                <linearGradient id="paint4_linear" x1="22" y1="0" x2="22" y2="44"
+                                                gradientUnits="userSpaceOnUse">
+                                    <stop offset="50%" stop-color="#3985f7"></stop>
+                                    <stop offset="100%" stop-color="#1272e8"></stop>
+                                </linearGradient>
+                                <clipPath id="clip0">
+                                    <rect width="26.3641" height="24.2" fill="white"
+                                          transform="translate(8.78906 9.90234)"></rect>
+                                </clipPath>
+                            </defs>
+                        </svg>
+                        <span class="tooltip-text">Chat với chúng tôi qua Zalo</span>
+                    </a>
+                </li>
+                <li class="addThis_item">
+                    <a class="addThis_item--icon" href="/he-thong-cua-hang" aria-label="Liên hệ">
+                        <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="22" cy="22" r="22" fill="url(#paint5_linear)"></circle>
+                            <path d="M22 10C17.0374 10 13 13.7367 13 18.3297C13 24.0297 21.0541 32.3978 21.397 32.7512C21.7191 33.0832 22.2815 33.0826 22.603 32.7512C22.9459 32.3978 31 24.0297 31 18.3297C30.9999 13.7367 26.9626 10 22 10ZM22 22.5206C19.5032 22.5206 17.4719 20.6406 17.4719 18.3297C17.4719 16.0188 19.5032 14.1388 22 14.1388C24.4968 14.1388 26.528 16.0189 26.528 18.3297C26.528 20.6406 24.4968 22.5206 22 22.5206Z"
+                                  fill="white"></path>
+                            <defs>
+                                <linearGradient id="paint5_linear" x1="22" y1="0" x2="22" y2="44"
+                                                gradientUnits="userSpaceOnUse">
+                                    <stop offset="50%" stop-color="#fecf72"></stop>
+                                    <stop offset="100%" stop-color="#ef9f00"></stop>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                        <span class="tooltip-text">Xem địa chỉ cơ sở</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="listSharing_overlay"></div>
     </div>
+    <div class="addThis_iconContact">
+        <div class="box-item item-contact">
+            <div class="svgico">
+                <svg width="34" height="35" viewBox="0 0 34 35" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4.35522 31V25.416H5.41122V30.064H7.61122V31H4.35522ZM8.97509 26.216C8.76176 26.216 8.60709 26.168 8.51109 26.072C8.42043 25.976 8.37509 25.8533 8.37509 25.704V25.544C8.37509 25.3947 8.42043 25.272 8.51109 25.176C8.60709 25.08 8.76176 25.032 8.97509 25.032C9.18309 25.032 9.33509 25.08 9.43109 25.176C9.52709 25.272 9.57509 25.3947 9.57509 25.544V25.704C9.57509 25.8533 9.52709 25.976 9.43109 26.072C9.33509 26.168 9.18309 26.216 8.97509 26.216ZM8.46309 26.824H9.48709V31H8.46309V26.824ZM12.834 24.712L13.842 25.944L13.33 26.344L12.37 25.424L11.41 26.344L10.898 25.944L11.906 24.712H12.834ZM12.362 31.096C12.0527 31.096 11.7754 31.0453 11.53 30.944C11.29 30.8373 11.0847 30.6907 10.914 30.504C10.7487 30.312 10.6207 30.0827 10.53 29.816C10.4394 29.544 10.394 29.24 10.394 28.904C10.394 28.5733 10.4367 28.2747 10.522 28.008C10.6127 27.7413 10.7407 27.5147 10.906 27.328C11.0714 27.136 11.274 26.9893 11.514 26.888C11.754 26.7813 12.026 26.728 12.33 26.728C12.6554 26.728 12.938 26.784 13.178 26.896C13.418 27.008 13.6154 27.16 13.77 27.352C13.9247 27.544 14.0394 27.768 14.114 28.024C14.194 28.2747 14.234 28.544 14.234 28.832V29.168H11.458V29.272C11.458 29.576 11.5434 29.8213 11.714 30.008C11.8847 30.1893 12.138 30.28 12.474 30.28C12.73 30.28 12.938 30.2267 13.098 30.12C13.2634 30.0133 13.41 29.8773 13.538 29.712L14.09 30.328C13.9194 30.568 13.6847 30.7573 13.386 30.896C13.0927 31.0293 12.7514 31.096 12.362 31.096ZM12.346 27.496C12.074 27.496 11.858 27.5867 11.698 27.768C11.538 27.9493 11.458 28.184 11.458 28.472V28.536H13.17V28.464C13.17 28.176 13.098 27.944 12.954 27.768C12.8154 27.5867 12.6127 27.496 12.346 27.496ZM15.135 31V26.824H16.159V27.52H16.199C16.2843 27.296 16.4176 27.1093 16.599 26.96C16.7856 26.8053 17.0416 26.728 17.367 26.728C17.799 26.728 18.1296 26.8693 18.359 27.152C18.5883 27.4347 18.703 27.8373 18.703 28.36V31H17.679V28.464C17.679 28.1653 17.6256 27.9413 17.519 27.792C17.4123 27.6427 17.2363 27.568 16.991 27.568C16.8843 27.568 16.7803 27.584 16.679 27.616C16.583 27.6427 16.495 27.6853 16.415 27.744C16.3403 27.7973 16.279 27.8667 16.231 27.952C16.183 28.032 16.159 28.128 16.159 28.24V31H15.135ZM21.7287 25.08H22.7527V27.52H22.7927C22.8781 27.296 23.0114 27.1093 23.1927 26.96C23.3794 26.8053 23.6354 26.728 23.9607 26.728C24.3927 26.728 24.7234 26.8693 24.9527 27.152C25.1821 27.4347 25.2967 27.8373 25.2967 28.36V31H24.2727V28.464C24.2727 28.1653 24.2194 27.9413 24.1127 27.792C24.0061 27.6427 23.8301 27.568 23.5847 27.568C23.4781 27.568 23.3741 27.584 23.2727 27.616C23.1767 27.6427 23.0887 27.6853 23.0087 27.744C22.9341 27.7973 22.8727 27.8667 22.8247 27.952C22.7767 28.032 22.7527 28.128 22.7527 28.24V31H21.7287V25.08ZM28.5918 24.712L29.5998 25.944L29.0878 26.344L28.1278 25.424L27.1678 26.344L26.6558 25.944L27.6638 24.712H28.5918ZM28.1198 31.096C27.8105 31.096 27.5332 31.0453 27.2878 30.944C27.0478 30.8373 26.8425 30.6907 26.6718 30.504C26.5065 30.312 26.3785 30.0827 26.2878 29.816C26.1972 29.544 26.1518 29.24 26.1518 28.904C26.1518 28.5733 26.1945 28.2747 26.2798 28.008C26.3705 27.7413 26.4985 27.5147 26.6638 27.328C26.8292 27.136 27.0318 26.9893 27.2718 26.888C27.5118 26.7813 27.7838 26.728 28.0878 26.728C28.4132 26.728 28.6958 26.784 28.9358 26.896C29.1758 27.008 29.3732 27.16 29.5278 27.352C29.6825 27.544 29.7972 27.768 29.8718 28.024C29.9518 28.2747 29.9918 28.544 29.9918 28.832V29.168H27.2158V29.272C27.2158 29.576 27.3012 29.8213 27.4718 30.008C27.6425 30.1893 27.8958 30.28 28.2318 30.28C28.4878 30.28 28.6958 30.2267 28.8558 30.12C29.0212 30.0133 29.1678 29.8773 29.2958 29.712L29.8478 30.328C29.6772 30.568 29.4425 30.7573 29.1438 30.896C28.8505 31.0293 28.5092 31.096 28.1198 31.096ZM28.1038 27.496C27.8318 27.496 27.6158 27.5867 27.4558 27.768C27.2958 27.9493 27.2158 28.184 27.2158 28.472V28.536H28.9278V28.464C28.9278 28.176 28.8558 27.944 28.7118 27.768C28.5732 27.5867 28.3705 27.496 28.1038 27.496ZM28.1038 32.552C27.8958 32.552 27.7465 32.5067 27.6558 32.416C27.5705 32.3307 27.5278 32.2213 27.5278 32.088V31.912C27.5278 31.7787 27.5705 31.6667 27.6558 31.576C27.7465 31.4907 27.8958 31.448 28.1038 31.448C28.3118 31.448 28.4585 31.4907 28.5438 31.576C28.6345 31.6667 28.6798 31.7787 28.6798 31.912V32.088C28.6798 32.2213 28.6345 32.3307 28.5438 32.416C28.4585 32.5067 28.3118 32.552 28.1038 32.552Z"></path>
+                    <path d="M27.2212 0H10.7532C9.76511 0 8.97461 0.834345 8.97461 1.82643V12.334C8.97461 13.3487 9.78701 14.1604 10.7532 14.1604H22.1051L24.6741 16.8211C24.7839 16.9338 24.9157 17.0015 25.0693 17.0015C25.3768 17.0015 25.6402 16.7535 25.6402 16.4153V14.1604H27.2212C28.2092 14.1604 28.9997 13.3261 28.9997 12.334V1.82643C28.9997 0.811779 28.1873 0 27.2212 0ZM13.2783 9.04195C12.378 9.04195 11.6315 8.2753 11.6315 7.35077C11.6315 6.42631 12.378 5.65966 13.2783 5.65966C14.1785 5.65966 14.925 6.42631 14.925 7.35077C14.925 8.2753 14.2005 9.04195 13.2783 9.04195ZM19.0531 9.04195C18.1528 9.04195 17.4062 8.2753 17.4062 7.35077C17.4062 6.42631 18.1528 5.65966 19.0531 5.65966C19.9533 5.65966 20.6998 6.42631 20.6998 7.35077C20.6998 8.2753 19.9533 9.04195 19.0531 9.04195ZM24.8059 9.04195C23.9056 9.04195 23.1591 8.2753 23.1591 7.35077C23.1591 6.42631 23.9056 5.65966 24.8059 5.65966C25.7061 5.65966 26.4526 6.42631 26.4526 7.35077C26.4526 8.2753 25.7061 9.04195 24.8059 9.04195Z"></path>
+                    <path d="M7.9649 12.3782V8.79297H6.16437C5.52762 8.79297 5.00066 9.33418 5.00066 9.98807V16.8878C4.97869 17.5868 5.50564 18.128 6.16437 18.128H7.19637V19.6162C7.19637 19.8192 7.37202 19.9995 7.56964 19.9995C7.67944 19.9995 7.76727 19.9544 7.83312 19.8868L9.52385 18.1505H16.9894C17.6261 18.1505 18.1531 17.6094 18.1531 16.9555V15.2418H10.7535C9.2165 15.2418 7.9649 13.9566 7.9649 12.3782Z"></path>
+                </svg>
+                <span class="svgico--close">
+				<svg viewBox="0 0 19 19" role="presentation"><path
+                        d="M9.1923882 8.39339828l7.7781745-7.7781746 1.4142136 1.41421357-7.7781746 7.77817459 7.7781746 7.77817456L16.9705627 19l-7.7781745-7.7781746L1.41421356 19 0 17.5857864l7.7781746-7.77817456L0 2.02943725 1.41421356.61522369 9.1923882 8.39339828z"
+                        fill-rule="evenodd"></path></svg>			</span>
+            </div>
+        </div>
+    </div>
+
+
+    <div style="visibility:hidden; position: absolute; z-index: -1; bottom: 0; left: 0;">
+        <svg xmlns="http://www.w3.org/2000/svg">
+            <symbol id="user">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                    <path d="M224 256c70.7 0 128-57.31 128-128s-57.3-128-128-128C153.3 0 96 57.31 96 128S153.3 256 224 256zM274.7 304H173.3C77.61 304 0 381.6 0 477.3c0 19.14 15.52 34.67 34.66 34.67h378.7C432.5 512 448 496.5 448 477.3C448 381.6 370.4 304 274.7 304z"/>
+                </svg>
+            </symbol>
+            <symbol id="carticon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                    <path d="M96 0C107.5 0 117.4 8.19 119.6 19.51L121.1 32H541.8C562.1 32 578.3 52.25 572.6 72.66L518.6 264.7C514.7 278.5 502.1 288 487.8 288H170.7L179.9 336H488C501.3 336 512 346.7 512 360C512 373.3 501.3 384 488 384H159.1C148.5 384 138.6 375.8 136.4 364.5L76.14 48H24C10.75 48 0 37.25 0 24C0 10.75 10.75 0 24 0H96zM128 464C128 437.5 149.5 416 176 416C202.5 416 224 437.5 224 464C224 490.5 202.5 512 176 512C149.5 512 128 490.5 128 464zM512 464C512 490.5 490.5 512 464 512C437.5 512 416 490.5 416 464C416 437.5 437.5 416 464 416C490.5 416 512 437.5 512 464z"/>
+                </svg>
+            </symbol>
+            <symbol id="wishlist">
+                <svg enable-background="new 0 0 412.735 412.735" version="1.1" viewBox="0 0 412.74 412.74"
+                     xml:space="preserve" xmlns="http://www.w3.org/2000/svg"> <path
+                        d="m295.71 35.522c-34.43-0.184-67.161 14.937-89.339 41.273-22.039-26.516-54.861-41.68-89.339-41.273-64.633 0-117.03 52.395-117.03 117.03 0 110.76 193.31 218.91 201.14 223.09 3.162 2.113 7.286 2.113 10.449 0 7.837-4.18 201.14-110.76 201.14-223.09 0-64.633-52.396-117.03-117.03-117.03zm-89.339 319.22c-30.302-17.763-185.47-112.33-185.47-202.19 0-53.091 43.039-96.131 96.131-96.131 32.512-0.427 62.938 15.972 80.457 43.363 3.557 4.905 10.418 5.998 15.323 2.44 0.937-0.68 1.761-1.503 2.44-2.44 29.055-44.435 88.631-56.903 133.07-27.848 27.202 17.787 43.575 48.114 43.521 80.615 1e-3 90.907-155.17 184.95-185.47 202.19z"/> </svg>
+            </symbol>
+
+            <symbol id="wishlisthead">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                    <path d="M0 190.9V185.1C0 115.2 50.52 55.58 119.4 44.1C164.1 36.51 211.4 51.37 244 84.02L256 96L267.1 84.02C300.6 51.37 347 36.51 392.6 44.1C461.5 55.58 512 115.2 512 185.1V190.9C512 232.4 494.8 272.1 464.4 300.4L283.7 469.1C276.2 476.1 266.3 480 256 480C245.7 480 235.8 476.1 228.3 469.1L47.59 300.4C17.23 272.1 .0003 232.4 .0003 190.9L0 190.9z"/>
+                </svg>
+            </symbol>
+            <symbol id="wishlistactive">
+                <svg enable-background="new 0 0 391.837 391.837" version="1.1" viewBox="0 0 391.84 391.84"
+                     xml:space="preserve" xmlns="http://www.w3.org/2000/svg"> <path
+                        d="m285.26 35.528c58.743 0.286 106.29 47.836 106.58 106.58 0 107.62-195.92 214.2-195.92 214.2s-195.92-108.15-195.92-214.2c0-58.862 47.717-106.58 106.58-106.58 36.032-0.281 69.718 17.842 89.339 48.065 19.755-30.076 53.354-48.152 89.338-48.065z"
+                        fill="#D7443E"/> </svg>
+            </symbol>
+            <symbol id="search">
+                <svg enable-background="new 0 0 612.01 612.01" version="1.1" viewBox="0 0 612.01 612.01"
+                     xml:space="preserve" xmlns="http://www.w3.org/2000/svg">
+				<path d="m606.21 578.71-158.01-155.49c41.378-44.956 66.802-104.41 66.802-169.84-0.02-139.95-115.3-253.39-257.51-253.39s-257.49 113.44-257.49 253.39 115.28 253.39 257.49 253.39c61.445 0 117.8-21.253 162.07-56.586l158.62 156.1c7.729 7.614 20.277 7.614 28.006 0 7.747-7.613 7.747-19.971 0.018-27.585zm-348.72-110.91c-120.33 0-217.87-95.993-217.87-214.41s97.543-214.41 217.87-214.41c120.33 0 217.87 95.993 217.87 214.41s-97.542 214.41-217.87 214.41z"></path>
+			</svg>
+            </symbol>
+            <symbol id="categoryicon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                    <path d="M0 96C0 78.33 14.33 64 32 64H416C433.7 64 448 78.33 448 96C448 113.7 433.7 128 416 128H32C14.33 128 0 113.7 0 96zM0 256C0 238.3 14.33 224 32 224H416C433.7 224 448 238.3 448 256C448 273.7 433.7 288 416 288H32C14.33 288 0 273.7 0 256zM416 448H32C14.33 448 0 433.7 0 416C0 398.3 14.33 384 32 384H416C433.7 384 448 398.3 448 416C448 433.7 433.7 448 416 448z"/>
+                </svg>
+            </symbol>
+            <symbol id="homeicon">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
+                     id="iconhome" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;"
+                     xml:space="preserve"> <g> <g> <path
+                        d="M506.555,208.064L263.859,30.367c-4.68-3.426-11.038-3.426-15.716,0L5.445,208.064    c-5.928,4.341-7.216,12.665-2.875,18.593s12.666,7.214,18.593,2.875L256,57.588l234.837,171.943c2.368,1.735,5.12,2.57,7.848,2.57    c4.096,0,8.138-1.885,10.744-5.445C513.771,220.729,512.483,212.405,506.555,208.064z"/> </g> </g>
+                    <g> <g> <path
+                            d="M442.246,232.543c-7.346,0-13.303,5.956-13.303,13.303v211.749H322.521V342.009c0-36.68-29.842-66.52-66.52-66.52    s-66.52,29.842-66.52,66.52v115.587H83.058V245.847c0-7.347-5.957-13.303-13.303-13.303s-13.303,5.956-13.303,13.303v225.053    c0,7.347,5.957,13.303,13.303,13.303h133.029c6.996,0,12.721-5.405,13.251-12.267c0.032-0.311,0.052-0.651,0.052-1.036v-128.89    c0-22.009,17.905-39.914,39.914-39.914s39.914,17.906,39.914,39.914v128.89c0,0.383,0.02,0.717,0.052,1.024    c0.524,6.867,6.251,12.279,13.251,12.279h133.029c7.347,0,13.303-5.956,13.303-13.303V245.847    C455.549,238.499,449.593,232.543,442.246,232.543z"/> </g> </g></svg>
+            </symbol>
+            <symbol id="nexticon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                    <path d="M96 480c-8.188 0-16.38-3.125-22.62-9.375c-12.5-12.5-12.5-32.75 0-45.25L242.8 256L73.38 86.63c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0l192 192c12.5 12.5 12.5 32.75 0 45.25l-192 192C112.4 476.9 104.2 480 96 480z"/>
+                </svg>
+            </symbol>
+            <symbol id="previcon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                    <path d="M224 480c-8.188 0-16.38-3.125-22.62-9.375l-192-192c-12.5-12.5-12.5-32.75 0-45.25l192-192c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25L77.25 256l169.4 169.4c12.5 12.5 12.5 32.75 0 45.25C240.4 476.9 232.2 480 224 480z"/>
+                </svg>
+            </symbol>
+            <symbol id="optionicon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                    <path d="M120 256C120 286.9 94.93 312 64 312C33.07 312 8 286.9 8 256C8 225.1 33.07 200 64 200C94.93 200 120 225.1 120 256zM280 256C280 286.9 254.9 312 224 312C193.1 312 168 286.9 168 256C168 225.1 193.1 200 224 200C254.9 200 280 225.1 280 256zM328 256C328 225.1 353.1 200 384 200C414.9 200 440 225.1 440 256C440 286.9 414.9 312 384 312C353.1 312 328 286.9 328 256z"/>
+                </svg>
+            </symbol>
+            <symbol id="addcarticon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                    <path d="M112 112C112 50.14 162.1 0 224 0C285.9 0 336 50.14 336 112V160H400C426.5 160 448 181.5 448 208V416C448 469 405 512 352 512H96C42.98 512 0 469 0 416V208C0 181.5 21.49 160 48 160H112V112zM160 160H288V112C288 76.65 259.3 48 224 48C188.7 48 160 76.65 160 112V160zM136 256C149.3 256 160 245.3 160 232C160 218.7 149.3 208 136 208C122.7 208 112 218.7 112 232C112 245.3 122.7 256 136 256zM312 208C298.7 208 288 218.7 288 232C288 245.3 298.7 256 312 256C325.3 256 336 245.3 336 232C336 218.7 325.3 208 312 208z"/>
+                </svg>
+            </symbol>
+            <symbol id="quickicon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488.4 488.4"
+                     style="enable-background:new 0 0 488.4 488.4;" xml:space="preserve">
+				<path d="M0,203.25c0,112.1,91.2,203.2,203.2,203.2c51.6,0,98.8-19.4,134.7-51.2l129.5,129.5c2.4,2.4,5.5,3.6,8.7,3.6    s6.3-1.2,8.7-3.6c4.8-4.8,4.8-12.5,0-17.3l-129.6-129.5c31.8-35.9,51.2-83,51.2-134.7c0-112.1-91.2-203.2-203.2-203.2    S0,91.15,0,203.25z M381.9,203.25c0,98.5-80.2,178.7-178.7,178.7s-178.7-80.2-178.7-178.7s80.2-178.7,178.7-178.7    S381.9,104.65,381.9,203.25z"/>
+			</svg>
+            </symbol>
+            <symbol id="plusicon">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px"
+                     y="0px" viewBox="0 0 52 52" style="enable-background:new 0 0 52 52;" xml:space="preserve">
+				<path d="M26,0C11.664,0,0,11.663,0,26s11.664,26,26,26s26-11.663,26-26S40.336,0,26,0z M26,50C12.767,50,2,39.233,2,26   S12.767,2,26,2s24,10.767,24,24S39.233,50,26,50z"/>
+                    <path d="M38.5,25H27V14c0-0.553-0.448-1-1-1s-1,0.447-1,1v11H13.5c-0.552,0-1,0.447-1,1s0.448,1,1,1H25v12c0,0.553,0.448,1,1,1   s1-0.447,1-1V27h11.5c0.552,0,1-0.447,1-1S39.052,25,38.5,25z"/>
+			</svg>
+            </symbol>
+            <symbol id="plusiconregular">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                    <path d="M432 256c0 17.69-14.33 32.01-32 32.01H256v144c0 17.69-14.33 31.99-32 31.99s-32-14.3-32-31.99v-144H48c-17.67 0-32-14.32-32-32.01s14.33-31.99 32-31.99H192v-144c0-17.69 14.33-32.01 32-32.01s32 14.32 32 32.01v144h144C417.7 224 432 238.3 432 256z"/>
+                </svg>
+            </symbol>
+            <symbol id="minusicon">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px"
+                     y="0px" viewBox="0 0 52 52" style="enable-background:new 0 0 52 52;" xml:space="preserve">
+				<path d="M26,0C11.664,0,0,11.663,0,26s11.664,26,26,26s26-11.663,26-26S40.336,0,26,0z M26,50C12.767,50,2,39.233,2,26   S12.767,2,26,2s24,10.767,24,24S39.233,50,26,50z"/>
+                    <path d="M39,25H13c-0.552,0-1,0.447-1,1s0.448,1,1,1h26c0.552,0,1-0.447,1-1S39.552,25,39,25z"/>
+			</svg>
+            </symbol>
+            <symbol id="videoicon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                    <path d="M384 112v288c0 26.51-21.49 48-48 48h-288c-26.51 0-48-21.49-48-48v-288c0-26.51 21.49-48 48-48h288C362.5 64 384 85.49 384 112zM576 127.5v256.9c0 25.5-29.17 40.39-50.39 25.79L416 334.7V177.3l109.6-75.56C546.9 87.13 576 102.1 576 127.5z"/>
+                </svg>
+            </symbol>
+
+            <symbol id="gallaryicon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                    <path d="M447.1 32h-384C28.64 32-.0091 60.65-.0091 96v320c0 35.35 28.65 64 63.1 64h384c35.35 0 64-28.65 64-64V96C511.1 60.65 483.3 32 447.1 32zM111.1 96c26.51 0 48 21.49 48 48S138.5 192 111.1 192s-48-21.49-48-48S85.48 96 111.1 96zM446.1 407.6C443.3 412.8 437.9 416 432 416H82.01c-6.021 0-11.53-3.379-14.26-8.75c-2.73-5.367-2.215-11.81 1.334-16.68l70-96C142.1 290.4 146.9 288 152 288s9.916 2.441 12.93 6.574l32.46 44.51l93.3-139.1C293.7 194.7 298.7 192 304 192s10.35 2.672 13.31 7.125l128 192C448.6 396 448.9 402.3 446.1 407.6z"/>
+                </svg>
+            </symbol>
+
+            <symbol id="addressicon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                    <path d="M168.3 499.2C116.1 435 0 279.4 0 192C0 85.96 85.96 0 192 0C298 0 384 85.96 384 192C384 279.4 267 435 215.7 499.2C203.4 514.5 180.6 514.5 168.3 499.2H168.3zM192 256C227.3 256 256 227.3 256 192C256 156.7 227.3 128 192 128C156.7 128 128 156.7 128 192C128 227.3 156.7 256 192 256z"/>
+                </svg>
+            </symbol>
+
+            <symbol id="phoneicon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                    <path d="M18.92 351.2l108.5-46.52c12.78-5.531 27.77-1.801 36.45 8.98l44.09 53.82c69.25-34 125.5-90.31 159.5-159.5l-53.81-44.04c-10.75-8.781-14.41-23.69-8.974-36.47l46.51-108.5c6.094-13.91 21.1-21.52 35.79-18.11l100.8 23.25c14.25 3.25 24.22 15.8 24.22 30.46c0 252.3-205.2 457.5-457.5 457.5c-14.67 0-27.18-9.968-30.45-24.22l-23.25-100.8C-2.571 372.4 5.018 357.2 18.92 351.2z"/>
+                </svg>
+            </symbol>
+            <symbol id="emailicon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                    <path d="M464 64C490.5 64 512 85.49 512 112C512 127.1 504.9 141.3 492.8 150.4L275.2 313.6C263.8 322.1 248.2 322.1 236.8 313.6L19.2 150.4C7.113 141.3 0 127.1 0 112C0 85.49 21.49 64 48 64H464zM217.6 339.2C240.4 356.3 271.6 356.3 294.4 339.2L512 176V384C512 419.3 483.3 448 448 448H64C28.65 448 0 419.3 0 384V176L217.6 339.2z"/>
+                </svg>
+            </symbol>
+            <symbol id="emailchip">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                    <path d="M256 417.1c-16.38 0-32.88-4.1-46.88-15.12L0 250.9v213.1C0 490.5 21.5 512 48 512h416c26.5 0 48-21.5 48-47.1V250.9l-209.1 151.1C288.9 412 272.4 417.1 256 417.1zM493.6 163C484.8 156 476.4 149.5 464 140.1v-44.12c0-26.5-21.5-48-48-48l-77.5 .0016c-3.125-2.25-5.875-4.25-9.125-6.5C312.6 29.13 279.3-.3732 256 .0018C232.8-.3732 199.4 29.13 182.6 41.5c-3.25 2.25-6 4.25-9.125 6.5L96 48c-26.5 0-48 21.5-48 48v44.12C35.63 149.5 27.25 156 18.38 163C6.75 172 0 186 0 200.8v10.62l96 69.37V96h320v184.7l96-69.37V200.8C512 186 505.3 172 493.6 163zM176 255.1h160c8.836 0 16-7.164 16-15.1c0-8.838-7.164-16-16-16h-160c-8.836 0-16 7.162-16 16C160 248.8 167.2 255.1 176 255.1zM176 191.1h160c8.836 0 16-7.164 16-16c0-8.838-7.164-15.1-16-15.1h-160c-8.836 0-16 7.162-16 15.1C160 184.8 167.2 191.1 176 191.1z"/>
+                </svg>
+            </symbol>
+            <symbol id="navchild">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                    <path d="M0 96C0 78.33 14.33 64 32 64H416C433.7 64 448 78.33 448 96C448 113.7 433.7 128 416 128H32C14.33 128 0 113.7 0 96zM64 256C64 238.3 78.33 224 96 224H480C497.7 224 512 238.3 512 256C512 273.7 497.7 288 480 288H96C78.33 288 64 273.7 64 256zM416 448H32C14.33 448 0 433.7 0 416C0 398.3 14.33 384 32 384H416C433.7 384 448 398.3 448 416C448 433.7 433.7 448 416 448z"/>
+                </svg>
+            </symbol>
+            <symbol id="phonefooter">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px"
+                     y="0px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve"><path d="M73.733,92.002c-0.001,0-0.002,0-0.003,0C57.5,92.001,39.091,75.379,31.93,68.233C24.096,60.416,6.099,40.416,8.162,23.57  c0.776-6.333,4.295-11.421,10.46-15.123c0.496-0.298,1.063-0.449,1.685-0.449c4.849,0,14.412,11.319,18.283,16.8  c5.533,7.835,4.749,10.046,4.454,10.878c-0.938,2.644-2.683,4.186-4.222,5.545c-1.347,1.19-2.51,2.217-3.103,3.888  c-0.082,0.406,0.456,2.598,3.97,6.917c5.522,6.787,12.798,12.252,15.141,12.252c1.729-0.592,2.758-1.755,3.947-3.102  c1.36-1.539,2.901-3.283,5.546-4.222c0.372-0.132,0.784-0.199,1.224-0.199c5.575,0,21.702,13.226,25.487,19.907  c0.401,0.709,1.623,2.867,0.517,4.712C87.324,88.427,81.328,92.002,73.733,92.002z M20.446,12.02  c-4.976,3.057-7.696,6.997-8.313,12.036c-1.283,10.473,7.174,25.93,22.622,41.345c6.81,6.795,24.238,22.6,38.977,22.601  c0,0,0.001,0,0.002,0c6.097,0,10.761-2.767,14.249-8.456c-0.66-3.953-18.215-18.726-22.408-18.79  c-1.618,0.602-2.631,1.747-3.799,3.069c-1.361,1.54-2.903,3.285-5.549,4.224c-0.428,0.152-0.897,0.229-1.396,0.229  c-5.299,0-15.411-9.53-20.045-16.092c-2.608-3.692-3.536-6.444-2.836-8.415c0.938-2.646,2.684-4.188,4.223-5.548  c1.324-1.169,2.47-2.183,3.071-3.804c0.022-1.441-3.24-7.22-9.33-14.125C24.913,14.623,21.556,12.27,20.446,12.02z"></path></svg>
+            </symbol>
+            <symbol id="mailfooter">
+                <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 85.57"><title>mail</title>
+                    <path d="M3.8,0,62.48,47.85,118.65,0ZM0,80.52,41.8,38.61,0,4.53v76ZM46.41,42.37,3.31,85.57h115.9L78,42.37,64.44,53.94h0a3,3,0,0,1-3.78.05L46.41,42.37Zm36.12-3.84,40.35,42.33V4.16L82.53,38.53Z"></path>
+                </svg>
+            </symbol>
+            <symbol id="shopicon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512">
+                    <path d="M0 155.2C0 147.9 2.153 140.8 6.188 134.7L81.75 21.37C90.65 8.021 105.6 0 121.7 0H518.3C534.4 0 549.3 8.021 558.2 21.37L633.8 134.7C637.8 140.8 640 147.9 640 155.2C640 175.5 623.5 192 603.2 192H36.84C16.5 192 .0003 175.5 .0003 155.2H0zM64 224H128V384H320V224H384V464C384 490.5 362.5 512 336 512H112C85.49 512 64 490.5 64 464V224zM512 224H576V480C576 497.7 561.7 512 544 512C526.3 512 512 497.7 512 480V224z"/>
+                </svg>
+            </symbol>
+        </svg>
+    </div>
+    <!--</body>-->
+    <!--</html>-->
+
+    <!-- file js + boottraps -->
+    <script>
+        $('.addThis_iconContact .item-contact,.addThis_listSharing .addThis_close').on('click', function (e) {
+            if ($('.addThis_listSharing').hasClass('active')) {
+                $('.addThis_listSharing').removeClass('active');
+                $('.addThis_listSharing').fadeOut(150);
+            } else {
+                $('.addThis_listSharing').fadeIn(100);
+                $('.addThis_listSharing').addClass('active');
+            }
+        });
+        $('.listSharing_overlay').on('click', function (e) {
+            $('.addThis_listSharing').removeClass('active');
+            $('.addThis_listSharing').fadeOut(150);
+        })
+    </script>
+    <link rel="preload" as='style'
+          href="//bizweb.sapocdn.net/100/460/476/themes/869615/assets/plugin-contact.scss.css?1669866878969">
+    <link href="//bizweb.sapocdn.net/100/460/476/themes/869615/assets/plugin-contact.scss.css?1669866878969"
+          rel="stylesheet" type="text/css"/>
+    <link rel="preload" href="//bizweb.sapocdn.net/100/460/476/themes/869615/assets/main.js?1669866878969" as="script">
+    <script src="//bizweb.sapocdn.net/100/460/476/themes/869615/assets/main.js?1669866878969"
+            type="text/javascript"></script>
+    <script src="//bizweb.sapocdn.net/100/460/476/themes/869615/assets/flashtest.js?1669866878969" defer></script>
+    <script>
+        var filter = new Bizweb.SearchFilter()
+
+        function clearAllFiltered() {
+            filter = new Bizweb.SearchFilter();
+            $(".filter-container__selected-filter-list ul").html("");
+            $(".filter-container input[type=checkbox]").prop("checked", false);
+            $(".filter-container__selected-filter").hide();
+            doSearch(1);
+        }
+    </script>
+    <link rel="preload" as="script" href="//bizweb.sapocdn.net/100/460/476/themes/869615/assets/col.js?1669866878969"/>
+    <script src="//bizweb.sapocdn.net/100/460/476/themes/869615/assets/col.js?1669866878969"
+            type="text/javascript"></script>
+
+    <script src="//bizweb.sapocdn.net/100/460/476/themes/869615/assets/wishlist-func.js?1669866878969" defer></script>
+    <script type="text/javascript" src="//bizweb.sapocdn.net/assets/themes_support/api.jquery.js"></script>
+    <script src="//bizweb.sapocdn.net/100/460/476/themes/869615/assets/minicart.js?1669866878969"></script>
+    <script src="//bizweb.sapocdn.net/100/460/476/themes/869615/assets/option_selector.js?1669866878969"></script>
+    <script src="//bizweb.sapocdn.net/100/460/476/themes/869615/assets/notify.js?1669866878969" async></script>
+    <link rel="preload" as='style' type="text/css"
+          href="//bizweb.sapocdn.net/100/460/476/themes/869615/assets/notify.scss.css?1669866878969">
+    <link href="//bizweb.sapocdn.net/100/460/476/themes/869615/assets/notify.scss.css?1669866878969" rel="stylesheet"
+          type="text/css"/>
+    <script>
+        var colId = 0;
+    </script>
+    <link rel="preload" as="image"
+          href="//bizweb.sapocdn.net/thumb/large/100/460/476/themes/869615/assets/slider_1.jpg?1669866878969"
+          media="screen and (max-width: 480px)">
+    <link rel="preload" as="image"
+          href="//bizweb.sapocdn.net/100/460/476/themes/869615/assets/slider_1.jpg?1669866878969"
+          media="screen and (min-width: 481px)">
+    <script src="//bizweb.sapocdn.net/100/460/476/themes/869615/assets/jquery-plugin.js?1669866878969"
+            type="text/javascript"></script>
+    <link rel="preload" href="//bizweb.sapocdn.net/100/460/476/themes/869615/assets/swiper-plugin.js?1669866878969"
+          as="script">
+    <script src="//bizweb.sapocdn.net/100/460/476/themes/869615/assets/swiper-plugin.js?1669866878969"></script>
+    <style>
+        :root {
+            --main-color: #2b5480;
+            --font-base: 'Roboto', sans-serif;
+            --font-title: 'Roboto', sans-serif;
+            --hover: #e67c26;
+            --text-color: #464646;
+            --price: #fd0000;
+            --hover: #e67c26;
+            --menu: #f08c37;
+            --deal-color: #e44724;
+            --bgcopoun: #ffeef2;
+            --footer-bg: #2b5480;
+            --bg-sup: #f3faff;
+        }
+    </style>
+    <link href="//bizweb.sapocdn.net/100/460/476/themes/869615/assets/plugin-css.scss.css?1669866878969"
+          rel="stylesheet" type="text/css"/>
+    <link rel="preload" as='style'
+          href="//bizweb.sapocdn.net/100/460/476/themes/869615/assets/swiper-style.scss.css?1669866878969">
+    <link href="//bizweb.sapocdn.net/100/460/476/themes/869615/assets/swiper-style.scss.css?1669866878969"
+          rel="stylesheet" type="text/css"/>
+
+    <link rel="preload" as='style'
+          href="//bizweb.sapocdn.net/100/460/476/themes/869615/assets/main.scss.css?1669866878969">
+    <link rel="preload" as='style'
+          href="//bizweb.sapocdn.net/100/460/476/themes/869615/assets/header.scss.css?1669866878969">
+
+    <link href="//bizweb.sapocdn.net/100/460/476/themes/869615/assets/main.scss.css?1669866878969" rel="stylesheet"
+          type="text/css"/>
+    <link href="//bizweb.sapocdn.net/100/460/476/themes/869615/assets/header.scss.css?1669866878969" rel="stylesheet"
+          type="text/css"/>
+
+
+    <link rel="preload" as='style' type="text/css"
+          href="//bizweb.sapocdn.net/100/460/476/themes/869615/assets/sidebar_style.scss.css?1669866878969">
+    <link href="//bizweb.sapocdn.net/100/460/476/themes/869615/assets/sidebar_style.scss.css?1669866878969"
+          rel="stylesheet" type="text/css"/>
+    <link rel="preload" as='style' type="text/css"
+          href="//bizweb.sapocdn.net/100/460/476/themes/869615/assets/collection_style.scss.css?1669866878969">
+    <link href="//bizweb.sapocdn.net/100/460/476/themes/869615/assets/collection_style.scss.css?1669866878969"
+          rel="stylesheet" type="text/css"/>
+
+    <script type="text/javascript">
+        function addLoadEvent(e) {
+            if (document.readyState === "complete") {
+                e()
+            } else {
+                var t = window.onload;
+                if (typeof window.onload != "function") {
+                    window.onload = e
+                } else {
+                    window.onload = function () {
+                        if (t) {
+                            t()
+                        }
+                        e()
+                    }
+                }
+            }
+        }
+    </script>
+    <script>
+        window.theme = window.theme || {};
+        var cartCount = 0;
+        theme.settings = {
+            moneyFormat: "{{amount_no_decimals_with_comma_separator}}₫",
+            urlpage_yeuthich: 'yeu-thich',
+            urlColor: 'https://bizweb.dktcdn.net/100/459/160/files/bangmau.txt?v=1657188898447'
+        };
+
+    </script>
+    <script>
+        var Bizweb = Bizweb || {};
+        Bizweb.store = 'ego-furniture.mysapo.net';
+        Bizweb.id = 460476;
+        Bizweb.theme = {'id': 869615, 'name': "Ego Furniture", 'role': 'main'};
+        Bizweb.template = 'collection';
+        if (!Bizweb.fbEventId) Bizweb.fbEventId = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
+    </script>
+    <script>
+        (function () {
+            function asyncLoad() {
+                var urls = [];
+                for (var i = 0; i < urls.length; i++) {
+                    var s = document.createElement('script');
+                    s.type = 'text/javascript';
+                    s.async = true;
+                    s.src = urls[i];
+                    var x = document.getElementsByTagName('script')[0];
+                    x.parentNode.insertBefore(s, x);
+                }
+            };
+            window.attachEvent ? window.attachEvent('onload', asyncLoad) : window.addEventListener('load', asyncLoad, false);
+        })();
+    </script>
+
+
+    <script>
+        window.BizwebAnalytics = window.BizwebAnalytics || {};
+        window.BizwebAnalytics.meta = window.BizwebAnalytics.meta || {};
+        window.BizwebAnalytics.meta.currency = 'VND';
+        window.BizwebAnalytics.tracking_url = '/s';
+
+        var meta = {};
+
+
+        for (var attr in meta) {
+            window.BizwebAnalytics.meta[attr] = meta[attr];
+        }
+    </script>
+    <script src="/dist/js/stats.min.js?v=69e02f0"></script>
+    <script type="application/ld+json">
+        {
+            "@context": "http://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "item": {
+                        "@id": "https://ego-furniture.mysapo.net",
+                        "name": "Trang chủ"
+                    }
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "item": {
+                        "@id": "https://ego-furniture.mysapo.net/collections/all",
+                        "name": "Tất cả sản phẩm"
+                    }
+                }
+            ]
+        }
+    </script>
+    <style>
+        :root {
+            --main-color: #2b5480;
+            --font-base: 'Roboto', sans-serif;
+            --font-title: 'Roboto', sans-serif;
+            --hover: #e67c26;
+            --text-color: #464646;
+            --price: #fd0000;
+            --hover: #e67c26;
+            --menu: #f08c37;
+            --deal-color: #e44724;
+            --bgcopoun: #ffeef2;
+            --footer-bg: #2b5480;
+            --bg-sup: #f3faff;
+        }
+    </style>
+    <link href="//bizweb.sapocdn.net/100/460/476/themes/869615/assets/plugin-css.scss.css?1669866878969"
+          rel="stylesheet" type="text/css"/>
+    <link rel="preload" as='style'
+          href="//bizweb.sapocdn.net/100/460/476/themes/869615/assets/swiper-style.scss.css?1669866878969">
+    <link href="//bizweb.sapocdn.net/100/460/476/themes/869615/assets/swiper-style.scss.css?1669866878969"
+          rel="stylesheet" type="text/css"/>
+
+    <link rel="preload" as='style'
+          href="//bizweb.sapocdn.net/100/460/476/themes/869615/assets/main.scss.css?1669866878969">
+    <link rel="preload" as='style'
+          href="//bizweb.sapocdn.net/100/460/476/themes/869615/assets/header.scss.css?1669866878969">
+
+    <link href="//bizweb.sapocdn.net/100/460/476/themes/869615/assets/main.scss.css?1669866878969" rel="stylesheet"
+          type="text/css"/>
+    <link href="//bizweb.sapocdn.net/100/460/476/themes/869615/assets/header.scss.css?1669866878969" rel="stylesheet"
+          type="text/css"/>
+
+
+    <link rel="preload" as='style' type="text/css"
+          href="//bizweb.sapocdn.net/100/460/476/themes/869615/assets/sidebar_style.scss.css?1669866878969">
+    <link href="//bizweb.sapocdn.net/100/460/476/themes/869615/assets/sidebar_style.scss.css?1669866878969"
+          rel="stylesheet" type="text/css"/>
+    <link rel="preload" as='style' type="text/css"
+          href="//bizweb.sapocdn.net/100/460/476/themes/869615/assets/collection_style.scss.css?1669866878969">
+    <link href="//bizweb.sapocdn.net/100/460/476/themes/869615/assets/collection_style.scss.css?1669866878969"
+          rel="stylesheet" type="text/css"/>
+
+    <script type="text/javascript">
+        function addLoadEvent(e) {
+            if (document.readyState === "complete") {
+                e()
+            } else {
+                var t = window.onload;
+                if (typeof window.onload != "function") {
+                    window.onload = e
+                } else {
+                    window.onload = function () {
+                        if (t) {
+                            t()
+                        }
+                        e()
+                    }
+                }
+            }
+        }
+    </script>
+    <script>
+        window.theme = window.theme || {};
+        var cartCount = 0;
+        theme.settings = {
+            moneyFormat: "{{amount_no_decimals_with_comma_separator}}₫",
+            urlpage_yeuthich: 'yeu-thich',
+            urlColor: 'https://bizweb.dktcdn.net/100/459/160/files/bangmau.txt?v=1657188898447'
+        };
+
+    </script>
+    <script>
+        var Bizweb = Bizweb || {};
+        Bizweb.store = 'ego-furniture.mysapo.net';
+        Bizweb.id = 460476;
+        Bizweb.theme = {'id': 869615, 'name': "Ego Furniture", 'role': 'main'};
+        Bizweb.template = 'collection';
+        if (!Bizweb.fbEventId) Bizweb.fbEventId = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
+    </script>
+    <script>
+        (function () {
+            function asyncLoad() {
+                var urls = [];
+                for (var i = 0; i < urls.length; i++) {
+                    var s = document.createElement('script');
+                    s.type = 'text/javascript';
+                    s.async = true;
+                    s.src = urls[i];
+                    var x = document.getElementsByTagName('script')[0];
+                    x.parentNode.insertBefore(s, x);
+                }
+            };
+            window.attachEvent ? window.attachEvent('onload', asyncLoad) : window.addEventListener('load', asyncLoad, false);
+        })();
+    </script>
+
+
+    <script>
+        window.BizwebAnalytics = window.BizwebAnalytics || {};
+        window.BizwebAnalytics.meta = window.BizwebAnalytics.meta || {};
+        window.BizwebAnalytics.meta.currency = 'VND';
+        window.BizwebAnalytics.tracking_url = '/s';
+
+        var meta = {};
+
+
+        for (var attr in meta) {
+            window.BizwebAnalytics.meta[attr] = meta[attr];
+        }
+    </script>
+    <script src="/dist/js/stats.min.js?v=69e02f0"></script>
+    <script type="application/ld+json">
+        {
+            "@context": "http://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "item": {
+                        "@id": "https://ego-furniture.mysapo.net",
+                        "name": "Trang chủ"
+                    }
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "item": {
+                        "@id": "https://ego-furniture.mysapo.net/collections/all",
+                        "name": "Tất cả sản phẩm"
+                    }
+                }
+            ]
+        }
+    </script>
+
 </div>
-                    <style>
-                        body {
-
-                            background: #eee;
-                        }
-
-
-                        .wrapper {
-
-                            margin-top: 30px;
-                        }
-
-                        .card {
-
-                            border: 1px solid #eee;
-                            cursor: pointer;
-                        }
-
-
-                        .weight {
-
-                            margin-top: -65px;
-                            transition: all 0.5s;
-                        }
-
-                        .weight small {
-
-                            color: #e2dede;
-                        }
-
-                        .buttons {
-                            padding: 10px;
-                            background-color: #d6d4d44f;
-                            border-radius: 4px;
-                            position: relative;
-                            margin-top: 7px;
-                            opacity: 0;
-                            transition: all 0.8s;
-                        }
-
-                        .dot {
-                            height: 14px;
-                            width: 14px;
-                            background-color: green;
-                            border-radius: 50%;
-                            position: absolute;
-                            left: 27%;
-                            display: flex;
-                            justify-content: center;
-                            align-items: center;
-                            font-size: 8px;
-                            color: #fff;
-                            opacity: 0;
-                        }
-
-                        .cart-button {
-                            height: 48px
-                        }
-
-                        .cart-button:focus {
-                            box-shadow: none
-                        }
-
-                        .cart {
-                            position: relative;
-                            height: 48px !important;
-                            width: 50px;
-                            margin-right: 8px;
-                            display: flex;
-                            justify-content: center;
-                            align-items: center;
-                            background-color: #fff;
-                            padding: 11px;
-                            border-radius: 5px;
-                            font-size: 14px;
-                            transition: 1s ease-in-out;
-                            overflow: hidden;
-
-                        }
-
-                        .cart-button.clicked span.dot {
-                            animation: item 0.3s ease-in forwards
-                        }
-
-                        @keyframes item {
-                            0% {
-                                opacity: 1;
-                                top: 30%;
-                                left: 30%
-                            }
-
-                            25% {
-                                opacity: 1;
-                                left: 26%;
-                                top: 0%
-                            }
-
-                            50% {
-                                opacity: 1;
-                                left: 23%;
-                                top: -22%
-                            }
-
-                            75% {
-                                opacity: 1;
-                                left: 19%;
-                                top: -18%
-                            }
-
-                            100% {
-                                opacity: 1;
-                                left: 14%;
-                                top: 28%
-                            }
-                        }
-
-
-                        .card:hover .buttons {
-
-                            opacity: 1;
-                        }
-
-
-                        .card:hover .weight {
-
-                            margin-top: 10px;
-                        }
-
-                        .card:hover {
-
-                            transform: scale(1.04);
-                            z-index: 2;
-                            overflow: hidden;
-                        }
-
-                        label.radio {
-                            cursor: pointer
-                        }
-
-                        label.radio input {
-                            position: absolute;
-                            top: 0;
-                            left: 0;
-                            visibility: hidden;
-                            pointer-events: none
-                        }
-
-                        label.radio span {
-                            padding: 2px 9px;
-                            border: 2px solid black;
-                            display: inline-block;
-                            color: black;
-                            border-radius: 3px;
-                            text-transform: uppercase
-                        }
-
-                        label.radio input:checked + span {
-                            border-color: black;
-                            background-color: black;
-                            color: #fff
-                        }
-
-                        .btn {
-
-                            border-radius: 0;
-                        }
-                    </style>
-                    <script type="text/javascript">
-                        $(document).ready(function () {
-                            $('#list').click(function (event) {
-                                event.preventDefault();
-                                $('#products .item').addClass('list-group-item');
-                            });
-                            $('#grid').click(function (event) {
-                                event.preventDefault();
-                                $('#products .item').removeClass('list-group-item');
-                                $('#products .item').addClass('grid-group-item');
-                            });
-                        });
-                    </script>
