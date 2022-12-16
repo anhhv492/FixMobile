@@ -169,26 +169,29 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                             var money = data.price
                             console.log('kkkkkk')
                             var urlSale=`http://localhost:8080/admin/rest/sale/getbigsale?money=`+money+`&idPrd=`+'0'+`&idAcsr=`+data.idAccessory;
-                            var total=-1;
+                            var total=0;
                             $http.get(urlSale, token).then(resp => {
                                 console.log("hihi")
                                 if(resp.data.moneySale == null) {
                                     total= money - money*resp.data.percentSale/100;
                                 }else if(resp.data.percentSale == null){
                                     if(resp.data.moneySale > money){
-                                        total=0;
+                                        total=money;
                                     }else {
                                         total=money - resp.data.moneySale;
                                     }
-                                }else{total=money}
+                                }else{
+                                    total=0
+                                }
                                 data.priceSale=total;
                                 data.idSale = resp.data.idSale;
-                                $rootScope.carts.push(data);
-                                $rootScope.saveLocalStorage();
-                                $rootScope.qtyCart++;
                             }).catch(error => {
                                 console.log(error)
                             })
+                            $rootScope.carts.push(data);
+                            $rootScope.saveLocalStorage();
+                            $rootScope.loadLocalStorage();
+                            $rootScope.qtyCart++;
                         }else{
                             $scope.accessoryItem.qty++;
                         }
@@ -258,8 +261,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                         if(!$scope.productItem){
                             data.qty=1;
                             var money = data.price
-
-                            var total=-1;
+                            var total=0;
                             var urlSale=`http://localhost:8080/admin/rest/sale/getbigsale?money=`+money+`&idPrd=`+data.idProduct+`&idAcsr=0`;
                             $http.get(urlSale, token).then(resp => {
                                 console.log("hihi")
@@ -267,21 +269,22 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                                     total= money - money*resp.data.percentSale/100;
                                 }else if(resp.data.percentSale == null){
                                     if(resp.data.moneySale>money){
-                                        total=0;
+                                        total=money;
                                     }else {
                                         total=money - resp.data.moneySale;
                                     }
-                                }else{total=money}
-                                data.priceSale=total;
-                                data.idSale = resp.data.idSale;
-                                $rootScope.carts.push(data);
-                              
-                                $rootScope.saveLocalStorage();
-                                $rootScope.qtyCart++;
-
+                                }else{
+                                    total=0
+                                }
                             }).catch(error => {
                                 console.log(error)
                             })
+                            data.priceSale=total;
+                            data.idSale = resp.data.idSale;
+                            $rootScope.carts.push(data);
+                            $rootScope.saveLocalStorage();
+                            $rootScope.loadLocalStorage();
+                            $rootScope.qtyCart++;
                         }else{
                             $scope.productItem.qty++;
                         }
@@ -369,19 +372,22 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                                 total= money - money*resp.data.percentSale/100;
                             }else if(resp.data.percentSale == null){
                                 if(resp.data.moneySale<money){
-                                    total=0;
+                                    total=money;
                                 }else {
                                     total=money - resp.data.moneySale;
                                 }
-                            }else{total=money}
-                            console.log(total)
-                            data.price=total;
-                            console.log(data.price);
-                            $rootScope.carts.push(data);
+                            }else{
+                                total=0
+                            }
                         }).catch(error => {
                             console.log(error)
                         })
+                        data.priceSale=total;
+                        data.idSale = resp.data.idSale;
                         $rootScope.carts.push(data);
+                        $rootScope.saveLocalStorage();
+                        $rootScope.loadLocalStorage();
+                        $rootScope.qtyCart++;
                     }else{
                         $scope.productItem.qty++;
                     }
@@ -426,7 +432,6 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
     }
     $rootScope.saveLocalStorage=function(){
         let json = JSON.stringify($rootScope.carts);
-
         $http.get(urlAccount+`/getAccountActive`, token).then(function (respon){
             localStorage.setItem(respon.data.username,json);
         }).catch(err=>{
@@ -444,13 +449,6 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
             $rootScope.carts=json? JSON.parse(json):[];
             $rootScope.loadQtyCart();
         })
-
-        localStorage.setItem("cart",json);
-    }
-    $rootScope.loadLocalStorage = function(){
-        let json = localStorage.getItem("cart");
-        $rootScope.carts=json? JSON.parse(json):[];
-
         for (let i = 0; i < $rootScope.carts.length; i++) {
             $rootScope.carts.find(item=>{
                 if(item.idAccessory){
@@ -469,6 +467,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
             })
         }
     }
+
     $rootScope.loadQtyCart=function(){
         $rootScope.qtyCart=0;
         if($rootScope.carts){
