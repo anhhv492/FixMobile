@@ -156,7 +156,6 @@ CREATE TABLE order_detail (
 	id_order int NULL, 
 	id_sale int NULL, 
 	price_sale decimal(10,0) NULL, 
-	status int  DEFAULT(0) null,
 	id_order int  NULL, 
 	id_product int NULL,
 	id_accessory int NULL,
