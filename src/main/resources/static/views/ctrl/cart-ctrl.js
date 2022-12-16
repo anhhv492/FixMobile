@@ -303,12 +303,10 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window,$timeou
             for(var i=0;i<$rootScope.carts.length;i++){
                 $scope.totalPriceSale1 = $scope.totalPriceSale1 + ($rootScope.carts[i].priceSale*$rootScope.carts[i].qty);
             }
-            console.log($scope.totalPriceSale1);
             return $scope.totalPriceSale1;
         }
     }
     $scope.totals = function () {
-        console.log($scope.totalPrice())
         if($scope.totalPriceSale1 !=0){
             return $scope.totalPriceSale1-$scope.priceSaleByVocher;
         }else{

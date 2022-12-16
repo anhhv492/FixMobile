@@ -51,17 +51,32 @@ app.controller('view_product_ctrl', function ($scope,$http,$rootScope){
         capacity:"",
         color:""
     }
-
+    $scope.getPriceSaleTopProduct = function(x){
+        $scope.productView[x].priceSale = 0;
+        var urlSale=`http://localhost:8080/admin/rest/sale/getbigsale?money=`+$scope.productView[x].price+`&idPrd=`+$scope.productView[x].idProduct+`&idAcsr=0`;
+        $http.get(urlSale, token).then(resp => {
+            console.log(resp.data);
+            if(resp.data.moneySale == null) {
+                $scope.productView[x].priceSale = $scope.productView[x].price * resp.data.percentSale/100;
+            }else if(resp.data.percentSale == null){
+                if(resp.data.moneySale > $scope.productView[x].price){
+                    $scope.productView[x].priceSale = $scope.productView[x].price;
+                }else {
+                    $scope.productView[x].priceSale =  resp.data.moneySale;
+                }
+            }
+        }).catch(error => {
+            console.log(error)
+        })
+    }
     // top 4 sp
     $scope.getTopProduct = function (){
         $http.get(`/rest/guest/productCount`,token).then(function(response) {
             $scope.productView = response.data;
-            $scope.priceSale=[];
+            console.log('nam ngu')
             for(var i=0; i<response.data.length;i++){
-                $scope.getSale(response.data[i].price,response.data[i].idProduct,0)
-                console.log($scope.priceSale);
+                $scope.getPriceSaleTopProduct(i);
             }
-            console.log(response.data);
         }).catch(error=>{
             console.log(error);
         });
@@ -130,7 +145,7 @@ app.controller('view_product_ctrl', function ($scope,$http,$rootScope){
 
 
     $scope.getTopProduct();
-    $scope.getTopProductPrice();
+    // $scope.getTopProductPrice();
 
     
     $scope.getOneProduct = function (id){
@@ -175,23 +190,6 @@ app.controller('view_product_ctrl', function ($scope,$http,$rootScope){
         });
     }
 
-    $scope.getSale=function (money,  idPrd,  idAcsr){
-        var urlSale=`http://localhost:8080/admin/rest/sale/getbigsale?money=`+money+`&idPrd=`+idPrd+`&idAcsr=`+idAcsr;
-        $http.get(urlSale, token).then(resp => {
-            if(resp.data.moneySale == null) {
-                $scope.priceSale.push(money - (money * resp.data.percentSale/100));
-            }else if(resp.data.percentSale == null){
-                if(resp.data.moneySale<money){
-                    $scope.priceSale.push(0);
-                }else {
-                    $scope.priceSale.push(money - resp.data.moneySale);
-                }
-            }else{ $scope.priceSale.push(-1)}
-        }).catch(error => {
-            console.log(error + "hahha");
-            $scope.priceSale.push(-1)
-        })
-    }
     $scope.getSale1=function (money,  idPrd,  idAcsr){
         var urlSale=`http://localhost:8080/admin/rest/sale/getbigsale?money=`+money+`&idPrd=`+idPrd+`&idAcsr=`+idAcsr;
         $http.get(urlSale, token).then(resp => {

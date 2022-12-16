@@ -449,13 +449,10 @@
                                                                 {{p.totail | number}} sản phẩm</small>
                                                         </div>
                                                         <div class="price-box">
-                                                            <span class="price">{{p.price}}</span>
-                                                            <span ng-if="priceSale[$index]==-1">{{p.price | number}} VNĐ</span>
-                                                            <span ng-if="pric0eSale[$index]!=-1 && priceSale[$index]!=0">
-															<del>{{p.price | number}} VNĐ</del> &nbsp; {{priceSale[$index] | number}} VNĐ
+                                                            <span ng-if="p.priceSale == 0">{{p.price | number}} VNĐ</span>
+                                                            <span ng-if="p.priceSale != 0">
+															<del>{{p.price | number}} VNĐ</del> &nbsp; {{p.price - p.priceSale| number}} VNĐ
 														</span>
-                                                            <span ng-if="priceSale[$index]!=-1 && priceSale[$index]==0">
-															<del>{{p.price | number}} VNĐ</del> &nbsp; Free </span>
                                                         </div>
                                                     </div>
                                                     <div class="action-cart">

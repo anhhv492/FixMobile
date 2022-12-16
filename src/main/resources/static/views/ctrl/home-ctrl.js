@@ -61,7 +61,6 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
         })
     }
     $scope.getPriceSalePrd=function (x){
-
         $rootScope.detailProducts[x].priceSale = 0;
         var urlSale=`http://localhost:8080/admin/rest/sale/getbigsale?money=`+$rootScope.detailProducts[x].price+`&idPrd=`+$rootScope.detailProducts[x].idProduct+`&idAcsr=0`;
         $http.get(urlSale, token).then(resp => {
@@ -74,6 +73,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                     $rootScope.detailProducts[x].priceSale =  resp.data.moneySale;
                 }
             }
+            console.log($rootScope.detailProducts)
         }).catch(error => {
             console.log(error)
         })

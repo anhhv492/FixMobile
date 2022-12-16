@@ -445,9 +445,8 @@
 															{{p.totail | number}} sản phẩm</small>
 													</div>
                                                     <div class="price-box">
-                                                        <span class="price">{{p.price}}</span>
 														<span ng-if=" p.priceSale != 0">
-															<del>{{p.price | number}} VNĐ</del> &nbsp; {{p.priceSale | number}} VNĐ
+															<del>{{p.price | number}} VNĐ</del> &nbsp; {{p.price-p.priceSale | number}} VNĐ
 														</span>
 														<span ng-if="p.priceSale == 0">
 															<del>{{p.price | number}} VNĐ</del> </span>
