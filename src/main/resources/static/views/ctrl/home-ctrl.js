@@ -64,13 +64,17 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
         $rootScope.detailProducts[x].priceSale = 0;
         var urlSale=`http://localhost:8080/admin/rest/sale/getbigsale?money=`+$rootScope.detailProducts[x].price+`&idPrd=`+$rootScope.detailProducts[x].idProduct+`&idAcsr=0`;
         $http.get(urlSale, token).then(resp => {
-            if(resp.data.moneySale == null) {
-                $rootScope.detailProducts[x].priceSale = $rootScope.detailProducts[x].price * resp.data.percentSale/100;
-            }else if(resp.data.percentSale == null){
-                if(resp.data.moneySale > $rootScope.detailProducts[x].price){
-                    $rootScope.detailProducts[x].priceSale = $rootScope.detailProducts[x].price;
-                }else {
-                    $rootScope.detailProducts[x].priceSale =  resp.data.moneySale;
+            if(resp.data==''){
+                $rootScope.detailProducts[x].priceSale = 0;
+            }else {
+                if (resp.data.moneySale == null) {
+                    $rootScope.detailProducts[x].priceSale = $rootScope.detailProducts[x].price * resp.data.percentSale / 100;
+                } else if (resp.data.percentSale == null) {
+                    if (resp.data.moneySale > $rootScope.detailProducts[x].price) {
+                        $rootScope.detailProducts[x].priceSale = $rootScope.detailProducts[x].price;
+                    } else {
+                        $rootScope.detailProducts[x].priceSale = resp.data.moneySale;
+                    }
                 }
             }
             console.log($rootScope.detailProducts)
@@ -82,14 +86,18 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
         $rootScope.detailAccessories[x].priceSale = 0;
         var urlSale=`http://localhost:8080/admin/rest/sale/getbigsale?money=`+$rootScope.detailAccessories[x].price+`&idPrd=0&idAcsr=`+$rootScope.detailAccessories[x].idAccessory;
         $http.get(urlSale, token).then(resp => {
-            if(resp.data.moneySale == null) {
-                $rootScope.detailAccessories[x].priceSale = $rootScope.detailAccessories[x].price * resp.data.percentSale/100;
-            }else if(resp.data.percentSale == null){
-                if(resp.data.moneySale > $rootScope.detailAccessories[x].price){
-                    $rootScope.detailAccessories[x].priceSale = $rootScope.detailAccessories[x].price;
-                }else {
-                    $rootScope.detailAccessories[x].priceSale =  resp.data.moneySale;
+            if(resp.data!='') {
+                if (resp.data.moneySale == null) {
+                    $rootScope.detailAccessories[x].priceSale = $rootScope.detailAccessories[x].price * resp.data.percentSale / 100;
+                } else if (resp.data.percentSale == null) {
+                    if (resp.data.moneySale > $rootScope.detailAccessories[x].price) {
+                        $rootScope.detailAccessories[x].priceSale = $rootScope.detailAccessories[x].price;
+                    } else {
+                        $rootScope.detailAccessories[x].priceSale = resp.data.moneySale;
+                    }
                 }
+            }else{
+                $rootScope.detailAccessories[x].priceSale = 0;
             }
         }).catch(error => {
             console.log(error)
@@ -171,27 +179,28 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                             var urlSale=`http://localhost:8080/admin/rest/sale/getbigsale?money=`+money+`&idPrd=`+'0'+`&idAcsr=`+data.idAccessory;
                             var total=0;
                             $http.get(urlSale, token).then(resp => {
-                                console.log("hihi")
-                                if(resp.data.moneySale == null) {
-                                    total= money - money*resp.data.percentSale/100;
-                                }else if(resp.data.percentSale == null){
-                                    if(resp.data.moneySale > money){
-                                        total=money;
-                                    }else {
-                                        total=money - resp.data.moneySale;
-                                    }
-                                }else{
+                                if(resp.data=''){
                                     total=0
+                                }else {
+                                    if (resp.data.moneySale == null) {
+                                        total = money - money * resp.data.percentSale / 100;
+                                    } else if (resp.data.percentSale == null) {
+                                        if (resp.data.moneySale > money) {
+                                            total = money;
+                                        } else {
+                                            total = money - resp.data.moneySale;
+                                        }
+                                    }
                                 }
-                                data.priceSale=total;
+                                data.priceSale = total;
                                 data.idSale = resp.data.idSale;
+                                $rootScope.carts.push(data);
+                                $rootScope.saveLocalStorage();
+                                $rootScope.loadLocalStorage();
+                                $rootScope.qtyCart++;
                             }).catch(error => {
                                 console.log(error)
                             })
-                            $rootScope.carts.push(data);
-                            $rootScope.saveLocalStorage();
-                            $rootScope.loadLocalStorage();
-                            $rootScope.qtyCart++;
                         }else{
                             $scope.accessoryItem.qty++;
                         }
@@ -261,10 +270,33 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                         alert("spanpham")
                         if(!$scope.productItem){
                             data.qty=1;
-                            $rootScope.carts.push(data);
-                            $rootScope.saveLocalStorage();
-                            $rootScope.loadLocalStorage();
-                            $rootScope.qtyCart++;
+                            var money = data.price
+
+                            var total=0;
+                            var urlSale=`http://localhost:8080/admin/rest/sale/getbigsale?money=`+money+`&idPrd=`+data.idProduct+`&idAcsr=0`;
+                            $http.get(urlSale, token).then(resp => {
+                                if(resp.data=''){
+                                    total=0;
+                                }else {
+                                    if (resp.data.moneySale == null) {
+                                        total = money - money * resp.data.percentSale / 100;
+                                    } else if (resp.data.percentSale == null) {
+                                        if (resp.data.moneySale > money) {
+                                            total = money;
+                                        } else {
+                                            total = money - resp.data.moneySale;
+                                        }
+                                    }
+                                }
+                                data.priceSale=total;
+                                data.idSale = resp.data.idSale;
+                                $rootScope.carts.push(data);
+                                $rootScope.saveLocalStorage();
+                                $rootScope.qtyCart++;
+
+                            }).catch(error => {
+                                console.log(error)
+                            })
                         }else{
                             $scope.productItem.qty++;
                         }
@@ -347,27 +379,28 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                         var urlSale=`http://localhost:8080/admin/rest/sale/getbigsale?money=`+money+`&idPrd=`+data.idProduct+`&idAcsr=0`;
                         var total=0;
                         $http.get(urlSale, token).then(resp => {
-                            console.log("hihi")
-                            if(resp.data.moneySale == null) {
-                                total= money - money*resp.data.percentSale/100;
-                            }else if(resp.data.percentSale == null){
-                                if(resp.data.moneySale<money){
-                                    total=money;
-                                }else {
-                                    total=money - resp.data.moneySale;
+                            if(resp.data=='') {
+                                total = 0;
+                            }else {
+                                if (resp.data.moneySale == null) {
+                                    total = money - money * resp.data.percentSale / 100;
+                                } else if (resp.data.percentSale == null) {
+                                    if (resp.data.moneySale > money) {
+                                        total = money;
+                                    } else {
+                                        total = money - resp.data.moneySale;
+                                    }
                                 }
-                            }else{
-                                total=0
                             }
+                            data.priceSale=total;
+                            data.idSale = resp.data.idSale;
+                            $rootScope.carts.push(data);
+                            $rootScope.saveLocalStorage();
+                            $rootScope.loadLocalStorage();
+                            $rootScope.qtyCart++;
                         }).catch(error => {
                             console.log(error)
                         })
-                        data.priceSale=total;
-                        data.idSale = resp.data.idSale;
-                        $rootScope.carts.push(data);
-                        $rootScope.saveLocalStorage();
-                        $rootScope.loadLocalStorage();
-                        $rootScope.qtyCart++;
                     }else{
                         $scope.productItem.qty++;
                     }

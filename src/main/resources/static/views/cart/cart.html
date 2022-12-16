@@ -47,8 +47,8 @@
                             <td class="align-middle" ng-if="item.idAccessory">{{item.color}}</td>
                             <td class="align-middle" ng-if="item.idProduct">{{item.color.name}}</td>
                             <td class="align-middle">
-                                <p class="mb-0" style="font-weight: 500 " ng-if="item.priceSale ==-1">{{item.price*item.qty|number}}</p>
-                                <p class="mb-0" style="font-weight: 500 " ng-if="item.priceSale !=-1">{{item.priceSale*item.qty|number}} VNĐ&nbsp;<del>{{item.price*item.qty|number}} VNĐ</del><br>
+                                <p class="mb-0" style="font-weight: 500 " ng-if="item.priceSale !=0">{{item.price*item.qty|number}}</p>
+                                <p class="mb-0" style="font-weight: 500 " ng-if="item.priceSale ==0">{{item.priceSale*item.qty|number}} VNĐ&nbsp;<del>{{item.price*item.qty|number}} VNĐ</del><br>
                                 Tiết kiệm được {{item.price*item.qty-item.priceSale*item.qty |number}}
                                 </p>
                             </td>
