@@ -139,7 +139,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
         $scope.productItem = $rootScope.carts.find(
             it=>it.idProduct===item.idProduct
         );
-        if(item.category){
+        if(item.category.type){
             $http.get(`${urlAccessory}/${item.idAccessory}`).then(res=>{
                 let itemCart = $rootScope.carts.find(
                     it=>it.idAccessory===item.idAccessory
@@ -161,7 +161,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                         })
                         Toast.fire({
                             icon: 'error',
-                            title: 'Số lượng sản phẩm không đủ!'
+                            title: 'Hết hàng!'
                         })
                     }else{
                         if(!$scope.accessoryItem){
@@ -255,32 +255,12 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                         })
                         Toast.fire({
                             icon: 'error',
-                            title: 'Số lượng sản phẩm không đủ!'
+                            title: 'Hết hàng!'
                         })
                     }else{
+                        alert("spanpham")
                         if(!$scope.productItem){
                             data.qty=1;
-                            var money = data.price
-                            var total=0;
-                            var urlSale=`http://localhost:8080/admin/rest/sale/getbigsale?money=`+money+`&idPrd=`+data.idProduct+`&idAcsr=0`;
-                            $http.get(urlSale, token).then(resp => {
-                                console.log("hihi")
-                                if(resp.data.moneySale == null) {
-                                    total= money - money*resp.data.percentSale/100;
-                                }else if(resp.data.percentSale == null){
-                                    if(resp.data.moneySale>money){
-                                        total=money;
-                                    }else {
-                                        total=money - resp.data.moneySale;
-                                    }
-                                }else{
-                                    total=0
-                                }
-                            }).catch(error => {
-                                console.log(error)
-                            })
-                            data.priceSale=total;
-                            data.idSale = resp.data.idSale;
                             $rootScope.carts.push(data);
                             $rootScope.saveLocalStorage();
                             $rootScope.loadLocalStorage();
@@ -358,7 +338,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                     })
                     Toast.fire({
                         icon: 'error',
-                        title: 'Số lượng sản phẩm không đủ!'
+                        title: 'Hết hàng!'
                     })
                 }else{
                     if(!$scope.productItem){
