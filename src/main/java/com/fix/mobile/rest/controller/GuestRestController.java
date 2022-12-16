@@ -41,7 +41,7 @@ public class GuestRestController {
     @Autowired
     private OrderDetailService orderDetailService;
     @Autowired
-    private SaleRepository saleService;
+    private SaleService saleService;
 
     @Autowired
     private  CapacityService capacityService;
@@ -173,6 +173,9 @@ public class GuestRestController {
                         priceSale= new BigDecimal(carts.get(i).get("priceSale").asDouble());
                         orderDetail.setPriceSale(priceSale);
                         orderDetail.setIdSale(carts.get(i).get("idSale").asInt());
+                        Sale updatequantity= saleService.findByid(carts.get(i).get("idSale").asInt());
+                        updatequantity.setQuantity(updatequantity.getQuantity()-1);
+                        saleService.updateQuantity(updatequantity);
                         orderDetailService.save(orderDetail);
                         accessory.get().setQuantity(accessory.get().getQuantity()-carts.get(i).get("qty").asInt());
                         accessoryService.update(accessory.get(),accessory.get().getIdAccessory());
@@ -190,6 +193,9 @@ public class GuestRestController {
                         priceSale= new BigDecimal(carts.get(i).get("priceSale").asDouble());
                         orderDetail.setPriceSale(priceSale);
                         orderDetail.setIdSale(carts.get(i).get("idSale").asInt());
+                        Sale updatequantity= saleService.findByid(carts.get(i).get("idSale").asInt());
+                        updatequantity.setQuantity(updatequantity.getQuantity()-1);
+                        saleService.updateQuantity(updatequantity);
                         orderDetailService.save(orderDetail);
 //                        for (int j = 0; j < carts.get(i).get("qty").asInt(); j++) {
 //                            imayProducts.get(j).setOrderDetail(orderDetail);
@@ -205,11 +211,11 @@ public class GuestRestController {
     }
 
 
-    @GetMapping("/cart/sale")
-    public List<Sale> getSaleByAccount(@PathVariable("id") Integer id){
-        List<Sale> sales = saleService.findAllByDate();
-        return sales;
-    }
+//    @GetMapping("/cart/sale")
+//    public List<Sale> getSaleByAccount(@PathVariable("id") Integer id){
+//        List<Sale> sales = saleService.findAllByDate();
+//        return sales;
+//    }
     @GetMapping(value ="/findByProductCode/{productCode}")
     public Optional<Product> findByProductCode(@PathVariable("productCode") Integer productCode) {
         Optional<Product> product = productService.findById(productCode);
