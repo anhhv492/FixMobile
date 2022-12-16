@@ -141,6 +141,7 @@ CREATE TABLE orders (
 	type binary  null,
 	username nvarchar(50)  NULL,
     money_sale decimal(10,0) null,
+    money_ship decimal(10,0) null,
 	person_take nvarchar(50)  NULL,
 	phone_take nvarchar(15)  NULL,
     id_sale int null,
