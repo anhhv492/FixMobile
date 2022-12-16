@@ -74,7 +74,18 @@ app.config(function($routeProvider){
             templateUrl:"order/detail/productchange.html",
             controller: "productchange-ctrl",
         })
-
+        .when("/shop",{
+            templateUrl:"product/viewproduct.html",
+            //controller: "productchange-ctrl",
+        })
+        .when("/viewaccesory",{
+            templateUrl:"accessory/viewaccesory.html",
+            //controller: "productchange-ctrl",
+        })
+        .when("/page",{
+            templateUrl:"home/page.html",
+            //controller: "productchange-ctrl",
+        })
 
 
 });
