@@ -32,7 +32,9 @@ public class CategoryRestController {
 
     @PostMapping("/create")
     public Category create(@RequestBody Category category){
-        return categoryService.save(category);
+        Category categorySave = categoryService.save(category);
+        if (categorySave != null) return categorySave;
+        throw new RuntimeException();
     }
 
     @PutMapping("/update")
