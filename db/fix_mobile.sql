@@ -153,10 +153,9 @@ CREATE TABLE order_detail (
 	quantity int  null,
 	price decimal(10,0) null,
 	status binary DEFAULT(0),
-	id_order int NULL, 
-	id_sale int NULL, 
 	price_sale decimal(10,0) NULL, 
-	id_order int  NULL, 
+	id_sale int NULL, 
+	id_order int NULL, 
 	id_product int NULL,
 	id_accessory int NULL,
 	foreign key(id_order) references orders(id_order),
@@ -364,9 +363,9 @@ INSERT INTO fix_mobile.accounts(username,password,full_name,gender,email,
 VALUES ('vietanhvs','$2a$12$FUNIidYXB/rc3BRR1XuQZObS4Vn7BPPomqllVvwcBOkJtZJWKFM16','Hạ Việt Anh',0,'vietanhvs@gmail.com',
 	1,'0984297473','2022/10/30','',1);
 	
-CREATE OR REPLACE view customerorders as select o.id_order AS 'id_order',count(d.id_detail) AS 'totalquantity',count(o.id_order) AS 'totalorder',`a`.`full_name` AS 'full_name', a.create_date AS 'create_date',sum(o.total) AS 'totalmoney' from ((((`japanshop`.`accounts` `a` left join `japanshop`.`orders` `o` on(`a`.`username` = `o`.`username`)) left join `japanshop`.`order_detail` `d` on(`d`.`id_order` = `o`.`id_order`)) left join `japanshop`.`products` `p` on(`p`.`id_product` = `d`.`id_product`)) left join `japanshop`.`imei` `i` on(`i`.`id_product` = `p`.`id_product`)) group by `o`.`id_order`,`a`.`username`,`p`.`id_product`;
+CREATE OR REPLACE view customerorders as select o.id_order AS 'id_order',count(d.id_detail) AS 'totalquantity',count(o.id_order) AS 'totalorder',`a`.`full_name` AS 'full_name', a.create_date AS 'create_date',sum(o.total) AS 'totalmoney' from ((((`fix_mobile`.`accounts` `a` left join `fix_mobile`.`orders` `o` on(`a`.`username` = `o`.`username`)) left join `fix_mobile`.`order_detail` `d` on(`d`.`id_order` = `o`.`id_order`)) left join `fix_mobile`.`products` `p` on(`p`.`id_product` = `d`.`id_product`)) left join `fix_mobile`.`imayproduct` `i` on(`i`.`id_product` = `p`.`id_product`)) group by `o`.`id_order`,`a`.`username`,`p`.`id_product`;
 
-// lấy giảm giá cao nhất của giảm toàn bộ cửa hàng
+--  lấy giảm giá cao nhất của giảm toàn bộ cửa hàng
 create
     definer = root@localhost procedure getBigSale_ALLSHOP(IN _money decimal)
 begin
@@ -388,7 +387,7 @@ begin
     end if;
 END;
 
-//giảm giá theo phụ kiện
+-- giảm giá theo phụ kiện
 create
     definer = root@localhost procedure getBigSale_Accessory(IN _idacsr int)
 begin
@@ -422,7 +421,7 @@ begin
     end if;
 END;
 
-//giảm giá theo đơn hàng
+-- giảm giá theo đơn hàng
 create
     definer = root@localhost procedure getBigSale_Order(IN _money decimal)
 begin
@@ -449,7 +448,7 @@ begin
     end if;
 END;
 
-//giảm giá theo sản phẩm
+-- giảm giá theo sản phẩm
 create
     definer = root@localhost procedure getBigSale_Products(IN _idprd int)
 begin
@@ -482,10 +481,10 @@ begin
                 quantity_use != 0 and NOW() between create_start  and create_end limit 1;
     end if;
 END;
-// quản lý theo người dùng
+--  quản lý theo người dùng
 create
     definer = root@localhost procedure getBigSale_UserName(IN _userName varchar(50), IN _money decimal)
-begin
+beginorder_detail
     declare max_moneySale decimal;
     declare max_percentSale integer;
 
