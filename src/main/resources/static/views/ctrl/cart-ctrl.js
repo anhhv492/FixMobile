@@ -4,7 +4,7 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window,$timeou
     var urlAccessory = `http://localhost:8080/rest/guest/accessory`;
     var urlProduct= `http://localhost:8080/rest/guest/product`;
     var urlOrderDetail = `http://localhost:8080/rest/guest/order/detail`;
-    var urlAccount = `http://localhost:8080/rest/admin/accounts`;
+    var urlAccount = `http://localhost:8080/rest/user`;
     var urlShippingOder = `http://localhost:8080/rest/user/address/getShipping-order`;
     const jwtToken = localStorage.getItem("jwtToken")
     const token = {

@@ -84,12 +84,7 @@ public class AccountRestController {
     }
 
     
-    @GetMapping("/getAccountActive")
-    public AccountDTO getAccountActive() {
-        Account account = accountService.findByUsername(UserName.getUserName());
-        AccountDTO accountDTO = modelMapper.map(account, AccountDTO.class);
-        return accountDTO;
-    }
+
     @RequestMapping("/getdatasale/{page}")
     public Page<Account> getDataShowSale(
             @PathVariable ("page") Integer page,
@@ -101,29 +96,5 @@ public class AccountRestController {
         return accountService.getByPage(page,5,share);
     }
 
-    @PostMapping("/setaddressdefault")
-    public void setaddressdefault(@RequestBody Integer id){
-        accountService.setAddressDefault(id);
-    }
 
-    @GetMapping("/getAddress")
-    public AddressDTO getAddress(){
-        return accountService.getAddress();
-    }
-
-    @PostMapping("/updateAccountActive")
-    public AccountDTO updateAccountActive(@RequestBody AccountDTO accountDTO){
-        return accountService.updateAccountActive(accountDTO);
-    }
-
-    @PostMapping(value = "/updateImage", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
-    public AccountResponDTO updateImage(@ModelAttribute AccountRequestDTO accountRequestDTO){
-        return accountService.updateImage(accountRequestDTO);
-    }
-
-    @PostMapping("/updatePassword")
-    public Boolean updatePassword (@RequestBody UpdatePasswordDTO updatePasswordDTO){
-
-         return accountService.updatePassword(updatePasswordDTO);
-    }
 }

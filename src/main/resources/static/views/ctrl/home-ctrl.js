@@ -4,7 +4,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
     var urlImei = `http://localhost:8080/rest/guest/imei`;
     var urlProduct=`http://localhost:8080/rest/guest/product`;
     var urlOneProduct = `http://localhost:8080/rest/guest`;
-    var urlAccount = `http://localhost:8080/rest/admin/accounts`;
+    var urlAccount = `http://localhost:8080/rest/user`;
     const callApiOneAccessoryHome = "http://localhost:8080/rest/guest/getOneAccessory";
 
      const jwtToken = localStorage.getItem("jwtToken")

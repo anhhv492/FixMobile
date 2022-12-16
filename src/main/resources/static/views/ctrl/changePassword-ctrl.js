@@ -5,7 +5,7 @@ app.controller('changePassword-ctrl',function($rootScope,$scope,$http,$window){
         password_verify: ''
     }
     $scope.inputType = 'password';
-    const callApi = "http://localhost:8080/rest/admin/accounts/updatePassword";
+    const callApi = "http://localhost:8080/rest/user/updatePassword";
 
     const jwtToken = localStorage.getItem("jwtToken")
     const token = {
@@ -66,8 +66,7 @@ app.controller('changePassword-ctrl',function($rootScope,$scope,$http,$window){
                        'Vui lòng đăng nhập lại!',
                        'success'
                    )
-                   $window.location.href = '#!login';
-
+                    $scope.logOut();
                }else {
                    Swal.fire({
                        icon: 'error',
@@ -85,5 +84,10 @@ app.controller('changePassword-ctrl',function($rootScope,$scope,$http,$window){
         }
     }
 
+    $scope.logOut= function () {
+        $window.location.href = '#!login';
+        $rootScope.account=null;
+        localStorage.removeItem('jwtToken');
+    }
 
 })

@@ -1,7 +1,7 @@
 app.controller('profile-ctl', function ($scope,$http, $window) {
     $scope.accountActive = {};
     $scope.form = {};
-    const callApi = "http://localhost:8080/rest/admin/accounts";
+    const callApi = "http://localhost:8080/rest/user";
     $scope.addressDefault = {};
 
     const jwtToken = localStorage.getItem("jwtToken")
@@ -84,7 +84,7 @@ app.controller('profile-ctl', function ($scope,$http, $window) {
     }
 
     $scope.getAddress = function () {
-        $http.get("http://localhost:8080/rest/admin/accounts/getAddress", token).then(function (respon){
+        $http.get("http://localhost:8080/rest/user/getAddress", token).then(function (respon){
             $scope.addressDefault = respon.data.addressTake;
             console.log($scope.addressDefault)
         }).catch(err => {
@@ -147,7 +147,7 @@ app.controller('profile-ctl', function ($scope,$http, $window) {
         });
         let req = {
             method: 'POST',
-            url: '/rest/admin/accounts/updateImage',
+            url: '/rest/user/updateImage',
             headers: {
                 'Content-Type': undefined,
                 Authorization: `Bearer `+jwtToken

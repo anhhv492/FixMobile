@@ -100,7 +100,7 @@ app.controller('order-detail-ctrl',function($window,$rootScope,$scope,$http){
 // get accouunt
     $scope.accountActive = {};
     $scope.getAcountActive = function () {
-        $http.get(`/rest/admin/accounts/getAccountActive`, token).then(function (respon){
+        $http.get(`/rest/user/getAccountActive`, token).then(function (respon){
             $scope.accountActive = respon.data;
             $rootScope.name = $scope.accountActive.username;
             console.log($scope.accountActive.username)
