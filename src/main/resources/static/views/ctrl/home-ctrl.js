@@ -10,7 +10,6 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
 
     const callApiOneAccessoryHome = "http://localhost:8080/rest/guest/getOneAccessory";
 
-
     const jwtToken = localStorage.getItem("jwtToken")
     const token = {
         headers: {
@@ -62,6 +61,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
         })
     }
     $scope.getPriceSalePrd=function (x){
+
         $rootScope.detailProducts[x].priceSale = 0;
         var urlSale=`http://localhost:8080/admin/rest/sale/getbigsale?money=`+$rootScope.detailProducts[x].price+`&idPrd=`+$rootScope.detailProducts[x].idProduct+`&idAcsr=0`;
         $http.get(urlSale, token).then(resp => {
@@ -189,7 +189,6 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                             }).catch(error => {
                                 console.log(error)
                             })
-                            $rootScope.carts.push(data);
                         }else{
                             $scope.accessoryItem.qty++;
                         }
@@ -379,7 +378,6 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                             data.price=total;
                             console.log(data.price);
                             $rootScope.carts.push(data);
-
                         }).catch(error => {
                             console.log(error)
                         })

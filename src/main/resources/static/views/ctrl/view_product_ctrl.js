@@ -55,7 +55,7 @@ app.controller('view_product_ctrl', function ($scope,$http,$rootScope){
     // top 4 sp
     $scope.getTopProduct = function (){
         $http.get(`/rest/guest/productCount`,token).then(function(response) {
-             $scope.productView = response.data;
+            $scope.productView = response.data;
             $scope.priceSale=[];
             for(var i=0; i<response.data.length;i++){
                 $scope.getSale(response.data[i].price,response.data[i].idProduct,0)
