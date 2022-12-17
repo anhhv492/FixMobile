@@ -174,8 +174,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                     }else{
                         if(!$scope.accessoryItem){
                             data.qty=1;
-                            var money = data.price
-                            console.log('kkkkkk')
+                            var money = data.price;
                             var urlSale=`http://localhost:8080/admin/rest/sale/getbigsale?money=`+money+`&idPrd=`+'0'+`&idAcsr=`+data.idAccessory;
                             var total=0;
                             $http.get(urlSale, token).then(resp => {
@@ -194,13 +193,13 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                                 }
                                 data.priceSale = total;
                                 data.idSale = resp.data.idSale;
-                                $rootScope.carts.push(data);
-                                $rootScope.saveLocalStorage();
-                                $rootScope.loadLocalStorage();
-                                $rootScope.qtyCart++;
                             }).catch(error => {
                                 console.log(error)
                             })
+                            $rootScope.carts.push(data);
+                            $rootScope.saveLocalStorage();
+                            $rootScope.loadLocalStorage();
+                            $rootScope.qtyCart++;
                         }else{
                             $scope.accessoryItem.qty++;
                         }
@@ -289,13 +288,14 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                                 }
                                 data.priceSale=total;
                                 data.idSale = resp.data.idSale;
-                                $rootScope.carts.push(data);
-                                $rootScope.saveLocalStorage();
-                                $rootScope.qtyCart++;
 
                             }).catch(error => {
                                 console.log(error)
                             })
+                            $rootScope.carts.push(data);
+                            $rootScope.saveLocalStorage();
+                            $rootScope.loadLocalStorage();
+                            $rootScope.qtyCart++;
                         }else{
                             $scope.productItem.qty++;
                         }
