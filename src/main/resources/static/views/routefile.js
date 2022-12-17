@@ -84,10 +84,7 @@ app.config(function($routeProvider){
             templateUrl:"accessory/viewaccesory.html",
             //controller: "productchange-ctrl",
         })
-        .when("/filterproductprice",{
-            templateUrl:"product/fileterByPriceProduct.html",
-            controller: "view_product_ctrl",
-        })
+
 
 
 });
