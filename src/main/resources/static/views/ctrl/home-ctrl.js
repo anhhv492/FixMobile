@@ -348,6 +348,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
         $scope.productItem = $rootScope.carts.find(
             it=>it.idProduct===product.idProduct
         );
+debugger
 
         $http.get(`${urlProduct}/${product.idProduct}`,token).then(res=>{
             let itemCart = $rootScope.carts.find(
@@ -452,6 +453,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
         })
 
     }
+
     $rootScope.loadLocalStorage = function(){
         $http.get(urlAccount+`/getAccountActive`, token).then(function (respon){
             let json = localStorage.getItem(respon.data.username);
@@ -491,6 +493,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
     }
 
     $rootScope.productCode = {};
+
     // $scope.getOneProduct = function (productCode){
     //     $http.get(`${urlOneProduct}/findByProductCode/${productCode.idProduct}`).then(res=>{
     //         $rootScope.productCode = res.data;

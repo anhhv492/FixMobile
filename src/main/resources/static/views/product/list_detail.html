@@ -50,105 +50,21 @@
                                                     <h2 class="title-module ">Theo mức giá</h2>
                                                 </div>
                                                 <div class="aside-content margin-top-0 filter-group content_price">
-                                                    <ul>
 
                                                         <li class="filter-item filter-item--check-box filter-item--green">
-						<span>
-							<label data-filter="100-000d" for="filter-duoi-100-000d">
-								<input type="checkbox" id="filter-duoi-100-000d" data-group="Khoảng giá"
-                                       data-field="price_min" data-text="Dưới 100.000đ" value="(<100000)"
-                                       data-operator="OR">
-								<i class="fa"></i>
-								Dưới 100.000đ
-							</label>
-						</span>
+                                                                <span>
+                                                                    <label data-filter="100-000d" for="filter-duoi-100-000d">
+                                                                        <input type="checkbox" id="filter-duoi-100-000d" data-group="Khoảng giá"
+                                                                               data-field="price_min" data-text="Dưới 100.000đ" value="(<100000)"
+                                                                               data-operator="OR">
+                                                                        <i class="fa"></i>
+                                                                         <a class="" href="#!product/detail"  ng-click="findProductByPr()">Từ 100.000 đ đến 500.000đ</a>
+                                                                    </label>
+                                                                </span>
                                                         </li>
 
-                                                        <li class="filter-item filter-item--check-box filter-item--green">
-						<span>
-							<label data-filter="200-000d" for="filter-100-000d-200-000d">
-								<input type="checkbox" id="filter-100-000d-200-000d" data-group="Khoảng giá"
-                                       data-field="price_min" data-text="100.000đ - 200.000đ"
-                                       value="(>=100000 AND <=200000)" data-operator="OR">
-								<i class="fa"></i>
-								Từ 100.000đ đến 200.000đ
-							</label>
-						</span>
                                                         </li>
 
-                                                        <li class="filter-item filter-item--check-box filter-item--green">
-						<span>
-							<label data-filter="400-000d" for="filter-200-000d-400-000d">
-								<input type="checkbox" id="filter-200-000d-400-000d" data-group="Khoảng giá"
-                                       data-field="price_min" data-text="200.000đ - 400.000đ"
-                                       value="(>=200000 AND <=400000)" data-operator="OR">
-								<i class="fa"></i>
-								Từ 200.000đ đến 400.000đ
-							</label>
-						</span>
-                                                        </li>
-
-                                                        <li class="filter-item filter-item--check-box filter-item--green">
-						<span>
-							<label data-filter="600-000d" for="filter-400-000d-600-000d">
-								<input type="checkbox" id="filter-400-000d-600-000d" data-group="Khoảng giá"
-                                       data-field="price_min" data-text="400.000đ - 600.000đ"
-                                       value="(>=400000 AND <=600000)" data-operator="OR">
-								<i class="fa"></i>
-								Từ 400.000đ đến 600.000đ
-							</label>
-						</span>
-                                                        </li>
-
-                                                        <li class="filter-item filter-item--check-box filter-item--green">
-						<span>
-							<label data-filter="800-000d" for="filter-600-000d-800-000d">
-								<input type="checkbox" id="filter-600-000d-800-000d" data-group="Khoảng giá"
-                                       data-field="price_min" data-text="600.000đ - 800.000đ"
-                                       value="(>=600000 AND <=800000)" data-operator="OR">
-								<i class="fa"></i>
-								Từ 600.000đ đến 800.000đ
-							</label>
-						</span>
-                                                        </li>
-
-                                                        <li class="filter-item filter-item--check-box filter-item--green">
-						<span>
-							<label data-filter="1-000-000d" for="filter-800-000d-1-000-000d">
-								<input type="checkbox" id="filter-800-000d-1-000-000d" data-group="Khoảng giá"
-                                       data-field="price_min" data-text="800.000đ - 1.000.000đ"
-                                       value="(>=800000 AND <=1000000)" data-operator="OR">
-								<i class="fa"></i>
-								Từ 800.000đ đến 1 triệu
-							</label>
-						</span>
-                                                        </li>
-
-                                                        <li class="filter-item filter-item--check-box filter-item--green">
-						<span>
-							<label data-filter="2-000-000d" for="filter-1-000-000d-2-000-000d">
-								<input type="checkbox" id="filter-1-000-000d-2-000-000d" data-group="Khoảng giá"
-                                       data-field="price_min" data-text="1.000.000đ - 2.000.000đ"
-                                       value="(>=1000000 AND <=2000000)" data-operator="OR">
-								<i class="fa"></i>
-								Từ 1 đến 2 triệu
-							</label>
-						</span>
-                                                        </li>
-                                                        <li class="filter-item filter-item--check-box filter-item--green">
-						<span>
-							<label data-filter="2-000-000d" for="filter-tren2-000-000d">
-								<input type="checkbox" id="filter-tren2-000-000d" data-group="Khoảng giá"
-                                       data-field="price_min" data-text="Trên 2.000.000đ" value="(>2000000)"
-                                       data-operator="OR">
-								<i class="fa"></i>
-								Trên 2 triệu
-							</label>
-						</span>
-                                                        </li>
-
-
-                                                    </ul>
                                                 </div>
                                             </aside>
                                             <!-- End Lọc giá -->
@@ -209,175 +125,9 @@
                                                                      viewBox="0 0 384 512">
                                                                     <path d="M192 384c-8.188 0-16.38-3.125-22.62-9.375l-160-160c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L192 306.8l137.4-137.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-160 160C208.4 380.9 200.2 384 192 384z"/>
                                                                 </svg>
-                                                                <ul class="dropdown-menu">
-                                                                    <li class="nav-item lv3">
-                                                                        <a class="nav-link" href="/bon-cau">Bồn cầu
-                                                                        </a>
-                                                                    </li>
-                                                                    <li class="nav-item lv3">
-                                                                        <a class="nav-link" href="/nap-bon-cau">Nắp bồn cầu
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
+
                                                             </li>
-                                                            <li class="nav-item">
-                                                                <a class="nav-link" href="/chau-rua-mat-voi-chau">Chậu rửa
-                                                                    mặt, vòi chậu
-                                                                </a>
-                                                            </li>
-                                                            <li class="dropdown-submenu nav-item">
-                                                                <a class="nav-link" href="/sen-tam-bon-tam">Sen tắm, bồn tắm
-                                                                </a>
-                                                                <svg class="fa-plus svg-inline--fa fa-caret-down fa-w-10"
-                                                                     xmlns="http://www.w3.org/2000/svg"
-                                                                     viewBox="0 0 384 512">
-                                                                    <path d="M192 384c-8.188 0-16.38-3.125-22.62-9.375l-160-160c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L192 306.8l137.4-137.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-160 160C208.4 380.9 200.2 384 192 384z"/>
-                                                                </svg>
-                                                                <ul class="dropdown-menu">
-                                                                    <li class="nav-item lv3">
-                                                                        <a class="nav-link" href="/sen-tam">Sen tắm
-                                                                        </a>
-                                                                    </li>
-                                                                    <li class="nav-item lv3">
-                                                                        <a class="nav-link" href="/bon-tam">Bồn tắm
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-                                                            </li>
-                                                            <li class="nav-item">
-                                                                <a class="nav-link" href="/bon-tieu-khu-cong-cong">Bồn tiểu,
-                                                                    khu công cộng
-                                                                </a>
-                                                            </li>
-                                                            <li class="nav-item">
-                                                                <a class="nav-link" href="/phu-kien-nha-tam">Phụ kiện nhà
-                                                                    tắm
-                                                                </a>
-                                                            </li>
-                                                            <li class="nav-item">
-                                                                <a class="nav-link" href="/thiet-bi-nha-bep">Thiết bị nhà
-                                                                    bếp
-                                                                </a>
-                                                            </li>
-                                                            <li class="nav-item">
-                                                                <a class="nav-link" href="/thiet-bi-dien">Thiết bị điện
-                                                                </a>
-                                                            </li>
-                                                            <li class="nav-item">
-                                                                <a class="nav-link" href="/den-led-trang-tri">Đèn led trang
-                                                                    trí
-                                                                </a>
-                                                            </li>
-                                                            <li class="nav-item">
-                                                                <a class="nav-link" href="/thiet-bi-loc-nuoc">Thiết bị lọc
-                                                                    nước
-                                                                </a>
-                                                            </li>
-                                                            <li class="nav-item">
-                                                                <a class="nav-link" href="/cham-soc-nha-cua">Chăm sóc nhà
-                                                                    cửa
-                                                                </a>
-                                                            </li>
-                                                            <li class="nav-item">
-                                                                <a class="nav-link" href="/hang-outlet">Hàng outlet
-                                                                </a>
-                                                            </li>
-                                                            <li class="dropdown-submenu nav-item">
-                                                                <a class="nav-link" href="/son-noi-ngoai-that">Sơn nội ngoại
-                                                                    thất
-                                                                </a>
-                                                                <svg class="fa-plus svg-inline--fa fa-caret-down fa-w-10"
-                                                                     xmlns="http://www.w3.org/2000/svg"
-                                                                     viewBox="0 0 384 512">
-                                                                    <path d="M192 384c-8.188 0-16.38-3.125-22.62-9.375l-160-160c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L192 306.8l137.4-137.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-160 160C208.4 380.9 200.2 384 192 384z"/>
-                                                                </svg>
-                                                                <ul class="dropdown-menu">
-                                                                    <li class="nav-item lv3">
-                                                                        <a class="nav-link" href="/son-noi-that">Sơn nội
-                                                                            thất
-                                                                        </a>
-                                                                    </li>
-                                                                    <li class="nav-item lv3">
-                                                                        <a class="nav-link" href="/son-ngoai-that">Sơn ngoại
-                                                                            thất
-                                                                        </a>
-                                                                    </li>
-                                                                    <li class="nav-item lv3">
-                                                                        <a class="nav-link" href="/son-chong-tham">Sơn chống
-                                                                            thấm
-                                                                        </a>
-                                                                    </li>
-                                                                    <li class="nav-item lv3">
-                                                                        <a class="nav-link" href="/son-lot">Sơn lót
-                                                                        </a>
-                                                                    </li>
-                                                                    <li class="nav-item lv3">
-                                                                        <a class="nav-link" href="/son-bong">Sơn bóng
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-                                                            </li>
-                                                            <li class="dropdown-submenu nav-item">
-                                                                <a class="nav-link" href="/gach-op-cac-loai">Gạch ốp các
-                                                                    loại
-                                                                </a>
-                                                                <svg class="fa-plus svg-inline--fa fa-caret-down fa-w-10"
-                                                                     xmlns="http://www.w3.org/2000/svg"
-                                                                     viewBox="0 0 384 512">
-                                                                    <path d="M192 384c-8.188 0-16.38-3.125-22.62-9.375l-160-160c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L192 306.8l137.4-137.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-160 160C208.4 380.9 200.2 384 192 384z"/>
-                                                                </svg>
-                                                                <ul class="dropdown-menu">
-                                                                    <li class="nav-item lv3">
-                                                                        <a class="nav-link" href="/gach-op-tuong">Gạch ốp
-                                                                            tường
-                                                                        </a>
-                                                                    </li>
-                                                                    <li class="nav-item lv3">
-                                                                        <a class="nav-link" href="/gach-chan-tuong">Gạch
-                                                                            chân tường
-                                                                        </a>
-                                                                    </li>
-                                                                    <li class="nav-item lv3">
-                                                                        <a class="nav-link" href="/gach-trang-tri">Gạch
-                                                                            trang trí
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-                                                            </li>
-                                                        </ul>
-                                                    </li>
-                                                    <li class="nav-item"><a class="nav-link" href="/yeu-thich">Yêu thích
-                                                    </a>
-                                                    </li>
-                                                    <li class="nav-item"><a class="nav-link" href="/san-pham-da-xem">Sản
-                                                        phẩm đã xem
-                                                    </a>
-                                                    </li>
-                                                    <li class="nav-item"><a class="nav-link" href="/landing-sale">Landing
-                                                        Sale
-                                                    </a>
-                                                    </li>
-                                                    <li class="nav-item"><a class="nav-link" href="/he-thong-cua-hang">Hệ
-                                                        thống cửa hàng
-                                                    </a>
-                                                    </li>
-                                                    <li class="nav-item"><a class="nav-link" href="/lien-he">Liên hệ
-                                                    </a>
-                                                    </li>
-                                                    <li class="nav-item"><a class="nav-link" href="/tin-tuc">Tin tức
-                                                    </a>
-                                                    </li>
-                                                    <li class="nav-item"><a class="nav-link" href="/du-an-thi-cong">Dự án
-                                                        thi công
-                                                    </a>
-                                                    </li>
-                                                    <li class="nav-item"><a class="nav-link" href="/tin-khuyen-mai">Tin
-                                                        khuyến mại
-                                                    </a>
-                                                    </li>
-                                                    <li class="nav-item"><a class="nav-link" href="/gioi-thieu">Giới thiệu
-                                                    </a>
-                                                    </li>
+
                                                 </ul>
                                             </nav>
                                         </div>
