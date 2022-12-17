@@ -64,13 +64,17 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
         $rootScope.detailProducts[x].priceSale = 0;
         var urlSale=`http://localhost:8080/admin/rest/sale/getbigsale?money=`+$rootScope.detailProducts[x].price+`&idPrd=`+$rootScope.detailProducts[x].idProduct+`&idAcsr=0`;
         $http.get(urlSale, token).then(resp => {
-            if(resp.data.moneySale == null) {
-                $rootScope.detailProducts[x].priceSale = $rootScope.detailProducts[x].price * resp.data.percentSale/100;
-            }else if(resp.data.percentSale == null){
-                if(resp.data.moneySale > $rootScope.detailProducts[x].price){
-                    $rootScope.detailProducts[x].priceSale = $rootScope.detailProducts[x].price;
-                }else {
-                    $rootScope.detailProducts[x].priceSale =  resp.data.moneySale;
+            if(resp.data==''){
+                $rootScope.detailProducts[x].priceSale = 0;
+            }else {
+                if (resp.data.moneySale == null) {
+                    $rootScope.detailProducts[x].priceSale = $rootScope.detailProducts[x].price * resp.data.percentSale / 100;
+                } else if (resp.data.percentSale == null) {
+                    if (resp.data.moneySale > $rootScope.detailProducts[x].price) {
+                        $rootScope.detailProducts[x].priceSale = $rootScope.detailProducts[x].price;
+                    } else {
+                        $rootScope.detailProducts[x].priceSale = resp.data.moneySale;
+                    }
                 }
             }
             console.log($rootScope.detailProducts)
@@ -82,14 +86,18 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
         $rootScope.detailAccessories[x].priceSale = 0;
         var urlSale=`http://localhost:8080/admin/rest/sale/getbigsale?money=`+$rootScope.detailAccessories[x].price+`&idPrd=0&idAcsr=`+$rootScope.detailAccessories[x].idAccessory;
         $http.get(urlSale, token).then(resp => {
-            if(resp.data.moneySale == null) {
-                $rootScope.detailAccessories[x].priceSale = $rootScope.detailAccessories[x].price * resp.data.percentSale/100;
-            }else if(resp.data.percentSale == null){
-                if(resp.data.moneySale > $rootScope.detailAccessories[x].price){
-                    $rootScope.detailAccessories[x].priceSale = $rootScope.detailAccessories[x].price;
-                }else {
-                    $rootScope.detailAccessories[x].priceSale =  resp.data.moneySale;
+            if(resp.data!='') {
+                if (resp.data.moneySale == null) {
+                    $rootScope.detailAccessories[x].priceSale = $rootScope.detailAccessories[x].price * resp.data.percentSale / 100;
+                } else if (resp.data.percentSale == null) {
+                    if (resp.data.moneySale > $rootScope.detailAccessories[x].price) {
+                        $rootScope.detailAccessories[x].priceSale = $rootScope.detailAccessories[x].price;
+                    } else {
+                        $rootScope.detailAccessories[x].priceSale = resp.data.moneySale;
+                    }
                 }
+            }else{
+                $rootScope.detailAccessories[x].priceSale = 0;
             }
         }).catch(error => {
             console.log(error)
@@ -139,7 +147,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
         $scope.productItem = $rootScope.carts.find(
             it=>it.idProduct===item.idProduct
         );
-        if(item.category){
+        if(item.category.type){
             $http.get(`${urlAccessory}/${item.idAccessory}`).then(res=>{
                 let itemCart = $rootScope.carts.find(
                     it=>it.idAccessory===item.idAccessory
@@ -161,7 +169,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                         })
                         Toast.fire({
                             icon: 'error',
-                            title: 'Số lượng sản phẩm không đủ!'
+                            title: 'Hết hàng!'
                         })
                     }else{
                         if(!$scope.accessoryItem){
@@ -169,22 +177,26 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                             var money = data.price
                             console.log('kkkkkk')
                             var urlSale=`http://localhost:8080/admin/rest/sale/getbigsale?money=`+money+`&idPrd=`+'0'+`&idAcsr=`+data.idAccessory;
-                            var total=-1;
+                            var total=0;
                             $http.get(urlSale, token).then(resp => {
-                                console.log("hihi")
-                                if(resp.data.moneySale == null) {
-                                    total= money - money*resp.data.percentSale/100;
-                                }else if(resp.data.percentSale == null){
-                                    if(resp.data.moneySale > money){
-                                        total=0;
-                                    }else {
-                                        total=money - resp.data.moneySale;
+                                if(resp.data=''){
+                                    total=0
+                                }else {
+                                    if (resp.data.moneySale == null) {
+                                        total = money - money * resp.data.percentSale / 100;
+                                    } else if (resp.data.percentSale == null) {
+                                        if (resp.data.moneySale > money) {
+                                            total = money;
+                                        } else {
+                                            total = money - resp.data.moneySale;
+                                        }
                                     }
-                                }else{total=money}
-                                data.priceSale=total;
+                                }
+                                data.priceSale = total;
                                 data.idSale = resp.data.idSale;
                                 $rootScope.carts.push(data);
                                 $rootScope.saveLocalStorage();
+                                $rootScope.loadLocalStorage();
                                 $rootScope.qtyCart++;
                             }).catch(error => {
                                 console.log(error)
@@ -252,30 +264,33 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                         })
                         Toast.fire({
                             icon: 'error',
-                            title: 'Số lượng sản phẩm không đủ!'
+                            title: 'Hết hàng!'
                         })
                     }else{
+                        alert("spanpham")
                         if(!$scope.productItem){
                             data.qty=1;
                             var money = data.price
 
-                            var total=-1;
+                            var total=0;
                             var urlSale=`http://localhost:8080/admin/rest/sale/getbigsale?money=`+money+`&idPrd=`+data.idProduct+`&idAcsr=0`;
                             $http.get(urlSale, token).then(resp => {
-                                console.log("hihi")
-                                if(resp.data.moneySale == null) {
-                                    total= money - money*resp.data.percentSale/100;
-                                }else if(resp.data.percentSale == null){
-                                    if(resp.data.moneySale>money){
-                                        total=0;
-                                    }else {
-                                        total=money - resp.data.moneySale;
+                                if(resp.data=''){
+                                    total=0;
+                                }else {
+                                    if (resp.data.moneySale == null) {
+                                        total = money - money * resp.data.percentSale / 100;
+                                    } else if (resp.data.percentSale == null) {
+                                        if (resp.data.moneySale > money) {
+                                            total = money;
+                                        } else {
+                                            total = money - resp.data.moneySale;
+                                        }
                                     }
-                                }else{total=money}
+                                }
                                 data.priceSale=total;
                                 data.idSale = resp.data.idSale;
                                 $rootScope.carts.push(data);
-                              
                                 $rootScope.saveLocalStorage();
                                 $rootScope.qtyCart++;
 
@@ -356,7 +371,7 @@ debugger
                     })
                     Toast.fire({
                         icon: 'error',
-                        title: 'Số lượng sản phẩm không đủ!'
+                        title: 'Hết hàng!'
                     })
                 }else{
                     if(!$scope.productItem){
@@ -365,24 +380,28 @@ debugger
                         var urlSale=`http://localhost:8080/admin/rest/sale/getbigsale?money=`+money+`&idPrd=`+data.idProduct+`&idAcsr=0`;
                         var total=0;
                         $http.get(urlSale, token).then(resp => {
-                            console.log("hihi")
-                            if(resp.data.moneySale == null) {
-                                total= money - money*resp.data.percentSale/100;
-                            }else if(resp.data.percentSale == null){
-                                if(resp.data.moneySale<money){
-                                    total=0;
-                                }else {
-                                    total=money - resp.data.moneySale;
+                            if(resp.data=='') {
+                                total = 0;
+                            }else {
+                                if (resp.data.moneySale == null) {
+                                    total = money - money * resp.data.percentSale / 100;
+                                } else if (resp.data.percentSale == null) {
+                                    if (resp.data.moneySale > money) {
+                                        total = money;
+                                    } else {
+                                        total = money - resp.data.moneySale;
+                                    }
                                 }
-                            }else{total=money}
-                            console.log(total)
-                            data.price=total;
-                            console.log(data.price);
+                            }
+                            data.priceSale=total;
+                            data.idSale = resp.data.idSale;
                             $rootScope.carts.push(data);
+                            $rootScope.saveLocalStorage();
+                            $rootScope.loadLocalStorage();
+                            $rootScope.qtyCart++;
                         }).catch(error => {
                             console.log(error)
                         })
-                        $rootScope.carts.push(data);
                     }else{
                         $scope.productItem.qty++;
                     }
@@ -427,7 +446,6 @@ debugger
     }
     $rootScope.saveLocalStorage=function(){
         let json = JSON.stringify($rootScope.carts);
-
         $http.get(urlAccount+`/getAccountActive`, token).then(function (respon){
             localStorage.setItem(respon.data.username,json);
         }).catch(err=>{
@@ -446,13 +464,6 @@ debugger
             $rootScope.carts=json? JSON.parse(json):[];
             $rootScope.loadQtyCart();
         })
-
-        localStorage.setItem("cart",json);
-    }
-    $rootScope.loadLocalStorage = function(){
-        let json = localStorage.getItem("cart");
-        $rootScope.carts=json? JSON.parse(json):[];
-
         for (let i = 0; i < $rootScope.carts.length; i++) {
             $rootScope.carts.find(item=>{
                 if(item.idAccessory){
@@ -471,6 +482,7 @@ debugger
             })
         }
     }
+
     $rootScope.loadQtyCart=function(){
         $rootScope.qtyCart=0;
         if($rootScope.carts){

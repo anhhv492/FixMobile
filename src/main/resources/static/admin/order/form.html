@@ -165,7 +165,88 @@
             <td>{{order.address}}</td>
             <td>{{order.createDate|date:'dd/MM/yyyy HH:mm:ss'}}</td>
             <td>{{order.moneyShip|number}}</td>
-            <td>{{order.total|number}}</td>
+            <td>
+                {{order.total|number}} <i class="fa fa-info-circle" aria-hidden="true" ng-click="getOrderDetail(order.idOrder)" data-bs-toggle="modal" data-bs-target="#exampleModal{{order.idOrder}}"></i>
+                <div class="modal fade modal-xl" id="exampleModal{{order.idOrder}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Chi Tiết Tổng Tiền</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">STT</th>
+                                        <th scope="col">Tên Sản Phẩm </th>
+                                        <th scope="col">Số lượng</th>
+                                        <th scope="col">Giá tiền</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody ng-repeat="ordt in ordersDetail">
+                                    <tr>
+                                        <th colspan="1" >{{$index}}</th>
+                                        <td ng-if="ordt.product!=null">{{ordt.product.name}}</td>
+                                        <td ng-if="ordt.accessory!=null">{{ordt.accessory.name}}</td>
+                                        <td>{{ordt.quantity}}</td>
+                                        <td ng-if="ordt.priceSale==0" >{{ordt.price}} VNĐ</td>
+                                        <td ng-if="ordt.priceSale!=0" >{{ordt.priceSale}} VNĐ &nbsp;<del>{{ordt.price}} VNĐ</del></td>
+                                    </tr>
+                                    <tr ng-if="ordt.idSale!=null">
+                                        <th colspan="1">Mã giảm giá đã dùng</th>
+                                        <td colspan="2">{{ordt.noteSale}}</td>
+                                        <td colspan="1">Tổng tiền giảm: {{ordt.price - ordt.priceSale}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="1">Thành tiền:</th>
+                                        <td colspan="2" ng-if="ordt.priceSale!=0" > Giá 1 Sản phẩm {{ordt.priceSale}}  VNĐ  * số lượng {{ordt.quantity}}</td>
+                                        <td colspan="2" ng-if="ordt.priceSale==0" >Giá 1 Sản phẩm {{ordt.price}} VNĐ  * số lượng {{ordt.quantity}}</td>
+                                        <td ng-if="ordt.priceSale==0" >{{ordt.price * ordt.quantity}} VNĐ</td>
+                                        <td ng-if="ordt.priceSale!=0" >{{ordt.priceSale * ordt.quantity}}  VNĐ</td>
+                                    </tr>
+                                    </tbody>
+                                    <tr>
+                                        <th  colspan="4"></th>
+                                    </tr>
+                                    <tr>
+                                        <th  colspan="3">Tiền Ship: </th>
+                                        <td>{{order.moneyShip|number}}</td>
+                                    </tr>
+                                    <tr ng-if="saleApply!=''">
+                                        <th scope="row">Mã Voucher Đã dùng: {{saleApply.voucher}}</th>
+                                        <td ng-if="saleApply.percent_sale==null">Giảm {{saleApply.moneySale}} VNĐ </td>
+                                        <td ng-if="saleApply.moneySale==null">Giảm {{saleApply.percent_sale}} % </td>
+                                        <td ng-if="saleApply.valueMin==null">Đơn từ 0 đồng </td>
+                                        <td ng-if="saleApply.valueMin!=null">Đơn từ {{saleApply.valueMin}} VNĐ </td>
+                                        <td>Tổng giảm Voucher: {{(sumPrice()-order.total+order.moneyShip)-sumPrice()+sumPriceSale()}} VNĐ </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" colspan="3">Tổng tiền khách được giảm giá trực tiếp:</th>
+                                        <td >{{sumPrice()-sumPriceSale()}} VNĐ </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th scope="row" colspan="3">Tổng tiền khách được giảm giá:</th>
+                                        <td >{{sumPrice()-order.total+order.moneyShip}} VNĐ </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" colspan="3">Tiền Thực Tế Thu Về: </th>
+                                        <td >{{order.total-order.moneyShip}} VNĐ </td>
+                                    </tr>
+
+                                </table>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+
+
             <td ng-if="order.note">{{order.note}}</td>
             <td ng-if="!order.note">Không có</td>
             <td>

@@ -13,6 +13,7 @@
                                 <p ng-if="accessory.priceSale!=0"> <del>{{accessory.price|number}} VNĐ </del> {{accessory.price - accessory.priceSale|number}} VNĐ</p>
                                 <p ng-if="accessory.priceSale==0"> {{accessory.price|number}} VNĐ</p>
                                 <span>{{accessory.name}}</span>
+                                <span>{{accessory.idAccessory}}</span>
                                 <div class="buttons d-flex flex-row">
                                     <a class="cart" href="#!accessoryDetail"
                                        ng-click="getOneAccessoryHome(accessory.idAccessory)">

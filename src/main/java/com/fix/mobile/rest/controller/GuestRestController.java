@@ -172,10 +172,16 @@ public class GuestRestController {
                         orderDetail.setPrice(price);
                         priceSale= new BigDecimal(carts.get(i).get("priceSale").asDouble());
                         orderDetail.setPriceSale(priceSale);
-                        orderDetail.setIdSale(carts.get(i).get("idSale").asInt());
-                        Sale updatequantity= saleService.findByid(carts.get(i).get("idSale").asInt());
-                        updatequantity.setQuantity(updatequantity.getQuantity()-1);
-                        saleService.updateQuantity(updatequantity);
+                        if(carts.get(i).get("idSale")==null){
+                            System.out.println("hi1");
+                            orderDetail.setIdSale(null);
+                        }else{
+                            System.out.println("hi2");
+                            orderDetail.setIdSale(carts.get(i).get("idSale").asInt());
+                            Sale updatequantity= saleService.findByid(carts.get(i).get("idSale").asInt());
+                            updatequantity.setQuantity(updatequantity.getQuantity()-1);
+                            saleService.updateQuantity(updatequantity);
+                        }
                         orderDetailService.save(orderDetail);
                         accessory.get().setQuantity(accessory.get().getQuantity()-carts.get(i).get("qty").asInt());
                         accessoryService.update(accessory.get(),accessory.get().getIdAccessory());
