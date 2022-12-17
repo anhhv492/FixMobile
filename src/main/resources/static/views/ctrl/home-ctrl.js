@@ -128,9 +128,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
     $scope.test=function (){
         console.log($rootScope.carts)
     }
-
     $scope.addCart=function(item){
-        console.log("qty",$scope.qtyCart);
         $http.get(urlAccount+`/getAccountActive`, token).then(function (respon){
             let json = localStorage.getItem(respon.data.username);
             $rootScope.carts=json? JSON.parse(json):[];
@@ -145,6 +143,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
         $scope.productItem = $rootScope.carts.find(
             it=>it.idProduct===item.idProduct
         );
+
         if(item.category.type){
             $http.get(`${urlAccessory}/${item.idAccessory}`).then(res=>{
                 let itemCart = $rootScope.carts.find(
@@ -172,8 +171,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                     }else{
                         if(!$scope.accessoryItem){
                             data.qty=1;
-                            var money = data.price
-                            console.log('kkkkkk')
+                            var money = data.price;
                             var urlSale=`http://localhost:8080/admin/rest/sale/getbigsale?money=`+money+`&idPrd=`+'0'+`&idAcsr=`+data.idAccessory;
                             var total=0;
                             $http.get(urlSale, token).then(resp => {
@@ -196,30 +194,17 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                                 $rootScope.saveLocalStorage();
                                 $rootScope.loadLocalStorage();
                                 $rootScope.qtyCart++;
+                                $scope.messageSuccess("Thêm vào giỏ hàng thành công!");
                             }).catch(error => {
                                 console.log(error)
                             })
                         }else{
-                            $scope.accessoryItem.qty++;
+                            $rootScope.carts.find(
+                                it=>it.idAccessory===item.idAccessory
+                            ).qty++;
+                            $rootScope.saveLocalStorage();
+                            $scope.messageSuccess("Thêm vào giỏ hàng thành công!");
                         }
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: 'top-end',
-                            showConfirmButton: false,
-                            timer: 1500,
-                            timerProgressBar: true,
-                            didOpen: (toast) => {
-                                toast.addEventListener('mouseenter', Swal.stopTimer)
-                                toast.addEventListener('mouseleave', Swal.resumeTimer)
-                            }
-                        })
-
-                        Toast.fire({
-                            icon: 'success',
-                            title: 'Thêm thành công!'
-                        })
-                        $rootScope.saveLocalStorage();
-                        $rootScope.qtyCart++;
                     }
                 }).catch(err=>{
                     const Toast = Swal.mixin({
@@ -265,11 +250,9 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                             title: 'Hết hàng!'
                         })
                     }else{
-                        alert("spanpham")
                         if(!$scope.productItem){
                             data.qty=1;
                             var money = data.price
-
                             var total=0;
                             var urlSale=`http://localhost:8080/admin/rest/sale/getbigsale?money=`+money+`&idPrd=`+data.idProduct+`&idAcsr=0`;
                             $http.get(urlSale, token).then(resp => {
@@ -290,32 +273,19 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                                 data.idSale = resp.data.idSale;
                                 $rootScope.carts.push(data);
                                 $rootScope.saveLocalStorage();
+                                $rootScope.loadLocalStorage();
                                 $rootScope.qtyCart++;
-
+                                $scope.messageSuccess("Thêm vào giỏ hàng thành công!");
                             }).catch(error => {
                                 console.log(error)
                             })
                         }else{
-                            $scope.productItem.qty++;
+                            $rootScope.carts.find(
+                                it=>it.idProduct===item.idProduct
+                            ).qty++;
+                            $rootScope.saveLocalStorage();
+                            $scope.messageSuccess("Thêm vào giỏ hàng thành công!");
                         }
-                        const Toast = Swal.mixin({
-                        toast: true,
-                        position: 'top-end',
-                        showConfirmButton: false,
-                        timer: 1500,
-                        timerProgressBar: true,
-                        didOpen: (toast) => {
-                            toast.addEventListener('mouseenter', Swal.stopTimer)
-                            toast.addEventListener('mouseleave', Swal.resumeTimer)
-                        }
-                    })
-
-                    Toast.fire({
-                        icon: 'success',
-                        title: 'Thêm thành công!'
-                    })
-                    $rootScope.saveLocalStorage();
-                    $rootScope.qtyCart++;
                 }
                 }).catch(err=>{
                     const Toast = Swal.mixin({
@@ -339,109 +309,6 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
         }
     }
 
-    $scope.addProductCart = function (product) {
-        console.log("qty",$scope.qtyCart);
-        let json = localStorage.getItem($rootScope.name);
-        $rootScope.carts=json? JSON.parse(json):[];
-        $scope.productItem = $rootScope.carts.find(
-            it=>it.idProduct===product.idProduct
-        );
-debugger
-
-        $http.get(`${urlProduct}/${product.idProduct}`,token).then(res=>{
-            let itemCart = $rootScope.carts.find(
-                it=>it.idProduct===product.idProduct
-            );
-            let data= res.data;
-
-            $http.get(`${urlImei}/amount/${product.idProduct}`).then(res=>{
-                if(itemCart&&itemCart.qty>=res.data) {
-                    const Toast = Swal.mixin({
-                        toast: true,
-                        position: 'top-end',
-                        showConfirmButton: false,
-                        timer: 2000,
-                        timerProgressBar: true,
-                        didOpen: (toast) => {
-                            toast.addEventListener('mouseenter', Swal.stopTimer)
-                            toast.addEventListener('mouseleave', Swal.resumeTimer)
-                        }
-                    })
-                    Toast.fire({
-                        icon: 'error',
-                        title: 'Hết hàng!'
-                    })
-                }else{
-                    if(!$scope.productItem){
-                        data.qty=1;
-                        var money = data.price
-                        var urlSale=`http://localhost:8080/admin/rest/sale/getbigsale?money=`+money+`&idPrd=`+data.idProduct+`&idAcsr=0`;
-                        var total=0;
-                        $http.get(urlSale, token).then(resp => {
-                            if(resp.data=='') {
-                                total = 0;
-                            }else {
-                                if (resp.data.moneySale == null) {
-                                    total = money - money * resp.data.percentSale / 100;
-                                } else if (resp.data.percentSale == null) {
-                                    if (resp.data.moneySale > money) {
-                                        total = money;
-                                    } else {
-                                        total = money - resp.data.moneySale;
-                                    }
-                                }
-                            }
-                            data.priceSale=total;
-                            data.idSale = resp.data.idSale;
-                            $rootScope.carts.push(data);
-                            $rootScope.saveLocalStorage();
-                            $rootScope.loadLocalStorage();
-                            $rootScope.qtyCart++;
-                        }).catch(error => {
-                            console.log(error)
-                        })
-                    }else{
-                        $scope.productItem.qty++;
-                    }
-                    const Toast = Swal.mixin({
-                        toast: true,
-                        position: 'top-end',
-                        showConfirmButton: false,
-                        timer: 1500,
-                        timerProgressBar: true,
-                        didOpen: (toast) => {
-                            toast.addEventListener('mouseenter', Swal.stopTimer)
-                            toast.addEventListener('mouseleave', Swal.resumeTimer)
-                        }
-                    })
-
-                    Toast.fire({
-                        icon: 'success',
-                        title: 'Thêm thành công!'
-                    })
-                    $rootScope.saveLocalStorage();
-                    $rootScope.qtyCart++;
-                }
-            }).catch(err=>{
-                const Toast = Swal.mixin({
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 1500,
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                        toast.addEventListener('mouseenter', Swal.stopTimer)
-                        toast.addEventListener('mouseleave', Swal.resumeTimer)
-                    }
-                })
-
-                Toast.fire({
-                    icon: 'error',
-                    title: 'Thêm thất bại!'
-                })
-            })
-        })
-    }
     $rootScope.saveLocalStorage=function(){
         let json = JSON.stringify($rootScope.carts);
         $http.get(urlAccount+`/getAccountActive`, token).then(function (respon){
@@ -489,7 +356,42 @@ debugger
             });
         }
     }
+    $scope.messageSuccess=function (text) {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
 
+        Toast.fire({
+            icon: 'success',
+            title: text
+        })
+    }
+    $scope.messageError=function (text) {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+
+        Toast.fire({
+            icon: 'error',
+            title: text
+        })
+    }
     $rootScope.productCode = {};
 
     // $scope.getOneProduct = function (productCode){
