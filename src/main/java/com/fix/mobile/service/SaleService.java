@@ -6,7 +6,6 @@ import org.springframework.data.domain.Page;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 
 public interface SaleService {
     public Sale add(Sale sale);
@@ -16,6 +15,8 @@ public interface SaleService {
     public Sale updateQuantity(Sale sale);
 
     public void delete(Integer id);
+
+    public Integer findSaleApply(Integer id);
 
     public List<Sale> getall(Integer status);
 

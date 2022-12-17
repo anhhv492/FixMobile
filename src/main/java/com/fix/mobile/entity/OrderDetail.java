@@ -27,10 +27,10 @@ public class OrderDetail {
     private BigDecimal price;
 
     @Column(name = "status")
-    private int status;
+    private Integer status;
 
     @Column(name="id_sale")
-    private int idSale;
+    private Integer idSale;
 
     @Column(name="price_sale")
     private BigDecimal priceSale;

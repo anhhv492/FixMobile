@@ -98,8 +98,6 @@ app.controller("register-ctrl",function ($scope, $http,$window){
 
             }
             console.log("Kết thúc thêm ")
-
-
         });
     }
 } )

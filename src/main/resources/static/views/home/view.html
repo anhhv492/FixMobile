@@ -93,13 +93,10 @@
                                     </div>
 
                                     <div class="product-details">
-                                        <p ng-if="priceSale[$index]==-1">{{prov.price | number}} VNĐ</p>
-                                        <p ng-if="priceSale[$index]!=-1 && priceSale[$index]!=0">
-                                            <del>{{prov.price | number}} VNĐ</del> &nbsp; {{priceSale[$index] | number}}
+                                        <p ng-if="prov.priceSale==0">{{prov.price | number}} VNĐ</p>
+                                        <p ng-if="prov.priceSale!=0">
+                                            <del>{{prov.price | number}} VNĐ</del> &nbsp; {{prov.price-prov.priceSale | number}}
                                             VNĐ
-                                        </p>
-                                        <p ng-if="priceSale[$index]!=-1 && priceSale[$index]==0">
-                                            <del>{{prov.price | number}} VNĐ</del> &nbsp; Free
                                         </p>
 
                                         <span>{{prov.name}}</span>
