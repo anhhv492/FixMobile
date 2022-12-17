@@ -23,12 +23,18 @@ app.controller('order-admin-detail-ctrl',function($rootScope,$scope,$http,$compi
             console.log(error);
         })
     }
-    $scope.getImeis=function (orderDetail) {
+    $scope.getImeis2=function (orderDetail) {
         $http.get(urlOrderDetail+'/imei2/'+orderDetail.idDetail,token).then(resp=>{
             $scope.imeis2=resp.data;
         })
     }
+    $scope.getImeis1=function (orderDetail) {
+        $http.get(urlOrderDetail+'/imei/'+orderDetail.product.idProduct,token).then(resp=> {
+            $scope.imeis = resp.data;
+        })
+    }
     $scope.removeImei=function (idImei) {
+        let idDetail=$scope.idDT;
         Swal.fire({
             title: 'Bạn có chắc muốn xóa?',
             text: "Xóa không thể khôi phục lại!",
@@ -57,7 +63,8 @@ app.controller('order-admin-detail-ctrl',function($rootScope,$scope,$http,$compi
                         icon: 'success',
                         title: 'Xóa thành công!'
                     })
-
+                    $scope.getImeis1(idDetail);
+                    $scope.getImeis2(idDetail);
                     document.getElementById("closeMd").click();
                 }).catch(error=>{
                     const Toast = Swal.mixin({
@@ -138,7 +145,8 @@ app.controller('order-admin-detail-ctrl',function($rootScope,$scope,$http,$compi
                     icon: 'success',
                     title: 'Thêm thành công!'
                 })
-                $scope.getImeis();
+                $scope.getImeis1(idDetail);
+                $scope.getImeis2(idDetail);
 
                 document.getElementById("closeMd").click();
         }).catch(error=>{
