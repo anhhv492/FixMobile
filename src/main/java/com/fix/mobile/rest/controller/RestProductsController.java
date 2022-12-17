@@ -265,4 +265,14 @@ public class RestProductsController {
 		imayService.deleteById(id);
 	}
 
+	//findBy product price
+	@RequestMapping(value = "/findProductByPrice",method = RequestMethod.GET)
+	public List<Product> findProductByPrice(){
+		List<Product> listproduct = productService.findProductByPrices();
+		if(listproduct.isEmpty()){
+			return  null;
+		}
+		return listproduct;
+	}
+
 }

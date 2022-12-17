@@ -253,5 +253,16 @@ app.controller('view_product_ctrl', function ($scope,$http,$rootScope){
             console.log("Hết Hàng")
         })
     }
-    
+        // get product between price
+    $scope.listProduct=[];
+    $scope.findProductByPr = function (price1,price2){
+        $http.get(`/rest/admin/product/findProductByPrice`).then(function (respon){
+            $scope.listProduct = respon.data;
+            console.log($scope.respon.data);
+            debugger;
+            alert('vvvv')
+        }).catch(err => {
+            console.log(error + 'kiixu  lỗi')
+        })
+    }
 })
