@@ -2,14 +2,11 @@ package com.fix.mobile.service.impl;
 
 import com.fix.mobile.repository.AccountRepository;
 import com.fix.mobile.repository.OrderRepository;
-import com.fix.mobile.service.AccountService;
-import com.fix.mobile.service.OrderService;
 import org.hibernate.StaleStateException;
 import com.fix.mobile.repository.SaleDetailRepository;
 import com.fix.mobile.repository.SaleRepository;
 import com.fix.mobile.service.SaleService;
 import com.fix.mobile.entity.Sale;
-import org.springframework.security.core.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,7 +14,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 
-import javax.swing.text.html.Option;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -76,6 +72,11 @@ public class SaleServiceImpl implements SaleService {
     @Override
     public void delete(Integer id) {
         dao.deleteById(id);
+    }
+
+    @Override
+    public Integer findSaleApply(Integer id) {
+        return dao.findSaleApply(id);
     }
 
     @Override

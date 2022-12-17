@@ -142,10 +142,17 @@ private void checkList(List list,Integer idx,Integer id){
         }else{
             userName = account.getUsername();
         }
-        Sale updatequantity= saleSV.findByid(idSale);
-        updatequantity.setQuantity(updatequantity.getQuantity()-1);
-        saleSV.updateQuantity(updatequantity);
-        saleSV.addApply_Sale(idSale,userName);
+        if(idSale!=0){
+            Sale updatequantity= saleSV.findByid(idSale);
+            updatequantity.setQuantity(updatequantity.getQuantity()-1);
+            saleSV.updateQuantity(updatequantity);
+            saleSV.addApply_Sale(idSale,userName);
+        }
+    }
+
+    @RequestMapping("/saleapply/{id}")
+    public Sale findSaleApply(@PathVariable("id") Integer id){
+        return saleSV.findByid(saleSV.findSaleApply(id));
     }
 
     @RequestMapping("/getvoucher")

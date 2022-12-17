@@ -179,7 +179,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                             var urlSale=`http://localhost:8080/admin/rest/sale/getbigsale?money=`+money+`&idPrd=`+'0'+`&idAcsr=`+data.idAccessory;
                             var total=0;
                             $http.get(urlSale, token).then(resp => {
-                                if(resp.data==''){
+                                if(resp.data=''){
                                     total=0
                                 }else {
                                     if (resp.data.moneySale == null) {
@@ -194,13 +194,13 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                                 }
                                 data.priceSale = total;
                                 data.idSale = resp.data.idSale;
+                                $rootScope.carts.push(data);
+                                $rootScope.saveLocalStorage();
+                                $rootScope.loadLocalStorage();
+                                $rootScope.qtyCart++;
                             }).catch(error => {
                                 console.log(error)
                             })
-                            $rootScope.carts.push(data);
-                            $rootScope.saveLocalStorage();
-                            $rootScope.loadLocalStorage();
-                            $rootScope.qtyCart++;
                         }else{
                             $scope.accessoryItem.qty++;
                         }
@@ -267,6 +267,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                             title: 'Hết hàng!'
                         })
                     }else{
+                        alert("spanpham")
                         if(!$scope.productItem){
                             data.qty=1;
                             var money = data.price
@@ -274,7 +275,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                             var total=0;
                             var urlSale=`http://localhost:8080/admin/rest/sale/getbigsale?money=`+money+`&idPrd=`+data.idProduct+`&idAcsr=0`;
                             $http.get(urlSale, token).then(resp => {
-                                if(resp.data==''){
+                                if(resp.data=''){
                                     total=0;
                                 }else {
                                     if (resp.data.moneySale == null) {
@@ -289,14 +290,13 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                                 }
                                 data.priceSale=total;
                                 data.idSale = resp.data.idSale;
+                                $rootScope.carts.push(data);
+                                $rootScope.saveLocalStorage();
+                                $rootScope.qtyCart++;
 
                             }).catch(error => {
                                 console.log(error)
                             })
-                            $rootScope.carts.push(data);
-                            $rootScope.saveLocalStorage();
-                            $rootScope.loadLocalStorage();
-                            $rootScope.qtyCart++;
                         }else{
                             $scope.productItem.qty++;
                         }
@@ -394,13 +394,13 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                             }
                             data.priceSale=total;
                             data.idSale = resp.data.idSale;
+                            $rootScope.carts.push(data);
+                            $rootScope.saveLocalStorage();
+                            $rootScope.loadLocalStorage();
+                            $rootScope.qtyCart++;
                         }).catch(error => {
                             console.log(error)
                         })
-                        $rootScope.carts.push(data);
-                        $rootScope.saveLocalStorage();
-                        $rootScope.loadLocalStorage();
-                        $rootScope.qtyCart++;
                     }else{
                         $scope.productItem.qty++;
                     }
