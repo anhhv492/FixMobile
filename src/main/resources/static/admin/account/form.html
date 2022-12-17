@@ -177,7 +177,7 @@
                 </div>
             </div>
             <div class="row ">
-                <div ng-hide="hidePassword" class="col-sm-6 -p-0">
+                <div  ng-hide="hidePassword" class="col-sm-6 -p-0">
                     <div class="row  mb-1">
                         <div class="col-sm-3">
                             <label class="card-title mb-0">Mật khẩu</label>
@@ -226,6 +226,7 @@
             <button ng-hide="hideUpdate" class="btn btn-primary" ng-disabled="myForm.$invalid" ng-click="update()"><b
                     class="glyphicon glyphicon-save"></b>Cập nhật
             </button>
+
             <button class="btn btn-warning" ng-click="reset()"><b class="glyphicon glyphicon-trash"></b>Làm mới</button>
         </div>
     </div>
@@ -283,7 +284,7 @@
                         <td>{{acc.phone}}</td>
                         <td>{{acc.createDate | date:'MM-dd-yyyy'}}</td>
                         <td>{{acc.status == true ? 'Hoạt động' : 'Không hoạt động'}}</td>
-                        <td>{{acc.role}}</td>
+                        <td>{{acc.role ==1 ? 'ADMIN': acc.role ==2? 'STAFF': 'USER'}}</td>
                         <td>
                             <div class="btn-group btn-group-xs">
                                 <button ng-click="edit(acc)"  class="btn btn-primary"data-bs-toggle="tooltip" data-bs-placement="bottom" title="Tooltip on bottom">
