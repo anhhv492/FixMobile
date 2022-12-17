@@ -102,8 +102,8 @@ CREATE TABLE sale (
 	id_sale int NOT NULL auto_increment primary key,
 	name nvarchar(100) ,
 	type_sale nvarchar(100) ,
-	create_start date ,
-	create_end date,
+	create_start datetime ,
+	create_end datetime,
 	voucher nvarchar(100),
 	value_min decimal(10,0),
 	money_sale decimal(10,0),
@@ -121,14 +121,11 @@ CREATE TABLE sale (
 
 CREATE TABLE sale_detail (
 	id_detail int NOT NULL auto_increment primary key,
-	id_sale int NOT NULL,
-	id_product int NOT NULL,
+	id_sale int  NULL,
+	id_product int  NULL,
 	id_accessory int NULL,
-	username nvarchar(50) not null,
-	foreign key(username) references accounts(username),
+	username nvarchar(50) null,
 	foreign key(id_sale) references sale(id_sale),
-	foreign key(id_product) references products(id_product),
-	foreign key(id_accessory) references accessories(id_accessory)
 );
 
 CREATE TABLE orders (
@@ -142,13 +139,10 @@ CREATE TABLE orders (
 	status_buy int null,
 	type binary  null,
 	username nvarchar(50)  NULL,
-    money_sale decimal(10,0) null,
-    money_ship decimal(10,0) null,
+    	money_ship decimal(10,0) null,
 	person_take nvarchar(50)  NULL,
 	phone_take nvarchar(15)  NULL,
-    id_sale int null,
 	foreign key(username) references accounts(username),
-	foreign key(id_sale) references sale(id_sale)
 );
 
 CREATE TABLE order_detail (
