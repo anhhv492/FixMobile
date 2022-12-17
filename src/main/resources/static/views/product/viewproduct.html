@@ -28,9 +28,19 @@
                                                 <ul>
                                                     <li class="filter-item filter-item--check-box filter-item--green">
                                                         <span>
+
                                                             <label><a class="" href="#!filterproductprice"
                                                                             ng-click="findProductByPr()">Từ 100.000 đ đến 500.000đ</a>
                                                                     </label>
+
+                                                            <label data-filter="100-000d" >
+                                                                <input type="checkbox" id="filter-duoi-100-000d" data-group="Khoảng giá"
+                                                                       data-field="price_min" data-text="Dưới 100.000đ" value="(<100000)"
+                                                                       data-operator="OR">
+                                                                <i class="fa"></i>
+                                                                <a class="" href="#!product/detail"  ng-click="findProductByPr()">Từ 100.000 đ đến 500.000đ</a>
+                                                            </label>
+
                                                         </span>
                                                     </li>
 
@@ -62,6 +72,28 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="col-12 col-lg-12">
+                                <aside class="aside-item blog-sidebar sidebar-category collection-category margin-bottom-25 clear-fix">
+                                    <div class="block-title">
+                                        <h2 class="title-module">Danh mục</h2>
+                                    </div>
+                                    <div class="aside-content">
+                                        <nav class="nav-category navbar-toggleable-md">
+                                            <ul class="nav navbar-pills">
+                                                <li class="nav-item"><a class="nav-link" href="/">Trang chủ
+                                                </a>
+                                                </li>
+                                                <li class="nav-item"><a class="nav-link" href="/landing-sale">Landing
+                                                    Sale
+                                                </a>
+                                                </li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                </aside>
+                            </div>
+
                         </div>
                     </aside>
                     <div class="main_container collection col-lg-9 col-md-12 col-sm-12">
@@ -131,12 +163,14 @@
                                                     </div>
                                                 </div>
                                                 <div class="action-cart">
+
                                                         <button type="button" ng-click="addCart(p)"
                                                                 class="btn btn-lg btn-gray btn_buy"
                                                                 title="Mua ngay"> <i class="fa fa-shopping-cart"></i>
                                                             <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink"
                                                                                    xlink:href="#plusiconregular"></use></svg>
                                                         </button>
+
                                                 </div>
                                             </form>
 
@@ -176,9 +210,6 @@
                 </div>
             </div>
         </div>
-<!--</html>-->
-
-<!-- file js + boottraps -->
 
 <style>
     :root {
@@ -222,7 +253,4 @@
       href="//bizweb.sapocdn.net/100/460/476/themes/869615/assets/collection_style.scss.css?1669866878969">
 <link href="//bizweb.sapocdn.net/100/460/476/themes/869615/assets/collection_style.scss.css?1669866878969"
       rel="stylesheet" type="text/css"/>
-
-
-
 
