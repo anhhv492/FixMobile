@@ -125,7 +125,7 @@ CREATE TABLE sale_detail (
 	id_product int  NULL,
 	id_accessory int NULL,
 	username nvarchar(50) null,
-	foreign key(id_sale) references sale(id_sale),
+	foreign key(id_sale) references sale(id_sale)
 );
 
 CREATE TABLE orders (
