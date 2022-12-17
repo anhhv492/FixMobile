@@ -203,5 +203,10 @@ public class ProductServiceImpl implements ProductService {
         return productResponDTOList;
     }
 
+    @Override
+    public List<Product> findProductByPrices() {
+        return repository.findProductByPrices();
+    }
+
 
 }

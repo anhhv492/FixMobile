@@ -27,5 +27,7 @@ public interface ProductService extends GenericService<Product, Integer> {
 	List<ProductResponDTO> getProductCount();
 
 	List<ProductResponDTO> findByPriceExits();
+
+	List<Product> findProductByPrices();
 }
 
