@@ -102,8 +102,8 @@ CREATE TABLE sale (
 	id_sale int NOT NULL auto_increment primary key,
 	name nvarchar(100) ,
 	type_sale nvarchar(100) ,
-	create_start date ,
-	create_end date,
+	create_start datetime ,
+	create_end datetime,
 	voucher nvarchar(100),
 	value_min decimal(10,0),
 	money_sale decimal(10,0),
@@ -121,14 +121,11 @@ CREATE TABLE sale (
 
 CREATE TABLE sale_detail (
 	id_detail int NOT NULL auto_increment primary key,
-	id_sale int NOT NULL,
-	id_product int NOT NULL,
+	id_sale int  NULL,
+	id_product int  NULL,
 	id_accessory int NULL,
-	username nvarchar(50) not null,
-	foreign key(username) references accounts(username),
-	foreign key(id_sale) references sale(id_sale),
-	foreign key(id_product) references products(id_product),
-	foreign key(id_accessory) references accessories(id_accessory)
+	username nvarchar(50) null,
+	foreign key(id_sale) references sale(id_sale)
 );
 
 CREATE TABLE orders (
@@ -142,13 +139,10 @@ CREATE TABLE orders (
 	status_buy int null,
 	type binary  null,
 	username nvarchar(50)  NULL,
-    money_sale decimal(10,0) null,
-    money_ship decimal(10,0) null,
+	money_ship decimal(10,0) null,
 	person_take nvarchar(50)  NULL,
 	phone_take nvarchar(15)  NULL,
-    id_sale int null,
-	foreign key(username) references accounts(username),
-	foreign key(id_sale) references sale(id_sale)
+	foreign key(username) references accounts(username)
 );
 
 CREATE TABLE order_detail (
@@ -486,11 +480,12 @@ begin
 END;
 
 --  quản lý theo người dùng
-create
-    definer = root@localhost procedure getBigSale_UserName(IN _userName varchar(50), IN _money  decimal(10,0))
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getBigSale_UserName`(IN _userName varchar(50), IN _money decimal)
 begin
-    declare max_moneySale decimal(10,0);
+    declare max_moneySale decimal;
     declare max_percentSale integer;
+
     if ((select username from orders where username like _userName limit 1) is null) then
         select MAX(money_sale) FROM sale s where type_sale = 3 and discount_method = 1 and user_type = 0 and
                 quantity != 0 and NOW() between create_start  and create_end
@@ -530,6 +525,7 @@ begin
             into max_percentSale;
         end if;
     end if;
+
     if(max_moneySale is null) then
         select * FROM sale s LEFT join sale_detail sd ON s.id_sale = sd.id_sale
         where percent_sale = max_percentSale and type_sale = 3 and discount_method = 1 and username = _userName and user_type = 1 and
@@ -547,7 +543,8 @@ begin
         where percent_sale = max_percentSale and type_sale = 3 and discount_method = 1 and username = _userName and user_type = 1 and
                 quantity != 0 and NOW() between create_start  and create_end limit 1;
     end if;
-END;
+END$$
+DELIMITER ;
 
 
 

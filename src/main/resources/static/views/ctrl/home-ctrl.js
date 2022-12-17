@@ -177,7 +177,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                             var urlSale=`http://localhost:8080/admin/rest/sale/getbigsale?money=`+money+`&idPrd=`+'0'+`&idAcsr=`+data.idAccessory;
                             var total=0;
                             $http.get(urlSale, token).then(resp => {
-                                if(resp.data=''){
+                                if(resp.data==''){
                                     total=0
                                 }else {
                                     if (resp.data.moneySale == null) {
@@ -273,7 +273,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                             var total=0;
                             var urlSale=`http://localhost:8080/admin/rest/sale/getbigsale?money=`+money+`&idPrd=`+data.idProduct+`&idAcsr=0`;
                             $http.get(urlSale, token).then(resp => {
-                                if(resp.data=''){
+                                if(resp.data==''){
                                     total=0;
                                 }else {
                                     if (resp.data.moneySale == null) {

@@ -20,6 +20,7 @@ app.config(function($routeProvider){
         .when("/product/detail",{
             templateUrl:"product/list_detail.html",
             controller: "home-ctrl",
+            controller: "view_product_ctrl",
         })
         .when("/order",{
             templateUrl:"order/view.html",
@@ -83,10 +84,7 @@ app.config(function($routeProvider){
             templateUrl:"accessory/viewaccesory.html",
             //controller: "productchange-ctrl",
         })
-        // .when("/page",{
-        //     templateUrl:"home/page.html",
-        //     //controller: "productchange-ctrl",
-        // })
+
 
 
 });
