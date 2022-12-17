@@ -7,12 +7,10 @@ import com.fix.mobile.dto.account.AccountRequestDTO;
 import com.fix.mobile.dto.account.AccountResponDTO;
 import com.fix.mobile.dto.account.UpdatePasswordDTO;
 import com.fix.mobile.entity.Account;
+import com.fix.mobile.entity.Order;
 import com.fix.mobile.entity.Sale;
 import com.fix.mobile.entity.SaleDetail;
-import com.fix.mobile.service.AccountService;
-import com.fix.mobile.service.RoleService;
-import com.fix.mobile.service.SaleDetailService;
-import com.fix.mobile.service.SaleService;
+import com.fix.mobile.service.*;
 import com.fix.mobile.utils.UserName;
 import org.hibernate.StaleStateException;
 import org.modelmapper.ModelMapper;
@@ -24,6 +22,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.ServletContext;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @RestController
@@ -35,6 +35,9 @@ public class UserRestController {
     private AccountService accountService;
     @Autowired
     private RoleService roleService;
+
+    @Autowired
+    private OrderService orderService;
 
     @Autowired
     SaleService saleSV;
@@ -169,5 +172,31 @@ public class UserRestController {
         }
 //        System.out.println(saleSV.getBigSale(userName,moneySale,idPrdSale,idAcsrSale));
         return saleSV.getBigSale(userName,moneySale,idPrd,idAcsr);
+    }
+
+    @GetMapping(value="/order")
+    public List<Order> getAllByAccount(){
+        Account account = accountService.findByUsername(UserName.getUserName());
+        List<Order> orders = orderService.findAllByAccount(account);
+        Comparator comparator = new Comparator<Order>() {
+            @Override
+            public int compare(Order o1, Order o2) {
+                return o2.getIdOrder().compareTo(o1.getIdOrder());
+            }
+        };
+        Collections.sort(orders,comparator);
+        return orders;
+    }
+
+    @PostMapping("/order/change")
+    public Order orderChange(@RequestBody Order order){
+        Order orderOld = orderService.findById(order.getIdOrder()).get();
+        if(orderOld.getStatus()<2){
+            orderOld.setStatus(4);
+            orderOld.setNote(order.getNote());
+            orderService.update(orderOld,orderOld.getIdOrder());
+            return order;
+        }
+        return null;
     }
 }
