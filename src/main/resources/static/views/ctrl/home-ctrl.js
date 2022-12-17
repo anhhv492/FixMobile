@@ -267,7 +267,6 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                             title: 'Hết hàng!'
                         })
                     }else{
-                        alert("spanpham")
                         if(!$scope.productItem){
                             data.qty=1;
                             var money = data.price
