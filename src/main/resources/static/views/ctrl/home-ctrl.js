@@ -525,12 +525,13 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
             localStorage.setItem('accessCodeHome', $rootScope.accessCodeHome.idAccessory);
         })
     }
-     if ($rootScope.account != null){
+     if ($rootScope.account != null && token != null){
          $scope.getAcountActive();
+         $rootScope.loadLocalStorage();
      }
 
 
-    $rootScope.loadLocalStorage();
+
 
 
 })

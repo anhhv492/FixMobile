@@ -299,4 +299,17 @@ public class GuestRestController {
 //        System.out.println(saleSV.getBigSale(userName,moneySale,idPrdSale,idAcsrSale));
         return saleSV.getBigSale(userName,moneySale,idPrd,idAcsr);
     }
+
+    @GetMapping("/product/getAll")
+    public List<Product> findAll(){
+        return productService.findAll();
+    }
+
+    @GetMapping(value ="/product/findByProductCode")
+    public Optional<Product> findByProductCodeDetail(@RequestParam("id") Integer productCode) {
+        Optional<Product> product = null;
+        if (productCode == null) ;
+        product = productService.findById(productCode);
+        return product;
+    }
 }

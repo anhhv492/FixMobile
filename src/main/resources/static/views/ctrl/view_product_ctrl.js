@@ -156,7 +156,7 @@ app.controller('view_product_ctrl', function ($scope,$http,$rootScope){
 
     
     $scope.getOneProduct = function (id){
-        $http.get('/rest/admin/product/findByProductCode?id='+id,token).then(function(response) {
+        $http.get('/rest/guest/product/findByProductCode?id='+id).then(function(response) {
             $scope.oneProduct = response.data;
             $scope.displayProduct.name = $scope.oneProduct.name;
             $scope.displayProduct.price = $scope.oneProduct.price;
@@ -177,7 +177,7 @@ app.controller('view_product_ctrl', function ($scope,$http,$rootScope){
     }
 
     $scope.getColorByNamePr = function (id) {
-        $http.get('/rest/admin/product/findByProductCode?id=' + id, token).then(function (response) {
+        $http.get('/rest/guest/product/findByProductCode?id=' + id).then(function (response) {
             $scope.namePr = response.data.name;
             console.log($scope.namePr)
             $http.get('/rest/guest/getColorProductByName?name=' + $scope.namePr).then(function (response) {
