@@ -1,5 +1,6 @@
+
 <div class=" well well-sm row d-flex justify-content-center">
-    <div class="alert alert-warning container " ng-if="detailProducts.length<0">
+    <div class="alert alert-warning container " ng-if="listProduct.length<0">
         Sản phẩm này đã hết hàng!
     </div>
 
@@ -26,14 +27,14 @@
                                                     <h2 class="title-module ">Theo mức giá</h2>
                                                 </div>
                                                 <div class="aside-content margin-top-0 filter-group content_price">
-                                                        <li class="filter-item filter-item--check-box filter-item--green">
+                                                    <li class="filter-item filter-item--check-box filter-item--green">
                                                                 <span>
-                                                                   <label>
+                                                                    <label>
                                                                          <a class="" href="#!filterproductprice"
                                                                             ng-click="findProductByPr()">Từ 100.000 đ đến 500.000đ</a>
                                                                     </label>
                                                                 </span>
-                                                        </li>
+                                                    </li>
                                                 </div>
                                             </aside>
                                             <!-- End Lọc giá -->
@@ -100,48 +101,50 @@
 
                             <div class="category-products products">
                                 <section class="products-view products-view-grid collection_reponsive">
-                                    <div class="row" ng-if="detailProducts.length > 0">
-                                        <div class="col-6 col-md-3 col-lg-3 product-col"
-                                             ng-repeat="p in detailProducts">
-                                            <div class="item_product_main">
-                                                <form action="/cart/add" method="post"
-                                                      class="variants product-action wishItem" data-cart-form
-                                                      data-id="product-actions-27234048" enctype="multipart/form-data">
-                                                    <a class="image_thumb" href="/san-pham-khong-co-anh"
-                                                       title="san pham khong co anh">
-                                                        <span class="label-sale">95%</span>
-                                                        <img width="199" height="199"
-                                                             src="{{p.image}}"
-                                                             alt="san pham khong co anh"
-                                                             class="lazyload img-responsive center-block"/>
-                                                    </a>
-                                                    <div class="info-product">
-                                                        <h3 class="product-name"><a hfre=""
-                                                                           title="san pham khong co anh">{{p.name}}</a></h3>
-                                                        <div class="weight">
-                                                            <small style="color: lightslategray">Còn
-                                                                {{p.totail | number}} sản phẩm</small>
-                                                        </div>
-                                                        <div class="price-box">
-                                                            <span ng-if="p.priceSale == 0">{{p.price | number}} VNĐ</span>
-                                                            <span ng-if="p.priceSale != 0">
-															<del>{{p.price | number}} VNĐ</del> &nbsp; {{p.price - p.priceSale| number}} VNĐ
+                                    <div class="row" ng-if="listProduct.length > 0">
+                                        <div class="row" ng-if="listProduct.length > 0" >
+                                            <div class="col-6 col-md-3 col-lg-3 product-col"
+                                                 ng-repeat="p in listProduct">
+                                                <div class="item_product_main">
+                                                    <form action="/cart/add" method="post"
+                                                          class="variants product-action wishItem" data-cart-form
+                                                          data-id="product-actions-27234048" enctype="multipart/form-data">
+                                                        <a class="image_thumb" href="/san-pham-khong-co-anh"
+                                                           title="san pham khong co anh">
+                                                            <span class="label-sale">95%</span>
+                                                            <img width="199" height="199"
+                                                                 src="{{p.images.name}}"
+                                                                 alt="san pham khong co anh"
+                                                                 class="lazyload img-responsive center-block"/>
+                                                        </a>
+                                                        <div class="info-product">
+                                                            <h3 class="product-name"><a hfre=""
+                                                                                        title="san pham khong co anh">{{p.name}}</a></h3>
+                                                            <div class="weight">
+                                                                <small style="color: lightslategray">Còn
+                                                                    {{p.totail | number}} sản phẩm</small>
+                                                            </div>
+                                                            <div class="price-box">
+                                                                <span ng-if="p.priceSale == 0">{{pro.price | number}} VNĐ</span>
+                                                                <span ng-if="p.priceSale != 0">
+															<del>{{p.price | number}} VNĐ</del> &nbsp; {{p.price - pro.priceSale| number}} VNĐ
 														</span>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="action-cart">
-                                                        <button type="button" ng-click="addCart(p)"
-                                                                class="btn btn-lg btn-gray btn_buy">
-                                                            <i class="fa fa-shopping-cart"></i>
-                                                            <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                                                   xlink:href="#plusiconregular"></use></svg>
-                                                        </button>
-                                                    </div>
-                                                </form>
+                                                        <div class="action-cart">
+                                                            <button type="button" ng-click="addCart(p)"
+                                                                    class="btn btn-lg btn-gray btn_buy"
+                                                                    title="Mua ngay">
+                                                                <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                                                       xlink:href="#plusiconregular"></use></svg>
+                                                            </button>
+                                                        </div>
+                                                    </form>
 
+                                                </div>
                                             </div>
+                                            <div class="col-6 col-md-3 col-lg-3 product-col" ng-if="listProduct.length < 0"></div>
                                         </div>
-
                                     </div>
 
                                     <div class="section pagenav">
