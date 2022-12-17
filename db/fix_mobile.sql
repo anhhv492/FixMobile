@@ -139,10 +139,10 @@ CREATE TABLE orders (
 	status_buy int null,
 	type binary  null,
 	username nvarchar(50)  NULL,
-    	money_ship decimal(10,0) null,
+	money_ship decimal(10,0) null,
 	person_take nvarchar(50)  NULL,
 	phone_take nvarchar(15)  NULL,
-	foreign key(username) references accounts(username),
+	foreign key(username) references accounts(username)
 );
 
 CREATE TABLE order_detail (
