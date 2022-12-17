@@ -268,14 +268,13 @@ app.controller('view_product_ctrl', function ($scope,$http,$rootScope){
     }
         // get product between price
     $scope.listProduct=[];
-
-  $scope.findProductByPr = function (){
+    $scope.findProductByPr = function (){
         $http.get(`/rest/admin/product/findProductByPrice`).then(function (respon){
             $scope.listProduct = respon.data;
             debugger;
             console.log($scope.respon.data);
         }).catch(err => {
             console.log(err + 'kiixu  lỗi')
-
-   }
+        })
+    }
 })
