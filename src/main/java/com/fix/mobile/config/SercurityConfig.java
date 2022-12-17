@@ -40,71 +40,72 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration//File cấu hình
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)//Cho phép sử dụng Annotation trong @Controller
-public class SercurityConfig{
-	//HttpSecurity: Phân quyền sử dụng
-	//Cau hinh, chi thi phuong thuc login
-	@Autowired
-	private HttpServletRequest request;
+public class SercurityConfig {
+    //HttpSecurity: Phân quyền sử dụng
+    //Cau hinh, chi thi phuong thuc login
+    @Autowired
+    private HttpServletRequest request;
 
-	@Autowired
-	JwtEntrypoint jwtEntrypoint;
+    @Autowired
+    JwtEntrypoint jwtEntrypoint;
 
-	@Autowired
-	JwtFilter jwtFilter;
-	
-
-
-	@Autowired
-	UserService userService;
+    @Autowired
+    JwtFilter jwtFilter;
 
 
-	PasswordEncoder passwordEncoder() {//Mã hóa password
-		return new BCryptPasswordEncoder();
-	}
-	@Bean
-	protected AuthenticationManager authenticationManagerBean(HttpSecurity httpSecurity) throws Exception {
-		return httpSecurity.getSharedObject(AuthenticationManagerBuilder.class)
-				.userDetailsService(userService)
-				.passwordEncoder(passwordEncoder())
-				.and().build();
+    @Autowired
+    UserService userService;
 
-	}
-	
+
+    PasswordEncoder passwordEncoder() {//Mã hóa password
+        return new BCryptPasswordEncoder();
+    }
+
     @Bean
-	protected SecurityFilterChain configure(HttpSecurity http)throws Exception {
-		//Disable crsf cho đường dẫn /rest/**
-    	http.csrf().disable();
-    	
-		http.authorizeHttpRequests().antMatchers("/admin/*",
-						"/rest/guest/registers").permitAll()//Phân quyền sử dụng
-		.antMatchers("/order/**").authenticated()
-//		.antMatchers("/rest/admin/**","/rest/staff/**").hasAnyRole("STAFF","ADMIN")
-//		.antMatchers("/rest/authorities").hasRole("DIRE")
-		 .and().exceptionHandling().authenticationEntryPoint(jwtEntrypoint)
-				.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+    protected AuthenticationManager authenticationManagerBean(HttpSecurity httpSecurity) throws Exception {
+        return httpSecurity.getSharedObject(AuthenticationManagerBuilder.class)
+                .userDetailsService(userService)
+                .passwordEncoder(passwordEncoder())
+                .and().build();
 
-		http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+    }
 
+    @Bean
+    protected SecurityFilterChain configure(HttpSecurity http) throws Exception {
+        //Disable crsf cho đường dẫn /rest/**
+        http.csrf().disable();
 
-		http.formLogin()
-		.loginPage("/login")
-		.loginProcessingUrl("/security/login/success")
-		.defaultSuccessUrl("/security/login/success",false)
-		
-		.failureUrl("/security/login/error");
-		
-		http.rememberMe()
-		.tokenValiditySeconds(86400);
-		
-		http.exceptionHandling()
-		.accessDeniedPage("/security/unauthoried");
-		
-		http.logout()
-		.logoutUrl("/security/logoff")// địa chỉ hệ thống xử lý
-		.logoutSuccessUrl("/security/logoff/success");
+        http.authorizeHttpRequests().antMatchers(
+                        "/rest/guest/**").permitAll()//Phân quyền sử dụng
+                .antMatchers("/order/**").authenticated()
+                .antMatchers("/rest/admin/**").hasRole("ADMIN")
+                .antMatchers("/rest/staff/**").hasAnyRole("STAFF", "ADMIN")
+                .antMatchers("/rest/user/**").hasAnyRole("USER", "STAFF", "ADMIN")
+                .and().exceptionHandling().authenticationEntryPoint(jwtEntrypoint)
+                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
 
-		return http.build();
-	}	
+        http.formLogin()
+                .loginPage("/login")
+                .loginProcessingUrl("/security/login/success")
+                .defaultSuccessUrl("/security/login/success", false)
+
+                .failureUrl("/security/login/error");
+
+        http.rememberMe()
+                .tokenValiditySeconds(86400);
+
+        http.exceptionHandling()
+                .accessDeniedPage("/security/unauthoried");
+
+        http.logout()
+                .logoutUrl("/security/logoff")// địa chỉ hệ thống xử lý
+                .logoutSuccessUrl("/security/logoff/success");
+
+
+        return http.build();
+    }
 
 }

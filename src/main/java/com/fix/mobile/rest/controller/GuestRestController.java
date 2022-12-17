@@ -51,6 +51,9 @@ public class GuestRestController {
 
     @Autowired
     private ColorService colorService;
+
+    @Autowired
+    SaleService saleSV;
     
     Order order = null;
     Account account = null;
@@ -210,12 +213,14 @@ public class GuestRestController {
         List<Sale> sales = saleService.findAllByDate();
         return sales;
     }
-    @GetMapping(value ="/findByProductCode/{productCode}")
+    @GetMapping(value ="/product/findByProductCode/{productCode}")
     public Optional<Product> findByProductCode(@PathVariable("productCode") Integer productCode) {
         Optional<Product> product = productService.findById(productCode);
 
         return Optional.of(product.get());
     }
+
+
 
     @GetMapping("/getAllCapacity")
     public List<Capacity> getAllCapacity(){
@@ -253,5 +258,32 @@ public class GuestRestController {
     @GetMapping("/getColorProductByName")
     public List<ColorProductResponDTO> getColorProductByName(@RequestParam("name") String name){
         return productService.getColorProductByName(name);
+    }
+
+    @RequestMapping("/sale/getbigsale")
+    public Sale getBigSale( @RequestParam(name="money") String money,
+                            @RequestParam(name="idPrd") Integer idPrd,
+                            @RequestParam(name="idAcsr") Integer idAcsr){
+        BigDecimal moneySale;
+        String userName;
+        account = accountService.findByUsername(UserName.getUserName());
+        if(null==account){
+            userName=null;
+        }else{
+            userName = account.getUsername();
+        }
+        if( 0 == money.length() || "undefined".equals(money) ||"".equals(money)){
+            moneySale=null;
+        }else{
+            moneySale = new BigDecimal(Double.valueOf(money));
+        }
+        if( 0==idPrd ){
+            idPrd=null;
+        }
+        if( 0 == idAcsr){
+            idAcsr=null;
+        }
+//        System.out.println(saleSV.getBigSale(userName,moneySale,idPrdSale,idAcsrSale));
+        return saleSV.getBigSale(userName,moneySale,idPrd,idAcsr);
     }
 }

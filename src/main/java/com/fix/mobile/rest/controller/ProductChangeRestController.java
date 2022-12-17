@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.*;
 
 @RestController
-@RequestMapping(value= "/rest/productchange")
+@RequestMapping(value= "/rest/user/productchange")
 @CrossOrigin("*")
 public class ProductChangeRestController {
 
