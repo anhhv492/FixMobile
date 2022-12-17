@@ -480,11 +480,12 @@ begin
 END;
 
 --  quản lý theo người dùng
-create
-    definer = root@localhost procedure getBigSale_UserName(IN _userName varchar(50), IN _money  decimal(10,0))
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getBigSale_UserName`(IN _userName varchar(50), IN _money decimal)
 begin
-    declare max_moneySale decimal(10,0);
+    declare max_moneySale decimal;
     declare max_percentSale integer;
+
     if ((select username from orders where username like _userName limit 1) is null) then
         select MAX(money_sale) FROM sale s where type_sale = 3 and discount_method = 1 and user_type = 0 and
                 quantity != 0 and NOW() between create_start  and create_end
@@ -524,6 +525,7 @@ begin
             into max_percentSale;
         end if;
     end if;
+
     if(max_moneySale is null) then
         select * FROM sale s LEFT join sale_detail sd ON s.id_sale = sd.id_sale
         where percent_sale = max_percentSale and type_sale = 3 and discount_method = 1 and username = _userName and user_type = 1 and
@@ -541,7 +543,8 @@ begin
         where percent_sale = max_percentSale and type_sale = 3 and discount_method = 1 and username = _userName and user_type = 1 and
                 quantity != 0 and NOW() between create_start  and create_end limit 1;
     end if;
-END;
+END$$
+DELIMITER ;
 
 
 
