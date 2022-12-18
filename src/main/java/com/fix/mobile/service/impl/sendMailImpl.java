@@ -1,6 +1,9 @@
 package com.fix.mobile.service.impl;
 
+import com.fix.mobile.entity.Account;
 import com.fix.mobile.entity.ProductChange;
+import com.fix.mobile.entity.Ram;
+import com.fix.mobile.repository.AccountRepository;
 import com.fix.mobile.service.ProductChangeService;
 import com.fix.mobile.service.sendMailService;
 import com.fix.mobile.utils.UserName;
@@ -19,13 +22,15 @@ import javax.mail.internet.MimeMessage;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
+import java.util.Random;
 
 @Service
 public class sendMailImpl implements sendMailService {
 
 	@Autowired
 	private ProductChangeService productChangeService;
-
+	@Autowired
+	private AccountRepository acccountReposetory;
 
 
 	private static final String EMAIL_FORGOT_PASSWORD = "Online Entertainment - New password";
@@ -103,5 +108,42 @@ public class sendMailImpl implements sendMailService {
 			e.printStackTrace();
 			e.getMessage();
 		}
+	}
+
+	@Override
+	public void SendEmailChangePass(String user, String pass, String mail) {
+		try {
+			Properties properties = new Properties();
+			properties.put("mail.smtp.host", "smtp.gmail.com");
+			properties.put("mail.smtp.port", "587");
+			properties.put("mail.smtp.auth", "true");
+			properties.put("mail.smtp.starttls.enable", "true");
+			Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
+				protected PasswordAuthentication getPasswordAuthentication() {
+					return new PasswordAuthentication(user,pass);
+				}
+			});
+			Message msg = new MimeMessage(session);
+			msg.setFrom(new InternetAddress(user, false));
+			Random r = new Random();
+			Account acc= acccountReposetory.findByEmail(mail);
+			acc.setPassword(String.valueOf(r.nextInt()));
+			acccountReposetory.save(acc);
+			if(acc.getEmail().equals(r.nextInt())){
+				msg.setFrom(new InternetAddress(user));
+				InternetAddress[] toAddresses = {new InternetAddress(acc.getEmail())};
+				msg.setRecipients(Message.RecipientType.TO, toAddresses);
+				msg.setSubject("xin chào mật khẩu của bạn");
+				msg.setSentDate(new Date());
+				msg.setText("Mật khẩu của bạn là: "+r.nextInt());
+				// sends the e-mail
+				Transport.send(msg);
+			}else{
+				System.out.println("bắn log");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
 }

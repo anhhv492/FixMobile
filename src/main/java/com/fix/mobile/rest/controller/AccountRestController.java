@@ -9,7 +9,9 @@ import com.fix.mobile.dto.account.AccountResponDTO;
 import com.fix.mobile.dto.account.UpdatePasswordDTO;
 import com.fix.mobile.dto.AccountDTO;
 import com.fix.mobile.dto.AddressDTO;
+import com.fix.mobile.service.sendMailService;
 import com.fix.mobile.utils.UserName;
+import org.apache.naming.factory.SendMailFactory;
 import org.modelmapper.ModelMapper;
 import com.fix.mobile.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +41,8 @@ public class AccountRestController {
     @Autowired
     ModelMapper modelMapper;
 
+    @Autowired
+    sendMailService mailService;
     public AccountRestController(AccountService accountService, RoleService roleService, ServletContext application, ModelMapper modelMapper) {
         this.accountService = accountService;
         this.roleService = roleService;
@@ -125,5 +129,16 @@ public class AccountRestController {
     public Boolean updatePassword (@RequestBody UpdatePasswordDTO updatePasswordDTO){
 
          return accountService.updatePassword(updatePasswordDTO);
+    }
+
+    @PostMapping("/updatePasswordMail")
+    public void updatePasswordMail (@RequestParam("email")String email){
+        try {
+            if(email != null){
+                mailService.SendEmailChangePass("top1zukavietnam@gmail.com","kzbtzovffrqbkonf",email);
+            }else;
+        }catch (Exception e){
+
+        }
     }
 }
