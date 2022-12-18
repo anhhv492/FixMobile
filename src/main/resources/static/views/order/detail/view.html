@@ -35,6 +35,8 @@
                 <td>{{orderDetail.quantity * orderDetail.price | number}}</td>
                     <p ng-if="orderDetail.status == 0">Đang kiểm tra yêu cầu ...</p>
                     <p ng-if="orderDetail.status == 1">Đã xác nhận đổi trả</p>
+                    <p ng-if="orderDetail.status == 2">Vui lòng đang chọn máy mới cho bạn</p>
+                    <p ng-if="orderDetail.status == 3">Đổi máy thanh công</p>
                 </td>
                 <td>
                     <button ng-click="getProductChange(orderDetail)"
@@ -44,6 +46,7 @@
                         <i class="fa fa-info-circle" aria-hidden="true"></i> Đổi hàng
                     </button>
                 </td>
+                <td></td>
             </tr>
             </tbody>
         </table>
