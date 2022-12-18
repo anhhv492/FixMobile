@@ -1,7 +1,7 @@
-app.controller('product', function($scope, $http) {
-    const pathAPI = "/rest/admin/product";
-    const callApiPage = "http://localhost:8080/rest/admin/product/pageImei?page="
-    const callDeleteImei = "http://localhost:8080/rest/admin/product/deleteImeiById?id="
+app.controller('product', function($scope, $http, $window) {
+    const pathAPI = "/rest/staff/product";
+    const callApiPage = "http://localhost:8080/rest/staff/product/pageImei?page="
+    const callDeleteImei = "http://localhost:8080/rest/staff/product/deleteImeiById?id="
     $scope.formProduct = {};
     $scope.imeis = []
     $scope.products = [];
@@ -196,7 +196,7 @@ app.controller('product', function($scope, $http) {
         formData.append('capacity',$scope.formProduct.capacity)
         let req = {
             method: 'POST',
-            url: '/rest/admin/product/updateProduct?id=' +$scope.formProduct.idProduct,
+            url: '/rest/staff/product/updateProduct?id=' +$scope.formProduct.idProduct,
             headers: {
                 'Content-Type': undefined,
                 Authorization: `Bearer `+jwtToken
@@ -319,7 +319,7 @@ app.controller('product', function($scope, $http) {
         console.log($scope.formProduct.category)
         let req = {
             method: 'POST',
-            url: '/rest/admin/product/saveProduct',
+            url: '/rest/staff/product/saveProduct',
             headers: {
                 'Content-Type': undefined,
                 Authorization: `Bearer `+jwtToken
@@ -541,7 +541,7 @@ app.controller('product', function($scope, $http) {
         form.append('product',$scope.formProduct.product);
         let req = {
             method: 'POST',
-            url: '/rest/admin/product/saveImay',
+            url: '/rest/staff/product/saveImay',
             headers: {
                 'Content-Type': undefined, // or  'Content-Type':'application/json'
                 Authorization: `Bearer `+jwtToken

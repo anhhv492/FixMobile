@@ -16,6 +16,7 @@ app.config(function($routeProvider){
             controller: "home-ctrl",
             controller: "view_product_ctrl",
 
+
         })
         .when("/product/detail",{
             templateUrl:"product/list_detail.html",

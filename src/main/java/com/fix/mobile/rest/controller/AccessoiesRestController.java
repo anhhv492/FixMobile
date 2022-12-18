@@ -24,7 +24,7 @@ import java.util.*;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping(value="/rest/admin/accessoríes")
+@RequestMapping(value="/rest/staff/accessories")
 public class AccessoiesRestController {
 
 	Logger LOGGER = Logger.getLogger(AccessoiesRestController.class);

@@ -75,10 +75,10 @@ public class SercurityConfig {
         //Disable crsf cho đường dẫn /rest/**
         http.csrf().disable();
 
-        http.authorizeHttpRequests().antMatchers(
+        http.authorizeHttpRequests().antMatchers("/admin/**",
                         "/rest/guest/**").permitAll()//Phân quyền sử dụng
                 .antMatchers("/order/**").authenticated()
-                .antMatchers("/rest/admin/**").hasRole("ADMIN")
+                .antMatchers("/rest/admin/**","/admin/**").hasRole("ADMIN")
                 .antMatchers("/rest/staff/**").hasAnyRole("STAFF", "ADMIN")
                 .antMatchers("/rest/user/**").hasAnyRole("USER", "STAFF", "ADMIN")
                 .and().exceptionHandling().authenticationEntryPoint(jwtEntrypoint)

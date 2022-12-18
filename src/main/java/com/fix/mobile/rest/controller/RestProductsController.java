@@ -31,7 +31,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
 @RestController
-@RequestMapping(value= "/rest/admin/product")
+@RequestMapping(value= "/rest/staff/product")
 @CrossOrigin("*")
 @Component
 public class RestProductsController {
