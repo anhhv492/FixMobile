@@ -76,10 +76,10 @@ public class SercurityConfig{
 	UserService userService;
 
 
-//	@Bean
-//	public BCryptPasswordEncoder pe() {//Mã hóa password
-//		return new BCryptPasswordEncoder();
-//	}
+	@Bean
+	public BCryptPasswordEncoder pe() {//Mã hóa password
+		return new BCryptPasswordEncoder();
+	}
 //	@Override
 //	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 ////	Viet phuong thuc userDetailService cos du lieu truyen vao: username
