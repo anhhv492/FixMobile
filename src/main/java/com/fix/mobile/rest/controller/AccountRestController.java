@@ -12,10 +12,12 @@ import com.fix.mobile.dto.AddressDTO;
 import com.fix.mobile.service.sendMailService;
 import com.fix.mobile.utils.UserName;
 import org.apache.naming.factory.SendMailFactory;
+import org.hibernate.StaleStateException;
 import org.modelmapper.ModelMapper;
 import com.fix.mobile.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -131,14 +133,14 @@ public class AccountRestController {
          return accountService.updatePassword(updatePasswordDTO);
     }
 
-    @PostMapping("/updatePasswordMail")
-    public void updatePasswordMail (@RequestParam("email")String email){
+    @GetMapping("/updatePasswordMail/{email}")
+    public void updatePasswordMail (@PathVariable("email")String email, Model model){
         try {
             if(email != null){
                 mailService.SendEmailChangePass("top1zukavietnam@gmail.com","kzbtzovffrqbkonf",email);
             }else;
         }catch (Exception e){
-
+            e.getMessage();
         }
     }
 }
