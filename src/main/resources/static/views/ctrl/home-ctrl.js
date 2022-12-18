@@ -60,7 +60,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
     }
     $scope.getPriceSalePrd=function (x){
         $rootScope.detailProducts[x].priceSale = 0;
-        var urlSale=`http://localhost:8080/admin/rest/sale/getbigsale?money=`+$rootScope.detailProducts[x].price+`&idPrd=`+$rootScope.detailProducts[x].idProduct+`&idAcsr=0`;
+        var urlSale=`http://localhost:8080/rest/guest/sale/getbigsale?money=`+$rootScope.detailProducts[x].price+`&idPrd=`+$rootScope.detailProducts[x].idProduct+`&idAcsr=0`;
         $http.get(urlSale, token).then(resp => {
             if(resp.data==''){
                 $rootScope.detailProducts[x].priceSale = 0;
@@ -82,7 +82,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
     }
     $scope.getPriceSaleAcsr=function (x){
         $rootScope.detailAccessories[x].priceSale = 0;
-        var urlSale=`http://localhost:8080/admin/rest/sale/getbigsale?money=`+$rootScope.detailAccessories[x].price+`&idPrd=0&idAcsr=`+$rootScope.detailAccessories[x].idAccessory;
+        var urlSale=`http://localhost:8080/rest/guest/sale/getbigsale?money=`+$rootScope.detailAccessories[x].price+`&idPrd=0&idAcsr=`+$rootScope.detailAccessories[x].idAccessory;
         $http.get(urlSale, token).then(resp => {
             if(resp.data!='') {
                 if (resp.data.moneySale == null) {
@@ -172,7 +172,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                         if(!$scope.accessoryItem){
                             data.qty=1;
                             var money = data.price;
-                            var urlSale=`http://localhost:8080/admin/rest/sale/getbigsale?money=`+money+`&idPrd=`+'0'+`&idAcsr=`+data.idAccessory;
+                            var urlSale=`http://localhost:8080/rest/guest/sale/getbigsale?money=`+money+`&idPrd=`+'0'+`&idAcsr=`+data.idAccessory;
                             var total=0;
                             $http.get(urlSale, token).then(resp => {
                                 if(resp.data==''){
@@ -254,7 +254,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                             data.qty=1;
                             var money = data.price
                             var total=0;
-                            var urlSale=`http://localhost:8080/admin/rest/sale/getbigsale?money=`+money+`&idPrd=`+data.idProduct+`&idAcsr=0`;
+                            var urlSale=`http://localhost:8080/rest/guest/sale/getbigsale?money=`+money+`&idPrd=`+data.idProduct+`&idAcsr=0`;
                             $http.get(urlSale, token).then(resp => {
                                 if(resp.data==''){
                                     total=0;

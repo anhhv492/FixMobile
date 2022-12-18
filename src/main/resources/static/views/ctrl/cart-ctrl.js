@@ -489,7 +489,7 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window,$timeou
                             $http.post(urlOrder + '/add', $scope.cart, token).then(res => {
                                 if (res.data) {
                                     $http.post(urlOrderDetail + '/add', $rootScope.carts, token).then(res => {
-                                        var urladdsaleapply=`/admin/rest/sale/addsaleapply?idSale=`+$scope.getVoucherApply;
+                                        var urladdsaleapply=`/rest/user/sale/addsaleapply?idSale=`+$scope.getVoucherApply;
                                         $http.post(urladdsaleapply, token).then(res => {
 
                                         })
@@ -572,7 +572,7 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window,$timeou
     $rootScope.loadLocalStorage();
     $scope.listVoucherSale=[];
     $scope.getVoucherSale=function (money){
-        let url = `http://localhost:8080/admin/rest/sale/getvoucher?money=`+money
+        let url = `http://localhost:8080/rest/user/sale/getvoucher?money=`+money
         $http.post(url, $rootScope.carts, token).then(res => {
             $scope.listVoucherSale=res.data;
         }).catch(err => {
@@ -583,11 +583,11 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window,$timeou
     $scope.priceSaleByVocher=0;
     $scope.getSaleApply=function(x){
         $scope.getVoucherApply=x;
-        let urlsale = `http://localhost:8080/admin/rest/sale/getsale/`+$scope.getVoucherApply;
+        let urlsale = `http://localhost:8080/rest/user/sale/getsale/`+$scope.getVoucherApply;
         $http.get(urlsale, token).then(res => {
             var price=0;
             if(res.data.typeSale==1 || res.data.typeSale==4 || (res.data.typeSale==3 && res.data.userType==1)){
-               let urlsaledetail=`http://localhost:8080/admin/rest/sale/getsaledetail/`+$scope.getVoucherApply;
+               let urlsaledetail=`http://localhost:8080/rest/user/sale/getsaledetail/`+$scope.getVoucherApply;
                 $http.get(urlsaledetail, token).then(res1 => {
                     if(res.data.typeSale==1){
                         price=0;

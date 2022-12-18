@@ -52,7 +52,7 @@ app.controller('view_product_ctrl', function ($scope, $http, $rootScope) {
     }
     $scope.getPriceSaleTopProduct = function (x) {
         $scope.productView[x].priceSale = 0;
-        var urlSale = `http://localhost:8080/admin/rest/sale/getbigsale?money=` + $scope.productView[x].price + `&idPrd=` + $scope.productView[x].idProduct + `&idAcsr=0`;
+        var urlSale = `http://localhost:8080/rest/guest/sale/getbigsale?money=` + $scope.productView[x].price + `&idPrd=` + $scope.productView[x].idProduct + `&idAcsr=0`;
         $http.get(urlSale, token).then(resp => {
             if (resp.data == '') {
                 $rootScope.productView[x].priceSale = 0;
@@ -85,7 +85,7 @@ app.controller('view_product_ctrl', function ($scope, $http, $rootScope) {
     }
     $scope.getPriceTopProduct = function (x) {
         $rootScope.viewByPrice[x].priceSale = 0;
-        var urlSale = `http://localhost:8080/admin/rest/sale/getbigsale?money=` + $rootScope.viewByPrice[x].price + `&idPrd=` + $rootScope.viewByPrice[x].idProduct + `&idAcsr=0`;
+        var urlSale = `http://localhost:8080/rest/guest/sale/getbigsale?money=` + $rootScope.viewByPrice[x].price + `&idPrd=` + $rootScope.viewByPrice[x].idProduct + `&idAcsr=0`;
         $http.get(urlSale, token).then(resp => {
             if (resp.data == '') {
                 $rootScope.viewByPrice[x].priceSale = 0;
@@ -266,7 +266,7 @@ app.controller('view_product_ctrl', function ($scope, $http, $rootScope) {
     $scope.listProduct = [];
 
     $scope.findProductByPr = function () {
-        $http.get(`/rest/admin/product/findProductByPrice`).then(function (respon) {
+        $http.get(`/rest/guest/product/findProductByPrice`).then(function (respon) {
             $scope.listProduct = respon.data;
             console.log($scope.respon.data);
         }).catch(err => {

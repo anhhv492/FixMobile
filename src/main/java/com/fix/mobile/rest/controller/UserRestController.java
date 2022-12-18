@@ -147,32 +147,7 @@ public class UserRestController {
         return saleDetailSV.findByid(sale);
     }
 
-    @RequestMapping("/sale/getbigsale")
-    public Sale getBigSale( @RequestParam(name="money") String money,
-                            @RequestParam(name="idPrd") Integer idPrd,
-                            @RequestParam(name="idAcsr") Integer idAcsr){
-        BigDecimal moneySale;
-        String userName;
-        account = accountService.findByUsername(UserName.getUserName());
-        if(null==account){
-            userName=null;
-        }else{
-            userName = account.getUsername();
-        }
-        if( 0 == money.length() || "undefined".equals(money) ||"".equals(money)){
-            moneySale=null;
-        }else{
-            moneySale = new BigDecimal(Double.valueOf(money));
-        }
-        if( 0==idPrd ){
-            idPrd=null;
-        }
-        if( 0 == idAcsr){
-            idAcsr=null;
-        }
-//        System.out.println(saleSV.getBigSale(userName,moneySale,idPrdSale,idAcsrSale));
-        return saleSV.getBigSale(userName,moneySale,idPrd,idAcsr);
-    }
+
 
     @GetMapping(value="/order")
     public List<Order> getAllByAccount(){
@@ -199,4 +174,25 @@ public class UserRestController {
         }
         return null;
     }
+
+    @PostMapping("/sale/addsaleapply")
+    public void getSaleOrder(
+            @RequestParam(name="idSale") Integer idSale
+    ){
+        String userName;
+        account = accountService.findByUsername(UserName.getUserName());
+        if(null==account){
+            userName=null;
+        }else{
+            userName = account.getUsername();
+        }
+        if(idSale!=0){
+            Sale updatequantity= saleSV.findByid(idSale);
+            updatequantity.setQuantity(updatequantity.getQuantity()-1);
+            saleSV.updateQuantity(updatequantity);
+            saleSV.addApply_Sale(idSale,userName);
+        }
+    }
+
+
 }

@@ -315,4 +315,15 @@ public class GuestRestController {
         product = productService.findById(productCode);
         return product;
     }
+
+    @RequestMapping(value = "/product/findProductByPrice",method = RequestMethod.GET)
+    public List<Product> findProductByPrice(){
+        List<Product> listproduct = productService.findProductByPrices();
+        if(listproduct.isEmpty()){
+            return  null;
+        }
+        return listproduct;
+    }
+
+
 }
