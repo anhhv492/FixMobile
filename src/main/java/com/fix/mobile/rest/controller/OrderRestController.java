@@ -76,16 +76,18 @@ public class OrderRestController {
             }
             orderOld.setStatus(order.getStatus());
             orderService.update(orderOld,orderOld.getIdOrder());
-            sendMailService.sendEmailOrder("vietanhsvip@gmail.com","Anh492002",
+            sendMailService.sendEmailOrder("top1zukavietnam@gmail.com","kzbtzovffrqbkonf",
                     orderOld.getAccount().getEmail(), orderOld.getPersonTake(), orderOld);
+            System.out.println("gửi mail thành công");
             return orderOld;
         }
         orderOld.setStatus(order.getStatus());
         if(account.getRole().getName().equals("ADMIN")||account.getRole().getName().equals("STAFF")){
             logger.info("-- Account: "+account.getUsername()+" update order success: "+orderOld.getIdOrder()+" to status: "+order.getStatus());
             orderService.update(orderOld,orderOld.getIdOrder());
-            sendMailService.sendEmailOrder("vietanhsvip@gmail.com","Anh492002",
+            sendMailService.sendEmailOrder("top1zukavietnam@gmail.com","kzbtzovffrqbkonf",
                     orderOld.getAccount().getEmail(), orderOld.getPersonTake(), orderOld);
+            System.out.println("gửi mail thành công");
             return orderOld;
         }
         return null;
