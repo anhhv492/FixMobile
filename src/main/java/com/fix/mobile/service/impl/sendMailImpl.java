@@ -1,5 +1,6 @@
 package com.fix.mobile.service.impl;
 
+import com.fix.mobile.config.SercurityConfig;
 import com.fix.mobile.entity.Account;
 import com.fix.mobile.entity.ProductChange;
 import com.fix.mobile.entity.Ram;
@@ -7,10 +8,13 @@ import com.fix.mobile.repository.AccountRepository;
 import com.fix.mobile.service.ProductChangeService;
 import com.fix.mobile.service.sendMailService;
 import com.fix.mobile.utils.UserName;
+import org.hibernate.StaleStateException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.mail.Message;
@@ -31,6 +35,9 @@ public class sendMailImpl implements sendMailService {
 	private ProductChangeService productChangeService;
 	@Autowired
 	private AccountRepository acccountReposetory;
+
+	@Autowired
+	SercurityConfig sendCurity;
 
 
 	private static final String EMAIL_FORGOT_PASSWORD = "Online Entertainment - New password";
@@ -125,24 +132,24 @@ public class sendMailImpl implements sendMailService {
 			});
 			Message msg = new MimeMessage(session);
 			msg.setFrom(new InternetAddress(user, false));
-			Random r = new Random();
 			Account acc= acccountReposetory.findByEmail(mail);
-			acc.setPassword(String.valueOf(r.nextInt()));
-			acccountReposetory.save(acc);
-			if(acc.getEmail().equals(r.nextInt())){
+
+			if(acc.getEmail().equals(mail)){
+				acc.setPassword(sendCurity.pe().encode("kdi23239dsad"));
+				acccountReposetory.save(acc);
 				msg.setFrom(new InternetAddress(user));
 				InternetAddress[] toAddresses = {new InternetAddress(acc.getEmail())};
 				msg.setRecipients(Message.RecipientType.TO, toAddresses);
 				msg.setSubject("xin chào mật khẩu của bạn");
 				msg.setSentDate(new Date());
-				msg.setText("Mật khẩu của bạn là: "+r.nextInt());
-				// sends the e-mail
+				msg.setText("Mật khẩu của bạn là: kdi23239dsad");
 				Transport.send(msg);
-			}else{
+			}
+			else{
 				System.out.println("bắn log");
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+		 throw new StaleStateException("Email này không tìm thấy trong database");
 		}
 
 	}
