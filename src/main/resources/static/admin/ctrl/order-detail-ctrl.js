@@ -12,8 +12,8 @@ app.controller('order-admin-detail-ctrl',function($rootScope,$scope,$http,$compi
     $scope.imeis2=[];
     $scope.nameProduct=null;
     $scope.form= {};
-    $scope.order= {};
     $scope.idDT= null;
+    $scope.orderDT= null;
 
     $scope.getAllByOrder=function(){
         let id = $rootScope.idOrder;
@@ -23,14 +23,26 @@ app.controller('order-admin-detail-ctrl',function($rootScope,$scope,$http,$compi
             console.log(error);
         })
     }
-    $scope.getImeis2=function (orderDetail) {
-        $http.get(urlOrderDetail+'/imei2/'+orderDetail.idDetail,token).then(resp=>{
+    $scope.getImeis2=function () {
+        $http.get(urlOrderDetail+'/imei2/'+$scope.orderDT.idDetail,token).then(resp=>{
             $scope.imeis2=resp.data;
+        }).catch(error=>{
+            console.log(error);
         })
     }
-    $scope.getImeis1=function (orderDetail) {
-        $http.get(urlOrderDetail+'/imei/'+orderDetail.product.idProduct,token).then(resp=> {
+    $scope.getImeis1=function () {
+        $http.get(urlOrderDetail+'/imei/'+$scope.orderDT.product.idProduct,token).then(resp=> {
             $scope.imeis = resp.data;
+        }).catch(error=>{
+            console.log(error);
+        })
+    }
+    $scope.viewImeiDetail=function (orderDT) {
+        let idDetail = orderDT.idDetail;
+        $http.get(urlOrderDetail+'/imei2/'+idDetail,token).then(resp=>{
+            $scope.imeis2=resp.data;
+        }).catch(error=>{
+            $scope.imeis2=[];
         })
     }
     $scope.removeImei=function (idImei) {
@@ -46,51 +58,32 @@ app.controller('order-admin-detail-ctrl',function($rootScope,$scope,$http,$compi
         }).then((result) => {
             if (result.isConfirmed) {
                 $http.delete(urlOrderDetail+'/imei/remove/'+idImei,token).then(resp=>{
-                    $scope.imeis=resp.data;
-                    const Toast = Swal.mixin({
-                        toast: true,
-                        position: 'top-end',
-                        showConfirmButton: false,
-                        timer: 2000,
-                        timerProgressBar: true,
-                        didOpen: (toast) => {
-                            toast.addEventListener('mouseenter', Swal.stopTimer)
-                            toast.addEventListener('mouseleave', Swal.resumeTimer)
-                        }
-                    })
-
-                    Toast.fire({
-                        icon: 'success',
-                        title: 'Xóa thành công!'
-                    })
-                    $scope.getImeis1(idDetail);
-                    $scope.getImeis2(idDetail);
-                    document.getElementById("closeMd").click();
-                }).catch(error=>{
-                    const Toast = Swal.mixin({
-                        toast: true,
-                        position: 'top-end',
-                        showConfirmButton: false,
-                        timer: 2000,
-                        timerProgressBar: true,
-                        didOpen: (toast) => {
-                            toast.addEventListener('mouseenter', Swal.stopTimer)
-                            toast.addEventListener('mouseleave', Swal.resumeTimer)
-                        }
-                    })
-
-                    Toast.fire({
-                        icon: 'error',
-                        title: 'Xóa thất bại!'
-                    })
-                    console.log('error update',error);
-                });
+                    $scope.messageSuccess("Xóa thành công");
+                    $scope.getImeis1();
+                    $scope.getImeis2();
+                })
             }
+        })
+    }
+    $scope.setImei=function () {
+        let idDetail=$scope.idDT;
+        $http.get(urlOrderDetail+'/imei/add/'+idDetail+"/"+$scope.form.idImei,token).then(resp=>{
+            $scope.messageSuccess("Thêm thành công");
+            $scope.getImeis1();
+            $scope.getImeis2();
+            $scope.orderDetails.forEach(function (item) {
+                if($rootScope.orderModel.status==3){
+                    if(item.idDetail==idDetail){
+                        item.status=3;
+                    }
+                }
+            })
         })
     }
     $scope.imeiPro=function(orderDetail){
         // $scope.selects="";
         $scope.idDT= orderDetail.idDetail;
+        $scope.orderDT= orderDetail;
         $http.get(urlOrderDetail+'/imei/'+orderDetail.product.idProduct,token).then(resp=>{
             $scope.imeis=resp.data;
             $http.get(urlOrderDetail+'/imei2/'+orderDetail.idDetail,token).then(resp=>{
@@ -124,33 +117,40 @@ app.controller('order-admin-detail-ctrl',function($rootScope,$scope,$http,$compi
             console.log(error);
         })
     }
-    $scope.setImei=function () {
-        let idDetail=$scope.idDT;
-        $http.get(urlOrderDetail+'/imei/add/'+idDetail+"/"+$scope.form.idImei,token)
-            .then(resp=>{
-                $scope.imeis2=resp.data;
-                const Toast = Swal.mixin({
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 2000,
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                        toast.addEventListener('mouseenter', Swal.stopTimer)
-                        toast.addEventListener('mouseleave', Swal.resumeTimer)
-                    }
-                })
+    $scope.messageSuccess=function (text) {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
 
-                Toast.fire({
-                    icon: 'success',
-                    title: 'Thêm thành công!'
-                })
-                $scope.getImeis1(idDetail);
-                $scope.getImeis2(idDetail);
+        Toast.fire({
+            icon: 'success',
+            title: text
+        })
+    }
+    $scope.messageError=function (text) {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
 
-                document.getElementById("closeMd").click();
-        }).catch(error=>{
-            console.log(error);
+        Toast.fire({
+            icon: 'error',
+            title: text
         })
     }
     $scope.getAllByOrder();

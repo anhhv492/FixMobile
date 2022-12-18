@@ -45,6 +45,60 @@ app.controller('order-admin-ctrl',function($rootScope,$scope,$http,$window,$filt
         let urlUpdate=`http://localhost:8080/rest/staff/order`;
         $scope.showUpdate=false;
         $scope.form.idOrder=id;
+        if($scope.form.status==2){
+            $http.get(urlOrder+'/getDetail/'+id,token).then(function(response){
+                if(response.data) {
+                    Swal.fire({
+                        title: 'Cảnh báo!',
+                        text: "Có sản phẩm trong đơn hàng không đủ, bạn có muốn tiếp tục?",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Xác nhận'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $http.put(urlUpdate,$scope.form,token).then(function(response){
+                                if(response.data){
+                                    $scope.form.status=null;
+                                    $scope.getAll();
+                                    $scope.messageSuccess("Đổi trạng thái thành công");
+                                }else{
+                                    $scope.messageError("Đổi trạng thái thất bại");
+                                }
+                            }).catch(error=>{
+                                $scope.messageError("Đổi trạng thái thất bại");
+                            });
+                        }
+                    })
+                }
+            });
+        }else{
+            Swal.fire({
+                title: 'Bạn có chắc muốn đổi trạng thái không?',
+                text: "Đổi không thể quay lại!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Xác nhận'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $http.put(urlUpdate,$scope.form,token).then(function(response){
+                        if(response.data){
+                            $scope.form.status=null;
+                            $scope.getAll();
+                            $scope.messageSuccess("Đổi trạng thái thành công");
+                        }else{
+                            $scope.messageError("Đổi trạng thái thất bại");
+                        }
+                    }).catch(error=>{
+                        $scope.messageError("Đổi trạng thái thất bại");
+                    });
+                }
+            })
+        }
+
         Swal.fire({
             title: 'Bạn có chắc muốn đổi trạng thái không?',
             text: "Đổi không thể quay lại!",
@@ -59,57 +113,12 @@ app.controller('order-admin-ctrl',function($rootScope,$scope,$http,$window,$filt
                     if(response.data){
                         $scope.form.status=null;
                         $scope.getAll();
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: 'top-end',
-                            showConfirmButton: false,
-                            timer: 2000,
-                            timerProgressBar: true,
-                            didOpen: (toast) => {
-                                toast.addEventListener('mouseenter', Swal.stopTimer)
-                                toast.addEventListener('mouseleave', Swal.resumeTimer)
-                            }
-                        })
-
-                        Toast.fire({
-                            icon: 'success',
-                            title: 'Thay đổi thành công!'
-                        })
+                        $scope.messageSuccess("Đổi trạng thái thành công");
                     }else{
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: 'top-end',
-                            showConfirmButton: false,
-                            timer: 2000,
-                            timerProgressBar: true,
-                            didOpen: (toast) => {
-                                toast.addEventListener('mouseenter', Swal.stopTimer)
-                                toast.addEventListener('mouseleave', Swal.resumeTimer)
-                            }
-                        })
-
-                        Toast.fire({
-                            icon: 'error',
-                            title: 'Không thể thay đổi trạng thái!'
-                        })
+                        $scope.messageError("Đổi trạng thái thất bại");
                     }
                 }).catch(error=>{
-                    const Toast = Swal.mixin({
-                        toast: true,
-                        position: 'top-end',
-                        showConfirmButton: false,
-                        timer: 2000,
-                        timerProgressBar: true,
-                        didOpen: (toast) => {
-                            toast.addEventListener('mouseenter', Swal.stopTimer)
-                            toast.addEventListener('mouseleave', Swal.resumeTimer)
-                        }
-                    })
-
-                    Toast.fire({
-                        icon: 'error',
-                        title: 'Không thể thay đổi trạng thái!'
-                    })
+                    $scope.messageError("Đổi trạng thái thất bại");
                 });
             }
         })

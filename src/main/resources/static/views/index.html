@@ -350,7 +350,8 @@
                                 </button>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown04">
                                     <div ng-if="account">
-                                        <a href="/admin/index.html#!/product" class="dropdown-item">Quản trị tài
+                                        <a href="/admin/index.html#!/product" class="dropdown-item"
+                                         ng-if="accountHome.role.name=='STAFF'||accountHome.role.name=='ADMIN'">Quản trị tài
                                             khoản</a>
                                         <a href="#!profile" class="dropdown-item">Thông tin tài khoản</a>
                                         <div class="dropdown-divider"></div>
@@ -501,6 +502,6 @@
 </script>
 
 <script type="text/javascript" src="ctrl/viewController.js"></script>
-
+<script type="text/javascript" src="ctrl/forgetPassword-ctrl.js"></script>
 </body>
 </html>

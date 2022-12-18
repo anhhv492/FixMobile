@@ -9,11 +9,15 @@ import com.fix.mobile.dto.account.AccountResponDTO;
 import com.fix.mobile.dto.account.UpdatePasswordDTO;
 import com.fix.mobile.dto.AccountDTO;
 import com.fix.mobile.dto.AddressDTO;
+import com.fix.mobile.service.sendMailService;
 import com.fix.mobile.utils.UserName;
+import org.apache.naming.factory.SendMailFactory;
+import org.hibernate.StaleStateException;
 import org.modelmapper.ModelMapper;
 import com.fix.mobile.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -39,6 +43,8 @@ public class AccountRestController {
     @Autowired
     ModelMapper modelMapper;
 
+    @Autowired
+    sendMailService mailService;
     public AccountRestController(AccountService accountService, RoleService roleService, ServletContext application, ModelMapper modelMapper) {
         this.accountService = accountService;
         this.roleService = roleService;
@@ -96,5 +102,37 @@ public class AccountRestController {
         return accountService.getByPage(page,5,share);
     }
 
+
+    @GetMapping("/getAddress")
+    public AddressDTO getAddress(){
+        return accountService.getAddress();
+    }
+
+    @PostMapping("/updateAccountActive")
+    public AccountDTO updateAccountActive(@RequestBody AccountDTO accountDTO){
+        return accountService.updateAccountActive(accountDTO);
+    }
+
+    @PostMapping(value = "/updateImage", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+    public AccountResponDTO updateImage(@ModelAttribute AccountRequestDTO accountRequestDTO){
+        return accountService.updateImage(accountRequestDTO);
+    }
+
+    @PostMapping("/updatePassword")
+    public Boolean updatePassword (@RequestBody UpdatePasswordDTO updatePasswordDTO){
+
+         return accountService.updatePassword(updatePasswordDTO);
+    }
+
+    @GetMapping("/updatePasswordMail/{email}")
+    public void updatePasswordMail (@PathVariable("email")String email, Model model){
+        try {
+            if(email != null){
+                mailService.SendEmailChangePass("top1zukavietnam@gmail.com","kzbtzovffrqbkonf",email);
+            }else;
+        }catch (Exception e){
+            e.getMessage();
+        }
+    }
 
 }

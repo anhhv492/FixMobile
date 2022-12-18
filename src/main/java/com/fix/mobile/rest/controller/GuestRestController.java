@@ -1,6 +1,7 @@
 package com.fix.mobile.rest.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fix.mobile.dto.AccountDTO;
 import com.fix.mobile.dto.ColorProductResponDTO;
 import com.fix.mobile.dto.ProductResponDTO;
 import com.fix.mobile.entity.*;
@@ -57,6 +58,11 @@ public class GuestRestController {
     
     Order order = null;
     Account account = null;
+    @GetMapping("/getAccount")
+    public Account getAccountActive() {
+        Account account = accountService.findByUsername(UserName.getUserName());
+        return account;
+    }
     @GetMapping("/category/getAll")
     public List<Category> getAll(){
         return categoryService.findAllBybStatus();
@@ -169,7 +175,7 @@ public class GuestRestController {
                     if(accessory.isPresent()){
                         orderDetail.setAccessory(accessory.get());
                         orderDetail.setOrder(order);
-                        orderDetail.setStatus(1);
+                        orderDetail.setStatus(0);
                         orderDetail.setQuantity(carts.get(i).get("qty").asInt());
                         price = new BigDecimal(carts.get(i).get("price").asDouble());
                         orderDetail.setPrice(price);
@@ -185,8 +191,6 @@ public class GuestRestController {
                             saleService.updateQuantity(updatequantity);
                         }
                         orderDetailService.save(orderDetail);
-                        accessory.get().setQuantity(accessory.get().getQuantity()-carts.get(i).get("qty").asInt());
-                        accessoryService.update(accessory.get(),accessory.get().getIdAccessory());
                     }
                 } else if (carts.get(i).get("idProduct")!=null){
                     Optional<Product> product = productService.findById(carts.get(i).get("idProduct").asInt());
@@ -194,7 +198,7 @@ public class GuestRestController {
                     if(product.isPresent()){
                         orderDetail.setProduct(product.get());
                         orderDetail.setOrder(order);
-                        orderDetail.setStatus(1);
+                        orderDetail.setStatus(0);
                         orderDetail.setQuantity(carts.get(i).get("qty").asInt());
                         price = new BigDecimal(carts.get(i).get("price").asDouble());
                         orderDetail.setPrice(price);
