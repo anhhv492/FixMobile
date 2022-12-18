@@ -8,11 +8,16 @@
     <div class="row">
             <div class="col-12 panel panel-default">
                 <div class="panel-body">
-                    <form  ng-submit="onSubmitForm($event)">
+                    <form  ng-submit="onSubmitForm($event)" name="myForm">
                         <div class="col-md-12">
                             <div class="form-group mt-1">
                                 <label>Tên Dung Lượng</label>
-                                <input ng-model="capacity.name" required class="form-control mt-2" placeholder="Nhập dữ liệu">
+                                <input maxlength="250" oninput="this.value = this.value.toUpperCase().trim()" ng-model="capacity.name" name="capacity" required class="form-control mt-2" placeholder="Nhập dữ liệu">
+                                <span ng-show="myForm.$submitted || myForm.capacity.$dirty" style="color: red" >
+                                        <span class="error" ng-show="myForm.capacity.$error.required"> <i
+                                                class="fa fa-exclamation-circle"></i>Không được trống</span>
+
+                                    </span>
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -33,6 +38,7 @@
                <tr>
                    <th>STT</th>
                    <th>Tên Dung lượng</th>
+                   <th>Thao tác</th>
                </thead>
                <tbody>
                <tr ng-repeat="capa in capacityItems">
