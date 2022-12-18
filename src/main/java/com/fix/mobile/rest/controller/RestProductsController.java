@@ -198,6 +198,10 @@ public class RestProductsController {
 	public void saveImay(@ModelAttribute ImayProductDTO  imay){
 		try {
 			for ( String  s :  imay.getName()) {
+				if(s.equals(s)){
+					System.out.println("trùng rồi không thêm đc");
+					return;
+				}
 				ImayProduct i = new ImayProduct();
 				i.setName(s);
 				i.setProduct(imay.getProduct());

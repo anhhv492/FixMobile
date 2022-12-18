@@ -530,6 +530,7 @@ app.controller('product', function($scope, $http) {
         }
     }
     $scope.saveImay = function (){
+
         var form = new FormData();
         if(!$scope.imeis.isPrototypeOf()){
             angular.forEach($scope.imeis, function(name) {
@@ -550,7 +551,8 @@ app.controller('product', function($scope, $http) {
         }
         $http(req,token).then(response=> {
             $scope.message('Đã thêm '+ $scope.formProduct.name);
-            console.log('ddadadasdsssssssssssssss '+ $scope.formProduct.name)
+            console.log('ddadadasdsssssssssssssss '+ response.data)
+            debugger
             $scope.formProduct = {}
             $scope.imeis.splice('')
         }).catch(error=>{
