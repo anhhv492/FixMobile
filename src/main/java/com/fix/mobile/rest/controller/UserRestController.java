@@ -33,8 +33,6 @@ import java.util.List;
 public class UserRestController {
     @Autowired
     private AccountService accountService;
-    @Autowired
-    private RoleService roleService;
 
     @Autowired
     private OrderService orderService;
@@ -53,9 +51,9 @@ public class UserRestController {
 
     Account account = null;
 
-    public UserRestController(AccountService accountService, RoleService roleService, SaleService saleSV, ServletContext application, ModelMapper modelMapper, SaleDetailService saleDetailSV) {
+    public UserRestController(AccountService accountService, SaleService saleSV, ServletContext application, ModelMapper modelMapper, SaleDetailService saleDetailSV) {
         this.accountService = accountService;
-        this.roleService = roleService;
+
         this.saleSV = saleSV;
         this.application = application;
         this.modelMapper = modelMapper;
@@ -149,31 +147,31 @@ public class UserRestController {
 
 
 
-    @GetMapping(value="/order")
-    public List<Order> getAllByAccount(){
-        Account account = accountService.findByUsername(UserName.getUserName());
-        List<Order> orders = orderService.findAllByAccount(account);
-        Comparator comparator = new Comparator<Order>() {
-            @Override
-            public int compare(Order o1, Order o2) {
-                return o2.getIdOrder().compareTo(o1.getIdOrder());
-            }
-        };
-        Collections.sort(orders,comparator);
-        return orders;
-    }
+//    @GetMapping("/order")
+//    public List<Order> getAllByAccount(){
+//        Account account = accountService.findByUsername(UserName.getUserName());
+//        List<Order> orders = orderService.findAllByAccount(account);
+//        Comparator comparator = new Comparator<Order>() {
+//            @Override
+//            public int compare(Order o1, Order o2) {
+//                return o2.getIdOrder().compareTo(o1.getIdOrder());
+//            }
+//        };
+//        Collections.sort(orders,comparator);
+//        return orders;
+//    }
 
-    @PostMapping("/order/change")
-    public Order orderChange(@RequestBody Order order){
-        Order orderOld = orderService.findById(order.getIdOrder()).get();
-        if(orderOld.getStatus()<2){
-            orderOld.setStatus(4);
-            orderOld.setNote(order.getNote());
-            orderService.update(orderOld,orderOld.getIdOrder());
-            return order;
-        }
-        return null;
-    }
+//    @PostMapping("/order/change")
+//    public Order orderChange(@RequestBody Order order){
+//        Order orderOld = orderService.findById(order.getIdOrder()).get();
+//        if(orderOld.getStatus()<2){
+//            orderOld.setStatus(4);
+//            orderOld.setNote(order.getNote());
+//            orderService.update(orderOld,orderOld.getIdOrder());
+//            return order;
+//        }
+//        return null;
+//    }
 
     @PostMapping("/sale/addsaleapply")
     public void getSaleOrder(

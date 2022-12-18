@@ -156,7 +156,7 @@ public class OrderRestController {
         }
         return null;
     }
-    @GetMapping(value="/rest/user/order")
+    @GetMapping("/rest/user/order")
     public List<Order> getAllByAccount(){
         Account account = accountService.findByUsername(UserName.getUserName());
         List<Order> orders = orderService.findAllByAccount(account);
@@ -170,7 +170,7 @@ public class OrderRestController {
         return orders;
     }
 
-    @PostMapping("/rest/user/order/change")
+    @PostMapping(value = "/rest/user/order/change")
     public Order orderChange(@RequestBody Order order){
         Order orderOld = orderService.findById(order.getIdOrder()).get();
         List<OrderDetail> orderDetails = orderDetailService.findAllByOrder(orderOld);
