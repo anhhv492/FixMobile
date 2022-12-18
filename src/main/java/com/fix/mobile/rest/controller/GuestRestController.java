@@ -182,8 +182,6 @@ public class GuestRestController {
                             saleService.updateQuantity(updatequantity);
                         }
                         orderDetailService.save(orderDetail);
-                        accessory.get().setQuantity(accessory.get().getQuantity()-carts.get(i).get("qty").asInt());
-                        accessoryService.update(accessory.get(),accessory.get().getIdAccessory());
                     }
                 } else if (carts.get(i).get("idProduct")!=null){
                     Optional<Product> product = productService.findById(carts.get(i).get("idProduct").asInt());
