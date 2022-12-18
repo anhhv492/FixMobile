@@ -35,13 +35,13 @@
       <td><img width="80px" height="80px" src="{{orderDetail.product.images[0].name}}"></td>
       <td>{{orderDetail.quantity*orderDetail.price|number}}</td>
       <td ng-if="orderDetail.status==0 && orderModel.status==3">
-        Đang kiểm tra yêu cầu ...</td>
+        Không</td>
       <td ng-if="orderDetail.status==1 && orderModel.status==3">
-        Đã xác nhận đổi trả</td>
+        Xác nhận đổi trả</td>
       <td ng-if="orderDetail.status==2 && orderModel.status==3">
         Chờ đổi máy mới</td>
       <td ng-if="orderDetail.status==3 && orderModel.status==3">
-        Đã đổi trả</td>
+        Đã đổi máy</td>
       <td>
         <button ng-click="imeiPro(orderDetail)" class="btn btn-default"
                 data-bs-toggle="modal" data-bs-target="#staticBackdrop"
@@ -51,7 +51,7 @@
         </button>
         <button ng-click="imeiPro(orderDetail)" class="btn btn-default"
                 data-bs-toggle="modal" data-bs-target="#staticBackdrop"
-                ng-if="orderDetail.order.status==3">
+                ng-if="orderDetail.order.status==3 && orderDetail.status==2">
           <i class="fa fa-pencil" aria-hidden="true"></i>
           <span>Đổi</span>
         </button>
