@@ -9,18 +9,27 @@
     <div class="row">
             <div class="col-12 panel panel-default" >
                 <div class="panel-body">
-                    <form  ng-submit="onSubmitForm($event)">
+                    <form  ng-submit="onSubmitForm($event)" name="myForm">
                         <div class="col-md-12">
-                            <div class="form-group mt-1">
-                                <label>Tên Ram</label>
-                                <input ng-model="accseries.name" required class="form-control mt-2" placeholder="Nhập dữ liệu">
-                            </div>
+
+                                <div class="form-group mt-1">
+                                    <label>Tên Ram</label>
+                                    <input maxlength="250" oninput="this.value = this.value.toUpperCase().trim()" required ng-model="accseries.name" name="ram"  class="form-control mt-2" placeholder="Nhập dữ liệu">
+                                    <span ng-show="myForm.$submitted || myForm.ram.$dirty" style="color: red" >
+                                        <span class="error" ng-show="myForm.ram.$error.required"> <i
+                                                class="fa fa-exclamation-circle"></i>Không được trống</span>
+
+                                    </span>
+                                </div>
+                                <div class="form-group mt-4 offset-5">
+                                    <button  ng-click="create()" class="btn btn-success">Thêm mới</button>
+                                    <button  ng-click="reset()" class="btn btn-warning">Làm mới</button>
+                                </div>
+
+
                         </div>
                         <div class="col-md-12">
-                            <div class="form-group mt-4 offset-5">
-                                <button  ng-click="create()" class="btn btn-success">Thêm mới</button>
-                                <button  ng-click="reset()" class="btn btn-warning">Làm mới</button>
-                            </div>
+
                         </div>
                     </form>
                 </div>
@@ -34,6 +43,7 @@
                <tr>
                    <th>STT</th>
                    <th>Tên Ram</th>
+                   <th>Thao tác</th>
                </thead>
                <tbody>
                <tr ng-repeat="accessres in items">
@@ -70,4 +80,24 @@
             </li>
         </ul>
     </nav>
+
+        </div>
+    </div>
+
 </div>
+<style>
+    input.ng-invalid.ng-touched {
+        border:2px solid red;
+    }
+
+    textarea.ng-invalid.ng-touched {
+        border:2px solid red;
+    }
+    select.ng-invalid.ng-touched {
+        border:2px solid red;
+    }
+    button:hover{
+        box-shadow: 0 0 5px rgb(119, 119, 145);
+    }
+
+</style>
