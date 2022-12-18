@@ -1,6 +1,7 @@
 package com.fix.mobile.rest.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fix.mobile.dto.AccountDTO;
 import com.fix.mobile.dto.ColorProductResponDTO;
 import com.fix.mobile.dto.ProductResponDTO;
 import com.fix.mobile.entity.*;
@@ -54,6 +55,11 @@ public class GuestRestController {
     
     Order order = null;
     Account account = null;
+    @GetMapping("/getAccount")
+    public Account getAccountActive() {
+        Account account = accountService.findByUsername(UserName.getUserName());
+        return account;
+    }
     @GetMapping("/category/getAll")
     public List<Category> getAll(){
         return categoryService.findAllBybStatus();

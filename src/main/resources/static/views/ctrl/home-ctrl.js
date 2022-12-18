@@ -5,6 +5,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
     var urlProduct=`http://localhost:8080/rest/guest/product`;
     var urlOneProduct = `http://localhost:8080/rest/guest`;
     var urlAccount = `http://localhost:8080/rest/admin/accounts`;
+    var apiAccount = `http://localhost:8080/rest/guest`;
 
     var urlCart = `http://localhost:8080/rest/guest/cart`;
 
@@ -25,10 +26,18 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
     $rootScope.account = jwtToken;
     $rootScope.name="";
     $scope.accountActive= {};
+    $scope.accountHome= {};
 
 
+    $scope.getAcount = function () {
+        $http.get(apiAccount+`/getAccount`, token).then(function (respon){
+            $scope.accountHome = respon.data;
+        }).catch(err => {
+            $scope.accountHome = null;
+        })
+
+    }
     $scope.getAcountActive = function () {
-
         $http.get(urlAccount+`/getAccountActive`, token).then(function (respon){
             $scope.accountActive = respon.data;
             $rootScope.name = $scope.accountActive.username;
@@ -438,7 +447,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
 
 
     $rootScope.loadLocalStorage();
-
+    $scope.getAcount();
 
 })
 

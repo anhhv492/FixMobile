@@ -1,6 +1,8 @@
 package com.fix.mobile.service;
 
 
+import com.fix.mobile.entity.Order;
+
 public interface sendMailService{
 	void SendEmail(String user, String pass,Integer idchange);
 
@@ -8,4 +10,5 @@ public interface sendMailService{
 
 	void SendEmailChangePass(String user, String pass ,String mail);
 
+	void sendEmailOrder(String User, String pass,String mail,String fullName, Order order);
 }

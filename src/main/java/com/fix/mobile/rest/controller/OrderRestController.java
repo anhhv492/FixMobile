@@ -31,8 +31,11 @@ public class OrderRestController {
     private OrderDetailService orderDetailService;
     @Autowired
     private ImayProductService imayProductService;
+    @Autowired
+    private sendMailService sendMailService;
     @PutMapping(value="/rest/staff/order")
     public Order update(@RequestBody Order order){
+        Account account = accountService.findByUsername(UserName.getUserName());
         Order orderOld = orderService.findById(order.getIdOrder()).get();
 //        if((order.getStatus()-orderOld.getStatus())!=1){
 //            return null;
@@ -51,6 +54,8 @@ public class OrderRestController {
             }
             orderOld.setStatus(order.getStatus());
             orderService.update(orderOld,orderOld.getIdOrder());
+            sendMailService.sendEmailOrder("vietanhsvip@gmail.com","Anh492002",
+                    orderOld.getAccount().getEmail(), orderOld.getPersonTake(), orderOld);
             return orderOld;
         }
         if(order.getStatus()==4){
@@ -71,13 +76,16 @@ public class OrderRestController {
             }
             orderOld.setStatus(order.getStatus());
             orderService.update(orderOld,orderOld.getIdOrder());
+            sendMailService.sendEmailOrder("vietanhsvip@gmail.com","Anh492002",
+                    orderOld.getAccount().getEmail(), orderOld.getPersonTake(), orderOld);
             return orderOld;
         }
         orderOld.setStatus(order.getStatus());
-        Account account = accountService.findByUsername(UserName.getUserName());
         if(account.getRole().getName().equals("ADMIN")||account.getRole().getName().equals("STAFF")){
             logger.info("-- Account: "+account.getUsername()+" update order success: "+orderOld.getIdOrder()+" to status: "+order.getStatus());
             orderService.update(orderOld,orderOld.getIdOrder());
+            sendMailService.sendEmailOrder("vietanhsvip@gmail.com","Anh492002",
+                    orderOld.getAccount().getEmail(), orderOld.getPersonTake(), orderOld);
             return orderOld;
         }
         return null;

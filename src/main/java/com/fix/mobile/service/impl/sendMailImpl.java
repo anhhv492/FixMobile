@@ -2,6 +2,7 @@ package com.fix.mobile.service.impl;
 
 import com.fix.mobile.config.SercurityConfig;
 import com.fix.mobile.entity.Account;
+import com.fix.mobile.entity.Order;
 import com.fix.mobile.entity.ProductChange;
 import com.fix.mobile.entity.Ram;
 import com.fix.mobile.repository.AccountRepository;
@@ -152,5 +153,49 @@ public class sendMailImpl implements sendMailService {
 		 throw new StaleStateException("Email này không tìm thấy trong database");
 		}
 
+	}
+
+	@Override
+	public void sendEmailOrder(String user,String pass,String mail,String fullName, Order order) {
+		try {
+			Properties properties = new Properties();
+			properties.put("mail.smtp.host", "smtp.gmail.com");
+			properties.put("mail.smtp.port", "587");
+			properties.put("mail.smtp.auth", "true");
+			properties.put("mail.smtp.starttls.enable", "true");
+			Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
+				protected PasswordAuthentication getPasswordAuthentication() {
+					return new PasswordAuthentication(user,pass);
+				}
+			});
+			Account acc= acccountReposetory.findByEmail(mail);
+			Message msg = new MimeMessage(session);
+			msg.setFrom(new InternetAddress(user, false));
+			if(acc.getEmail().equals(mail)){
+				msg.setFrom(new InternetAddress(user));
+				InternetAddress[] toAddresses = {new InternetAddress(acc.getEmail())};
+				msg.setRecipients(Message.RecipientType.TO, toAddresses);
+				msg.setSubject("FixMobile - Thay đổi thông tin đơn hàng");
+				msg.setSentDate(new Date());
+				if(order.getStatus()==0){
+					msg.setText("Xin chào "+fullName+"\n"+"Đơn hàng của bạn đã được tiếp nhận, chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất");
+					Transport.send(msg);
+				}
+				else if(order.getStatus()==1){
+					msg.setText("Xin chào "+fullName+"\n"+"Đơn hàng của bạn đang được xử lý, vui lòng chờ");
+					Transport.send(msg);
+				}
+				else if(order.getStatus()==2){
+					msg.setText("Xin chào "+fullName+"\n"+"Đơn hàng của bạn đang được giao, vui lòng kiểm tra lại thông tin");
+					Transport.send(msg);
+				}
+				else if(order.getStatus()==3){
+					msg.setText("Xin chào "+fullName+"\n"+"Đơn hàng đã hoàn tất giao dịch, cảm ơn bạn đã sử dụng dịch vụ của chúng tôi");
+					Transport.send(msg);
+				}
+			}
+		} catch (Exception e) {
+			throw new StaleStateException("Email này không tìm thấy trong database");
+		}
 	}
 }
