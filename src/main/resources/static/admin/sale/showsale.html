@@ -32,7 +32,7 @@
                     <div class="mb-3">
                         <label for="" class="form-label">Phương thức giảm giá</label>
                         <select class="form-select form-select-lg" ng-change="onChangeDiscountMethod()"
-                                ng-model="saleadd.discountMethod" ng-disabled="saleadd.idSale!=null">
+                                ng-model="saleadd.discountMethod" ng-disabled="saleadd.idSale!=null || checktypeSalediscountMethod">
                             <option ng-value="0">theo voucher</option>
                             <option ng-value="1">trực tiếp</option>
                         </select>

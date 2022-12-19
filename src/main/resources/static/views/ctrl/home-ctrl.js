@@ -126,6 +126,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
         }else{
             $http.get(`${urlProduct}/cate-product/${item.idCategory}`, token).then(res=>{
                 $rootScope.detailProducts=res.data;
+                console.log($rootScope.detailProducts)
                 for(var i=0; i<res.data.length;i++){
                     $scope.getPriceSalePrd(i);
                 }
@@ -154,7 +155,6 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
         $scope.productItem = $rootScope.carts.find(
             it=>it.idProduct===item.idProduct
         );
-
         if(item.category.type){
             $http.get(`${urlAccessory}/${item.idAccessory}`).then(res=>{
                 let itemCart = $rootScope.carts.find(
@@ -319,7 +319,6 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
             })
         }
     }
-
     $rootScope.saveLocalStorage=function(){
         let json = JSON.stringify($rootScope.carts);
         $http.get(urlAccount+`/getAccountActive`, token).then(function (respon){
