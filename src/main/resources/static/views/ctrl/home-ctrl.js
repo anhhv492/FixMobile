@@ -5,7 +5,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
     var urlProduct=`http://localhost:8080/rest/guest/product`;
     var urlOneProduct = `http://localhost:8080/rest/guest`;
 
-    var urlAccount = `http://localhost:8080/rest/user/accounts`;
+    var urlAccount = `http://localhost:8080/rest/user`;
     var apiAccount = `http://localhost:8080/rest/guest`;
 
 
