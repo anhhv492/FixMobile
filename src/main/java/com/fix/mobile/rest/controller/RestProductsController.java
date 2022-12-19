@@ -12,6 +12,7 @@ import com.fix.mobile.repository.ProductRepository;
 import com.fix.mobile.service.*;
 import org.apache.log4j.Logger;
 import org.hibernate.StaleStateException;
+import org.hibernate.annotations.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -24,11 +25,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import javax.websocket.server.PathParam;
 import java.math.BigDecimal;
 import java.util.*;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
 @RestController
 @RequestMapping(value= "/rest/admin/product")
