@@ -20,6 +20,8 @@ public interface AccessoryRepository extends PagingAndSortingRepository<Accessor
 
     @Query(value ="select * from accessories  a  order by  a.id_accessory desc limit 4",nativeQuery = true)
     List<Accessory> findTop4();
+    @Query(value = "select * from accessories where status = 1",nativeQuery = true)
+    List<Accessory> findAccessory();
 
 //    Page<Accessory> findByStatusAndNameContaining(Boolean stt,String name, Pageable pageable);
 }

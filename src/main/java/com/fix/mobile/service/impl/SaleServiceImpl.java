@@ -431,6 +431,9 @@ public class SaleServiceImpl implements SaleService {
         if(sale.getTypeSale()!=3){
             sale.setUserType(null);
         }
+        if(sale.getTypeSale()==2){
+            sale.setDiscountMethod(0);
+        }
         return sale;
     }
 }

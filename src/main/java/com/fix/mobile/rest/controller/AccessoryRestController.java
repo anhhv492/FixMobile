@@ -1,5 +1,6 @@
 package com.fix.mobile.rest.controller;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fix.mobile.dto.accessory.AccessoryDTO;
 import com.fix.mobile.dto.accessory.AccessoryResponDTO;
 import com.fix.mobile.entity.Accessory;
@@ -117,5 +118,13 @@ public class AccessoryRestController {
 			share="";
 		}
 		return accessoryService.getByPage(page,5,share);
+	}
+	@RequestMapping("/findaccessory/{page}")
+	public Page<Accessory> getFindAccessory(
+			@PathVariable ("page") Integer page,
+			@RequestBody JsonNode findAccessoryAll
+	){
+
+		return null;
 	}
 }
