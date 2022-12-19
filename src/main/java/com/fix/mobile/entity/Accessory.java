@@ -30,8 +30,6 @@ public class Accessory {
     @Column(name = "create_date")
     private Date createDate;
 
-    @Column(name = "color")
-    private String color;
 
     @Column(name = "price")
     private BigDecimal price;
@@ -54,7 +52,11 @@ public class Accessory {
     @OneToMany(mappedBy = "accessory")
     private List<OrderDetail> orderDetail;
 
-    public Accessory(String name, Integer quantity, Date createDate, String color, BigDecimal price, Boolean status, String note, Category category) {
+    @ManyToOne
+    @JoinColumn(name = "id_color")
+    private Color color;
+
+    public Accessory(String name, Integer quantity, Date createDate, Color color, BigDecimal price, Boolean status, String note, Category category) {
         this.name = name;
         this.quantity = quantity;
         this.createDate = createDate;

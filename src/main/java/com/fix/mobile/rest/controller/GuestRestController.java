@@ -243,7 +243,7 @@ public class GuestRestController {
 
     @GetMapping("/getAllRam")
     public List<Ram> getAllRam(){
-        return ramService.findAll();
+        return ramService.getALL();
     }
 
     @GetMapping("/getAllColor")

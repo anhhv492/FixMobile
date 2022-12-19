@@ -44,4 +44,11 @@ public interface ProductRepository extends PagingAndSortingRepository<Product, I
 
     @Query("SELECT p FROM Product p where p.price between 100000 and 500000")
     List<Product> findProductByPrices();
+    @Query(value = "select * from products where status = 1",nativeQuery = true)
+    List<Product> findProduct();
+    @Query(value = "select MIN(price) from products order by price",nativeQuery = true)
+    BigDecimal getMinPrice();
+
+    @Query(value = "select MAX(price) from products order by price",nativeQuery = true)
+    BigDecimal getMaxPrice();
 }

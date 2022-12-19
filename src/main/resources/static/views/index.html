@@ -20,7 +20,6 @@
     <link rel="stylesheet" href="/css/login.css">
     <link rel="stylesheet" href="../css/register.css">
     <script src="/js/jquery-3.3.1.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-route/1.8.3/angular-route.min.js"></script>
@@ -339,8 +338,8 @@
                     <div class="collapse navbar-collapse" id="ftco-nav">
                         <ul class="navbar-nav ml-auto mr-md-3">
                             <li class="nav-item active"><a href="#!home/index" class="nav-link">Trang chủ</a></li>
-                            <li class="nav-item"><a href="#!accessoryDetail" class="nav-link">Phụ kiện</a></li>
-                            <li class="nav-item"><a href="#!shop" class="nav-link">Sản phẩm</a></li>
+                            <li class="nav-item"><a href="#!listaccessory" class="nav-link">Phụ kiện</a></li>
+                            <li class="nav-item"><a href="#!listproducts" class="nav-link">Sản phẩm</a></li>
                             <li class="nav-item"><a href="#!contact" class="nav-link">Nội dung</a></li>
                             <li class="dropdown nav-item d-md-flex align-items-center">
                                 <button class="dropdown-toggle nav-link d-flex align-items-center justify-content-center icon-cart p-0"
@@ -396,7 +395,7 @@
                                     <ul class="dropdown-menu {{overPro?'show':''}}" aria-labelledby="dropdownPro">
                                         <li ng-repeat="catePro in cateProducts">
 
-                                            <a class="dropdown-item" href="#!product/detail"
+                                            <a class="dropdown-item" href="#!listproducts"
                                                ng-click="getDetail(catePro)">{{catePro.name}}</a>
 
                                         </li>
@@ -410,7 +409,7 @@
                                     </a>
                                     <ul class="dropdown-menu {{overAccess?'show':''}}" aria-labelledby="dropdownAccess">
                                         <li ng-repeat="cateAccess in cateAccessories">
-                                            <a class="dropdown-item" href="#!accessory/detail"
+                                            <a class="dropdown-item" href="#!listaccessory"
                                                ng-click="getDetail(cateAccess)">{{cateAccess.name}}</a>
                                         </li>
                                     </ul>
@@ -439,7 +438,7 @@
 <script src="https://code.jquery.com/jquery.min.js"></script>
 
 <!-- Bootstrap JS form CDN -->
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<!--<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>-->
 
 <script src="ctrl/home-ctrl.js"></script>
 <script src="ctrl/view_product_ctrl.js"></script>
@@ -465,7 +464,6 @@
 
 
 <!-- Bootstrap JS form CDN -->
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
 <script src="ctrl/home-ctrl.js"></script>
 <script src="ctrl/view_product_ctrl.js"></script>

@@ -7,6 +7,8 @@ import com.fix.mobile.entity.Category;
 import com.fix.mobile.entity.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,5 +31,9 @@ public interface ProductService extends GenericService<Product, Integer> {
 	List<ProductResponDTO> findByPriceExits();
 
 	List<Product> findProductByPrices();
+
+	List<Product> findProduct();
+
+	List<BigDecimal> getMinMaxPrice();
 }
 

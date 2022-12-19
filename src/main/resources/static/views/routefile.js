@@ -80,12 +80,20 @@ app.config(function($routeProvider){
             controller: "home-ctrl",
             controller: "view_product_ctrl",
         })
+        .when("/listproducts",{
+            templateUrl:"product/list_product.html",
+            controller: "home-ctrl",
+            controller: "view_product_ctrl",
+        })
+        .when("/listaccessory",{
+            templateUrl:"accessory/list_accessory.html",
+            controller: "home-ctrl",
+            controller: "view_accessory_ctrl",
+        })
         .when("/viewaccesory",{
             templateUrl:"accessory/viewaccesory.html",
             //controller: "productchange-ctrl",
         })
-
-
 
 });
 

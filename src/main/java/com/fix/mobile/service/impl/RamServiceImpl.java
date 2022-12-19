@@ -66,4 +66,9 @@ public class RamServiceImpl implements RamService {
     public Optional<Ram> findByName(String name) {
         return repository.findByName(name);
     }
+
+    @Override
+    public List<Ram> getALL() {
+        return (List<Ram>) repository.findAll();
+    }
 }

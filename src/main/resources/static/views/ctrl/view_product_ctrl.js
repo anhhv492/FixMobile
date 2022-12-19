@@ -273,4 +273,5 @@ app.controller('view_product_ctrl', function ($scope, $http, $rootScope) {
             }
         )
     };
+
 })
