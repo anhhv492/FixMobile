@@ -2,14 +2,11 @@ package com.fix.mobile.service.impl;
 
 import com.fix.mobile.repository.AccountRepository;
 import com.fix.mobile.repository.OrderRepository;
-import com.fix.mobile.service.AccountService;
-import com.fix.mobile.service.OrderService;
 import org.hibernate.StaleStateException;
 import com.fix.mobile.repository.SaleDetailRepository;
 import com.fix.mobile.repository.SaleRepository;
 import com.fix.mobile.service.SaleService;
 import com.fix.mobile.entity.Sale;
-import org.springframework.security.core.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,7 +14,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 
-import javax.swing.text.html.Option;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -76,6 +72,11 @@ public class SaleServiceImpl implements SaleService {
     @Override
     public void delete(Integer id) {
         dao.deleteById(id);
+    }
+
+    @Override
+    public Integer findSaleApply(Integer id) {
+        return dao.findSaleApply(id);
     }
 
     @Override
@@ -317,15 +318,15 @@ public class SaleServiceImpl implements SaleService {
         if(sale.getTypeSale()==null){
             throw new StaleStateException("Bạn phải chọn loại giảm giá");
         }
-        if(sale.getName()==null){
+        if(sale.getName()==null || sale.getName().length()==0){
             throw new StaleStateException("Tên chương trình sai định dạng");
         }
         if(sale.getDiscountMethod() == null){
             throw new StaleStateException("Bạn phải chọn Phương thức giảm giá");
         }
         if(sale.getDiscountMethod() == 0){
-            if(sale.getVoucher() == null ){
-                throw new StaleStateException("Mã giảm giá sai định dạng");
+            if(sale.getVoucher() == null ||sale.getVoucher().length()==0){
+                throw new StaleStateException("Mã giảm giá sai định dạng hãy nhập trên 5 kí tự không bao gồm kí tự đặc biệt và khoảng trắng");
             }
         }
         if(sale.getDiscountType() == null){
@@ -333,26 +334,26 @@ public class SaleServiceImpl implements SaleService {
         }
         if(sale.getDiscountType() == 0){
             if(sale.getMoneySale() == null){
-                throw new StaleStateException("Mức giảm giá sai định dạng");
+                throw new StaleStateException("Mức giảm giá sai định dạng hãy nhập lớn hơn 10.000");
             }
         }
         if(sale.getDiscountType() == 1){
             if(sale.getPercentSale() == null){
-                throw new StaleStateException("Mức giảm giá sai định dạng");
+                throw new StaleStateException("Mức giảm giá sai định dạng hãy nhập từ 1 đến 100");
             }
         }
         if(sale.getQuantity() == null){
-            throw new StaleStateException("Số lượng sai định dạng");
+            throw new StaleStateException("Số lượng sai định dạng hãy nhập lớn hơn 1");
         }
         if(sale.getCreateStart() == null){
-            throw new StaleStateException("Thời gian bắt đầu sai định dạng");
+            throw new StaleStateException("Thời gian bắt đầu sai định dạng hãy nhập tháng / ngày / năm");
         }
         if(sale.getCreateEnd() == null){
-            throw new StaleStateException("Thời gian kết thúc sai định dạng");
+            throw new StaleStateException("Thời gian kết thúc sai định dạng hãy nhập tháng / ngày / năm");
         }
         if(sale.getTypeSale() == 2 ){
             if(sale.getValueMin() == null ){
-                throw new StaleStateException("Giá trị đơn hàng tối thiểu sai định dạng");
+                throw new StaleStateException("Giá trị đơn hàng tối thiểu sai định dạng hãy nhập lớn hơn hoặc bằng 0");
             }
         }
         if(sale.getTypeSale() == 3 ){
@@ -429,6 +430,9 @@ public class SaleServiceImpl implements SaleService {
         }
         if(sale.getTypeSale()!=3){
             sale.setUserType(null);
+        }
+        if(sale.getTypeSale()==2){
+            sale.setDiscountMethod(0);
         }
         return sale;
     }

@@ -98,15 +98,14 @@
                                     <div class="form-group mt-1">
                                         <label>Giá</label>
                                         <input ng-maxlength="9" maxlength="9" ng-model="formProduct.price" required type="number"
-                                               class="form-control" name="price" placeholder="Giá bán" min="1" max="999999999">
+                                               class="form-control" name="price"  placeholder="Giá bán"  min="1" max="999999999">
                                         <span ng-show="myForm.$submitted || myForm.price.$dirty" style="color: red">
                                         <span class="error" ng-show="myForm.price.$error.required"> <i
                                                 class="fa fa-exclamation-circle"></i>Giá bán không được trống</span>
                                         <span class="error" ng-show="myForm.price.$error.min"> <i
                                                 class="fa fa-exclamation-circle"></i>Giá bán phải > 0</span>
                                         <span class="error" ng-show="myForm.price.$error.max">
-                                        <i class="fa fa-exclamation-circle"></i>Giá sản phẩm quá lớn</span>
-
+                                        <i class="fa fa-exclamation-circle"></i>Giá sản phẩm không quá 9 ký tự </span>
                                         </span>
 
                                     </div>
@@ -123,8 +122,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group mt-1">
-                                        <label>camera</label>
-                                        <input maxlength="250" ng-model="formProduct.camera" class="form-control" placeholder="Camera" required>
+                                        <label>Camera</label>
+                                        <input maxlength="250" oninput="this.value = this.value.toUpperCase()" ng-model="formProduct.camera" class="form-control" placeholder="Camera" required>
                                         <span ng-show="myForm.$submitted || myForm.size.$dirty" style="color: red">
                                         <span class="error" ng-show="formProduct.camera.$error.required"> <i
                                                 class="fa fa-exclamation-circle"></i>Camera không được trống</span>
@@ -151,7 +150,7 @@
 
                                     <div class="form-group mt-1">
                                         <label>Kích thước</label>
-                                        <input maxlength="250" ng-model="formProduct.size" class="form-control" name="size" placeholder="Kích thước" required>
+                                        <input oninput="this.value = this.value.toUpperCase()" maxlength="250" ng-model="formProduct.size" class="form-control" name="size" placeholder="Kích thước" required>
                                         <span ng-show="myForm.$submitted || myForm.size.$dirty" style="color: red">
                                         <span class="error" ng-show="myForm.size.$error.required"> <i
                                                 class="fa fa-exclamation-circle"></i>Kích thước không được trống</span>

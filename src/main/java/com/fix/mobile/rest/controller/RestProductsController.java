@@ -2,6 +2,7 @@ package com.fix.mobile.rest.controller;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fix.mobile.dto.ImayProductDTO;
 import com.fix.mobile.dto.ImeiProductResponDTO;
 import com.fix.mobile.entity.*;
@@ -14,6 +15,7 @@ import org.hibernate.StaleStateException;
 import org.hibernate.annotations.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -25,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import javax.websocket.server.PathParam;
+import java.math.BigDecimal;
 import java.util.*;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -198,6 +201,10 @@ public class RestProductsController {
 	public void saveImay(@ModelAttribute ImayProductDTO  imay){
 		try {
 			for ( String  s :  imay.getName()) {
+				if(s.equals(s)){
+					System.out.println("trùng rồi không thêm đc");
+					return;
+				}
 				ImayProduct i = new ImayProduct();
 				i.setName(s);
 				i.setProduct(imay.getProduct());
@@ -265,4 +272,158 @@ public class RestProductsController {
 		imayService.deleteById(id);
 	}
 
+	//findBy product price
+	@RequestMapping(value = "/findProductByPrice",method = RequestMethod.GET)
+	public List<Product> findProductByPrice(){
+		List<Product> listproduct = productService.findProductByPrices();
+		if(listproduct.isEmpty()){
+			return  null;
+		}
+		return listproduct;
+	}
+
+
+	@RequestMapping("/findproduct/{page}")
+	public Page<Product> findProduct(
+			@PathVariable ("page") Integer page,
+			@RequestBody JsonNode findProcuctAll
+	) {
+		Pageable paging = PageRequest.of(page, 4);
+		BigDecimal priceMin;
+		BigDecimal priceMax;
+		System.out.println(getMaxMinPriceProduct().get(0));
+		if(String.valueOf(findProcuctAll.get("priceSalemin")).replaceAll("\"","").equals("")){
+			 priceMin = new BigDecimal(String.valueOf(getMaxMinPriceProduct().get(0)));
+		}else {
+			 priceMin = new BigDecimal(String.valueOf(findProcuctAll.get("priceSalemin")).replaceAll("\"", ""));
+		}
+		if(String.valueOf(findProcuctAll.get("priceSalemax")).replaceAll("\"","").equals("")){
+			 priceMax = new BigDecimal(String.valueOf(getMaxMinPriceProduct().get(1)));
+		}else {
+			 priceMax = new BigDecimal(String.valueOf(findProcuctAll.get("priceSalemax")).replaceAll("\"",""));
+		}
+		List<Product> listPrd = productService.findProduct();
+		List<Product> listFindProduct = new ArrayList<>();
+		JsonNode listIdCategory = findProcuctAll.get("idCategory");
+		JsonNode listIdRam = findProcuctAll.get("idRam");
+		JsonNode listIdColer = findProcuctAll.get("idColer");
+		JsonNode listIdCapacity = findProcuctAll.get("idCapacity");
+		Integer sortMinMax = findProcuctAll.get("sortMinMax").asInt();
+		System.out.println(listPrd.size());
+		System.out.println(String.valueOf(findProcuctAll.get("search")).replaceAll("\"","")+"hihihi");
+		if(listPrd.size()!=0) {
+			for (int i = 0; i < listPrd.size(); i++) {
+				if (
+						listIdCategory.size() == 0 &&
+								listIdRam.size() == 0 &&
+								listIdCapacity.size() == 0 &&
+								listIdColer.size() == 0
+				) {
+					if (listPrd.get(i).getName().toLowerCase().contains(String.valueOf(findProcuctAll.get("search")).replaceAll("\"", "").toLowerCase())
+							&& listPrd.get(i).getPrice().compareTo(priceMin) >= 0
+							&& listPrd.get(i).getPrice().compareTo(priceMax) <= 0
+					) {
+						listFindProduct = checklist(listFindProduct, listPrd.get(i));
+					}
+				} else {
+					if (listIdCategory.size() != 0) {
+						for (int y = 0; y < listIdCategory.size(); y++) {
+							if (listIdCategory.get(y).asInt() == listPrd.get(i).getCategory().getIdCategory()
+									&& listPrd.get(i).getPrice().compareTo(priceMin) >= 0
+									&& listPrd.get(i).getPrice().compareTo(priceMax) <= 0
+									&& listPrd.get(i).getName().toLowerCase().contains(String.valueOf(findProcuctAll.get("search")).replaceAll("\"", "").toLowerCase())
+							) {
+								listFindProduct = checklist(listFindProduct, listPrd.get(i));
+							}
+						}
+					}
+
+					if (listIdRam.size() != 0) {
+						for (int y = 0; y < listIdRam.size(); y++) {
+							if (listIdRam.get(y).asInt() == listPrd.get(i).getRam().getIdRam()
+									&& listPrd.get(i).getPrice().compareTo(priceMin) >= 0
+									&& listPrd.get(i).getPrice().compareTo(priceMax) <= 0
+									&& listPrd.get(i).getName().toLowerCase().contains(String.valueOf(findProcuctAll.get("search")).replaceAll("\"", "").toLowerCase())
+							) {
+								listFindProduct = checklist(listFindProduct, listPrd.get(i));
+							}
+						}
+					}
+
+					if (listIdCapacity.size() != 0) {
+						for (int y = 0; y < listIdCapacity.size(); y++) {
+							if (listIdCapacity.get(y).asInt() == listPrd.get(i).getCapacity().getIdCapacity()
+									&& listPrd.get(i).getPrice().compareTo(priceMin) >= 0
+									&& listPrd.get(i).getPrice().compareTo(priceMax) <= 0
+									&& listPrd.get(i).getName().toLowerCase().contains(String.valueOf(findProcuctAll.get("search")).replaceAll("\"", "").toLowerCase())
+							) {
+								listFindProduct = checklist(listFindProduct, listPrd.get(i));
+							}
+						}
+					}
+
+					if (listIdColer.size() != 0) {
+						for (int y = 0; y < listIdColer.size(); y++) {
+							if (listIdColer.get(y).asInt() == listPrd.get(i).getColor().getIdColor()
+									&& listPrd.get(i).getPrice().compareTo(priceMin) >= 0
+									&& listPrd.get(i).getPrice().compareTo(priceMax) <= 0
+									&& listPrd.get(i).getName().toLowerCase().contains(String.valueOf(findProcuctAll.get("search")).replaceAll("\"", "").toLowerCase())
+							) {
+								listFindProduct = checklist(listFindProduct, listPrd.get(i));
+							}
+						}
+					}
+				}
+			}
+		}
+		Page<Product> pageFindProductAll = new PageImpl<>(sortProduct(listFindProduct,sortMinMax), paging, listFindProduct.size());
+		System.out.println(pageFindProductAll);
+		return pageFindProductAll;
+	}
+	private List<BigDecimal> getMaxMinPriceProduct(){
+		return productService.getMinMaxPrice();
+	}
+
+	private List<Product> checklist( List<Product> listcheck, Product check){
+		if(listcheck.size()!=0){
+			boolean kT= true;
+			for (int i=0;i<listcheck.size();i++){
+				if(listcheck.get(i).getIdProduct()==check.getIdProduct()){
+					kT = false;
+				}
+			}
+			if(kT==true){
+				listcheck.add(check);
+			}
+		}
+		else{
+			listcheck.add(check);
+		}
+		return listcheck;
+	}
+	private List<Product> sortProduct(List<Product> listPRD,Integer check) {
+//		BigDecimal a = new BigDecimal(String.valueOf(listPRD.get(0).getPrice()));
+		if(listPRD.size()==0){
+			return listPRD;
+		}else {
+			Comparator<Product>  MinMax = new Comparator<Product>() {
+				@Override
+				public int compare(Product o1, Product o2) {
+					return o1.getPrice().compareTo(o2.getPrice());
+				}
+			};
+			Comparator<Product> MaxMin = new Comparator<Product>() {
+				@Override
+				public int compare(Product o1, Product o2) {
+					return o2.getPrice().compareTo(o1.getPrice());
+				}
+			};
+			if(check == 0){
+				Collections.sort(listPRD, MinMax);
+			}else{
+				Collections.sort(listPRD, MaxMin);
+			}
+			return listPRD;
+		}
+	}
 }

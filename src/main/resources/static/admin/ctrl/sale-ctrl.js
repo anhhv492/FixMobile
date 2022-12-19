@@ -23,6 +23,7 @@ app.controller("sale_ctrl", function ($scope, $http) {
     $scope.totalPagestable = 0;
     $scope.check_firsttable = false;
     $scope.check_lasttable = true;
+    $scope.checktypeSalediscountMethod=false;
 
     //validate start
     $scope.hiddenTableAll = false;
@@ -291,6 +292,7 @@ app.controller("sale_ctrl", function ($scope, $http) {
             $scope.nameOnTable = "";
             $scope.hiddenTableAll = false;
             $scope.hiddenValueMin = false;
+            $scope.checktypeSalediscountMethod=false;
             $scope.hiddenUserType = false;
             $scope.saleadd.typeSale = 0;
         } else if ($scope.saleadd.typeSale == '1') {
@@ -298,25 +300,30 @@ app.controller("sale_ctrl", function ($scope, $http) {
             $scope.hiddenTableAll = true;
             $scope.hiddenValueMin = false;
             $scope.hiddenUserType = false;
+            $scope.checktypeSalediscountMethod=false;
             $scope.nameOnTable = "sản phẩm"
             $scope.getDataTable(urlprd);
         } else if ($scope.saleadd.typeSale == '2') {
+            $scope.saleadd.discountMethod=0;
+            $scope.checktypeSalediscountMethod=true;
             $scope.saleadd.typeSale = 2;
             $scope.hiddenTableAll = false;
             $scope.hiddenValueMin = true;
             $scope.hiddenUserType = false;
-            $scope.nameOnTable = ""
+            $scope.nameOnTable = "";
         } else if ($scope.saleadd.typeSale == '3') {
+            $scope.checktypeSalediscountMethod=false;
             $scope.saleadd.typeSale = 3;
             $scope.hiddenTableAll = false;
             $scope.hiddenValueMin = false;
             $scope.hiddenUserType = true;
-            $scope.nameOnTable = "user"
+            $scope.nameOnTable = "user";
             $scope.getDataTable(urlacc);
         } else if ($scope.saleadd.typeSale == '4') {
             $scope.saleadd.typeSale = 4;
             $scope.hiddenTableAll = true;
             $scope.hiddenValueMin = false;
+            $scope.checktypeSalediscountMethod=false;
             $scope.hiddenUserType = false;
             $scope.nameOnTable = "phụ kiện"
             $scope.getDataTable(urlacsr);

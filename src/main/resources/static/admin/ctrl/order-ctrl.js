@@ -45,6 +45,60 @@ app.controller('order-admin-ctrl',function($rootScope,$scope,$http,$window,$filt
         let urlUpdate=`http://localhost:8080/rest/staff/order`;
         $scope.showUpdate=false;
         $scope.form.idOrder=id;
+        if($scope.form.status==2){
+            $http.get(urlOrder+'/getDetail/'+id,token).then(function(response){
+                if(response.data) {
+                    Swal.fire({
+                        title: 'Cảnh báo!',
+                        text: "Có sản phẩm trong đơn hàng không đủ, bạn có muốn tiếp tục?",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Xác nhận'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $http.put(urlUpdate,$scope.form,token).then(function(response){
+                                if(response.data){
+                                    $scope.form.status=null;
+                                    $scope.getAll();
+                                    $scope.messageSuccess("Đổi trạng thái thành công");
+                                }else{
+                                    $scope.messageError("Đổi trạng thái thất bại");
+                                }
+                            }).catch(error=>{
+                                $scope.messageError("Đổi trạng thái thất bại");
+                            });
+                        }
+                    })
+                }
+            });
+        }else{
+            Swal.fire({
+                title: 'Bạn có chắc muốn đổi trạng thái không?',
+                text: "Đổi không thể quay lại!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Xác nhận'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $http.put(urlUpdate,$scope.form,token).then(function(response){
+                        if(response.data){
+                            $scope.form.status=null;
+                            $scope.getAll();
+                            $scope.messageSuccess("Đổi trạng thái thành công");
+                        }else{
+                            $scope.messageError("Đổi trạng thái thất bại");
+                        }
+                    }).catch(error=>{
+                        $scope.messageError("Đổi trạng thái thất bại");
+                    });
+                }
+            })
+        }
+
         Swal.fire({
             title: 'Bạn có chắc muốn đổi trạng thái không?',
             text: "Đổi không thể quay lại!",
@@ -59,57 +113,12 @@ app.controller('order-admin-ctrl',function($rootScope,$scope,$http,$window,$filt
                     if(response.data){
                         $scope.form.status=null;
                         $scope.getAll();
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: 'top-end',
-                            showConfirmButton: false,
-                            timer: 2000,
-                            timerProgressBar: true,
-                            didOpen: (toast) => {
-                                toast.addEventListener('mouseenter', Swal.stopTimer)
-                                toast.addEventListener('mouseleave', Swal.resumeTimer)
-                            }
-                        })
-
-                        Toast.fire({
-                            icon: 'success',
-                            title: 'Thay đổi thành công!'
-                        })
+                        $scope.messageSuccess("Đổi trạng thái thành công");
                     }else{
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: 'top-end',
-                            showConfirmButton: false,
-                            timer: 2000,
-                            timerProgressBar: true,
-                            didOpen: (toast) => {
-                                toast.addEventListener('mouseenter', Swal.stopTimer)
-                                toast.addEventListener('mouseleave', Swal.resumeTimer)
-                            }
-                        })
-
-                        Toast.fire({
-                            icon: 'error',
-                            title: 'Không thể thay đổi trạng thái!'
-                        })
+                        $scope.messageError("Đổi trạng thái thất bại");
                     }
                 }).catch(error=>{
-                    const Toast = Swal.mixin({
-                        toast: true,
-                        position: 'top-end',
-                        showConfirmButton: false,
-                        timer: 2000,
-                        timerProgressBar: true,
-                        didOpen: (toast) => {
-                            toast.addEventListener('mouseenter', Swal.stopTimer)
-                            toast.addEventListener('mouseleave', Swal.resumeTimer)
-                        }
-                    })
-
-                    Toast.fire({
-                        icon: 'error',
-                        title: 'Không thể thay đổi trạng thái!'
-                    })
+                    $scope.messageError("Đổi trạng thái thất bại");
                 });
             }
         })
@@ -243,4 +252,89 @@ app.controller('order-admin-ctrl',function($rootScope,$scope,$http,$window,$filt
     $scope.status.id='';
     $scope.getAll();
     $scope.getAllUser();
+
+    $scope.getSaleOrDeTail=function (x){
+        if($scope.ordersDetail[x].idSale==null){
+            $scope.ordersDetail[x].noteSale = '';
+        }else {
+            var urlSale = `http://localhost:8080/admin/rest/sale/getsale/` + $scope.ordersDetail[x].idSale;
+            $http.get(urlSale).then(resp => {
+                if (resp.data != '') {
+                    let priceSale='';
+                    if(resp.data.moneySale==null){
+                        priceSale=resp.data.percentSale + ' %';
+                    }else{
+                        priceSale=resp.data.moneySale + ' VNĐ';
+                    }
+                    let minValueSale='';
+                    if(resp.data.valueMin==null){
+                        minValueSale='0 đồng';
+                    }else{
+                        minValueSale=resp.data.valueMin+' VNĐ';
+                    }
+                    let typeSale='';
+                    if(resp.data.typeSale==0){
+                        typeSale='toàn cửa hàng'
+                    }else if(resp.data.typeSale==1){
+                        typeSale='cho 1 số sản phẩm'
+                    }else if(resp.data.typeSale==2){
+                        typeSale='theo đơn hàng'
+                    }else if(resp.data.typeSale==3){
+                        typeSale='cho riêng bạn'
+                    }else if(resp.data.typeSale==4){
+                        typeSale='cho 1 số phụ kiện'
+                    }
+                    $scope.ordersDetail[x].noteSale = 'Giảm giá đã dùng: ID giảm giá: "'+resp.data.idSale+'" giảm giá '+typeSale+' giảm '+priceSale+' đơn từ '+minValueSale;
+                } else {
+                    $scope.ordersDetail[x].noteSale ='';
+                }
+            }).catch(error => {
+                $scope.ordersDetail[x].noteSale ='';
+            })
+        }
+    }
+    $scope.getOrderDetail=function (idOrder){
+        let url=`/rest/staff/order/detail/`+idOrder;
+        $http.get(url).then(function(response){
+            if(response.data){
+                $scope.ordersDetail=response.data;
+                for(let i=0;i<$scope.ordersDetail.length;i++){
+                    $scope.getSaleOrDeTail(i)
+                }
+            }
+        }).catch(error=>{
+            console.log(error);
+        });
+        let urlapplysale=`/admin/rest/sale/saleapply/`+idOrder;
+        $http.get(urlapplysale).then(function(response){
+                $scope.saleApply=response.data;
+        }).catch(error=>{
+            $scope.saleApply={};
+        });
+        console.log( $scope.saleApply)
+    }
+
+    $scope.sumPriceSale=function (){
+        let total=0;
+        if($scope.ordersDetail.length!=0) {
+            for (let i = 0; i < $scope.ordersDetail.length; i++) {
+                if($scope.ordersDetail[i].priceSale==0){
+                    total = total + $scope.ordersDetail[i].price;
+                }else {
+                    total = total + $scope.ordersDetail[i].priceSale;
+                }
+            }
+        }
+        console.log(total)
+        return total;
+    }
+    $scope.sumPrice=function (){
+        let total=0;
+        if($scope.ordersDetail.length!=0) {
+            for (let i = 0; i < $scope.ordersDetail.length; i++) {
+                total=total+$scope.ordersDetail[i].price;
+            }
+        }
+        return total;
+    }
 });

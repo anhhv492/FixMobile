@@ -13,6 +13,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
+
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,10 +37,18 @@ public interface ProductRepository extends PagingAndSortingRepository<Product, I
     @Query(value = "select * from products p where p.name = :name ", nativeQuery = true)
     List<Product> findColorByNameProduct(String name);
 
-
     List<Product> findByNameAndCapacityAndColor(String name, Capacity capacity, Color color );
 
     @Query(value = "SELECT * FROM products p where p.id_category = :id and p.status = :status", nativeQuery = true)
     List<Product> getProductByCategoryIdAndStatus(Integer id, Integer status);
 
+    @Query("SELECT p FROM Product p where p.price between 100000 and 500000")
+    List<Product> findProductByPrices();
+    @Query(value = "select * from products where status = 1",nativeQuery = true)
+    List<Product> findProduct();
+    @Query(value = "select MIN(price) from products order by price",nativeQuery = true)
+    BigDecimal getMinPrice();
+
+    @Query(value = "select MAX(price) from products order by price",nativeQuery = true)
+    BigDecimal getMaxPrice();
 }

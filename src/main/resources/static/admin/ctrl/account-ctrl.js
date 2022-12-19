@@ -1,4 +1,4 @@
-app.controller("account-ctrl", function ($scope, $http) {
+app.controller("account-ctrl", function ($scope, $http,$window) {
     $scope.accounts = [];
     $scope.roles = [];
     $scope.form = {};
@@ -44,7 +44,7 @@ app.controller("account-ctrl", function ($scope, $http) {
 
     role.onchange = function () {
         if (this.value != "") {
-            console.log(this.value)
+            // console.log(this.value)
             $scope.idrole_form = this.value;
         }
     }
@@ -196,10 +196,10 @@ app.controller("account-ctrl", function ($scope, $http) {
             }
         }).catch(error => {
             console.log(error);
-        });;
+        });
         $http.get("/rest/admin/accounts/roles",token).then(resp => {
             $scope.roles = resp.data;
-            console.log($scope.roles)
+            // console.log($scope.roles)
         }).catch(error => {
             console.log(error);
         });
@@ -281,12 +281,18 @@ console.log("Kết thúc check trùng")
             $scope.accounts.forEach(acc => {
 
                 if ($scope.form.username == acc.username) {
-                    console.log($scope.form.username)
-                    console.log(acc.username)
-                    console.log(" trùng")
                     Toast.fire({
                         icon: 'error',
                         title: 'Tài khoản đã tồn tại ',
+                    })
+                    // alert("Tài khoản đã tồn tại")
+                    return a = 0;
+
+                }
+                if ($scope.form.email == acc.email) {
+                    Toast.fire({
+                        icon: 'error',
+                        title: 'Email đã tồn tại ',
                     })
                     // alert("Tài khoản đã tồn tại")
                     return a = 0;
@@ -305,7 +311,7 @@ console.log("Kết thúc check trùng")
                 formData.append("gender",$scope.form.gender);
                 formData.append("email",$scope.form.email);
                 formData.append("status",$scope.form.status);
-                formData.append("password", $scope.form.password);
+                formData.append("password",$scope.form.password);
                 formData.append("phone",$scope.form.phone);
                 formData.append("role",$scope.idrole_form);
 

@@ -1,14 +1,10 @@
 package com.fix.mobile.rest.controller;
 
 import com.fix.mobile.dto.account.AccountResponDTO;
-import com.fix.mobile.entity.Accessory;
-import com.fix.mobile.entity.Account;
-import com.fix.mobile.entity.Order;
+import com.fix.mobile.entity.*;
 import com.fix.mobile.repository.AccountRepository;
 import com.fix.mobile.repository.OrderRepository;
-import com.fix.mobile.service.AccessoryService;
-import com.fix.mobile.service.AccountService;
-import com.fix.mobile.service.OrderService;
+import com.fix.mobile.service.*;
 import com.fix.mobile.utils.UserName;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,23 +27,67 @@ public class OrderRestController {
     private OrderService orderService;
     @Autowired
     private OrderRepository orderRepository;
+    @Autowired
+    private OrderDetailService orderDetailService;
+    @Autowired
+    private ImayProductService imayProductService;
+    @Autowired
+    private sendMailService sendMailService;
     @PutMapping(value="/rest/staff/order")
     public Order update(@RequestBody Order order){
+        Account account = accountService.findByUsername(UserName.getUserName());
         Order orderOld = orderService.findById(order.getIdOrder()).get();
-        if(order.getStatus()==4){
-            return null;
-        }
-        if((order.getStatus()-orderOld.getStatus())!=1){
-            return null;
-        }
+//        if((order.getStatus()-orderOld.getStatus())!=1){
+//            return null;
+//        }
         if(order.getStatus()<orderOld.getStatus()){
             return null;
         }
+        if(order.getStatus()==2){
+            List<OrderDetail> orderDetails = orderDetailService.findAllByOrder(orderOld);
+            for (int i = 0; i < orderDetails.size(); i++) {
+                Accessory accessory = orderDetails.get(i).getAccessory();
+                if(accessory!=null){
+                    accessory.setQuantity(accessory.getQuantity()-orderDetails.get(i).getQuantity());
+                    accessoryService.update(accessory,accessory.getIdAccessory());
+                }
+            }
+            orderOld.setStatus(order.getStatus());
+            orderService.update(orderOld,orderOld.getIdOrder());
+            sendMailService.sendEmailOrder("vietanhsvip@gmail.com","Anh492002",
+                    orderOld.getAccount().getEmail(), orderOld.getPersonTake(), orderOld);
+            return orderOld;
+        }
+        if(order.getStatus()==4){
+            List<OrderDetail> orderDetails = orderDetailService.findAllByOrder(orderOld);
+            for (int i = 0; i < orderDetails.size(); i++) {
+                Accessory accessory = orderDetails.get(i).getAccessory();
+                if(accessory!=null){
+                    accessory.setQuantity(accessory.getQuantity()+orderDetails.get(i).getQuantity());
+                    accessoryService.update(accessory,accessory.getIdAccessory());
+                }
+                List<ImayProduct> imayProducts = imayProductService.findByOrderDetail(orderDetails.get(i));
+                if(imayProducts.size()>0){
+                    for (int j = 0; j < imayProducts.size(); j++) {
+                        imayProducts.get(j).setStatus(1);
+                        imayProductService.update(imayProducts.get(j),imayProducts.get(j).getIdImay());
+                    }
+                }
+            }
+            orderOld.setStatus(order.getStatus());
+            orderService.update(orderOld,orderOld.getIdOrder());
+            sendMailService.sendEmailOrder("top1zukavietnam@gmail.com","kzbtzovffrqbkonf",
+                    orderOld.getAccount().getEmail(), orderOld.getPersonTake(), orderOld);
+            System.out.println("gửi mail thành công");
+            return orderOld;
+        }
         orderOld.setStatus(order.getStatus());
-        Account account = accountService.findByUsername(UserName.getUserName());
         if(account.getRole().getName().equals("ADMIN")||account.getRole().getName().equals("STAFF")){
             logger.info("-- Account: "+account.getUsername()+" update order success: "+orderOld.getIdOrder()+" to status: "+order.getStatus());
             orderService.update(orderOld,orderOld.getIdOrder());
+            sendMailService.sendEmailOrder("top1zukavietnam@gmail.com","kzbtzovffrqbkonf",
+                    orderOld.getAccount().getEmail(), orderOld.getPersonTake(), orderOld);
+            System.out.println("gửi mail thành công");
             return orderOld;
         }
         return null;
@@ -101,6 +141,20 @@ public class OrderRestController {
         List<Order> orders = orderRepository.findAllByName(name);
         return orders;
     }
+    @GetMapping(value="/rest/staff/order/getDetail/{idOrder}")
+    public Order findAllDetail(@PathVariable("idOrder") Integer idOrder){
+        Order order = orderService.findById(idOrder).get();
+        List<OrderDetail> orderDetails = orderDetailService.findAllByOrder(order);
+        List<ImayProduct> imayProducts = null;
+        for (int i = 0; i < orderDetails.size(); i++) {
+            imayProducts = imayProductService.findByOrderDetail(orderDetails.get(i));
+            if(imayProducts.size()<orderDetails.get(i).getQuantity()){
+                System.out.println("Số lượng sản phẩm không đủ-------");
+                return order;
+            }
+        }
+        return null;
+    }
     @GetMapping(value="/rest/user/order")
     public List<Order> getAllByAccount(){
         Account account = accountService.findByUsername(UserName.getUserName());
@@ -118,10 +172,25 @@ public class OrderRestController {
     @PostMapping("/rest/user/order/change")
     public Order orderChange(@RequestBody Order order){
         Order orderOld = orderService.findById(order.getIdOrder()).get();
+        List<OrderDetail> orderDetails = orderDetailService.findAllByOrder(orderOld);
         if(orderOld.getStatus()<2){
             orderOld.setStatus(4);
             orderOld.setNote(order.getNote());
             orderService.update(orderOld,orderOld.getIdOrder());
+            for (int i = 0; i < orderDetails.size(); i++) {
+                Accessory accessory = orderDetails.get(i).getAccessory();
+                if(accessory!=null){
+                    accessory.setQuantity(accessory.getQuantity()+orderDetails.get(i).getQuantity());
+                    accessoryService.update(accessory,accessory.getIdAccessory());
+                }
+                List<ImayProduct> imayProducts = imayProductService.findByOrderDetail(orderDetails.get(i));
+                if(imayProducts.size()>0){
+                    for (int j = 0; j < imayProducts.size(); j++) {
+                        imayProducts.get(j).setStatus(1);
+                        imayProductService.update(imayProducts.get(j),imayProducts.get(j).getIdImay());
+                    }
+                }
+            }
             return order;
         }
         return null;

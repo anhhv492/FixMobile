@@ -5,11 +5,11 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
     var urlProduct=`http://localhost:8080/rest/guest/product`;
     var urlOneProduct = `http://localhost:8080/rest/guest`;
     var urlAccount = `http://localhost:8080/rest/admin/accounts`;
+    var apiAccount = `http://localhost:8080/rest/guest`;
 
     var urlCart = `http://localhost:8080/rest/guest/cart`;
 
     const callApiOneAccessoryHome = "http://localhost:8080/rest/guest/getOneAccessory";
-
 
     const jwtToken = localStorage.getItem("jwtToken")
     const token = {
@@ -26,10 +26,18 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
     $rootScope.account = jwtToken;
     $rootScope.name="";
     $scope.accountActive= {};
+    $scope.accountHome= {};
 
 
+    $scope.getAcount = function () {
+        $http.get(apiAccount+`/getAccount`, token).then(function (respon){
+            $scope.accountHome = respon.data;
+        }).catch(err => {
+            $scope.accountHome = null;
+        })
+
+    }
     $scope.getAcountActive = function () {
-
         $http.get(urlAccount+`/getAccountActive`, token).then(function (respon){
             $scope.accountActive = respon.data;
             $rootScope.name = $scope.accountActive.username;
@@ -65,15 +73,20 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
         $rootScope.detailProducts[x].priceSale = 0;
         var urlSale=`http://localhost:8080/admin/rest/sale/getbigsale?money=`+$rootScope.detailProducts[x].price+`&idPrd=`+$rootScope.detailProducts[x].idProduct+`&idAcsr=0`;
         $http.get(urlSale, token).then(resp => {
-            if(resp.data.moneySale == null) {
-                $rootScope.detailProducts[x].priceSale = $rootScope.detailProducts[x].price * resp.data.percentSale/100;
-            }else if(resp.data.percentSale == null){
-                if(resp.data.moneySale > $rootScope.detailProducts[x].price){
-                    $rootScope.detailProducts[x].priceSale = $rootScope.detailProducts[x].price;
-                }else {
-                    $rootScope.detailProducts[x].priceSale =  resp.data.moneySale;
+            if(resp.data==''){
+                $rootScope.detailProducts[x].priceSale = 0;
+            }else {
+                if (resp.data.moneySale == null) {
+                    $rootScope.detailProducts[x].priceSale = $rootScope.detailProducts[x].price * resp.data.percentSale / 100;
+                } else if (resp.data.percentSale == null) {
+                    if (resp.data.moneySale > $rootScope.detailProducts[x].price) {
+                        $rootScope.detailProducts[x].priceSale = $rootScope.detailProducts[x].price;
+                    } else {
+                        $rootScope.detailProducts[x].priceSale = resp.data.moneySale;
+                    }
                 }
             }
+            console.log($rootScope.detailProducts)
         }).catch(error => {
             console.log(error)
         })
@@ -82,14 +95,18 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
         $rootScope.detailAccessories[x].priceSale = 0;
         var urlSale=`http://localhost:8080/admin/rest/sale/getbigsale?money=`+$rootScope.detailAccessories[x].price+`&idPrd=0&idAcsr=`+$rootScope.detailAccessories[x].idAccessory;
         $http.get(urlSale, token).then(resp => {
-            if(resp.data.moneySale == null) {
-                $rootScope.detailAccessories[x].priceSale = $rootScope.detailAccessories[x].price * resp.data.percentSale/100;
-            }else if(resp.data.percentSale == null){
-                if(resp.data.moneySale > $rootScope.detailAccessories[x].price){
-                    $rootScope.detailAccessories[x].priceSale = $rootScope.detailAccessories[x].price;
-                }else {
-                    $rootScope.detailAccessories[x].priceSale =  resp.data.moneySale;
+            if(resp.data!='') {
+                if (resp.data.moneySale == null) {
+                    $rootScope.detailAccessories[x].priceSale = $rootScope.detailAccessories[x].price * resp.data.percentSale / 100;
+                } else if (resp.data.percentSale == null) {
+                    if (resp.data.moneySale > $rootScope.detailAccessories[x].price) {
+                        $rootScope.detailAccessories[x].priceSale = $rootScope.detailAccessories[x].price;
+                    } else {
+                        $rootScope.detailAccessories[x].priceSale = resp.data.moneySale;
+                    }
                 }
+            }else{
+                $rootScope.detailAccessories[x].priceSale = 0;
             }
         }).catch(error => {
             console.log(error)
@@ -109,6 +126,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
         }else{
             $http.get(`${urlProduct}/cate-product/${item.idCategory}`, token).then(res=>{
                 $rootScope.detailProducts=res.data;
+                console.log($rootScope.detailProducts)
                 for(var i=0; i<res.data.length;i++){
                     $scope.getPriceSalePrd(i);
                 }
@@ -122,9 +140,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
     $scope.test=function (){
         console.log($rootScope.carts)
     }
-
     $scope.addCart=function(item){
-        console.log("qty",$scope.qtyCart);
         $http.get(urlAccount+`/getAccountActive`, token).then(function (respon){
             let json = localStorage.getItem(respon.data.username);
             $rootScope.carts=json? JSON.parse(json):[];
@@ -139,7 +155,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
         $scope.productItem = $rootScope.carts.find(
             it=>it.idProduct===item.idProduct
         );
-        if(item.category){
+        if(item.category.type){
             $http.get(`${urlAccessory}/${item.idAccessory}`).then(res=>{
                 let itemCart = $rootScope.carts.find(
                     it=>it.idAccessory===item.idAccessory
@@ -161,56 +177,45 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                         })
                         Toast.fire({
                             icon: 'error',
-                            title: 'Số lượng sản phẩm không đủ!'
+                            title: 'Hết hàng!'
                         })
                     }else{
                         if(!$scope.accessoryItem){
                             data.qty=1;
-                            var money = data.price
-                            console.log('kkkkkk')
+                            var money = data.price;
                             var urlSale=`http://localhost:8080/admin/rest/sale/getbigsale?money=`+money+`&idPrd=`+'0'+`&idAcsr=`+data.idAccessory;
-                            var total=-1;
+                            var total=0;
                             $http.get(urlSale, token).then(resp => {
-                                console.log("hihi")
-                                if(resp.data.moneySale == null) {
-                                    total= money - money*resp.data.percentSale/100;
-                                }else if(resp.data.percentSale == null){
-                                    if(resp.data.moneySale > money){
-                                        total=0;
-                                    }else {
-                                        total=money - resp.data.moneySale;
+                                if(resp.data==''){
+                                    total=0
+                                }else {
+                                    if (resp.data.moneySale == null) {
+                                        total = money - money * resp.data.percentSale / 100;
+                                    } else if (resp.data.percentSale == null) {
+                                        if (resp.data.moneySale > money) {
+                                            total = money;
+                                        } else {
+                                            total = money - resp.data.moneySale;
+                                        }
                                     }
-                                }else{total=money}
-                                data.priceSale=total;
+                                }
+                                data.priceSale = total;
                                 data.idSale = resp.data.idSale;
                                 $rootScope.carts.push(data);
                                 $rootScope.saveLocalStorage();
+                                $rootScope.loadLocalStorage();
                                 $rootScope.qtyCart++;
+                                $scope.messageSuccess("Thêm vào giỏ hàng thành công!");
                             }).catch(error => {
                                 console.log(error)
                             })
-                            $rootScope.carts.push(data);
                         }else{
-                            $scope.accessoryItem.qty++;
+                            $rootScope.carts.find(
+                                it=>it.idAccessory===item.idAccessory
+                            ).qty++;
+                            $rootScope.saveLocalStorage();
+                            $scope.messageSuccess("Thêm vào giỏ hàng thành công!");
                         }
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: 'top-end',
-                            showConfirmButton: false,
-                            timer: 1500,
-                            timerProgressBar: true,
-                            didOpen: (toast) => {
-                                toast.addEventListener('mouseenter', Swal.stopTimer)
-                                toast.addEventListener('mouseleave', Swal.resumeTimer)
-                            }
-                        })
-
-                        Toast.fire({
-                            icon: 'success',
-                            title: 'Thêm thành công!'
-                        })
-                        $rootScope.saveLocalStorage();
-                        $rootScope.qtyCart++;
                     }
                 }).catch(err=>{
                     const Toast = Swal.mixin({
@@ -253,57 +258,45 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                         })
                         Toast.fire({
                             icon: 'error',
-                            title: 'Số lượng sản phẩm không đủ!'
+                            title: 'Hết hàng!'
                         })
                     }else{
                         if(!$scope.productItem){
                             data.qty=1;
                             var money = data.price
-
-                            var total=-1;
+                            var total=0;
                             var urlSale=`http://localhost:8080/admin/rest/sale/getbigsale?money=`+money+`&idPrd=`+data.idProduct+`&idAcsr=0`;
                             $http.get(urlSale, token).then(resp => {
-                                console.log("hihi")
-                                if(resp.data.moneySale == null) {
-                                    total= money - money*resp.data.percentSale/100;
-                                }else if(resp.data.percentSale == null){
-                                    if(resp.data.moneySale>money){
-                                        total=0;
-                                    }else {
-                                        total=money - resp.data.moneySale;
+                                if(resp.data==''){
+                                    total=0;
+                                }else {
+                                    if (resp.data.moneySale == null) {
+                                        total = money - money * resp.data.percentSale / 100;
+                                    } else if (resp.data.percentSale == null) {
+                                        if (resp.data.moneySale > money) {
+                                            total = money;
+                                        } else {
+                                            total = money - resp.data.moneySale;
+                                        }
                                     }
-                                }else{total=money}
+                                }
                                 data.priceSale=total;
                                 data.idSale = resp.data.idSale;
                                 $rootScope.carts.push(data);
-                              
                                 $rootScope.saveLocalStorage();
+                                $rootScope.loadLocalStorage();
                                 $rootScope.qtyCart++;
-
+                                $scope.messageSuccess("Thêm vào giỏ hàng thành công!");
                             }).catch(error => {
                                 console.log(error)
                             })
                         }else{
-                            $scope.productItem.qty++;
+                            $rootScope.carts.find(
+                                it=>it.idProduct===item.idProduct
+                            ).qty++;
+                            $rootScope.saveLocalStorage();
+                            $scope.messageSuccess("Thêm vào giỏ hàng thành công!");
                         }
-                        const Toast = Swal.mixin({
-                        toast: true,
-                        position: 'top-end',
-                        showConfirmButton: false,
-                        timer: 1500,
-                        timerProgressBar: true,
-                        didOpen: (toast) => {
-                            toast.addEventListener('mouseenter', Swal.stopTimer)
-                            toast.addEventListener('mouseleave', Swal.resumeTimer)
-                        }
-                    })
-
-                    Toast.fire({
-                        icon: 'success',
-                        title: 'Thêm thành công!'
-                    })
-                    $rootScope.saveLocalStorage();
-                    $rootScope.qtyCart++;
                 }
                 }).catch(err=>{
                     const Toast = Swal.mixin({
@@ -326,109 +319,8 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
             })
         }
     }
-
-    $scope.addProductCart = function (product) {
-        console.log("qty",$scope.qtyCart);
-        let json = localStorage.getItem($rootScope.name);
-        $rootScope.carts=json? JSON.parse(json):[];
-        $scope.productItem = $rootScope.carts.find(
-            it=>it.idProduct===product.idProduct
-        );
-
-        $http.get(`${urlProduct}/${product.idProduct}`,token).then(res=>{
-            let itemCart = $rootScope.carts.find(
-                it=>it.idProduct===product.idProduct
-            );
-            let data= res.data;
-
-            $http.get(`${urlImei}/amount/${product.idProduct}`).then(res=>{
-                if(itemCart&&itemCart.qty>=res.data) {
-                    const Toast = Swal.mixin({
-                        toast: true,
-                        position: 'top-end',
-                        showConfirmButton: false,
-                        timer: 2000,
-                        timerProgressBar: true,
-                        didOpen: (toast) => {
-                            toast.addEventListener('mouseenter', Swal.stopTimer)
-                            toast.addEventListener('mouseleave', Swal.resumeTimer)
-                        }
-                    })
-                    Toast.fire({
-                        icon: 'error',
-                        title: 'Số lượng sản phẩm không đủ!'
-                    })
-                }else{
-                    if(!$scope.productItem){
-                        data.qty=1;
-                        var money = data.price
-                        var urlSale=`http://localhost:8080/admin/rest/sale/getbigsale?money=`+money+`&idPrd=`+data.idProduct+`&idAcsr=0`;
-                        var total=0;
-                        $http.get(urlSale, token).then(resp => {
-                            console.log("hihi")
-                            if(resp.data.moneySale == null) {
-                                total= money - money*resp.data.percentSale/100;
-                            }else if(resp.data.percentSale == null){
-                                if(resp.data.moneySale<money){
-                                    total=0;
-                                }else {
-                                    total=money - resp.data.moneySale;
-                                }
-                            }else{total=money}
-                            console.log(total)
-                            data.price=total;
-                            console.log(data.price);
-                            $rootScope.carts.push(data);
-
-                        }).catch(error => {
-                            console.log(error)
-                        })
-                        $rootScope.carts.push(data);
-                    }else{
-                        $scope.productItem.qty++;
-                    }
-                    const Toast = Swal.mixin({
-                        toast: true,
-                        position: 'top-end',
-                        showConfirmButton: false,
-                        timer: 1500,
-                        timerProgressBar: true,
-                        didOpen: (toast) => {
-                            toast.addEventListener('mouseenter', Swal.stopTimer)
-                            toast.addEventListener('mouseleave', Swal.resumeTimer)
-                        }
-                    })
-
-                    Toast.fire({
-                        icon: 'success',
-                        title: 'Thêm thành công!'
-                    })
-                    $rootScope.saveLocalStorage();
-                    $rootScope.qtyCart++;
-                }
-            }).catch(err=>{
-                const Toast = Swal.mixin({
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 1500,
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                        toast.addEventListener('mouseenter', Swal.stopTimer)
-                        toast.addEventListener('mouseleave', Swal.resumeTimer)
-                    }
-                })
-
-                Toast.fire({
-                    icon: 'error',
-                    title: 'Thêm thất bại!'
-                })
-            })
-        })
-    }
     $rootScope.saveLocalStorage=function(){
         let json = JSON.stringify($rootScope.carts);
-
         $http.get(urlAccount+`/getAccountActive`, token).then(function (respon){
             localStorage.setItem(respon.data.username,json);
         }).catch(err=>{
@@ -436,6 +328,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
         })
 
     }
+
     $rootScope.loadLocalStorage = function(){
         $http.get(urlAccount+`/getAccountActive`, token).then(function (respon){
             let json = localStorage.getItem(respon.data.username);
@@ -446,13 +339,6 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
             $rootScope.carts=json? JSON.parse(json):[];
             $rootScope.loadQtyCart();
         })
-
-        localStorage.setItem("cart",json);
-    }
-    $rootScope.loadLocalStorage = function(){
-        let json = localStorage.getItem("cart");
-        $rootScope.carts=json? JSON.parse(json):[];
-
         for (let i = 0; i < $rootScope.carts.length; i++) {
             $rootScope.carts.find(item=>{
                 if(item.idAccessory){
@@ -471,6 +357,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
             })
         }
     }
+
     $rootScope.loadQtyCart=function(){
         $rootScope.qtyCart=0;
         if($rootScope.carts){
@@ -479,8 +366,44 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
             });
         }
     }
+    $scope.messageSuccess=function (text) {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
 
+        Toast.fire({
+            icon: 'success',
+            title: text
+        })
+    }
+    $scope.messageError=function (text) {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+
+        Toast.fire({
+            icon: 'error',
+            title: text
+        })
+    }
     $rootScope.productCode = {};
+
     // $scope.getOneProduct = function (productCode){
     //     $http.get(`${urlOneProduct}/findByProductCode/${productCode.idProduct}`).then(res=>{
     //         $rootScope.productCode = res.data;
@@ -523,7 +446,161 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
 
 
     $rootScope.loadLocalStorage();
+    $scope.getAcount();
 
+    $scope.ramProducts=[];
+    $scope.capacityProducts=[];
+    $scope.colorProducts=[];
+    $scope.findProductAll={};
+    $scope.findProductAll.idCategory=[];
+    $scope.findProductAll.idRam=[];
+    $scope.findProductAll.idColer=[];
+    $scope.findProductAll.idCapacity=[];
+    $scope.findProductAll.sortMinMax=0;
+    $scope.findProductAll.priceSalemin='';
+    $scope.findProductAll.priceSalemax='';
+    $scope.findProductAll.search='';
 
+    $scope.getAllRam=function (){
+        let url=`/rest/guest/getAllRam`;
+        $http.get(url).then(function (respon){
+            $scope.ramProducts = respon.data;
+        }).catch(err => {
+            console.log(err)
+        })
+    }
+
+    $scope.getAllColor=function (){
+        let url=`/rest/guest/getAllColor`;
+        $http.get(url).then(function (respon){
+            $scope.colorProducts = respon.data;
+        }).catch(err => {
+            console.log(err)
+        })
+    }
+
+    $scope.getAllCapacity=function (){
+        let url=`/rest/guest/getAllCapacity`;
+        $http.get(url).then(function (respon){
+            $scope.capacityProducts = respon.data;
+        }).catch(err => {
+            console.log(err)
+        })
+    }
+
+    $scope.getPriceSale=function (x,y){
+        var urlSale=`http://localhost:8080/admin/rest/sale/getbigsale?money=`+$rootScope.detailProducts[x].price+`&idPrd=`+$rootScope.detailProducts[x].idProduct+`&idAcsr=0`;
+        $http.get(urlSale, token).then(resp => {
+            if(y==0) {
+                if (resp.data == '') {
+                    $rootScope.detailProducts[x].priceSale = 0;
+                } else {
+                    if (resp.data.moneySale == null) {
+                        $rootScope.detailProducts[x].priceSale = $rootScope.detailProducts[x].price * resp.data.percentSale / 100;
+                    } else if (resp.data.percentSale == null) {
+                        if (resp.data.moneySale > $rootScope.detailProducts[x].price) {
+                            $rootScope.detailProducts[x].priceSale = $rootScope.detailProducts[x].price;
+                        } else {
+                            $rootScope.detailProducts[x].priceSale = resp.data.moneySale;
+                        }
+                    }
+                }
+            } else if(y==1){
+
+            }
+        }).catch(error => {
+            console.log(error)
+        })
+    }
+    $scope.findProduct=function (){
+        $http.post(`/rest/admin/product/findproduct/0`,$scope.findProductAll).then(function (respon) {
+            $rootScope.detailProducts = respon.data.content;
+            $scope.totalElements = respon.data.totalElements;
+            console.log(respon.data)
+            for(var i=0;i<$rootScope.detailProducts.length;i++){
+                $scope.getPriceSale(i,0);
+            }
+        }).catch(err => {
+                console.log(err + 'kiixu  lỗi')
+            }
+        )
+    }
+
+    $scope.findAccessory=function (){
+        $http.post(`/rest/admin/accessory/findaccessory/0`,$scope.findProductAll).then(function (respon) {
+            $rootScope.detailAccessories = respon.data.content;
+            $scope.totalElements = respon.data.totalElements;
+            console.log(respon.data)
+            for(var i=0;i<$rootScope.detailProducts.length;i++){
+                $scope.getPriceSale(i,1);
+            }
+        }).catch(err => {
+                console.log(err + 'kiixu  lỗi')
+            }
+        )
+    }
+
+    $scope.checksortMinMax=function (text,check){
+        if(text=='Tăng dần'){
+            $scope.findProductAll.sortMinMax=0;
+        }else{
+            $scope.findProductAll.sortMinMax=1;
+        }
+        if(check==0){
+            $scope.findProduct();
+        } else if(check==1){
+            $scope.findAccessory();
+        }
+
+    }
+    $scope.checkSelected = function (id, check) {
+        let checkseleced=true;
+        if (check == 0) {
+            for(let i=0;i<$scope.findProductAll.idCategory.length;i++){
+                if(id==$scope.findProductAll.idCategory[i]){
+                    $scope.findProductAll.idCategory.splice(i, 1);
+                    checkseleced=false
+                }
+            }
+            if(checkseleced){
+                $scope.findProductAll.idCategory.push(id);
+            }
+        } else if (check == 1) {
+            for(let i=0;i<$scope.findProductAll.idCapacity.length;i++){
+                if(id==$scope.findProductAll.idCapacity[i]){
+                    $scope.findProductAll.idCapacity.splice(i, 1);
+                    checkseleced=false
+                }
+            }
+            if(checkseleced){
+                $scope.findProductAll.idCapacity.push(id);
+            }
+        } else if (check == 2) {
+            for(let i=0;i<$scope.findProductAll.idRam.length;i++){
+                if(id==$scope.findProductAll.idRam[i]){
+                    $scope.findProductAll.idRam.splice(i, 1);
+                    checkseleced=false
+                }
+            }
+            if(checkseleced){
+                $scope.findProductAll.idRam.push(id);
+            }
+        }else if (check == 3) {
+            for(let i=0;i<$scope.findProductAll.idColer.length;i++){
+                if(id==$scope.findProductAll.idColer[i]){
+                    $scope.findProductAll.idColer.splice(i, 1);
+                    checkseleced=false
+                }
+            }
+            if(checkseleced){
+                $scope.findProductAll.idColer.push(id);
+            }
+        }
+    }
+    $scope.getAllRam();
+    $scope.getAllColor();
+    $scope.getAllCapacity();
+    $scope.findProduct();
+    $scope.findAccessory();
 })
 

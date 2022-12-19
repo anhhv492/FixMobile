@@ -91,4 +91,6 @@ public interface SaleRepository extends PagingAndSortingRepository<Sale, Integer
     @Modifying @Transactional
     @Query(value = "insert into apply_sale(id_order,id_sale,user_apply) VALUE ((select id_order from orders order by id_order  desc limit 1),?1,?2 )",nativeQuery = true)
     void addSaleApply( Integer idSale, String userName);
+    @Query(value = "select id_sale from apply_sale where id_order=?1",nativeQuery = true)
+    Integer findSaleApply(Integer id);
 }

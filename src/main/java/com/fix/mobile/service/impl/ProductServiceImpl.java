@@ -22,6 +22,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -201,6 +202,24 @@ public class ProductServiceImpl implements ProductService {
             productResponDTOList.add(productResponDTO);
         }
         return productResponDTOList;
+    }
+
+    @Override
+    public List<Product> findProductByPrices() {
+        return repository.findProductByPrices();
+    }
+
+    @Override
+    public List<Product> findProduct() {
+        return repository.findProduct();
+    }
+
+    @Override
+    public List<BigDecimal> getMinMaxPrice() {
+        List<BigDecimal> listPriceMINMAX= new ArrayList<>();
+        listPriceMINMAX.add(repository.getMinPrice());
+        listPriceMINMAX.add(repository.getMaxPrice());
+        return listPriceMINMAX;
     }
 
 

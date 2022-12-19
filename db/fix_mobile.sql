@@ -62,7 +62,7 @@ CREATE TABLE address (
 	ward VARCHAR(1000) NULL,
 	foreign key(username) references accounts(username)
 ) ;
-select * from orders where create_date between 2022/12/14 and 2022/12/21;
+
 CREATE TABLE products (
 	id_product int NOT NULL auto_increment primary key,
 	name nvarchar(255)  NULL,
@@ -102,8 +102,8 @@ CREATE TABLE sale (
 	id_sale int NOT NULL auto_increment primary key,
 	name nvarchar(100) ,
 	type_sale nvarchar(100) ,
-	create_start date ,
-	create_end date,
+	create_start datetime ,
+	create_end datetime,
 	voucher nvarchar(100),
 	value_min decimal(10,0),
 	money_sale decimal(10,0),
@@ -111,8 +111,8 @@ CREATE TABLE sale (
 	quantity int,
 	create_time datetime,
 	update_time datetime ,
-	user_update int ,
-	user_create int,
+	user_update varchar(50) ,
+	user_create varchar(50),
 	detail_sale varchar(250),
 	discount_method int,
 	discount_type int,
@@ -121,31 +121,28 @@ CREATE TABLE sale (
 
 CREATE TABLE sale_detail (
 	id_detail int NOT NULL auto_increment primary key,
-	id_sale int NOT NULL,
-	id_product int NOT NULL,
+	id_sale int  NULL,
+	id_product int  NULL,
 	id_accessory int NULL,
-	username nvarchar(50) not null,
-	foreign key(username) references accounts(username),
-	foreign key(id_sale) references sale(id_sale),
-	foreign key(id_product) references products(id_product),
-	foreign key(id_accessory) references accessories(id_accessory)
+	username nvarchar(50) null,
+	foreign key(id_sale) references sale(id_sale)
 );
 
 CREATE TABLE orders (
 	id_order int NOT NULL auto_increment primary key, 
 	create_date datetime null,
+	time_receive datetime null,
 	total decimal(10,0)  null,
 	note nvarchar(255) NULL,
 	address nvarchar(255)  null,
 	status int DEFAULT(0)  null,
+	status_buy int null,
 	type binary  null,
 	username nvarchar(50)  NULL,
-    money_sale decimal(10,0) null,
+	money_ship decimal(10,0) null,
 	person_take nvarchar(50)  NULL,
 	phone_take nvarchar(15)  NULL,
-    id_sale int null,
-	foreign key(username) references accounts(username),
-	foreign key(id_sale) references sale(id_sale)
+	foreign key(username) references accounts(username)
 );
 
 CREATE TABLE order_detail (
@@ -153,11 +150,9 @@ CREATE TABLE order_detail (
 	quantity int  null,
 	price decimal(10,0) null,
 	status binary DEFAULT(0),
-	id_order int NULL, 
-	id_sale int NULL, 
 	price_sale decimal(10,0) NULL, 
-	status int  DEFAULT(0) null,
-	id_order int  NULL, 
+	id_sale int NULL, 
+	id_order int NULL, 
 	id_product int NULL,
 	id_accessory int NULL,
 	foreign key(id_order) references orders(id_order),
@@ -365,9 +360,9 @@ INSERT INTO fix_mobile.accounts(username,password,full_name,gender,email,
 VALUES ('vietanhvs','$2a$12$FUNIidYXB/rc3BRR1XuQZObS4Vn7BPPomqllVvwcBOkJtZJWKFM16','Hạ Việt Anh',0,'vietanhvs@gmail.com',
 	1,'0984297473','2022/10/30','',1);
 	
-CREATE OR REPLACE view customerorders as select o.id_order AS 'id_order',count(d.id_detail) AS 'totalquantity',count(o.id_order) AS 'totalorder',`a`.`full_name` AS 'full_name', a.create_date AS 'create_date',sum(o.total) AS 'totalmoney' from ((((`japanshop`.`accounts` `a` left join `japanshop`.`orders` `o` on(`a`.`username` = `o`.`username`)) left join `japanshop`.`order_detail` `d` on(`d`.`id_order` = `o`.`id_order`)) left join `japanshop`.`products` `p` on(`p`.`id_product` = `d`.`id_product`)) left join `japanshop`.`imei` `i` on(`i`.`id_product` = `p`.`id_product`)) group by `o`.`id_order`,`a`.`username`,`p`.`id_product`;
+CREATE OR REPLACE view customerorders as select o.id_order AS 'id_order',count(d.id_detail) AS 'totalquantity',count(o.id_order) AS 'totalorder',`a`.`full_name` AS 'full_name', a.create_date AS 'create_date',sum(o.total) AS 'totalmoney' from ((((`fix_mobile`.`accounts` `a` left join `fix_mobile`.`orders` `o` on(`a`.`username` = `o`.`username`)) left join `fix_mobile`.`order_detail` `d` on(`d`.`id_order` = `o`.`id_order`)) left join `fix_mobile`.`products` `p` on(`p`.`id_product` = `d`.`id_product`)) left join `fix_mobile`.`imayproduct` `i` on(`i`.`id_product` = `p`.`id_product`)) group by `o`.`id_order`,`a`.`username`,`p`.`id_product`;
 
-// lấy giảm giá cao nhất của giảm toàn bộ cửa hàng
+--  lấy giảm giá cao nhất của giảm toàn bộ cửa hàng
 create
     definer = root@localhost procedure getBigSale_ALLSHOP(IN _money decimal)
 begin
@@ -389,7 +384,7 @@ begin
     end if;
 END;
 
-//giảm giá theo phụ kiện
+-- giảm giá theo phụ kiện
 create
     definer = root@localhost procedure getBigSale_Accessory(IN _idacsr int)
 begin
@@ -423,7 +418,7 @@ begin
     end if;
 END;
 
-//giảm giá theo đơn hàng
+-- giảm giá theo đơn hàng
 create
     definer = root@localhost procedure getBigSale_Order(IN _money decimal)
 begin
@@ -450,7 +445,7 @@ begin
     end if;
 END;
 
-//giảm giá theo sản phẩm
+-- giảm giá theo sản phẩm
 create
     definer = root@localhost procedure getBigSale_Products(IN _idprd int)
 begin
@@ -483,33 +478,34 @@ begin
                 quantity_use != 0 and NOW() between create_start  and create_end limit 1;
     end if;
 END;
-// quản lý theo người dùng
-create
-    definer = root@localhost procedure getBigSale_UserName(IN _userName varchar(50), IN _money decimal)
+
+--  quản lý theo người dùng
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getBigSale_UserName`(IN _userName varchar(50), IN _money decimal)
 begin
     declare max_moneySale decimal;
     declare max_percentSale integer;
 
-    if ((select username from orders where username like _userName) is null) then
+    if ((select username from orders where username like _userName limit 1) is null) then
         select MAX(money_sale) FROM sale s where type_sale = 3 and discount_method = 1 and user_type = 0 and
-            quantity_use != 0 and NOW() between create_start  and create_end
+                quantity != 0 and NOW() between create_start  and create_end
         into max_moneySale;
         select MAX(percent_sale) FROM sale s where type_sale = 3 and discount_method = 1 and user_type = 0 and
-                quantity_use != 0 and NOW() between create_start  and create_end
+                quantity != 0 and NOW() between create_start  and create_end
         into max_percentSale;
     end if;
     if (max_moneySale is null) then
         select MAX(money_sale) FROM sale s LEFT join sale_detail sd ON s.id_sale = sd.id_sale
         where type_sale = 3 and discount_method = 1 and username = _userName and user_type = 1 and
-                quantity_use != 0 and NOW() between create_start  and create_end
+                quantity != 0 and NOW() between create_start  and create_end
         into max_moneySale;
     else
         if(max_moneySale<(select MAX(money_sale) FROM sale s LEFT join sale_detail sd ON s.id_sale = sd.id_sale
-                            where type_sale = 3 and discount_method = 1 and username = _userName and user_type = 1 and
-                                    quantity_use != 0 and NOW() between create_start  and create_end)) then
+                          where type_sale = 3 and discount_method = 1 and username = _userName and user_type = 1 and
+                                  quantity != 0 and NOW() between create_start  and create_end)) then
             select MAX(money_sale) FROM sale s LEFT join sale_detail sd ON s.id_sale = sd.id_sale
             where type_sale = 3 and discount_method = 1 and username = _userName and user_type = 1 and
-                    quantity_use != 0 and NOW() between create_start  and create_end
+                    quantity != 0 and NOW() between create_start  and create_end
             into max_moneySale;
         end if;
     end if;
@@ -517,36 +513,38 @@ begin
     if (max_percentSale is null) then
         select MAX(percent_sale) FROM sale s LEFT join sale_detail sd ON s.id_sale = sd.id_sale
         where type_sale = 3 and discount_method = 1 and username = _userName and user_type = 1 and
-                quantity_use != 0 and NOW() between create_start  and create_end
+                quantity != 0 and NOW() between create_start  and create_end
         into max_percentSale;
     else
         if (max_percentSale<(select MAX(percent_sale) FROM sale s LEFT join sale_detail sd ON s.id_sale = sd.id_sale
                              where type_sale = 3 and discount_method = 1 and username = _userName and user_type = 1 and
-                                     quantity_use != 0 and NOW() between create_start  and create_end)) then
+                                     quantity != 0 and NOW() between create_start  and create_end)) then
             select MAX(percent_sale) FROM sale s LEFT join sale_detail sd ON s.id_sale = sd.id_sale
             where type_sale = 3 and discount_method = 1 and username = _userName and user_type = 1 and
-                    quantity_use != 0 and NOW() between create_start  and create_end
+                    quantity != 0 and NOW() between create_start  and create_end
             into max_percentSale;
         end if;
     end if;
 
     if(max_moneySale is null) then
         select * FROM sale s LEFT join sale_detail sd ON s.id_sale = sd.id_sale
-                 where percent_sale = max_percentSale and type_sale = 3 and discount_method = 1 and username = _userName and user_type = 1 and
-                quantity_use != 0 and NOW() between create_start  and create_end limit 1;
+        where percent_sale = max_percentSale and type_sale = 3 and discount_method = 1 and username = _userName and user_type = 1 and
+                quantity != 0 and NOW() between create_start  and create_end limit 1;
     ELSEIF (max_percentSale is null) then
         select * from sale s LEFT join sale_detail sd ON s.id_sale = sd.id_sale
-                 where money_sale = max_moneySale and type_sale = 3 and discount_method = 1 and username = _userName and user_type = 1 and
-                quantity_use != 0 and NOW() between create_start  and create_end limit 1;
+        where money_sale = max_moneySale and type_sale = 3 and discount_method = 1 and username = _userName and user_type = 1 and
+                quantity != 0 and NOW() between create_start  and create_end limit 1;
     ELSEIF (max_moneySale > _money * max_percentSale/100) then
         select * from sale s LEFT join sale_detail sd ON s.id_sale = sd.id_sale
-                 where money_sale = max_moneySale and type_sale = 3 and discount_method = 1 and username = _userName and user_type = 1 and
-                quantity_use != 0 and NOW() between create_start  and create_end limit 1;
+        where money_sale = max_moneySale and type_sale = 3 and discount_method = 1 and username = _userName and user_type = 1 and
+                quantity != 0 and NOW() between create_start  and create_end limit 1;
     else
         select * from sale s LEFT join sale_detail sd ON s.id_sale = sd.id_sale
-                 where percent_sale = max_percentSale and type_sale = 3 and discount_method = 1 and username = _userName and user_type = 1 and
-                quantity_use != 0 and NOW() between create_start  and create_end limit 1;
+        where percent_sale = max_percentSale and type_sale = 3 and discount_method = 1 and username = _userName and user_type = 1 and
+                quantity != 0 and NOW() between create_start  and create_end limit 1;
     end if;
-END;
+END$$
+DELIMITER ;
+
 
 

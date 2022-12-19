@@ -1,6 +1,7 @@
 package com.fix.mobile.rest.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fix.mobile.dto.AccountDTO;
 import com.fix.mobile.dto.ColorProductResponDTO;
 import com.fix.mobile.dto.ProductResponDTO;
 import com.fix.mobile.entity.*;
@@ -41,7 +42,7 @@ public class GuestRestController {
     @Autowired
     private OrderDetailService orderDetailService;
     @Autowired
-    private SaleRepository saleService;
+    private SaleService saleService;
 
     @Autowired
     private  CapacityService capacityService;
@@ -54,6 +55,11 @@ public class GuestRestController {
     
     Order order = null;
     Account account = null;
+    @GetMapping("/getAccount")
+    public Account getAccountActive() {
+        Account account = accountService.findByUsername(UserName.getUserName());
+        return account;
+    }
     @GetMapping("/category/getAll")
     public List<Category> getAll(){
         return categoryService.findAllBybStatus();
@@ -166,16 +172,22 @@ public class GuestRestController {
                     if(accessory.isPresent()){
                         orderDetail.setAccessory(accessory.get());
                         orderDetail.setOrder(order);
-                        orderDetail.setStatus(1);
+                        orderDetail.setStatus(0);
                         orderDetail.setQuantity(carts.get(i).get("qty").asInt());
                         price = new BigDecimal(carts.get(i).get("price").asDouble());
                         orderDetail.setPrice(price);
                         priceSale= new BigDecimal(carts.get(i).get("priceSale").asDouble());
                         orderDetail.setPriceSale(priceSale);
-                        orderDetail.setIdSale(carts.get(i).get("idSale").asInt());
+                        if(carts.get(i).get("idSale")==null){
+                            orderDetail.setIdSale(null);
+                        }else{
+                            System.out.println("hi2");
+                            orderDetail.setIdSale(carts.get(i).get("idSale").asInt());
+                            Sale updatequantity= saleService.findByid(carts.get(i).get("idSale").asInt());
+                            updatequantity.setQuantity(updatequantity.getQuantity()-1);
+                            saleService.updateQuantity(updatequantity);
+                        }
                         orderDetailService.save(orderDetail);
-                        accessory.get().setQuantity(accessory.get().getQuantity()-carts.get(i).get("qty").asInt());
-                        accessoryService.update(accessory.get(),accessory.get().getIdAccessory());
                     }
                 } else if (carts.get(i).get("idProduct")!=null){
                     Optional<Product> product = productService.findById(carts.get(i).get("idProduct").asInt());
@@ -183,13 +195,20 @@ public class GuestRestController {
                     if(product.isPresent()){
                         orderDetail.setProduct(product.get());
                         orderDetail.setOrder(order);
-                        orderDetail.setStatus(1);
+                        orderDetail.setStatus(0);
                         orderDetail.setQuantity(carts.get(i).get("qty").asInt());
                         price = new BigDecimal(carts.get(i).get("price").asDouble());
                         orderDetail.setPrice(price);
                         priceSale= new BigDecimal(carts.get(i).get("priceSale").asDouble());
                         orderDetail.setPriceSale(priceSale);
-                        orderDetail.setIdSale(carts.get(i).get("idSale").asInt());
+                        if(carts.get(i).get("idSale")==null){
+                            orderDetail.setIdSale(null);
+                        }else{
+                            orderDetail.setIdSale(carts.get(i).get("idSale").asInt());
+                            Sale updatequantity= saleService.findByid(carts.get(i).get("idSale").asInt());
+                            updatequantity.setQuantity(updatequantity.getQuantity()-1);
+                            saleService.updateQuantity(updatequantity);
+                        }
                         orderDetailService.save(orderDetail);
 //                        for (int j = 0; j < carts.get(i).get("qty").asInt(); j++) {
 //                            imayProducts.get(j).setOrderDetail(orderDetail);
@@ -205,11 +224,11 @@ public class GuestRestController {
     }
 
 
-    @GetMapping("/cart/sale")
-    public List<Sale> getSaleByAccount(@PathVariable("id") Integer id){
-        List<Sale> sales = saleService.findAllByDate();
-        return sales;
-    }
+//    @GetMapping("/cart/sale")
+//    public List<Sale> getSaleByAccount(@PathVariable("id") Integer id){
+//        List<Sale> sales = saleService.findAllByDate();
+//        return sales;
+//    }
     @GetMapping(value ="/findByProductCode/{productCode}")
     public Optional<Product> findByProductCode(@PathVariable("productCode") Integer productCode) {
         Optional<Product> product = productService.findById(productCode);
@@ -224,7 +243,7 @@ public class GuestRestController {
 
     @GetMapping("/getAllRam")
     public List<Ram> getAllRam(){
-        return ramService.findAll();
+        return ramService.getALL();
     }
 
     @GetMapping("/getAllColor")
