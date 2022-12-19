@@ -1,4 +1,4 @@
-app.controller('product', function($scope, $http, $window) {
+app.controller('product', function($scope, $http, $window,$rootScope) {
     const pathAPI = "/rest/staff/product";
     const callApiPage = "http://localhost:8080/rest/staff/product/pageImei?page="
     const callDeleteImei = "http://localhost:8080/rest/staff/product/deleteImeiById?id="
@@ -25,6 +25,7 @@ app.controller('product', function($scope, $http, $window) {
         insert:'Thêm mới',
         update:'Cập nhật'
     };
+    $rootScope.check = null;
     const jwtToken = localStorage.getItem("jwtToken")
     const token = {
         headers: {
@@ -710,4 +711,31 @@ app.controller('product', function($scope, $http, $window) {
         $scope.pageImeiFt($scope.imeisPage);
     }
     $scope.pageImeiFt($scope.imeisPage);
+
+    $scope.logOut = function (){
+        $window.location.href = "http://localhost:8080/views/index.html#!/login"
+        Swal.fire({
+            icon: 'error',
+            title: 'Vui lòng đăng nhập lại!!',
+            text: 'Tài khoản của bạn không có quyền truy cập!!',
+        })
+    }
+
+    $scope.checkLogin = function () {
+        if (jwtToken == null){
+           $scope.logOut();
+        }else {
+            $http.get("http://localhost:8080/rest/user/getRole",token).then(respon =>{
+                if (respon.data.name === "USER"){
+                    $scope.logOut();
+                }else if (respon.data.name === "ADMIN"){
+                    $rootScope.check = null;
+                }else {
+                    $rootScope.check = "OK";
+                }
+            })
+        }
+    }
+
+    $scope.checkLogin();
 });

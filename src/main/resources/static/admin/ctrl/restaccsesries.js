@@ -1,4 +1,4 @@
-app.controller("restaccsesries", function ($scope, $http) {
+app.controller("restaccsesries", function ($scope, $http, $window,$rootScope) {
     // ram máy
     $scope.items = [];
     $scope.formCreate  = [];
@@ -7,12 +7,43 @@ app.controller("restaccsesries", function ($scope, $http) {
     $scope.colorItems = [];
     $scope.color = {};
 
+    $rootScope.check = null;
+
     const jwtToken = localStorage.getItem("jwtToken")
     const token = {
         headers: {
             Authorization: `Bearer `+jwtToken
         }
     }
+
+    $scope.logOut = function (){
+        $window.location.href = "http://localhost:8080/views/index.html#!/login"
+        Swal.fire({
+            icon: 'error',
+            title: 'Vui lòng đăng nhập lại!!',
+            text: 'Tài khoản của bạn không có quyền truy cập!!',
+        })
+    }
+
+    $scope.checkLogin = function () {
+        if (jwtToken == null){
+            $scope.logOut();
+        }else {
+            $http.get("http://localhost:8080/rest/user/getRole",token).then(respon =>{
+                console.log(respon.data.name);
+                if (respon.data.name === "USER"){
+                    $scope.logOut();
+                }else if (respon.data.name === "ADMIN"){
+                    $rootScope.check = null;
+                }else {
+                    $rootScope.check = "OK";
+
+                }
+            })
+        }
+    }
+
+    $scope.checkLogin();
 
     $scope.message = function (mes){
         const Toast = Swal.mixin({

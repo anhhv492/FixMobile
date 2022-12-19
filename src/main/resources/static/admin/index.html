@@ -30,7 +30,7 @@
 
             <ul class="sidebar-nav">
                 <li class="sidebar-item active">
-                    <a class="sidebar-link" href="#!dashboard">
+                    <a class="sidebar-link" href="#!dashboard" ng-if="!check">
           <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Thống kê</span>
         </a>
                 </li>
@@ -38,7 +38,7 @@
                     Quản lý
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="#!account">
+                    <a class="sidebar-link" href="#!account" ng-if="!check">
                         <i class="align-middle" data-feather="user"></i> <span class="align-middle">Tài khoản</span>
                     </a>
                 </li>
@@ -69,7 +69,7 @@
                 </li>
                 
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="#!sale">
+                    <a class="sidebar-link" href="#!sale" ng-if="!check">
                         <i class="align-middle" data-feather="gift"></i> <span class="align-middle">Giảm giá</span>
                     </a>
                 </li>
@@ -109,24 +109,6 @@
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="#!productchange">
                         <i class="align-middle" data-feather="user"></i> <span class="align-middle">Quản lý đổi trả hàng</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="pages-profile.html">
-                        <i class="align-middle" data-feather="user"></i> <span class="align-middle">Profile</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="pages-blank.html">
-                        <i class="align-middle" data-feather="book"></i> <span class="align-middle">Blank</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="maps-google.html">
-                        <i class="align-middle" data-feather="map"></i> <span class="align-middle">Maps</span>
                     </a>
                 </li>
             </ul>

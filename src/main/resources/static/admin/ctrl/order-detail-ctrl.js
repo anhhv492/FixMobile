@@ -1,4 +1,4 @@
-app.controller('order-admin-detail-ctrl',function($rootScope,$scope,$http,$compile){
+app.controller('order-admin-detail-ctrl',function($rootScope,$scope,$http,$compile,$window){
     var urlOrderDetail=`http://localhost:8080/rest/staff/order/detail`;
     var urlOrder=`http://localhost:8080/rest/staff/order`;
     const jwtToken = localStorage.getItem("jwtToken")
@@ -14,6 +14,7 @@ app.controller('order-admin-detail-ctrl',function($rootScope,$scope,$http,$compi
     $scope.form= {};
     $scope.idDT= null;
     $scope.orderDT= null;
+    $rootScope.check = null;
 
     $scope.getAllByOrder=function(){
         let id = $rootScope.idOrder;
@@ -154,4 +155,30 @@ app.controller('order-admin-detail-ctrl',function($rootScope,$scope,$http,$compi
         })
     }
     $scope.getAllByOrder();
+    $scope.logOut = function (){
+        $window.location.href = "http://localhost:8080/views/index.html#!/login"
+        Swal.fire({
+            icon: 'error',
+            title: 'Vui lòng đăng nhập lại!!',
+            text: 'Tài khoản của bạn không có quyền truy cập!!',
+        })
+    }
+
+    $scope.checkLogin = function () {
+        if (jwtToken == null){
+            $scope.logOut();
+        }else {
+            $http.get("http://localhost:8080/rest/user/getRole",token).then(respon =>{
+                if (respon.data.name === "USER"){
+                    $scope.logOut();
+                }else if (respon.data.name === "ADMIN"){
+                    $rootScope.check = null;
+                }else {
+                    $rootScope.check = "OK";
+                }
+            })
+        }
+    }
+
+    $scope.checkLogin();
 });

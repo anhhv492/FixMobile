@@ -11,6 +11,7 @@ app.controller('order-admin-ctrl',function($rootScope,$scope,$http,$window,$filt
     $scope.checkNgayMua=false;
     $scope.checkTongGia=false;
     $scope.checkTrangThai=false;
+    $rootScope.check = null;
     $scope.status = [
         {id : '', name : "Thay đổi"},
         {id : 0, name : "Chờ xác nhận"},
@@ -337,4 +338,31 @@ app.controller('order-admin-ctrl',function($rootScope,$scope,$http,$window,$filt
         }
         return total;
     }
+
+    $scope.logOut = function (){
+        $window.location.href = "http://localhost:8080/views/index.html#!/login"
+        Swal.fire({
+            icon: 'error',
+            title: 'Vui lòng đăng nhập lại!!',
+            text: 'Tài khoản của bạn không có quyền truy cập!!',
+        })
+    }
+
+    $scope.checkLogin = function () {
+        if (jwtToken == null){
+            $scope.logOut();
+        }else {
+            $http.get("http://localhost:8080/rest/user/getRole",token).then(respon =>{
+                if (respon.data.name === "USER"){
+                    $scope.logOut();
+                }else if (respon.data.name === "ADMIN"){
+                    $rootScope.check = null;
+                }else {
+                    $rootScope.check = "OK";
+                }
+            })
+        }
+    }
+
+    $scope.checkLogin();
 });

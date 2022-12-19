@@ -3,13 +3,11 @@ package com.fix.mobile.rest.controller;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fix.mobile.dto.AccountDTO;
 import com.fix.mobile.dto.AddressDTO;
+import com.fix.mobile.dto.RoleDTO;
 import com.fix.mobile.dto.account.AccountRequestDTO;
 import com.fix.mobile.dto.account.AccountResponDTO;
 import com.fix.mobile.dto.account.UpdatePasswordDTO;
-import com.fix.mobile.entity.Account;
-import com.fix.mobile.entity.Order;
-import com.fix.mobile.entity.Sale;
-import com.fix.mobile.entity.SaleDetail;
+import com.fix.mobile.entity.*;
 import com.fix.mobile.service.*;
 import com.fix.mobile.utils.UserName;
 import org.hibernate.StaleStateException;
@@ -143,6 +141,11 @@ public class UserRestController {
     public List<SaleDetail> finByidsaledetail(@PathVariable("id") Integer id){
         Sale sale = saleSV.findByid(id);
         return saleDetailSV.findByid(sale);
+    }
+
+    @GetMapping("/getRole")
+    public Role getRole(){
+        return accountService.getRoleByUserName(UserName.getUserName());
     }
 
 

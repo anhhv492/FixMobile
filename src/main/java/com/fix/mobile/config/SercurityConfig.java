@@ -85,7 +85,7 @@ public class SercurityConfig {
         http.authorizeHttpRequests().antMatchers("/admin/**",
                         "/rest/guest/**").permitAll()//Phân quyền sử dụng
                 .antMatchers("/order/**").authenticated()
-                .antMatchers("/rest/admin/**","/admin/**").hasRole("ADMIN")
+                .antMatchers("/rest/admin/**","/admin/**","/admin/rest/**").hasRole("ADMIN")
                 .antMatchers("/rest/staff/**").hasAnyRole("STAFF", "ADMIN")
                 .antMatchers("/rest/user/**").hasAnyRole("USER", "STAFF", "ADMIN")
                 .and().exceptionHandling().authenticationEntryPoint(jwtEntrypoint)

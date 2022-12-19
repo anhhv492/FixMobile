@@ -15,8 +15,6 @@ app.config(function($routeProvider){
             controller: "view_accessory_ctrl",
             controller: "home-ctrl",
             controller: "view_product_ctrl",
-
-
         })
         .when("/product/detail",{
             templateUrl:"product/list_detail.html",

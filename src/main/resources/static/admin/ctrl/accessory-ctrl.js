@@ -1,4 +1,4 @@
-app.controller('rest_accessory', function($scope, $http) {
+app.controller('rest_accessory', function($scope, $http,$rootScope,$window) {
     const pathAPI = "http://localhost:8080/rest/admin/accessory";
     $scope.form = {};
     $scope.accessories = [];
@@ -7,6 +7,7 @@ app.controller('rest_accessory', function($scope, $http) {
     $scope.check_first=false;
     $scope.check_last=true;
     $scope.totalPages=0;
+    $rootScope.check = null;
     $scope.title={
         insert:'Thêm mới',
         update:'Cập nhật'
@@ -466,5 +467,32 @@ app.controller('rest_accessory', function($scope, $http) {
         })
     }
     $scope.loadAccessories();
+
+    $scope.logOut = function (){
+        $window.location.href = "http://localhost:8080/views/index.html#!/login"
+        Swal.fire({
+            icon: 'error',
+            title: 'Vui lòng đăng nhập lại!!',
+            text: 'Tài khoản của bạn không có quyền truy cập!!',
+        })
+    }
+
+    $scope.checkLogin = function () {
+        if (jwtToken == null){
+            $scope.logOut();
+        }else {
+            $http.get("http://localhost:8080/rest/user/getRole",token).then(respon =>{
+                if (respon.data.name === "USER"){
+                    $scope.logOut();
+                }else if (respon.data.name === "ADMIN"){
+                    $rootScope.check = null;
+                }else {
+                    $rootScope.check = "OK";
+                }
+            })
+        }
+    }
+
+    $scope.checkLogin();
 
 });

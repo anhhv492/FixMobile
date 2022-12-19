@@ -21,7 +21,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-@RestController @RequestMapping("/admin/rest/sale")
+@RestController @RequestMapping("/rest/admin/sale")
 public class SaleRestController {
 
     @Autowired
