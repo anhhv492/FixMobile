@@ -520,6 +520,7 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window,$timeou
     $scope.checkBuyCOD = function () {
         $scope.checkBuy = false;
     }
+
     $scope.getAddressAcountActive = function () {
         if ($rootScope.account != null) {
             $http.get(urlAccount + "/getAddress", token).then(function (respon) {

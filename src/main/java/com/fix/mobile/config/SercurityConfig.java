@@ -63,30 +63,7 @@ public class SercurityConfig {
 	public BCryptPasswordEncoder pe() {//Mã hóa password
 		return new BCryptPasswordEncoder();
 	}
-//	@Override
-//	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-////	Viet phuong thuc userDetailService cos du lieu truyen vao: username
-////		HttpSession session = request.getSession();
-//		auth.userDetailsService((username) ->{
-//			try {
-//				Account user = accountService.findByName(username);
-//				if (user == null) {
-////					session.setAttribute("error", "Sai email hoặc mật khẩu");
-//					System.out.println("Sai thông tin login");
-//				}else
-//					System.out.println("Password chưa mã hóa: "+ user.getPassword());
-////					System.out.println("Mã hóa pass word: " + pe().encode(user.getPassword()));
-//					String password = user.getPassword();
-//					String roles =  user.getRole().getName();
-//					return User.withUsername(username).password(password).roles(roles).build();
-//
-//
-//			} catch (NoSuchElementException e) {
-//				throw new UsernameNotFoundException(username + "not found!");
-//			}
-//		});
-//
-//=======
+
 	PasswordEncoder passwordEncoder() {//Mã hóa password
 		return new BCryptPasswordEncoder();
 	}

@@ -166,9 +166,8 @@ app.controller('ctrl_cate', function($scope, $http) {
     }
 
     $scope.onSave = function() {
-
-        $http.post(pathAPI+"/create", $scope.form,
-            $scope.form.status= $scope.valueSelectStatus,token).then(response => {
+        $scope.form.status = $scope.valueSelectStatus;
+        $http.post(pathAPI+"/create", $scope.form,token).then(response => {
             if (response != null){
                 const Toast = Swal.mixin({
                     toast: true,
