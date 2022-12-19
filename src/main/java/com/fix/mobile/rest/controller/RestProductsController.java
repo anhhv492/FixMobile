@@ -200,17 +200,15 @@ public class RestProductsController {
 	@PostMapping("/saveImay")
 	public void saveImay(@ModelAttribute ImayProductDTO  imay){
 		try {
-			for ( String  s :  imay.getName()) {
-				if(s.equals(s)){
-					System.out.println("trùng rồi không thêm đc");
-					return;
+			if(imay !=null){
+				for ( String  s :  imay.getName()) {
+					ImayProduct i = new ImayProduct();
+					i.setName(s);
+					i.setProduct(imay.getProduct());
+					i.setStatus(1);
+					imayService.save(i);
 				}
-				ImayProduct i = new ImayProduct();
-				i.setName(s);
-				i.setProduct(imay.getProduct());
-				i.setStatus(1);
-				imayService.save(i);
-			}
+			}else;
 		}catch (Exception e ){
 			e.getMessage();
 			e.printStackTrace();
