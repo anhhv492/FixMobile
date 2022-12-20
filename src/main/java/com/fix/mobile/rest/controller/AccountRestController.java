@@ -124,15 +124,6 @@ public class AccountRestController {
          return accountService.updatePassword(updatePasswordDTO);
     }
 
-    @GetMapping("/updatePasswordMail/{email}")
-    public void updatePasswordMail (@PathVariable("email")String email, Model model){
-        try {
-            if(email != null){
-                mailService.SendEmailChangePass("top1zukavietnam@gmail.com","kzbtzovffrqbkonf",email);
-            }else;
-        }catch (Exception e){
-            e.getMessage();
-        }
-    }
+
 
 }

@@ -28,6 +28,21 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
     $rootScope.name="";
     $scope.accountActive= {};
     $scope.accountHome= {};
+    $rootScope.check = null;
+
+    $scope.checkLogin = function () {
+        if (jwtToken == null){
+
+        }else {
+            $http.get("http://localhost:8080/rest/user/getRole",token).then(respon =>{
+                if (respon.data.name === "USER"){
+                    $rootScope.check = "OK";
+                }else {
+                    $rootScope.check = null;
+                }
+            })
+        }
+    }
 
 
     $scope.getAcount = function () {
@@ -528,7 +543,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
         })
     }
     $scope.findProduct=function (){
-        $http.post(`/rest/admin/product/findproduct/0`,$scope.findProductAll).then(function (respon) {
+        $http.post(`/rest/guest/product/findproduct/0`,$scope.findProductAll).then(function (respon) {
             $rootScope.detailProducts = respon.data.content;
             $scope.totalElements = respon.data.totalElements;
             console.log(respon.data)
@@ -542,7 +557,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
     }
 
     $scope.findAccessory=function (){
-        $http.post(`/rest/admin/accessory/findaccessory/0`,$scope.findProductAll).then(function (respon) {
+        $http.post(`/rest/guest/accessory/findaccessory/0`,$scope.findProductAll).then(function (respon) {
             $rootScope.detailAccessories = respon.data.content;
             console.log(respon.data)
             for(var i=0;i<$rootScope.detailProducts.length;i++){
@@ -619,7 +634,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
 
     $scope.detailProduct={};
     $scope.getDetailProduct=function (id){
-        $http.post(`/rest/admin/product/detailproduct/`+id).then(function (respon) {
+        $http.post(`/rest/guest/product/detailproduct/`+id).then(function (respon) {
             $scope.detailProduct=respon.data;
             console.log(respon.data)
         }).catch(err => {
@@ -629,7 +644,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
     }
     $scope.getAllProduct=[];
     $scope.getALLProduct=function (){
-        $http.post(`/rest/admin/product/getallproduct`).then(function (respon) {
+        $http.post(`/rest/guest/product/getallproduct`).then(function (respon) {
             $scope.getAllProduct=respon.data;
             console.log(respon.data)
         }).catch(err => {

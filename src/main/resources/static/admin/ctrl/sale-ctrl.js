@@ -421,12 +421,12 @@ app.controller("sale_ctrl", function ($scope, $http, $window,$rootScope) {
 
     $scope.showdetailSale = function (id) {
         var url = `http://localhost:8080/rest/admin/sale/getsale/` + id;
-        $http.get(url).then(function (response) {
+        $http.get(url,token).then(function (response) {
             $scope.saleadd = response.data;
             $scope.saleadd.createStart = new Date(response.data.createStart);
             $scope.saleadd.createEnd = new Date(response.data.createEnd);
             var url1 = "http://localhost:8080/rest/admin/sale/getsaledetail/" + id;
-            $http.get(url1).then(function (response1) {
+            $http.get(url1,token).then(function (response1) {
                 $scope.seLected = [];
                 for (var i = 0; i < response1.data.length; i++) {
                     if ($scope.saleadd.typeSale == 1) {

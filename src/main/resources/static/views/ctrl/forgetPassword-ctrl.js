@@ -20,7 +20,7 @@ app.controller("forgetPassword-ctrl", function ($scope, $http,$window) {
         })
     }
     $scope.changePassword = function (email) {
-        $http.get(`/rest/admin/accounts/updatePasswordMail/${email}`)
+        $http.get(`/rest/guest/accounts/updatePasswordMail/${email}`)
             .then(function (respon) {
                 $scope.message('Mật khẩu đã gửi về email của quý khách vui lòng kiêm tra');
                 console.log('sessuce ' + respon.data);
