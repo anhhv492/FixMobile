@@ -2,6 +2,7 @@ package com.fix.mobile.rest.controller;
 
 import com.fix.mobile.dto.account.AccountResponDTO;
 import com.fix.mobile.entity.*;
+import com.fix.mobile.helper.WriteExcel;
 import com.fix.mobile.repository.AccountRepository;
 import com.fix.mobile.repository.OrderRepository;
 import com.fix.mobile.service.*;
@@ -33,6 +34,8 @@ public class OrderRestController {
     private ImayProductService imayProductService;
     @Autowired
     private sendMailService sendMailService;
+    @Autowired
+    private WriteExcel writeExcel;
     @PutMapping(value="/rest/staff/order")
     public Order update(@RequestBody Order order){
         Account account = accountService.findByUsername(UserName.getUserName());
@@ -105,6 +108,13 @@ public class OrderRestController {
             }
         };
         Collections.sort(orders,comparator);
+        return orders;
+    }
+
+    @GetMapping(value="/rest/staff/order/export-excel")
+    public List<Order> exportExcel() throws Exception {
+        List<Order> orders = orderService.findAll();
+        writeExcel.writeExcel(orders);
         return orders;
     }
 

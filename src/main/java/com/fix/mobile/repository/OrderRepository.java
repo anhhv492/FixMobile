@@ -26,4 +26,6 @@ public interface OrderRepository extends PagingAndSortingRepository<Order, Integ
     List<Order> findAllByName(String name);
 
     List<Order> findAllByStatus(Integer status);
+
+    List<Order> findAllByIdOrder(Integer id);
 }

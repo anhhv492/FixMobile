@@ -23,6 +23,14 @@
                 type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">
             Trạng thái</button>
     </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link btn text-dark" ng-click="getAll()" type="button">
+            Tất cả</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link btn text-success" ng-click="exportExcel()" type="button">
+            Xuất file</button>
+    </li>
 </ul>
 <div class="tab-content" id="myTabContent">
     <div class="tab-pane fade show active container" id="acc-tab-pane" role="tabpanel" aria-labelledby="acc-tab" tabindex="0">

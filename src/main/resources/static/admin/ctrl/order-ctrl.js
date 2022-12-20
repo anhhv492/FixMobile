@@ -220,22 +220,37 @@ app.controller('order-admin-ctrl',function($rootScope,$scope,$http,$window,$filt
             }
         }
     }
-    $scope.hoTen=function(){
-        $scope.checkHoTen=!$scope.checkHoTen;
-    }
-    $scope.ngayMua=function(){
-        $scope.checkNgayMua=!$scope.checkNgayMua;
-    }
-    $scope.tongGiaTang=function(){
-        $scope.checkTongGia=!$scope.checkTongGia;
-        $scope.sortPriceUp();
-    }
-    $scope.tongGiaGiam=function(){
-        $scope.checkTongGia=!$scope.checkTongGia;
-        $scope.sortPriceDown();
-    }
-    $scope.trangThai=function(){
-        $scope.checkTrangThai=!$scope.checkTrangThai;
+    $scope.exportExcel = function () {
+        $http.get(urlOrder+'/export-excel',token).then(function(response){
+            if(response.data){
+                let timerInterval
+                Swal.fire({
+                    title: 'Đang xuất file đến thư mục C:\\FixMobile\\excels',
+                    html: 'Vui lòng chờ <b></b> milliseconds.',
+                    timer: 3500,
+                    timerProgressBar: true,
+                    didOpen: () => {
+                        Swal.showLoading();
+                        // cho code vao day
+                        const b = Swal.getHtmlContainer().querySelector('b')
+                        timerInterval = setInterval(() => {
+                            b.textContent = Swal.getTimerLeft()
+                        }, 100)
+                    },
+                    willClose: () => {
+                        $scope.messageSuccess('Xuất file excel thành công');
+                    }
+                }).then((result) => {
+                    /* Read more about handling dismissals below */
+                    if (result.dismiss === Swal.DismissReason.timer) {
+                        console.log('I was closed by the timer')
+                    }
+                })
+            }
+        }).catch(error=>{
+            $scope.messageError("Không có dữ liệu để xuất file!");
+            console.log('error getOrder',error);
+        });
     }
     $scope.status.id='';
     $scope.getAll();
