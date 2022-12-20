@@ -44,7 +44,7 @@
                                     </button>
                                 </div>
                             </td>
-                            <td class="align-middle" ng-if="item.idAccessory">{{item.color}}</td>
+                            <td class="align-middle" ng-if="item.idAccessory">{{item.color.name}}</td>
                             <td class="align-middle" ng-if="item.idProduct">{{item.color.name}}</td>
                             <td class="align-middle">
                                 <p class="mb-0" style="font-weight: 500 " ng-if="item.priceSale ==0">{{item.price*item.qty|number}}  VNĐ</p>

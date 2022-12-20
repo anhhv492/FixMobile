@@ -6,6 +6,7 @@ import com.fix.mobile.entity.Accessory;
 import com.fix.mobile.entity.Category;
 import org.springframework.data.domain.Page;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,4 +21,6 @@ public interface AccessoryService extends GenericService<Accessory, Integer> {
     AccessoryResponDTO update(Integer id, AccessoryDTO accessoryDTO);
 
     List<Accessory> getTop4();
+
+    List<BigDecimal> getMinMaxPrice();
 }

@@ -531,7 +531,6 @@ app.controller('product', function($scope, $http, $window,$rootScope) {
         }
     }
     $scope.saveImay = function (){
-
         var form = new FormData();
         if(!$scope.imeis.isPrototypeOf()){
             angular.forEach($scope.imeis, function(name) {
@@ -553,7 +552,7 @@ app.controller('product', function($scope, $http, $window,$rootScope) {
         $http(req,token).then(response=> {
             $scope.message('Đã thêm '+ $scope.formProduct.name);
             console.log('ddadadasdsssssssssssssss '+ response.data)
-            debugger
+
             $scope.formProduct = {}
             $scope.imeis.splice('')
         }).catch(error=>{
@@ -712,6 +711,7 @@ app.controller('product', function($scope, $http, $window,$rootScope) {
     }
     $scope.pageImeiFt($scope.imeisPage);
 
+
     $scope.logOut = function (){
         $window.location.href = "http://localhost:8080/views/index.html#!/login"
         Swal.fire({
@@ -738,4 +738,40 @@ app.controller('product', function($scope, $http, $window,$rootScope) {
     }
 
     $scope.checkLogin();
+
+    $scope.generationName=function (){
+        if($scope.formProduct.name!=undefined || $scope.formProduct.name!=null ||$scope.formProduct.name!=''){
+            $scope.formProduct.nam='';
+        }
+        if($scope.formProduct.category!=undefined||$scope.formProduct.category!=null||$scope.formProduct.category!=''){
+            for(let i=0; i<$scope.categories.length;i++){
+                if($scope.formProduct.category == $scope.categories[i].idCategory){
+                    $scope.formProduct.name = $scope.categories[i].name;
+                }
+            }
+        }
+        if($scope.formProduct.capacity!=undefined||$scope.formProduct.capacity!=null||$scope.formProduct.capacity!=''){
+            for(let i=0; i<$scope.capacitys.length;i++){
+                if($scope.formProduct.capacity == $scope.capacitys[i].idCapacity){
+                    $scope.formProduct.name += ' Dung Lượng '+$scope.capacitys[i].name;
+                }
+            }
+        }
+        if($scope.formProduct.ram!=undefined||$scope.formProduct.ram!=null||$scope.formProduct.ram!=''){
+            for(let i=0; i<$scope.rams.length;i++){
+                if($scope.formProduct.ram == $scope.rams[i].idRam){
+                    $scope.formProduct.name += ' RAM '+$scope.rams[i].name;
+                }
+            }
+        }
+        if($scope.formProduct.color!=undefined||$scope.formProduct.color!=null||$scope.formProduct.color!=''){
+            for(let i=0; i<$scope.colors.length;i++){
+                if($scope.formProduct.color == $scope.colors[i].idColor){
+                    $scope.formProduct.name += ' Màu '+$scope.colors[i].name;
+                }
+            }
+        }
+
+    }
+
 });

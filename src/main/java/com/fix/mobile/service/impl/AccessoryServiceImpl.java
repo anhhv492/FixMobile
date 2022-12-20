@@ -7,6 +7,7 @@ import com.fix.mobile.dto.accessory.AccessoryResponDTO;
 import com.fix.mobile.entity.Category;
 import com.fix.mobile.repository.AccessoryRepository;
 import com.fix.mobile.repository.CategoryRepository;
+import com.fix.mobile.repository.ColorRepository;
 import com.fix.mobile.service.AccessoryService;
 import com.fix.mobile.entity.Accessory;
 import org.modelmapper.ModelMapper;
@@ -18,10 +19,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.math.BigDecimal;
+import java.util.*;
 
 @Service
 @Transactional
@@ -36,6 +35,9 @@ public class AccessoryServiceImpl implements AccessoryService {
 
     @Autowired
     private Cloudinary cloud;
+
+    @Autowired
+    private ColorRepository colorRepository;
 
     public AccessoryServiceImpl(AccessoryRepository repository, CategoryRepository categoryRepository, ModelMapper modelMapper) {
         this.repository = repository;
@@ -108,7 +110,7 @@ public class AccessoryServiceImpl implements AccessoryService {
 
     @Override
     public List<Accessory> findAccessory() {
-        return null;
+        return repository.findAccessory();
     }
 
     @Override
@@ -120,7 +122,7 @@ public class AccessoryServiceImpl implements AccessoryService {
           accessory.setName(accessoryDTO.getName());
           accessory.setQuantity(accessoryDTO.getQuantity());
           accessory.setPrice(accessoryDTO.getPrice());
-          accessory.setColor(accessoryDTO.getColor());
+          accessory.setColor(colorRepository.findById(Integer.parseInt(accessoryDTO.getColor())).orElse(null));
           accessory.setNote(accessoryDTO.getNote());
           accessory.setCategory(category);
           accessory.setCreateDate(date);
@@ -164,7 +166,7 @@ public class AccessoryServiceImpl implements AccessoryService {
                optional.setName(accessoryDTO.getName());
                optional.setQuantity(accessoryDTO.getQuantity());
                optional.setPrice(accessoryDTO.getPrice());
-               optional.setColor(accessoryDTO.getColor());
+               optional.setColor(colorRepository.findById(Integer.parseInt(accessoryDTO.getColor())).orElse(null));
                optional.setNote(accessoryDTO.getNote());
                optional.setCategory(category);
                if (accessoryDTO.getImage() == null){
@@ -194,6 +196,14 @@ public class AccessoryServiceImpl implements AccessoryService {
     @Override
     public List<Accessory> getTop4() {
         return repository.findTop4();
+    }
+
+    @Override
+    public List<BigDecimal> getMinMaxPrice() {
+        List<BigDecimal> listPriceMINMAX= new ArrayList<>();
+        listPriceMINMAX.add(repository.getMinPrice());
+        listPriceMINMAX.add(repository.getMaxPrice());
+        return listPriceMINMAX;
     }
 
 

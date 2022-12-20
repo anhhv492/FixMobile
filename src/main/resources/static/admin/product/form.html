@@ -31,7 +31,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group mt-1">
                                         <label >Thể loại </label>
-                                        <select ng-model="formProduct.category" class="form-select" name="category" required>
+                                        <select ng-model="formProduct.category" class="form-select" name="category" required ng-change="generationName()">
                                             <option  ng-value="">Chọn thể loại
                                             </option>
                                             <option ng-repeat="cate in categories" ng-value="cate.idCategory">{{cate.name}}
@@ -45,7 +45,7 @@
                                     </div>
                                     <div class="form-group mt-1">
                                         <label>Tên sản phẩm</label>
-                                        <input maxlength="250" ng-model="formProduct.name" class="form-control" name="name" placeholder="Tên sản phẩm"
+                                        <input disabled maxlength="250" ng-model="formProduct.name" class="form-control" name="name" placeholder="Tên sản phẩm"
                                                ng-minlength="6" ng-maxlength="250" required>
                                         <span ng-show="myForm.$submitted || myForm.name.$dirty" style="color: red">
                                         <span class="error" ng-show="myForm.name.$error.required"> <i
@@ -58,7 +58,7 @@
                                     </div>
                                     <div class="form-group mt-1">
                                         <label >Ram </label>
-                                        <select ng-model="formProduct.ram" class="form-select" name="ram" required>
+                                        <select ng-model="formProduct.ram" class="form-select" name="ram" required ng-change="generationName()">
                                             <option value="" ng-value="">Chọn ram
                                             </option>
                                             <option ng-repeat="cate in rams" ng-value="cate.idRam">{{cate.name}}
@@ -71,7 +71,7 @@
                                     </div>
                                     <div class="form-group mt-1">
                                             <label >Màu </label>
-                                            <select ng-model="formProduct.color" class="form-select" name="color" required>
+                                            <select ng-model="formProduct.color" class="form-select" name="color" required ng-change="generationName()">
                                                 <option  value="" ng-value="">Chọn màu
                                                 </option>
                                                 <option ng-repeat="color in colors" ng-value="color.idColor">{{color.name}}
@@ -84,7 +84,7 @@
                                     </div>
                                     <div class="form-group mt-1">
                                         <label>Dung lượng</label>
-                                        <select ng-model="formProduct.capacity" class="form-select" name="capacity" required>
+                                        <select ng-model="formProduct.capacity" class="form-select" name="capacity" required ng-change="generationName()">
                                             <option  value="" ng-value="">Chọn dung lượng
                                             </option>
                                             <option ng-repeat="capa in capacitys"  ng-value="capa.idCapacity">{{capa.name}}

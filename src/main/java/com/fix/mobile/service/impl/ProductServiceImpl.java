@@ -5,13 +5,9 @@ import com.fix.mobile.dto.ColorProductResponDTO;
 import com.fix.mobile.dto.ProductResponDTO;
 import com.fix.mobile.entity.*;
 import com.fix.mobile.repository.*;
-import com.fix.mobile.service.CapacityService;
-import com.fix.mobile.service.ProductService;
 import com.fix.mobile.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.fix.mobile.entity.Category;
-import com.fix.mobile.service.ProductService;
 import com.fix.mobile.repository.ProductRepository;
 import com.fix.mobile.entity.Product;
 
@@ -215,10 +211,81 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<BigDecimal> getMinMaxPrice() {
+    public Product getdeTailPrd(Integer idCapa, Integer idRam, Integer idColor) {
+        return repository.getDetailPrd(idCapa,idRam,idColor);
+    }
+
+    @Override
+    public List<Integer> getlistDetailProductCapacity(Integer id) {
+        return repository.getlistDetailProductCapacity(id);
+    }
+
+    @Override
+    public List<Integer> getlistDetailProductRam(Integer id) {
+        return repository.getlistDetailProductRam(id);
+    }
+
+    @Override
+    public List<Integer> getlistDetailProductColor(Integer id) {
+        return repository.getlistDetailProductColor(id);
+    }
+
+    @Override
+    public List<Integer> getlistDetailProductCategory() {
+        return repository.getlistDetailProductCategory();
+    }
+
+    @Override
+    public List<Integer> checkColor(Integer idRam, Integer idCapa) {
+        return repository.checkColor(idRam,idCapa);
+    }
+
+    @Override
+    public List<Integer> checkCapa(Integer idColor, Integer idRam) {
+        return repository.checkCapa(idColor,idRam);
+    }
+
+    @Override
+    public List<Integer> checkRam(Integer idColor, Integer idCapa) {
+        return repository.checkRam(idColor,idCapa);
+    }
+
+    @Override
+    public List<Integer> ramcheckRamAndColor(Integer idCapa) {
+        return repository.ramcheckRamAndColor(idCapa);
+    }
+
+    @Override
+    public List<Integer> colorcheckRamAndColor(Integer idCapa) {
+        return repository.colorcheckRamAndColor(idCapa);
+    }
+
+    @Override
+    public List<Integer> ramcheckRamAndCapa(Integer idColor) {
+        return repository.ramcheckRamAndCapa(idColor);
+    }
+
+    @Override
+    public List<Integer> CapacheckRamAndCapa(Integer idColor) {
+        return repository.CapacheckRamAndCapa(idColor);
+    }
+
+    @Override
+    public List<Integer> ColorcheckColorAndCapa(Integer idRam) {
+        return repository.ColorcheckColorAndCapa(idRam);
+    }
+
+    @Override
+    public List<Integer> CapacheckColorAndCapa(Integer idRam) {
+        return repository.CapacheckColorAndCapa(idRam);
+    }
+
+
+    @Override
+    public List<BigDecimal> getMinMaxPrice(Integer id) {
         List<BigDecimal> listPriceMINMAX= new ArrayList<>();
-        listPriceMINMAX.add(repository.getMinPrice());
-        listPriceMINMAX.add(repository.getMaxPrice());
+        listPriceMINMAX.add(repository.getMinPrice(id));
+        listPriceMINMAX.add(repository.getMaxPrice(id));
         return listPriceMINMAX;
     }
 

@@ -25,4 +25,7 @@ public class Color {
     @JsonIgnore
     @OneToMany(mappedBy = "color")
     private List<Product> products;
+    @JsonIgnore
+    @OneToMany(mappedBy = "color")
+    private List<Accessory> accessory;
 }

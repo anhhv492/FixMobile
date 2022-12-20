@@ -3,8 +3,10 @@ package com.fix.mobile.rest.controller;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fix.mobile.dto.CheckProductDTO;
 import com.fix.mobile.dto.ImayProductDTO;
 import com.fix.mobile.dto.ImeiProductResponDTO;
+import com.fix.mobile.dto.ProductDetailDTO;
 import com.fix.mobile.entity.*;
 import com.fix.mobile.helper.ExcelProducts;
 import com.fix.mobile.payload.SaveProductRequest;
@@ -115,11 +117,44 @@ public class RestProductsController {
 		}
 	}
 
+	private String generationName(SaveProductRequest prd){
+		String name="";
+		List<Category> listCate =categoryService.findAll();
+		List<Capacity> listCapa = capacityService.findAll();
+		List<Color> listColor = colorService.findAll();
+		List<Ram> listRam = ramService.findAll();
+		for (Category cate:listCate
+			 ) {
+			if(prd.getCategory().getIdCategory()==cate.getIdCategory()){
+				name+= cate.getName();
+			}
+		}
+		for (Capacity capa:listCapa
+		) {
+			if(prd.getCapacity().getIdCapacity()==capa.getIdCapacity()){
+				name+= " Dung Lượng " + capa.getName();
+			}
+		}
+		for (Ram ram:listRam
+		) {
+			if(prd.getRam().getIdRam()==ram.getIdRam()){
+				name+=" RAM " + ram.getName();
+			}
+		}
+		for (Color color:listColor
+		) {
+			if(prd.getColor().getIdColor() == color.getIdColor()){
+				name+=" Màu " +color.getName();
+			}
+		}
+		return name;
+	}
+
 	@RequestMapping(path = "/saveProduct", method = POST, consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
 	public void save(@ModelAttribute SaveProductRequest saveProductRequest){
 		Date date = new Date();
 		Product p = new Product();
-		p.setName(saveProductRequest.getName());
+		p.setName(generationName(saveProductRequest));
 		p.setNote(saveProductRequest.getNote());
 		p.setSize(saveProductRequest.getSize());
 		p.setCategory(saveProductRequest.getCategory());
@@ -197,17 +232,15 @@ public class RestProductsController {
 	@PostMapping("/saveImay")
 	public void saveImay(@ModelAttribute ImayProductDTO  imay){
 		try {
-			for ( String  s :  imay.getName()) {
-				if(s.equals(s)){
-					System.out.println("trùng rồi không thêm đc");
-					return;
+			if(imay !=null){
+				for ( String  s :  imay.getName()) {
+					ImayProduct i = new ImayProduct();
+					i.setName(s);
+					i.setProduct(imay.getProduct());
+					i.setStatus(1);
+					imayService.save(i);
 				}
-				ImayProduct i = new ImayProduct();
-				i.setName(s);
-				i.setProduct(imay.getProduct());
-				i.setStatus(1);
-				imayService.save(i);
-			}
+			}else;
 		}catch (Exception e ){
 			e.getMessage();
 			e.printStackTrace();
@@ -279,19 +312,6 @@ public class RestProductsController {
 			@RequestBody JsonNode findProcuctAll
 	) {
 		Pageable paging = PageRequest.of(page, 4);
-		BigDecimal priceMin;
-		BigDecimal priceMax;
-		System.out.println(getMaxMinPriceProduct().get(0));
-		if(String.valueOf(findProcuctAll.get("priceSalemin")).replaceAll("\"","").equals("")){
-			 priceMin = new BigDecimal(String.valueOf(getMaxMinPriceProduct().get(0)));
-		}else {
-			 priceMin = new BigDecimal(String.valueOf(findProcuctAll.get("priceSalemin")).replaceAll("\"", ""));
-		}
-		if(String.valueOf(findProcuctAll.get("priceSalemax")).replaceAll("\"","").equals("")){
-			 priceMax = new BigDecimal(String.valueOf(getMaxMinPriceProduct().get(1)));
-		}else {
-			 priceMax = new BigDecimal(String.valueOf(findProcuctAll.get("priceSalemax")).replaceAll("\"",""));
-		}
 		List<Product> listPrd = productService.findProduct();
 		List<Product> listFindProduct = new ArrayList<>();
 		JsonNode listIdCategory = findProcuctAll.get("idCategory");
@@ -301,64 +321,56 @@ public class RestProductsController {
 		Integer sortMinMax = findProcuctAll.get("sortMinMax").asInt();
 		System.out.println(listPrd.size());
 		System.out.println(String.valueOf(findProcuctAll.get("search")).replaceAll("\"","")+"hihihi");
-		for (int i = 0; i < listPrd.size(); i++) {
-			if(
-				listIdCategory.size() == 0 &&
-				listIdRam.size() == 0 &&
-				listIdCapacity.size() == 0 &&
-				listIdColer.size() == 0
-			){
-				if(listPrd.get(i).getName().toLowerCase().contains(String.valueOf(findProcuctAll.get("search")).replaceAll("\"","").toLowerCase())
-						&& listPrd.get(i).getPrice().compareTo(priceMin) >= 0
-						&& listPrd.get(i).getPrice().compareTo(priceMax) <= 0
-				){
-					listFindProduct.add(listPrd.get(i));
-				}
-			}else {
-				if (listIdCategory.size() != 0) {
-					for (int y = 0; y < listIdCategory.size(); y++) {
-						if (listIdCategory.get(y).asInt() == listPrd.get(i).getCategory().getIdCategory()
-								&& listPrd.get(i).getPrice().compareTo(priceMin) >= 0
-								&& listPrd.get(i).getPrice().compareTo(priceMax) <= 0
-								&& listPrd.get(i).getName().toLowerCase().contains(String.valueOf(findProcuctAll.get("search")).replaceAll("\"","").toLowerCase())
-						) {
-							listFindProduct.add(listPrd.get(i));
+		if(listPrd.size()!=0) {
+			for (int i = 0; i < listPrd.size(); i++) {
+				if (
+						listIdCategory.size() == 0 &&
+								listIdRam.size() == 0 &&
+								listIdCapacity.size() == 0 &&
+								listIdColer.size() == 0
+				) {
+					if (listPrd.get(i).getName().toLowerCase().contains(String.valueOf(findProcuctAll.get("search")).replaceAll("\"", "").toLowerCase())
+					) {
+						listFindProduct = checklist(listFindProduct, listPrd.get(i));
+					}
+				} else {
+					if (listIdCategory.size() != 0) {
+						for (int y = 0; y < listIdCategory.size(); y++) {
+							if (listIdCategory.get(y).asInt() == listPrd.get(i).getCategory().getIdCategory()
+									&& listPrd.get(i).getName().toLowerCase().contains(String.valueOf(findProcuctAll.get("search")).replaceAll("\"", "").toLowerCase())
+							) {
+								listFindProduct = checklist(listFindProduct, listPrd.get(i));
+							}
 						}
 					}
-				}
 
-				if (listIdRam.size() != 0) {
-					for (int y = 0; y < listIdRam.size(); y++) {
-						if (listIdRam.get(y).asInt() == listPrd.get(i).getRam().getIdRam()
-								&& listPrd.get(i).getPrice().compareTo(priceMin) >= 0
-								&& listPrd.get(i).getPrice().compareTo(priceMax) <= 0
-								&& listPrd.get(i).getName().toLowerCase().contains(String.valueOf(findProcuctAll.get("search")).replaceAll("\"","").toLowerCase())
-						) {
-							listFindProduct.add(listPrd.get(i));
+					if (listIdRam.size() != 0) {
+						for (int y = 0; y < listIdRam.size(); y++) {
+							if (listIdRam.get(y).asInt() == listPrd.get(i).getRam().getIdRam()
+									&& listPrd.get(i).getName().toLowerCase().contains(String.valueOf(findProcuctAll.get("search")).replaceAll("\"", "").toLowerCase())
+							) {
+								listFindProduct = checklist(listFindProduct, listPrd.get(i));
+							}
 						}
 					}
-				}
 
-				if (listIdCapacity.size() != 0) {
-					for (int y = 0; y < listIdCapacity.size(); y++) {
-						if (listIdCapacity.get(y).asInt() == listPrd.get(i).getCapacity().getIdCapacity()
-								&& listPrd.get(i).getPrice().compareTo(priceMin) >= 0
-								&& listPrd.get(i).getPrice().compareTo(priceMax) <= 0
-								&& listPrd.get(i).getName().toLowerCase().contains(String.valueOf(findProcuctAll.get("search")).replaceAll("\"","").toLowerCase())
-						) {
-							listFindProduct.add(listPrd.get(i));
+					if (listIdCapacity.size() != 0) {
+						for (int y = 0; y < listIdCapacity.size(); y++) {
+							if (listIdCapacity.get(y).asInt() == listPrd.get(i).getCapacity().getIdCapacity()
+									&& listPrd.get(i).getName().toLowerCase().contains(String.valueOf(findProcuctAll.get("search")).replaceAll("\"", "").toLowerCase())
+							) {
+								listFindProduct = checklist(listFindProduct, listPrd.get(i));
+							}
 						}
 					}
-				}
 
-				if (listIdColer.size() != 0) {
-					for (int y = 0; y < listIdColer.size(); y++) {
-						if (listIdColer.get(y).asInt() == listPrd.get(i).getColor().getIdColor()
-								&& listPrd.get(i).getPrice().compareTo(priceMin) >= 0
-								&& listPrd.get(i).getPrice().compareTo(priceMax) <= 0
-								&& listPrd.get(i).getName().toLowerCase().contains(String.valueOf(findProcuctAll.get("search")).replaceAll("\"","").toLowerCase())
-						) {
-							listFindProduct.add(listPrd.get(i));
+					if (listIdColer.size() != 0) {
+						for (int y = 0; y < listIdColer.size(); y++) {
+							if (listIdColer.get(y).asInt() == listPrd.get(i).getColor().getIdColor()
+									&& listPrd.get(i).getName().toLowerCase().contains(String.valueOf(findProcuctAll.get("search")).replaceAll("\"", "").toLowerCase())
+							) {
+								listFindProduct = checklist(listFindProduct, listPrd.get(i));
+							}
 						}
 					}
 				}
@@ -368,8 +380,26 @@ public class RestProductsController {
 		System.out.println(pageFindProductAll);
 		return pageFindProductAll;
 	}
-	private List<BigDecimal> getMaxMinPriceProduct(){
-		return productService.getMinMaxPrice();
+	private List<BigDecimal> getMaxMinPriceProduct(Integer id){
+		return productService.getMinMaxPrice(id);
+	}
+
+	private List<Product> checklist( List<Product> listcheck, Product check){
+		if(listcheck.size()!=0){
+			boolean kT= true;
+			for (int i=0;i<listcheck.size();i++){
+				if(listcheck.get(i).getIdProduct()==check.getIdProduct()){
+					kT = false;
+				}
+			}
+			if(kT==true){
+				listcheck.add(check);
+			}
+		}
+		else{
+			listcheck.add(check);
+		}
+		return listcheck;
 	}
 	private List<Product> sortProduct(List<Product> listPRD,Integer check) {
 //		BigDecimal a = new BigDecimal(String.valueOf(listPRD.get(0).getPrice()));
@@ -396,4 +426,153 @@ public class RestProductsController {
 			return listPRD;
 		}
 	}
+	@RequestMapping("/getallproduct")
+	public List<ProductDetailDTO> getallProduct(){
+		List<ProductDetailDTO> listgetAllProduct= new ArrayList<>();
+		for (int x: productService.getlistDetailProductCategory()
+			 ) {
+			listgetAllProduct.add(getDetailProduct(x));
+		}
+		return listgetAllProduct;
+	}
+	@RequestMapping("/detailproduct/{idcate}")
+	public ProductDetailDTO getDetailProduct(
+			@PathVariable("idcate")Integer id
+	){
+		List<Ram> listRam=new ArrayList<>();
+		List<Capacity> listCapa=new ArrayList<>();
+		List<Color> listColor=new ArrayList<>();
+		for (int x: productService.getlistDetailProductRam(id)
+			 ) {
+			listRam.add(ramService.findById(x).get());
+		}for (int x: productService.getlistDetailProductCapacity(id)
+			 ) {
+			listCapa.add(capacityService.findById(x).get());
+		}for (int x: productService.getlistDetailProductColor(id)
+			 ) {
+			listColor.add(colorService.findById(x).get());
+		}
+		ProductDetailDTO detailProduct=new ProductDetailDTO();
+		detailProduct.setId(id);
+		detailProduct.setName(categoryService.findById(id).get().getName());
+		detailProduct.setRam(listRam);
+		detailProduct.setCapa(listCapa);
+		detailProduct.setColor(listColor);
+		detailProduct.setPriceMin(getMaxMinPriceProduct(id).get(0));
+		detailProduct.setPriceMax(getMaxMinPriceProduct(id).get(1));
+		return detailProduct;
+	}
+	@RequestMapping("/getdetailproduct/{idCapa}/{idRam}/{idColor}")
+	public Product getdetailProduct(
+			@PathVariable("idCapa")Integer idCapa,
+			@PathVariable("idRam")Integer idRam,
+			@PathVariable("idColor")Integer idColor
+	){
+		return productService.getdeTailPrd(idCapa,idRam,idColor);
+	}
+	@RequestMapping("/checkprd/{idCapa}/{idRam}/{idColor}")
+	public CheckProductDTO checkPrd(
+			@PathVariable("idCapa")Integer idCapa,
+			@PathVariable("idRam")Integer idRam,
+			@PathVariable("idColor")Integer idColor
+	){
+		List<Integer> checkCapa = new ArrayList<>();
+		List<Integer> checkRam = new ArrayList<>();
+		List<Integer> checkColor = new ArrayList<>();
+		if(idCapa==0 && idRam==0 && idColor!=0){
+			if(productService.ramcheckRamAndCapa(idColor).size()==0){
+				checkRam=null;
+			}else{
+				for (int x:productService.ramcheckRamAndCapa(idColor)
+					 ) {
+					checkRam.add(x);
+				}
+			}
+			if(productService.CapacheckRamAndCapa(idColor).size()==0){
+				checkCapa=null;
+			}else{
+				for (int x:productService.CapacheckRamAndCapa(idColor)
+					 ) {
+					checkCapa.add(x);
+				}
+			}
+		}
+		if(idCapa==0 && idRam!=0 && idColor!=0){
+			if(productService.checkCapa(idRam,idColor).size()==0){
+				checkCapa=null;
+			}else{
+				for (int x:productService.checkCapa(idRam,idColor)
+					 ) {
+					checkCapa.add(x);
+				}
+			}
+
+		}
+
+		if(idCapa!=0 && idRam==0 && idColor==0){
+			if(productService.ramcheckRamAndColor(idCapa).size()==0){
+				checkRam=null;
+			}else{
+				for (int x:productService.ramcheckRamAndColor(idCapa)
+					 ) {
+					checkRam.add(x);
+				}
+			}
+			if(productService.colorcheckRamAndColor(idCapa).size()==0){
+				checkColor=null;
+			}else{
+				for (int x:productService.colorcheckRamAndColor(idCapa)
+					 ) {
+					checkColor.add(x);
+				}
+			}
+		}
+		if(idCapa!=0 && idRam!=0 && idColor==0){
+			if(productService.checkColor(idRam,idCapa).size()==0){
+				checkColor=null;
+			}else{
+				for (int x:productService.checkColor(idRam,idCapa)
+					 ) {
+					checkColor.add(x);
+				}
+			}
+
+		}
+
+		if(idCapa==0 && idRam!=0 && idColor==0){
+			if(productService.ColorcheckColorAndCapa(idRam).size()==0){
+				checkColor=null;
+			}else{
+				for (int x:productService.ColorcheckColorAndCapa(idRam)
+					 ) {
+					checkColor.add(x);
+				}
+			}
+			if(productService.CapacheckColorAndCapa(idRam).size()==0){
+				checkCapa=null;
+			}else{
+				for (int x:productService.CapacheckColorAndCapa(idRam)
+					 ) {
+					checkCapa.add(x);
+				}
+			}
+		}
+		if(idCapa!=0 && idRam==0 && idColor!=0){
+			if(productService.checkRam(idColor,idCapa).size()==0){
+				checkRam=null;
+			}else{
+				for (int x:productService.checkRam(idColor,idCapa)
+					 ) {
+					checkRam.add(x);
+				}
+			}
+
+		}
+		CheckProductDTO check = new CheckProductDTO();
+		check.setCheckCapa(checkCapa);
+		check.setCheckColor(checkColor);
+		check.setCheckRam(checkRam);
+		return check;
+	}
+
 }

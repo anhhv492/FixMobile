@@ -9,6 +9,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,6 +23,12 @@ public interface AccessoryRepository extends PagingAndSortingRepository<Accessor
     List<Accessory> findTop4();
     @Query(value = "select * from accessories where status = 1",nativeQuery = true)
     List<Accessory> findAccessory();
+
+    @Query(value = "select MIN(price) from accessories order by price",nativeQuery = true)
+    BigDecimal getMinPrice();
+
+    @Query(value = "select MAX(price) from accessories order by price",nativeQuery = true)
+    BigDecimal getMaxPrice();
 
 //    Page<Accessory> findByStatusAndNameContaining(Boolean stt,String name, Pageable pageable);
 }

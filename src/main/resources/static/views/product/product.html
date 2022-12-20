@@ -27,16 +27,30 @@
                                 <div class="col-md-6">
                                     <div class="p-3 right-side">
                                         <div class="d-flex justify-content-between align-items-center"><h3>
-                                            {{displayProduct.name}}</h3>
+                                            {{detailProduct.name}}</h3>
                                         </div>
-                                        <h3>{{displayProduct.price | number}} VNĐ</h3>
-                                        <div class="mt-2 pr-3 content"><p style="font-size: 17px">Camera: {{displayProduct.camera}}</p></div>
-                                        <div class="mt-2 pr-3 content"><p style="font-size: 17px">Ram: {{displayProduct.ram}}</p></div>
-                                        <div class="mt-2 pr-3 content"><p style="font-size: 17px">Màu sắc: {{displayProduct.color}}</p></div>
-                                        <div class="mt-2 pr-3 content"><p style="font-size: 17px">Dung lượng: {{displayProduct.capacity}}</p></div>
-                                        <div class="mt-2 pr-3 content"><p style="font-size: 15px">Mô tả sản phẩm: {{displayProduct.describe}}</p></div>
+                                        <h3 ng-if="PrD.price == undefined">{{detailProduct.priceMin | number}} VNĐ - {{detailProduct.priceMax | number}} VNĐ</h3>
+                                        <h3 ng-if="PrD.price != undefined">{{PrD.price | number}} VNĐ</h3>
+                                        Dung lượng
+                                        <div ng-repeat="capa in detailProduct.capa">
+                                            <input type="radio" name="capa" ng-disabled="checkDisabled(capa.idCapacity , 0)"
+                                                   ng-click="checkProduct(capa.idCapacity , 0)"
+                                            > {{capa.name}}
+                                        </div>
+                                        Ram
+                                        <div ng-repeat="ram in detailProduct.ram">
+                                            <input type="radio" name="ram"ng-disabled="checkDisabled(ram.idRam , 1)"
+                                                   ng-click="checkProduct(ram.idRam , 1)"
+                                            > {{ram.name}}
+                                        </div>
+                                        Màu sắc
+                                        <div ng-repeat="color in detailProduct.color">
+                                            <input type="radio" name="color" ng-disabled="checkDisabled(color.idColor, 2)"
+                                                   ng-click="checkProduct(color.idColor, 2)"
+                                            > {{color.name}}
+                                        </div>
                                         <div class="d-flex flex-row mt-5 gap-3">
-                                            <button class="btn btn-outline-dark" ng-click="addProductCart(oneProduct)"
+                                            <button class="btn btn-outline-dark" ng-click=""
                                                     style="height: 70px; width: 100%">Add to Cart
                                             </button>
                                         </div>
