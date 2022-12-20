@@ -94,14 +94,36 @@ app.controller('product-change',function($rootScope,$scope,$http){
             $scope.error("Hãy chọn yêu cầu để xác nhận");
             return null;
         }else{
-            $http.post(`/rest/admin/productchange/comfirmRequest`,$scope.seLected).then(response => {
-                console.log("ddd " + response.data);
-                $scope.message("Đã xác nhận yêu cầu");
-                $scope.seLected=[];
-                $scope.getAllProductChange();
-            }).catch(error => {
-                $scope.error('lỗi có bug rồi');
-            });
+            let timerInterval
+            Swal.fire({
+                title: 'Đang gửi thông báo cho khách hàng!',
+                html: 'Vui lòng chờ <b></b> milliseconds.',
+                timer: 4000,
+                timerProgressBar: true,
+                didOpen: () => {
+                    Swal.showLoading();
+                    $http.post(`/rest/admin/productchange/comfirmRequest`,$scope.seLected).then(response => {
+                        console.log("ddd " + response.data);
+                        $scope.message("Đã xác nhận yêu cầu");
+                        $scope.seLected=[];
+                        $scope.getAllProductChange();
+                    }).catch(error => {
+                        $scope.error('lỗi có bug rồi');
+                    });
+                    const b = Swal.getHtmlContainer().querySelector('b')
+                    timerInterval = setInterval(() => {
+                        b.textContent = Swal.getTimerLeft()
+                    }, 100)
+                },
+                willClose: () => {
+                    clearInterval(timerInterval)
+                }
+            }).then((result) => {
+                if (result.dismiss === Swal.DismissReason.timer) {
+                    console.log('I was closed by the timer')
+                }
+            })
+
         }
 
     }

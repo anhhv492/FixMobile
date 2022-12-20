@@ -87,8 +87,10 @@
                                         <select ng-model="formProduct.capacity" class="form-select" name="capacity" required ng-change="generationName()">
                                             <option  value="" ng-value="">Chọn dung lượng
                                             </option>
+
                                             <option ng-repeat="capa in capacitys"  ng-value="capa.idCapacity">{{capa.name}}
                                             </option>
+
                                         </select>
                                         <span ng-show="myForm.$submitted || myForm.capacity.$dirty" style="color: red">
                                         <span class="error" ng-show="myForm.capacity.$error.required"> <i
