@@ -293,7 +293,7 @@
                                     </span>
                                 </div>
                                 <div class="mt-3" ng-repeat="imei in imeis">
-                                    <input ng-model="imei.value" PATTERN="^[0-9]{15,15}|[,]$" name="imeii"  class="form-control" placeholder="Nhập imei máy" required>
+                                    <input ng-model="imei.value" PATTERN="^[0-9]{15,15}|[,]$" name="imeii"  class="form-control" minlength="15" maxlength="15" placeholder="Nhập imei máy" required>
                                     <span ng-show="myFormImay.$submitted || myFormImay.imeii.$dirty" style="color: red">
                                         <span class="error" ng-show="myFormImay.imeii.$error.required"> <i
                                                 class="fa fa-exclamation-circle"></i>Mã imei không được trống</span>
@@ -302,12 +302,6 @@
                                     </span>
                                 </div>
 
-                            </div>
-                                <div class="mt-3" ng-repeat="imei in imeis">
-                                    <input ng-model="imei.value"  class="form-control" placeholder="Nhập imay máy" required>
-                                </div>
-
-                            </div>
                             <div class="col-md-6">
                                 <div ng-if="checkSubmit==false" class="form-group mt-1">
                                     <label>Thêm file Excel</label>
@@ -362,7 +356,7 @@
                         </div>
                         <div class="col-1 justify-content-center pagination">
                             <li class="page-item ms-2 me-2">
-                                <button class="btn btn-default" ng-click="prevPageImei()"><i class="fa fa-step-backward" aria-hidden="true"></i></button>
+                                <button class="btn btn-default {{!check_prev_imei?'disabled':''}}" ng-click="prevPageImei()"><i class="fa fa-step-backward" aria-hidden="true"></i></button>
                             </li>
                         </div>
                         <div class="col-sm-1 col-12 justify-content-center pagination">
@@ -372,7 +366,7 @@
                         </div>
                         <div class="col-1 justify-content-center pagination">
                             <li class="page-item ms-2 me-2">
-                                <button class="btn btn-default" ng-click="nextPageImei()"><i class="fa fa-step-forward" aria-hidden="true"></i></button>
+                                <button class="btn btn-default {{!check_next_imei?'disabled':''}}"  ng-click="nextPageImei()"><i class="fa fa-step-forward" aria-hidden="true"></i></button>
                             </li>
                         </div>
                         <div class="col-1 justify-content-center pagination">

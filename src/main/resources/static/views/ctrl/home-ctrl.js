@@ -450,7 +450,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
 
     $rootScope.loadLocalStorage();
     $scope.getAcount();
-    
+
     $scope.ramProducts=[];
     $scope.capacityProducts=[];
     $scope.colorProducts=[];
@@ -492,7 +492,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
     }
 
     $scope.getPriceSale=function (x,y){
-        var urlSale=`http://localhost:8080/admin/rest/sale/getbigsale?money=`+$rootScope.detailProducts[x].price+`&idPrd=`+$rootScope.detailProducts[x].idProduct+`&idAcsr=0`;
+        var urlSale=`http://localhost:8080/rest/guest/sale/getbigsale?money=`+$rootScope.detailProducts[x].price+`&idPrd=`+$rootScope.detailProducts[x].idProduct+`&idAcsr=0`;
         $http.get(urlSale, token).then(resp => {
             if(y==0) {
                 if (resp.data == '') {

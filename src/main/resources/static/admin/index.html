@@ -15,10 +15,17 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-route/1.8.3/angular-route.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+            integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
+            integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
+            crossorigin="anonymous"></script>
 </head>
 <body ng-app="myApp">
 <div class="wrapper">
@@ -31,8 +38,8 @@
             <ul class="sidebar-nav">
                 <li class="sidebar-item active">
                     <a class="sidebar-link" href="#!dashboard" ng-if="!check">
-          <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Thống kê</span>
-        </a>
+                        <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Thống kê</span>
+                    </a>
                 </li>
                 <li class="sidebar-header">
                     Quản lý
@@ -67,7 +74,7 @@
                         <i class="align-middle" data-feather="dribbble"></i> <span class="align-middle">Phụ kiện</span>
                     </a>
                 </li>
-                
+
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="#!sale" ng-if="!check">
                         <i class="align-middle" data-feather="gift"></i> <span class="align-middle">Giảm giá</span>
@@ -85,7 +92,8 @@
 
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="#!createcapacity">
-                        <i class="align-middle" data-feather="dribbble"></i> <span class="align-middle">Dung lượng</span>
+                        <i class="align-middle" data-feather="dribbble"></i> <span
+                            class="align-middle">Dung lượng</span>
                     </a>
                 </li>
 
@@ -95,11 +103,11 @@
                     </a>
                 </li>
 
-<!--                <li class="sidebar-item">-->
-<!--                    <a class="sidebar-link" href="#!images">-->
-<!--                        <i class="align-middle" data-feather="dribbble"></i> <span class="align-middle">Hình ảnh</span>-->
-<!--                    </a>-->
-<!--                </li>-->
+                <!--                <li class="sidebar-item">-->
+                <!--                    <a class="sidebar-link" href="#!images">-->
+                <!--                        <i class="align-middle" data-feather="dribbble"></i> <span class="align-middle">Hình ảnh</span>-->
+                <!--                    </a>-->
+                <!--                </li>-->
 
 
                 <li class="sidebar-header">
@@ -108,7 +116,20 @@
 
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="#!productchange">
-                        <i class="align-middle" data-feather="user"></i> <span class="align-middle">Quản lý đổi trả hàng</span>
+                        <i class="align-middle" data-feather="user"></i> <span
+                            class="align-middle">Quản lý đổi trả hàng</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="http://localhost:8080/views/index.html#!/login">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                             class="bi bi-box-arrow-left" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                  d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z"/>
+                            <path fill-rule="evenodd"
+                                  d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"/>
+                        </svg>
+                        <span class="align-middle">Đăng xuất</span>
                     </a>
                 </li>
             </ul>
@@ -125,7 +146,7 @@
                 <ul class="navbar-nav navbar-align d-flex justify-content-end">
                     <li class="nav-item">
                         <a class="nav-link d-none d-sm-inline-block" href="/home/index">
-                            <span class="text-dark" >Trang chủ</span>
+                            <span class="text-dark">Trang chủ</span>
                             <img src="img/koduck.png" class="avatar img-fluid rounded me-1"/>
                         </a>
                     </li>
@@ -133,7 +154,7 @@
             </div>
         </nav>
         <div class="container " ng-view></div>
-       
+
     </div>
 </div>
 

@@ -16,6 +16,8 @@ app.controller('product', function($scope, $http, $window,$rootScope) {
     $scope.check_last=true;
     $scope.check_first_imei=false;
     $scope.check_last_imei=true;
+    $scope.check_next_imei=true;
+    $scope.check_prev_imei=false;
     $scope.totalPages=0;
     $scope.currentPage = 0;
     $scope.pageImei = [];
@@ -669,14 +671,16 @@ app.controller('product', function($scope, $http, $window,$rootScope) {
     };
     $scope.nextPageImei=function(){
         $scope.check_first_imei=true;
+        $scope.check_prev_imei=true;
         $scope.imeisPage++;
-        if($scope.imeisPage>=$scope.totalPagesImei){
+        if($scope.currentPageImei>=$scope.totalPagesImei){
             $scope.index=0;
             $scope.check_first_imei=false;
             $scope.check_last_imei=true;
         }
-        if($scope.imeisPage==$scope.totalPagesImei){
+        if($scope.currentPageImei==$scope.totalPagesImei){
             $scope.check_first_imei=true;
+            $scope.check_next_imei=false;
             $scope.check_last_imei=false;
         }
         $scope.pageImeiFt($scope.imeisPage);
@@ -685,13 +689,14 @@ app.controller('product', function($scope, $http, $window,$rootScope) {
     $scope.prevPageImei=function(){
         $scope.check_last_imei=true;
         $scope.imeisPage--;
-        if($scope.imeisPage<1){
+        if($scope.currentPageImei<1){
             $scope.imeisPage=$scope.totalPagesImei;
             $scope.check_first_imei=true;
             $scope.check_last_imei=false;
         }
-        if($scope.imeisPage==1){
+        if($scope.currentPageImei==1){
             $scope.check_first_imei=false;
+            $scope.check_prev_imei=false;
             $scope.check_last_imei=true;
         }
         $scope.pageImeiFt($scope.imeisPage);
@@ -706,10 +711,20 @@ app.controller('product', function($scope, $http, $window,$rootScope) {
     $scope.lastPageImei=function(){
         $scope.check_first_imei=true;
         $scope.check_last_imei=false;
+        $scope.check_prev_imei=true;
+        $scope.check_next_imei=false;
         $scope.imeisPage=$scope.totalPages;
         $scope.pageImeiFt($scope.imeisPage);
     }
     $scope.pageImeiFt($scope.imeisPage);
+
+    if ($scope.currentPageImei==$scope.totalPagesImei){
+        $scope.check_next_imei=false;
+        $scope.check_last_imei=false;
+    }else if ($scope.currentPageImei<$scope.totalPagesImei){
+        $scope.check_next_imei=true;
+        $scope.check_last_imei=true;
+    }
 
 
     $scope.logOut = function (){
