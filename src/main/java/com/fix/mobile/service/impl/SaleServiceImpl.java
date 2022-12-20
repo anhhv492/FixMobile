@@ -319,7 +319,7 @@ public class SaleServiceImpl implements SaleService {
             throw new StaleStateException("Bạn phải chọn loại giảm giá");
         }
         if(sale.getName()==null || sale.getName().length()==0){
-            throw new StaleStateException("Tên chương trình sai định dạng");
+            throw new StaleStateException("Tên chương trình không được bỏ trống");
         }
         if(sale.getDiscountMethod() == null){
             throw new StaleStateException("Bạn phải chọn Phương thức giảm giá");

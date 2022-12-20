@@ -709,4 +709,39 @@ app.controller('product', function($scope, $http) {
         $scope.pageImeiFt($scope.imeisPage);
     }
     $scope.pageImeiFt($scope.imeisPage);
+
+    $scope.generationName=function (){
+        if($scope.formProduct.name!=undefined || $scope.formProduct.name!=null ||$scope.formProduct.name!=''){
+            $scope.formProduct.nam='';
+        }
+        if($scope.formProduct.category!=undefined||$scope.formProduct.category!=null||$scope.formProduct.category!=''){
+            for(let i=0; i<$scope.categories.length;i++){
+                if($scope.formProduct.category == $scope.categories[i].idCategory){
+                    $scope.formProduct.name = $scope.categories[i].name;
+                }
+            }
+        }
+        if($scope.formProduct.capacity!=undefined||$scope.formProduct.capacity!=null||$scope.formProduct.capacity!=''){
+            for(let i=0; i<$scope.capacitys.length;i++){
+                if($scope.formProduct.capacity == $scope.capacitys[i].idCapacity){
+                    $scope.formProduct.name += ' Dung Lượng '+$scope.capacitys[i].name;
+                }
+            }
+        }
+        if($scope.formProduct.ram!=undefined||$scope.formProduct.ram!=null||$scope.formProduct.ram!=''){
+            for(let i=0; i<$scope.rams.length;i++){
+                if($scope.formProduct.ram == $scope.rams[i].idRam){
+                    $scope.formProduct.name += ' RAM '+$scope.rams[i].name;
+                }
+            }
+        }
+        if($scope.formProduct.color!=undefined||$scope.formProduct.color!=null||$scope.formProduct.color!=''){
+            for(let i=0; i<$scope.colors.length;i++){
+                if($scope.formProduct.color == $scope.colors[i].idColor){
+                    $scope.formProduct.name += ' Màu '+$scope.colors[i].name;
+                }
+            }
+        }
+
+    }
 });

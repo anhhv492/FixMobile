@@ -3,7 +3,6 @@ package com.fix.mobile.service;
 
 import com.fix.mobile.dto.ColorProductResponDTO;
 import com.fix.mobile.dto.ProductResponDTO;
-import com.fix.mobile.entity.Category;
 import com.fix.mobile.entity.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,6 +33,23 @@ public interface ProductService extends GenericService<Product, Integer> {
 
 	List<Product> findProduct();
 
-	List<BigDecimal> getMinMaxPrice();
+	Product getdeTailPrd(Integer idCapa,Integer idRam,Integer idColor);
+
+	List<Integer> getlistDetailProductCapacity(Integer id);
+	List<Integer> getlistDetailProductRam(Integer id);
+	List<Integer> getlistDetailProductColor(Integer id);
+	List<Integer> getlistDetailProductCategory();
+
+	List<Integer> checkColor(Integer idRam,Integer idCapa);
+	List<Integer> checkCapa(Integer idColor,Integer idRam);
+	List<Integer> checkRam(Integer idColor,Integer idCapa);
+	List<Integer> ramcheckRamAndColor(Integer idCapa);
+	List<Integer> colorcheckRamAndColor(Integer idCapa);
+	List<Integer> ramcheckRamAndCapa(Integer idColor);
+	List<Integer> CapacheckRamAndCapa(Integer idColor);
+	List<Integer> ColorcheckColorAndCapa(Integer idRam);
+	List<Integer> CapacheckColorAndCapa(Integer idRam);
+
+	List<BigDecimal> getMinMaxPrice(Integer id);
 }
 

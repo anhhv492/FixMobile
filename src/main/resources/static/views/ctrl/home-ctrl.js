@@ -506,7 +506,19 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                     }
                 }
             } else if(y==1){
-
+                if (resp.data == '') {
+                    $rootScope.detailAccessories[x].priceSale = 0;
+                } else {
+                    if (resp.data.moneySale == null) {
+                        $rootScope.detailAccessories[x].priceSale = $rootScope.detailAccessories[x].price * resp.data.percentSale / 100;
+                    } else if (resp.data.percentSale == null) {
+                        if (resp.data.moneySale > $rootScope.detailAccessories[x].price) {
+                            $rootScope.detailAccessories[x].priceSale = $rootScope.detailAccessories[x].price;
+                        } else {
+                            $rootScope.detailAccessories[x].priceSale = resp.data.moneySale;
+                        }
+                    }
+                }
             }
         }).catch(error => {
             console.log(error)
@@ -529,7 +541,6 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
     $scope.findAccessory=function (){
         $http.post(`/rest/admin/accessory/findaccessory/0`,$scope.findProductAll).then(function (respon) {
             $rootScope.detailAccessories = respon.data.content;
-            $scope.totalElements = respon.data.totalElements;
             console.log(respon.data)
             for(var i=0;i<$rootScope.detailProducts.length;i++){
                 $scope.getPriceSale(i,1);
@@ -602,5 +613,129 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
     $scope.getAllCapacity();
     $scope.findProduct();
     $scope.findAccessory();
+
+    $scope.detailProduct={};
+    $scope.getDetailProduct=function (id){
+        $http.post(`/rest/admin/product/detailproduct/`+id).then(function (respon) {
+            $scope.detailProduct=respon.data;
+            console.log(respon.data)
+        }).catch(err => {
+                console.log(err , 'kiixu  lỗi')
+            }
+        )
+    }
+    $scope.getAllProduct=[];
+    $scope.getALLProduct=function (){
+        $http.post(`/rest/admin/product/getallproduct`).then(function (respon) {
+            $scope.getAllProduct=respon.data;
+            console.log(respon.data)
+        }).catch(err => {
+                console.log(err , 'kiixu  lỗi')
+            }
+        )
+    }
+    $scope.checkCapa=0;
+    $scope.checkRam=0;
+    $scope.checkColer=0;
+    $scope.dataCheck={};
+    $scope.dataCheck.checkCapa=[];
+    $scope.dataCheck.checkRam=[];
+    $scope.dataCheck.checkColor=[];
+    $scope.PrD={};
+    $scope.checkProduct= function (id, check){
+        if(check==0){
+            $scope.checkCapa=id;
+            $scope.checkRam=0;
+            $scope.checkColer=0;
+        }else if(check==1){
+            $scope.checkRam=id;
+        }else if(check==2){
+            $scope.checkColer=id;
+        }
+        if($scope.checkCapa==0 || $scope.checkRam==0 ||$scope.checkColer==0){
+            let url=`/rest/admin/product/checkprd/`+$scope.checkCapa+`/`+$scope.checkRam+`/`+$scope.checkColer;
+            $http.post(url).then(function (respon) {
+                if(respon.data.checkCapa!=''){
+                    $scope.dataCheck.checkCapa=respon.data.checkCapa;
+                }
+                if(respon.data.checkColor.length!=''){
+                    $scope.dataCheck.checkColor=respon.data.checkColor;
+                }
+                if(respon.data.checkRam.length!=''){
+                    $scope.dataCheck.checkRam=respon.data.checkRam;
+                }
+                console.log($scope.dataCheck)
+            }).catch(err => {
+                    console.log(err , 'kiixu  lỗi')
+                }
+            )
+        }else{
+            let url=`/rest/admin/product/getdetailproduct/`+$scope.checkCapa+`/`+$scope.checkRam+`/`+$scope.checkColer;
+            $http.post(url).then(function (respon) {
+                $scope.PrD=respon.data
+                console.log("hihihi")
+            }).catch(err => {
+                    console.log(err , 'kiixu  lỗi')
+                }
+            )
+        }
+    }
+    $scope.checkDisabled=function (id, check){
+        debugger
+        if(check==0){
+            if($scope.checkRam==0 && $scope.checkCapa==0 && $scope.checkColer==0){
+                return false;
+            }else{
+                let check1 = true;
+                if($scope.dataCheck.checkCapa!=undefined && $scope.dataCheck.checkCapa.length!=0) {
+                    for (let i = 0; i < $scope.dataCheck.checkCapa.length; i++) {
+                        if (id == $scope.dataCheck.checkCapa[i]) {
+                            check1 = false;
+                        }
+                    }
+                }else{
+                    check1=false;
+                }
+                return check1;
+            }
+
+        }else if(check==1){
+            if($scope.checkRam==0 && $scope.checkCapa==0 && $scope.checkColer==0){
+                return false;
+            }else{
+                let check1 = true;
+                if($scope.dataCheck.checkRam!=undefined && $scope.dataCheck.checkRam.length!=0) {
+                    for (let i = 0; i < $scope.dataCheck.checkRam.length; i++) {
+                        if (id == $scope.dataCheck.checkRam[i]) {
+                            check1 = false;
+                        }
+                    }
+                }else{
+
+                        check1=false;
+
+                }
+                return check1;
+            }
+        }else if(check==2){
+            if($scope.checkRam==0 && $scope.checkCapa==0 && $scope.checkColer==0){
+                return false;
+            }else{
+                let check1 = true;
+                if($scope.dataCheck.checkColor!=undefined && $scope.dataCheck.checkColor.length!=0) {
+                    for (let i = 0; i < $scope.dataCheck.checkColor.length; i++) {
+                        if (id == $scope.dataCheck.checkColor[i]) {
+                            check1= false;
+                        }
+                    }
+                }else{
+                        check1=false;
+                }
+                return check1;
+
+            }
+        }
+    }
+    $scope.getALLProduct();
 })
 
