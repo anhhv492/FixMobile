@@ -79,6 +79,9 @@ public class OrderDetailRestController {
         ImayProduct imayProduct = imeiProductService.findById(idImei).get();
         imayProduct.setStatus(1);
         imayProduct.setOrderDetail(null);
+        if(imayProduct.getOrderDetail().getStatus() == 2){
+            imayProduct.getOrderDetail().setStatus(2);
+        }
         imeiProductService.update(imayProduct,imayProduct.getIdImay());
         return imayProduct;
     }
