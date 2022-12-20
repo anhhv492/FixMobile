@@ -83,6 +83,9 @@ public class OrderRestController {
         }
         orderOld.setStatus(order.getStatus());
         if(account.getRole().getName().equals("ADMIN")||account.getRole().getName().equals("STAFF")){
+            if(order.getStatus()==3){
+                orderOld.setTimeReceive(new Date());
+            }
             logger.info("-- Account: "+account.getUsername()+" update order success: "+orderOld.getIdOrder()+" to status: "+order.getStatus());
             orderService.update(orderOld,orderOld.getIdOrder());
             sendMailService.sendEmailOrder("top1zukavietnam@gmail.com","kzbtzovffrqbkonf",
