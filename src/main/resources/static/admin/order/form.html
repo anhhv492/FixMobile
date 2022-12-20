@@ -157,7 +157,7 @@
                                     <tr ng-if="ordt.idSale!=null">
                                         <th colspan="1">Mã giảm giá đã dùng</th>
                                         <td colspan="2">{{ordt.noteSale}}</td>
-                                        <td colspan="1">Tổng tiền giảm: {{ordt.price - ordt.priceSale}}</td>
+                                        <td colspan="1">Tổng tiền giảm: {{ordt.price*ordt.quantity - ordt.priceSale*ordt.quantity}}</td>
                                     </tr>
                                     <tr>
                                         <th colspan="1">Thành tiền:</th>

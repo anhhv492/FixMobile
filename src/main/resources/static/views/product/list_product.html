@@ -11,16 +11,6 @@
             <div class="col-lg-3 col-md-5">
                 <div class="sidebar">
                     <div class="sidebar__item">
-                        <h4>Lọc theo loại máy</h4>
-                        <ul ng-repeat="catePro in cateProducts">
-                            <li>
-                                <input type="checkbox" class="form-check-input" value=""
-                                ng-click="checkSelected(catePro.idCategory,0)">
-                                {{catePro.name}}
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="sidebar__item">
                         <h4>Lọc theo giá</h4>
                         <div class="price-range-wrap">
                             <div class="range-slider">
@@ -86,7 +76,7 @@
                         <div class="col-lg-4 col-md-5">
                             <div class="filter__sort">
                                 <span>Sắp xếp theo giá</span>
-                                <select ng-model="findProductAll.sortMinMax" ng-change="checkdemo()">
+                                <select ng-model="findProductAll.sortMinMax" ng-change="">
                                     <option ng-value="0">Tăng dần</option>
                                     <option ng-value="1">Dảm dần</option>
                                 </select>
@@ -94,7 +84,7 @@
                         </div>
                         <div class="col-lg-4 col-md-4">
                             <div class="filter__found">
-                                <h6><span>{{detailProducts.length}}</span> Sản phẩm được tìm thấy</h6>
+                                <h6><span>{{getAllProduct.length}}</span> Sản phẩm được tìm thấy</h6>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-3">

@@ -59,24 +59,6 @@ public interface ProductRepository extends PagingAndSortingRepository<Product, I
     List<Integer> getlistDetailProductCapacity(Integer id);
     @Query(value = "select distinct id_category from products",nativeQuery = true)
     List<Integer> getlistDetailProductCategory();
-    @Query(value = "select distinct id_color from products where id_ram =?1 and id_capacity =?2",nativeQuery = true)
-    List<Integer> checkColor(Integer idRam,Integer idCapa);
-    @Query(value = "select distinct id_capacity from products where id_color = ?1 and id_ram  =?2",nativeQuery = true)
-    List<Integer> checkCapa(Integer idColor,Integer idRam);
-    @Query(value = "select distinct id_ram  from products where id_color = ?1 and id_capacity  =?2",nativeQuery = true)
-    List<Integer> checkRam(Integer idColor,Integer idCapa);
-    @Query(value = "select distinct id_ram  from products where id_capacity  =?1",nativeQuery = true)
-    List<Integer> ramcheckRamAndColor(Integer idCapa);
-    @Query(value = "select distinct id_color from products where id_capacity  =?1",nativeQuery = true)
-    List<Integer> colorcheckRamAndColor(Integer idCapa);
-    @Query(value = "select distinct id_ram from products where id_color =?1",nativeQuery = true)
-    List<Integer> ramcheckRamAndCapa(Integer idColor);
-    @Query(value = "select distinct id_capacity from products where id_color =?1",nativeQuery = true)
-    List<Integer> CapacheckRamAndCapa(Integer idColor);
-    @Query(value = "select distinct id_color from products where id_ram  =?1",nativeQuery = true)
-    List<Integer> ColorcheckColorAndCapa(Integer idRam);
-    @Query(value = "select distinct id_capacity from products where id_ram  =?1",nativeQuery = true)
-    List<Integer> CapacheckColorAndCapa(Integer idRam);
     @Query(value = "select * from products where id_capacity =?1 and id_ram  =?2 and id_color=?3 limit 1",nativeQuery = true)
     Product getDetailPrd(Integer idCapa, Integer idRam, Integer idColor);
 }

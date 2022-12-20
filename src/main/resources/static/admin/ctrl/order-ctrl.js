@@ -335,7 +335,7 @@ app.controller('order-admin-ctrl',function($rootScope,$scope,$http,$window,$filt
         let total=0;
         if($scope.ordersDetail.length!=0) {
             for (let i = 0; i < $scope.ordersDetail.length; i++) {
-                total=total+$scope.ordersDetail[i].price;
+                total=total+$scope.ordersDetail[i].price*$scope.ordersDetail[i].quantity;
             }
         }
         return total;

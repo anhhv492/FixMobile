@@ -5,7 +5,6 @@ app.controller('viewController', function($scope, $http) {
         $http.get(`/rest/admin/product/getAll`).then(function(response) {
             $scope.products = response.data;
             // $scope.totalPages = response.data.totalPages;
-            debugger
             // $scope.currentPage = response.data.currentPage;
         }).catch(error=>{
             console.log(error);

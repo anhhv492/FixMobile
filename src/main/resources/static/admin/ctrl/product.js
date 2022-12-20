@@ -586,7 +586,6 @@ app.controller('product', function($scope, $http) {
                 }).then(res=>{
                     $scope.message("Thêm hàng loạt dữ liệu thành công")
                     console.log('excel',res);
-                    debugger
                 }).catch(err=>{
                     $scope.error("thêm mới hàng loạt thất bại")
                     console.log('err',err);

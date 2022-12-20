@@ -235,50 +235,6 @@ public class ProductServiceImpl implements ProductService {
         return repository.getlistDetailProductCategory();
     }
 
-    @Override
-    public List<Integer> checkColor(Integer idRam, Integer idCapa) {
-        return repository.checkColor(idRam,idCapa);
-    }
-
-    @Override
-    public List<Integer> checkCapa(Integer idColor, Integer idRam) {
-        return repository.checkCapa(idColor,idRam);
-    }
-
-    @Override
-    public List<Integer> checkRam(Integer idColor, Integer idCapa) {
-        return repository.checkRam(idColor,idCapa);
-    }
-
-    @Override
-    public List<Integer> ramcheckRamAndColor(Integer idCapa) {
-        return repository.ramcheckRamAndColor(idCapa);
-    }
-
-    @Override
-    public List<Integer> colorcheckRamAndColor(Integer idCapa) {
-        return repository.colorcheckRamAndColor(idCapa);
-    }
-
-    @Override
-    public List<Integer> ramcheckRamAndCapa(Integer idColor) {
-        return repository.ramcheckRamAndCapa(idColor);
-    }
-
-    @Override
-    public List<Integer> CapacheckRamAndCapa(Integer idColor) {
-        return repository.CapacheckRamAndCapa(idColor);
-    }
-
-    @Override
-    public List<Integer> ColorcheckColorAndCapa(Integer idRam) {
-        return repository.ColorcheckColorAndCapa(idRam);
-    }
-
-    @Override
-    public List<Integer> CapacheckColorAndCapa(Integer idRam) {
-        return repository.CapacheckColorAndCapa(idRam);
-    }
 
 
     @Override

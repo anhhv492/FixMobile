@@ -92,12 +92,12 @@
                                 <label for="" class="form-label" >Thời gian bắt đầu</label>
 <!--                                <input type="datetime-local" ng-value="2018-06-12T19:30" class="form-control"-->
 <!--                                       ng-model="saleadd.createStart">-->
-                                <input type="datetime-local" class="form-control"
+                                <input type="datetime-local" class="form-control" min="2022-01-01T00:00:00" max="2023-12-31T00:00:00"
                                        ng-model="saleadd.createStart"  ng-disabled="saleadd.idSale!=null && compareDate(saleadd.createStart,saleadd.createEnd,saleadd.quantity) != 0">
                             </div>
                             <div class="col-md">
                                 <label for="" class="form-label">Thời gian kết thúc</label>
-                                <input type="datetime-local" class="form-control" min="saleadd.createStart"
+                                <input type="datetime-local" class="form-control" min="saleadd.createStart" min="2022-01-01T00:00:00" max="2023-12-31T00:00:00"
                                        ng-model="saleadd.createEnd" ng-disabled="saleadd.idSale!=null && compareDate(saleadd.createStart,saleadd.createEnd,saleadd.quantity) == 2 ">
                             </div>
                         </div>

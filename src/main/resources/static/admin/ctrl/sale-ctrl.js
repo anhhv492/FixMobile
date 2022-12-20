@@ -55,7 +55,6 @@ app.controller("sale_ctrl", function ($scope, $http) {
             cancelButtonText: 'Xem lại',
         }).then((result) => {
             if (result.isConfirmed) {
-                debugger
                 let item = angular.copy($scope.saleadd);
                 let urlsale = `/admin/rest/sale/add`;
                 let listDetail = angular.copy($scope.seLected);
