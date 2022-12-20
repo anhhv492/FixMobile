@@ -95,50 +95,15 @@
         <tr>
             <th>Mã hóa đơn</th>
             <th>Tài khoản</th>
-            <th>
-                <button class="btn btn-default" ng-click="hoTen()" ng-if="!checkHoTen">
-                    <strong>Họ tên</strong>
-                    <i class="fa fa-caret-down" aria-hidden="true"></i>
-                </button>
-                <button class="btn btn-default" ng-click="hoTen()" ng-if="checkHoTen">
-                    <strong>Họ tên</strong>
-                    <i class="fa fa-caret-up" aria-hidden="true"></i>
-                </button>
-            </th>
+            <th>Họ tên</th>
             <th>Số điện thoại</th>
             <th>Địa chỉ nhận</th>
-            <th>
-                <button class="btn btn-default" ng-click="ngayMua()" ng-if="!checkNgayMua">
-                    <strong>Ngày mua</strong>
-                    <i class="fa fa-caret-down" aria-hidden="true"></i>
-                </button>
-                <button class="btn btn-default" ng-click="ngayMua()" ng-if="checkNgayMua">
-                    <strong>Ngày mua</strong>
-                    <i class="fa fa-caret-up" aria-hidden="true"></i>
-                </button>
-            </th>
+            <th>Ngày mua</th>
+            <th>Ngày nhận</th>
             <th>Tiền ship (VNĐ)</th>
-            <th>
-                <button class="btn btn-default" ng-click="tongGiaTang()" ng-if="!checkTongGia">
-                    <strong>Tổng giá (VNĐ)</strong>
-                    <i class="fa fa-caret-down" aria-hidden="true"></i>
-                </button>
-                <button class="btn btn-default" ng-click="tongGiaGiam()" ng-if="checkTongGia">
-                    <strong>Tổng giá (VNĐ)</strong>
-                    <i class="fa fa-caret-up" aria-hidden="true"></i>
-                </button>
-            </th>
+            <th>Tổng giá (VNĐ)</th>
             <th>Ghi chú</th>
-            <th>
-                <button class="btn btn-default" ng-click="trangThai()" ng-if="!checkTrangThai">
-                    <strong>Trạng thái</strong>
-                    <i class="fa fa-caret-down" aria-hidden="true"></i>
-                </button>
-                <button class="btn btn-default" ng-click="trangThai()" ng-if="checkTrangThai">
-                    <strong>Trạng thái</strong>
-                    <i class="fa fa-caret-up" aria-hidden="true"></i>
-                </button>
-            </th>
+            <th>Trạng thái</th>
             <th>Thao tác</th>
         </tr>
         </thead>
@@ -150,6 +115,8 @@
             <td>{{order.phoneTake}}</td>
             <td>{{order.address}}</td>
             <td>{{order.createDate|date:'dd/MM/yyyy HH:mm:ss'}}</td>
+            <td ng-if="order.timeReceive">{{order.timeReceive|date:'dd/MM/yyyy HH:mm:ss'}}</td>
+            <td ng-if="!order.timeReceive">Chưa nhận hàng</td>
             <td>{{order.moneyShip|number}}</td>
             <td>
                 {{order.total|number}} <i class="fa fa-info-circle" aria-hidden="true" ng-click="getOrderDetail(order.idOrder)" data-bs-toggle="modal" data-bs-target="#exampleModal{{order.idOrder}}"></i>

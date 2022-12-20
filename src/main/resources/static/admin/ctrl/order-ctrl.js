@@ -55,30 +55,6 @@ app.controller('order-admin-ctrl',function($rootScope,$scope,$http,$window,$filt
                     })
                 }
             });
-        }else{
-            Swal.fire({
-                title: 'Bạn có chắc muốn đổi trạng thái không?',
-                text: "Đổi không thể quay lại!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Xác nhận'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $http.put(urlUpdate,$scope.form,token).then(function(response){
-                        if(response.data){
-                            $scope.form.status=null;
-                            $scope.getAll();
-                            $scope.messageSuccess("Đổi trạng thái thành công");
-                        }else{
-                            $scope.messageError("Đổi trạng thái thất bại");
-                        }
-                    }).catch(error=>{
-                        $scope.messageError("Đổi trạng thái thất bại");
-                    });
-                }
-            })
         }
 
         Swal.fire({
@@ -91,17 +67,39 @@ app.controller('order-admin-ctrl',function($rootScope,$scope,$http,$window,$filt
             confirmButtonText: 'Xác nhận'
         }).then((result) => {
             if (result.isConfirmed) {
-                $http.put(urlUpdate,$scope.form,token).then(function(response){
-                    if(response.data){
-                        $scope.form.status=null;
-                        $scope.getAll();
-                        $scope.messageSuccess("Đổi trạng thái thành công");
-                    }else{
-                        $scope.messageError("Đổi trạng thái thất bại");
+                let timerInterval
+                Swal.fire({
+                    title: 'Đang gửi thông báo cho khách hàng!',
+                    html: 'Vui lòng chờ <b></b> milliseconds.',
+                    timer: 4000,
+                    timerProgressBar: true,
+                    didOpen: () => {
+                        Swal.showLoading();
+                        $http.put(urlUpdate,$scope.form,token).then(function(response){
+                            if(response.data){
+                                $scope.form.status=null;
+                                $scope.getAll();
+                                $scope.messageSuccess("Đổi trạng thái thành công");
+                            }else{
+                                $scope.messageError("Đổi trạng thái thất bại");
+                            }
+                        }).catch(error=>{
+                            $scope.messageError("Đổi trạng thái thất bại");
+                        });
+                        const b = Swal.getHtmlContainer().querySelector('b')
+                        timerInterval = setInterval(() => {
+                            b.textContent = Swal.getTimerLeft()
+                        }, 100)
+                    },
+                    willClose: () => {
+                        clearInterval(timerInterval)
                     }
-                }).catch(error=>{
-                    $scope.messageError("Đổi trạng thái thất bại");
-                });
+                }).then((result) => {
+                    /* Read more about handling dismissals below */
+                    if (result.dismiss === Swal.DismissReason.timer) {
+                        console.log('I was closed by the timer')
+                    }
+                })
             }
         })
     }
