@@ -58,17 +58,40 @@ app.controller('order-admin-ctrl',function($rootScope,$scope,$http,$window,$filt
                         confirmButtonText: 'Xác nhận'
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            $http.put(urlUpdate,$scope.form,token).then(function(response){
-                                if(response.data){
-                                    $scope.form.status=null;
-                                    $scope.getAll();
-                                    $scope.messageSuccess("Đổi trạng thái thành công");
-                                }else{
-                                    $scope.messageError("Đổi trạng thái thất bại");
+                            let timerInterval
+                            Swal.fire({
+                                title: 'Auto close alert!',
+                                html: 'I will close in <b></b> milliseconds.',
+                                timer: 2000,
+                                timerProgressBar: true,
+                                didOpen: () => {
+                                    Swal.showLoading()
+
+                                    $http.put(urlUpdate,$scope.form,token).then(function(response){
+                                        if(response.data){
+                                            $scope.form.status=null;
+                                            $scope.getAll();
+                                            $scope.messageSuccess("Đổi trạng thái thành công");
+                                        }else{
+                                            $scope.messageError("Đổi trạng thái thất bại");
+                                        }
+                                    }).catch(error=>{
+                                        $scope.messageError("Đổi trạng thái thất bại");
+                                    });
+                                    const b = Swal.getHtmlContainer().querySelector('b')
+                                    timerInterval = setInterval(() => {
+                                        b.textContent = Swal.getTimerLeft()
+                                    }, 100)
+                                },
+                                willClose: () => {
+                                    clearInterval(timerInterval)
                                 }
-                            }).catch(error=>{
-                                $scope.messageError("Đổi trạng thái thất bại");
-                            });
+                            }).then((result) => {
+                                /* Read more about handling dismissals below */
+                                if (result.dismiss === Swal.DismissReason.timer) {
+                                    console.log('I was closed by the timer')
+                                }
+                            })
                         }
                     })
                 }
@@ -184,6 +207,14 @@ app.controller('order-admin-ctrl',function($rootScope,$scope,$http,$window,$filt
             if(response.data){
                 $scope.orders=response.data;
             }
+        }).catch(error=>{
+            console.log('error getOrder',error);
+            $scope.messageError('Không tìm thấy đơn hàng!');
+        });
+    }
+    $scope.findByStatus=function(){
+        $http.get(urlOrder+`/status/`+$scope.statusChange,token).then(function(response){
+            $scope.orders=response.data;
         }).catch(error=>{
             console.log('error getOrder',error);
             $scope.messageError('Không tìm thấy đơn hàng!');

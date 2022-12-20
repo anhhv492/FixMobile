@@ -1,7 +1,77 @@
-<div class="alert alert-warning container" ng-if="orders.length<=0">
+<h5 class="text-center text-primary font-weight-bold mb-2">Đơn hàng</h5>
+<ul class="nav nav-tabs container" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+        <p class="nav-link text-dark">
+            Lọc:</p>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane"
+                type="button" role="tab">
+            Tổng tiền</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane"
+                type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">
+            Thời gian</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane"
+                type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">
+            Trạng thái</button>
+    </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show container active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+        <div class="row">
+            <div class="col-12 col-sm-3">
+                Từ giá
+                <input type="number" ng-model="price1" class="form-control" >
+            </div>
+            <div class="col-12 col-sm-3">
+                Đến giá
+                <input type="number" ng-model="price2" class="form-control" >
+            </div>
+            <div class="col-12 col-sm-3 mt-4">
+                <button class="btn btn-primary" ng-click="findByPrice()">Lọc</button>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade container" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+        <div class="row container">
+            <div class="col-12 col-sm-3">
+                Từ ngày
+                <input type="date" ng-model="date1" class="form-control" >
+            </div>
+            <div class="col-12 col-sm-3">
+                Đến ngày
+                <input type="date" ng-model="date2" class="form-control" >
+            </div>
+            <div class="col-12 col-sm-2 mt-4">
+                <button class="btn btn-primary" ng-click="findByDate()">Lọc</button>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade container" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
+        <div class="row container" >
+            <div class="col-12 col-sm-3">
+                Sắp xếp
+                <select class="form-select" ng-model="statusChange">
+                    <option ng-value="0">Chờ xác nhận</option>
+                    <option ng-value="1">Xác nhận</option>
+                    <option ng-value="2">Đang giao hàng</option>
+                    <option ng-value="3">Hoàn tất giao dịch</option>
+                    <option ng-value="4">Hủy đơn</option>
+                </select>
+            </div>
+            <div class="col-12 col-sm-2 mt-4">
+                <button class="btn btn-primary" ng-click="findByStatus()">Lọc</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="alert alert-warning container mt-3" ng-if="orders.length<=0">
     Bạn chưa mua sản phẩm nào
 </div>
-<h5 class="text-center text-primary font-weight-bold mt-2">Đơn hàng</h5>
 <div class="table-responsive" ng-if="orders.length>0">
     <table class="table table-bordered table-hover container">
         <thead>

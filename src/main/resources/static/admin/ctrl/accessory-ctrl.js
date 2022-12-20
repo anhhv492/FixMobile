@@ -1,5 +1,5 @@
 app.controller('rest_accessory', function($scope, $http) {
-    const pathAPI = "http://localhost:8080/rest/admin/accessory";
+    const pathAPI = "http://localhost:8080/rest/staff/accessory";
     $scope.form = {};
     $scope.accessories = [];
     $scope.categories = [];
@@ -76,6 +76,7 @@ app.controller('rest_accessory', function($scope, $http) {
         $http.get(`${pathAPI}/cate`,token).then(function(response) {
             $scope.categories = response.data;
         }).catch(error=>{
+            $scope.categories=[];
             console.log("error findByCate",error);
         });
     };
@@ -92,7 +93,7 @@ app.controller('rest_accessory', function($scope, $http) {
         formData.append("category", $scope.form.category);
         let req = {
             method: 'POST',
-            url: '/rest/admin/accessory/create',
+            url: '/rest/staff/accessory/create',
             headers: {
                 'Content-Type': undefined,
                 Authorization: `Bearer `+jwtToken
@@ -198,7 +199,7 @@ app.controller('rest_accessory', function($scope, $http) {
         formData.append("category", $scope.form.category);
         let req = {
             method: 'POST',
-            url: '/rest/admin/accessory/update?id='+accessory.idAccessory,
+            url: '/rest/staff/accessory/update?id='+accessory.idAccessory,
             headers: {
                 'Content-Type': undefined,
                 Authorization: `Bearer `+jwtToken
