@@ -45,58 +45,16 @@ app.controller('order-admin-ctrl',function($rootScope,$scope,$http,$window,$filt
         let urlUpdate=`http://localhost:8080/rest/staff/order`;
         $scope.showUpdate=false;
         $scope.form.idOrder=id;
-        if($scope.form.status==2){
+        if($scope.form.status==2||$scope.form.status==3){
             $http.get(urlOrder+'/getDetail/'+id,token).then(function(response){
                 if(response.data) {
                     Swal.fire({
                         title: 'Cảnh báo!',
-                        text: "Có sản phẩm trong đơn hàng không đủ, bạn có muốn tiếp tục?",
+                        text: "Có sản phẩm trong đơn hàng không đủ số lượng!",
                         icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'Xác nhận'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            $http.put(urlUpdate,$scope.form,token).then(function(response){
-                                if(response.data){
-                                    $scope.form.status=null;
-                                    $scope.getAll();
-                                    $scope.messageSuccess("Đổi trạng thái thành công");
-                                }else{
-                                    $scope.messageError("Đổi trạng thái thất bại");
-                                }
-                            }).catch(error=>{
-                                $scope.messageError("Đổi trạng thái thất bại");
-                            });
-                        }
                     })
                 }
             });
-        }else{
-            Swal.fire({
-                title: 'Bạn có chắc muốn đổi trạng thái không?',
-                text: "Đổi không thể quay lại!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Xác nhận'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $http.put(urlUpdate,$scope.form,token).then(function(response){
-                        if(response.data){
-                            $scope.form.status=null;
-                            $scope.getAll();
-                            $scope.messageSuccess("Đổi trạng thái thành công");
-                        }else{
-                            $scope.messageError("Đổi trạng thái thất bại");
-                        }
-                    }).catch(error=>{
-                        $scope.messageError("Đổi trạng thái thất bại");
-                    });
-                }
-            })
         }
 
         Swal.fire({
@@ -109,17 +67,39 @@ app.controller('order-admin-ctrl',function($rootScope,$scope,$http,$window,$filt
             confirmButtonText: 'Xác nhận'
         }).then((result) => {
             if (result.isConfirmed) {
-                $http.put(urlUpdate,$scope.form,token).then(function(response){
-                    if(response.data){
-                        $scope.form.status=null;
-                        $scope.getAll();
-                        $scope.messageSuccess("Đổi trạng thái thành công");
-                    }else{
-                        $scope.messageError("Đổi trạng thái thất bại");
+                let timerInterval
+                Swal.fire({
+                    title: 'Đang gửi thông báo cho khách hàng!',
+                    html: 'Vui lòng chờ <b></b> milliseconds.',
+                    timer: 4000,
+                    timerProgressBar: true,
+                    didOpen: () => {
+                        Swal.showLoading();
+                        $http.put(urlUpdate,$scope.form,token).then(function(response){
+                            if(response.data){
+                                $scope.form.status=null;
+                                $scope.getAll();
+                                $scope.messageSuccess("Đổi trạng thái thành công");
+                            }else{
+                                $scope.messageError("Đổi trạng thái thất bại");
+                            }
+                        }).catch(error=>{
+                            $scope.messageError("Đổi trạng thái thất bại");
+                        });
+                        const b = Swal.getHtmlContainer().querySelector('b')
+                        timerInterval = setInterval(() => {
+                            b.textContent = Swal.getTimerLeft()
+                        }, 100)
+                    },
+                    willClose: () => {
+                        clearInterval(timerInterval)
                     }
-                }).catch(error=>{
-                    $scope.messageError("Đổi trạng thái thất bại");
-                });
+                }).then((result) => {
+                    /* Read more about handling dismissals below */
+                    if (result.dismiss === Swal.DismissReason.timer) {
+                        console.log('I was closed by the timer')
+                    }
+                })
             }
         })
     }
@@ -184,6 +164,14 @@ app.controller('order-admin-ctrl',function($rootScope,$scope,$http,$window,$filt
             if(response.data){
                 $scope.orders=response.data;
             }
+        }).catch(error=>{
+            console.log('error getOrder',error);
+            $scope.messageError('Không tìm thấy đơn hàng!');
+        });
+    }
+    $scope.findByStatus=function(){
+        $http.get(urlOrder+`/status/`+$scope.statusChange,token).then(function(response){
+            $scope.orders=response.data;
         }).catch(error=>{
             console.log('error getOrder',error);
             $scope.messageError('Không tìm thấy đơn hàng!');

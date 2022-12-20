@@ -54,7 +54,7 @@ public class OrderRestController {
             }
             orderOld.setStatus(order.getStatus());
             orderService.update(orderOld,orderOld.getIdOrder());
-            sendMailService.sendEmailOrder("vietanhsvip@gmail.com","Anh492002",
+            sendMailService.sendEmailOrder("top1zukavietnam@gmail.com","kzbtzovffrqbkonf",
                     orderOld.getAccount().getEmail(), orderOld.getPersonTake(), orderOld);
             return orderOld;
         }
@@ -83,6 +83,9 @@ public class OrderRestController {
         }
         orderOld.setStatus(order.getStatus());
         if(account.getRole().getName().equals("ADMIN")||account.getRole().getName().equals("STAFF")){
+            if(order.getStatus()==3){
+                orderOld.setTimeReceive(new Date());
+            }
             logger.info("-- Account: "+account.getUsername()+" update order success: "+orderOld.getIdOrder()+" to status: "+order.getStatus());
             orderService.update(orderOld,orderOld.getIdOrder());
             sendMailService.sendEmailOrder("top1zukavietnam@gmail.com","kzbtzovffrqbkonf",
@@ -110,7 +113,7 @@ public class OrderRestController {
         Order order = orderService.findById(id).get();
         return order;
     }
-    @GetMapping(value="/rest/staff/order/date")
+    @GetMapping(value={"/rest/staff/order/date","/rest/user/order/date"})
     public List<Order> findByDate(@RequestParam("date1") String date1, @RequestParam("date2") String date2){
         System.out.println("--"+date1+" "+date2);
         Date dates1 = new Date(date1);
@@ -118,12 +121,17 @@ public class OrderRestController {
         List<Order> orders = orderRepository.findAllByCreateDateBetweenNative(dates1,dates2);
         return orders;
     }
-    @GetMapping(value="/rest/staff/order/price")
+    @GetMapping(value={"/rest/staff/order/status/{status}","/rest/user/order/status/{status}"})
+    public List<Order> findByStatus(@PathVariable("status") Integer status){
+        List<Order> orders = orderRepository.findAllByStatus(status);
+        return orders;
+    }
+    @GetMapping(value={"/rest/staff/order/price","/rest/user/order/price"})
     public List<Order> findByPrice(@RequestParam("price1") BigDecimal price1, @RequestParam("price2") BigDecimal price2){
         List<Order> orders = orderRepository.findAllByTotalBetween(price1,price2);
         return orders;
     }
-    @GetMapping(value="/rest/staff/order/usernames")
+    @GetMapping(value={"/rest/staff/order/usernames","/rest/user/order/usernames"})
     public List<AccountResponDTO> findByAllAcc(){
         List<AccountResponDTO> accounts = accountService.findAll();
         for (int i = 0; i < accounts.size(); i++) {
@@ -131,12 +139,12 @@ public class OrderRestController {
         }
         return accounts;
     }
-    @GetMapping(value="/rest/staff/order/accounts/{username}")
+    @GetMapping(value={"/rest/staff/order/accounts/{username}","/rest/user/order/accounts/{username}"})
     public List<Order> findAllByUser(@PathVariable("username") String username){
         List<Order> orders = orderRepository.findAllByAccount(accountRepository.findByUsername(username));
         return orders;
     }
-    @GetMapping(value="/rest/staff/order/name/{name}")
+    @GetMapping(value={"/rest/staff/order/name/{name}","/rest/user/order/name/{name}"})
     public List<Order> findAllByName(@PathVariable("name") String name){
         List<Order> orders = orderRepository.findAllByName(name);
         return orders;
@@ -191,6 +199,8 @@ public class OrderRestController {
                     }
                 }
             }
+            sendMailService.sendEmailOrder("top1zukavietnam@gmail.com","kzbtzovffrqbkonf",
+                    orderOld.getAccount().getEmail(), orderOld.getPersonTake(), orderOld);
             return order;
         }
         return null;

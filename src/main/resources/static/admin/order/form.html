@@ -56,8 +56,8 @@
             </div>
         </div>
     </div>
-    <div class="tab-pane fade " id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-            <div class="row">
+    <div class="tab-pane fade container" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+            <div class="row container">
                 <div class="col-12 col-sm-3">
                     Từ ngày
                     <input type="date" ng-model="date1" class="form-control" >
@@ -71,34 +71,20 @@
                 </div>
         </div>
     </div>
-    <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
+    <div class="tab-pane fade container" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
         <div class="row container" >
-            <span>Sắp xếp</span>
-            <select class="form-select" ng-model="">
-                <option ng-value="0">Tất cả</option>
-                <option ng-value="1">Từ thấp đến cao</option>
-                <option ng-value="2">Từ cao đến thấp</option>
-            </select>
-            <div class="col-3 offset-2">
-                <span>Sắp xếp</span>
-                <select class="form-select" ng-model="">
-                    <option ng-value="0">Tất cả</option>
-                    <option ng-value="1">Từ thấp đến cao</option>
-                    <option ng-value="2">Từ cao đến thấp</option>
+            <div class="col-12 col-sm-3">
+                Sắp xếp
+                <select class="form-select" ng-model="statusChange">
+                    <option ng-value="0">Chờ xác nhận</option>
+                    <option ng-value="1">Xác nhận</option>
+                    <option ng-value="2">Đang giao hàng</option>
+                    <option ng-value="3">Hoàn tất giao dịch</option>
+                    <option ng-value="4">Hủy đơn</option>
                 </select>
             </div>
-            <div class="col-3 offset-2">
-                <span>Sắp xếp</span>
-                <select class="form-select" ng-model="">
-                    <option ng-value="0">Tất cả</option>
-                    <option ng-value="1">Từ thấp đến cao</option>
-                    <option ng-value="2">Từ cao đến thấp</option>
-                </select>
-            </div>
-        </div>
-        <div class="row mt-2">
-            <div class="col-2">
-                <button class="btn btn-primary">Lọc</button>
+            <div class="col-12 col-sm-2 mt-4">
+                <button class="btn btn-primary" ng-click="findByStatus()">Lọc</button>
             </div>
         </div>
     </div>
@@ -107,52 +93,17 @@
     <table class="table table-bordered table-hover container">
         <thead>
         <tr>
-            <th>Mã hóa đơn</th>
+            <th>Mã đơn</th>
             <th>Tài khoản</th>
-            <th>
-                <button class="btn btn-default" ng-click="hoTen()" ng-if="!checkHoTen">
-                    <strong>Họ tên</strong>
-                    <i class="fa fa-caret-down" aria-hidden="true"></i>
-                </button>
-                <button class="btn btn-default" ng-click="hoTen()" ng-if="checkHoTen">
-                    <strong>Họ tên</strong>
-                    <i class="fa fa-caret-up" aria-hidden="true"></i>
-                </button>
-            </th>
+            <th>Họ tên</th>
             <th>Số điện thoại</th>
             <th>Địa chỉ nhận</th>
-            <th>
-                <button class="btn btn-default" ng-click="ngayMua()" ng-if="!checkNgayMua">
-                    <strong>Ngày mua</strong>
-                    <i class="fa fa-caret-down" aria-hidden="true"></i>
-                </button>
-                <button class="btn btn-default" ng-click="ngayMua()" ng-if="checkNgayMua">
-                    <strong>Ngày mua</strong>
-                    <i class="fa fa-caret-up" aria-hidden="true"></i>
-                </button>
-            </th>
+            <th>Ngày mua</th>
+            <th>Ngày nhận</th>
             <th>Tiền ship (VNĐ)</th>
-            <th>
-                <button class="btn btn-default" ng-click="tongGiaTang()" ng-if="!checkTongGia">
-                    <strong>Tổng giá (VNĐ)</strong>
-                    <i class="fa fa-caret-down" aria-hidden="true"></i>
-                </button>
-                <button class="btn btn-default" ng-click="tongGiaGiam()" ng-if="checkTongGia">
-                    <strong>Tổng giá (VNĐ)</strong>
-                    <i class="fa fa-caret-up" aria-hidden="true"></i>
-                </button>
-            </th>
+            <th>Tổng giá (VNĐ)</th>
             <th>Ghi chú</th>
-            <th>
-                <button class="btn btn-default" ng-click="trangThai()" ng-if="!checkTrangThai">
-                    <strong>Trạng thái</strong>
-                    <i class="fa fa-caret-down" aria-hidden="true"></i>
-                </button>
-                <button class="btn btn-default" ng-click="trangThai()" ng-if="checkTrangThai">
-                    <strong>Trạng thái</strong>
-                    <i class="fa fa-caret-up" aria-hidden="true"></i>
-                </button>
-            </th>
+            <th>Trạng thái</th>
             <th>Thao tác</th>
         </tr>
         </thead>
@@ -164,6 +115,8 @@
             <td>{{order.phoneTake}}</td>
             <td>{{order.address}}</td>
             <td>{{order.createDate|date:'dd/MM/yyyy HH:mm:ss'}}</td>
+            <td ng-if="order.timeReceive">{{order.timeReceive|date:'dd/MM/yyyy HH:mm:ss'}}</td>
+            <td ng-if="!order.timeReceive">Chưa nhận hàng</td>
             <td>{{order.moneyShip|number}}</td>
             <td>
                 {{order.total|number}} <i class="fa fa-info-circle" aria-hidden="true" ng-click="getOrderDetail(order.idOrder)" data-bs-toggle="modal" data-bs-target="#exampleModal{{order.idOrder}}"></i>
@@ -285,4 +238,4 @@
         </tbody>
     </table>
 </div>
-<div class="alert alert-warning container" ng-if="orders.length<=0">Không có dữ liệu</div>
+<div class="alert alert-warning container mt-3 container" ng-if="orders.length<=0">Không có dữ liệu</div>

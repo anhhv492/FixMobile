@@ -41,7 +41,7 @@ public class ExcelHelper {
     private String name=null;
     private Integer quantity=null;
     private java.sql.Date createDate= Date.valueOf(java.time.LocalDate.now());
-    private Color color=null;
+    private String color=null;
     private BigDecimal price=null;
     private Boolean status=true;
     private String image=null;
@@ -84,7 +84,7 @@ public class ExcelHelper {
                         }
                         if (cc.getColumnIndex() == 2 && cc.getCellType() == CellType.STRING) {
                             System.out.println(cc.getStringCellValue() + ", ");
-                            color =colorRepository.findById(Integer.parseInt(cc.getStringCellValue())).orElse(null);
+                            color = cc.getStringCellValue();
                         }
                         if (cc.getColumnIndex() == 3 && cc.getCellType() == CellType.NUMERIC) {
                             System.out.println(cc.getNumericCellValue() + ", ");

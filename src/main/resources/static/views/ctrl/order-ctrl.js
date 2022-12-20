@@ -1,4 +1,4 @@
-app.controller('order-ctrl',function($rootScope,$scope,$http){
+app.controller('order-ctrl',function($rootScope,$scope,$http,$filter){
     var urlOrder=`http://localhost:8080/rest/user/order`;
     $scope.orders=[];
     $scope.form={};
@@ -59,6 +59,98 @@ app.controller('order-ctrl',function($rootScope,$scope,$http){
                 }
             })
         }
+    }
+    $scope.findByDate=function(){
+        let date1= $filter('date')($scope.date1, "yyyy/MM/dd");
+        let date2= $filter('date')($scope.date2, "yyyy/MM/dd");
+        $http.get(urlOrder+`/date?date1=`+date1+'&&date2='+date2,token).then(function(response){
+            $scope.orders=response.data;
+        }).catch(error=>{
+            console.log('error getOrder',error);
+            $scope.messageError('Không tìm thấy đơn hàng!');
+        });
+    }
+    $scope.findByPrice=function(){
+        $http.get(urlOrder+`/price?price1=`+$scope.price1+'&&price2='+$scope.price2,token).then(function(response){
+            if(response.data){
+                $scope.orders=response.data;
+            }
+        }).catch(error=>{
+            console.log('error getOrder',error);
+            $scope.messageError('Không tìm thấy đơn hàng!');
+        });
+    }
+    $scope.findByName=function(){
+        $http.get(urlOrder+'/name/'+$scope.nameSearch.trim(),token).then(function(response){
+            if(response.data){
+                $scope.orders=response.data;
+            }
+        }).catch(error=>{
+            console.log('error getOrder',error);
+            $scope.messageError('Không tìm thấy đơn hàng!');
+        });
+    }
+    $scope.findByStatus=function(){
+        $http.get(urlOrder+`/status/`+$scope.statusChange,token).then(function(response){
+            $scope.orders=response.data;
+        }).catch(error=>{
+            console.log('error getOrder',error);
+            $scope.messageError('Không tìm thấy đơn hàng!');
+        });
+    }
+    $scope.getAllUser=function(){
+        $http.get(urlOrder+'/usernames',token).then(function(response){
+            if(response.data){
+                $scope.accs=response.data;
+            }
+        }).catch(error=>{
+            console.log('error getOrder',error);
+        });
+    }
+    $scope.selectByUser=function(){
+        $http.get(urlOrder+'/accounts/'+$scope.userSearch,token).then(function(response){
+            if(response.data){
+                $scope.orders=response.data;
+            }
+        }).catch(error=>{
+            console.log('error getOrder',error);
+        });
+    }
+    $scope.messageSuccess=function (text) {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+
+        Toast.fire({
+            icon: 'success',
+            title: text
+        })
+    }
+    $scope.messageError=function (text) {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+
+        Toast.fire({
+            icon: 'error',
+            title: text
+        })
     }
     $scope.getOrder=function(id){
         $rootScope.idOrder=id;

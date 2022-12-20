@@ -24,4 +24,6 @@ public interface OrderRepository extends PagingAndSortingRepository<Order, Integ
 
     @Query(value = "SELECT * FROM `orders` WHERE person_take like %?1%", nativeQuery = true)
     List<Order> findAllByName(String name);
+
+    List<Order> findAllByStatus(Integer status);
 }

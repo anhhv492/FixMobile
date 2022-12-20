@@ -106,21 +106,17 @@
                     </div>
                 </div>
                 <div class="row" >
-                    <div class="col-lg-4 col-md-6 col-sm-6" ng-repeat="p in detailProducts">
+                    <div class="col-lg-4 col-md-6 col-sm-6" ng-repeat="p in getAllProduct">
                         <div class="product__item">
-                            <div class="product__item__pic set-bg" data-setbg="{{p.image}}" style="background-image: url(&quot;{{p.image}};);">
+                            <div class="product__item__pic set-bg" data-setbg="" style="">
                                 <ul class="product__item__pic__hover" style="  margin-left: 0;">
-                                    <li><a ng-click="addCart(p)" ><i class="fa fa-info-circle"></i></a></li>
-                                    <li><a ng-click="addCart(p)" ><i class="fa fa-shopping-cart"></i></a></li>
+                                    <li><a href="#!product" ng-click="getDetailProduct(p.id)"><i class="fa fa-shopping-cart"></i></a></li>
                                 </ul>
                             </div>
                             <div class="product__item__text">
-                                <h6><a href="#">{{p.name}}</a></h6>
+                                <h6><a href="#!product" ng-click="getDetailProduct(p.id)" style="font-size: 30px;">{{p.name}}</a></h6>
                                 <h5>
-                                    <span ng-if="p.priceSale == 0">{{p.price | number}} VNĐ</span>
-                                    <span ng-if="p.priceSale != 0">
-                                    <del>{{p.price | number}} VNĐ</del> <br> {{p.price - p.priceSale | number}} VNĐ
-                                    </span>
+                                    <span>{{p.priceMin | number}} VNĐ - {{p.priceMax | number}} VNĐ</span>
                                 </h5>
                             </div>
                         </div>
