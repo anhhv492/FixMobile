@@ -175,7 +175,7 @@ public class sendMailImpl implements sendMailService {
 				msg.setFrom(new InternetAddress(user));
 				InternetAddress[] toAddresses = {new InternetAddress(acc.getEmail())};
 				msg.setRecipients(Message.RecipientType.TO, toAddresses);
-				msg.setSubject("FixMobile - Thay đổi thông tin đơn hàng");
+				msg.setSubject("FixMobile - Thay đổi thông tin đơn hàng mã: "+order.getIdOrder());
 				msg.setSentDate(new Date());
 				if(order.getStatus()==0){
 					msg.setText("Xin chào "+fullName+"\n"+"Đơn hàng của bạn đã được tiếp nhận, chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất");
