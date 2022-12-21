@@ -72,7 +72,7 @@ app.controller('product-change',function($rootScope,$scope,$http, $window){
     }
 
     $scope.getAllProductChange=function(){
-        $http.get('/rest/user/productchange/getAll').then(resp=>{
+        $http.get('/rest/user/productchange/getAll',token).then(resp=>{
             $scope.listProductChange = resp.data;
             console.log('dsadsadsdsadas '+$scope.listProductChange);
         }).catch(error=>{
@@ -81,10 +81,10 @@ app.controller('product-change',function($rootScope,$scope,$http, $window){
     }
     $scope.imeis = [];
     $scope.getAllProductChangeDetails=function(id){
-        $http.get(`/rest/user/productchange/getPrChangeDetails/${id}`).then(resp=>{
+        $http.get(`/rest/user/productchange/getPrChangeDetails/${id}`,token).then(resp=>{
             $scope.getOneProduct = resp.data;
             console.log('dsadsadsdsadas '+resp.data);
-            $http.get(`/rest/staff/order/detail/imei2/${ $scope.getOneProduct.orderDetail.idDetail}`).then(res=>{
+            $http.get(`/rest/staff/order/detail/imei2/${ $scope.getOneProduct.orderDetail.idDetail}`,token).then(res=>{
                 $scope.imeis=res.data;
                 console.log('dsadsadsdsadas '+ $scope.imeis[0].name);
             }).catch(err=>{
@@ -134,7 +134,7 @@ app.controller('product-change',function($rootScope,$scope,$http, $window){
                 timerProgressBar: true,
                 didOpen: () => {
                     Swal.showLoading();
-                    $http.post(`/rest/staff/productchange/comfirmRequest`,$scope.seLected).then(response => {
+                    $http.post(`/rest/staff/productchange/comfirmRequest`,$scope.seLected,token).then(response => {
                         console.log("ddd " + response.data);
                         $scope.message("Đã xác nhận yêu cầu");
                         $scope.seLected=[];
@@ -165,7 +165,7 @@ app.controller('product-change',function($rootScope,$scope,$http, $window){
             $scope.error("Vui lòng chọn yêu cầu hủy");
             return null;
         }
-        $http.post(`/rest/staff/productchange/cancelRequest`,$scope.seLected).then(response => {
+        $http.post(`/rest/staff/productchange/cancelRequest`,$scope.seLected,token).then(response => {
             console.log("ddd " + response.data);
             $scope.message("Đã hủy yêu cầu");
             $scope.seLected=[];
