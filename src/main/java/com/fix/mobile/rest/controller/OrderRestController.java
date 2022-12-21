@@ -3,6 +3,7 @@ package com.fix.mobile.rest.controller;
 import com.fix.mobile.dto.account.AccountResponDTO;
 import com.fix.mobile.entity.*;
 import com.fix.mobile.helper.WriteExcel;
+import com.fix.mobile.repository.AccessoryRepository;
 import com.fix.mobile.repository.AccountRepository;
 import com.fix.mobile.repository.OrderRepository;
 import com.fix.mobile.service.*;
@@ -32,6 +33,8 @@ public class OrderRestController {
     private OrderDetailService orderDetailService;
     @Autowired
     private ImayProductService imayProductService;
+    @Autowired
+    private AccessoryRepository accessoryRepository;
     @Autowired
     private sendMailService sendMailService;
     @Autowired
@@ -166,10 +169,18 @@ public class OrderRestController {
         List<OrderDetail> orderDetails = orderDetailService.findAllByOrder(order);
         List<ImayProduct> imayProducts = null;
         for (int i = 0; i < orderDetails.size(); i++) {
+            if (orderDetails.get(i).getAccessory()!=null){
+                if(orderDetails.get(i).getQuantity()>orderDetails.get(i).getAccessory().getQuantity()){
+                    System.out.println("Số lượng phụ kiện không đủ-------");
+                    return order;
+                }
+            }
             imayProducts = imayProductService.findByOrderDetail(orderDetails.get(i));
-            if(imayProducts.size()<orderDetails.get(i).getQuantity()){
-                System.out.println("Số lượng sản phẩm không đủ-------");
-                return order;
+            if(imayProducts.size()>0){
+                if(imayProducts.size()<orderDetails.get(i).getQuantity()){
+                    System.out.println("Số lượng sản phẩm không đủ-------");
+                    return order;
+                }
             }
         }
         return null;

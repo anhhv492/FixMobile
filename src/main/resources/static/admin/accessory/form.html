@@ -46,7 +46,8 @@
                                     </div>
                                     <div class="form-group mt-1">
                                         <label>Số lượng</label>
-                                        <input ng-model="form.quantity" required name="quantity" type="number" min="1" class="form-control">
+                                        <input ng-model="form.quantity" required name="quantity" type="number" min="1"
+                                               maxlength="7" class="form-control">
                                         <span ng-show="myForm.$submitted || myForm.quantity.$dirty" style="color: red">
                                         <span class="error" ng-show="myForm.quantity.$error.required"> <i
                                                 class="fa fa-exclamation-circle"></i>Số lượng không được trống</span>
@@ -67,7 +68,7 @@
                                     </div>
                                     <div class="form-group mt-1">
                                         <label>Giá</label>
-                                        <input ng-model="form.price" required name="price" min="10000"
+                                        <input ng-model="form.price" required name="price" min="10000" maxlength="9"
                                                type="number" class="form-control">
                                         <span ng-show="myForm.$submitted || myForm.price.$dirty" style="color: red">
                                         <span class="error" ng-show="myForm.price.$error.required"> <i

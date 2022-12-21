@@ -123,7 +123,6 @@ app.controller('rest_accessory', function($scope, $http,$rootScope,$window) {
         $http(req).then(response => {
             console.log(response.data);
             $scope.message("Thêm mới thành công");
-            $scope.reset();
         })
     };
     $scope.changeStatus = function(accessory) {
@@ -244,8 +243,8 @@ app.controller('rest_accessory', function($scope, $http,$rootScope,$window) {
                 icon: 'success',
                 title: 'Cập nhật thành công!'
             })
-            $scope.reset();
-        })
+            $scope.loadAccessories();
+        });
     };
     // submit form
     $scope.doSubmit = function() {
@@ -270,6 +269,7 @@ app.controller('rest_accessory', function($scope, $http,$rootScope,$window) {
                 /* Read more about handling dismissals below */
                 if (result.dismiss === Swal.DismissReason.timer) {
                     $scope.onUpdate();
+                    document.getElementById('list-tab').click();
                     console.log('I was closed by the timer')
                 }
             })

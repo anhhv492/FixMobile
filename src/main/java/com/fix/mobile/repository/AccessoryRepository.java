@@ -2,6 +2,7 @@ package com.fix.mobile.repository;
 
 import com.fix.mobile.entity.Accessory;
 import com.fix.mobile.entity.Category;
+import com.fix.mobile.entity.Order;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;

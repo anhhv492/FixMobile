@@ -10,7 +10,8 @@
                             <th scope="col">Loại</th>
                             <th scope="col">Số lượng</th>
                             <th scope="col">Màu</th>
-                            <th scope="col">Giá (VNĐ)</th>
+                            <th scope="col">Giá (VNĐ</th>
+                            <th scope="col">Tổng (VNĐ)</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -44,8 +45,9 @@
                                     </button>
                                 </div>
                             </td>
-                            <td class="align-middle" ng-if="item.idAccessory">{{item.color.name}}</td>
+                            <td class="align-middle" ng-if="item.idAccessory">{{item.color}}</td>
                             <td class="align-middle" ng-if="item.idProduct">{{item.color.name}}</td>
+                            <td class="align-middle">{{item.price|number}}</td>
                             <td class="align-middle">
                                 <p class="mb-0" style="font-weight: 500 " ng-if="item.priceSale ==0">{{item.price*item.qty|number}}  VNĐ</p>
                                 <p class="mb-0" style="font-weight: 500 " ng-if="item.priceSale !=0">{{item.priceSale*item.qty|number}} VNĐ&nbsp;<del>{{item.price*item.qty|number}} VNĐ</del><br>
