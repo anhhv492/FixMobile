@@ -61,42 +61,41 @@ app.controller('order-ctrl',function($rootScope,$scope,$http,$filter){
         }
     }
     $scope.findByDate=function(){
-        let date1= $filter('date')($scope.date1, "yyyy/MM/dd");
-        let date2= $filter('date')($scope.date2, "yyyy/MM/dd");
-        $http.get(urlOrder+`/date?date1=`+date1+'&&date2='+date2,token).then(function(response){
+        let ords=[];
+        $http.get(urlOrder,token).then(function(response){
             $scope.orders=response.data;
-        }).catch(error=>{
-            console.log('error getOrder',error);
-            $scope.messageError('Không tìm thấy đơn hàng!');
-        });
+            $scope.orders.forEach(function (order) {
+                if($filter('date')(order.createDate,'dd/MM/yyyy')>=$filter('date')($scope.date1,'dd/MM/yyyy')
+                    && $filter('date')(order.createDate,'dd/MM/yyyy')<=$filter('date')($scope.date2,'dd/MM/yyyy')){
+                    ords.push(order);
+                }
+            })
+            $scope.orders=ords;
+        })
     }
     $scope.findByPrice=function(){
-        $http.get(urlOrder+`/price?price1=`+$scope.price1+'&&price2='+$scope.price2,token).then(function(response){
-            if(response.data){
-                $scope.orders=response.data;
-            }
-        }).catch(error=>{
-            console.log('error getOrder',error);
-            $scope.messageError('Không tìm thấy đơn hàng!');
-        });
-    }
-    $scope.findByName=function(){
-        $http.get(urlOrder+'/name/'+$scope.nameSearch.trim(),token).then(function(response){
-            if(response.data){
-                $scope.orders=response.data;
-            }
-        }).catch(error=>{
-            console.log('error getOrder',error);
-            $scope.messageError('Không tìm thấy đơn hàng!');
-        });
+        let ords=[];
+        $http.get(urlOrder,token).then(function(response){
+            $scope.orders=response.data;
+            $scope.orders.forEach(function (order) {
+                if(order.total>=$scope.price1 && order.total<=$scope.price2){
+                    ords.push(order);
+                }
+            })
+            $scope.orders=ords;
+        })
     }
     $scope.findByStatus=function(){
-        $http.get(urlOrder+`/status/`+$scope.statusChange,token).then(function(response){
+        let ords=[];
+        $http.get(urlOrder,token).then(function(response){
             $scope.orders=response.data;
-        }).catch(error=>{
-            console.log('error getOrder',error);
-            $scope.messageError('Không tìm thấy đơn hàng!');
-        });
+            $scope.orders.forEach(function (order) {
+                if(order.status==$scope.statusChange){
+                    ords.push(order);
+                }
+            })
+            $scope.orders=ords;
+        })
     }
     $scope.getAllUser=function(){
         $http.get(urlOrder+'/usernames',token).then(function(response){
