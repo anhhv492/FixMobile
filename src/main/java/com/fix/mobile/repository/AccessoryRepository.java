@@ -2,6 +2,7 @@ package com.fix.mobile.repository;
 
 import com.fix.mobile.entity.Accessory;
 import com.fix.mobile.entity.Category;
+import com.fix.mobile.entity.Order;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
@@ -29,6 +30,8 @@ public interface AccessoryRepository extends PagingAndSortingRepository<Accessor
 
     @Query(value = "select MAX(price) from accessories order by price",nativeQuery = true)
     BigDecimal getMaxPrice();
+
+    List<Accessory> findAllByOrder(Order order);
 
 //    Page<Accessory> findByStatusAndNameContaining(Boolean stt,String name, Pageable pageable);
 }
