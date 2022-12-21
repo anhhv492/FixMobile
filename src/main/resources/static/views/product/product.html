@@ -34,7 +34,6 @@
                                         <h3 ng-if="PrD.price != undefined">{{PrD.price | number}} VNĐ</h3>
                                         Dung lượng
                                         <div ng-repeat="capa in detailProduct.capa">
-                                            <h1>{{checkCapa}}</h1>
                                             <input type="radio" name="capa" ng-checked="checkCapa!=0 ? true : false"
                                                    ng-click="checkProduct(capa.idCapacity , 0)"
                                             > {{capa.name}}
