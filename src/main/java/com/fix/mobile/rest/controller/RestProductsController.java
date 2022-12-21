@@ -33,7 +33,7 @@ import java.util.*;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @RestController
-@RequestMapping(value= "/rest/admin/product")
+@RequestMapping(value= "/rest/staff/product")
 @CrossOrigin("*")
 @Component
 public class RestProductsController {
@@ -303,14 +303,7 @@ public class RestProductsController {
 	}
 
 	//findBy product price
-	@RequestMapping(value = "/findProductByPrice",method = RequestMethod.GET)
-	public List<Product> findProductByPrice(){
-		List<Product> listproduct = productService.findProductByPrices();
-		if(listproduct.isEmpty()){
-			return  null;
-		}
-		return listproduct;
-	}
+
 
 
 	@RequestMapping("/findproduct/{page}")

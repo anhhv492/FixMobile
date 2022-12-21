@@ -90,12 +90,7 @@ public class AccountRestController {
     }
 
     
-    @GetMapping("/getAccountActive")
-    public AccountDTO getAccountActive() {
-        Account account = accountService.findByUsername(UserName.getUserName());
-        AccountDTO accountDTO = modelMapper.map(account, AccountDTO.class);
-        return accountDTO;
-    }
+
     @RequestMapping("/getdatasale/{page}")
     public Page<Account> getDataShowSale(
             @PathVariable ("page") Integer page,
@@ -107,10 +102,6 @@ public class AccountRestController {
         return accountService.getByPage(page,5,share);
     }
 
-    @PostMapping("/setaddressdefault")
-    public void setaddressdefault(@RequestBody Integer id){
-        accountService.setAddressDefault(id);
-    }
 
     @GetMapping("/getAddress")
     public AddressDTO getAddress(){
@@ -133,14 +124,6 @@ public class AccountRestController {
          return accountService.updatePassword(updatePasswordDTO);
     }
 
-    @GetMapping("/updatePasswordMail/{email}")
-    public void updatePasswordMail (@PathVariable("email")String email, Model model){
-        try {
-            if(email != null){
-                mailService.SendEmailChangePass("top1zukavietnam@gmail.com","kzbtzovffrqbkonf",email);
-            }else;
-        }catch (Exception e){
-            e.getMessage();
-        }
-    }
+
+
 }

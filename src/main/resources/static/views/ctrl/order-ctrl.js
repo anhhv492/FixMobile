@@ -158,7 +158,7 @@ app.controller('order-ctrl',function($rootScope,$scope,$http,$filter){
     $scope.getAllByUser();
 
     $scope.getOrderDetail=function (idOrder){
-        let url=`/rest/staff/order/detail/`+idOrder;
+        let url=`/rest/user/order/detail/`+idOrder;
         $http.get(url).then(function(response){
             if(response.data){
                 $scope.ordersDetail=response.data;
@@ -169,7 +169,7 @@ app.controller('order-ctrl',function($rootScope,$scope,$http,$filter){
         }).catch(error=>{
             console.log(error);
         });
-        let urlapplysale=`/admin/rest/sale/saleapply/`+idOrder;
+        let urlapplysale=`/rest/user/sale/saleapply/`+idOrder;
         $http.get(urlapplysale).then(function(response){
             $scope.saleApply=response.data;
         }).catch(error=>{

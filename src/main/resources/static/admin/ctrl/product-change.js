@@ -1,8 +1,40 @@
-app.controller('product-change',function($rootScope,$scope,$http){
+app.controller('product-change',function($rootScope,$scope,$http, $window){
     $scope.listProductChange =[];
     $scope.getOneProduct = {};
     $scope.objectInt = 5;
     $scope.seLected = [];
+    const jwtToken = localStorage.getItem("jwtToken");
+    const token = {
+        headers: {
+            Authorization: `Bearer ` + jwtToken
+        }
+    }
+    $scope.logOut = function (){
+        $window.location.href = "http://localhost:8080/views/index.html#!/login"
+        Swal.fire({
+            icon: 'error',
+            title: 'Vui lòng đăng nhập lại!!',
+            text: 'Tài khoản của bạn không có quyền truy cập!!',
+        })
+    }
+
+    $scope.checkLogin = function () {
+        if (jwtToken == null){
+            $scope.logOut();
+        }else {
+            $http.get("http://localhost:8080/rest/user/getRole",token).then(respon =>{
+                if (respon.data.name === "USER"){
+                    $scope.logOut();
+                }else if (respon.data.name === "ADMIN"){
+                    $rootScope.check = null;
+                }else {
+                    $rootScope.check = "OK";
+                }
+            })
+        }
+    }
+
+    $scope.checkLogin();
     $scope.message = function (mes){
         const Toast = Swal.mixin({
             toast: true,
@@ -40,7 +72,7 @@ app.controller('product-change',function($rootScope,$scope,$http){
     }
 
     $scope.getAllProductChange=function(){
-        $http.get('/rest/productchange/getAll').then(resp=>{
+        $http.get('/rest/user/productchange/getAll').then(resp=>{
             $scope.listProductChange = resp.data;
             console.log('dsadsadsdsadas '+$scope.listProductChange);
         }).catch(error=>{
@@ -49,7 +81,7 @@ app.controller('product-change',function($rootScope,$scope,$http){
     }
     $scope.imeis = [];
     $scope.getAllProductChangeDetails=function(id){
-        $http.get(`/rest/productchange/getPrChangeDetails/${id}`).then(resp=>{
+        $http.get(`/rest/user/productchange/getPrChangeDetails/${id}`).then(resp=>{
             $scope.getOneProduct = resp.data;
             console.log('dsadsadsdsadas '+resp.data);
             $http.get(`/rest/staff/order/detail/imei2/${ $scope.getOneProduct.orderDetail.idDetail}`).then(res=>{
@@ -102,7 +134,7 @@ app.controller('product-change',function($rootScope,$scope,$http){
                 timerProgressBar: true,
                 didOpen: () => {
                     Swal.showLoading();
-                    $http.post(`/rest/admin/productchange/comfirmRequest`,$scope.seLected).then(response => {
+                    $http.post(`/rest/staff/productchange/comfirmRequest`,$scope.seLected).then(response => {
                         console.log("ddd " + response.data);
                         $scope.message("Đã xác nhận yêu cầu");
                         $scope.seLected=[];
@@ -133,7 +165,7 @@ app.controller('product-change',function($rootScope,$scope,$http){
             $scope.error("Vui lòng chọn yêu cầu hủy");
             return null;
         }
-        $http.post(`/rest/admin/productchange/cancelRequest`,$scope.seLected).then(response => {
+        $http.post(`/rest/staff/productchange/cancelRequest`,$scope.seLected).then(response => {
             console.log("ddd " + response.data);
             $scope.message("Đã hủy yêu cầu");
             $scope.seLected=[];

@@ -22,9 +22,9 @@ app.controller('home-ctr-v2', function ($rootScope, $scope, $http,) {
         console.log("hihi")
         var urlSale='';
         if(y == 0){
-            urlSale= `http://localhost:8080/admin/rest/sale/getbigsale?money=` + $rootScope.detailProducts[x].price + `&idPrd=` + $rootScope.detailProducts[x].idProduct + `&idAcsr=0`;
+            urlSale= `http://localhost:8080/rest/guest/sale/getbigsale?money=` + $rootScope.detailProducts[x].price + `&idPrd=` + $rootScope.detailProducts[x].idProduct + `&idAcsr=0`;
         }else {
-            urlSale= `http://localhost:8080/admin/rest/sale/getbigsale?money=` + $rootScope.detailAccessories[x].price + `&idPrd=0&idAcsr=`+ $rootScope.detailAccessories[x].idAccessory;
+            urlSale= `http://localhost:8080/rest/guest/sale/getbigsale?money=` + $rootScope.detailAccessories[x].price + `&idPrd=0&idAcsr=`+ $rootScope.detailAccessories[x].idAccessory;
         }
         $http.get(urlSale, token).then(resp => {
             if (y == 0) {
@@ -91,7 +91,7 @@ app.controller('home-ctr-v2', function ($rootScope, $scope, $http,) {
     }
     $scope.getAllCapacity();
     $scope.findProduct = function () {
-        $http.post(`/rest/admin/product/findproduct/0`, $scope.findProductAll).then(function (respon) {
+        $http.post(`/rest/guest/product/findproduct/0`, $scope.findProductAll).then(function (respon) {
             $scope.getAllProduct = respon.data.content;
         }).catch(err => {
                 console.log(err + 'kiixu  lỗi')
@@ -101,7 +101,7 @@ app.controller('home-ctr-v2', function ($rootScope, $scope, $http,) {
     // $scope.findProduct();
 
     $scope.findAccessory = function () {
-        $http.post(`/rest/admin/accessory/findaccessory/0`, $scope.findProductAll).then(function (respon) {
+        $http.post(`/rest/guest/accessory/findaccessory/0`, $scope.findProductAll).then(function (respon) {
             $rootScope.detailAccessories = respon.data.content;
             console.log("in")
             console.log($rootScope.detailAccessories);
@@ -177,7 +177,7 @@ app.controller('home-ctr-v2', function ($rootScope, $scope, $http,) {
         }
     }
     $scope.getALLProduct=function (){
-        $http.post(`/rest/admin/product/getallproduct`).then(function (respon) {
+        $http.post(`/rest/guest/product/getallproduct`).then(function (respon) {
             $scope.getAllProduct=respon.data;
             console.log(respon.data)
         }).catch(err => {

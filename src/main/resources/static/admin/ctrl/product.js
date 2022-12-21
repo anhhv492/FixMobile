@@ -1,7 +1,7 @@
-app.controller('product', function($scope, $http) {
-    const pathAPI = "/rest/admin/product";
-    const callApiPage = "http://localhost:8080/rest/admin/product/pageImei?page="
-    const callDeleteImei = "http://localhost:8080/rest/admin/product/deleteImeiById?id="
+app.controller('product', function($scope, $http, $window,$rootScope) {
+    const pathAPI = "/rest/staff/product";
+    const callApiPage = "http://localhost:8080/rest/staff/product/pageImei?page="
+    const callDeleteImei = "http://localhost:8080/rest/staff/product/deleteImeiById?id="
     $scope.formProduct = {};
     $scope.imeis = []
     $scope.products = [];
@@ -16,6 +16,8 @@ app.controller('product', function($scope, $http) {
     $scope.check_last=true;
     $scope.check_first_imei=false;
     $scope.check_last_imei=true;
+    $scope.check_next_imei=true;
+    $scope.check_prev_imei=false;
     $scope.totalPages=0;
     $scope.currentPage = 0;
     $scope.pageImei = [];
@@ -25,6 +27,7 @@ app.controller('product', function($scope, $http) {
         insert:'Thêm mới',
         update:'Cập nhật'
     };
+    $rootScope.check = null;
     const jwtToken = localStorage.getItem("jwtToken")
     const token = {
         headers: {
@@ -147,7 +150,7 @@ app.controller('product', function($scope, $http) {
                     }
                 }).then((result) => {
                     if (result.dismiss === Swal.DismissReason.timer) {
-                        $http.post(`${pathAPI}/delete?id=${formProduct.idProduct}`,token).then(response=> {
+                        $http.post(pathAPI+`/delete?id=${formProduct.idProduct}`,formProduct.idProduct,token).then(response=> {
                         $scope.message('Đã cập nhật trạng thái  sản phẩm thành hết hàng');
                         $scope.getProducts();
                     }).catch(error=>{
@@ -196,7 +199,7 @@ app.controller('product', function($scope, $http) {
         formData.append('capacity',$scope.formProduct.capacity)
         let req = {
             method: 'POST',
-            url: '/rest/admin/product/updateProduct?id=' +$scope.formProduct.idProduct,
+            url: '/rest/staff/product/updateProduct?id=' +$scope.formProduct.idProduct,
             headers: {
                 'Content-Type': undefined,
                 Authorization: `Bearer `+jwtToken
@@ -319,7 +322,7 @@ app.controller('product', function($scope, $http) {
         console.log($scope.formProduct.category)
         let req = {
             method: 'POST',
-            url: '/rest/admin/product/saveProduct',
+            url: '/rest/staff/product/saveProduct',
             headers: {
                 'Content-Type': undefined,
                 Authorization: `Bearer `+jwtToken
@@ -541,7 +544,7 @@ app.controller('product', function($scope, $http) {
         form.append('product',$scope.formProduct.product);
         let req = {
             method: 'POST',
-            url: '/rest/admin/product/saveImay',
+            url: '/rest/staff/product/saveImay',
             headers: {
                 'Content-Type': undefined, // or  'Content-Type':'application/json'
                 Authorization: `Bearer `+jwtToken
@@ -650,7 +653,7 @@ app.controller('product', function($scope, $http) {
                 }).then((result) => {
                     /* Read more about handling dismissals below */
                     if (result.dismiss === Swal.DismissReason.timer) {
-                        $http.post(callDeleteImei+imeiForm.idImay,token).then(response=> {
+                        $http.post(callDeleteImei+imeiForm.idImay,imeiForm.idImay,token).then(response=> {
                             $scope.pageImei.splice($scope.pageImei.indexOf(imeiForm), 1);
                             $scope.message('Đã xóa thành công Imei');
 
@@ -667,14 +670,16 @@ app.controller('product', function($scope, $http) {
     };
     $scope.nextPageImei=function(){
         $scope.check_first_imei=true;
+        $scope.check_prev_imei=true;
         $scope.imeisPage++;
-        if($scope.imeisPage>=$scope.totalPagesImei){
+        if($scope.currentPageImei>=$scope.totalPagesImei){
             $scope.index=0;
             $scope.check_first_imei=false;
             $scope.check_last_imei=true;
         }
-        if($scope.imeisPage==$scope.totalPagesImei){
+        if($scope.currentPageImei==$scope.totalPagesImei){
             $scope.check_first_imei=true;
+            $scope.check_next_imei=false;
             $scope.check_last_imei=false;
         }
         $scope.pageImeiFt($scope.imeisPage);
@@ -683,13 +688,14 @@ app.controller('product', function($scope, $http) {
     $scope.prevPageImei=function(){
         $scope.check_last_imei=true;
         $scope.imeisPage--;
-        if($scope.imeisPage<1){
+        if($scope.currentPageImei<1){
             $scope.imeisPage=$scope.totalPagesImei;
             $scope.check_first_imei=true;
             $scope.check_last_imei=false;
         }
-        if($scope.imeisPage==1){
+        if($scope.currentPageImei==1){
             $scope.check_first_imei=false;
+            $scope.check_prev_imei=false;
             $scope.check_last_imei=true;
         }
         $scope.pageImeiFt($scope.imeisPage);
@@ -704,10 +710,48 @@ app.controller('product', function($scope, $http) {
     $scope.lastPageImei=function(){
         $scope.check_first_imei=true;
         $scope.check_last_imei=false;
+        $scope.check_prev_imei=true;
+        $scope.check_next_imei=false;
         $scope.imeisPage=$scope.totalPages;
         $scope.pageImeiFt($scope.imeisPage);
     }
     $scope.pageImeiFt($scope.imeisPage);
+
+    if ($scope.currentPageImei==$scope.totalPagesImei){
+        $scope.check_next_imei=false;
+        $scope.check_last_imei=false;
+    }else if ($scope.currentPageImei<$scope.totalPagesImei){
+        $scope.check_next_imei=true;
+        $scope.check_last_imei=true;
+    }
+
+
+    $scope.logOut = function (){
+        $window.location.href = "http://localhost:8080/views/index.html#!/login"
+        Swal.fire({
+            icon: 'error',
+            title: 'Vui lòng đăng nhập lại!!',
+            text: 'Tài khoản của bạn không có quyền truy cập!!',
+        })
+    }
+
+    $scope.checkLogin = function () {
+        if (jwtToken == null){
+           $scope.logOut();
+        }else {
+            $http.get("http://localhost:8080/rest/user/getRole",token).then(respon =>{
+                if (respon.data.name === "USER"){
+                    $scope.logOut();
+                }else if (respon.data.name === "ADMIN"){
+                    $rootScope.check = null;
+                }else {
+                    $rootScope.check = "OK";
+                }
+            })
+        }
+    }
+
+    $scope.checkLogin();
 
     $scope.generationName=function (){
         if($scope.formProduct.name!=undefined || $scope.formProduct.name!=null ||$scope.formProduct.name!=''){
@@ -743,4 +787,5 @@ app.controller('product', function($scope, $http) {
         }
 
     }
+
 });

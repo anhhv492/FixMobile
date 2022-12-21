@@ -1,4 +1,4 @@
-app.controller("sale_ctrl", function ($scope, $http) {
+app.controller("sale_ctrl", function ($scope, $http, $window,$rootScope) {
     let urlprd = "http://localhost:8080/rest/admin/product/getdatasale";
     let urlacsr = "http://localhost:8080/rest/admin/accessory/getdatasale";
     let urlacc = "http://localhost:8080/rest/admin/accounts/getdatasale";
@@ -9,10 +9,40 @@ app.controller("sale_ctrl", function ($scope, $http) {
             Authorization: `Bearer ` + jwtToken
         }
     }
+
+    $rootScope.check = null;
+
+    $scope.logOut = function (){
+        $window.location.href = "http://localhost:8080/views/index.html#!/login"
+        Swal.fire({
+            icon: 'error',
+            title: 'Vui lòng đăng nhập lại!!',
+            text: 'Tài khoản của bạn không có quyền truy cập!!',
+        })
+    }
+
+    $scope.checkLogin = function () {
+        if (jwtToken == null){
+            $scope.logOut();
+        }else {
+            $http.get("http://localhost:8080/rest/user/getRole",token).then(respon =>{
+                if (respon.data.name === "USER"){
+                    $scope.logOut();
+                }else if (respon.data.name === "ADMIN"){
+                    $rootScope.check = null;
+                }else {
+                    $rootScope.check = "OK";
+                    $scope.logOut();
+                }
+            })
+        }
+    }
+
+    $scope.checkLogin();
     $scope.saleadd = {};
     $scope.saleedit = {};
     $scope.dataTable = [];
-    $scope.dataTableSale = {};
+            $scope.dataTableSale = {};
     $scope.seLected = [];
     $scope.index = 0;
     $scope.totalPages = 0;
@@ -56,7 +86,7 @@ app.controller("sale_ctrl", function ($scope, $http) {
         }).then((result) => {
             if (result.isConfirmed) {
                 let item = angular.copy($scope.saleadd);
-                let urlsale = `/admin/rest/sale/add`;
+                let urlsale = `/rest/admin/sale/add`;
                 let listDetail = angular.copy($scope.seLected);
                 console.log($scope.saleadd.typeSale+'hahhahaah')
                 if ($scope.saleadd.typeSale == 0 || $scope.saleadd.typeSale == 2 || ($scope.saleadd.userType == 0 && $scope.saleadd.typeSale == 3) ) {
@@ -81,7 +111,7 @@ app.controller("sale_ctrl", function ($scope, $http) {
                     })
                 } else {
                     $http.post(urlsale, item, token).then(resp => {
-                        let urlsaledetail = `/admin/rest/sale/adddetail/` + $scope.saleadd.typeSale;
+                        let urlsaledetail = `/rest/admin/sale/adddetail/` + $scope.saleadd.typeSale;
                         console.log(listDetail);
                         $http.post(urlsaledetail, listDetail, token).then(resp => {
                             document.getElementById("clossmodal").click();
@@ -149,8 +179,8 @@ app.controller("sale_ctrl", function ($scope, $http) {
                 $scope.check_firsttable = true;
                 $scope.check_lasttable = false;
             }
-            var urlGetDataTableSale = `/admin/rest/sale/getall/` + $scope.indextable + `?stt=` + idxstt + `&share=&type=`;
-            $http.get(urlGetDataTableSale).then(function (response) {
+            var urlGetDataTableSale = `/rest/admin/sale/getall/` + $scope.indextable + `?stt=` + idxstt + `&share=&type=`;
+            $http.get(urlGetDataTableSale,token).then(function (response) {
                 $scope.dataTableSale = response.data.content;
                 $scope.totalPagestable = response.data.totalPages;
             }).catch(error => {
@@ -191,8 +221,8 @@ app.controller("sale_ctrl", function ($scope, $http) {
                 $scope.check_firsttable = false;
                 $scope.check_lasttable = true;
             }
-            var urlGetDataTableSale = `/admin/rest/sale/getall/` + $scope.indextable + `?stt=` + idxstt + `&share=&type=`;
-            $http.get(urlGetDataTableSale).then(function (response) {
+            var urlGetDataTableSale = `/rest/admin/sale/getall/` + $scope.indextable + `?stt=` + idxstt + `&share=&type=`;
+            $http.get(urlGetDataTableSale,token).then(function (response) {
                 $scope.dataTableSale = response.data.content;
                 $scope.totalPagestable = response.data.totalPages;
             }).catch(error => {
@@ -359,8 +389,8 @@ app.controller("sale_ctrl", function ($scope, $http) {
     $scope.showDataTableSale = function (stt) {
         $scope.dataTableSale = [];
         $scope.indextable = 0;
-        var urlGetDataTableSale = `/admin/rest/sale/getall/` + $scope.indextable + `?stt=` + stt + `&share=&type=`;
-        $http.get(urlGetDataTableSale).then(function (response) {
+        var urlGetDataTableSale = `/rest/admin/sale/getall/` + $scope.indextable + `?stt=` + stt + `&share=&type=`;
+        $http.get(urlGetDataTableSale,token).then(function (response) {
             $scope.dataTableSale = response.data.content;
             $scope.totalPagestable = response.data.totalPages;
         }).catch(error => {
@@ -389,13 +419,13 @@ app.controller("sale_ctrl", function ($scope, $http) {
     }
 
     $scope.showdetailSale = function (id) {
-        var url = `http://localhost:8080/admin/rest/sale/getsale/` + id;
-        $http.get(url).then(function (response) {
+        var url = `http://localhost:8080/rest/admin/sale/getsale/` + id;
+        $http.get(url,token).then(function (response) {
             $scope.saleadd = response.data;
             $scope.saleadd.createStart = new Date(response.data.createStart);
             $scope.saleadd.createEnd = new Date(response.data.createEnd);
-            var url1 = "http://localhost:8080/admin/rest/sale/getsaledetail/" + id;
-            $http.get(url1).then(function (response1) {
+            var url1 = "http://localhost:8080/rest/admin/sale/getsaledetail/" + id;
+            $http.get(url1,token).then(function (response1) {
                 $scope.seLected = [];
                 for (var i = 0; i < response1.data.length; i++) {
                     if ($scope.saleadd.typeSale == 1) {
@@ -416,7 +446,7 @@ app.controller("sale_ctrl", function ($scope, $http) {
     // update Sale start
     $scope.updateSale = function () {
         let item = angular.copy($scope.saleadd);
-        let urlsale = `/admin/rest/sale/update`;
+        let urlsale = `/rest/admin/sale/update`;
         let listDetail = angular.copy($scope.seLected);
         if ($scope.saleadd.typeSale == 0 || $scope.saleadd.typeSale == 2) {
             $http.post(urlsale, item, token).then(resp => {
@@ -438,7 +468,7 @@ app.controller("sale_ctrl", function ($scope, $http) {
             })
         } else {
             $http.post(urlsale, item, token).then(resp => {
-                let urlsaledetail = `/admin/rest/sale/updatedetail/` + $scope.saleadd.typeSale + `/` + $scope.saleadd.idSale;
+                let urlsaledetail = `/rest/admin/sale/updatedetail/` + $scope.saleadd.typeSale + `/` + $scope.saleadd.idSale;
                 $http.post(urlsaledetail, listDetail, token).then(resp => {
                     document.getElementById("clossmodal").click();
                     $scope.clear();
@@ -482,7 +512,7 @@ app.controller("sale_ctrl", function ($scope, $http) {
         }).then((result) => {
             if (result.isConfirmed) {
                 let item = angular.copy($scope.saleadd);
-                let urlsale = `/admin/rest/sale/delete`;
+                let urlsale = `/rest/admin/sale/delete`;
                 $http.post(urlsale, item, token).then(resp => {
                     document.getElementById("clossmodal").click();
                     swal.fire({

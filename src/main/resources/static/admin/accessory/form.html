@@ -109,7 +109,7 @@
                                     </span>
                                     </div>
                                     <div class="form-group mt-4">
-                                        <button type="submit" class="btn btn-success" ng-disabled="myForm.$invalid">{{checkSubmit==false?title.insert:title.update}}</button>
+                                        <button type="submit" class="btn {{checkSubmit == false ? 'btn-success' : 'btn-primary'}}" ng-disabled="myForm.$invalid">{{checkSubmit==false?title.insert:title.update}}</button>
                                         <button type="button" ng-if="checkSubmit" ng-click="refresh()" class="btn btn-warning">Hủy</button>
                                     </div>
                                 </div>

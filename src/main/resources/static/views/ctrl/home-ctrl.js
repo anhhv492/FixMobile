@@ -4,11 +4,12 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
     var urlImei = `http://localhost:8080/rest/guest/imei`;
     var urlProduct=`http://localhost:8080/rest/guest/product`;
     var urlOneProduct = `http://localhost:8080/rest/guest`;
-    var urlAccount = `http://localhost:8080/rest/admin/accounts`;
+
+    var urlAccount = `http://localhost:8080/rest/user`;
     var apiAccount = `http://localhost:8080/rest/guest`;
 
-    var urlCart = `http://localhost:8080/rest/guest/cart`;
 
+    var urlCart = `http://localhost:8080/rest/guest/cart`;
     const callApiOneAccessoryHome = "http://localhost:8080/rest/guest/getOneAccessory";
 
     const jwtToken = localStorage.getItem("jwtToken")
@@ -27,6 +28,21 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
     $rootScope.name="";
     $scope.accountActive= {};
     $scope.accountHome= {};
+    $rootScope.check = null;
+
+    $scope.checkLogin = function () {
+        if (jwtToken == null){
+
+        }else {
+            $http.get("http://localhost:8080/rest/user/getRole",token).then(respon =>{
+                if (respon.data.name === "USER"){
+                    $rootScope.check = "OK";
+                }else {
+                    $rootScope.check = null;
+                }
+            })
+        }
+    }
 
 
     $scope.getAcount = function () {
@@ -71,7 +87,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
     }
     $scope.getPriceSalePrd=function (x){
         $rootScope.detailProducts[x].priceSale = 0;
-        var urlSale=`http://localhost:8080/admin/rest/sale/getbigsale?money=`+$rootScope.detailProducts[x].price+`&idPrd=`+$rootScope.detailProducts[x].idProduct+`&idAcsr=0`;
+        var urlSale=`http://localhost:8080/rest/guest/sale/getbigsale?money=`+$rootScope.detailProducts[x].price+`&idPrd=`+$rootScope.detailProducts[x].idProduct+`&idAcsr=0`;
         $http.get(urlSale, token).then(resp => {
             if(resp.data==''){
                 $rootScope.detailProducts[x].priceSale = 0;
@@ -93,7 +109,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
     }
     $scope.getPriceSaleAcsr=function (x){
         $rootScope.detailAccessories[x].priceSale = 0;
-        var urlSale=`http://localhost:8080/admin/rest/sale/getbigsale?money=`+$rootScope.detailAccessories[x].price+`&idPrd=0&idAcsr=`+$rootScope.detailAccessories[x].idAccessory;
+        var urlSale=`http://localhost:8080/rest/guest/sale/getbigsale?money=`+$rootScope.detailAccessories[x].price+`&idPrd=0&idAcsr=`+$rootScope.detailAccessories[x].idAccessory;
         $http.get(urlSale, token).then(resp => {
             if(resp.data!='') {
                 if (resp.data.moneySale == null) {
@@ -183,7 +199,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                         if(!$scope.accessoryItem){
                             data.qty=1;
                             var money = data.price;
-                            var urlSale=`http://localhost:8080/admin/rest/sale/getbigsale?money=`+money+`&idPrd=`+'0'+`&idAcsr=`+data.idAccessory;
+                            var urlSale=`http://localhost:8080/rest/guest/sale/getbigsale?money=`+money+`&idPrd=`+'0'+`&idAcsr=`+data.idAccessory;
                             var total=0;
                             $http.get(urlSale, token).then(resp => {
                                 if(resp.data==''){
@@ -265,7 +281,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                             data.qty=1;
                             var money = data.price
                             var total=0;
-                            var urlSale=`http://localhost:8080/admin/rest/sale/getbigsale?money=`+money+`&idPrd=`+data.idProduct+`&idAcsr=0`;
+                            var urlSale=`http://localhost:8080/rest/guest/sale/getbigsale?money=`+money+`&idPrd=`+data.idProduct+`&idAcsr=0`;
                             $http.get(urlSale, token).then(resp => {
                                 if(resp.data==''){
                                     total=0;
@@ -440,9 +456,11 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
             localStorage.setItem('accessCodeHome', $rootScope.accessCodeHome.idAccessory);
         })
     }
-     if ($rootScope.account != null){
+     if ($rootScope.account != null && token != null){
          $scope.getAcountActive();
+         $rootScope.loadLocalStorage();
      }
+
 
 
     $rootScope.loadLocalStorage();
@@ -450,7 +468,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
 
     $scope.detailProduct={};
     $scope.getDetailProduct=function (id){
-        $http.post(`/rest/admin/product/detailproduct/`+id).then(function (respon) {
+        $http.post(`/rest/guest/product/detailproduct/`+id).then(function (respon) {
             $scope.detailProduct=respon.data;
             console.log(respon.data)
         }).catch(err => {

@@ -1,4 +1,4 @@
-app.controller('ctrl_cate', function($scope, $http) {
+app.controller('ctrl_cate', function($scope, $http, $window,$rootScope) {
     $scope.form = {};
     $scope.category = [];
     $scope.index=1;
@@ -17,6 +17,7 @@ app.controller('ctrl_cate', function($scope, $http) {
     $scope.statusValue = -1;
     $scope.valueSelectStatus = 1;
     $scope.listId = [];
+    $rootScope.check = null;
 
     const jwtToken = localStorage.getItem("jwtToken")
     const token = {
@@ -166,9 +167,8 @@ app.controller('ctrl_cate', function($scope, $http) {
     }
 
     $scope.onSave = function() {
-
-        $http.post(pathAPI+"/create", $scope.form,
-            $scope.form.status= $scope.valueSelectStatus,token).then(response => {
+        $scope.form.status = $scope.valueSelectStatus;
+        $http.post(pathAPI+"/create", $scope.form,token).then(response => {
             if (response != null){
                 const Toast = Swal.mixin({
                     toast: true,
@@ -255,7 +255,7 @@ app.controller('ctrl_cate', function($scope, $http) {
                 }).then((result) => {
                     /* Read more about handling dismissals below */
                     if (result.dismiss === Swal.DismissReason.timer) {
-                        $http.post(`${pathAPI}/delete?id=`+category.idCategory,token).then(response=> {
+                        $http.post(`${pathAPI}/delete?id=${category.idCategory}`,category.idCategory,token).then(response=> {
                             const Toast = Swal.mixin({
                                 toast: true,
                                 position: 'top-end',
@@ -309,8 +309,9 @@ app.controller('ctrl_cate', function($scope, $http) {
     };
 
     $scope.onUpdate = function() {
+        $scope.form.status= $scope.valueSelectStatus
         $http.put(pathAPI+'/update?id='+$scope.form.idCategory,
-            $scope.form,$scope.form.status= $scope.valueSelectStatus,token).then(response=> {
+            $scope.form,token).then(response=> {
             const Toast = Swal.mixin({
                 toast: true,
                 position: 'top-end',
@@ -468,4 +469,31 @@ app.controller('ctrl_cate', function($scope, $http) {
 
 
     $scope.getAll();
+    $scope.logOut = function (){
+        $window.location.href = "http://localhost:8080/views/index.html#!/login"
+        Swal.fire({
+            icon: 'error',
+            title: 'Vui lòng đăng nhập lại!!',
+            text: 'Tài khoản của bạn không có quyền truy cập!!',
+        })
+    }
+
+    $scope.checkLogin = function () {
+        if (jwtToken == null){
+            $scope.logOut();
+        }else {
+            $http.get("http://localhost:8080/rest/user/getRole",token).then(respon =>{
+
+                if (respon.data.name === "USER"){
+                    $scope.logOut();
+                }else if (respon.data.name === "ADMIN"){
+                    $rootScope.check = null;
+                }else {
+                    $rootScope.check = "OK";
+                }
+            })
+        }
+    }
+
+    $scope.checkLogin();
 });

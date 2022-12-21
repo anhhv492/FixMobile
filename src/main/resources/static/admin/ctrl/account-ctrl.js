@@ -554,4 +554,28 @@ console.log("Kết thúc check trùng")
         })
     }
 
+    $scope.logOut = function (){
+        $window.location.href = "http://localhost:8080/views/index.html#!/login"
+        Swal.fire({
+            icon: 'error',
+            title: 'Vui lòng đăng nhập lại!!',
+            text: 'Tài khoản của bạn không có quyền truy cập!!',
+        })
+    }
+
+    $scope.checkLogin = function () {
+        if (jwtToken == null){
+            $scope.logOut();
+        }else {
+            $http.get("http://localhost:8080/rest/user/getRole",token).then(respon =>{
+                console.log(respon.data.name);
+                if (respon.data.name === "USER" || respon.data.name === "STAFF"){
+                    $scope.logOut();
+                }
+            })
+        }
+    }
+
+    $scope.checkLogin();
+
 })

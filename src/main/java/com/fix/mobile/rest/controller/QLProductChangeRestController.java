@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(value= "/rest/admin/productchange")
+@RequestMapping(value= "/rest/staff/productchange")
 @CrossOrigin("*")
 public class QLProductChangeRestController {
 	@Autowired
