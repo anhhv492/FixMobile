@@ -445,7 +445,7 @@ public class GuestRestController {
 
                     if (listIdColer.size() != 0) {
                         for (int y = 0; y < listIdColer.size(); y++) {
-                            if (listIdColer.get(y).asInt() == listASSR.get(i).getColor().getIdColor()
+                            if (listIdColer.get(y).asText() == listASSR.get(i).getColor()
                                     && listASSR.get(i).getPrice().compareTo(priceMin) >= 0
                                     && listASSR.get(i).getPrice().compareTo(priceMax) <= 0
                                     && listASSR.get(i).getName().toLowerCase().contains(String.valueOf(findProcuctAll.get("search")).replaceAll("\"", "").toLowerCase())
@@ -620,5 +620,10 @@ public class GuestRestController {
     }
     private List<BigDecimal> getMaxMinPriceProduct(Integer id){
         return productService.getMinMaxPrice(id);
+    }
+
+    @RequestMapping("/saleapply/{id}")
+    public Sale findSaleApply(@PathVariable("id") Integer id){
+        return saleSV.findByid(saleSV.findSaleApply(id));
     }
 }

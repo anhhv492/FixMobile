@@ -87,8 +87,10 @@
                                         <select ng-model="formProduct.capacity" class="form-select" name="capacity" required ng-change="generationName()">
                                             <option  value="" ng-value="">Chọn dung lượng
                                             </option>
+
                                             <option ng-repeat="capa in capacitys"  ng-value="capa.idCapacity">{{capa.name}}
                                             </option>
+
                                         </select>
                                         <span ng-show="myForm.$submitted || myForm.capacity.$dirty" style="color: red">
                                         <span class="error" ng-show="myForm.capacity.$error.required"> <i
@@ -164,7 +166,7 @@
                                     </div>
 
                                     <div class="form-group mt-4">
-                                        <button type="submit"  class="btn btn-success" ng-disabled="myForm.$invalid">{{checkSubmit==false?title.insert:title.update}}</button>
+                                        <button type="submit"  class="btn {{checkSubmit == false ? 'btn-success' : 'btn-primary'}}" ng-disabled="myForm.$invalid">{{checkSubmit==false?title.insert:title.update}}</button>
                                         <button type="button" ng-if="checkSubmit" ng-click="refresh()" class="btn btn-warning">Làm mới</button>
                                     </div>
                                 </div>

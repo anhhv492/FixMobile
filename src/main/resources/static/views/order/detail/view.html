@@ -1,3 +1,4 @@
+<h5 class="text-center text-primary font-weight-bold mt-2">Đơn hàng chi tiết</h5>
 <div class="container">
     <div class="table-responsive">
         <table class="table  table-bordered table-hover container">
@@ -24,6 +25,8 @@
                 <td><img width="80px" height="80px" src="/images/accessories/{{orderDetail.accessory.image}}"
                          class="pt-2"></td>
                 <td>{{orderDetail.quantity * orderDetail.price | number}}</td>
+                <td></td>
+                <td></td>
             </tr>
             <tr ng-repeat="orderDetail in orderDetails" ng-if="orderDetail.product">
                 <td>{{orderDetail.product.name}}</td>
@@ -33,6 +36,7 @@
                 <td>{{orderDetail.quantity}}</td>
                 <td><img width="80px" height="80px" src="{{orderDetail.product.images[0].name}}" class="pt-2"></td>
                 <td>{{orderDetail.quantity * orderDetail.price | number}}</td>
+                <td>
                     <p ng-if="orderDetail.status == 0">Đang kiểm tra yêu cầu ...</p>
                     <p ng-if="orderDetail.status == 1">Đã xác nhận đổi trả</p>
                     <p ng-if="orderDetail.status == 2">Vui lòng đang chọn máy mới cho bạn</p>
@@ -40,13 +44,12 @@
                 </td>
                 <td>
                     <button ng-click="getProductChange(orderDetail)"
-                            ng-if="orderDetail.order.status == 3 && orderDetail.status == 2"
+                            ng-if="orderDetail.order.status == 3 && orderDetail.status == 1"
                             class="btn btn-default"
                             data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                         <i class="fa fa-info-circle" aria-hidden="true"></i> Đổi hàng
                     </button>
                 </td>
-                <td></td>
             </tr>
             </tbody>
         </table>

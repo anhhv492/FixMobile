@@ -19,10 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletContext;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequestMapping(value= "/rest/user")
@@ -47,6 +44,8 @@ public class UserRestController {
     @Autowired
     SaleDetailService saleDetailSV;
 
+    @Autowired
+    private OrderDetailService orderDetailService;
     Account account = null;
 
     public UserRestController(AccountService accountService, SaleService saleSV, ServletContext application, ModelMapper modelMapper, SaleDetailService saleDetailSV) {
@@ -193,6 +192,11 @@ public class UserRestController {
             saleSV.updateQuantity(updatequantity);
             saleSV.addApply_Sale(idSale,userName);
         }
+    }
+
+    @RequestMapping("/saleapply/{id}")
+    public Sale findSaleApply(@PathVariable("id") Integer id){
+        return saleSV.findByid(saleSV.findSaleApply(id));
     }
 
 

@@ -326,7 +326,7 @@ public class SaleServiceImpl implements SaleService {
         }
         if(sale.getDiscountMethod() == 0){
             if(sale.getVoucher() == null ||sale.getVoucher().length()==0){
-                throw new StaleStateException("Mã giảm giá sai định dạng hãy nhập trên 5 kí tự không bao gồm kí tự đặc biệt và khoảng trắng");
+                throw new StaleStateException("Mã giảm giá sai định dạng hãy nhập trên 5 kí tự không in hoa, không bao gồm kí tự đặc biệt và khoảng trắng");
             }
         }
         if(sale.getDiscountType() == null){
@@ -346,10 +346,10 @@ public class SaleServiceImpl implements SaleService {
             throw new StaleStateException("Số lượng sai định dạng hãy nhập lớn hơn 1");
         }
         if(sale.getCreateStart() == null){
-            throw new StaleStateException("Thời gian bắt đầu sai định dạng hãy nhập tháng / ngày / năm");
+            throw new StaleStateException("Thời gian bắt đầu sai định dạng hãy nhập tháng / ngày / năm và nằm trong khoảng 12 tháng gần đây");
         }
         if(sale.getCreateEnd() == null){
-            throw new StaleStateException("Thời gian kết thúc sai định dạng hãy nhập tháng / ngày / năm");
+            throw new StaleStateException("Thời gian kết thúc sai định dạng hãy nhập tháng / ngày / năm và nằm trong khoảng 12 tháng gần đây");
         }
         if(sale.getTypeSale() == 2 ){
             if(sale.getValueMin() == null ){

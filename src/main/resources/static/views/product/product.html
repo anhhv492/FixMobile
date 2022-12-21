@@ -1,4 +1,4 @@
-<div class="container mt-3 mb-3">
+<div class="container mt-3 mb-3" ng-init="loadDetailPrd()">
     <div class="single-product-area bg-white">
         <div class="container">
             <div class="row">
@@ -50,7 +50,7 @@
                                             > {{color.name}}
                                         </div>
                                         <div class="d-flex flex-row mt-5 gap-3">
-                                            <button class="btn btn-outline-dark" ng-click=""
+                                            <button class="btn btn-outline-dark" ng-click="addCart(PrD)"
                                                     style="height: 70px; width: 100%">Add to Cart
                                             </button>
                                         </div>
@@ -104,24 +104,15 @@
                                                 </div>
 
                                             </div>
-
-
                                         </div>
-
-
                                     </div>
                                 </div>
-
                             </div>
-
-
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 <style>

@@ -40,15 +40,6 @@ public interface ProductService extends GenericService<Product, Integer> {
 	List<Integer> getlistDetailProductColor(Integer id);
 	List<Integer> getlistDetailProductCategory();
 
-	List<Integer> checkColor(Integer idRam,Integer idCapa);
-	List<Integer> checkCapa(Integer idColor,Integer idRam);
-	List<Integer> checkRam(Integer idColor,Integer idCapa);
-	List<Integer> ramcheckRamAndColor(Integer idCapa);
-	List<Integer> colorcheckRamAndColor(Integer idCapa);
-	List<Integer> ramcheckRamAndCapa(Integer idColor);
-	List<Integer> CapacheckRamAndCapa(Integer idColor);
-	List<Integer> ColorcheckColorAndCapa(Integer idRam);
-	List<Integer> CapacheckColorAndCapa(Integer idRam);
 
 	List<BigDecimal> getMinMaxPrice(Integer id);
 }

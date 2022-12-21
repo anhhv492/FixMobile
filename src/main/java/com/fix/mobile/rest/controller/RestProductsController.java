@@ -307,47 +307,30 @@ public class RestProductsController {
 
 
 	@RequestMapping("/findproduct/{page}")
-	public Page<Product> findProduct(
+	public Page<ProductDetailDTO> findProduct(
 			@PathVariable ("page") Integer page,
 			@RequestBody JsonNode findProcuctAll
 	) {
 		Pageable paging = PageRequest.of(page, 4);
 		List<Product> listPrd = productService.findProduct();
 		List<Product> listFindProduct = new ArrayList<>();
-		JsonNode listIdCategory = findProcuctAll.get("idCategory");
 		JsonNode listIdRam = findProcuctAll.get("idRam");
 		JsonNode listIdColer = findProcuctAll.get("idColer");
 		JsonNode listIdCapacity = findProcuctAll.get("idCapacity");
 		Integer sortMinMax = findProcuctAll.get("sortMinMax").asInt();
-		System.out.println(listPrd.size());
-		System.out.println(String.valueOf(findProcuctAll.get("search")).replaceAll("\"","")+"hihihi");
 		if(listPrd.size()!=0) {
 			for (int i = 0; i < listPrd.size(); i++) {
 				if (
-						listIdCategory.size() == 0 &&
 								listIdRam.size() == 0 &&
 								listIdCapacity.size() == 0 &&
 								listIdColer.size() == 0
 				) {
-					if (listPrd.get(i).getName().toLowerCase().contains(String.valueOf(findProcuctAll.get("search")).replaceAll("\"", "").toLowerCase())
-					) {
-						listFindProduct = checklist(listFindProduct, listPrd.get(i));
-					}
+					listFindProduct = checklist(listFindProduct, listPrd.get(i));
 				} else {
-					if (listIdCategory.size() != 0) {
-						for (int y = 0; y < listIdCategory.size(); y++) {
-							if (listIdCategory.get(y).asInt() == listPrd.get(i).getCategory().getIdCategory()
-									&& listPrd.get(i).getName().toLowerCase().contains(String.valueOf(findProcuctAll.get("search")).replaceAll("\"", "").toLowerCase())
-							) {
-								listFindProduct = checklist(listFindProduct, listPrd.get(i));
-							}
-						}
-					}
 
 					if (listIdRam.size() != 0) {
 						for (int y = 0; y < listIdRam.size(); y++) {
 							if (listIdRam.get(y).asInt() == listPrd.get(i).getRam().getIdRam()
-									&& listPrd.get(i).getName().toLowerCase().contains(String.valueOf(findProcuctAll.get("search")).replaceAll("\"", "").toLowerCase())
 							) {
 								listFindProduct = checklist(listFindProduct, listPrd.get(i));
 							}
@@ -357,7 +340,6 @@ public class RestProductsController {
 					if (listIdCapacity.size() != 0) {
 						for (int y = 0; y < listIdCapacity.size(); y++) {
 							if (listIdCapacity.get(y).asInt() == listPrd.get(i).getCapacity().getIdCapacity()
-									&& listPrd.get(i).getName().toLowerCase().contains(String.valueOf(findProcuctAll.get("search")).replaceAll("\"", "").toLowerCase())
 							) {
 								listFindProduct = checklist(listFindProduct, listPrd.get(i));
 							}
@@ -367,7 +349,6 @@ public class RestProductsController {
 					if (listIdColer.size() != 0) {
 						for (int y = 0; y < listIdColer.size(); y++) {
 							if (listIdColer.get(y).asInt() == listPrd.get(i).getColor().getIdColor()
-									&& listPrd.get(i).getName().toLowerCase().contains(String.valueOf(findProcuctAll.get("search")).replaceAll("\"", "").toLowerCase())
 							) {
 								listFindProduct = checklist(listFindProduct, listPrd.get(i));
 							}
@@ -376,8 +357,71 @@ public class RestProductsController {
 				}
 			}
 		}
-		Page<Product> pageFindProductAll = new PageImpl<>(sortProduct(listFindProduct,sortMinMax), paging, listFindProduct.size());
-		System.out.println(pageFindProductAll);
+		List<ProductDetailDTO> listgetAllProduct= new ArrayList<>();
+		for (int x: productService.getlistDetailProductCategory()
+		) {
+			if(listFindProduct.size()!=0){
+				for (int i=0;i<listFindProduct.size();i++){
+					if(listFindProduct.get(i).getCategory().getIdCategory()==x){
+						if(listgetAllProduct.size()==0){
+							listgetAllProduct.add(getDetailProduct(x));
+						}else {
+							boolean ktt=true;
+							for (int y=0; y < listgetAllProduct.size();y++
+							) {
+								if (listgetAllProduct.get(y).getId() == x) {
+									ktt=false;
+								}
+							}
+							if(ktt){
+								listgetAllProduct.add(getDetailProduct(x));
+							}
+						}
+					}
+				}
+			}
+		}
+
+		BigDecimal priceSalemin;
+		BigDecimal priceSalemax;
+		List<ProductDetailDTO> listRmove=new ArrayList<>();
+		if(!String.valueOf(findProcuctAll.get("priceSalemin")).replaceAll("\"","").equals("")){
+			priceSalemin = new BigDecimal(String.valueOf(findProcuctAll.get("priceSalemin")).replaceAll("\"",""));
+			if(!String.valueOf(findProcuctAll.get("priceSalemax")).replaceAll("\"","").equals("")){
+				priceSalemax = new BigDecimal(String.valueOf(findProcuctAll.get("priceSalemax")).replaceAll("\"",""));
+				for (int i = 0; i <listgetAllProduct.size(); i++
+					 ) {
+					if(listgetAllProduct.get(i).getPriceMin().compareTo(priceSalemax)>0){
+						listRmove.add(listgetAllProduct.get(i));
+					}else if(listgetAllProduct.get(i).getPriceMax().compareTo(priceSalemin)<0){
+						listRmove.add(listgetAllProduct.get(i));
+					}
+				}
+			}
+		}
+		if(listgetAllProduct.size()!=0){
+			for(int i=0; i<listgetAllProduct.size();i++){
+				if(!listgetAllProduct.get(i).getName().contains(String.valueOf(findProcuctAll.get("search")).replaceAll("\"", "").toLowerCase())){
+					if(listRmove.size()==0){
+						listRmove.add(listgetAllProduct.get(i));
+					}else{
+						boolean cc=true;
+						for(int x=0;x<listRmove.size();x++){
+							if (i==x) {
+								cc=false;
+							}
+						}
+						if(cc){
+							listRmove.add(listgetAllProduct.get(i));
+						}
+					}
+				}
+			}
+		}
+		if(listRmove!=null){
+			listgetAllProduct.removeAll(listRmove);
+		}
+		Page<ProductDetailDTO> pageFindProductAll = new PageImpl<>(sortProduct(listgetAllProduct,sortMinMax), paging, listFindProduct.size());
 		return pageFindProductAll;
 	}
 	private List<BigDecimal> getMaxMinPriceProduct(Integer id){
@@ -401,21 +445,20 @@ public class RestProductsController {
 		}
 		return listcheck;
 	}
-	private List<Product> sortProduct(List<Product> listPRD,Integer check) {
-//		BigDecimal a = new BigDecimal(String.valueOf(listPRD.get(0).getPrice()));
+	private List<ProductDetailDTO> sortProduct(List<ProductDetailDTO> listPRD,Integer check) {
 		if(listPRD.size()==0){
 			return listPRD;
 		}else {
-			Comparator<Product>  MinMax = new Comparator<Product>() {
+			Comparator<ProductDetailDTO>  MinMax = new Comparator<ProductDetailDTO>() {
 				@Override
-				public int compare(Product o1, Product o2) {
-					return o1.getPrice().compareTo(o2.getPrice());
+				public int compare(ProductDetailDTO o1, ProductDetailDTO o2) {
+					return o1.getPriceMin().compareTo(o2.getPriceMin());
 				}
 			};
-			Comparator<Product> MaxMin = new Comparator<Product>() {
+			Comparator<ProductDetailDTO> MaxMin = new Comparator<ProductDetailDTO>() {
 				@Override
-				public int compare(Product o1, Product o2) {
-					return o2.getPrice().compareTo(o1.getPrice());
+				public int compare(ProductDetailDTO o1, ProductDetailDTO o2) {
+					return o2.getPriceMin().compareTo(o1.getPriceMin());
 				}
 			};
 			if(check == 0){
@@ -460,6 +503,10 @@ public class RestProductsController {
 		detailProduct.setColor(listColor);
 		detailProduct.setPriceMin(getMaxMinPriceProduct(id).get(0));
 		detailProduct.setPriceMax(getMaxMinPriceProduct(id).get(1));
+//		detailProduct.setImages();
+//		if(productImage != null && productImage.getImages().size() > 0){
+//			productResponDTO.setImage(productImage.getImages().get(0).getName());
+//		} else productResponDTO.setImage("https://res.cloudinary.com/dcll6yp9s/image/upload/v1669970939/fugsyd4nw4ks0vb7kzyd.png");
 		return detailProduct;
 	}
 	@RequestMapping("/getdetailproduct/{idCapa}/{idRam}/{idColor}")
@@ -469,110 +516,6 @@ public class RestProductsController {
 			@PathVariable("idColor")Integer idColor
 	){
 		return productService.getdeTailPrd(idCapa,idRam,idColor);
-	}
-	@RequestMapping("/checkprd/{idCapa}/{idRam}/{idColor}")
-	public CheckProductDTO checkPrd(
-			@PathVariable("idCapa")Integer idCapa,
-			@PathVariable("idRam")Integer idRam,
-			@PathVariable("idColor")Integer idColor
-	){
-		List<Integer> checkCapa = new ArrayList<>();
-		List<Integer> checkRam = new ArrayList<>();
-		List<Integer> checkColor = new ArrayList<>();
-		if(idCapa==0 && idRam==0 && idColor!=0){
-			if(productService.ramcheckRamAndCapa(idColor).size()==0){
-				checkRam=null;
-			}else{
-				for (int x:productService.ramcheckRamAndCapa(idColor)
-					 ) {
-					checkRam.add(x);
-				}
-			}
-			if(productService.CapacheckRamAndCapa(idColor).size()==0){
-				checkCapa=null;
-			}else{
-				for (int x:productService.CapacheckRamAndCapa(idColor)
-					 ) {
-					checkCapa.add(x);
-				}
-			}
-		}
-		if(idCapa==0 && idRam!=0 && idColor!=0){
-			if(productService.checkCapa(idRam,idColor).size()==0){
-				checkCapa=null;
-			}else{
-				for (int x:productService.checkCapa(idRam,idColor)
-					 ) {
-					checkCapa.add(x);
-				}
-			}
-
-		}
-
-		if(idCapa!=0 && idRam==0 && idColor==0){
-			if(productService.ramcheckRamAndColor(idCapa).size()==0){
-				checkRam=null;
-			}else{
-				for (int x:productService.ramcheckRamAndColor(idCapa)
-					 ) {
-					checkRam.add(x);
-				}
-			}
-			if(productService.colorcheckRamAndColor(idCapa).size()==0){
-				checkColor=null;
-			}else{
-				for (int x:productService.colorcheckRamAndColor(idCapa)
-					 ) {
-					checkColor.add(x);
-				}
-			}
-		}
-		if(idCapa!=0 && idRam!=0 && idColor==0){
-			if(productService.checkColor(idRam,idCapa).size()==0){
-				checkColor=null;
-			}else{
-				for (int x:productService.checkColor(idRam,idCapa)
-					 ) {
-					checkColor.add(x);
-				}
-			}
-
-		}
-
-		if(idCapa==0 && idRam!=0 && idColor==0){
-			if(productService.ColorcheckColorAndCapa(idRam).size()==0){
-				checkColor=null;
-			}else{
-				for (int x:productService.ColorcheckColorAndCapa(idRam)
-					 ) {
-					checkColor.add(x);
-				}
-			}
-			if(productService.CapacheckColorAndCapa(idRam).size()==0){
-				checkCapa=null;
-			}else{
-				for (int x:productService.CapacheckColorAndCapa(idRam)
-					 ) {
-					checkCapa.add(x);
-				}
-			}
-		}
-		if(idCapa!=0 && idRam==0 && idColor!=0){
-			if(productService.checkRam(idColor,idCapa).size()==0){
-				checkRam=null;
-			}else{
-				for (int x:productService.checkRam(idColor,idCapa)
-					 ) {
-					checkRam.add(x);
-				}
-			}
-
-		}
-		CheckProductDTO check = new CheckProductDTO();
-		check.setCheckCapa(checkCapa);
-		check.setCheckColor(checkColor);
-		check.setCheckRam(checkRam);
-		return check;
 	}
 
 }

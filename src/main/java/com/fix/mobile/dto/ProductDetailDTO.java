@@ -2,6 +2,7 @@ package com.fix.mobile.dto;
 
 import com.fix.mobile.entity.Capacity;
 import com.fix.mobile.entity.Color;
+import com.fix.mobile.entity.Image;
 import com.fix.mobile.entity.Ram;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,4 +22,5 @@ public class ProductDetailDTO {
     private List<Capacity> capa;
     private List<Ram> ram;
     private List<Color> color;
+    private List<String> images;
 }

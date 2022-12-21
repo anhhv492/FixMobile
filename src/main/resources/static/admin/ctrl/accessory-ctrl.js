@@ -1,5 +1,5 @@
 app.controller('rest_accessory', function($scope, $http,$rootScope,$window) {
-    const pathAPI = "http://localhost:8080/rest/admin/accessory";
+    const pathAPI = "http://localhost:8080/rest/staff/accessory";
     $scope.form = {};
     $scope.accessories = [];
     $scope.categories = [];
@@ -77,6 +77,7 @@ app.controller('rest_accessory', function($scope, $http,$rootScope,$window) {
         $http.get(`${pathAPI}/cate`,token).then(function(response) {
             $scope.categories = response.data;
         }).catch(error=>{
+            $scope.categories=[];
             console.log("error findByCate",error);
         });
     };
@@ -93,7 +94,7 @@ app.controller('rest_accessory', function($scope, $http,$rootScope,$window) {
         formData.append("category", $scope.form.category);
         let req = {
             method: 'POST',
-            url: '/rest/admin/accessory/create',
+            url: '/rest/staff/accessory/create',
             headers: {
                 'Content-Type': undefined,
                 Authorization: `Bearer `+jwtToken
@@ -136,7 +137,7 @@ app.controller('rest_accessory', function($scope, $http,$rootScope,$window) {
             confirmButtonText: 'Xác nhận!'
         }).then((result) => {
             if (result.isConfirmed) {
-                $http.put(`${pathAPI}/change/${accessory.idAccessory}`,token).then(response=> {
+                $http.put(`${pathAPI}/change/${accessory.idAccessory}`,accessory,token).then(response=> {
                     const Toast = Swal.mixin({
                         toast: true,
                         position: 'top-end',
@@ -199,7 +200,7 @@ app.controller('rest_accessory', function($scope, $http,$rootScope,$window) {
         formData.append("category", $scope.form.category);
         let req = {
             method: 'POST',
-            url: '/rest/admin/accessory/update?id='+accessory.idAccessory,
+            url: '/rest/staff/accessory/update?id='+accessory.idAccessory,
             headers: {
                 'Content-Type': undefined,
                 Authorization: `Bearer `+jwtToken

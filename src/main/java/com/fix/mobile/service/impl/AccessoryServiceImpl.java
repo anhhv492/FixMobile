@@ -122,7 +122,7 @@ public class AccessoryServiceImpl implements AccessoryService {
           accessory.setName(accessoryDTO.getName());
           accessory.setQuantity(accessoryDTO.getQuantity());
           accessory.setPrice(accessoryDTO.getPrice());
-          accessory.setColor(colorRepository.findById(Integer.parseInt(accessoryDTO.getColor())).orElse(null));
+          accessory.setColor(accessoryDTO.getColor());
           accessory.setNote(accessoryDTO.getNote());
           accessory.setCategory(category);
           accessory.setCreateDate(date);
@@ -166,7 +166,7 @@ public class AccessoryServiceImpl implements AccessoryService {
                optional.setName(accessoryDTO.getName());
                optional.setQuantity(accessoryDTO.getQuantity());
                optional.setPrice(accessoryDTO.getPrice());
-               optional.setColor(colorRepository.findById(Integer.parseInt(accessoryDTO.getColor())).orElse(null));
+               optional.setColor(accessoryDTO.getColor());
                optional.setNote(accessoryDTO.getNote());
                optional.setCategory(category);
                if (accessoryDTO.getImage() == null){

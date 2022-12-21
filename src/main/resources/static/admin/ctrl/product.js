@@ -150,7 +150,7 @@ app.controller('product', function($scope, $http, $window,$rootScope) {
                     }
                 }).then((result) => {
                     if (result.dismiss === Swal.DismissReason.timer) {
-                        $http.post(`${pathAPI}/delete?id=${formProduct.idProduct}`,token).then(response=> {
+                        $http.post(pathAPI+`/delete?id=${formProduct.idProduct}`,formProduct.idProduct,token).then(response=> {
                         $scope.message('Đã cập nhật trạng thái  sản phẩm thành hết hàng');
                         $scope.getProducts();
                     }).catch(error=>{
@@ -589,7 +589,6 @@ app.controller('product', function($scope, $http, $window,$rootScope) {
                 }).then(res=>{
                     $scope.message("Thêm hàng loạt dữ liệu thành công")
                     console.log('excel',res);
-                    debugger
                 }).catch(err=>{
                     $scope.error("thêm mới hàng loạt thất bại")
                     console.log('err',err);
@@ -654,7 +653,7 @@ app.controller('product', function($scope, $http, $window,$rootScope) {
                 }).then((result) => {
                     /* Read more about handling dismissals below */
                     if (result.dismiss === Swal.DismissReason.timer) {
-                        $http.post(callDeleteImei+imeiForm.idImay,token).then(response=> {
+                        $http.post(callDeleteImei+imeiForm.idImay,imeiForm.idImay,token).then(response=> {
                             $scope.pageImei.splice($scope.pageImei.indexOf(imeiForm), 1);
                             $scope.message('Đã xóa thành công Imei');
 
