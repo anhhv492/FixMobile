@@ -18,6 +18,14 @@ app.controller('home-ctr-v2', function ($rootScope, $scope, $http,) {
     $scope.findProductAll.priceSalemin = '';
     $scope.findProductAll.priceSalemax = '';
     $scope.findProductAll.search = '';
+    $scope.totalElements=0;
+    $scope.totalPages=0;
+    $scope.numberPage=0;
+
+    $scope.totalElementsPRD=0;
+    $scope.totalPagesPRD=0;
+    $scope.numberPagePRD=0;
+
     $scope.getPriceSale = function (x, y) {
         console.log("hihi")
         var urlSale='';
@@ -90,34 +98,47 @@ app.controller('home-ctr-v2', function ($rootScope, $scope, $http,) {
         })
     }
     $scope.getAllCapacity();
-    $scope.findProduct = function () {
-        $http.post(`/rest/guest/product/findproduct/0`, $scope.findProductAll).then(function (respon) {
+    $scope.findProduct = function (page) {
+        if(page<0){
+            page=$scope.totalPagesPRD-1;
+        }else if(page>$scope.totalPagesPRD-1){
+            page=0
+        }
+        $http.post(`/rest/guest/product/findproduct/`+page, $scope.findProductAll).then(function (respon) {
             $scope.getAllProduct = respon.data.content;
+            console.log(respon.data.content)
+            $scope.totalElementsPRD=respon.data.totalElements
+            $scope.totalPagesPRD=respon.data.totalPages;
+            $scope.numberPagePRD=respon.data.number;
+
         }).catch(err => {
                 console.log(err + 'kiixu  lỗi')
             }
         )
     }
-    // $scope.findProduct();
-
-    $scope.findAccessory = function () {
-        $http.post(`/rest/guest/accessory/findaccessory/0`, $scope.findProductAll).then(function (respon) {
+    $scope.findProduct(0);
+    $scope.findAccessory = function (page) {
+        if(page<0){
+            page=$scope.totalPages-1;
+        }else if(page>$scope.totalPages-1){
+            page=0
+        }
+        $http.post(`/rest/guest/accessory/findaccessory/`+page, $scope.findProductAll).then(function (respon) {
             $rootScope.detailAccessories = respon.data.content;
-            console.log("in")
-            console.log($rootScope.detailAccessories);
+            $scope.totalElements=respon.data.totalElements
+            $scope.totalPages=respon.data.totalPages;
+            $scope.numberPage=respon.data.number;
             if($rootScope.detailAccessories !=''){
                 for (var i = 0; i < $rootScope.detailAccessories.length; i++) {
                     $scope.getPriceSale(i, 1);
                 }
             }
-            console.log("out")
-
         }).catch(err => {
                 console.log(err , "hihihihii")
             }
         )
     }
-    $scope.findAccessory()
+    $scope.findAccessory(0);
 
     $scope.checksortMinMax = function (text, check) {
         if (text == 'Tăng dần') {
@@ -126,9 +147,9 @@ app.controller('home-ctr-v2', function ($rootScope, $scope, $http,) {
             $scope.findProductAll.sortMinMax = 1;
         }
         if (check == 0) {
-            $scope.findProduct();
+            $scope.findProduct(0);
         } else if (check == 1) {
-            $scope.findAccessory();
+            $scope.findAccessory(0);
         }
 
     }
@@ -176,14 +197,4 @@ app.controller('home-ctr-v2', function ($rootScope, $scope, $http,) {
             }
         }
     }
-    $scope.getALLProduct=function (){
-        $http.post(`/rest/guest/product/getallproduct`).then(function (respon) {
-            $scope.getAllProduct=respon.data;
-            console.log(respon.data)
-        }).catch(err => {
-                console.log(err , 'kiixu  lỗi')
-            }
-        )
-    }
-    $scope.getALLProduct();
 })

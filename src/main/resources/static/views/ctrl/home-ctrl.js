@@ -29,6 +29,10 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
     $scope.accountActive= {};
     $scope.accountHome= {};
     $rootScope.check = null;
+    $scope.checkCapa=0;
+    $scope.checkRam=0;
+    $scope.checkColer=0;
+    $scope.PrD={};
 
     $scope.checkLogin = function () {
         if (jwtToken == null){
@@ -195,6 +199,10 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                             icon: 'error',
                             title: 'Hết hàng!'
                         })
+                        $scope.checkCapa=0;
+                        $scope.checkRam=0;
+                        $scope.checkColer=0;
+                        $scope.PrD={};
                     }else{
                         if(!$scope.accessoryItem){
                             data.qty=1;
@@ -261,6 +269,9 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
 
                 $http.get(`${urlImei}/amount/${item.idProduct}`).then(res=>{
                     if(itemCart&&itemCart.qty>=res.data) {
+                        $scope.checkCapa=0;
+                        $scope.checkRam=0;
+                        $scope.checkColer=0;
                         const Toast = Swal.mixin({
                             toast: true,
                             position: 'top-end',
@@ -302,6 +313,9 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                                 $rootScope.saveLocalStorage();
                                 $rootScope.loadLocalStorage();
                                 $rootScope.qtyCart++;
+                                $scope.checkCapa=0;
+                                $scope.checkRam=0;
+                                $scope.checkColer=0;
                                 $scope.messageSuccess("Thêm vào giỏ hàng thành công!");
                             }).catch(error => {
                                 console.log(error)
@@ -311,10 +325,17 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                                 it=>it.idProduct===item.idProduct
                             ).qty++;
                             $rootScope.saveLocalStorage();
+                            $scope.checkCapa=0;
+                            $scope.checkRam=0;
+                            $scope.checkColer=0;
                             $scope.messageSuccess("Thêm vào giỏ hàng thành công!");
                         }
                 }
                 }).catch(err=>{
+                    $scope.checkCapa=0;
+                    $scope.checkRam=0;
+                    $scope.checkColer=0;
+                    $scope.PrD={};
                     const Toast = Swal.mixin({
                         toast: true,
                         position: 'top-end',
@@ -326,7 +347,6 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                             toast.addEventListener('mouseleave', Swal.resumeTimer)
                         }
                     })
-
                     Toast.fire({
                         icon: 'error',
                         title: 'Thêm thất bại!'
@@ -420,21 +440,10 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
     }
     $rootScope.productCode = {};
 
-    // $scope.getOneProduct = function (productCode){
-    //     $http.get(`${urlOneProduct}/findByProductCode/${productCode.idProduct}`).then(res=>{
-    //         $rootScope.productCode = res.data;
-    //         console.log(productCode);
-    //     }).catch(err=>{
-    //         console.log("error",err);
-    //     })
-    // }
     $scope.overPro=false;
     $scope.overAccess=false;
     $scope.getCategories();
     $rootScope.loadQtyCart();
-
-
-
      $rootScope.productCode = {};
      $scope.getOneProductHome = function (productCode){
          $http.get(`${urlOneProduct}/findByProductCode/${productCode.idProduct}`).then(res=>{
@@ -461,20 +470,45 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
          $rootScope.loadLocalStorage();
      }
 
-
-
     $rootScope.loadLocalStorage();
     $scope.getAcount();
 
-    $scope.detailProduct={};
+    $scope.detailProduct={}
     $scope.getDetailProduct=function (id){
-        $http.post(`/rest/guest/product/detailproduct/`+id).then(function (respon) {
-            $scope.detailProduct=respon.data;
-            console.log(respon.data)
+
+        if(id==0){
+            id = localStorage.getItem('idDetail')
+        }
+        $http.post(`/rest/guest/product/detailproduct/` + id).then(function (respon) {
+            $scope.detailProduct = respon.data;
+            localStorage.removeItem('idDetail')
+            localStorage.setItem('idDetail', id);
         }).catch(err => {
-                console.log(err , 'kiixu  lỗi')
+                console.log(err, 'kiixu  lỗi')
             }
         )
+        $scope.checkCapa=0;
+        $scope.checkRam=0;
+        $scope.checkColer=0;
+
+    }
+    $scope.checkProduct= function (id, check){
+        if(check==0){
+            $scope.checkCapa=id;
+        }else if(check==1){
+            $scope.checkRam=id;
+        }else if(check==2){
+            $scope.checkColer=id;
+        }
+        if($scope.checkCapa!=0 && $scope.checkRam!=0 && $scope.checkColer!=0) {
+            let url = `/rest/guest/product/getdetailproduct/` + $scope.checkCapa + `/` + $scope.checkRam + `/` + $scope.checkColer;
+            $http.post(url).then(function (respon) {
+                $scope.PrD = respon.data
+            }).catch(err => {
+                    console.log(err, 'kiixu  lỗi')
+                }
+            )
+        }
     }
 })
 

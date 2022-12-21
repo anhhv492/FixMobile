@@ -1,4 +1,4 @@
-<div class="container mt-3 mb-3" ng-init="loadDetailPrd()">
+<div class="container mt-3 mb-3" ng-init="getDetailProduct(0)">
     <div class="single-product-area bg-white">
         <div class="container">
             <div class="row">
@@ -29,28 +29,30 @@
                                         <div class="d-flex justify-content-between align-items-center"><h3>
                                             {{detailProduct.name}}</h3>
                                         </div>
-                                        <h3 ng-if="PrD.price == undefined">{{detailProduct.priceMin | number}} VNĐ - {{detailProduct.priceMax | number}} VNĐ</h3>
+                                        <h3 ng-if="PrD.price == undefined && detailProduct.priceMin != detailProduct.priceMax">{{detailProduct.priceMin | number}} VNĐ - {{detailProduct.priceMax | number}} VNĐ</h3>
+                                        <h3 ng-if="PrD.price == undefined && detailProduct.priceMin == detailProduct.priceMax">{{detailProduct.priceMin | number}} VNĐ </h3>
                                         <h3 ng-if="PrD.price != undefined">{{PrD.price | number}} VNĐ</h3>
                                         Dung lượng
                                         <div ng-repeat="capa in detailProduct.capa">
-                                            <input type="radio" name="capa" ng-disabled="checkDisabled(capa.idCapacity , 0)"
+                                            <h1>{{checkCapa}}</h1>
+                                            <input type="radio" name="capa" ng-checked="checkCapa!=0 ? true : false"
                                                    ng-click="checkProduct(capa.idCapacity , 0)"
                                             > {{capa.name}}
                                         </div>
                                         Ram
                                         <div ng-repeat="ram in detailProduct.ram">
-                                            <input type="radio" name="ram"ng-disabled="checkDisabled(ram.idRam , 1)"
+                                            <input type="radio" name="ram" ng-checked="checkRam!=0 ? true : false"
                                                    ng-click="checkProduct(ram.idRam , 1)"
                                             > {{ram.name}}
                                         </div>
                                         Màu sắc
                                         <div ng-repeat="color in detailProduct.color">
-                                            <input type="radio" name="color" ng-disabled="checkDisabled(color.idColor, 2)"
+                                            <input type="radio" name="color" ng-checked="checkColer != 0 ? true : false"
                                                    ng-click="checkProduct(color.idColor, 2)"
                                             > {{color.name}}
                                         </div>
                                         <div class="d-flex flex-row mt-5 gap-3">
-                                            <button class="btn btn-outline-dark" ng-click="addCart(PrD)"
+                                            <button class="btn btn-outline-dark" ng-click="addCart(PrD)" ng-disabled="PrD.idProduct==undefined ? true : false"
                                                     style="height: 70px; width: 100%">Add to Cart
                                             </button>
                                         </div>

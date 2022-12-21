@@ -35,19 +35,8 @@
               </div>
             </div>
           </div>
-          <div class="sidebar__item sidebar__item__color--option">
-            <h4>Lọc theo màu sắc</h4>
-            <div class="sidebar__item__color sidebar__item__color--gray"
-                 ng-repeat="color in colorProducts">
-              <input type="checkbox" class="form-check-input" value=""
-                     ng-click="checkSelected(color.idColor,3)">
-              <label class="form-check-label">
-                {{color.name}}
-              </label>
-            </div>
-          </div>
           <button class="btn btn-success" style="text-align: center"
-                  ng-click="findAccessory()">Lọc sản phẩm</button>
+                  ng-click="findAccessory(0)">Lọc sản phẩm</button>
 
         </div>
       </div>
@@ -74,7 +63,7 @@
             </div>
             <div class="col-lg-4 col-md-4">
               <div class="filter__found">
-                <h6><span>{{detailAccessories.length}}</span> Sản phẩm được tìm thấy</h6>
+                <h6><span>{{totalElements}}</span> Sản phẩm được tìm thấy</h6>
               </div>
             </div>
             <div class="col-lg-4 col-md-3">
@@ -88,9 +77,8 @@
         <div class="row" >
           <div class="col-lg-4 col-md-6 col-sm-6" ng-repeat="acsr in detailAccessories">
             <div class="product__item">
-              <div class="product__item__pic set-bg" data-setbg="{{acsr.image}}" style="background-image: url(&quot;{{acsr.image}};);">
+              <div class="product__item__pic set-bg" data-setbg="{{acsr.image}}" style="background-image: url({{acsr.image}};);">
                 <ul class="product__item__pic__hover" style="  margin-left: 0;">
-                  <li><a ng-click="addCart(acsr)" ><i class="fa fa-info-circle"></i></a></li>
                   <li><a ng-click="addCart(acsr)" ><i class="fa fa-shopping-cart"></i></a></li>
                 </ul>
               </div>
@@ -106,6 +94,47 @@
             </div>
           </div>
         </div>
+        <nav class="row table-responsive">
+
+          <table>
+            <ul class="pagination justify-content-center row">
+              <div class="col-1">
+                <li class="page-item">
+                  <button class="btn btn-default" ng-click="findAccessory(0)"ng-disabled="numberPage==0">
+                    <i class="fa fa-fast-backward" aria-hidden="true"></i>
+                  </button>
+                </li>
+              </div>
+              <div class="col-1">
+                <li class="page-item ms-2 me-2">
+                  <button class="btn btn-default" ng-click="findAccessory(numberPage - 1 )" ><i class="fa fa-step-backward"
+                                                      aria-hidden="true"></i></button>
+                </li>
+              </div>
+              <div class="col-1">
+                <li class="page-item ms-1 me-1 pt-1 ">
+                  <h4>{{numberPage + 1}}/{{totalPages}}</h4>
+                </li>
+              </div>
+              <div class="col-1">
+                <li class="page-item ms-2 me-2">
+                  <button class="btn btn-default"ng-click="findAccessory(numberPage +1)">
+                    <i class="fa fa-step-forward" aria-hidden="true"></i>
+                  </button>
+                  <!--            <p class="btn btn-success" disabled ng-show="!check_last">Trang sau</p>-->
+                </li>
+              </div>
+              <div class="col-1">
+                <li class="page-item">
+                  <button class="btn btn-default" ng-click="findAccessory(totalPages - 1)" ng-disabled="numberPage==totalPages-1">
+                    <i class="fa fa-fast-forward" aria-hidden="true"></i>
+                  </button>
+                  <!--            <p class="btn btn-dark" disabled ng-show="!check_last">Trang cuối</p>-->
+                </li>
+              </div>
+            </ul>
+          </table>
+        </nav>
       </div>
     </div>
   </div>

@@ -1,4 +1,5 @@
 <main ng-controller="sale_ctrl">
+    <h1 class="page-header text-center text-body" style=" margin: 20px 0px 20px 0px;">Quản lý giảm giá</h1>
     <button class="btn btn-success" style="width:100%" data-bs-toggle="modal" ng-click="clear()"
             data-bs-target="#exampleModaladd">Thêm mới
     </button>
@@ -21,7 +22,7 @@
                             <option ng-value="1">Theo Sản Phẩm</option>
                             <option ng-value="2">Theo Đơn Hàng</option>
                             <option ng-value="3">Theo Khách Hàng</option>
-                            <option ng-value="4">Theo phụ kiện</option>
+                            <option ng-value="4">Theo Phụ Kiện</option>
                         </select>
                     </div>
                     <div class="mb-3">
@@ -33,8 +34,8 @@
                         <label for="" class="form-label">Phương thức giảm giá</label>
                         <select class="form-select form-select-lg" ng-change="onChangeDiscountMethod()"
                                 ng-model="saleadd.discountMethod" ng-disabled="saleadd.idSale!=null || checktypeSalediscountMethod">
-                            <option ng-value="0">theo voucher</option>
-                            <option ng-value="1">trực tiếp</option>
+                            <option ng-value="0">Theo voucher</option>
+                            <option ng-value="1">Trực tiếp</option>
                         </select>
                     </div>
                     <div class="mb-3" ng-show="hiddenDiscountMethod">
@@ -46,8 +47,8 @@
                         <label for="" class="form-label">Kiểu giảm giá</label>
                         <select class="form-select form-select-lg" ng-change="onChangeDiscountType()"
                                 ng-model="saleadd.discountType" name="" ng-disabled="saleadd.idSale!=null && compareDate(saleadd.createStart,saleadd.createEnd,saleadd.quantity) != 0">
-                            <option ng-value="0">theo tiền mặt</option>
-                            <option ng-value="1">theo %</option>
+                            <option ng-value="0">Theo tiền mặt</option>
+                            <option ng-value="1">Theo %</option>
                         </select>
                     </div>
                     <div class="mb-3">
@@ -74,14 +75,14 @@
                     </div>
                     <div class="mb-3" ng-show="hiddenValueMin">
                         <label for="" class="form-label" >Giá trị đơn hàng tối thiểu</label>
-                        <input type="number" min="0" maxlength="6" ng-model="saleadd.valueMin" ng-value="saleadd.valueMin" class="form-control"
+                        <input type="number" min="0" maxlength="9" ng-model="saleadd.valueMin" ng-value="saleadd.valueMin" class="form-control"
                                placeholder="" aria-describedby="helpId" ng-disabled="saleadd.idSale!=null && compareDate(saleadd.createStart,saleadd.createEnd,saleadd.quantity) != 0">
                     </div>
                     <div class="mb-3" ng-show="hiddenUserType">
                         <label for="" class="form-label">Đối tượng giảm giá</label>
                         <select class="form-select form-select-lg" ng-change="onChangeUserType()"
                                 ng-model="saleadd.userType"ng-disabled="saleadd.idSale!=null">
-                            <option ng-value="0">Tất cả user mới</option>
+                            <option ng-value="0">Tất cả user mới (Những người chưa mua hàng tại website)</option>
                             <option ng-value="1">Chọn user</option>
                         </select>
                     </div>
@@ -241,13 +242,13 @@
             <th>
                 <p>{{sales.name}}</p>
                 <p ng-if="sales.voucher">Mã giảm giá: <span class=" bg-light text-dark">{{sales.voucher}}</span></p>
-                <p ng-if="!sales.voucher">giảm giá trực tiếp</p>
+                <p ng-if="!sales.voucher">Giảm giá trực tiếp</p>
             </th>
             <td>
                 <p ng-if="sales.typeSale == 0">Toàn bộ cửa hàng</p>
                 <p ng-if="sales.typeSale == 1">Theo sản phẩm</p>
                 <p ng-if="sales.typeSale == 2">Theo đơn hàng</p>
-                <p ng-if="sales.typeSale == 3">Theo Khách hàng</p>
+                <p ng-if="sales.typeSale == 3">Theo khách hàng</p>
                 <p ng-if="sales.typeSale == 4">Theo phụ kiện</p>
             </td>
             <td>
@@ -273,8 +274,8 @@
             <td>
                 <p>Người tạo: {{sales.userCreate}}</p>
                 <p>Thời gian tạo: {{sales.createTime| date:'MM/dd/yyyy h:mma'}}</p>
-                <p ng-if="!sales.userUpdate">chưa cập nhật</p>
-                <p ng-if="sales.userUpdate">người sửa: {{sales.userUpdate}}</p>
+                <p ng-if="!sales.userUpdate">Chưa cập nhật</p>
+                <p ng-if="sales.userUpdate">Người sửa: {{sales.userUpdate}}</p>
                 <p ng-if="sales.updateTime">Thời gian sửa {{sales.updateTime | date:'MM/dd/yyyy h:mma'}}</p>
             </td>
             <td>
