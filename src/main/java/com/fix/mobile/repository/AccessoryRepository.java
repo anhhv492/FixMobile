@@ -31,7 +31,5 @@ public interface AccessoryRepository extends PagingAndSortingRepository<Accessor
     @Query(value = "select MAX(price) from accessories order by price",nativeQuery = true)
     BigDecimal getMaxPrice();
 
-    List<Accessory> findAllByOrder(Order order);
-
 //    Page<Accessory> findByStatusAndNameContaining(Boolean stt,String name, Pageable pageable);
 }

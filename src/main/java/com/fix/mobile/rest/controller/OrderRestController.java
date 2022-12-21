@@ -170,15 +170,17 @@ public class OrderRestController {
         List<ImayProduct> imayProducts = null;
         for (int i = 0; i < orderDetails.size(); i++) {
             if (orderDetails.get(i).getAccessory()!=null){
-                Accessory accessory = accessoryService.findById(orderDetails.get(i).getAccessory().getIdAccessory()).get();
-                if(orderDetails.get(i).getAccessory().getQuantity()>accessory.getQuantity()){
+                if(orderDetails.get(i).getQuantity()>orderDetails.get(i).getAccessory().getQuantity()){
+                    System.out.println("Số lượng phụ kiện không đủ-------");
                     return order;
                 }
             }
             imayProducts = imayProductService.findByOrderDetail(orderDetails.get(i));
-            if(imayProducts.size()<orderDetails.get(i).getQuantity()){
-                System.out.println("Số lượng sản phẩm không đủ-------");
-                return order;
+            if(imayProducts.size()>0){
+                if(imayProducts.size()<orderDetails.get(i).getQuantity()){
+                    System.out.println("Số lượng sản phẩm không đủ-------");
+                    return order;
+                }
             }
         }
         return null;

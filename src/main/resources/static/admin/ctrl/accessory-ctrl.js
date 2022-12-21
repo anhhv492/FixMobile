@@ -243,6 +243,7 @@ app.controller('rest_accessory', function($scope, $http,$rootScope,$window) {
                 icon: 'success',
                 title: 'Cập nhật thành công!'
             })
+            $scope.loadAccessories();
         });
     };
     // submit form
@@ -268,7 +269,6 @@ app.controller('rest_accessory', function($scope, $http,$rootScope,$window) {
                 /* Read more about handling dismissals below */
                 if (result.dismiss === Swal.DismissReason.timer) {
                     $scope.onUpdate();
-                    $scope.loadAccessories();
                     document.getElementById('list-tab').click();
                     console.log('I was closed by the timer')
                 }
