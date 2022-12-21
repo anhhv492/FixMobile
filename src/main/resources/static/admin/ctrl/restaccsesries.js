@@ -1,4 +1,6 @@
 app.controller("restaccsesries", function ($scope, $http, $window,$rootScope) {
+
+    const callApi = "http://localhost:8080/rest/staff/accessories";
     // ram máy
     $scope.items = [];
     $scope.formCreate  = [];
@@ -102,7 +104,7 @@ app.controller("restaccsesries", function ($scope, $http, $window,$rootScope) {
     $scope.create = function (){
         var item = angular.copy($scope.accseries);
         console.log(item);
-        $http.post("/rest/staff/accessories",item).then(resp => {
+        $http.post("/rest/staff/accessories",item,token).then(resp => {
             $scope.items.push(item);
             $scope.reset();
             $scope.message("Đã thêm thành công");
@@ -112,7 +114,7 @@ app.controller("restaccsesries", function ($scope, $http, $window,$rootScope) {
         })
     }
     $scope.delete = function(items) {
-            $http.delete(`/rest/staff/accessories/delete/${items.idRam}`,token).then(response=> {
+            $http.post(`/rest/staff/accessories/delete/${items.idRam}`,items.idRam,token).then(response=> {
                 $scope.items.splice($scope.items.indexOf(items), 1);
                 $scope.message('xóa thành công');
                 $scope.reset();
@@ -179,7 +181,7 @@ app.controller("restaccsesries", function ($scope, $http, $window,$rootScope) {
                 }).then((result) => {
                     /* Read more about handling dismissals below */
                     if (result.dismiss === Swal.DismissReason.timer) {
-                        $http.delete(`/rest/staff/accessories/deleteColor/${colorItems.idColor}`,token).then(response=> {
+                        $http.post(callApi+`/deleteColor/${colorItems.idColor}`,colorItems.idColor,token).then(response=> {
                             $scope.colorItems.splice($scope.colorItems.indexOf(colorItems), 1);
                             $scope.message('xóa thành công');
                             $scope.reset();
@@ -252,7 +254,7 @@ app.controller("restaccsesries", function ($scope, $http, $window,$rootScope) {
                     }
                 }).then((result) => {
                     if (result.dismiss === Swal.DismissReason.timer) {
-                        $http.delete(`/rest/staff/accessories/deleteCapacity/${capacityItems.idCapacity}`,token).then(response=> {
+                        $http.post(`/rest/staff/accessories/deleteCapacity/${capacityItems.idCapacity}`,capacityItems.idCapacity,token).then(response=> {
                             $scope.capacityItems.splice($scope.capacityItems.indexOf(capacityItems), 1);
                             $scope.message('xóa thành công');
                             $scope.reset();
@@ -342,7 +344,7 @@ app.controller("restaccsesries", function ($scope, $http, $window,$rootScope) {
                 }).then((result) => {
                     /* Read more about handling dismissals below */
                     if (result.dismiss === Swal.DismissReason.timer) {
-                        $http.delete(`/rest/staff/accessories/${img.idImage}`,token).then(response=> {
+                        $http.post(`/rest/staff/accessories/${img.idImage}`,img.idImage,token).then(response=> {
                             $scope.img.splice($scope.img.indexOf(img), 1);
                             $scope.message('xóa thành công');
                             $scope.resetImage();

@@ -255,7 +255,7 @@ app.controller('ctrl_cate', function($scope, $http, $window,$rootScope) {
                 }).then((result) => {
                     /* Read more about handling dismissals below */
                     if (result.dismiss === Swal.DismissReason.timer) {
-                        $http.post(`${pathAPI}/delete?id=`+category.idCategory,token).then(response=> {
+                        $http.post(`${pathAPI}/delete?id=${category.idCategory}`,category.idCategory,token).then(response=> {
                             const Toast = Swal.mixin({
                                 toast: true,
                                 position: 'top-end',
@@ -309,8 +309,9 @@ app.controller('ctrl_cate', function($scope, $http, $window,$rootScope) {
     };
 
     $scope.onUpdate = function() {
+        $scope.form.status= $scope.valueSelectStatus
         $http.put(pathAPI+'/update?id='+$scope.form.idCategory,
-            $scope.form,$scope.form.status= $scope.valueSelectStatus,token).then(response=> {
+            $scope.form,token).then(response=> {
             const Toast = Swal.mixin({
                 toast: true,
                 position: 'top-end',
