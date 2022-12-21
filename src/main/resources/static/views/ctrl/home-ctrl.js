@@ -456,7 +456,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
             localStorage.setItem('accessCodeHome', $rootScope.accessCodeHome.idAccessory);
         })
     }
-     if ($rootScope.account != null && token != null){
+     if ($rootScope.account != null && jwtToken != null){
          $scope.getAcountActive();
          $rootScope.loadLocalStorage();
      }

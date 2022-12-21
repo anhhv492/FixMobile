@@ -37,7 +37,7 @@ public class ImayProductServiceImpl implements ImayProductService {
 
 	@Override
 	public ImayProduct save(ImayProduct entity) {
-		return repository.save(entity);
+			return repository.save(entity);
 	}
 
 	@Override
@@ -115,5 +115,15 @@ public class ImayProductServiceImpl implements ImayProductService {
 	public List<ImayProduct> findByProductAndStatus(ProductResponDTO productResponDTO, int status) {
 		Product product = productRepository.findById(productResponDTO.getIdProduct()).orElse(null);
 		return repository.findByProductAndStatus(product,status);
+	}
+
+	@Override
+	public ImayProduct findImeiByName(String name) {
+		if (repository.findByName(name) == null){
+			return null;
+		}else {
+			return repository.findByName(name);
+		}
+
 	}
 }

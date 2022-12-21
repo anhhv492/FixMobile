@@ -21,4 +21,6 @@ public interface ImayProductRepository extends PagingAndSortingRepository<ImayPr
 
 
     Page<ImayProduct> findAllByStatus(Pageable pageable, Integer status);
+
+    ImayProduct findByName(String name);
 }

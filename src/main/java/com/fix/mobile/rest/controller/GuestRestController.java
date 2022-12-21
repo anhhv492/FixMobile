@@ -606,6 +606,7 @@ public class GuestRestController {
         detailProduct.setColor(listColor);
         detailProduct.setPriceMin(getMaxMinPriceProduct(id).get(0));
         detailProduct.setPriceMax(getMaxMinPriceProduct(id).get(1));
+
         return detailProduct;
     }
 
@@ -626,4 +627,6 @@ public class GuestRestController {
     public Sale findSaleApply(@PathVariable("id") Integer id){
         return saleSV.findByid(saleSV.findSaleApply(id));
     }
+
+
 }

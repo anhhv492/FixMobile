@@ -57,6 +57,9 @@ public class RestProductsController {
 	private CategoryService categoryService;
 
 	@Autowired
+	private ImayProductService imayProductService;
+
+	@Autowired
 	private Cloudinary cloud;
 
 	@Autowired  private ExcelProducts excelProduct;
@@ -245,6 +248,11 @@ public class RestProductsController {
 			e.getMessage();
 			e.printStackTrace();
 		}
+	}
+
+	@GetMapping("/getImeiByName")
+	public ImayProduct getImeiByname(@RequestParam("name") String name){
+		return imayProductService.findImeiByName(name);
 	}
 
 	@PostMapping("/readExcelImay")
