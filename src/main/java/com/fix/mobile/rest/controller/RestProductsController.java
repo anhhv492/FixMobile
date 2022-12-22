@@ -10,6 +10,7 @@ import com.fix.mobile.dto.ProductDetailDTO;
 import com.fix.mobile.entity.*;
 import com.fix.mobile.helper.ExcelProducts;
 import com.fix.mobile.payload.SaveProductRequest;
+import com.fix.mobile.repository.ImayProductRepository;
 import com.fix.mobile.repository.ProductRepository;
 import com.fix.mobile.service.*;
 import org.apache.log4j.Logger;
@@ -67,6 +68,8 @@ public class RestProductsController {
 	@Autowired private ImayProductService imayService;
 
 	@Autowired private ProductRepository repose;
+	@Autowired
+	private ImayProductRepository imayProductRepository;
 
 	@GetMapping("/getAllRam")
 	public List<Ram> findAllRam(){
@@ -208,6 +211,27 @@ public class RestProductsController {
 					   @ModelAttribute SaveProductRequest saveProductRequest) {
 	        Optional<Product> p = productService.findById(id);
 		try {
+			List<ImayProduct> imayProducts = null;
+			ImayProduct imayProduct = null;
+			if(saveProductRequest.getStatus()==0){
+				imayProducts= imayProductRepository.findAllByProductAndStatus(p.get(),1);
+				if(imayProducts!=null) {
+					for (int i = 0; i < imayProducts.size(); i++) {
+						imayProduct = imayProducts.get(i);
+						imayProduct.setStatus(4);
+						imayService.update(imayProduct, imayProduct.getIdImay());
+					}
+				}
+			}else{
+				imayProducts= imayProductRepository.findAllByProductAndStatus(p.get(),4);
+				if(imayProducts!=null){
+					for(int i=0;i<imayProducts.size();i++){
+						imayProduct = imayProducts.get(i);
+						imayProduct.setStatus(1);
+						imayService.update(imayProduct,imayProduct.getIdImay());
+					}
+				}
+			}
 			if(p!=null){
 				p.orElseThrow().setName(saveProductRequest.getName());
 				p.orElseThrow().setNote(saveProductRequest.getNote());
