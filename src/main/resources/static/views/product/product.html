@@ -8,28 +8,28 @@
                             <div class="row g-0">
                                 <div class="col-md-6 border-end">
                                     <div class="d-flex flex-column justify-content-center">
-                                        <div class="main_image" ng-if="detailProduct.images[0]==undefined ? true : false"><img src="{{detailProduct.imageDefault}}"
-                                                                      width="350"></div>
-                                        <div class="main_image" ng-if="detailProduct.images[0]!=undefined ? true : false"><img src="{{detailProduct.images[0]}}"
-                                                                      width="350"></div>
+                                        <div class="main_image"  ng-if="detailProduct.images[0]==undefined ? true : false"><img src="{{detailProduct.imageDefault}}"
+                                                                                                                                id="main_product_image"   width="350"></div>
+                                        <div class="main_image"   ng-if="detailProduct.images[0]!=undefined ? true : false"><img src="{{detailProduct.images[0]}}"
+                                                                                                                                 id="main_product_image"  width="350"></div>
                                         <div class="thumbnail_images">
                                             <ul id="thumbnail">
-                                                <li ng-if="detailProduct.images[1]==undefined ? true : false"><img ng-click="changeImage(1)"
+                                                <li ng-if="detailProduct.images[1]==undefined ? true : false"><img ng-click="changeImage(1)" id="image_product_change"
                                                          src="{{displayProduct.imageDefault1}}" width="70"></li>
-                                                <li ng-if="detailProduct.images[1]!=undefined ? true : false"><img ng-click="changeImage(1)"
-                                                         src="{{detailProduct.images[1]}}" width="70"></li>
-                                                <li ng-if="detailProduct.images[2]==undefined ? true : false"><img ng-click="changeImage(2)"
+                                                <li ng-if="detailProduct.images[1]!=undefined ? true : false"><img ng-click="changeImage(1)" id="image_product_change"
+                                                         src="{{detailProduct.images[0]}}" width="70"></li>
+                                                <li ng-if="detailProduct.images[2]==undefined ? true : false"><img ng-click="changeImage(2)" id="image_product_change1"
                                                          src="{{displayProduct.imageDefault2}}" width="70"></li>
-                                                <li ng-if="detailProduct.images[2]!=undefined ? true : false"><img ng-click="changeImage(2)"
-                                                         src="{{detailProduct.images[2]}}" width="70"></li>
-                                                <li ng-if="detailProduct.images[3]==undefined ? true : false"><img ng-click="changeImage(3)"
+                                                <li ng-if="detailProduct.images[2]!=undefined ? true : false"><img ng-click="changeImage(2)" id="image_product_change1"
+                                                         src="{{detailProduct.images[1]}}" width="70"></li>
+                                                <li ng-if="detailProduct.images[3]==undefined ? true : false"><img ng-click="changeImage(3)" id="image_product_change2"
                                                          src="{{displayProduct.imageDefault3}}" width="70"></li>
-                                                <li ng-if="detailProduct.images[3]!=undefined ? true : false"><img ng-click="changeImage(3)"
-                                                         src="{{detailProduct.images[3]}}" width="70"></li>
-                                                <li ng-if="detailProduct.images[4]==undefined ? true : false"><img ng-click="changeImage(4)"
+                                                <li ng-if="detailProduct.images[3]!=undefined ? true : false"><img ng-click="changeImage(3)" id="image_product_change2"
+                                                         src="{{detailProduct.images[2]}}" width="70"></li>
+                                                <li ng-if="detailProduct.images[4]==undefined ? true : false"><img ng-click="changeImage(4)" id="image_product_change3"
                                                          src="{{displayProduct.imageDefault}}" width="70"></li>
-                                                <li ng-if="detailProduct.images[4]!=undefined ? true : false"><img ng-click="changeImage(4)"
-                                                         src="{{detailProduct.images[4]}}" width="70"></li>
+                                                <li ng-if="detailProduct.images[4]!=undefined ? true : false"><img ng-click="changeImage(4)"id="image_product_change3"
+                                                         src="{{detailProduct.images[3]}}" width="70"></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -41,7 +41,8 @@
                                         </div>
                                         <h3 ng-if="PrD.price == undefined && detailProduct.priceMin != detailProduct.priceMax">{{detailProduct.priceMin | number}} VNĐ - {{detailProduct.priceMax | number}} VNĐ</h3>
                                         <h3 ng-if="PrD.price == undefined && detailProduct.priceMin == detailProduct.priceMax">{{detailProduct.priceMin | number}} VNĐ </h3>
-                                        <h3 ng-if="PrD.price != undefined">{{PrD.price | number}} VNĐ</h3>
+                                        <h3 ng-if="PrD.price != undefined && PrD.priceSale == undefined ">{{PrD.price | number}} VNĐ</h3>
+                                        <h3 ng-if="PrD.price != undefined && PrD.priceSale != undefined"> <del>{{PrD.price | number}} VNĐ</del> {{PrD.priceSale | number}}  VNĐ</h3>
                                         Dung lượng
                                         <div>
                                             <label class="radio me-1" ng-repeat="capa in detailProduct.capa">
@@ -74,6 +75,9 @@
                                                     style="height: 70px; width: 100%">Thêm vào giỏ hàng
                                             </button>
                                         </div>
+                                        <p ng-if="checkQuantity == true "
+                                           style="height: 70px; width: 100%; color: red; text-align: center ">Sản phẩm đã hết hàng
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -92,7 +96,6 @@
                                             <div class="text-center" style="width: 200px; height: 200px">
                                                 <img src="{{pros.image}}">
                                             </div>
-
                                             <div class="product-details">
                                                 <span class="font-weight-bold d-block">{{pros.price | number}}VND</span>
                                                 <p ng-if="pric0eSale[$index]!=-1 && priceSale[$index]!=0">
@@ -104,18 +107,9 @@
                                                 <span>{{pros.name}}</span>
 
                                                 <div class="buttons d-flex flex-row">
-                                                    <a class="cart" href="#!product"
-                                                       ng-click="getOneProduct(pros.idProduct)">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                             fill="currentColor" class="bi bi-ticket-detailed"
-                                                             viewBox="0 0 16 16">
-                                                            <path d="M4 5.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5Zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5ZM5 7a1 1 0 0 0 0 2h6a1 1 0 1 0 0-2H5Z"/>
-                                                            <path d="M0 4.5A1.5 1.5 0 0 1 1.5 3h13A1.5 1.5 0 0 1 16 4.5V6a.5.5 0 0 1-.5.5 1.5 1.5 0 0 0 0 3 .5.5 0 0 1 .5.5v1.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 11.5V10a.5.5 0 0 1 .5-.5 1.5 1.5 0 1 0 0-3A.5.5 0 0 1 0 6V4.5ZM1.5 4a.5.5 0 0 0-.5.5v1.05a2.5 2.5 0 0 1 0 4.9v1.05a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-1.05a2.5 2.5 0 0 1 0-4.9V4.5a.5.5 0 0 0-.5-.5h-13Z"/>
-                                                        </svg>
+                                                    <a class="btn btn-success cart-button btn-block col-12" href="#!product"
+                                                            ng-click="getDetailProduct(pros.category.idCategory)">Chi tiết sản phẩm
                                                     </a>
-                                                    <button class="btn btn-success cart-button btn-block"
-                                                            ng-click="addProductCart(pros)">Thêm vào giỏ hàng
-                                                    </button>
                                                 </div>
 
                                                 <div class="weight">

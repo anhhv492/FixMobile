@@ -214,7 +214,18 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product getdeTailPrd(Integer idCapa, Integer idRam, Integer idColor) {
-        return repository.getDetailPrd(idCapa,idRam,idColor);
+        Product prd = new Product();
+        if (repository.getDetailPrd(idCapa,idRam,idColor)!=null){
+            if(imayProductRepository.findByProductAndStatus(repository.getDetailPrd(idCapa,idRam,idColor),1)==null){
+                prd = null;
+            }
+            else{
+                prd = repository.getDetailPrd(idCapa,idRam,idColor);
+            }
+        }else{
+            prd = null;
+        }
+        return prd;
     }
 
 

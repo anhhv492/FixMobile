@@ -89,24 +89,24 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
             console.log("error",err)
         })
     }
-    $scope.getPriceSalePrd=function (x){
-        $rootScope.detailProducts[x].priceSale = 0;
-        var urlSale=`http://localhost:8080/rest/guest/sale/getbigsale?money=`+$rootScope.detailProducts[x].price+`&idPrd=`+$rootScope.detailProducts[x].idProduct+`&idAcsr=0`;
+    $scope.getPriceSalePrd=function (){
+        $scope.PrD.priceSale = 0;
+        var urlSale=`http://localhost:8080/rest/guest/sale/getbigsale?money=`+$scope.PrD.price+`&idPrd=`+$scope.PrD.idProduct+`&idAcsr=0`;
         $http.get(urlSale, token).then(resp => {
             if(resp.data==''){
-                $rootScope.detailProducts[x].priceSale = 0;
+                $scope.PrD.priceSale = 0;
             }else {
                 if (resp.data.moneySale == null) {
-                    $rootScope.detailProducts[x].priceSale = $rootScope.detailProducts[x].price * resp.data.percentSale / 100;
+                    $scope.PrD.priceSale = $scope.PrD.price * resp.data.percentSale / 100;
                 } else if (resp.data.percentSale == null) {
-                    if (resp.data.moneySale > $rootScope.detailProducts[x].price) {
-                        $rootScope.detailProducts[x].priceSale = $rootScope.detailProducts[x].price;
+                    if (resp.data.moneySale > $scope.PrD.price) {
+                        $scope.PrD.priceSale = $scope.PrD.price;
                     } else {
-                        $rootScope.detailProducts[x].priceSale = resp.data.moneySale;
+                        $scope.PrD.priceSale = resp.data.moneySale;
                     }
                 }
             }
-            console.log($rootScope.detailProducts)
+            console.log($scope.PrD)
         }).catch(error => {
             console.log(error)
         })
@@ -141,17 +141,6 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                 }
             }).catch(err=>{
                 $rootScope.detailAccessories=null;
-                console.log("error",err)
-            })
-        }else{
-            $http.get(`${urlProduct}/cate-product/${item.idCategory}`, token).then(res=>{
-                $rootScope.detailProducts=res.data;
-                console.log($rootScope.detailProducts)
-                for(var i=0; i<res.data.length;i++){
-                    $scope.getPriceSalePrd(i);
-                }
-            }).catch(err=>{
-                $rootScope.detailProducts=null;
                 console.log("error",err)
             })
         }
@@ -487,6 +476,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
     $scope.detailProduct={}
     $scope.idCheck=undefined;
     $scope.getDetailProduct=function (id){
+        console.log(id)
         if(id==0){
             id = localStorage.getItem('idDetail');
             $http.post(`/rest/guest/product/detailproduct/` + id).then(function (respon) {
@@ -498,6 +488,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
         }else {
             localStorage.removeItem('idDetail');
             localStorage.setItem('idDetail', id);
+            $window.location.href='#!product';
         }
     }
     $scope.checkProduct= function (id, check){
@@ -512,6 +503,12 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
             let url = `/rest/guest/product/getdetailproduct/` + $scope.checkCapa + `/` + $scope.checkRam + `/` + $scope.checkColer;
             $http.post(url).then(function (respon) {
                 $scope.PrD = respon.data
+                if($scope.PrD!='' ){
+                    $scope.checkQuantity = false;
+                    $scope.getPriceSalePrd();
+                }else if($scope.PrD==''){
+                    $scope.checkQuantity = true;
+                }
             }).catch(err => {
                     console.log(err, 'kiixu  lỗi')
                 }
