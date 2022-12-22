@@ -80,10 +80,18 @@ app.controller('product-change',function($rootScope,$scope,$http, $window){
         })
     }
     $scope.imeis = [];
+    $scope.image = [];
     $scope.getAllProductChangeDetails=function(id){
         $http.get(`/rest/user/productchange/getPrChangeDetails/${id}`,token).then(resp=>{
             $scope.getOneProduct = resp.data;
             console.log('dsadsadsdsadas '+resp.data);
+            $http.get(`/rest/user/productchange/findImageByPr/${id}`,token).then(res=>{
+                $scope.image = res.data;
+                debugger
+                console.log('dsadsadsdsadas '+ $scope.image);
+            }).catch(err=>{
+                console.log(err);
+            })
             $http.get(`/rest/staff/order/detail/imei2/${ $scope.getOneProduct.orderDetail.idDetail}`,token).then(res=>{
                 $scope.imeis=res.data;
                 console.log('dsadsadsdsadas '+ $scope.imeis[0].name);
@@ -163,6 +171,9 @@ app.controller('product-change',function($rootScope,$scope,$http, $window){
     $scope.putRequest = function(){
         if($scope.seLected.length  == 0){
             $scope.error("Vui lòng chọn yêu cầu hủy");
+            return null;
+        }else if($scope.seLected.status == 2){
+            $scope.error("Vui lòng chọn yêu khác");
             return null;
         }
         $http.post(`/rest/staff/productchange/cancelRequest`,$scope.seLected,token).then(response => {

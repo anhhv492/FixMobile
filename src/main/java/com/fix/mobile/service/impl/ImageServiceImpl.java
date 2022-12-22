@@ -70,4 +70,11 @@ public class ImageServiceImpl implements ImageService {
         return null;
     }
 
+    @Override
+    public List<Image> findImageByPr(Integer id) {
+        if(id ==null){
+            return null;
+        }
+        return repository.findImageByPr(id);
+    }
 }

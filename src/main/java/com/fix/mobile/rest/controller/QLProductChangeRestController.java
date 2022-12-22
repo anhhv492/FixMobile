@@ -2,7 +2,9 @@ package com.fix.mobile.rest.controller;
 
 import com.fix.mobile.dto.ProductChangeDTO;
 import com.fix.mobile.entity.ChangeDetail;
+import com.fix.mobile.entity.Image;
 import com.fix.mobile.entity.ProductChange;
+import com.fix.mobile.service.ImageService;
 import com.fix.mobile.service.ProductChangeService;
 import com.fix.mobile.service.sendMailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,8 @@ public class QLProductChangeRestController {
 
 	@Autowired
 	private  sendMailService mailServices;
+
+
 
 	// xác nhận đổi chờ kiểm tra
 	@RequestMapping(value = "/comfirmRequest", method = RequestMethod.POST)
@@ -59,6 +63,8 @@ public class QLProductChangeRestController {
 			}
 		}
 	}
+
+
 
 
 }

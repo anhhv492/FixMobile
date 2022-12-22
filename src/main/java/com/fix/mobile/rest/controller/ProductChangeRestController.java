@@ -26,6 +26,7 @@ public class ProductChangeRestController {
 
 	@Autowired private AccountService accountService;
 	@Autowired private OrderDetailService  orderDetailsService;
+
 	@RequestMapping(value = "/findProductChange/{idDetail}",method = RequestMethod.GET)
 	public OrderDetail findByProductChange (@PathVariable("idDetail") Integer idOrderDetails){
 			Optional<OrderDetail> orderDetails =  orderDetailsService.findById(idOrderDetails);
@@ -113,6 +114,13 @@ public class ProductChangeRestController {
 	public List<ProductChange> findByUser(@RequestParam("username") String user) {
 		List<ProductChange> listPrChangeDetails = productChangeSerivce.findByUsername(user);
 		return listPrChangeDetails;
+	}
+
+	// gegt anhr
+	@GetMapping(value = "rest/user/findImageByPr/{id}")
+	public List<Image>   findAllImageByPr(@PathVariable("id") Integer id){
+		List<Image> listImage = imageService.findImageByPr(id);
+		return listImage;
 	}
 
 }
