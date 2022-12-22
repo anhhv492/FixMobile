@@ -75,7 +75,6 @@ app.controller('view_product_ctrl', function ($scope, $http, $rootScope) {
     $scope.getTopProduct = function () {
         $http.get(`/rest/guest/productCount`, token).then(function (response) {
             $scope.productView = response.data;
-            console.log('nam ngu')
             for (var i = 0; i < response.data.length; i++) {
                 $scope.getPriceSaleTopProduct(i);
             }

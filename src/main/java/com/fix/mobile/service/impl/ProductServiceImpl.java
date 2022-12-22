@@ -174,6 +174,7 @@ public class ProductServiceImpl implements ProductService {
              totail = imeis.size();
              productResponDTO.setIdProduct(productList.get(i).getIdProduct());
              productResponDTO.setName(productList.get(i).getName());
+             productResponDTO.setCategory(productList.get(i).getCategory());
             if(productImage != null && productImage.getImages().size() > 0){
                 productResponDTO.setImage(productImage.getImages().get(0).getName());
             } else productResponDTO.setImage("https://res.cloudinary.com/dcll6yp9s/image/upload/v1669970939/fugsyd4nw4ks0vb7kzyd.png");
