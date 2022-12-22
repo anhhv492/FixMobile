@@ -66,10 +66,10 @@ public class sendMailImpl implements sendMailService {
 			}else {
 					for ( ProductChange s: listProductSendMail) {
 						String EMAIL_WELCOME_SUBJECT =
-								"Dear anh chị yêu câu đổi trả hàng của anh chị đã" +
-								"được xác nhận vui lòng mang máy "+
+								"Dear Anh/Chị, yêu câu đổi trả hàng của anh chị đã được xác nhận. " +
+								"Vui lòng mang máy "+
 								s.getOrderDetail().getProduct().getName() +
-								" đến cửa hàng địa chỉ tại Nam Từ Liêm Hà Nôị";
+								" đến cửa hàng địa chỉ tại số 7 ngõ 470 đường Láng – Láng Hạ – Đống Đa – Hà Nội.";
 						msg.setFrom(new InternetAddress(user));
 						InternetAddress[] toAddresses = {new InternetAddress(s.getEmail())};
 						msg.setRecipients(Message.RecipientType.TO, toAddresses);
@@ -141,7 +141,7 @@ public class sendMailImpl implements sendMailService {
 				msg.setFrom(new InternetAddress(user));
 				InternetAddress[] toAddresses = {new InternetAddress(acc.getEmail())};
 				msg.setRecipients(Message.RecipientType.TO, toAddresses);
-				msg.setSubject("xin chào mật khẩu của bạn");
+				msg.setSubject("Fix Mobile - Đổi mật khẩu tài khoản");
 				msg.setSentDate(new Date());
 				msg.setText("Mật khẩu của bạn là: kdi23239dsad");
 				Transport.send(msg);
