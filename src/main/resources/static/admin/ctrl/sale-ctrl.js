@@ -88,7 +88,6 @@ app.controller("sale_ctrl", function ($scope, $http, $window,$rootScope) {
                 let item = angular.copy($scope.saleadd);
                 let urlsale = `/rest/admin/sale/add`;
                 let listDetail = angular.copy($scope.seLected);
-                console.log($scope.saleadd.typeSale+'hahhahaah')
                 if ($scope.saleadd.typeSale == 0 || $scope.saleadd.typeSale == 2 || ($scope.saleadd.userType == 0 && $scope.saleadd.typeSale == 3) ) {
                     console.log($scope.saleadd.typeSale+'hihihihi')
                     $http.post(urlsale, item, token).then(resp => {
@@ -110,6 +109,7 @@ app.controller("sale_ctrl", function ($scope, $http, $window,$rootScope) {
                         });
                     })
                 } else {
+                    console.log($scope.saleadd.typeSale+'hahhahaah')
                     $http.post(urlsale, item, token).then(resp => {
                         let urlsaledetail = `/rest/admin/sale/adddetail/` + $scope.saleadd.typeSale;
                         console.log(listDetail);
