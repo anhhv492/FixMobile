@@ -1,6 +1,6 @@
 app.controller("sale_ctrl", function ($scope, $http, $window,$rootScope) {
-    let urlprd = "http://localhost:8080/rest/admin/product/getdatasale";
-    let urlacsr = "http://localhost:8080/rest/admin/accessory/getdatasale";
+    let urlprd = "http://localhost:8080/rest/staff/product/getdatasale";
+    let urlacsr = "http://localhost:8080/rest/staff/accessory/getdatasale";
     let urlacc = "http://localhost:8080/rest/admin/accounts/getdatasale";
 
     const jwtToken = localStorage.getItem("jwtToken")
