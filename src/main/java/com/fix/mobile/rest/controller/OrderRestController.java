@@ -216,7 +216,7 @@ public class OrderRestController {
                     accessoryService.update(accessory,accessory.getIdAccessory());
                 }
                 List<ImayProduct> imayProducts = imayProductService.findByOrderDetail(orderDetails.get(i));
-                if(imayProducts.size()>0){
+                if(imayProducts.size()>=0){
                     for (int j = 0; j < imayProducts.size(); j++) {
                         imayProducts.get(j).setStatus(1);
                         imayProductService.update(imayProducts.get(j),imayProducts.get(j).getIdImay());
