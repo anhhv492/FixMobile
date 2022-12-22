@@ -61,7 +61,7 @@
                     </thead>
                     <tbody>
                     <tr>
-                        <td><img src="{{getOneProduct.productChange.images.length>0?
+                        <td ><img src="{{getOneProduct.productChange.images.length>0?
                                  getOneProduct.productChange.images[0].name : ''}}" class="img-fluid rounded-3"
                                  style="width: 120px;height: 120px" alt="Book">
                             <img src="{{getOneProduct.productChange.images.length>0?
@@ -70,6 +70,8 @@
                             <img src="{{getOneProduct.productChange.images.length>0?
                                  getOneProduct.productChange.images[3].name : ''}}" class="img-fluid rounded-3"
                                  style="width: 120px;height: 120px" alt="Book"> <br>
+                            <img src="{{getOneProduct.productChange.images[4].name}}" class="img-fluid rounded-3"
+                                 style="width: 120px;height: 120px" alt=""> <br>
                         </td>
                         <td class="align-middle">số lượng: {{getOneProduct.productChange.quantity}}</td>
                         <td>

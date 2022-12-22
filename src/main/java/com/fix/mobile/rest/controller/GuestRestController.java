@@ -182,7 +182,7 @@ public class GuestRestController {
                     if(accessory.isPresent()){
                         orderDetail.setAccessory(accessory.get());
                         orderDetail.setOrder(order);
-                        orderDetail.setStatus(0);
+                        orderDetail.setStatus(1);
                         orderDetail.setQuantity(carts.get(i).get("qty").asInt());
                         price = new BigDecimal(carts.get(i).get("price").asDouble());
                         orderDetail.setPrice(price);
