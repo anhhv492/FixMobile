@@ -89,6 +89,7 @@ public class AccessoryRestController {
 	public Accessory changeStatus(@PathVariable("id") Integer id){
 	    Accessory accessory = accessoryService.findById(id).get();
 		if(accessory.getStatus() == true){
+			accessory.setQuantity(0);
 			accessory.setStatus(false);
 		}else{
 			accessory.setStatus(true);

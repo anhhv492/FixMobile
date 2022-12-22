@@ -155,6 +155,7 @@ app.controller('rest_accessory', function($scope, $http,$rootScope,$window) {
                     })
                     console.log(response.data);
                     $scope.accessories.find(item=>item.idAccessory==accessory.idAccessory).status=!accessory.status;
+                    $scope.accessories.find(item=>item.idAccessory==accessory.idAccessory).quantity=0;
                 }).catch(error=>{
                     const Toast = Swal.mixin({
                         toast: true,

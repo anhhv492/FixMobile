@@ -155,7 +155,7 @@
                                         aria-controls="home-tab-pane">
                                     <i class="fa fa-pencil-square" aria-hidden="true"> Sửa</i>
                                 </button>
-                                <button class="btn btn-default" ng-click="changeStatus(accessory)">
+                                <button class="btn btn-default" ng-click="changeStatus(accessory)" ng-if="accessory.quantity>0">
                                     <i class="fa fa-wrench"> Thay đổi</i>
                                 </button>
                             </td>
