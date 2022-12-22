@@ -19,9 +19,9 @@
                         <div class="price-range-wrap">
                             <div class="range-slider">
                                 <div class="price-input" style="text-align: center;  font-size: 12px;">
-                                    <input ng-model="findProductAll.priceSalemin"  class="col-4" type="text" id="minamount" placeholder="Từ"> <b> VNĐ</b>
+                                    <input ng-model="findProductAll.priceSalemin"  class="col-4" type="number" min="0"  maxlength="9" id="minamount" placeholder="Từ"> <b> VNĐ</b>
                                      -->
-                                    <input ng-model="findProductAll.priceSalemax"  class="col-4" type="text" id="maxamount" placeholder="Đến"> <b> VNĐ</b>
+                                    <input ng-model="findProductAll.priceSalemax"  class="col-4" type="number" min="0"  maxlength="9" id="maxamount" placeholder="Đến"> <b> VNĐ</b>
                                 </div>
                             </div>
                         </div>
