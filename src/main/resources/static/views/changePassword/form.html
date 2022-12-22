@@ -1,0 +1,85 @@
+<body>
+<div></div>
+<section class="ftco-section mt-5 mb-5">
+    <div class="container">
+
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5">
+                <div class="login-wrap p-4 p-md-5">
+                    <div class="icon d-flex align-items-center justify-content-center">
+                        <span class="fa fa-user-o"></span>
+                    </div>
+                    <h3 class="text-center mb-4">Đổi mật khẩu</h3>
+                    <form method="post" class="changePassword-form row" name="form1">
+                        <div class="form-group col-lg-12">
+                            <input type="{{inputType}}" class="form-control rounded-left" path="oldPassword"
+                                   name="oldPassword" placeholder="Mật khẩu cũ" ng-model="form.oldPassword"
+                                   required  maxlength="250">
+                            <span ng-show="form1.$submitted || form1.oldPassword.$dirty" style="color: red">
+                                        <span class="error" ng-show="form1.oldPassword.$error.required"> <i
+                                                class="fa fa-exclamation-circle"></i>Vui lòng không để trống</span>
+                            </span>
+                        </div>
+
+                        <div class="form-group  col-lg-12">
+                            <input type="{{inputType}}" class="form-control rounded-left" path="newPassword"
+                                   name="newPassword" placeholder="Mật khẩu mới" ng-model="form.password"
+                                   required ng-minlength="6" ng-maxlength="250" maxlength="250">
+
+                            <span ng-show="form1.$submitted || form1.newPassword.$dirty" style="color: red">
+                                        <span class="error" ng-show="form1.newPassword.$error.required"> <i
+                                                class="fa fa-exclamation-circle"></i>Vui lòng không để trống</span>
+                                        <span class="error"
+                                              ng-show="((form1.newPassword.$error.minlength
+                                              || form1.newPassword.maxlength) || form1.newPassword.$error.$dirty)">
+                                                <i class="fa fa-exclamation-circle"></i>Mật khẩu phải từ 6 - 250 ký tự</span>
+                        </span>
+                        </div>
+
+                        <div class="form-group  mt-2">
+                            <input type="{{inputType}}" class="form-control rounded-left" path="confirmPassword"
+                                   name="confirmPassword" placeholder="Xác nhận mật khẩu" ng-model="form.password_verify"
+                                   required maxlength="250">
+                            <span ng-show="form1.$submitted || form1.confirmPassword.$dirty" style="color: red">
+                                        <span class="error" ng-show="form1.confirmPassword.$error.required"> <i
+                                                class="fa fa-exclamation-circle"></i>Vui lòng không để trống</span>
+                                <span class="error"
+                                      ng-show="((form1.confirmPassword.$error.minlength
+                                              || form1.confirmPassword.maxlength) || form1.confirmPassword.$error.$dirty)">
+                                                <i class="fa fa-exclamation-circle"></i>Mật khẩu phải từ 6 - 250 ký tự</span>
+
+                            </span>
+                        </div>
+
+                        <div class="form-group d-flex">
+                            <input type="checkbox" id="checkbox" ng-model="passwordCheckbox" ng-click="hideShowPassword()"/>
+                            <label for="checkbox" ng-if="passwordCheckbox">Ẩn mật khẩu</label>
+                            <label for="checkbox" ng-if="!passwordCheckbox">Hiển thị mật khẩu</label>
+                        </div>
+                        <!-- <div class="col p-0">
+
+                        </div>
+                        -->
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary rounded submit p-3
+                                 px-5 ">Hủy bỏ
+                            </button>
+                            <button ng-click="changePassword()" type="submit" class="btn btn-primary rounded submit p-3
+                                 px-5 ">Đồng ý
+                            </button>
+
+                        </div>
+                        <div class="row mb-5"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- <script src="/templates/js/jquery.min.js"></script>
+<script src="/templates/js/popper.js"></script>
+<script src="/templates/js/bootstrap.min.js"></script>
+<script src="/templates/js/main.js"></script> -->
+<!--    <script src="/ctrl/login-ctrl.js"></script> -->
+<!-- </body>
+</html> -->

@@ -1,0 +1,224 @@
+<section class="h-100">
+    <div class="container h-100 py-5">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col" class="h5">Giỏ hàng</th>
+                            <th scope="col">Loại</th>
+                            <th scope="col">Số lượng</th>
+                            <th scope="col">Màu</th>
+                            <th scope="col">Giá (VNĐ</th>
+                            <th scope="col">Tổng (VNĐ)</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="item in carts">
+                            <th scope="row">
+                                <div class="d-flex align-items-center">
+                                    <img src="{{item.image}}" class="img-fluid rounded-3"
+                                         style="width: 120px;height: 120px" alt="Book" ng-if="item.idAccessory">
+                                    <img src="{{item.images[0].name}}" class="img-fluid rounded-3"
+                                         style="width: 120px;height: 120px" alt="Book" ng-if="item.idProduct">
+                                    <div class="flex-column ms-4">
+                                        <h4 class="mb-2">{{item.name}}</h4>
+                                        <span class="mb-0 text-success">{{item.note}}</span>
+                                    </div>
+                                </div>
+                            </th>
+                            <td class="align-middle">
+                                <p class="mb-0" style="font-weight: 500;">{{item.category.name}}</p>
+                            </td>
+                            <td class="align-middle">
+                                <div class="d-flex flex-row">
+                                    <button class="btn btn-link px-2" ng-click="reduce(item)">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+
+                                    <input min="0" ng-change="update(item)" ng-model="item.qty" ng-value="item.qty" type="number"
+                                           class="form-control form-control-sm" style="width: 100px;" />
+
+                                    <button class="btn btn-link px-2" ng-click="raise(item)">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                            </td>
+                            <td class="align-middle" ng-if="item.idAccessory">{{item.color}}</td>
+                            <td class="align-middle" ng-if="item.idProduct">{{item.color.name}}</td>
+                            <td class="align-middle">{{item.price|number}}</td>
+                            <td class="align-middle">
+                                <p class="mb-0" style="font-weight: 500 " ng-if="item.priceSale ==0">{{item.price*item.qty|number}}  VNĐ</p>
+                                <p class="mb-0" style="font-weight: 500 " ng-if="item.priceSale !=0">{{item.priceSale*item.qty|number}} VNĐ&nbsp;<del>{{item.price*item.qty|number}} VNĐ</del><br>
+                                Tiết kiệm được {{item.price*item.qty-item.priceSale*item.qty |number}}
+                                </p>
+                            </td>
+                            <td>
+                                <button class="btn btn-light" ng-click="remove(item)">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                                        <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                                    </svg>
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card shadow-2-strong mb-5 mb-lg-0" style="border-radius: 16px;" ng-if="carts.length>0">
+                    <div class="card-body p-4">
+
+                        <div class="row">
+                            <div class="col-md-6 col-lg-4 col-xl-3 mb-md-0">
+                                <form>
+                                    <label class="form-label ps-2">Phương thức thanh toán</label>
+                                    <div class="d-flex flex-row pb-3">
+                                        <div class="d-flex align-items-center pe-2">
+                                            <input class="form-check-input" type="radio" ng-click="checkBuyCOD()" name="checkBuy">
+                                        </div>
+                                        <div class="rounded border w-100 p-3">
+                                            <p class="d-flex align-items-center mb-0">
+                                                <i class="fab fa-cc-diners-club fa-2x fa-lg text-dark pe-2"></i>Tiền mặt
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex flex-row">
+                                        <div class="d-flex align-items-center pe-2">
+                                            <input class="form-check-input" type="radio" ng-click="checkBuyPaypal()" name="checkBuy">
+                                        </div>
+                                        <div class="rounded border w-100 p-3">
+                                            <p class="d-flex align-items-center mb-0">
+                                                <i class="fab fa-cc-paypal fa-2x fa-lg text-dark pe-2"></i>PayPal
+                                            </p>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col-md-6 col-lg-4 col-xl-6">
+                                <div class="row">
+                                    <div class="form-outline col-6">
+                                        <label class="form-label">Người nhận</label>
+                                        <p class="alert alert-secondary" style="height: 50px">{{addressAccount.personTake}}</p>
+                                    </div>
+                                    <div class="form-outline col-6">
+                                        <label class="form-label">Số điện thoại</label>
+                                        <p class="alert alert-secondary" style="height: 50px">{{addressAccount.phoneTake}}</p>
+                                    </div>
+                                    <div class="form-outline col-12 mt-2">
+                                        <label class="form-label">Địa chỉ</label>
+                                        <p class="alert alert-secondary">{{addressAccount.addressDetail}}, {{addressAccount.addressTake}}</p>
+                                    </div>
+                                    <div class="form-outline col-12 mt-2">
+                                        <label class="form-label" for="typeText2">Ghi chú</label>
+                                        <textarea class="form-control" ng-model="cart.note" name="note"
+                                                  id="typeText2" rows="4" placeholder="Note"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-xl-3">
+                                <a class="btn btn-outline-primary" href="#!login" ng-if="!account">Chọn địa chỉ</a>
+                                <a class="btn btn-outline-primary" href="#!address" ng-if="account">Chọn địa chỉ</a>
+                                <button class="btn btn-outline-warning ms-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop" ng-click="getVoucherSale(totals())">
+                                    Mã giảm giá
+                                </button>
+                                <div class="d-flex justify-content-between" style="font-weight: 500;">
+                                    <p class="mb-2">Tổng đơn</p>
+                                    <p class="mb-2">{{totalPrice()|number}}đ</p>
+                                </div>
+                                <div ng-if="totalPriceSale() != 0 " class="d-flex justify-content-between" style="font-weight: 500;">
+                                    <p class="mb-2">Tổng tiết kiệm</p>
+                                    <p class="mb-2">{{totalPrice()-totalPriceSale()|number}}đ</p>
+                                </div>
+                                <div ng-if="priceSaleByVocher != 0" class="d-flex justify-content-between" style="font-weight: 500;">
+                                    <p class="mb-2">Giảm giá theo mã</p>
+                                    <p class="mb-2">{{priceSaleByVocher|number}}đ</p>
+                                </div>
+
+                                <div class="d-flex justify-content-between" style="font-weight: 500;">
+                                    <p class="mb-0">Giao hàng</p>
+                                    <p class="mb-0">{{ship|number}}đ</p>
+                                </div>
+
+                                <hr class="my-4">
+
+                                <div class="d-flex justify-content-between mb-3" style="font-weight: 500;">
+                                    <h5 class="mb-2">Tổng tiền</h5>
+                                    <h5 class="mb-2">{{totals()+ship|number}}đ</h5>
+                                </div>
+                                <a class="btn btn-primary btn-block btn-lg" href="#!login" ng-if="!account">
+                                    Thanh toán
+                                </a>
+                                <button type="button" class="btn btn-primary btn-block btn-lg" ng-if="checkBuy!=null && account"
+                                    ng-click="buyCart()">
+                                    Thanh toán
+                                </button>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Chọn mã giảm giá</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body ">
+                    <h2 ng-if="listVoucherSale.length==0">Không có mã giảm giá nào phù hợp với đơn hàng</h2>
+                    <table class="table table-striped table-hover" ng-if="listVoucherSale.length!=0" >
+                        <thead>
+                            <tr>
+                                <th scope="col">Chọn</th>
+                                <th scope="col">Chương trình giảm giá</th>
+                                <th scope="col">Tiền được giảm</th>
+                                <th scope="col">Đơn hàng tối thiểu</th>
+                                <th scope="col">Hạn sử dụng</th>
+                            </tr>
+                        </thead>
+                        <tbody ng-repeat="sale in listVoucherSale">
+                            <tr>
+                                <th scope="row"><input type="radio" ng-model="getVoucherApply" ng-value="sale.idSale" ng-click="getSaleApply(getVoucherApply)" style="width: 40px;height: 40px" name="slecedSale" data-bs-dismiss="modal" ></th>
+                                <td>
+                                    <p ng-if="sale.typeSale==0">giảm giá toàn shop</p>
+                                    <p ng-if="sale.typeSale==1">giảm giá theo 1 số sản phẩm</p>
+                                    <p ng-if="sale.typeSale==4">giảm giá theo 1 số phụ kiện</p>
+                                    <p ng-if="sale.typeSale==2">giảm giá the đơn hàng </p>
+                                    <p ng-if="sale.typeSale==3 && sale.userType==0">giảm giá cho khách hàng mới</p>
+                                    <p ng-if="sale.typeSale==3 && sale.userType==1">giảm giá cho dành riêng cho bạn</p>
+                                </td>
+                                <td>
+                                    <p ng-if="sale.moneySale!=null">{{sale.moneySale}} VNĐ</p>
+                                    <p ng-if="sale.percentSale!=null">{{sale.percentSale}} %</p>
+                                </td>
+                                <td>
+                                    <p ng-if="sale.valueMin==null">0 VNĐ</p>
+                                    <p ng-if="sale.valueMin!=null">{{sale.valueMin}} VNĐ</p>
+                                </td>
+                                <td>
+                                    <p>Ngày bắt đầu {{sale.createStart| date:'MM/dd/yyyy h:mma'}}</p>
+                                    <p>Ngày kết thúc {{sale.createEnd| date:'MM/dd/yyyy h:mma'}}</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    @media (min-width: 1025px) {
+        .h-custom {
+            height: 100vh !important;
+        }
+    }
+</style>

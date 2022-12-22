@@ -1,0 +1,155 @@
+<main ng-controller="sale_ctrl">
+        <div class="mb-3">
+            <label for="" class="form-label">Loại giảm giá</label>
+            <select class="form-select form-select-lg" ng-change="onChangeTypeSale()" ng-model="saleadd.typeSale" id="typeSale">
+                <option ng-value="0" >Toàn Bộ Cửa Hàng</option>
+                <option ng-value="1" >Theo Sản Phẩm</option>
+                <option ng-value="2" >Theo Đơn Hàng</option>
+                <option ng-value="3" >Theo Khách Hàng</option>
+                <option ng-value="4" >Theo phụ kiện</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="" class="form-label">Tên chương trình</label>
+            <input type="text" ng-model="saleadd.name" ng-value="saleadd.name" class="form-control" placeholder="" aria-describedby="helpId">
+        </div>
+        <div class="mb-3">
+            <label for="" class="form-label">Phương thức giảm giá</label>
+            <select class="form-select form-select-lg"  ng-change="onChangeDiscountMethod()" ng-model="saleadd.discountMethod" >
+                <option ng-value="0">theo voucher</option>
+                <option ng-value="1">trực tiếp</option>
+            </select>
+        </div>
+        <div class="mb-3" ng-show="hiddenDiscountMethod">
+            <label for="" class="form-label">Mã giảm giá</label>
+            <input type="text" ng-model="saleadd.voucher" ng-value="saleadd.voucher" class="form-control" placeholder="" aria-describedby="helpId">
+        </div>
+        <div class="mb-3">
+            <label for="" class="form-label">Kiểu giảm giá</label>
+            <select class="form-select form-select-lg" ng-change="onChangeDiscountType()" ng-model="saleadd.discountType" name="">
+                <option ng-value="0">theo tiền mặt</option>
+                <option ng-value="1">theo %</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <div class="row g-2">
+                <div class="col-md">
+                    <label for="" class="form-label" >Mức giảm giá</label>
+                    <div class="input-group" ng-show="hiddenMoneySale">
+                        <input type="input" class="form-control" ng-model="saleadd.moneySale" ng-value="saleadd.moneySale">
+                        <span class="input-group-text" >VNĐ</span>
+                    </div>
+                    <div class="input-group" ng-show="hiddenPercentSale">
+                        <input type="number" min="0" max="100" class="form-control" ng-model="saleadd.percentSale" ng-value="saleadd.percentSale">
+                        <span class="input-group-text">%</span>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <label for="" class="form-label">Số lượng</label>
+                    <input type="text" maxlength="6" ng-model="saleadd.quantity" ng-value="saleadd.quantity" class="form-control" placeholder="" aria-describedby="helpId">
+                </div>
+            </div>
+        </div>
+        <div class="mb-3" ng-show="hiddenValueMin">
+            <label for="" class="form-label">Giá trị đơn hàng tối thiểu</label>
+            <input type="number" ng-model="saleadd.valueMin" ng-value="saleadd.valueMin"  class="form-control" placeholder="" aria-describedby="helpId">
+        </div>
+    <div class="mb-3" ng-show="hiddenUserType">
+        <label for="" class="form-label">Đối tượng giảm giá</label>
+        <select class="form-select form-select-lg" ng-change="onChangeUserType()"
+                ng-model="saleadd.userType">
+            <option ng-value="0">Tất cả user mới</option>
+            <option ng-value="1">Chọn user</option>
+        </select>
+    </div>
+
+        <div class="mb-3" id="">
+            <div class="row g-2">
+                <div class="col-md">
+                        <label for="" class="form-label">Thời gian bắt đầu</label>
+                        <input type="datetime-local" ng-value="saleadd.createStart"  class="form-control" ng-model="saleadd.createStart">
+                </div>
+                <div class="col-md">
+                        <label for="" class="form-label">Thời gian kết thúc</label>
+                        <input type="datetime-local" ng-value="saleadd.createEnd"  class="form-control" ng-model="saleadd.createEnd">
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="floatingTextarea2">Mô tả chi tiết</label>
+            <textarea class="form-control" placeholder="Leave a comment here" ng-model="saleadd.detailSale" id="floatingTextarea2" style="height: 100px"></textarea>
+      </div>
+
+        <!-- table all -->
+        <div ng-show="hiddenTableAll">
+            <form class="">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Chọn</th>
+                    <th scope="col">Mã {{nameOnTable}}</th>
+                    <th scope="col">Tên {{nameOnTable}}</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="dta in dataTable">
+                    <th scope="row"><input type="checkbox" ng-checked="checkSelect(dta.idAccessory)" ng-click="checkSelected(dta.idAccessory)"></th>
+                    <td>
+                        <p ng-if="dta.idAccessory">{{dta.idAccessory}}</p>
+                        <p ng-if="dta.username">{{dta.username}}</p>
+                        <p ng-if="dta.idProduct">{{dta.idProduct}}</p>
+                    </td>
+                    <td>
+                        <p ng-if="dta.name">{{dta.name}}</p>
+                        <p ng-if="dta.fullName">{{dta.fullName}}</p>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <nav class="row table-responsive">
+                <table>
+                    <ul class="pagination justify-content-center row">
+                        <div class="col-1">
+                            <li class="page-item">
+                                <button class="btn btn-default {{!check_first?'disabled':''}}" ng-click="first()"><i class="fa fa-fast-backward" aria-hidden="true"></i></button>
+                                <!--            <p class="btn btn-dark" disabled ng-show="!check_first">Trang đầu</p>-->
+                            </li>
+                        </div>
+                        <div class="col-1">
+                            <li class="page-item ms-2 me-2">
+                                <button class="btn btn-default" ng-click="prev(nameOnTable)"><i class="fa fa-step-backward" aria-hidden="true"></i></button>
+                                <!--            <p class="btn btn-success" disabled ng-show="!check_first">Trang trước</p>-->
+                            </li>
+                        </div>
+                        <div class="col-1">
+                            <li class="page-item ms-1 me-1 pt-1 ">
+                                <h4>{{index+1}}/{{totalPages}}</h4>
+                            </li>
+                        </div>
+                        <div class="col-1">
+                            <li class="page-item ms-2 me-2">
+                                <button class="btn btn-default" ng-click="next(nameOnTable)"><i class="fa fa-step-forward" aria-hidden="true"></i></button>
+                                <!--            <p class="btn btn-success" disabled ng-show="!check_last">Trang sau</p>-->
+                            </li>
+                        </div>
+                        <div class="col-1">
+                            <li class="page-item">
+                                <button class="btn btn-default {{!check_last?'disabled':''}}" ng-click="last()"><i class="fa fa-fast-forward" aria-hidden="true"></i></button>
+                                <!--            <p class="btn btn-dark" disabled ng-show="!check_last">Trang cuối</p>-->
+                            </li>
+                        </div>
+                    </ul>
+                </table>
+            </nav>
+        </div>
+        <!-- end table all -->
+
+        <button type="submit" ng-click="createSale()">Tạo</button>
+    <a href="#!showsale">xem</a>
+</main>
+
+

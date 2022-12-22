@@ -1,0 +1,103 @@
+<div class="col-sm-9 col-sm-offset-3 col-lg-12">
+    <div class="row">
+        <div class="row mt-4">
+            <h1 class="page-header text-center
+             text-body">Ram</h1>
+            <div>
+
+    </div><!--/.row-->
+    <div class="row">
+            <div class="col-12 panel panel-default" >
+                <div class="panel-body">
+                    <form  ng-submit="onSubmitForm($event)" name="myForm">
+                        <div class="col-md-12">
+
+                                <div class="form-group mt-1">
+                                    <label>Tên Ram</label>
+                                    <input maxlength="250" oninput="this.value = this.value.toUpperCase().trim()" required ng-model="accseries.name" name="ram"  class="form-control mt-2" placeholder="Nhập dữ liệu">
+                                    <span ng-show="myForm.$submitted || myForm.ram.$dirty" style="color: red" >
+                                        <span class="error" ng-show="myForm.ram.$error.required"> <i
+                                                class="fa fa-exclamation-circle"></i>Không được trống</span>
+
+                                    </span>
+                                </div>
+                                <div class="form-group mt-4 offset-5">
+                                    <button  ng-click="create()" class="btn btn-success">Thêm mới</button>
+                                    <button  ng-click="reset()" class="btn btn-warning">Làm mới</button>
+                                </div>
+
+
+                        </div>
+                        <div class="col-md-12">
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+    </div>
+
+    <div class="row">
+              <div class="col-lg-12">
+           <table class="table table-striped table-hover">
+               <thead>
+               <tr>
+                   <th>STT</th>
+                   <th>Tên Ram</th>
+                   <th>Thao tác</th>
+               </thead>
+               <tbody>
+               <tr ng-repeat="accessres in items">
+                   <td>{{$index + 1}}</td>
+                   <td>{{accessres.name}}</td>
+                   <td>
+                       <button ng-click="delete(accessres)" class="btn btn-danger">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                           <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                       </svg>
+                       </button>
+                   </td>
+               </tr>
+               </tbody>
+           </table>
+       </div>
+        <div class="col-lg-2"></div>
+    </div>
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <li class="page-item">
+                <a class="page-link {{!check_firsts?'disabled':''}}" ng-click="first()">First</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" ng-click="prev()">Previous</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">{{index+1}}/{{totalPagess}}</a></li>
+            <li class="page-item">
+                <a class="page-link" ng-click="next()">Next</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link {{!check_lasts?'disabled':''}}" ng-click="last()">Last</a>
+            </li>
+        </ul>
+    </nav>
+
+        </div>
+    </div>
+
+</div>
+<style>
+    input.ng-invalid.ng-touched {
+        border:2px solid red;
+    }
+
+    textarea.ng-invalid.ng-touched {
+        border:2px solid red;
+    }
+    select.ng-invalid.ng-touched {
+        border:2px solid red;
+    }
+    button:hover{
+        box-shadow: 0 0 5px rgb(119, 119, 145);
+    }
+
+</style>

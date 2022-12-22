@@ -1,0 +1,256 @@
+<main class="wrapperMain_content">
+    <div class="alert alert-warning container " ng-if="detailProducts.length<0">
+        Sản phẩm này đã hết hàng!
+    </div>
+
+    <div class="section wrap_background">
+        <div class="container ">
+            <div class="bg_collection section">
+                <div class="row">
+                    <aside class="dqdt-sidebar sidebar left-content col-lg-3 col-md-4 col-sm-4">
+                        <div class="row">
+                            <div class="col-12 col-lg-12">
+                                <div class="filter-content aside-filter">
+                                    <div class="module-filter">
+                                        <h2 class="title-filter-top margin-top-0">
+                                            Lọc sản phẩm
+                                        </h2>
+                                    </div>
+                                    <div class="filter-container">
+                                        <!-- Lọc Thương hiệu -->
+                                        <!-- End Lọc Thương hiệu -->
+                                        <!-- Lọc giá -->
+                                        <aside class="aside-item filter-price f-left">
+                                            <div class="block-title">
+                                                <h2 class="title-module ">Theo mức giá</h2>
+                                            </div>
+                                            <div class="aside-content margin-top-0 filter-group content_price">
+                                                <ul>
+                                                    <li class="filter-item filter-item--check-box filter-item--green">
+                                                        <span>
+
+                                                            <label><a class="" href="#!filterproductprice"
+                                                                            ng-click="findProductByPr()">Từ 100.000 đ đến 500.000đ</a>
+                                                                    </label>
+
+                                                            <label data-filter="100-000d" >
+                                                                <input type="checkbox" id="filter-duoi-100-000d" data-group="Khoảng giá"
+                                                                       data-field="price_min" data-text="Dưới 100.000đ" value="(<100000)"
+                                                                       data-operator="OR">
+                                                                <i class="fa"></i>
+                                                                <a class="" href="#!product/detail"  ng-click="findProductByPr()">Từ 100.000 đ đến 500.000đ</a>
+                                                            </label>
+
+                                                        </span>
+                                                    </li>
+
+                                                </ul>
+                                            </div>
+                                        </aside>
+                                        <!-- End Lọc giá -->
+                                        <!-- Lọc Loại -->
+                                        <aside class="aside-item aside-itemxx filter-type">
+                                            <div class="block-title">
+                                                <h2 class="title-module ">Tìm theo loại</h2>
+                                            </div>
+                                            <div class="aside-content filter-group">
+                                                <ul>
+                                                    <li class="filter-item filter-item--check-box filter-item--green"
+                                                        ng-repeat="catePro in cateProducts">
+                                                        <span>
+                                                            <label >
+                                                                <i class="fa"></i>
+                                                                <a class="" href="#!product/detail"  ng-click="getDetail(catePro)">{{catePro.name}}</a>
+                                                            </label>
+                                                        </span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </aside>
+                                        <!-- End Lọc Loại -->
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-lg-12">
+                                <aside class="aside-item blog-sidebar sidebar-category collection-category margin-bottom-25 clear-fix">
+                                    <div class="block-title">
+                                        <h2 class="title-module">Danh mục</h2>
+                                    </div>
+                                    <div class="aside-content">
+                                        <nav class="nav-category navbar-toggleable-md">
+                                            <ul class="nav navbar-pills">
+                                                <li class="nav-item"><a class="nav-link" href="/">Trang chủ
+                                                </a>
+                                                </li>
+                                                <li class="nav-item"><a class="nav-link" href="/landing-sale">Landing
+                                                    Sale
+                                                </a>
+                                                </li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                </aside>
+                            </div>
+
+                        </div>
+                    </aside>
+                    <div class="main_container collection col-lg-9 col-md-12 col-sm-12">
+                        <div class="wrap-srt-title">
+                            <h1 class="title-module">Tất cả sản phẩm</h1>
+                            <div class="sortPagiBar">
+                                <div class="sort-cate clearfix">
+                                    <div class="sort-cate-left">
+                                        <span>Sắp xếp: <em>Mặc định</em></span>
+                                        <ul>
+                                            <li class="btn-quick-sort alpha-asc">
+                                                <a href="javascript:;" onclick="sortby('alpha-asc')"
+                                                   title="Tên A-Z"><i></i>Tên A-Z</a>
+                                            </li>
+                                            <li class="btn-quick-sort price-asc">
+                                                <a href="javascript:;" onclick="sortby('price-asc')"
+                                                   title="Giá thấp đến cao"><i></i>Giá tăng dần</a>
+                                            </li>
+                                            <li class="btn-quick-sort price-desc">
+                                                <a href="javascript:;" onclick="sortby('price-desc')"
+                                                   title="Giá cao xuống thấp"><i></i>Giá giảm dần</a>
+                                            </li>
+                                            <li class="btn-quick-sort created-desc">
+                                                <a href="javascript:;" onclick="sortby('created-desc')"
+                                                   title="Mới nhất"><i></i>Mới nhất</a>
+                                            </li>
+                                            <li class="btn-quick-sort created-asc">
+                                                <a href="javascript:;" onclick="sortby('created-asc')"
+                                                   title="Cũ nhất"><i></i>Cũ nhất</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="category-products products">
+                            <section class="products-view products-view-grid collection_reponsive">
+                                <div class="row">
+                                    <div class="col-6 col-md-3 col-lg-3 product-col"
+                                        ng-if="productView.length > 0" ng-repeat="p in productView">
+                                        <div class="item_product_main">
+                                            <form action="/cart/add" method="post"
+                                                  class="variants product-action wishItem" data-cart-form
+                                                  data-id="product-actions-27234048" enctype="multipart/form-data">
+                                                <a class="image_thumb" href="/san-pham-khong-co-anh"
+                                                   title="san pham khong co anh">
+                                                    <img width="199" height="199"
+                                                         src="{{p.image}}"
+                                                         alt="san pham khong co anh"
+                                                         class="lazyload img-responsive center-block"/>
+                                                </a>
+                                                <div class="info-product">
+                                                    <h3 class="product-name"><a href=""
+                                                                                title="san pham khong co anh">{{p.name}}</a></h3>
+                                                    <div class="weight">
+                                                        <small style="color: lightslategray">Còn
+                                                            {{p.totail | number}} sản phẩm</small>
+                                                    </div>
+                                                    <div class="price-box">
+														<span ng-if=" p.priceSale != 0">
+															<del>{{p.price | number}} VNĐ</del> &nbsp; {{p.price-p.priceSale | number}} VNĐ
+														</span>
+                                                        <span ng-if="p.priceSale == 0">
+															<del>{{p.price | number}} VNĐ</del> </span>
+                                                    </div>
+                                                </div>
+                                                <div class="action-cart">
+
+                                                        <button type="button" ng-click="addCart(p)"
+                                                                class="btn btn-lg btn-gray btn_buy"
+                                                                title="Mua ngay"> <i class="fa fa-shopping-cart"></i>
+                                                            <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                                                   xlink:href="#plusiconregular"></use></svg>
+                                                        </button>
+
+                                                </div>
+                                            </form>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="section pagenav ">
+                                    <nav class="clearfix relative nav_pagi w_100">
+                                        <ul class="pagination clearfix">
+
+                                            <li class="page-item disabled"><a class="page-link" href="#">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512">
+                                                    <path d="M192 448c-8.188 0-16.38-3.125-22.62-9.375l-160-160c-12.5-12.5-12.5-32.75 0-45.25l160-160c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25L77.25 256l137.4 137.4c12.5 12.5 12.5 32.75 0 45.25C208.4 444.9 200.2 448 192 448z"/>
+                                                </svg>
+                                            </a></li>
+
+                                            <li class="active page-item disabled"><a class="page-link"
+                                                                                     href="javascript:;">1</a></li>
+                                            <li class="page-item"><a class="page-link" onclick="doSearch(2)"
+                                                                     href="javascript:;">2</a></li>
+
+                                            <li class="page-item hidden-xs"><a class="page-link" onclick="doSearch(2)"
+                                                                               href="javascript:;">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512">
+                                                    <path d="M64 448c-8.188 0-16.38-3.125-22.62-9.375c-12.5-12.5-12.5-32.75 0-45.25L178.8 256L41.38 118.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0l160 160c12.5 12.5 12.5 32.75 0 45.25l-160 160C80.38 444.9 72.19 448 64 448z"/>
+                                                </svg>
+                                            </a></li>
+                                        </ul>
+                                    </nav>
+
+                                </div>
+                            </section>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<style>
+    :root {
+        --main-color: #2b5480;
+        --font-base: 'Roboto', sans-serif;
+        --font-title: 'Roboto', sans-serif;
+        --hover: #e67c26;
+        --text-color: #464646;
+        --price: #fd0000;
+        --hover: #e67c26;
+        --menu: #f08c37;
+        --deal-color: #e44724;
+        --bgcopoun: #ffeef2;
+        --footer-bg: #2b5480;
+        --bg-sup: #f3faff;
+    }
+</style>
+<link href="//bizweb.sapocdn.net/100/460/476/themes/869615/assets/plugin-css.scss.css?1669866878969"
+      rel="stylesheet" type="text/css"/>
+<link rel="preload" as='style'
+      href="//bizweb.sapocdn.net/100/460/476/themes/869615/assets/swiper-style.scss.css?1669866878969">
+<link href="//bizweb.sapocdn.net/100/460/476/themes/869615/assets/swiper-style.scss.css?1669866878969"
+      rel="stylesheet" type="text/css"/>
+
+<link rel="preload" as='style'
+      href="//bizweb.sapocdn.net/100/460/476/themes/869615/assets/main.scss.css?1669866878969">
+<link rel="preload" as='style'
+      href="//bizweb.sapocdn.net/100/460/476/themes/869615/assets/header.scss.css?1669866878969">
+
+<link href="//bizweb.sapocdn.net/100/460/476/themes/869615/assets/main.scss.css?1669866878969" rel="stylesheet"
+      type="text/css"/>
+<link href="//bizweb.sapocdn.net/100/460/476/themes/869615/assets/header.scss.css?1669866878969" rel="stylesheet"
+      type="text/css"/>
+
+
+<link rel="preload" as='style' type="text/css"
+      href="//bizweb.sapocdn.net/100/460/476/themes/869615/assets/sidebar_style.scss.css?1669866878969">
+<link href="//bizweb.sapocdn.net/100/460/476/themes/869615/assets/sidebar_style.scss.css?1669866878969"
+      rel="stylesheet" type="text/css"/>
+<link rel="preload" as='style' type="text/css"
+      href="//bizweb.sapocdn.net/100/460/476/themes/869615/assets/collection_style.scss.css?1669866878969">
+<link href="//bizweb.sapocdn.net/100/460/476/themes/869615/assets/collection_style.scss.css?1669866878969"
+      rel="stylesheet" type="text/css"/>

@@ -1,0 +1,138 @@
+<section style="background-color: #eee;">
+    <div class="container py-5">
+        <div class="row">
+            <div class="card mb-4 col-lg-4">
+                <div class="card-body row d-flex align-content-center text-center">
+                    <div class="col-12">
+                        <img src="{{accountActive.image}}"
+                             alt="avatar"
+                             class="rounded-circle img-fluid" style="width: 150px">
+                    </div>
+                    <h5 class="col-12 my-3">{{accountActive.fullName}}</h5>
+                    <p class="col-12 text-muted">Dụng lượng file tối đa 5 MB</p>
+                    <p class="col-12 text-muted">Định dạng:.JPEG, .PNG</p>
+                    <div class="upload-btn-wrapper col-12 d-flex justify-content-center mb-2">
+                        <button type="button" class="btn btn-outline-primary ms-1">Chọn ảnh</button>
+                        <input type="file" name="myfile" onchange="angular.element(this).scope().upLoadFile(this.files)"
+                               accept=".jpg,.jpeg,.png"/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <form method="post" enctype="multipart/form-data" name="myForm" ng-submit="doSubmit()">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Tên đăng nhập</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <input class="text-muted mb-0 input" disabled value="{{accountActive.username}}">
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Tên</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <input ng-model="accountActive.fullName" name="fullName" type="text"
+                                           ng-minlength="6" ng-maxlength="250"
+                                           required placeholder="Ví dụ: Trần Văn A" class="text-muted mb-0 input"
+                                           value="{{accountActive.fullName}}">
+                                    <span ng-show="myForm.$submitted || myForm.fullName.$dirty" style="color: red">
+                                        <span class="error" ng-show="myForm.fullName.$error.required"
+                                              > <i
+                                                class="fa fa-exclamation-circle"></i>Họ và Tên không được trống</span>
+                                        <span class="error"
+                                              ng-show="((myForm.fullName.$error.minlength || myForm.fullName.$error.maxlength)
+                                              || myForm.fullName.$error.$dirty)">
+                                                <i class="fa fa-exclamation-circle"></i>Họ và tên từ 6-250 ký tự</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Email</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <input ng-model="accountActive.email" type="email" name="email"
+                                           class="text-muted mb-0 input"
+                                           value="{{accountActive.email}}"
+                                           required pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"
+                                           placeholder="Ví dụ: abc@gmail.com">
+                                    <span ng-show="myForm.$submitted || myForm.email.$dirty" style="color: red">
+                                        <span class="error" ng-show="myForm.email.$error.required"> <i
+                                                class="fa fa-exclamation-circle"></i>Email không được trống</span>
+                                                <span class="error" ng-show="myForm.email.$error.pattern"> <i
+                                                        class="fa fa-exclamation-circle"></i>Email sai đinh dạng</span>
+                                    </span>
+                                </div>
+
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Số điện thoại</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <input ng-model="accountActive.phone" class="text-muted mb-0 input"
+                                           value="{{accountActive.phone}}" pattern="(84|0[3|5|7|8|9])+([0-9]{8})\b"
+                                           ng-minlength="0" ng-maxlength="10" name="phone" required type="text"
+                                           placeholder="Số điện thoại liên lạc">
+                                    <span ng-show="myForm.$submitted || myForm.phone.$dirty" style="color: red">
+                                        <span class="error" ng-show="myForm.phone.$error.required"
+                                              > <i
+                                                class="fa fa-exclamation-circle"></i>Số điện thoại không được
+                                            trống</span>
+                                            <span class="error" ng-show="myForm.phone.$error.pattern"
+                                                  > <i
+                                                    class="fa fa-exclamation-circle"></i>Số điện thoại sai đinh dạng</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Giới tính</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <input ng-model="accountActive.gender" class="radio mb-0" type="radio"
+                                           ng-value="true" {{accountActive.gender==true?'checked':''}}>
+                                    Nam </input>
+                                    <input ng-model="accountActive.gender" class="radio mb-0 ms-5" type="radio"
+                                           ng-value="false" {{accountActive.gender==false?'checked':''}}>
+                                    Nữ </input>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row date">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Mật khẩu</p>
+                                </div>
+                                <div class="col-sm-9 d-flex gap-3">
+                                    <a href="#!/changePassword" style="color: blue">Đổi mật khẩu</a>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Địa Chỉ</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p>{{addressDefault}} <a href="#!/address" style="color: blue">Chọn địa chỉ mặc
+                                        định</a></p>
+
+                                </div>
+                            </div>
+                            <hr>
+                            <button type="submit" ng-disabled="myForm.$invalid" class="btn btn-outline-primary ms-1 mt-3 offset-2">Lưu</button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>

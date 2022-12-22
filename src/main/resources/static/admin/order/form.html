@@ -1,0 +1,249 @@
+<ul class="nav nav-tabs container" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+        <p class="nav-link text-dark">
+            Lọc:</p>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="acc-tab" data-bs-toggle="tab" data-bs-target="#acc-tab-pane"
+                type="button" role="tab">
+            Tài khoản</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane"
+                type="button" role="tab">
+            Tổng tiền</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane"
+                type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">
+            Thời gian</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane"
+                type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">
+            Trạng thái</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link btn text-dark" ng-click="getAll()" type="button">
+            Tất cả</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link btn text-success" ng-click="exportExcel()" type="button">
+            Xuất file</button>
+    </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active container" id="acc-tab-pane" role="tabpanel" aria-labelledby="acc-tab" tabindex="0">
+        <div class="row">
+            <div class="col-12 col-sm-3">
+                Tài khoản
+                <select class="form-select" ng-model="userSearch" ng-change="selectByUser()">
+                    <option ng-repeat="acc in accs" ng-value="acc.username">
+                        {{acc.username}}
+                    </option>
+                </select>
+            </div>
+            <div class="col-12 col-sm-3">
+                Họ tên
+                <input type="text" ng-model="nameSearch" class="form-control" ng-change="findByName()">
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade show container" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+        <div class="row">
+            <div class="col-12 col-sm-3">
+                Từ giá
+                <input type="number" ng-model="price1" class="form-control" >
+            </div>
+            <div class="col-12 col-sm-3">
+                Đến giá
+                <input type="number" ng-model="price2" class="form-control" >
+            </div>
+            <div class="col-12 col-sm-3 mt-4">
+                <button class="btn btn-primary" ng-click="findByPrice()">Lọc</button>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade container" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+            <div class="row container">
+                <div class="col-12 col-sm-3">
+                    Từ ngày
+                    <input type="date" ng-model="date1" class="form-control" >
+                </div>
+                <div class="col-12 col-sm-3">
+                    Đến ngày
+                    <input type="date" ng-model="date2" class="form-control" >
+                </div>
+                <div class="col-12 col-sm-2 mt-4">
+                    <button class="btn btn-primary" ng-click="findByDate()">Lọc</button>
+                </div>
+        </div>
+    </div>
+    <div class="tab-pane fade container" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
+        <div class="row container" >
+            <div class="col-12 col-sm-3">
+                Sắp xếp
+                <select class="form-select" ng-model="statusChange">
+                    <option ng-value="0">Chờ xác nhận</option>
+                    <option ng-value="1">Xác nhận</option>
+                    <option ng-value="2">Đang giao hàng</option>
+                    <option ng-value="3">Hoàn tất giao dịch</option>
+                    <option ng-value="4">Hủy đơn</option>
+                </select>
+            </div>
+            <div class="col-12 col-sm-2 mt-4">
+                <button class="btn btn-primary" ng-click="findByStatus()">Lọc</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="table-responsive mt-2" ng-if="orders.length>0">
+    <table class="table table-bordered table-hover container">
+        <thead>
+        <tr>
+            <th>Mã đơn</th>
+            <th>Tài khoản</th>
+            <th>Họ tên</th>
+            <th>Số điện thoại</th>
+            <th>Địa chỉ nhận</th>
+            <th>Ngày mua</th>
+            <th>Ngày nhận</th>
+            <th>Tiền ship (VNĐ)</th>
+            <th>Tổng giá (VNĐ)</th>
+            <th>Ghi chú</th>
+            <th>Trạng thái</th>
+            <th>Thao tác</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="order in orders">
+            <td>{{order.idOrder}}</td>
+            <td>{{order.account.username}}</td>
+            <td>{{order.personTake}}</td>
+            <td>{{order.phoneTake}}</td>
+            <td>{{order.address}}</td>
+            <td>{{order.createDate|date:'dd/MM/yyyy HH:mm:ss'}}</td>
+            <td ng-if="order.timeReceive">{{order.timeReceive|date:'dd/MM/yyyy HH:mm:ss'}}</td>
+            <td ng-if="!order.timeReceive">Chưa nhận hàng</td>
+            <td>{{order.moneyShip|number}}</td>
+            <td>
+                {{order.total|number}} <i class="fa fa-info-circle" aria-hidden="true" ng-click="getOrderDetail(order.idOrder)" data-bs-toggle="modal" data-bs-target="#exampleModal{{order.idOrder}}"></i>
+                <div class="modal fade modal-xl" id="exampleModal{{order.idOrder}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Chi Tiết Tổng Tiền</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">STT</th>
+                                        <th scope="col">Tên Sản Phẩm </th>
+                                        <th scope="col">Số lượng</th>
+                                        <th scope="col">Giá tiền</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody ng-repeat="ordt in ordersDetail">
+                                    <tr>
+                                        <th colspan="1" >{{$index}}</th>
+                                        <td ng-if="ordt.product!=null">{{ordt.product.name}}</td>
+                                        <td ng-if="ordt.accessory!=null">{{ordt.accessory.name}}</td>
+                                        <td>{{ordt.quantity}}</td>
+                                        <td ng-if="ordt.priceSale==0" >{{ordt.price}} VNĐ</td>
+                                        <td ng-if="ordt.priceSale!=0" >{{ordt.priceSale}} VNĐ &nbsp;<del>{{ordt.price}} VNĐ</del></td>
+                                    </tr>
+                                    <tr ng-if="ordt.idSale!=null">
+                                        <th colspan="1">Mã giảm giá đã dùng</th>
+                                        <td colspan="2">{{ordt.noteSale}}</td>
+                                        <td colspan="1">Tổng tiền giảm: {{ordt.price*ordt.quantity - ordt.priceSale*ordt.quantity}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="1">Thành tiền:</th>
+                                        <td colspan="2" ng-if="ordt.priceSale!=0" > Giá 1 Sản phẩm {{ordt.priceSale}}  VNĐ  * số lượng {{ordt.quantity}}</td>
+                                        <td colspan="2" ng-if="ordt.priceSale==0" >Giá 1 Sản phẩm {{ordt.price}} VNĐ  * số lượng {{ordt.quantity}}</td>
+                                        <td ng-if="ordt.priceSale==0" >{{ordt.price * ordt.quantity}} VNĐ</td>
+                                        <td ng-if="ordt.priceSale!=0" >{{ordt.priceSale * ordt.quantity}}  VNĐ</td>
+                                    </tr>
+                                    </tbody>
+                                    <tr>
+                                        <th  colspan="4"></th>
+                                    </tr>
+                                    <tr>
+                                        <th  colspan="3">Tiền Ship: </th>
+                                        <td>{{order.moneyShip|number}}</td>
+                                    </tr>
+                                    <tr ng-if="saleApply!=''">
+                                        <th scope="row">Mã Voucher Đã dùng: {{saleApply.voucher}}</th>
+                                        <td ng-if="saleApply.percent_sale==null">Giảm {{saleApply.moneySale}} VNĐ </td>
+                                        <td ng-if="saleApply.moneySale==null">Giảm {{saleApply.percent_sale}} % </td>
+                                        <td ng-if="saleApply.valueMin==null">Đơn từ 0 đồng </td>
+                                        <td ng-if="saleApply.valueMin!=null">Đơn từ {{saleApply.valueMin}} VNĐ </td>
+                                        <td>Tổng giảm Voucher: {{(sumPrice()-order.total+order.moneyShip)-sumPrice()+sumPriceSale()}} VNĐ </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" colspan="3">Tổng tiền khách được giảm giá trực tiếp:</th>
+                                        <td >{{sumPrice()-sumPriceSale()}} VNĐ </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th scope="row" colspan="3">Tổng tiền khách được giảm giá:</th>
+                                        <td >{{sumPrice()-order.total+order.moneyShip}} VNĐ </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" colspan="3">Tiền Thực Tế Thu Về: </th>
+                                        <td >{{order.total-order.moneyShip}} VNĐ </td>
+                                    </tr>
+
+                                </table>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+
+
+            <td ng-if="order.note">{{order.note}}</td>
+            <td ng-if="!order.note">Không có</td>
+            <td>
+        <span ng-if="order.status==0 && order.statusBuy==0">
+            <span class="text-warning">Chưa thanh toán (Chờ xác nhận)</span>
+        </span>
+        <span ng-if="order.status==0 && order.statusBuy==1">
+            <span class="text-info">Đã thanh toán (Chờ xác nhận)</span>
+        </span>
+        <span ng-if="order.status==1">
+            <span class="text-primary">Xác nhận</span>
+        </span>
+        <span ng-if="order.status==2">
+            <span class="text-primary">Đang giao hàng</span>
+        </span>
+        <span ng-if="order.status==3">
+            <span class="text-success">Hoàn tất giao dịch</span>
+        </span>
+        <span ng-if="order.status==4">
+            <span class="text-dark">Hủy đơn</span>
+        </span>
+        <span ng-if="order.status==5">
+            <span class="text-dark">Hoàn trả</span>
+        </span>
+                <select ng-model="form.status" ng-change="updateStatus(order.idOrder)" class="form-select"
+                        ng-if="order.status!=4&&order.status!=5&&order.status!=3">
+                    <option ng-repeat="item in status" ng-value="item.id">{{item.name}}</option>
+                </select>
+            </td>
+            <td>
+                <a href="#!order-detail" ng-click="getOrder(order)" class="btn btn-default">
+                    <i class="fa fa-info-circle" aria-hidden="true"></i> Chi tiết
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="alert alert-warning container mt-3 container" ng-if="orders.length<=0">Không có dữ liệu</div>

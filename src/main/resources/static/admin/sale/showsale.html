@@ -1,0 +1,328 @@
+<main ng-controller="sale_ctrl">
+    <h1 class="page-header text-center text-body" style=" margin: 20px 0px 20px 0px;">Quản lý giảm giá</h1>
+    <button class="btn btn-success" style="width:100%" data-bs-toggle="modal" ng-click="clear()"
+            data-bs-target="#exampleModaladd">Thêm mới
+    </button>
+    <!-- Modal add -->
+    <div class="modal fade" id="exampleModaladd" tabindex="-1" data-bs-backdrop="static"
+         aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"> <p ng-if="saleadd.idSale==null">Thêm mới sale</p> <p ng-if="saleadd.idSale!=null">Chi tiết sale</p></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- add -->
+                    <div class="mb-3">
+                        <label for="" class="form-label" >Loại giảm giá</label>
+                        <select class="form-select form-select-lg" ng-change="onChangeTypeSale()"
+                                ng-model="saleadd.typeSale" id="typeSale" ng-disabled="saleadd.idSale!=null">
+                            <option ng-value="0">Toàn Bộ Cửa Hàng</option>
+                            <option ng-value="1">Theo Sản Phẩm</option>
+                            <option ng-value="2">Theo Đơn Hàng</option>
+                            <option ng-value="3">Theo Khách Hàng</option>
+                            <option ng-value="4">Theo Phụ Kiện</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="" class="form-label">Tên chương trình</label>
+                        <input type="text" ng-model="saleadd.name" ng-value="saleadd.name" class="form-control"
+                               placeholder="" aria-describedby="helpId" ng-disabled="saleadd.idSale!=null">
+                    </div>
+                    <div class="mb-3">
+                        <label for="" class="form-label">Phương thức giảm giá</label>
+                        <select class="form-select form-select-lg" ng-change="onChangeDiscountMethod()"
+                                ng-model="saleadd.discountMethod" ng-disabled="saleadd.idSale!=null || checktypeSalediscountMethod">
+                            <option ng-value="0">Theo voucher</option>
+                            <option ng-value="1">Trực tiếp</option>
+                        </select>
+                    </div>
+                    <div class="mb-3" ng-show="hiddenDiscountMethod">
+                        <label for="" class="form-label">Mã giảm giá</label>
+                        <input type="text" ng-model="saleadd.voucher" ng-value="saleadd.voucher" class="form-control"
+                               placeholder="" aria-describedby="helpId" pattern="^[a-z0-9_-]{5,250}$" ng-disabled="saleadd.idSale!=null">
+                    </div>
+                    <div class="mb-3">
+                        <label for="" class="form-label">Kiểu giảm giá</label>
+                        <select class="form-select form-select-lg" ng-change="onChangeDiscountType()"
+                                ng-model="saleadd.discountType" name="" ng-disabled="saleadd.idSale!=null && compareDate(saleadd.createStart,saleadd.createEnd,saleadd.quantity) != 0">
+                            <option ng-value="0">Theo tiền mặt</option>
+                            <option ng-value="1">Theo %</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <div class="row g-2">
+                            <div class="col-md">
+                                <label for="" class="form-label">Mức giảm giá</label>
+                                <div class="input-group" ng-show="hiddenMoneySale" >
+                                    <input type="number" min="10000" maxlength="9" class="form-control" ng-model="saleadd.moneySale"
+                                           ng-value="saleadd.moneySale" ng-disabled="saleadd.idSale!=null && compareDate(saleadd.createStart,saleadd.createEnd,saleadd.quantity) != 0">
+                                    <span class="input-group-text">VNĐ</span>
+                                </div>
+                                <div class="input-group" ng-show="hiddenPercentSale">
+                                    <input type="number" min="1" max="100" class="form-control"
+                                           ng-model="saleadd.percentSale" ng-value="saleadd.percentSale" ng-disabled="saleadd.idSale!=null && compareDate(saleadd.createStart,saleadd.createEnd,saleadd.quantity) != 0">
+                                    <span class="input-group-text">%</span>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <label for="" class="form-label">Số lượng</label>
+                                <input type="number" min="1" maxlength="6" ng-model="saleadd.quantity" ng-value="saleadd.quantity"
+                                       class="form-control" placeholder="" aria-describedby="helpId" ng-disabled="saleadd.idSale!=null && compareDate(saleadd.createStart,saleadd.createEnd,saleadd.quantity) == 2">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3" ng-show="hiddenValueMin">
+                        <label for="" class="form-label" >Giá trị đơn hàng tối thiểu</label>
+                        <input type="number" min="0" maxlength="9" ng-model="saleadd.valueMin" ng-value="saleadd.valueMin" class="form-control"
+                               placeholder="" aria-describedby="helpId" ng-disabled="saleadd.idSale!=null && compareDate(saleadd.createStart,saleadd.createEnd,saleadd.quantity) != 0">
+                    </div>
+                    <div class="mb-3" ng-show="hiddenUserType">
+                        <label for="" class="form-label">Đối tượng giảm giá</label>
+                        <select class="form-select form-select-lg" ng-change="onChangeUserType()"
+                                ng-model="saleadd.userType"ng-disabled="saleadd.idSale!=null">
+                            <option ng-value="0">Tất cả user mới (Những người chưa mua hàng tại website)</option>
+                            <option ng-value="1">Chọn user</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3" id="">
+                        <div class="row g-2">
+                            <div class="col-md">
+                                <label for="" class="form-label" >Thời gian bắt đầu</label>
+<!--                                <input type="datetime-local" ng-value="2018-06-12T19:30" class="form-control"-->
+<!--                                       ng-model="saleadd.createStart">-->
+                                <input type="datetime-local" class="form-control" min="2022-01-01T00:00:00" max="2023-12-31T00:00:00"
+                                       ng-model="saleadd.createStart"  ng-disabled="saleadd.idSale!=null && compareDate(saleadd.createStart,saleadd.createEnd,saleadd.quantity) != 0">
+                            </div>
+                            <div class="col-md">
+                                <label for="" class="form-label">Thời gian kết thúc</label>
+                                <input type="datetime-local" class="form-control" min="saleadd.createStart" min="2022-01-01T00:00:00" max="2023-12-31T00:00:00"
+                                       ng-model="saleadd.createEnd" ng-disabled="saleadd.idSale!=null && compareDate(saleadd.createStart,saleadd.createEnd,saleadd.quantity) == 2 ">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="floatingTextarea2">Mô tả chi tiết</label>
+                        <textarea class="form-control" placeholder="Leave a comment here" ng-model="saleadd.detailSale"
+                                  id="floatingTextarea2" style="height: 100px" ng-disabled="saleadd.idSale!=null && compareDate(saleadd.createStart,saleadd.createEnd,saleadd.quantity) != 0"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <input class="form-control" hidden ng-model="saleadd.idSale"
+                                   style="height: 100px" ng-disabled="saleadd.idSale!=null && compareDate(saleadd.createStart,saleadd.createEnd,saleadd.quantity) != 0 && compareDate(saleadd.createStart,saleadd.createEnd,saleadd.quantity) != 1">
+                    </div>
+
+                    <!-- table all -->
+                    <div ng-show="hiddenTableAll">
+                        <!-- share table -->
+                            <input class="form-control me-2" type="search" placeholder="Search" ng-keyup="shareTBS()" ng-model="shareTbS" aria-label="Search">
+                        <!-- share table -->
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">Chọn</th>
+                                <th scope="col">Mã {{nameOnTable}}</th>
+                                <th scope="col">Tên {{nameOnTable}}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="dta in dataTable">
+                                <th scope="row"><input type="checkbox" ng-checked="checkSelect($index)"
+                                                       ng-click="checkSelected($index)" ng-disabled="saleadd.idSale!=null  && compareDate(saleadd.createStart,saleadd.createEnd,saleadd.quantity) != 0 "></th>
+                                <td>
+                                    <p ng-if="dta.idAccessory">{{dta.idAccessory}}</p>
+                                    <p ng-if="dta.username">{{dta.username}}</p>
+                                    <p ng-if="dta.idProduct">{{dta.idProduct}}</p>
+                                </td>
+                                <td>
+                                    <p ng-if="dta.name">{{dta.name}}</p>
+                                    <p ng-if="dta.fullName">{{dta.fullName}}</p>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <nav class="row table-responsive">
+                            <table>
+                                <ul class="pagination justify-content-center row">
+                                    <div class="col-1">
+                                        <li class="page-item">
+                                            <button class="btn btn-default {{!check_first?'disabled':''}}"
+                                                    ng-click="first()"><i class="fa fa-fast-backward"
+                                                                          aria-hidden="true"></i></button>
+                                            <!--            <p class="btn btn-dark" disabled ng-show="!check_first">Trang đầu</p>-->
+                                        </li>
+                                    </div>
+                                    <div class="col-1">
+                                        <li class="page-item ms-2 me-2">
+                                            <button class="btn btn-default" ng-click="prev(nameOnTable)"><i
+                                                    class="fa fa-step-backward" aria-hidden="true"></i></button>
+                                            <!--            <p class="btn btn-success" disabled ng-show="!check_first">Trang trước</p>-->
+                                        </li>
+                                    </div>
+                                    <div class="col-1">
+                                        <li class="page-item ms-1 me-1 pt-1 ">
+                                            <h4>{{index + 1}}/{{totalPages}}</h4>
+                                        </li>
+                                    </div>
+                                    <div class="col-1">
+                                        <li class="page-item ms-2 me-2">
+                                            <button class="btn btn-default" ng-click="next(nameOnTable)"><i
+                                                    class="fa fa-step-forward" aria-hidden="true"></i></button>
+                                            <!--            <p class="btn btn-success" disabled ng-show="!check_last">Trang sau</p>-->
+                                        </li>
+                                    </div>
+                                    <div class="col-1">
+                                        <li class="page-item">
+                                            <button class="btn btn-default {{!check_last?'disabled':''}}"
+                                                    ng-click="last()"><i class="fa fa-fast-forward"
+                                                                         aria-hidden="true"></i></button>
+                                            <!--            <p class="btn btn-dark" disabled ng-show="!check_last">Trang cuối</p>-->
+                                        </li>
+                                    </div>
+                                </ul>
+                            </table>
+                        </nav>
+                    </div>
+                    <!-- end table all -->
+                    <button type="button"  ng-if="saleadd.idSale==null" class="btn btn-success"  ng-click="addSale()">Thêm mới</button>
+                    <button type="button"  ng-if="saleadd.idSale!=null && compareDate(saleadd.createStart,saleadd.createEnd,saleadd.quantity) != 2 && compareDate(saleadd.createStart,saleadd.createEnd,saleadd.quantity) != 3" class="btn btn-warning" ng-click="updateSale()">Cập nhật</button>
+                    <button type="button"  ng-if="saleadd.idSale!=null && compareDate(saleadd.createStart,saleadd.createEnd,saleadd.quantity) != 2 && compareDate(saleadd.createStart,saleadd.createEnd,saleadd.quantity) != 3" class="btn btn-danger" ng-click="deleteSale()">Dừng Sale</button>
+                    <button type="button"  ng-if="saleadd.idSale!=null" class="btn btn-info" ng-click="coppySale()">Sao chép</button>
+                    <!-- add -->
+                    <button id="clossmodal" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal add -->
+
+
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" ng-click="showDataTableSale(0)" data-bs-toggle="tab" type="button"
+                    role="tab"
+                    aria-controls="home" aria-selected="true">Tất cả
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" ng-click="showDataTableSale(1)" data-bs-toggle="tab" type="button" role="tab"
+                    aria-controls="profile" aria-selected="false">Đang diễn ra
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" ng-click="showDataTableSale(2)" data-bs-toggle="tab" type="button" role="tab"
+                    aria-controls="contact" aria-selected="false">Sắp diễn ra
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" ng-click="showDataTableSale(3)" data-bs-toggle="tab" type="button" role="tab"
+                    aria-controls="contact" aria-selected="false">Đã kết thúc
+            </button>
+        </li>
+    </ul>
+
+
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">Tên Voucher | Mã voucher</th>
+            <th scope="col">Loại mã</th>
+            <th scope="col">Giảm giá</th>
+            <th scope="col">Số lượng sử dụng còn lại</th>
+            <th scope="col">Trạng thái | Thời gian lưu Mã giảm giá</th>
+            <th scope="col">Người hành động | Mốc thời gian</th>
+            <th scope="col">Thao tác</th>
+        </tr>
+        </thead>
+        <tbody ng-repeat="sales in dataTableSale">
+        <tr>
+            <th>
+                <p>{{sales.name}}</p>
+                <p ng-if="sales.voucher">Mã giảm giá: <span class=" bg-light text-dark">{{sales.voucher}}</span></p>
+                <p ng-if="!sales.voucher">Giảm giá trực tiếp</p>
+            </th>
+            <td>
+                <p ng-if="sales.typeSale == 0">Toàn bộ cửa hàng</p>
+                <p ng-if="sales.typeSale == 1">Theo sản phẩm</p>
+                <p ng-if="sales.typeSale == 2">Theo đơn hàng</p>
+                <p ng-if="sales.typeSale == 3">Theo khách hàng</p>
+                <p ng-if="sales.typeSale == 4">Theo phụ kiện</p>
+            </td>
+            <td>
+                <p ng-if="sales.moneySale">{{sales.moneySale}} vnd</p>
+                <p ng-if="!sales.moneySale">{{sales.percentSale}} %</p>
+            </td>
+            <td>
+                <p>{{sales.quantity}}</p>
+            </td>
+            <td>
+                <p ng-if="compareDate(sales.createStart,sales.createEnd,sales.quantity) == 0"><span
+                        class="badge bg-warning text-dark">Sắp diễn ra</span></p>
+                <p ng-if="compareDate(sales.createStart,sales.createEnd,sales.quantity) == 1"><span
+                        class="badge bg-success">Đang diễn ra</span></p>
+                <p ng-if="compareDate(sales.createStart,sales.createEnd,sales.quantity) == 2"><span
+                        class="badge bg-secondary">Đã hết thời gian</span></p>
+                <p ng-if="compareDate(sales.createStart,sales.createEnd,sales.quantity) == 3"><span
+                        class="badge bg-danger">Đã hết số lượt sử dụng</span>
+                </p>
+                <p><span>{{ sales.createStart | date:'MM/dd/yyyy h:mma'}}</span> -
+                    <span>{{ sales.createEnd | date:'MM/dd/yyyy h:mma'}}</span></p>
+            </td>
+            <td>
+                <p>Người tạo: {{sales.userCreate}}</p>
+                <p>Thời gian tạo: {{sales.createTime| date:'MM/dd/yyyy h:mma'}}</p>
+                <p ng-if="!sales.userUpdate">Chưa cập nhật</p>
+                <p ng-if="sales.userUpdate">Người sửa: {{sales.userUpdate}}</p>
+                <p ng-if="sales.updateTime">Thời gian sửa {{sales.updateTime | date:'MM/dd/yyyy h:mma'}}</p>
+            </td>
+            <td>
+                <p class="btn btn-info" ng-click="showdetailSale(sales.idSale)" data-bs-toggle="modal" data-bs-target="#exampleModaladd">Chi tiết</p>
+            </td>
+        </tr>
+
+        </tbody>
+
+        <nav class="row table-responsive">
+            <table>
+                <ul class="pagination justify-content-center row">
+                    <div class="col-1">
+                        <li class="page-item">
+                            <button class="btn btn-default {{!check_first?'disabled':''}}" ng-click="first()"><i
+                                    class="fa fa-fast-backward" aria-hidden="true"></i></button>
+                            <!--            <p class="btn btn-dark" disabled ng-show="!check_first">Trang đầu</p>-->
+                        </li>
+                    </div>
+                    <div class="col-1">
+                        <li class="page-item ms-2 me-2">
+                            <button class="btn btn-default" ng-click="prev('all')"><i class="fa fa-step-backward"
+                                                                                      aria-hidden="true"></i></button>
+                            <!--            <p class="btn btn-success" disabled ng-show="!check_first">Trang trước</p>-->
+                        </li>
+                    </div>
+                    <div class="col-1">
+                        <li class="page-item ms-1 me-1 pt-1 ">
+                            <h4>{{indextable + 1}}/{{totalPagestable}}</h4>
+                        </li>
+                    </div>
+                    <div class="col-1">
+                        <li class="page-item ms-2 me-2">
+                            <button class="btn btn-default" ng-click="next('all')"><i class="fa fa-step-forward"
+                                                                                      aria-hidden="true"></i></button>
+                            <!--            <p class="btn btn-success" disabled ng-show="!check_last">Trang sau</p>-->
+                        </li>
+                    </div>
+                    <div class="col-1">
+                        <li class="page-item">
+                            <button class="btn btn-default {{!check_last?'disabled':''}}" ng-click="last()"><i
+                                    class="fa fa-fast-forward" aria-hidden="true"></i></button>
+                            <!--            <p class="btn btn-dark" disabled ng-show="!check_last">Trang cuối</p>-->
+                        </li>
+                    </div>
+                </ul>
+            </table>
+        </nav>
+    </table>
+</main>

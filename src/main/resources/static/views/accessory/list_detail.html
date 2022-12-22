@@ -1,0 +1,191 @@
+<div class=" well well-sm row d-flex justify-content-center">
+    <div class="alert alert-warning container" ng-if="detailAccessories.length<=0">Sản phẩm này đã hết hàng!</div>
+    <div class="row bg-gradient">
+        <div class="wrapper mb-5">
+            <div class="col-md-3" ng-repeat="accessory in detailAccessories" ng-if="detailAccessories.length>0">
+                <div class="card p-3 mb-3">
+                    <div class="text-center" style="width: 200px; height: 200px">
+                        <img src="{{accessory.image}}" lass="img-fluid">
+                    </div>
+                    <div class="product-details">
+                        <p ng-if="accessory.priceSale!=0"> <del>{{accessory.price|number}} VNĐ </del> {{accessory.price - accessory.priceSale|number}} VNĐ</p>
+                        <p ng-if="accessory.priceSale==0"> {{accessory.price|number}} VNĐ</p>
+                        <span>{{accessory.name}}</span>
+                        <span>{{accessory.idAccessory}}</span>
+                        <div class="buttons d-flex flex-row">
+                            <a class="cart" href="#!accessoryDetail"
+                               ng-click="getOneAccessoryHome(accessory.idAccessory)">
+                                <i class="fa-1x"></i>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                     height="16"
+                                     fill="currentColor" class="bi bi-ticket-detailed"
+                                     viewBox="0 0 16 16">
+                                    <path d="M4 5.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5Zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5ZM5 7a1 1 0 0 0 0 2h6a1 1 0 1 0 0-2H5Z"/>
+                                    <path d="M0 4.5A1.5 1.5 0 0 1 1.5 3h13A1.5 1.5 0 0 1 16 4.5V6a.5.5 0 0 1-.5.5 1.5 1.5 0 0 0 0 3 .5.5 0 0 1 .5.5v1.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 11.5V10a.5.5 0 0 1 .5-.5 1.5 1.5 0 1 0 0-3A.5.5 0 0 1 0 6V4.5ZM1.5 4a.5.5 0 0 0-.5.5v1.05a2.5 2.5 0 0 1 0 4.9v1.05a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-1.05a2.5 2.5 0 0 1 0-4.9V4.5a.5.5 0 0 0-.5-.5h-13Z"/>
+                                </svg>
+                            </a>
+                            <button class="btn btn-success cart-button btn-block"
+                                    ng-click="addCart(accessory)">Thêm vào giỏ hàng
+                            </button>
+                        </div>
+
+                        <div class="weight">
+                            <small style="color: lightslategray">Còn
+                                {{accessory.quantity | number}} sản phẩm</small>
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .glyphicon { margin-right:5px; }
+    .category{
+        position:relative;
+        top:-5px;
+        left:10px;
+        color:#20e3b2;
+        font-weight:200;
+        margin-bottom:-20px;
+    }
+    .well{
+        background:transparent;
+        border-style:none;
+    }
+    .well .btn{
+        border-style:none;
+
+    }
+    .well .col-md-3:hover{
+        box-shadow: 1px 5px 25px #ccc;
+
+    }
+    .well .thumbnail
+    {
+        margin-bottom: 0px;
+        padding: 0px;
+        -webkit-border-radius: 0px;
+        -moz-border-radius: 0px;
+        border-radius: 0px;
+
+    }
+    .well .inner{
+        margin-left:0px;
+    }
+    .well .item{
+        width:250px;
+        padding:0;
+        margin-top:5px;
+        margin:15px;
+        box-shadow: 1px 5px 15px #CCC;
+    }
+
+    .well .item.list-group-item
+    {
+        float: none;
+        width: 100%;
+        background-color: #fff;
+        margin-bottom: 10px;
+    }
+    .well .item.list-group-item:nth-of-type(odd):hover,.item.list-group-item:hover
+    {
+        box-shadow: 0px 1px 25px #ccc;
+    }
+
+    .well .item.list-group-item .list-group-image
+    {
+        margin-right:5px;
+
+    }
+    .well .item.list-group-item .thumbnail
+    {
+        margin-bottom: 0px;
+
+    }
+    .well .item.list-group-item .caption
+    {
+        padding: 9px 9px 0px 9px;
+
+    }
+
+
+    .well .item.list-group-item:before, .item.list-group-item:after
+    {
+        display: table;
+        content: " ";
+    }
+
+    .well  .item.list-group-item img
+    {
+        float: left;
+    }
+    .well .item.list-group-item:after
+    {
+        clear: both;
+    }
+    .well .btn-success,.btn-details{
+        margin-top:30px;
+        margin-bottom:10px;
+    }
+    .well  .btn-details{
+        background:transparent;
+        border-style:solid;
+        border-color:lightgrey;
+        border-radius:0%;
+        width:125px;
+        top:11px;
+        left:2px;
+        color:black;
+        height:33px;
+    }
+    .well .btn-details:hover{
+        background:lightgrey;
+        color:white;
+    }
+    .well .lead{
+        position:absolute;
+        font-weight:700;
+        font-size:18px;
+    }
+
+    .well .btn-success{
+        overflow:hidden;
+        border-radius:0%;
+        border-style:none;
+        width:125px;
+        right:2px;
+        top:11px;
+        height:33px;
+        background: linear-gradient(to right, #0cebeb, #20e3b2, #29ffc6);
+    }
+
+    .well .btn-success:hover{
+        background:#29ffc6  ;
+        color:white;
+    }
+    @keyframes scalewidth {
+        0% {
+            width: 0%;
+        }
+        100%{
+            width : 100%;
+        }
+    }
+</style>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#list').click(function (event) {
+            event.preventDefault();
+            $('#products .item').addClass('list-group-item');
+        });
+        $('#grid').click(function (event) {
+            event.preventDefault();
+            $('#products .item').removeClass('list-group-item');
+            $('#products .item').addClass('grid-group-item');
+        });
+    });
+</script>

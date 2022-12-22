@@ -1,71 +1,145 @@
-<main class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
-	<div class="row">
-		<div class="col-lg-12">
-			<h1 class="page-header">Quản lý danh mục</h1>
-		</div>
-	</div>
-	<!--/.row-->
-	<div id="toolbar" class="btn-group">
-		<a href="add_category.html" class="btn btn-success">
-			<i class="glyphicon glyphicon-plus"></i> Thêm danh mục
-		</a>
-	</div>
-	<div class="row">
-		<div class="col-md-12">
-			<div class="panel panel-default">
-				<div class="panel-body">
-					<table data-toolbar="#toolbar" data-toggle="table">
+<div class=" col-sm-offset-3 col-lg-12" xmlns:allowInvalid="http://www.w3.org/1999/xhtml"
+     xmlns:updateOn="http://www.w3.org/1999/xhtml" xmlns:debounce="http://www.w3.org/1999/xhtml">
+    <div class="row mt-4">
+        <h1 class="page-header text-center
+             text-body">Quản lý thể loại</h1>
+        <div>
+    </div><!--/.row-->
+    <div class="row ">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <form role="form" method="post" class="row" name="myForm"
+                          ng-submit="doSubmit()" enctype="multipart/form-data">
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <div class="form-group mt-3 col-sm-6">
 
-						<thead>
-							<tr>
-								<th data-field="id" data-sortable="true">ID</th>
-								<th>Tên danh mục</th>
-								<th>Hành động</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td style="">1</td>
-								<td style="">Sách Tiếng Việt</td>
-								<td class="form-group">
-									<a href="/" class="btn btn-primary"><i class="glyphicon glyphicon-pencil"></i></a>
-									<a href="/" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
-								</td>
-							</tr>
-							<tr>
-								<td style="">2</td>
-								<td style="">Sách nước ngoài</td>
-								<td class="form-group">
-									<a href="/" class="btn btn-primary"><i class="glyphicon glyphicon-pencil"></i></a>
-									<a href="/" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
-								</td>
-							</tr>
-							<tr>
-								<td style="">2</td>
-								<td style="">Manga - Comic</td>
-								<td class="form-group">
-									<a href="/" class="btn btn-primary"><i class="glyphicon glyphicon-pencil"></i></a>
-									<a href="/" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
-								</td>
-							</tr>
+                                    <label class="mb-2">Danh Mục</label>
+                                    <br>
 
-						</tbody>
-					</table>
-				</div>
-				<div class="panel-footer">
-					<nav aria-label="Page navigation example">
-						<ul class="pagination">
-							<li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-							<li class="page-item"><a class="page-link" href="#">1</a></li>
-							<li class="page-item"><a class="page-link" href="#">2</a></li>
-							<li class="page-item"><a class="page-link" href="#">3</a></li>
-							<li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
-						</ul>
-					</nav>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!--/.row-->
-</main>
-<!--/.main-->
+                                        <input type="radio" class="form-check-input"
+                                               ng-model="form.type" name="type" ng-value="0" checked> Sản Phẩm
+                                        <input type="radio" class="form-check-input"
+                                               checked ng-model="form.type" name="type" ng-value="1"> Phụ Kiện
+                                        <br>
+
+                                </div>
+                                <div class="form-group mt-3 col-sm-6">
+                                    <label class="mb-2">Trạng thái</label>
+                                    <select class="form-select mb-1 " id="selectStatus">
+                                        <option selected value="" disabled>Chọn trạng thái</option>
+                                        <option value="0">Không hoạt động</option>
+                                        <option value="1">Đang hoạt động</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group mt-3">
+                                <label>Tên thể loại</label>
+                                <input oninput="this.value = this.value.toUpperCase()"
+                                       ng-model="form.name" type="text" required class="form-control mt-2" placeholder=""
+                                       ng-minlength="3" ng-maxlength="250" name="name"
+                                       required>
+                                <span ng-show="myForm.$submitted || myForm.name.$dirty" style="color: red">
+                                        <span class="error" ng-show="myForm.name.$error.required"> <i
+                                                class="fa fa-exclamation-circle"></i>Tên thể loại không được trống</span>
+                                        <span class="error"
+                                              ng-show="((myForm.name.$error.minlength
+                                              || myForm.name.$error.maxlength) || myForm.name.$error.$dirty)">
+                                                <i class="fa fa-exclamation-circle"></i>Tên thể loại phải từ 3-250 ký tự</span>
+                                    </span>
+                            </div>
+
+                        </div>
+                        <div class="form-group mt-4">
+                            <button type="submit" class="btn   {{checkSubmit == false ? 'btn-success' : 'btn-primary'}}" ng-disabled="myForm.$invalid">
+                                {{checkSubmit == false ? title.insert : title.update}}
+                            </button>
+                            <button type="reset"  ng-click="refresh()" class="btn btn-warning">Làm mới</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-lg-12">
+            <div  class="table-header d-flex justify-content-between align-items-center p-2" style="background-color: #dee2e6">
+                <select id="filterType" class="form-select mb-1 w-25">
+                    <option selected value="" >Lọc theo danh mục</option>
+                    <option value="0">Sản Phẩm</option>
+                    <option value="1">Phụ Kiện</option>
+                </select>
+
+                <select class="form-select mb-1 w-25" id="filterStatus">
+                    <option selected value="" >Lọc theo trạng thái</option>
+                    <option value="0">Không hoạt động</option>
+                    <option value="1">Đang hoạt động</option>
+                </select>
+
+                <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Tìm kiếm..."
+                        style="max-width: 260px"
+                        id="search"
+                        debounce = "1000"
+                        ng-model-options="{ debounce: 800 }"
+                />
+            </div>
+            <table class="table table-striped  table-hover">
+                <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Danh mục</th>
+                    <th>Tên</th>
+                    <th>Trạng thái</th>
+                    <th>Thao tác</th>
+                </thead>
+                <tbody>
+                <tr ng-repeat="cate in category">
+                    <td>{{$index + 1}}</td>
+                    <td>{{cate.type == 1 ? 'Phụ Kiện' : 'Sản Phẩm'}}</td>
+                    <td>{{cate.name}}</td>
+                    <td>{{cate.status == 1? 'Đang hoạt động':'Không hoạt động'}}</td>
+                    <td>
+                        <button ng-click="edit(cate)" class="btn btn-primary"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                        </svg>
+                        </button>
+                        <button ng-click="delete(cate)" class="btn btn-danger"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                            <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                        </svg></button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                <li class="page-item">
+                    <a class="page-link {{!check_first?'disabled':''}}" ng-click="first()"><i
+                            class="fa fa-fast-backward" aria-hidden="true"></i></a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link {{!check_prev?'disabled':''}}" ng-click="prev()"><i class="fa fa-step-backward"
+                                                              aria-hidden="true"></i></a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">{{index}}/{{totalPages}}</a></li>
+                <li class="page-item">
+                    <a class="page-link {{!check_next?'disabled':''}}" ng-click="next()"><i class="fa fa-step-forward"
+                                                              aria-hidden="true"></i></a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link {{!check_last?'disabled':''}}" ng-click="last()"><i
+                            class="fa fa-fast-forward" aria-hidden="true"></i></a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+
+</div>

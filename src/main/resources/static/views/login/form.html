@@ -1,0 +1,91 @@
+
+
+<!-- <head>
+    <title>Đăng nhập</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+   
+</head> -->
+
+
+
+<body> 
+ <div></div>
+    <section class="ftco-section">
+        <div class="container">
+            <div class="row justify-content-center mt-3">
+
+                <div class="col-md-6 text-center mb-5">
+                    <h2 class="heading-section">Hãy đăng nhập</h2>
+                </div>
+            </div>
+            <div class="row justify-content-center mb-5">
+                <div class="col-md-6 col-lg-5">
+                    <div class="login-wrap p-4 p-md-5">
+                        <div class="icon d-flex align-items-center justify-content-center">
+                            <span class="fa fa-user-o"></span>
+                        </div>
+                        <h3 class="text-center mb-4">Bạn đã có tài khoản?</h3>
+                        <form  method="post" name="myForm" class="login-form">
+                            <div class="form-group">
+                                <input oninput="this.value = this.value.toLowerCase().trim()" ng-model="form.username" type="text" class="form-control rounded-left" path="username" name="username" placeholder="Tên tài khoản"
+                                       required  maxlength="250">
+                                <span ng-show="myForm.$submitted || myForm.username.$dirty">
+                                        <span class="error" ng-show="myForm.username.$error.required"> <i
+                                                class="fa fa-exclamation-circle"></i>Tên tài khoản không được trống</span>
+                                </span>
+                            </div>
+                            <div class="form-group ">
+                                <input ng-model="form.password" type="password" class="form-control rounded-left" path="password" name="password" placeholder="Mật khẩu"
+                                       required  maxlength="250">
+                                <span ng-show="myForm.$submitted || myForm.password.$dirty">
+                                        <span class="error" ng-show="myForm.password.$error.required"> <i
+                                                class="fa fa-exclamation-circle"></i>Mật khẩu không được trống</span>
+                                 </span>
+                            </div>
+                            <div class="form-group col-6-offset-2 mb-0 ">
+                                <div class=" text-center">
+                                    <a href="/forgetPassword">Quên mật khẩu</a>
+                                </div>
+                                <div class="text-center ">
+                                    <a href="/register">Bạn chưa có tài khoản?</a>
+                                </div>
+                            </div>
+                            <!-- <div class="col p-0">
+                               
+                            </div>
+                            -->
+                            <div class="form-group">
+                                <button ng-click="onLogin()" type="submit" class="btn btn-primary rounded submit p-3
+                                 px-5 ">Đăng nhập</button>
+                            </div>
+                           <div class="row mb-5"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+ <style>
+     /*input.ng-invalid.ng-touched {*/
+     /*    border: 2px solid red;*/
+     /*}*/
+
+     /*textarea.ng-invalid.ng-touched {*/
+     /*    border: 2px solid red;*/
+     /*}*/
+
+     /*select.ng-invalid.ng-touched {*/
+     /*    border: 2px solid red;*/
+     /*}*/
+
+     button:hover {
+         box-shadow: 0 0 5px rgb(119, 119, 145);
+     }
+
+     .error {
+         padding-left: 10px;
+         color: red;
+     }
+ </style>

@@ -1,0 +1,168 @@
+<section style="background-color: #eee;">
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div ng-repeat="addres in listaddress" class="card mb-2">
+                            <div class="card-header">
+                                <div class="row">
+                                    <div class="col-lg-10">
+                                        <h5 >Địa chỉ</h5>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <button ng-click="setAddressDefault(addres)" class="btn btn-outline-primary">
+                                            Chọn
+                                        </button>
+                                        <button ng-click="delete(addres)" class="btn">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                                                <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <p class="mb-0">Người nhận</p>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <p class="text-muted mb-0">{{addres.personTake}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <p class="mb-0">Số điện thoại</p>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <p class="text-muted mb-0">{{addres.phoneTake}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <p class="mb-0">Địa chỉ</p>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <p class="text-muted mb-0">{{addres.addressTake}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <p class="mb-0">Địa chỉ cụ thể</p>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <p class="text-muted mb-0">{{addres.addressDetail}}, {{addres.addressTake}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <form method="post"
+                              ng-submit="doSubmit()" name="myForm" enctype="multipart/form-data">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Họ và tên người nhận</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <input ng-model="form.personTake" type="text" name="personTake" class="text-muted mb-0 input"
+                                           ng-minlength="6" ng-maxlength="250"
+                                           required placeholder="Ví dụ: Trần Văn A">
+                                    <span ng-show="myForm.$submitted || myForm.personTake.$dirty" style="color: red">
+                                        <span class="error" ng-show="myForm.personTake.$error.required"
+                                        > <i
+                                                class="fa fa-exclamation-circle"></i>Họ và tên người nhận không được trống</span>
+                                        <span class="error"
+                                              ng-show="((myForm.personTake.$error.minlength || myForm.personTake.$error.maxlength)
+                                              || myForm.personTake.$error.$dirty)">
+                                                <i class="fa fa-exclamation-circle"></i>Họ và tên người nhận từ 6-250 ký tự</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Số điện thoại</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <input ng-model="form.phoneTake" class="text-muted mb-0 input"
+                                           pattern="(84|0[3|5|7|8|9])+([0-9]{8})\b"
+                                           ng-minlength="0" ng-maxlength="10" name="phoneTake" required type="text"
+                                           placeholder="Số điện thoại liên lạc">
+                                    <span ng-show="myForm.$submitted || myForm.phoneTake.$dirty" style="color: red">
+                                        <span class="error" ng-show="myForm.phoneTake.$error.required"
+                                        > <i
+                                                class="fa fa-exclamation-circle"></i>Số điện thoại không được
+                                            trống</span>
+                                            <span class="error" ng-show="myForm.phoneTake.$error.pattern"
+                                            > <i
+                                                    class="fa fa-exclamation-circle"></i>Số điện thoại sai đinh dạng</span>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <hr>
+                            <div class="row date">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Địa chỉ</p>
+                                </div>
+                                <div class="col-sm-9 d-flex gap-3">
+                                    <div class="input-wrapper small-4 columns" style="padding-left: 0;">
+                                        <select ng-model="form.provinceId" id="city" required>
+                                            <option value='' selected>Chọn Tỉnh/Thành phố</option>
+                                            <option ng-repeat="provin in provinces" value='{{provin.ProvinceID}}'>{{provin.ProvinceName}}</option>
+                                        </select>
+                                    </div>
+                                    <div  class="input-wrapper small-4 columns">
+                                        <select ng-model="form.districtId"  id="district" required>
+                                            <option value='' selected>Chọn Quận/Huyện</option>
+                                            <option ng-repeat="dis in district" value='{{dis.DistrictID}}'>{{dis.DistrictName}}</option>
+                                        </select>
+                                    </div>
+                                    <div  class="input-wrapper small-4 columns" style="padding-right: 0;">
+                                        <select  ng-model="form.wardId" id="ward" required>
+                                            <option value='' selected>Chọn Xã/Phường</option>
+                                            <option ng-repeat="wd in ward" value="{{wd.WardCode}}">{{wd.WardName}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Địa chỉ cụ thể</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <input ng-model="form.addressDetail" name="addressDetail" class="text-muted mb-0 input"
+                                           ng-minlength="6" ng-maxlength="250"
+                                           required type="text" placeholder="Ví dụ : số 111 ngọa long">
+                                    <span ng-show="myForm.$submitted || myForm.addressDetail.$dirty" style="color: red">
+                                        <span class="error" ng-show="myForm.addressDetail.$error.required"
+                                        > <i
+                                                class="fa fa-exclamation-circle"></i>Địa chỉ cụ thể không được trống</span>
+                                        <span class="error"
+                                              ng-show="((myForm.addressDetail.$error.minlength || myForm.addressDetail.$error.maxlength)
+                                              || myForm.addressDetail.$error.$dirty)">
+                                                <i class="fa fa-exclamation-circle"></i>Địa chỉ cụ thể phải từ 6-250 ký tự</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <hr>
+                            <button type="submit" ng-disabled="myForm.$invalid" class="btn btn-outline-primary ms-1 mt-3 offset-2">
+                                {{checkSubmit == false ? title.insert : title.update}}
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

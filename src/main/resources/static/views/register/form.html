@@ -1,0 +1,196 @@
+
+<body ng-app="app-register">
+
+  <section class="ftco-section">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-6 text-center mb-5">
+          <h2 class="heading-section">Hãy đăng ký tài khoản</h2>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-md-9 col-lg-8">
+          <div class="login-wrap p-4 p-md-5">
+            <div class="icon d-flex align-items-center justify-content-center">
+              <span class="fa fa-user-o"></span>
+            </div>
+            <h3 class="text-center mb-4">Bạn chưa có tài khoản?</h3>
+               <!-- action="/register/save" method="POST" -->
+            <form class="register-form" name="myForm" ng-controller="register-ctrl"  modelAttribute="account">
+              <div class="form-group">
+                <label for="username"> Tên tài khoản</label>
+                <input oninput="this.value = this.value.toLowerCase().trim()" id="username" type="text" class="form-control rounded-left" ng-model="form.username" path="username"
+                  name="username" placeholder="Tên tài khoản" pattern="^[a-zA-Z0-9_-]{3,100}$"
+                       required  maxlength="250">
+                  <span ng-show="myForm.$submitted || myForm.username.$dirty">
+                                        <span class="error" ng-show="myForm.username.$error.required"> <i
+                                                class="fa fa-exclamation-circle"></i>Tên tài khoản không được trống</span>
+                                        <span class="error" ng-show="myForm.username.$error.pattern"> <i
+                                                class="fa fa-exclamation-circle"></i>Tên tài khoản gồm 3-100 ký tự theo định dạng</span>
+                  </span>
+              </div>
+              <div class="form-group">
+                <label for="fullName"> Họ tên</label>
+                <input id="fullName" type="text" class="form-control rounded-left" ng-model="form.fullName" path="fullName"
+                  name="fullName" placeholder="Họ tên" ng-minlength="6" ng-maxlength="250"
+                       required  maxlength="250">
+                  <span ng-show="myForm.$submitted || myForm.fullName.$dirty">
+                                        <span class="error" ng-show="myForm.fullName.$error.required"> <i
+                                                class="fa fa-exclamation-circle"></i>Họ và Tên không được trống</span>
+                                        <span class="error"
+                                              ng-show="((myForm.fullName.$error.minlength || myForm.fullName.$error.maxlength) || myForm.fullName.$error.$dirty)">
+                                                <i class="fa fa-exclamation-circle"></i>Họ và tên từ 6-250 ký tự</span>
+                                    </span>
+              </div>
+              <div class="form-group ">
+                <label for="password"> Mật khẩu</label>
+                <input id="password" type="password" class="form-control rounded-left" ng-model="form.password" path="password"
+                  name="password" placeholder="Mật khẩu" required  ng-minlength="6" ng-maxlength="250" maxlength="250">
+                  <span ng-show="myForm.$submitted || myForm.password.$dirty">
+                                        <span class="error" ng-show="myForm.password.$error.required"> <i
+                                                class="fa fa-exclamation-circle"></i>Mật khẩu không được trống</span>
+                                        <span class="error"
+                                              ng-show="((myForm.password.$error.minlength || myForm.password.$error.maxlength) || myForm.fullName.$error.$dirty)">
+                                                <i class="fa fa-exclamation-circle"></i>Mật khẩu tối thiểu 6-250 ký tự</span>
+                  </span>
+              </div>
+              <div class="form-group">
+                <label for="email"> Email</label>
+                <input id="email" type="text" class="form-control rounded-left" ng-model="form.email" path="email" name="email"
+                  placeholder="abc@gmail.com" pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"
+                        maxlength="250" required>
+                  <span ng-show="myForm.$submitted || myForm.email.$dirty">
+                                        <span class="error" ng-show="myForm.email.$error.required"> <i
+                                                class="fa fa-exclamation-circle"></i>Email không được trống</span>
+                                                <span class="error" ng-show="myForm.email.$error.pattern"> <i
+                                                        class="fa fa-exclamation-circle"></i>Email sai đinh dạng</span>
+                                    </span>
+              </div>
+              <div class="form-group">
+                <label for="phone"> Số điện thoại</label>
+                <input id="phone" type="text" class="form-control rounded-left" ng-model="form.phone" path="phone" name="phone"
+                  placeholder="Số điện thoại" pattern="(84|0[3|5|7|8|9])+([0-9]{8})\b"
+                       ng-minlength="0" ng-maxlength="10"
+                       required maxlength="10">
+                  <span ng-show="myForm.$submitted || myForm.phone.$dirty">
+                                        <span class="error" ng-show="myForm.phone.$error.required"> <i
+                                                class="fa fa-exclamation-circle"></i>Số điện thoại không được
+                                            trống</span>
+                                            <span class="error" ng-show="myForm.phone.$error.pattern"> <i
+                                                    class="fa fa-exclamation-circle"></i>Số điện thoại sai đinh dạng</span>
+                                    </span>
+              </div>
+              <div class="form-group" hidden>
+                
+                  <div class="row  ">
+                      <div class="col-sm-3">
+                          <label class="card-title mb-0">Trạng thái</label>
+                      </div>
+                      <div class="col-sm-9">
+                          <select ng-model="form.status" name="status" required class="form-select mb-1">
+                              <option disabled>Chọn trạng thái</option>
+                              <option ng-value="1">Hoạt động</option>
+                              <option ng-value="0">Không hoạt động</option>
+                          </select><br>
+                          
+                      </div>
+                  </div>
+              
+                
+                  <div class="row  ">
+                      <div class="col-sm-3">
+                          <label class="card-title mb-0">Giới tính</label>
+                      </div>
+                      <div class="col-sm-9">
+
+                          <label class="radio-inline"> <input name="gender" ng-model="form.gender"
+                                  ng-value="true" checked type="radio" required>Nam
+                          </label>
+                          <!-- ng-value: để giá trị true -false | không phải là chuỗi -->
+                          <label class="radio-inline"> <input name="gender" ng-model="form.gender"
+                                  ng-value="false" type="radio" required>Nữ
+                          </label>
+                      </div>
+                  </div>
+                            
+                  <div class="row  ">
+                      <div class="col-sm-3">
+                          <label class="card-title mb-0">Chức vụ</label>
+                      </div>
+                      <div class="col-sm-9">
+                          <select ng-model="form.role.idRole" class="form-select " name="role" required>
+                              <option disabled>Chọn chức vụ</option>
+                              <option ng-repeat=" role in roles" ng-value="role.idRole">{{role.name}}
+                              </option>
+                          </select>
+                         
+                      </div>
+                  </div>
+                  
+                  <div class="row  ">
+                    <div class="col-sm-3">
+                      <label class="card-title mb-0">Ngày tạo</label>
+                    </div>
+                    <div class="col-sm-9">
+                      <div class="">
+                        <input disabled ng-model="form.createDate" name="creatDate" type="date" class="form-control">
+                       
+                      </div>
+                    </div>
+                  </div>
+               
+                
+                  <div class="row  ">
+                    <div class="col-sm-3">
+                      <label class="card-title mb-0">Hình ảnh</label>
+                    </div>
+                      <div class="col-sm-9">
+                          <div class="mb-1">
+                              <input onchange="angular.element(this).scope().upLoadFile(this.files)"
+                                     class="form-control" type="file" id="image">
+                          </div>
+                          <img style="filter: drop-shadow(0 0 5px rgb(119, 119, 145));" width="105px"
+                               src="https://res.cloudinary.com/dcll6yp9s/image/upload/v1669087979/kbasp5qdf76f3j02mebr.png"
+                               ng-if="!form.image">
+                          <label for="image">
+                              <img style="filter: drop-shadow(0 0 5px rgb(119, 119, 145));" width="105px"
+                                   src="{{form.image}}">
+                          </label>
+                      </div>
+                  </div>
+              </div>
+             
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary rounded submit p-3
+                 px-5 " ng-disabled="myForm.$invalid"  ng-click="create()">Đăng ký</button>
+              </div>
+              <div class="row mb-5"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+<style>
+    input.ng-invalid.ng-touched {
+        border: 2px solid red;
+    }
+
+    textarea.ng-invalid.ng-touched {
+        border: 2px solid red;
+    }
+
+    select.ng-invalid.ng-touched {
+        border: 2px solid red;
+    }
+
+    button:hover {
+        box-shadow: 0 0 5px rgb(119, 119, 145);
+    }
+
+    .error {
+        padding-left: 10px;
+        color: red;
+    }
+</style>

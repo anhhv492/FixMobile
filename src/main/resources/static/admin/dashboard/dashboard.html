@@ -1,0 +1,56 @@
+<div class="container-fluid p-0" xmlns="http://www.w3.org/1999/html">
+    <div class="row">
+        <h5 class="text-center text-primary font-weight-bold mt-2">Thống kê những đơn hàng bán được</h5>
+        <form    class="form-horizontal  row" id="search-form">
+            <div class="col-md-6">
+                <div class="form-group mt-1">
+                    <label  class="control-label"> Khách hàng</label>
+                    <select name="fullname" ng-model="form.fullname" class="form-select" name="category" required>
+                        <option ng-repeat="r1 in reportPay" ng-value="r1.id_order">{{r1.fullname}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group mt-1">
+                    <label class="control-label">Ngày thanh toán</label>
+                    <input class="form-control" name="createdate" type="datetime-local">
+
+                </div>
+            </div>
+            <div class="form-group mt-2">
+                <div class="col-xs-12 text-center">
+                    <button ng-click ="getSearchReportData()"  class="btn btn-primary btn-sm margtop05">Tìm Kiếm</button>
+                    <button ng-click=""  class="btn btn-primary btn-sm margtop05 ">Export</button>
+                </div>
+            </div>
+        </form>
+
+        <div class="col-12 col-lg-12 col-xxl-12 d-flex mt-2">
+            <div class="card flex-fill">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Latest Projects</h5>
+                </div>
+                <table class="table table-hover my-0">
+                    <thead>
+                        <tr>
+                            <th class="d-none d-xl-table-cell">Tên Khách hàng</th>
+                            <th class="d-none d-xl-table-cell">Số lượng SP</th>
+                            <th class="d-none d-xl-table-cell">Số lượng HD</th>
+                            <th>Ngày thanh toán</th>
+                            <th class="d-none d-md-table-cell">Tổng thanh toán</th>
+                        </tr>
+                    </thead>
+                    <tbody ng-repeat="r in reportPay">
+                        <tr>
+                            <td class="d-none d-xl-table-cell">{{r.fullname}}</td>
+                            <td class="d-none d-xl-table-cell">{{r.quantity}}</td>
+                            <td class="d-none d-xl-table-cell">{{r.order}}</td>
+                            <td><span class="badge bg-success">{{r.createDate}}</span></td>
+                            <td class="d-none d-md-table-cell">{{r.money | number}} VND</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

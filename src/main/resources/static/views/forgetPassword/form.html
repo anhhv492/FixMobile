@@ -1,0 +1,59 @@
+
+<body >
+
+<section class="ftco-section">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6 text-center mb-5">
+
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-md-9 col-lg-8">
+        <div class="login-wrap p-4 p-md-5">
+          <div class="icon d-flex align-items-center justify-content-center">
+            <span class="fa fa-user-o"></span>
+          </div>
+          <h3 class="text-center mb-4">Quên mật khẩu</h3>
+          <form method="post"  class="forgetPassword-form" name="myForm" >
+            <div class="form-group">
+              <label > Nhập email</label>
+              <input type="text" class="form-control rounded-left"
+                     ng-model="formChangePassMail.email"
+                     name="email" placeholder="Tên tài khoản">
+            </div>
+
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary rounded submit p-3
+                 px-5 " ng-click="changePassword(formChangePassMail.email)" >Gửi yêu cầu</button>
+            </div>
+            <div class="row mb-5"></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</body>
+<style>
+  input.ng-invalid.ng-touched {
+    border: 2px solid red;
+  }
+
+  textarea.ng-invalid.ng-touched {
+    border: 2px solid red;
+  }
+
+  select.ng-invalid.ng-touched {
+    border: 2px solid red;
+  }
+
+  button:hover {
+    box-shadow: 0 0 5px rgb(119, 119, 145);
+  }
+
+  .error {
+    padding-left: 10px;
+    color: red;
+  }
+</style>
