@@ -553,7 +553,6 @@ app.controller('product', function ($scope, $http, $window, $rootScope) {
         }
         $http(req, token).then(response => {
             $scope.message('Đã thêm ' + $scope.formProduct.name);
-            console.log('ddadadasdsssssssssssssss ' + response.data);
             $scope.pageImeiFt(1);
             $scope.formProduct = {}
             $scope.imeis.splice('')

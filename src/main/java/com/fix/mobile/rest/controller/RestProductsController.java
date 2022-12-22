@@ -233,21 +233,32 @@ public class RestProductsController {
 	}
 	// imay product
 	@PostMapping("/saveImay")
-	public void saveImay(@ModelAttribute ImayProductDTO  imay){
+	public ImayProduct saveImay(@ModelAttribute ImayProductDTO  imay){
 		try {
+			ImayProduct i=null;
+			List<ImayProduct> imayProducts = imayProductService.findAll();
+			Boolean checkImei=false;
 			if(imay !=null){
 				for ( String  s :  imay.getName()) {
-					ImayProduct i = new ImayProduct();
+					i = new ImayProduct();
+					for (int j=0;j<imayProducts.size();j++){
+						if(s.equals(imayProducts.get(j).getName())){
+							return null;
+						}
+					}
 					i.setName(s);
 					i.setProduct(imay.getProduct());
 					i.setStatus(1);
 					imayService.save(i);
+					return i;
 				}
-			}else;
+			}
+			return i;
 		}catch (Exception e ){
 			e.getMessage();
 			e.printStackTrace();
 		}
+		return null;
 	}
 
 	@GetMapping("/getImeiByName")
