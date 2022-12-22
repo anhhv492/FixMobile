@@ -267,23 +267,27 @@ public class RestProductsController {
 	@PostMapping("/saveImay")
 	public ImayProduct saveImay(@ModelAttribute ImayProduct  imay){
 		try {
-			List<ImayProduct> list  =  imayService.findAll();
-			for (int i = 0; i < list.size(); i++) {
-				if(imay.getName().equals(list.get(i).getName())){
-					return null;
-				}
-				else if(imay !=null){
-					ImayProduct im = new ImayProduct();
-					im.setName(imay.getName());
-					im.setProduct(imay.getProduct());
-					im.setStatus(1);
-					imayService.save(im);
-					return imay;
-				}else{
-					return null;
+			List<ImayProduct> list = imayService.findAll();
+			Boolean aBoolean=false;
+			ImayProduct im=null;
+			if(list.size()>0){
+				for (int i = 0; i < list.size(); i++) {
+					if(imay.getName().equals(list.get(i).getName())){
+						aBoolean=false;
+						return null;
+					}else{
+						aBoolean=true;
+						im = new ImayProduct();
+					}
 				}
 			}
-
+			if(aBoolean==true){
+				im.setName(imay.getName());
+				im.setProduct(imay.getProduct());
+				im.setStatus(1);
+				imayService.save(im);
+				return imay;
+			}
 		}catch (Exception e ){
 			e.getMessage();
 			e.printStackTrace();
