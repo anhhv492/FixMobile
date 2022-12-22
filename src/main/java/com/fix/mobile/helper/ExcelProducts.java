@@ -79,6 +79,10 @@ public class ExcelProducts {
 				Row currentRow = iterator.next();
 				Iterator<Cell> cellIterator = currentRow.iterator();
 				while (cellIterator.hasNext()) {
+					List<ImayProduct> listImay = imayService.findAll();
+					for (int i = 0; i < listImay.size() ; i++) {
+
+					}
 					Cell cc = cellIterator.next();
 					if (cc.getRowIndex() > 0) {
 						if (cc.getColumnIndex() == 0 && cc.getCellType() == CellType.STRING) {
