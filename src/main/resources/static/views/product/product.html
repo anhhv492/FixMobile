@@ -33,39 +33,29 @@
                                         <h3 ng-if="PrD.price == undefined && detailProduct.priceMin == detailProduct.priceMax">{{detailProduct.priceMin | number}} VNĐ </h3>
                                         <h3 ng-if="PrD.price != undefined">{{PrD.price | number}} VNĐ</h3>
                                         Dung lượng
-                                        <div ng-repeat="capa in detailProduct.capa">
-                                            <input type="radio" name="capa" ng-checked="checkCapa!=0 ? true : false"
-                                                   ng-click="checkProduct(capa.idCapacity , 0)"
-                                            > {{capa.name}}
                                         <div>
                                             <label class="radio me-1" ng-repeat="capa in detailProduct.capa">
-                                                <input type="radio" id="capa" ng-click="checkProduct(capa.idCapacity , 0)"
-                                                       ng-disabled="checkDisabled(capa.idCapacity , 0)"
-                                                       name="capa" value="{{capa.idCapacity}}">
+                                                <input type="radio" id="capa" ng-checked="checkCapa!=0 ? true : false"
+                                                       ng-click="checkProduct(capa.idCapacity , 0)"
+                                                       name="capa">
                                                 <span>{{capa.name}}</span>
                                             </label>
                                         </div>
                                         Ram
-                                        <div ng-repeat="ram in detailProduct.ram">
-                                            <input type="radio" name="ram" ng-checked="checkRam!=0 ? true : false"
-                                                   ng-click="checkProduct(ram.idRam , 1)"
-                                            > {{ram.name}}
                                         <div>
                                             <label class="radio me-1" ng-repeat="ram in detailProduct.ram">
-                                                <input type="radio" id="ram" ng-disabled="checkDisabled(ram.idRam , 1)"
-                                                       name="ram" value="{{ram.idRam}}">
+                                                <input type="radio" id="ram" ng-checked="checkRam!=0 ? true : false"
+                                                       ng-click="checkProduct(ram.idRam , 1)"
+                                                       name="ram" >
                                                 <span>{{ram.name}}</span>
                                             </label>
                                         </div>
                                         Màu sắc
-                                        <div ng-repeat="color in detailProduct.color">
-                                            <input type="radio" name="color" ng-checked="checkColer != 0 ? true : false"
-                                                   ng-click="checkProduct(color.idColor, 2)"
-                                            > {{color.name}}
                                         <div>
                                             <label class="radio me-1" ng-repeat="color in detailProduct.color">
-                                                <input type="radio" id="color" ng-disabled="checkDisabled(color.idColor, 2)"
-                                                       name="color" value="{{color.idColor}}">
+                                                <input type="radio" id="color"  ng-checked="checkColer != 0 ? true : false"
+                                                       ng-click="checkProduct(color.idColor, 2)"
+                                                       name="color">
                                                 <span>{{color.name}}</span>
                                             </label>
                                         </div>
