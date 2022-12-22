@@ -83,7 +83,7 @@ public class SercurityConfig {
         http.csrf().disable();
 
         http.authorizeHttpRequests().antMatchers("/admin/**",
-                        "/rest/guest/**").permitAll()//Phân quyền sử dụng
+                        "/rest/guest/**","/api/auth/**").permitAll()//Phân quyền sử dụng
                 .antMatchers("/order/**").authenticated()
                 .antMatchers("/rest/admin/**","/admin/**","/admin/rest/**").hasRole("ADMIN")
                 .antMatchers("/rest/staff/**").hasAnyRole("STAFF", "ADMIN")
