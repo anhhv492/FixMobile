@@ -401,35 +401,7 @@
                         </button>
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                                <a href=""></a>
-                                <li class="nav-item dropdown" ng-mouseover="overPro=true" ng-mouseleave="overPro=false">
-                                    <a class="nav-link dropdown-toggle" href="#" id="dropdownPro" role="button"
-                                       data-bs-toggle="dropdown"
-                                       aria-expanded="false">
-                                        Danh mục điện thoại
-                                    </a>
-                                    <ul class="dropdown-menu {{overPro?'show':''}}" aria-labelledby="dropdownPro">
-                                        <li ng-repeat="catePro in cateProducts">
 
-                                            <a class="dropdown-item" href="#!listproducts"
-                                               ng-click="getDetail(catePro)">{{catePro.name}}</a>
-
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="nav-item dropdown" ng-mouseover="overAccess=true"
-                                    ng-mouseleave="overAccess=false">
-                                    <a class="nav-link dropdown-toggle" href="#" id="dropdownAccess" role="button"
-                                       data-bs-toggle="dropdown" aria-expanded="false">
-                                        Danh mục phụ kiện
-                                    </a>
-                                    <ul class="dropdown-menu {{overAccess?'show':''}}" aria-labelledby="dropdownAccess">
-                                        <li ng-repeat="cateAccess in cateAccessories">
-                                            <a class="dropdown-item" href="#!listaccessory"
-                                               ng-click="getDetail(cateAccess)">{{cateAccess.name}}</a>
-                                        </li>
-                                    </ul>
-                                </li>
                             </ul>
                             <div class="col-1">
                                 <a href="#!cart" class="btn">

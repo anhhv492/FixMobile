@@ -58,7 +58,7 @@ app.controller('order-admin-detail-ctrl',function($rootScope,$scope,$http,$compi
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                $http.delete(urlOrderDetail+`/imei/remove/${idImei}`,idImei,token).then(resp=>{
+                $http.post(urlOrderDetail+`/imei/remove/${idImei}`,idImei,token).then(resp=>{
                     $scope.messageSuccess("Xóa thành công");
                     $scope.getImeis1();
                     $scope.getImeis2();

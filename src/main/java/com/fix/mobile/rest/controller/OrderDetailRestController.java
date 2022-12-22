@@ -74,7 +74,7 @@ public class OrderDetailRestController {
         }
         return null;
     }
-    @DeleteMapping("/rest/staff/order/detail/imei/remove/{id}")
+    @PostMapping("/rest/staff/order/detail/imei/remove/{id}")
     public ImayProduct changeImei(@PathVariable("id") Integer idImei){
         ImayProduct imayProduct = imeiProductService.findById(idImei).get();
         imayProduct.setStatus(1);
