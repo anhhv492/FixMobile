@@ -1,6 +1,7 @@
 package com.fix.mobile.rest.controller;
 
 import com.fix.mobile.entity.*;
+import com.fix.mobile.repository.ImayProductRepository;
 import com.fix.mobile.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,8 @@ public class OrderDetailRestController {
     @Autowired
     private ProductService productService;
     Product productDT = null;
+    @Autowired
+    private ImayProductRepository imayProductRepository;
 
     @GetMapping(value="/rest/staff/order/detail/{id}")
     public List<OrderDetail> getAllStaffByAccount(@PathVariable("id") Integer id){
@@ -78,11 +81,12 @@ public class OrderDetailRestController {
     public ImayProduct changeImei(@PathVariable("id") Integer idImei){
         ImayProduct imayProduct = imeiProductService.findById(idImei).get();
         imayProduct.setStatus(1);
-        imayProduct.setOrderDetail(null);
         if(imayProduct.getOrderDetail().getStatus() == 2){
-            imayProduct.getOrderDetail().setStatus(2);
+            imeiProductService.deleteById(imayProduct.getIdImay());
+        }else{
+            imayProduct.setOrderDetail(null);
+            imeiProductService.update(imayProduct,imayProduct.getIdImay());
         }
-        imeiProductService.update(imayProduct,imayProduct.getIdImay());
         return imayProduct;
     }
 }
