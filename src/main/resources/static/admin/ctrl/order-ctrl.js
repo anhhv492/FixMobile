@@ -55,6 +55,8 @@ app.controller('order-admin-ctrl',function($rootScope,$scope,$http,$window,$filt
                         icon: 'warning',
                     })
                 }
+            }).catch(err=>{
+                console.log(err)
             });
         }
 

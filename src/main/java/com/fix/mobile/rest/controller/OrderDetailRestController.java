@@ -1,6 +1,8 @@
 package com.fix.mobile.rest.controller;
 
 import com.fix.mobile.entity.*;
+import com.fix.mobile.repository.ImayProductRepository;
+import com.fix.mobile.repository.ProductChangeRepository;
 import com.fix.mobile.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +23,12 @@ public class OrderDetailRestController {
     @Autowired
     private ProductService productService;
     Product productDT = null;
+    @Autowired
+    private ImayProductRepository imayProductRepository;
+    @Autowired
+    private ProductChangeRepository productChangeRepository;
+    @Autowired
+    private ProductChangeService productChangeService;
 
     @GetMapping(value="/rest/staff/order/detail/{id}")
     public List<OrderDetail> getAllStaffByAccount(@PathVariable("id") Integer id){
@@ -56,6 +64,7 @@ public class OrderDetailRestController {
                                                 @PathVariable("idImeiNew") String idImeiNew){
         System.out.println("--id: "+idImeiNew+ " id2: "+idDetail+"--");
         try{
+            ProductChange productChange = null;
             Integer idDetailInt = Integer.parseInt(idDetail);
             Integer idImeiNewInt = Integer.parseInt(idImeiNew);
             OrderDetail orderDetail = orderDetailService.findById(idDetailInt).get();
@@ -66,6 +75,9 @@ public class OrderDetailRestController {
             if(orderDetail.getOrder().getStatus() == 3){
                 orderDetail.setStatus(3);
                 orderDetailService.update(orderDetail,orderDetail.getIdDetail());
+                productChange = productChangeRepository.findByOrderDetail(orderDetail);
+                productChange.setStatus(3);
+                productChangeService.update(productChange,productChange.getIdChange());
             }
             List<ImayProduct> imayProducts = imeiProductService.findByProductAndStatus(imayProductNew.getProduct(),1);
             return imayProducts;
@@ -78,11 +90,15 @@ public class OrderDetailRestController {
     public ImayProduct changeImei(@PathVariable("id") Integer idImei){
         ImayProduct imayProduct = imeiProductService.findById(idImei).get();
         imayProduct.setStatus(1);
-        imayProduct.setOrderDetail(null);
-        if(imayProduct.getOrderDetail().getStatus() == 2){
-            imayProduct.getOrderDetail().setStatus(2);
+        if(imayProduct.getOrderDetail().getStatus() == 2||imayProduct.getOrderDetail().getStatus() == 3){
+            imayProduct.setStatus(3);
+            imayProduct.setOrderDetail(null);
+            imeiProductService.update(imayProduct,imayProduct.getIdImay());
+            return imayProduct;
+        }else{
+            imayProduct.setOrderDetail(null);
+            imeiProductService.update(imayProduct,imayProduct.getIdImay());
+            return imayProduct;
         }
-        imeiProductService.update(imayProduct,imayProduct.getIdImay());
-        return imayProduct;
     }
 }

@@ -23,7 +23,7 @@ app.controller('order-detail-ctrl',function($window,$rootScope,$scope,$http){
     }
 
     $scope.getProductChange=function(formProductChange){
-        $http.get(`/rest/productchange/findProductChange/${formProductChange.idDetail}`  ,
+        $http.get(`/rest/user/productchange/findProductChange/${formProductChange.idDetail}`  ,
             token).then(resp=>{
             console.log($scope.formDetails.idDetail)
             $scope.formDetails = resp.data;
@@ -119,7 +119,7 @@ app.controller('order-detail-ctrl',function($window,$rootScope,$scope,$http){
         form.append("orderDetail", $scope.formDetails.idDetail);
         let req = {
             method: 'POST',
-            url: '/rest/productchange/saveRequest',
+            url: '/rest/user/productchange/saveRequest',
             headers: {
                 'Content-Type': undefined,
                 Authorization: `Bearer `+jwtToken
@@ -140,20 +140,21 @@ app.controller('order-detail-ctrl',function($window,$rootScope,$scope,$http){
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
+            confirmButtonText: 'Xác nhận!'
         }).then((result) => {
                 if (result.isConfirmed) {
                        if($scope.files == null){
                            $scope.error('chưa chọn ảnh tình trạng máy');
                            return null;
-                       }else if($scope.formProductChange.quantity == null){
+                       }else  if($scope.formProductChange.quantity > $scope.formDetails.quantity){
+                           $scope.error('Số lượng nhập vào không đúng vui lòng nhập lại');
+                           return null;
+                       }
+                       else if($scope.formProductChange.quantity == null){
                            $scope.error('Vui lòng nhập số lượng máy cần đổi');
                            return null;
                        }
-                       else  if($scope.formProductChange.quantity > $scope.formDetails.quantity){
-                           $scope.error('Số lượng nhập vào không đúng vui lòng nhập lại');
-                           return null;
-                        }
+
                         let timerInterval
                         Swal.fire({
                             title: 'Tạo yêu cầu thành công' + '!',
@@ -162,16 +163,6 @@ app.controller('order-detail-ctrl',function($window,$rootScope,$scope,$http){
                             timerProgressBar: true,
                             didOpen: () => {
                                 Swal.showLoading()
-                                const b = Swal.getHtmlContainer().querySelector('b')
-                                timerInterval = setInterval(() => {
-                                    b.textContent = Swal.getTimerLeft()
-                                }, 100)
-                            },
-                            willClose: () => {
-                                clearInterval(timerInterval)
-                            }
-                        }).then((result) => {
-                            if (result.dismiss === Swal.DismissReason.timer) {
                                 var formData = new FormData();
                                 angular.forEach($scope.files, function(file) {
                                     formData.append('files', file);
@@ -183,10 +174,10 @@ app.controller('order-detail-ctrl',function($window,$rootScope,$scope,$http){
                                 formData.append("orderDetail",$scope.formDetails.idDetail);
                                 let req = {
                                     method: 'POST',
-                                    url: '/rest/productchange/save',
+                                    url: '/rest/user/productchange/save',
                                     headers: {
                                         'Content-Type': undefined,
-                                         Authorization: `Bearer `+jwtToken
+                                        Authorization: `Bearer `+jwtToken
                                     },
                                     data: formData
                                 }
@@ -217,6 +208,17 @@ app.controller('order-detail-ctrl',function($window,$rootScope,$scope,$http){
                                 }).catch(error => {
                                     $scope.error('gửi  yêu cầu đổi trả thất bại');
                                 });
+                                const b = Swal.getHtmlContainer().querySelector('b')
+                                timerInterval = setInterval(() => {
+                                    b.textContent = Swal.getTimerLeft()
+                                }, 100)
+                            },
+                            willClose: () => {
+                                clearInterval(timerInterval)
+                            }
+                        }).then((result) => {
+                            if (result.dismiss === Swal.DismissReason.timer) {
+
 
                             }
                         })

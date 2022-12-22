@@ -8,18 +8,28 @@
                             <div class="row g-0">
                                 <div class="col-md-6 border-end">
                                     <div class="d-flex flex-column justify-content-center">
-                                        <div class="main_image"><img src="{{displayProduct.imageDefault}}"
-                                                                     id="main_product_image" width="350"></div>
+                                        <div class="main_image" ng-if="detailProduct.images[0]==undefined ? true : false"><img src="{{detailProduct.imageDefault}}"
+                                                                      width="350"></div>
+                                        <div class="main_image" ng-if="detailProduct.images[0]!=undefined ? true : false"><img src="{{detailProduct.images[0]}}"
+                                                                      width="350"></div>
                                         <div class="thumbnail_images">
                                             <ul id="thumbnail">
-                                                <li><img ng-click="changeImage(1)" id="image_product_change"
+                                                <li ng-if="detailProduct.images[1]==undefined ? true : false"><img ng-click="changeImage(1)"
                                                          src="{{displayProduct.imageDefault1}}" width="70"></li>
-                                                <li><img ng-click="changeImage(2)" id="image_product_change1"
+                                                <li ng-if="detailProduct.images[1]!=undefined ? true : false"><img ng-click="changeImage(1)"
+                                                         src="{{detailProduct.images[1]}}" width="70"></li>
+                                                <li ng-if="detailProduct.images[2]==undefined ? true : false"><img ng-click="changeImage(2)"
                                                          src="{{displayProduct.imageDefault2}}" width="70"></li>
-                                                <li><img ng-click="changeImage(3)" id="image_product_change2"
+                                                <li ng-if="detailProduct.images[2]!=undefined ? true : false"><img ng-click="changeImage(2)"
+                                                         src="{{detailProduct.images[2]}}" width="70"></li>
+                                                <li ng-if="detailProduct.images[3]==undefined ? true : false"><img ng-click="changeImage(3)"
                                                          src="{{displayProduct.imageDefault3}}" width="70"></li>
-                                                <li><img ng-click="changeImage(4)" id="image_product_change3"
+                                                <li ng-if="detailProduct.images[3]!=undefined ? true : false"><img ng-click="changeImage(3)"
+                                                         src="{{detailProduct.images[3]}}" width="70"></li>
+                                                <li ng-if="detailProduct.images[4]==undefined ? true : false"><img ng-click="changeImage(4)"
                                                          src="{{displayProduct.imageDefault}}" width="70"></li>
+                                                <li ng-if="detailProduct.images[4]!=undefined ? true : false"><img ng-click="changeImage(4)"
+                                                         src="{{detailProduct.images[4]}}" width="70"></li>
                                             </ul>
                                         </div>
                                     </div>

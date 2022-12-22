@@ -29,10 +29,11 @@
                 <i class="fa fa-info-circle" aria-hidden="true"></i> {{prChange.orderDetail.product.name}}
             </button>
         </td>
-        <td ng-if="prChange.status==0">Hủy yêu cầu</td>
+        <td ng-if="prChange.status==0">Không có yêu cầu</td>
         <td ng-if="prChange.status==1">Chờ xác nhận</td>
-        <td ng-if="prChange.status==2">Đã xác nhận máy vui lòng chờ kiểm trả</td>
+        <td ng-if="prChange.status==2">Đã xác nhận, chờ đổi trả</td>
         <td ng-if="prChange.status==3">Đã đổi thành công</td>
+        <td ng-if="prChange.status==4">Hủy yêu cầu</td>
 
     </tr>
     </tbody>

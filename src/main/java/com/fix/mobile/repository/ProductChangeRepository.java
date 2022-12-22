@@ -1,5 +1,6 @@
 package com.fix.mobile.repository;
 
+import com.fix.mobile.entity.OrderDetail;
 import com.fix.mobile.entity.ProductChange;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -24,5 +25,7 @@ public interface ProductChangeRepository extends PagingAndSortingRepository<Prod
 	public List<ProductChange> findByStatusSendEmail(Integer idChange);
 
 
+	ProductChange findAllByOrderDetail(OrderDetail orderDetail);
 
+	ProductChange findByOrderDetail(OrderDetail orderDetail);
 }

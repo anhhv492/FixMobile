@@ -37,10 +37,11 @@
                 <td><img width="80px" height="80px" src="{{orderDetail.product.images[0].name}}" class="pt-2"></td>
                 <td>{{orderDetail.quantity * orderDetail.price | number}}</td>
                 <td>
-<!--                    <p ng-if="orderDetail.order.status == 3 && orderDetail.status == 0">Đang kiểm tra yêu cầu ...</p>-->
-                    <p ng-if="orderDetail.order.status == 3 && orderDetail.status == 1">Đã xác nhận đổi trả</p>
+                    <p ng-if="orderDetail.order.status == 3 && orderDetail.status == 0">Có thể đổi trẩ</p>
+                    <p ng-if="orderDetail.order.status == 3 && orderDetail.status == 1">Chờ xác nhận đổi trả</p>
                     <p ng-if="orderDetail.order.status == 3 && orderDetail.status == 2">Vui lòng đang chọn máy mới cho bạn</p>
                     <p ng-if="orderDetail.order.status == 3 && orderDetail.status == 3">Đổi máy thanh công</p>
+                    <p ng-if="orderDetail.order.status == 3 && orderDetail.status == 4">Hủy yêu cầu</p>
                 </td>
                 <td>
                     <button ng-click="getProductChange(orderDetail)"

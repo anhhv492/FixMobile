@@ -161,6 +161,14 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
         console.log($rootScope.carts)
     }
     $scope.addCart=function(item){
+        if(item.idProduct){
+            $http.get(`${urlImei}/amount/${item.idProduct}`).then(res=>{
+                if(res.data<=0){
+                    $scope.messageError("Hết hàng!")
+                    stop();
+                }
+            })
+        }
         $http.get(urlAccount+`/getAccountActive`, token).then(function (respon){
             let json = localStorage.getItem(respon.data.username);
             $rootScope.carts=json? JSON.parse(json):[];
@@ -474,23 +482,20 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
     $scope.getAcount();
 
     $scope.detailProduct={}
+    $scope.idCheck=undefined;
     $scope.getDetailProduct=function (id){
-
         if(id==0){
-            id = localStorage.getItem('idDetail')
-        }
-        $http.post(`/rest/guest/product/detailproduct/` + id).then(function (respon) {
-            $scope.detailProduct = respon.data;
-            localStorage.removeItem('idDetail')
+            id = localStorage.getItem('idDetail');
+            $http.post(`/rest/guest/product/detailproduct/` + id).then(function (respon) {
+                $scope.detailProduct = respon.data;
+            }).catch(err => {
+                    console.log(err, 'kiixu  lỗi')
+                }
+            )
+        }else {
+            localStorage.removeItem('idDetail');
             localStorage.setItem('idDetail', id);
-        }).catch(err => {
-                console.log(err, 'kiixu  lỗi')
-            }
-        )
-        $scope.checkCapa=0;
-        $scope.checkRam=0;
-        $scope.checkColer=0;
-
+        }
     }
     $scope.checkProduct= function (id, check){
         if(check==0){
