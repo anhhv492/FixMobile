@@ -551,11 +551,11 @@ app.controller('product', function ($scope, $http, $window, $rootScope) {
                 $scope.pageImeiFt(1);
                 $scope.formProduct = {}
             }else{
-                $scope.formProduct = {}
                 $scope.error('Imei máy đã tồn tại');
+                $scope.formProduct = {}
             }
         }).catch(error => {
-            $scope.error('thêm mới thất bại');
+            $scope.error('Imei máy đã tồn tại');
         })
     }
     $scope.xcellDataImay = function (files) {
