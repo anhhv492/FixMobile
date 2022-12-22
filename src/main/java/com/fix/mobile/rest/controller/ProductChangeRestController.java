@@ -5,6 +5,8 @@ import com.cloudinary.utils.ObjectUtils;
 import com.fix.mobile.dto.ChangeDetailDTO;
 import com.fix.mobile.dto.ProductChangeDTO;
 import com.fix.mobile.entity.*;
+import com.fix.mobile.repository.OrderDetailRepository;
+import com.fix.mobile.repository.OrderRepository;
 import com.fix.mobile.service.*;
 import com.fix.mobile.utils.UserName;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,11 @@ public class ProductChangeRestController {
 
 	@Autowired private AccountService accountService;
 	@Autowired private OrderDetailService  orderDetailsService;
+	@Autowired
+	private OrderDetailRepository orderDetailRepository;
+	@Autowired
+	private OrderRepository orderRepository;
+
 	@RequestMapping(value = "/findProductChange/{idDetail}",method = RequestMethod.GET)
 	public OrderDetail findByProductChange (@PathVariable("idDetail") Integer idOrderDetails){
 			Optional<OrderDetail> orderDetails =  orderDetailsService.findById(idOrderDetails);
@@ -46,6 +53,9 @@ public class ProductChangeRestController {
 				p.setOrderDetail(productchange.getOrderDetail());
 				p.setStatus(1);
 				productChangeSerivce.save(p);
+				OrderDetail orderDetail = orderDetailRepository.findById(productchange.getOrderDetail().getIdDetail()).get();
+				orderDetail.setStatus(1);
+				orderDetailsService.update(orderDetail,orderDetail.getIdDetail());
 				for (MultipartFile multipartFile :  productchange.getFiles()) {
 					Map r = this.cloud.uploader().upload(multipartFile.getBytes(),
 							ObjectUtils.asMap(

@@ -23,7 +23,7 @@ app.controller('order-detail-ctrl',function($window,$rootScope,$scope,$http){
     }
 
     $scope.getProductChange=function(formProductChange){
-        $http.get(`/rest/productchange/findProductChange/${formProductChange.idDetail}`  ,
+        $http.get(`/rest/user/productchange/findProductChange/${formProductChange.idDetail}`  ,
             token).then(resp=>{
             console.log($scope.formDetails.idDetail)
             $scope.formDetails = resp.data;
@@ -162,16 +162,6 @@ app.controller('order-detail-ctrl',function($window,$rootScope,$scope,$http){
                             timerProgressBar: true,
                             didOpen: () => {
                                 Swal.showLoading()
-                                const b = Swal.getHtmlContainer().querySelector('b')
-                                timerInterval = setInterval(() => {
-                                    b.textContent = Swal.getTimerLeft()
-                                }, 100)
-                            },
-                            willClose: () => {
-                                clearInterval(timerInterval)
-                            }
-                        }).then((result) => {
-                            if (result.dismiss === Swal.DismissReason.timer) {
                                 var formData = new FormData();
                                 angular.forEach($scope.files, function(file) {
                                     formData.append('files', file);
@@ -186,7 +176,7 @@ app.controller('order-detail-ctrl',function($window,$rootScope,$scope,$http){
                                     url: '/rest/user/productchange/save',
                                     headers: {
                                         'Content-Type': undefined,
-                                         Authorization: `Bearer `+jwtToken
+                                        Authorization: `Bearer `+jwtToken
                                     },
                                     data: formData
                                 }
@@ -217,6 +207,17 @@ app.controller('order-detail-ctrl',function($window,$rootScope,$scope,$http){
                                 }).catch(error => {
                                     $scope.error('gửi  yêu cầu đổi trả thất bại');
                                 });
+                                const b = Swal.getHtmlContainer().querySelector('b')
+                                timerInterval = setInterval(() => {
+                                    b.textContent = Swal.getTimerLeft()
+                                }, 100)
+                            },
+                            willClose: () => {
+                                clearInterval(timerInterval)
+                            }
+                        }).then((result) => {
+                            if (result.dismiss === Swal.DismissReason.timer) {
+
 
                             }
                         })
