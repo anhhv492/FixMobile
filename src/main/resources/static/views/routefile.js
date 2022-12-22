@@ -78,7 +78,7 @@ app.config(function($routeProvider){
             templateUrl:"accessory/list_accessory.html",
             controller: "home-ctrl",
             controller: "view_accessory_ctrl",
-            controller: "home-ctr-v2",
+            controller: "home-ctr-v2"
         })
         .when("/viewaccesory",{
             templateUrl:"accessory/viewaccesory.html",

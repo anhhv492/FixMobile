@@ -367,8 +367,7 @@
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown04">
                                     <div ng-if="account">
                                         <a href="/admin/index.html#!/product" class="dropdown-item"
-                                         ng-if="!check">Quản trị tài
-                                            khoản</a>
+                                         ng-if="!check">Quản trị hệ thống</a>
                                         <a href="#!profile" class="dropdown-item">Thông tin tài khoản</a>
                                         <div class="dropdown-divider"></div>
                                         <a href="#!order" class="dropdown-item">Lịch sử mua hàng</a>
@@ -402,35 +401,7 @@
                         </button>
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                                <a href=""></a>
-                                <li class="nav-item dropdown" ng-mouseover="overPro=true" ng-mouseleave="overPro=false">
-                                    <a class="nav-link dropdown-toggle" href="#" id="dropdownPro" role="button"
-                                       data-bs-toggle="dropdown"
-                                       aria-expanded="false">
-                                        Danh mục điện thoại
-                                    </a>
-                                    <ul class="dropdown-menu {{overPro?'show':''}}" aria-labelledby="dropdownPro">
-                                        <li ng-repeat="catePro in cateProducts">
 
-                                            <a class="dropdown-item" href="#!listproducts"
-                                               ng-click="getDetail(catePro)">{{catePro.name}}</a>
-
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="nav-item dropdown" ng-mouseover="overAccess=true"
-                                    ng-mouseleave="overAccess=false">
-                                    <a class="nav-link dropdown-toggle" href="#" id="dropdownAccess" role="button"
-                                       data-bs-toggle="dropdown" aria-expanded="false">
-                                        Danh mục phụ kiện
-                                    </a>
-                                    <ul class="dropdown-menu {{overAccess?'show':''}}" aria-labelledby="dropdownAccess">
-                                        <li ng-repeat="cateAccess in cateAccessories">
-                                            <a class="dropdown-item" href="#!listaccessory"
-                                               ng-click="getDetail(cateAccess)">{{cateAccess.name}}</a>
-                                        </li>
-                                    </ul>
-                                </li>
                             </ul>
                             <div class="col-1">
                                 <a href="#!cart" class="btn">
@@ -501,6 +472,7 @@
 <script src="ctrl/changePassword-ctrl.js"></script>
 <script src="ctrl/product_change.js"></script>
 <script src="ctrl/productchange-ctrl.js"></script>
+<script src="ctrl/home-ctrl-v2.js"></script>
 
 <script>
     $(function () {

@@ -548,6 +548,10 @@ console.log("Kết thúc check trùng")
     $scope.getPageAccounts = function () {
         $http.get(pathAPI + `/page?status=1`,token).then(res => {
             $scope.accounts = res.data.content;
+            $scope.totalPages = res.data.totalPages;
+            $scope.index = res.data.number + 1;
+            $scope.check_last = true;
+            $scope.check_next = true;
             console.log('Load accounts success', res.data)
         }).catch(err => {
             console.log('Load accounts failse', err.data);

@@ -262,7 +262,7 @@ app.controller('order-admin-ctrl',function($rootScope,$scope,$http,$window,$filt
             $scope.ordersDetail[x].noteSale = '';
         }else {
             var urlSale = `http://localhost:8080/rest/admin/sale/getsale/` + $scope.ordersDetail[x].idSale;
-            $http.get(urlSale).then(resp => {
+            $http.get(urlSale,token).then(resp => {
                 if (resp.data != '') {
                     let priceSale='';
                     if(resp.data.moneySale==null){

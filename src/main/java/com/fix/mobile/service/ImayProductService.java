@@ -21,4 +21,6 @@ public interface ImayProductService extends GenericService<ImayProduct, Integer>
     Page<ImeiProductResponDTO> findAll(Pageable pageable, Integer status);
 
     List<ImayProduct> findByProductAndStatus(ProductResponDTO productResponDTO, int status);
+
+    ImayProduct findImeiByName(String name);
 }
