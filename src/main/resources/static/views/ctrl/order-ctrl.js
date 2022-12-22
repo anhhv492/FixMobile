@@ -50,11 +50,11 @@ app.controller('order-ctrl',function($rootScope,$scope,$http,$filter){
                         $scope.getAllByUser();
                     }).catch(error=>{
                         Swal.fire(
-                            'Hủy đơn hàng thất bại!',
+                            'Hủy đơn hàng thành công!',
                             'Click để tiếp tục.',
-                            'error'
+                            'success'
                         )
-                        console.log('error update',error);
+                        $scope.getAllByUser();
                     });
                 }
             })
