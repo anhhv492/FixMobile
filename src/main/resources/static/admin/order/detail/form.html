@@ -37,11 +37,13 @@
       <td ng-if="orderDetail.status==0 && orderModel.status==3">
         Không</td>
       <td ng-if="orderDetail.status==1 && orderModel.status==3">
-        Xác nhận đổi trả</td>
+        Chờ xác nhận đổi trả</td>
       <td ng-if="orderDetail.status==2 && orderModel.status==3">
         Chờ đổi máy mới</td>
       <td ng-if="orderDetail.status==3 && orderModel.status==3">
         Đã đổi máy</td>
+      <td ng-if="orderDetail.status==4 && orderModel.status==3">
+        Hủy yêu cầu</td>
       <td>
         <button ng-click="imeiPro(orderDetail)" class="btn btn-default"
                 data-bs-toggle="modal" data-bs-target="#staticBackdrop"

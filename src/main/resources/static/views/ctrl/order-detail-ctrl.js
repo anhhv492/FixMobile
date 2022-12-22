@@ -146,14 +146,15 @@ app.controller('order-detail-ctrl',function($window,$rootScope,$scope,$http){
                        if($scope.files == null){
                            $scope.error('chưa chọn ảnh tình trạng máy');
                            return null;
-                       }else if($scope.formProductChange.quantity == null){
+                       }else  if($scope.formProductChange.quantity > $scope.formDetails.quantity){
+                           $scope.error('Số lượng nhập vào không đúng vui lòng nhập lại');
+                           return null;
+                       }
+                       else if($scope.formProductChange.quantity == null){
                            $scope.error('Vui lòng nhập số lượng máy cần đổi');
                            return null;
                        }
-                       else  if($scope.formProductChange.quantity > $scope.formDetails.quantity){
-                           $scope.error('Số lượng nhập vào không đúng vui lòng nhập lại');
-                           return null;
-                        }
+
                         let timerInterval
                         Swal.fire({
                             title: 'Tạo yêu cầu thành công' + '!',

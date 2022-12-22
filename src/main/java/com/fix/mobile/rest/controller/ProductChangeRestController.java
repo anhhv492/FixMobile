@@ -86,7 +86,7 @@ public class ProductChangeRestController {
 				change.setOrderDetail(changeDetails.getOrderDetail());
 				changeDetailsService.createChangeDetails(changeDetails.getOrderDetail().getIdDetail());
 				Optional<OrderDetail> orderDetails =  orderDetailsService.findById(changeDetails.getOrderDetail().getIdDetail());
-				orderDetails.orElseThrow().setStatus(0);
+				orderDetails.orElseThrow().setStatus(1);
 				orderDetailsService.save(orderDetails.get());
 			}else;
 		}catch (Exception e ){
@@ -123,6 +123,13 @@ public class ProductChangeRestController {
 	public List<ProductChange> findByUser(@RequestParam("username") String user) {
 		List<ProductChange> listPrChangeDetails = productChangeSerivce.findByUsername(user);
 		return listPrChangeDetails;
+	}
+
+	// gegt anhr
+	@GetMapping(value = "rest/user/findImageByPr/{id}")
+	public List<Image>   findAllImageByPr(@PathVariable("id") Integer id){
+		List<Image> listImage = imageService.findImageByPr(id);
+		return listImage;
 	}
 
 }

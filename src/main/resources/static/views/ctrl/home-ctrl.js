@@ -280,6 +280,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                         $scope.checkCapa=0;
                         $scope.checkRam=0;
                         $scope.checkColer=0;
+                        $scope.PrD={}
                         const Toast = Swal.mixin({
                             toast: true,
                             position: 'top-end',
@@ -324,6 +325,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                                 $scope.checkCapa=0;
                                 $scope.checkRam=0;
                                 $scope.checkColer=0;
+                                $scope.PrD={}
                                 $scope.messageSuccess("Thêm vào giỏ hàng thành công!");
                             }).catch(error => {
                                 console.log(error)
@@ -336,6 +338,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
                             $scope.checkCapa=0;
                             $scope.checkRam=0;
                             $scope.checkColer=0;
+                            $scope.PrD={}
                             $scope.messageSuccess("Thêm vào giỏ hàng thành công!");
                         }
                 }
