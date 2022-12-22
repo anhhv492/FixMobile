@@ -85,14 +85,7 @@ app.controller('product-change',function($rootScope,$scope,$http, $window){
         $http.get(`/rest/user/productchange/getPrChangeDetails/${id}`,token).then(resp=>{
             $scope.getOneProduct = resp.data;
             console.log('dsadsadsdsadas '+resp.data);
-            debugger
-            $http.get(`/rest/user/productchange/findImageByPr/${id}`,token).then( res =>{
-                $scope.image = res.data;
 
-                console.log('dsadsadsdsadas '+ res.data);
-            }).catch(err=>{
-                console.log(err);
-            })
             $http.get(`/rest/staff/order/detail/imei2/${ $scope.getOneProduct.orderDetail.idDetail}`,token).then(res=>{
                 $scope.imeis=res.data;
                 console.log('dsadsadsdsadas '+ $scope.imeis[0].name);
