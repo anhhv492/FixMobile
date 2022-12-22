@@ -378,7 +378,7 @@ public class GuestRestController {
     ){
         return productService.getdeTailPrd(idCapa,idRam,idColor);
     }
-    @RequestMapping("/saleapply/{id}")
+    @RequestMapping("/sale/saleapply/{id}")
     public Sale findSaleApply(@PathVariable("id") Integer id){
         return saleSV.findByid(saleSV.findSaleApply(id));
     }

@@ -489,10 +489,12 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window,$timeou
                             $http.post(urlOrder + '/add', $scope.cart, token).then(res => {
                                 if (res.data) {
                                     $http.post(urlOrderDetail + '/add', $rootScope.carts, token).then(res => {
-                                        var urladdsaleapply=`/rest/user/sale/addsaleapply?idSale=`+$scope.getVoucherApply;
-                                        $http.post(urladdsaleapply, token).then(res => {
+                                        if($scope.getVoucherApply!=0){
+                                            var urladdsaleapply=`/rest/user/sale/addsaleapply?idSale=${$scope.getVoucherApply}`;
+                                            $http.post(urladdsaleapply,$scope.getVoucherApply, token).then(res => {
 
-                                        })
+                                            })
+                                        }
                                         $window.location.href = '/views/cart/buy-cod-success.html';
                                     }).catch(err => {
                                         console.log("err orderDetail", err)

@@ -301,7 +301,7 @@ app.controller('order-admin-ctrl',function($rootScope,$scope,$http,$window,$filt
     }
     $scope.getOrderDetail=function (idOrder){
         let url=`/rest/staff/order/detail/`+idOrder;
-        $http.get(url).then(function(response){
+        $http.get(url,token).then(function(response){
             if(response.data){
                 $scope.ordersDetail=response.data;
                 for(let i=0;i<$scope.ordersDetail.length;i++){
@@ -312,7 +312,7 @@ app.controller('order-admin-ctrl',function($rootScope,$scope,$http,$window,$filt
             console.log(error);
         });
         let urlapplysale=`/rest/admin/sale/saleapply/`+idOrder;
-        $http.get(urlapplysale).then(function(response){
+        $http.get(urlapplysale,token).then(function(response){
                 $scope.saleApply=response.data;
         }).catch(error=>{
             $scope.saleApply={};
