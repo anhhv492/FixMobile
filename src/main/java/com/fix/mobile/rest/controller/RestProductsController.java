@@ -207,6 +207,7 @@ public class RestProductsController {
 	public void update(@RequestParam("id") Integer id ,
 					   @ModelAttribute SaveProductRequest saveProductRequest) {
 	        Optional<Product> p = productService.findById(id);
+		try {
 			if(p!=null){
 				p.orElseThrow().setName(saveProductRequest.getName());
 				p.orElseThrow().setNote(saveProductRequest.getNote());
@@ -219,13 +220,20 @@ public class RestProductsController {
 				p.orElseThrow().setStatus(saveProductRequest.getStatus());
 				p.orElseThrow().setPrice(saveProductRequest.getPrice());
 				productService.save(p.get());
+
 			}else{
 				throw new StaleStateException("Bản ghi này không tòn tại");
 			}
+			System.out.println("Uploaded the files successfully: " + saveProductRequest.getFiles().size());
+
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
+
 
 	}
 
-   
+
 	@PostMapping("/readExcel")
 	public Boolean readExcel(@PathParam("file") MultipartFile file) throws Exception{
 		Boolean checkExcel= excelProduct.readExcel(file);
@@ -233,27 +241,25 @@ public class RestProductsController {
 	}
 	// imay product
 	@PostMapping("/saveImay")
-	public ImayProduct saveImay(@ModelAttribute ImayProductDTO  imay){
+	public ImayProduct saveImay(@ModelAttribute ImayProduct  imay){
 		try {
-			ImayProduct i=null;
-			List<ImayProduct> imayProducts = imayProductService.findAll();
-			Boolean checkImei=false;
-			if(imay !=null){
-				for ( String  s :  imay.getName()) {
-					i = new ImayProduct();
-					for (int j=0;j<imayProducts.size();j++){
-						if(s.equals(imayProducts.get(j).getName())){
-							return null;
-						}
-					}
-					i.setName(s);
-					i.setProduct(imay.getProduct());
-					i.setStatus(1);
-					imayService.save(i);
-					return i;
+			List<ImayProduct> list  =  imayService.findAll();
+			for (int i = 0; i < list.size(); i++) {
+				if(imay.getName().equals(list.get(i).getName())){
+					return null;
+				}
+				else if(imay !=null){
+					ImayProduct im = new ImayProduct();
+					im.setName(imay.getName());
+					im.setProduct(imay.getProduct());
+					im.setStatus(1);
+					imayService.save(im);
+					return imay;
+				}else{
+					return null;
 				}
 			}
-			return i;
+
 		}catch (Exception e ){
 			e.getMessage();
 			e.printStackTrace();

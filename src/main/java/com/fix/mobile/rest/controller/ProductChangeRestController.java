@@ -125,11 +125,14 @@ public class ProductChangeRestController {
 		return listPrChangeDetails;
 	}
 
-	// gegt anhr
-	@GetMapping(value = "rest/user/findImageByPr/{id}")
+	// get ảnh
+	@GetMapping(value = "/findImageByPr/{id}")
 	public List<Image>   findAllImageByPr(@PathVariable("id") Integer id){
 		List<Image> listImage = imageService.findImageByPr(id);
-		return listImage;
+		if(listImage !=null){
+			return listImage;
+		}
+		return null;
 	}
 
 }

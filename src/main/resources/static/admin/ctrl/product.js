@@ -534,13 +534,7 @@ app.controller('product', function ($scope, $http, $window, $rootScope) {
     }
     $scope.saveImay = function () {
         var form = new FormData();
-        if (!$scope.imeis.isPrototypeOf()) {
-            angular.forEach($scope.imeis, function (name) {
-                form.append('name', name.value);
-                console.log('vvvvv ' + name.value);
-            });
-        }
-        form.append('name', $scope.formProduct.name);
+        form.append('name',  $scope.formProduct.name );
         form.append('product', $scope.formProduct.product);
         let req = {
             method: 'POST',
@@ -552,10 +546,14 @@ app.controller('product', function ($scope, $http, $window, $rootScope) {
             data: form
         }
         $http(req, token).then(response => {
-            $scope.message('Đã thêm ' + $scope.formProduct.name);
-            $scope.pageImeiFt(1);
-            $scope.formProduct = {}
-            $scope.imeis.splice('')
+            if(response.data) {
+                $scope.message('Thêm thành công');
+                $scope.pageImeiFt(1);
+                $scope.formProduct = {}
+            }else{
+                $scope.formProduct = {}
+                $scope.error('Imei máy đã tồn tại');
+            }
         }).catch(error => {
             $scope.error('thêm mới thất bại');
         })
@@ -633,36 +631,13 @@ app.controller('product', function ($scope, $http, $window, $rootScope) {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                let timerInterval
-                Swal.fire({
-                    title: 'Đang xóa: ' + imeiForm.name + '!',
-                    html: 'Vui lòng chờ <b></b> milliseconds.',
-                    timer: 1500,
-                    timerProgressBar: true,
-                    didOpen: () => {
-                        Swal.showLoading()
-                        const b = Swal.getHtmlContainer().querySelector('b')
-                        timerInterval = setInterval(() => {
-                            b.textContent = Swal.getTimerLeft()
-                        }, 100)
-                    },
-                    willClose: () => {
-                        clearInterval(timerInterval)
-                    }
-                }).then((result) => {
-                    /* Read more about handling dismissals below */
-                    if (result.dismiss === Swal.DismissReason.timer) {
-                        $http.post(callDeleteImei + imeiForm.idImay, imeiForm.idImay, token).then(response => {
-                            $scope.pageImei.splice($scope.pageImei.indexOf(imeiForm), 1);
-                            $scope.message('Đã xóa thành công Imei');
+                $http.post(callDeleteImei + imeiForm.idImay, imeiForm.idImay, token).then(response => {
+                    $scope.pageImei.splice($scope.pageImei.indexOf(imeiForm), 1);
+                    $scope.message('Đã xóa thành công Imei');
 
-                        }).catch(error => {
-                            $scope.error('xóa thất bại');
-                        });
-                        console.log('I was closed by the timer')
-                    }
-                })
-
+                }).catch(error => {
+                    $scope.error('xóa thất bại');
+                });
             }
         })
 
