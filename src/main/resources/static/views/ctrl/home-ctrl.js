@@ -161,6 +161,14 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
         console.log($rootScope.carts)
     }
     $scope.addCart=function(item){
+        if(item.idProduct){
+            $http.get(`${urlImei}/amount/${item.idProduct}`).then(res=>{
+                if(res.data<=0){
+                    $scope.messageError("Hết hàng!")
+                    stop();
+                }
+            })
+        }
         $http.get(urlAccount+`/getAccountActive`, token).then(function (respon){
             let json = localStorage.getItem(respon.data.username);
             $rootScope.carts=json? JSON.parse(json):[];

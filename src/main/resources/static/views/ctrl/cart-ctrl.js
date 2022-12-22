@@ -45,7 +45,7 @@ app.controller('cart-ctrl', function ($rootScope, $scope, $http, $window,$timeou
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
+            confirmButtonText: 'Xác nhận'
         }).then((result) => {
             if (result.isConfirmed) {
                 $rootScope.carts.splice(index, 1);

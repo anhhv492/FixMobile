@@ -55,7 +55,7 @@ app.controller('order-admin-detail-ctrl',function($rootScope,$scope,$http,$compi
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
+            confirmButtonText: 'Xác nhận'
         }).then((result) => {
             if (result.isConfirmed) {
                 $http.post(urlOrderDetail+`/imei/remove/${idImei}`,idImei,token).then(resp=>{

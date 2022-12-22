@@ -175,11 +175,13 @@ public class OrderRestController {
                     return order;
                 }
             }
-            imayProducts = imayProductService.findByOrderDetail(orderDetails.get(i));
-            if(imayProducts.size()>0){
-                if(imayProducts.size()<orderDetails.get(i).getQuantity()){
-                    System.out.println("Số lượng sản phẩm không đủ-------");
-                    return order;
+            if(orderDetails.get(i).getProduct()!=null){
+                imayProducts = imayProductService.findByOrderDetail(orderDetails.get(i));
+                if(imayProducts.size()>0){
+                    if(imayProducts.size()<orderDetails.get(i).getQuantity()){
+                        System.out.println("Số lượng sản phẩm không đủ-------");
+                        return order;
+                    }
                 }
             }
         }

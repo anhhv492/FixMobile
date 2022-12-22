@@ -119,7 +119,7 @@ app.controller('order-detail-ctrl',function($window,$rootScope,$scope,$http){
         form.append("orderDetail", $scope.formDetails.idDetail);
         let req = {
             method: 'POST',
-            url: '/rest/productchange/saveRequest',
+            url: '/rest/user/productchange/saveRequest',
             headers: {
                 'Content-Type': undefined,
                 Authorization: `Bearer `+jwtToken
@@ -140,7 +140,7 @@ app.controller('order-detail-ctrl',function($window,$rootScope,$scope,$http){
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
+            confirmButtonText: 'Xác nhận!'
         }).then((result) => {
                 if (result.isConfirmed) {
                        if($scope.files == null){
@@ -183,7 +183,7 @@ app.controller('order-detail-ctrl',function($window,$rootScope,$scope,$http){
                                 formData.append("orderDetail",$scope.formDetails.idDetail);
                                 let req = {
                                     method: 'POST',
-                                    url: '/rest/productchange/save',
+                                    url: '/rest/user/productchange/save',
                                     headers: {
                                         'Content-Type': undefined,
                                          Authorization: `Bearer `+jwtToken
