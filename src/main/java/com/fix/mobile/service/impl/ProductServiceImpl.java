@@ -1,7 +1,9 @@
 package com.fix.mobile.service.impl;
 
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fix.mobile.dto.ColorProductResponDTO;
+import com.fix.mobile.dto.ProductDetailDTO;
 import com.fix.mobile.dto.ProductResponDTO;
 import com.fix.mobile.entity.*;
 import com.fix.mobile.repository.*;
@@ -19,9 +21,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Transactional
@@ -36,6 +36,12 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ColorRepository colorRepository;
+
+    @Autowired
+    private RamRepository ramRepository;
+
+    @Autowired
+    private CategoryRepository cateRepository;
 
 
     public ProductServiceImpl(ProductRepository repository) {
@@ -206,44 +212,224 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> findProduct() {
-        return repository.findProduct();
-    }
-
-    @Override
     public Product getdeTailPrd(Integer idCapa, Integer idRam, Integer idColor) {
         return repository.getDetailPrd(idCapa,idRam,idColor);
     }
 
+
+
     @Override
-    public List<Integer> getlistDetailProductCapacity(Integer id) {
-        return repository.getlistDetailProductCapacity(id);
+    public ProductDetailDTO getDetailProduct(Integer id) {
+        List<Ram> listRam=new ArrayList<>();
+        List<Capacity> listCapa=new ArrayList<>();
+        List<Color> listColor=new ArrayList<>();
+        List<Integer> listIImage = new ArrayList<>();
+        List<String> listimage= new ArrayList<>();
+        for (int x: repository.getlistDetailProductRam(id)
+        ) {
+            listRam.add(ramRepository.findById(x).get());
+        }for (int x: repository.getlistDetailProductCapacity(id)
+        ) {
+            listCapa.add(capacityRepository.findById(x).get());
+        }for (int x: repository.getlistDetailProductColor(id)
+        ) {
+            listColor.add(colorRepository.findById(x).get());
+        }for (int x: repository.getIdimage(id)
+        ) {
+            listIImage.add(x);
+        }
+        if(listIImage.size()!=0){
+            for(int i =0;i<listIImage.size();i++){
+                if(repository.getImg(listIImage.get(i))!=null){
+                    listimage.add(repository.getImg(listIImage.get(i)));
+                }
+            }
+        }
+
+        ProductDetailDTO detailProduct=new ProductDetailDTO();
+        detailProduct.setId(id);
+        detailProduct.setName(cateRepository.findById(id).get().getName());
+        detailProduct.setRam(listRam);
+        detailProduct.setCapa(listCapa);
+        detailProduct.setColor(listColor);
+        detailProduct.setImages(listimage);
+        detailProduct.setPriceMin(getMaxMinPriceProduct(id).get(0));
+        detailProduct.setPriceMax(getMaxMinPriceProduct(id).get(1));
+        return detailProduct;
     }
 
     @Override
-    public List<Integer> getlistDetailProductRam(Integer id) {
-        return repository.getlistDetailProductRam(id);
+    public Page<ProductDetailDTO> getByPage(int pageNumber, int maxRecord, JsonNode findProcuctAll) {
+        List<Product> listPrd = repository.findProduct();
+        List<Product> listFindProduct = new ArrayList<>();
+        JsonNode listIdRam = findProcuctAll.get("idRam");
+        JsonNode listIdColer = findProcuctAll.get("idColer");
+        JsonNode listIdCapacity = findProcuctAll.get("idCapacity");
+        Integer sortMinMax = findProcuctAll.get("sortMinMax").asInt();
+        if(listPrd.size()!=0) {
+            for (int i = 0; i < listPrd.size(); i++) {
+                if (
+                        listIdRam.size() == 0 &&
+                                listIdCapacity.size() == 0 &&
+                                listIdColer.size() == 0
+                ) {
+                    listFindProduct = checklist(listFindProduct, listPrd.get(i));
+                } else {
+
+                    if (listIdRam.size() != 0) {
+                        for (int y = 0; y < listIdRam.size(); y++) {
+                            if (listIdRam.get(y).asInt() == listPrd.get(i).getRam().getIdRam()
+                            ) {
+                                listFindProduct = checklist(listFindProduct, listPrd.get(i));
+                            }
+                        }
+                    }
+
+                    if (listIdCapacity.size() != 0) {
+                        for (int y = 0; y < listIdCapacity.size(); y++) {
+                            if (listIdCapacity.get(y).asInt() == listPrd.get(i).getCapacity().getIdCapacity()
+                            ) {
+                                listFindProduct = checklist(listFindProduct, listPrd.get(i));
+                            }
+                        }
+                    }
+
+                    if (listIdColer.size() != 0) {
+                        for (int y = 0; y < listIdColer.size(); y++) {
+                            if (listIdColer.get(y).asInt() == listPrd.get(i).getColor().getIdColor()
+                            ) {
+                                listFindProduct = checklist(listFindProduct, listPrd.get(i));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        List<ProductDetailDTO> listgetAllProduct= new ArrayList<>();
+        for (int x: repository.getlistDetailProductCategory()
+        ) {
+            if(listFindProduct.size()!=0){
+                for (int i=0;i<listFindProduct.size();i++){
+                    if(listFindProduct.get(i).getCategory().getIdCategory()==x){
+                        if(listgetAllProduct.size()==0){
+                            listgetAllProduct.add(getDetailProduct(x));
+                        }else {
+                            boolean ktt=true;
+                            for (int y=0; y < listgetAllProduct.size();y++
+                            ) {
+                                if (listgetAllProduct.get(y).getId() == x) {
+                                    ktt=false;
+                                }
+                            }
+                            if(ktt){
+                                listgetAllProduct.add(getDetailProduct(x));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        BigDecimal priceSalemin;
+        BigDecimal priceSalemax;
+        List<ProductDetailDTO> listRmove=new ArrayList<>();
+        if(!String.valueOf(findProcuctAll.get("priceSalemin")).replaceAll("\"","").equals("")){
+            priceSalemin = new BigDecimal(String.valueOf(findProcuctAll.get("priceSalemin")).replaceAll("\"",""));
+            if(!String.valueOf(findProcuctAll.get("priceSalemax")).replaceAll("\"","").equals("")){
+                priceSalemax = new BigDecimal(String.valueOf(findProcuctAll.get("priceSalemax")).replaceAll("\"",""));
+                for (int i = 0; i <listgetAllProduct.size(); i++
+                ) {
+                    if(listgetAllProduct.get(i).getPriceMin().compareTo(priceSalemax)>0){
+                        listRmove.add(listgetAllProduct.get(i));
+                    }else if(listgetAllProduct.get(i).getPriceMax().compareTo(priceSalemin)<0){
+                        listRmove.add(listgetAllProduct.get(i));
+                    }
+                }
+            }
+        }
+        if(listgetAllProduct.size()!=0){
+            for(int i=0; i<listgetAllProduct.size();i++){
+                if(!listgetAllProduct.get(i).getName().contains(String.valueOf(findProcuctAll.get("search")).replaceAll("\"", "").toLowerCase())){
+                    if(listRmove.size()==0){
+                        listRmove.add(listgetAllProduct.get(i));
+                    }else{
+                        boolean cc=true;
+                        for(int x=0;x<listRmove.size();x++){
+                            if (i==x) {
+                                cc=false;
+                            }
+                        }
+                        if(cc){
+                            listRmove.add(listgetAllProduct.get(i));
+                        }
+                    }
+                }
+            }
+        }
+        if(listRmove!=null){
+            listgetAllProduct.removeAll(listRmove);
+        }
+        Pageable paging = PageRequest.of(pageNumber, maxRecord);
+        int start = Math.min((int)paging.getOffset(), listgetAllProduct.size());
+        int end = Math.min((start + paging.getPageSize()), listgetAllProduct.size());
+        Page<ProductDetailDTO> pageFindProductAll = new PageImpl<>(sortProduct(listgetAllProduct,sortMinMax), paging, listFindProduct.size());
+        return pageFindProductAll;
     }
-
-    @Override
-    public List<Integer> getlistDetailProductColor(Integer id) {
-        return repository.getlistDetailProductColor(id);
-    }
-
-    @Override
-    public List<Integer> getlistDetailProductCategory() {
-        return repository.getlistDetailProductCategory();
-    }
-
-
-
-    @Override
-    public List<BigDecimal> getMinMaxPrice(Integer id) {
+    private List<BigDecimal> getMaxMinPriceProduct(Integer id){
         List<BigDecimal> listPriceMINMAX= new ArrayList<>();
         listPriceMINMAX.add(repository.getMinPrice(id));
         listPriceMINMAX.add(repository.getMaxPrice(id));
         return listPriceMINMAX;
     }
 
+    private List<Product> checklist( List<Product> listcheck, Product check){
+        if(listcheck.size()!=0){
+            boolean kT= true;
+            for (int i=0;i<listcheck.size();i++){
+                if(listcheck.get(i).getIdProduct()==check.getIdProduct()){
+                    kT = false;
+                }
+            }
+            if(kT==true){
+                listcheck.add(check);
+            }
+        }
+        else{
+            listcheck.add(check);
+        }
+        return listcheck;
+    }
+    private List<ProductDetailDTO> sortProduct(List<ProductDetailDTO> listPRD,Integer check) {
+        if(listPRD.size()==0){
+            return listPRD;
+        }else {
+            Comparator<ProductDetailDTO> MinMax = new Comparator<ProductDetailDTO>() {
+                @Override
+                public int compare(ProductDetailDTO o1, ProductDetailDTO o2) {
+                    return o1.getPriceMin().compareTo(o2.getPriceMin());
+                }
+            };
+            Comparator<ProductDetailDTO> MaxMin = new Comparator<ProductDetailDTO>() {
+                @Override
+                public int compare(ProductDetailDTO o1, ProductDetailDTO o2) {
+                    return o2.getPriceMin().compareTo(o1.getPriceMin());
+                }
+            };
+            if(check == 0){
+                Collections.sort(listPRD, MinMax);
+            }else{
+                Collections.sort(listPRD, MaxMin);
+            }
+            return listPRD;
+        }
+    }
+    private List<ProductDetailDTO> getallProduct(){
+        List<ProductDetailDTO> listgetAllProduct= new ArrayList<>();
+        for (int x: repository.getlistDetailProductCategory()
+        ) {
+            listgetAllProduct.add(getDetailProduct(x));
+        }
+        return listgetAllProduct;
+    }
 
 }

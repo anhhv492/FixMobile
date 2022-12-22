@@ -1,8 +1,11 @@
 package com.fix.mobile.service;
 
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fix.mobile.dto.ColorProductResponDTO;
+import com.fix.mobile.dto.ProductDetailDTO;
 import com.fix.mobile.dto.ProductResponDTO;
+import com.fix.mobile.entity.Accessory;
 import com.fix.mobile.entity.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,16 +34,9 @@ public interface ProductService extends GenericService<Product, Integer> {
 
 	List<Product> findProductByPrices();
 
-	List<Product> findProduct();
-
 	Product getdeTailPrd(Integer idCapa,Integer idRam,Integer idColor);
 
-	List<Integer> getlistDetailProductCapacity(Integer id);
-	List<Integer> getlistDetailProductRam(Integer id);
-	List<Integer> getlistDetailProductColor(Integer id);
-	List<Integer> getlistDetailProductCategory();
-
-
-	List<BigDecimal> getMinMaxPrice(Integer id);
+	ProductDetailDTO getDetailProduct(Integer id);
+	Page<ProductDetailDTO> getByPage(int pageNumber, int maxRecord, JsonNode findProcuctAll);
 }
 

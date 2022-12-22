@@ -1,9 +1,11 @@
 package com.fix.mobile.rest.controller;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fix.mobile.dto.accessory.AccessoryDTO;
 import com.fix.mobile.dto.accessory.AccessoryResponDTO;
 import com.fix.mobile.entity.Accessory;
 import com.fix.mobile.entity.Category;
+import com.fix.mobile.entity.Product;
 import com.fix.mobile.helper.ExcelHelper;
 import com.fix.mobile.repository.AccessoryRepository;
 import com.fix.mobile.repository.CategoryRepository;
@@ -12,13 +14,14 @@ import com.fix.mobile.service.CategoryService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
+import java.math.BigDecimal;
+import java.util.*;
 
 @RestController
 @CrossOrigin("*")
@@ -121,5 +124,12 @@ public class AccessoryRestController {
 			share="";
 		}
 		return accessoryService.getByPage(page,5,share);
+	}
+	@RequestMapping("/findaccessory/{page}")
+	public Page<Accessory> findProduct(
+			@PathVariable ("page") Integer page,
+			@RequestBody JsonNode findProcuctAll
+	) {
+		return accessoryService.getByPage(page,9,findProcuctAll);
 	}
 }
