@@ -42,6 +42,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private CategoryRepository cateRepository;
+    @Autowired
+    private OrderRepository orderRepository;
 
 
     public ProductServiceImpl(ProductRepository repository) {
@@ -268,6 +270,12 @@ public class ProductServiceImpl implements ProductService {
         detailProduct.setPriceMin(getMaxMinPriceProduct(id).get(0));
         detailProduct.setPriceMax(getMaxMinPriceProduct(id).get(1));
         return detailProduct;
+    }
+
+    @Override
+    public void deleteIFSaleEnd(Integer id) {
+        repository.deleteIFsaleEnd(id);
+        orderRepository.deleteById(id);
     }
 
     @Override

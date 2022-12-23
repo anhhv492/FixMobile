@@ -10,6 +10,7 @@ import com.fix.mobile.repository.SaleRepository;
 import com.fix.mobile.service.*;
 import com.fix.mobile.utils.UserName;
 import org.apache.log4j.Logger;
+import org.hibernate.StaleStateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -194,6 +195,10 @@ public class GuestRestController {
                             System.out.println("hi2");
                             orderDetail.setIdSale(carts.get(i).get("idSale").asInt());
                             Sale updatequantity= saleService.findByid(carts.get(i).get("idSale").asInt());
+                            if(updatequantity.getQuantity()==0){
+                                productService.deleteIFSaleEnd(order.getIdOrder());
+                                throw new StaleStateException("Giá sản phẩm đã được thay đổi bạn hãy thử lại");
+                            }
                             updatequantity.setQuantity(updatequantity.getQuantity()-1);
                             saleService.updateQuantity(updatequantity);
                         }
@@ -216,6 +221,10 @@ public class GuestRestController {
                         }else{
                             orderDetail.setIdSale(carts.get(i).get("idSale").asInt());
                             Sale updatequantity= saleService.findByid(carts.get(i).get("idSale").asInt());
+                            if(updatequantity.getQuantity()==0){
+                                productService.deleteIFSaleEnd(order.getIdOrder());
+                                throw new StaleStateException("Giá sản phẩm đã được thay đổi bạn hãy thử lại");
+                            }
                             updatequantity.setQuantity(updatequantity.getQuantity()-1);
                             saleService.updateQuantity(updatequantity);
                         }

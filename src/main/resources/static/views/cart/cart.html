@@ -124,7 +124,7 @@
                                     <p class="mb-2">Tổng đơn</p>
                                     <p class="mb-2">{{totalPrice()|number}}đ</p>
                                 </div>
-                                <div ng-if="totalPriceSale() != 0 " class="d-flex justify-content-between" style="font-weight: 500;">
+                                <div ng-if="totalPriceSale() >0 " class="d-flex justify-content-between" style="font-weight: 500;">
                                     <p class="mb-2">Tổng tiết kiệm</p>
                                     <p class="mb-2">{{totalPrice()-totalPriceSale()|number}}đ</p>
                                 </div>

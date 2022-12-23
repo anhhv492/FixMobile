@@ -19,8 +19,8 @@
       <td>{{orderDetail.accessory.name}}</td>
       <td>{{orderDetail.accessory.color}}</td>
       <td>{{orderDetail.accessory.category.name}}</td>
+      <td>{{orderDetail.priceSale|number}}</td>
       <td>{{orderDetail.price|number}}</td>
-      <td>{{orderDetail.accessory.price|number}}</td>
       <td>{{orderDetail.quantity}}</td>
       <td><img width="80px" height="80px" src="{{orderDetail.accessory.image}}"></td>
       <td>{{orderDetail.quantity*orderDetail.price|number}}</td>
@@ -29,8 +29,8 @@
       <td>{{orderDetail.product.name}}</td>
       <td>{{orderDetail.product.color.name}}</td>
       <td>{{orderDetail.product.category.name}}</td>
+      <td>{{orderDetail.priceSale|number}}</td>
       <td>{{orderDetail.price|number}}</td>
-      <td>{{orderDetail.product.price|number}}</td>
       <td>{{orderDetail.quantity}}</td>
       <td><img width="80px" height="80px" src="{{orderDetail.product.images[0].name}}"></td>
       <td>{{orderDetail.quantity*orderDetail.price|number}}</td>

@@ -253,7 +253,7 @@ app.controller('home-ctrl',function($rootScope,$scope,$http, $window){
 
                     Toast.fire({
                         icon: 'error',
-                        title: 'Thêm thất bại!'
+                        title: 'Hết hàng!'
                     })
                 })
             })

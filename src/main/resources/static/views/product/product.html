@@ -41,8 +41,8 @@
                                         </div>
                                         <h3 ng-if="PrD.price == undefined && detailProduct.priceMin != detailProduct.priceMax">{{detailProduct.priceMin | number}} VNĐ - {{detailProduct.priceMax | number}} VNĐ</h3>
                                         <h3 ng-if="PrD.price == undefined && detailProduct.priceMin == detailProduct.priceMax">{{detailProduct.priceMin | number}} VNĐ </h3>
-                                        <h3 ng-if="PrD.price != undefined && PrD.priceSale == undefined ">{{PrD.price | number}} VNĐ</h3>
-                                        <h3 ng-if="PrD.price != undefined && PrD.priceSale != undefined"> <del>{{PrD.price | number}} VNĐ</del> {{PrD.priceSale | number}}  VNĐ</h3>
+                                        <h3 ng-if="PrD.price != undefined && PrD.priceSale == 0 ">{{PrD.price | number}} VNĐ</h3>
+                                        <h3 ng-if="PrD.price != undefined && PrD.priceSale != 0"> <del>{{PrD.price | number}} VNĐ</del> {{PrD.priceSale | number}}  VNĐ</h3>
                                         Dung lượng
                                         <div>
                                             <label class="radio me-1" ng-repeat="capa in detailProduct.capa">

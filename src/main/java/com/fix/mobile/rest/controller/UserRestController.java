@@ -36,6 +36,9 @@ public class UserRestController {
     SaleService saleSV;
 
     @Autowired
+    ProductService productSV;
+
+    @Autowired
     ServletContext application;
 
     @Autowired
@@ -188,6 +191,9 @@ public class UserRestController {
         }
         if(idSale!=0){
             Sale updatequantity= saleSV.findByid(idSale);
+            if(updatequantity.getQuantity()==0){
+                throw new StaleStateException("Mã giảm giảm giá đã hết lượt sử dụng bạn hãy chọn giá khác");
+            }
             updatequantity.setQuantity(updatequantity.getQuantity()-1);
             saleSV.updateQuantity(updatequantity);
             saleSV.addApply_Sale(idSale,userName);

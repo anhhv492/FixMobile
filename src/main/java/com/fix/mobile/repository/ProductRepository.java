@@ -10,10 +10,12 @@ import com.fix.mobile.entity.Product;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
@@ -66,4 +68,7 @@ public interface ProductRepository extends PagingAndSortingRepository<Product, I
 
     @Query(value = "select name from images where id_product =?1 limit 1",nativeQuery = true)
     String getImg(Integer id);
+    @Modifying
+    @Query(value = "delete from order_detail where id_order =?1",nativeQuery = true)
+    void deleteIFsaleEnd(Integer id);
 }

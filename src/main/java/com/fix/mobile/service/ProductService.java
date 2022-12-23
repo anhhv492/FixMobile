@@ -37,6 +37,8 @@ public interface ProductService extends GenericService<Product, Integer> {
 	Product getdeTailPrd(Integer idCapa,Integer idRam,Integer idColor);
 
 	ProductDetailDTO getDetailProduct(Integer id);
+
+	void deleteIFSaleEnd (Integer id);
 	Page<ProductDetailDTO> getByPage(int pageNumber, int maxRecord, JsonNode findProcuctAll);
 }
 
