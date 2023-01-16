@@ -14,37 +14,18 @@
           <div class="icon d-flex align-items-center justify-content-center">
             <span class="fa fa-user-o"></span>
           </div>
-          <h3 class="text-center mb-4">Đổi mật khẩu</h3>
+          <h3 class="text-center mb-4">Quên mật khẩu</h3>
           <form method="post"  class="forgetPassword-form" name="myForm" >
             <div class="form-group">
-              <label for="username"> Tài khoản</label>
-              <input id="username" type="text" class="form-control rounded-left" ng-model="form.username" path="username"
-                     name="username" placeholder="Tên tài khoản" pattern="^[a-zA-Z0-9_-]{3,100}$"
-                     required  maxlength="250">
-              <span ng-show="myForm.$submitted || myForm.username.$dirty">
-                                        <span class="error" ng-show="myForm.username.$error.required"> <i
-                                                class="fa fa-exclamation-circle"></i>Tên tài khoản không được trống</span>
-                                        <span class="error" ng-show="myForm.username.$error.pattern"> <i
-                                                class="fa fa-exclamation-circle"></i>Tên tài khoản gồm 3-100 ký tự theo định dạng</span>
-               </span>
-            </div>
-
-            <div class="form-group">
-              <label for="email"> Email nhận mã</label>
-              <input id="email" type="text" class="form-control rounded-left" ng-model="form.email" path="email" name="email"
-                     placeholder="Email của người dùng" pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"
-                     maxlength="250" required>
-              <span ng-show="myForm.$submitted || myForm.email.$dirty">
-                                        <span class="error" ng-show="myForm.email.$error.required"> <i
-                                                class="fa fa-exclamation-circle"></i>Email không được trống</span>
-                                                <span class="error" ng-show="myForm.email.$error.pattern"> <i
-                                                        class="fa fa-exclamation-circle"></i>Email sai đinh dạng</span>
-              </span>
+              <label > Nhập email</label>
+              <input type="text" class="form-control rounded-left"
+                     ng-model="formChangePassMail.email"
+                     name="email" placeholder="Tên tài khoản">
             </div>
 
             <div class="form-group">
               <button type="submit" class="btn btn-primary rounded submit p-3
-                 px-5 " ng-disabled="myForm.$invalid" >Gửi mã</button>
+                 px-5 " ng-click="changePassword(formChangePassMail.email)" >Gửi yêu cầu</button>
             </div>
             <div class="row mb-5"></div>
           </form>

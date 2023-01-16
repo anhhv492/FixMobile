@@ -3,6 +3,7 @@ package com.fix.mobile.service.impl;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.fix.mobile.dto.RoleDTO;
 import com.fix.mobile.dto.account.AccountRequestDTO;
 import com.fix.mobile.dto.account.AccountResponDTO;
 import com.fix.mobile.dto.account.UpdatePasswordDTO;
@@ -287,5 +288,12 @@ public class AccountServiceImpl implements AccountService {
             return true;
         }
 
+    }
+
+    @Override
+    public Role getRoleByUserName(String userName) {
+        Account account = repository.findByName(userName);
+
+        return account.getRole();
     }
 }

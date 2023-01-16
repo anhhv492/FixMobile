@@ -17,7 +17,7 @@ app.controller('address-form-ctrl', function ($http, $scope, $window) {
     $scope.id_district="";
     $scope.id_ward ="";
     const callApiAddress = "http://localhost:8080/rest/user/address";
-    const callApiAcounts = "http://localhost:8080/rest/admin/accounts";
+    const callApiAcounts = "http://localhost:8080/rest/user";
 
     const jwtToken = localStorage.getItem("jwtToken")
     const token = {

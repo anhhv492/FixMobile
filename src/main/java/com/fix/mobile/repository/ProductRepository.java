@@ -10,10 +10,12 @@ import com.fix.mobile.entity.Product;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
@@ -44,4 +46,29 @@ public interface ProductRepository extends PagingAndSortingRepository<Product, I
 
     @Query("SELECT p FROM Product p where p.price between 100000 and 500000")
     List<Product> findProductByPrices();
+    @Query(value = "select * from products where status = 1",nativeQuery = true)
+    List<Product> findProduct();
+    @Query(value = "select MIN(price) from products where id_category = ?1 and status=1 order by price",nativeQuery = true)
+    BigDecimal getMinPrice(Integer id);
+
+    @Query(value = "select MAX(price) from products where id_category = ?1 and status=1 order by price",nativeQuery = true)
+    BigDecimal getMaxPrice(Integer id);
+    @Query(value = "select distinct id_color from products where id_category=?1 and status=1",nativeQuery = true)
+    List<Integer> getlistDetailProductColor(Integer id);
+    @Query(value = "select distinct id_ram from products where id_category = ?1 and status=1",nativeQuery = true)
+    List<Integer> getlistDetailProductRam(Integer id);
+    @Query(value = "select distinct id_capacity from products where id_category =?1 and status=1",nativeQuery = true)
+    List<Integer> getlistDetailProductCapacity(Integer id);
+    @Query(value = "select distinct id_category from products where status = 1",nativeQuery = true)
+    List<Integer> getlistDetailProductCategory();
+    @Query(value = "select * from products where id_capacity =?1 and id_ram  =?2 and id_color=?3 and status=1 limit 1",nativeQuery = true)
+    Product getDetailPrd(Integer idCapa, Integer idRam, Integer idColor);
+    @Query(value = "SELECT products.id_product  FROM products where id_category = ?1 and status = 1", nativeQuery = true)
+    List<Integer> getIdimage(Integer id);
+
+    @Query(value = "select name from images where id_product =?1 limit 1",nativeQuery = true)
+    String getImg(Integer id);
+    @Modifying
+    @Query(value = "delete from order_detail where id_order =?1",nativeQuery = true)
+    void deleteIFsaleEnd(Integer id);
 }

@@ -17,7 +17,7 @@
     </thead>
     <tbody>
     <tr ng-repeat="prChange in listProductChange">
-        <td><input type="checkbox" name="" ng-checked="checkSelect(prChange)"
+        <td ><input ng-if="prChange.status != 3" type="checkbox" name="" ng-checked="checkSelect(prChange)"
                    ng-click="checkSelected(prChange.idChange)"></td>
         <td>{{prChange.account.username}}</td>
         <td>{{prChange.account.email}} <br> {{prChange.account.phone}}</td>
@@ -29,10 +29,11 @@
                 <i class="fa fa-info-circle" aria-hidden="true"></i> {{prChange.orderDetail.product.name}}
             </button>
         </td>
-        <td ng-if="prChange.status==0">Hủy yêu cầu</td>
+        <td ng-if="prChange.status==0">Không có yêu cầu</td>
         <td ng-if="prChange.status==1">Chờ xác nhận</td>
-        <td ng-if="prChange.status==2">Đã xác nhận máy vui lòng chờ kiểm trả</td>
+        <td ng-if="prChange.status==2">Đã xác nhận, chờ đổi trả</td>
         <td ng-if="prChange.status==3">Đã đổi thành công</td>
+        <td ng-if="prChange.status==4">Hủy yêu cầu</td>
 
     </tr>
     </tbody>
@@ -61,15 +62,15 @@
                     </thead>
                     <tbody>
                     <tr>
-                        <td><img src="{{getOneProduct.productChange.images.length>0?
-                                 getOneProduct.productChange.images[0].name : ''}}" class="img-fluid rounded-3"
+                        <td ><img ng-repeat="image  in getOneProduct.productChange.images"
+                                  src="{{image.name}}" class="img-fluid rounded-3"
                                  style="width: 120px;height: 120px" alt="Book">
-                            <img src="{{getOneProduct.productChange.images.length>0?
-                                 getOneProduct.productChange.images[1].name : ''}}" class="img-fluid rounded-3"
-                                 style="width: 120px;height: 120px" alt="Book">
-                            <img src="{{getOneProduct.productChange.images.length>0?
-                                 getOneProduct.productChange.images[3].name : ''}}" class="img-fluid rounded-3"
-                                 style="width: 120px;height: 120px" alt="Book"> <br>
+<!--                            <img src="{{getOneProduct.productChange.images.length>0?-->
+<!--                                 getOneProduct.productChange.images[1].name : ''}}" class="img-fluid rounded-3"-->
+<!--                                 style="width: 120px;height: 120px" alt="Book">-->
+<!--                            <img src="{{getOneProduct.productChange.images.length>0?-->
+<!--                                 getOneProduct.productChange.images[3].name : ''}}" class="img-fluid rounded-3"-->
+<!--                                 style="width: 120px;height: 120px" alt="Book"> <br>-->
                         </td>
                         <td class="align-middle">số lượng: {{getOneProduct.productChange.quantity}}</td>
                         <td>

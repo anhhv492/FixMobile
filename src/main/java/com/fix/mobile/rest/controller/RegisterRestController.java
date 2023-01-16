@@ -22,7 +22,7 @@ import com.fix.mobile.service.RoleService;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping(value = "/rest/admin/registers")
+@RequestMapping(value = "/rest/guest/registers")
 public class RegisterRestController {
 
     @Autowired

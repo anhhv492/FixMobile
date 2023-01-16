@@ -15,7 +15,7 @@ app.controller("register-ctrl",function ($scope, $http,$window){
     })
     $scope.init = function(){
         
-        $http.get("/rest/admin/registers/roles").then(resp => {
+        $http.get("/rest/guest/registers/roles").then(resp => {
             $scope.roles = resp.data;
         }).catch(error => {
             console.log(error);
@@ -23,7 +23,7 @@ app.controller("register-ctrl",function ($scope, $http,$window){
         $scope.form = {
             username:null,
             createDate: new Date(),
-            image: "5.png",
+            image: "https://res.cloudinary.com/dcll6yp9s/image/upload/v1669087979/kbasp5qdf76f3j02mebr.png",
             gender: true,
             status: 1,
             password: null,
@@ -52,7 +52,7 @@ app.controller("register-ctrl",function ($scope, $http,$window){
            
     }
     $scope.init();
-    const api ="/rest/admin/registers";
+    const api ="/rest/guest/registers";
     $scope.create =function(){
         $http.get(api).then(resp => {
             var a = 1;
@@ -73,6 +73,14 @@ app.controller("register-ctrl",function ($scope, $http,$window){
                     return a = 0;
 
                 }
+                if ($scope.form.email == acc.email) {
+                    Toast.fire({
+                        icon: 'error',
+                        title: 'Email đã tồn tại ',
+                    })
+                    return a = 0;
+
+                }
             })
             if (a == 1) {
                 console.log("Bắt đầu thêm mới")
@@ -84,7 +92,7 @@ app.controller("register-ctrl",function ($scope, $http,$window){
                         icon: 'success',
                         title: 'Đăng ký thành công!',
                     })
-                    $window.location.href = '#!home/index';
+                    $window.location.href = '#!login';
                     $scope.reset();
                     // alert("Create success!");
                 }).catch(error => {

@@ -10,6 +10,7 @@
       <th>Số lượng</th>
       <th>Hình ảnh</th>
       <th>Tổng (VNĐ)</th>
+      <th ng-if="orderModel.status==3">Đổi trả</th>
       <th>Thao tác</th>
     </tr>
     </thead>
@@ -18,8 +19,8 @@
       <td>{{orderDetail.accessory.name}}</td>
       <td>{{orderDetail.accessory.color}}</td>
       <td>{{orderDetail.accessory.category.name}}</td>
+      <td>{{orderDetail.priceSale|number}}</td>
       <td>{{orderDetail.price|number}}</td>
-      <td>{{orderDetail.accessory.price|number}}</td>
       <td>{{orderDetail.quantity}}</td>
       <td><img width="80px" height="80px" src="{{orderDetail.accessory.image}}"></td>
       <td>{{orderDetail.quantity*orderDetail.price|number}}</td>
@@ -28,26 +29,42 @@
       <td>{{orderDetail.product.name}}</td>
       <td>{{orderDetail.product.color.name}}</td>
       <td>{{orderDetail.product.category.name}}</td>
+      <td>{{orderDetail.priceSale|number}}</td>
       <td>{{orderDetail.price|number}}</td>
-      <td>{{orderDetail.product.price|number}}</td>
       <td>{{orderDetail.quantity}}</td>
       <td><img width="80px" height="80px" src="{{orderDetail.product.images[0].name}}"></td>
       <td>{{orderDetail.quantity*orderDetail.price|number}}</td>
+      <td ng-if="orderDetail.status==0 && orderModel.status==3">
+        Không</td>
+      <td ng-if="orderDetail.status==1 && orderModel.status==3">
+        Chờ xác nhận đổi trả</td>
+      <td ng-if="orderDetail.status==2 && orderModel.status==3">
+        Chờ đổi máy mới</td>
+      <td ng-if="orderDetail.status==3 && orderModel.status==3">
+        Đã đổi máy</td>
+      <td ng-if="orderDetail.status==4 && orderModel.status==3">
+        Hủy yêu cầu</td>
       <td>
         <button ng-click="imeiPro(orderDetail)" class="btn btn-default"
                 data-bs-toggle="modal" data-bs-target="#staticBackdrop"
-                ng-if="orderDetail.order.status<2">
+                ng-if="orderDetail.order.status==0||orderDetail.order.status==1">
           <i class="fa fa-pencil" aria-hidden="true"></i>
           <span>Sửa</span>
         </button>
-        <button ng-click="getImeis(orderDetail)" class="btn btn-default"
+        <button ng-click="imeiPro(orderDetail)" class="btn btn-default"
+                data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                ng-if="orderDetail.order.status==3 && orderDetail.status>=2">
+          <i class="fa fa-pencil" aria-hidden="true"></i>
+          <span>Đổi</span>
+        </button>
+        <button ng-click="viewImeiDetail(orderDetail)" class="btn btn-default"
                 data-bs-toggle="modal" data-bs-target="#ss2"
-                ng-if="orderDetail.order.status>=2">
+                ng-if="orderDetail.order.status==2||orderDetail.order.status==3&&orderDetail.status<2">
           <i class="fa fa-pencil" aria-hidden="true"></i>
           <span>Xem</span>
         </button>
         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-             aria-labelledby="staticBackdropLabel" aria-hidden="true" ng-if="orderDetail.order.status<2">
+             aria-labelledby="staticBackdropLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
@@ -55,8 +72,9 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                <div ng-if="imeis2.length<orderDetail.quantity">
-                  Thêm mã máy
+                <div ng-if="imeis2.length<orderDT.quantity">
+                  <span ng-if="orderDT.order!=3">Thêm mã máy</span>
+                  <span ng-if="orderDT.order==3">Đổi mã máy</span>
                   <select class="form-select mt-1" ng-model="form.idImei" ng-change="setImei()">
                     <option ng-repeat="imei in imeis" ng-value="imei.idImay">{{imei.name}}</option>
                   </select>
@@ -77,7 +95,8 @@
     </tbody>
   </table>
 </div>
-<div class="modal fade" id="ss2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="ss2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">

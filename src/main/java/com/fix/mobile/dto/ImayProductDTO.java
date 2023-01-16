@@ -12,7 +12,7 @@ import java.util.List;
 @Data
 public class ImayProductDTO {
 	private Integer idImay;
-	private List<String> name;
+	private  String name;
 	private int status;
 	private Product product;
 }

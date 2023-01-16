@@ -1,6 +1,6 @@
 const app = angular.module('app-buy', ['ngRoute']);
 app.controller('buy-success-ctrl',function($scope,$window,$timeout,$http){
-    var urlAccount = `http://localhost:8080/rest/admin/accounts`;
+    var urlAccount = `http://localhost:8080/rest/user`;
     const jwtToken = localStorage.getItem("jwtToken")
     const token = {
         headers: {

@@ -10,7 +10,8 @@
                             <th scope="col">Loại</th>
                             <th scope="col">Số lượng</th>
                             <th scope="col">Màu</th>
-                            <th scope="col">Giá (VNĐ)</th>
+                            <th scope="col">Giá (VNĐ</th>
+                            <th scope="col">Tổng (VNĐ)</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -23,7 +24,6 @@
                                          style="width: 120px;height: 120px" alt="Book" ng-if="item.idProduct">
                                     <div class="flex-column ms-4">
                                         <h4 class="mb-2">{{item.name}}</h4>
-                                        <span class="mb-0 text-success">{{item.note}}</span>
                                     </div>
                                 </div>
                             </th>
@@ -46,6 +46,7 @@
                             </td>
                             <td class="align-middle" ng-if="item.idAccessory">{{item.color}}</td>
                             <td class="align-middle" ng-if="item.idProduct">{{item.color.name}}</td>
+                            <td class="align-middle">{{item.price|number}}</td>
                             <td class="align-middle">
                                 <p class="mb-0" style="font-weight: 500 " ng-if="item.priceSale ==0">{{item.price*item.qty|number}}  VNĐ</p>
                                 <p class="mb-0" style="font-weight: 500 " ng-if="item.priceSale !=0">{{item.priceSale*item.qty|number}} VNĐ&nbsp;<del>{{item.price*item.qty|number}} VNĐ</del><br>
@@ -123,7 +124,7 @@
                                     <p class="mb-2">Tổng đơn</p>
                                     <p class="mb-2">{{totalPrice()|number}}đ</p>
                                 </div>
-                                <div ng-if="totalPriceSale() != 0 " class="d-flex justify-content-between" style="font-weight: 500;">
+                                <div ng-if="totalPriceSale() >0 " class="d-flex justify-content-between" style="font-weight: 500;">
                                     <p class="mb-2">Tổng tiết kiệm</p>
                                     <p class="mb-2">{{totalPrice()-totalPriceSale()|number}}đ</p>
                                 </div>

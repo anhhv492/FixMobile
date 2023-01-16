@@ -1,4 +1,4 @@
-app.controller('order-admin-detail-ctrl',function($rootScope,$scope,$http,$compile){
+app.controller('order-admin-detail-ctrl',function($rootScope,$scope,$http,$compile,$window){
     var urlOrderDetail=`http://localhost:8080/rest/staff/order/detail`;
     var urlOrder=`http://localhost:8080/rest/staff/order`;
     const jwtToken = localStorage.getItem("jwtToken")
@@ -12,8 +12,9 @@ app.controller('order-admin-detail-ctrl',function($rootScope,$scope,$http,$compi
     $scope.imeis2=[];
     $scope.nameProduct=null;
     $scope.form= {};
-    $scope.order= {};
     $scope.idDT= null;
+    $scope.orderDT= null;
+    $rootScope.check = null;
 
     $scope.getAllByOrder=function(){
         let id = $rootScope.idOrder;
@@ -23,12 +24,30 @@ app.controller('order-admin-detail-ctrl',function($rootScope,$scope,$http,$compi
             console.log(error);
         })
     }
-    $scope.getImeis=function (orderDetail) {
-        $http.get(urlOrderDetail+'/imei2/'+orderDetail.idDetail,token).then(resp=>{
+    $scope.getImeis2=function () {
+        $http.get(urlOrderDetail+'/imei2/'+$scope.orderDT.idDetail,token).then(resp=>{
             $scope.imeis2=resp.data;
+        }).catch(error=>{
+            console.log(error);
+        })
+    }
+    $scope.getImeis1=function () {
+        $http.get(urlOrderDetail+'/imei/'+$scope.orderDT.product.idProduct,token).then(resp=> {
+            $scope.imeis = resp.data;
+        }).catch(error=>{
+            console.log(error);
+        })
+    }
+    $scope.viewImeiDetail=function (orderDT) {
+        let idDetail = orderDT.idDetail;
+        $http.get(urlOrderDetail+'/imei2/'+idDetail,token).then(resp=>{
+            $scope.imeis2=resp.data;
+        }).catch(error=>{
+            $scope.imeis2=[];
         })
     }
     $scope.removeImei=function (idImei) {
+        let idDetail=$scope.idDT;
         Swal.fire({
             title: 'Bạn có chắc muốn xóa?',
             text: "Xóa không thể khôi phục lại!",
@@ -36,54 +55,36 @@ app.controller('order-admin-detail-ctrl',function($rootScope,$scope,$http,$compi
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
+            confirmButtonText: 'Xác nhận'
         }).then((result) => {
             if (result.isConfirmed) {
-                $http.delete(urlOrderDetail+'/imei/remove/'+idImei,token).then(resp=>{
-                    $scope.imeis=resp.data;
-                    const Toast = Swal.mixin({
-                        toast: true,
-                        position: 'top-end',
-                        showConfirmButton: false,
-                        timer: 2000,
-                        timerProgressBar: true,
-                        didOpen: (toast) => {
-                            toast.addEventListener('mouseenter', Swal.stopTimer)
-                            toast.addEventListener('mouseleave', Swal.resumeTimer)
-                        }
-                    })
-
-                    Toast.fire({
-                        icon: 'success',
-                        title: 'Xóa thành công!'
-                    })
-
-                    document.getElementById("closeMd").click();
-                }).catch(error=>{
-                    const Toast = Swal.mixin({
-                        toast: true,
-                        position: 'top-end',
-                        showConfirmButton: false,
-                        timer: 2000,
-                        timerProgressBar: true,
-                        didOpen: (toast) => {
-                            toast.addEventListener('mouseenter', Swal.stopTimer)
-                            toast.addEventListener('mouseleave', Swal.resumeTimer)
-                        }
-                    })
-
-                    Toast.fire({
-                        icon: 'error',
-                        title: 'Xóa thất bại!'
-                    })
-                    console.log('error update',error);
-                });
+                $http.post(urlOrderDetail+`/imei/remove/${idImei}`,idImei,token).then(resp=>{
+                    $scope.messageSuccess("Xóa thành công");
+                    $scope.getImeis1();
+                    $scope.getImeis2();
+                })
             }
+        })
+    }
+    $scope.setImei=function () {
+        let idDetail=$scope.idDT;
+        $http.get(urlOrderDetail+'/imei/add/'+idDetail+"/"+$scope.form.idImei,token).then(resp=>{
+            $scope.messageSuccess("Thêm thành công");
+            $scope.getImeis1();
+            $scope.getImeis2();
+            $scope.orderDetails.forEach(function (item) {
+                if($rootScope.orderModel.status==3){
+                    if(item.idDetail==idDetail){
+                        item.status=3;
+                    }
+                }
+            })
         })
     }
     $scope.imeiPro=function(orderDetail){
         // $scope.selects="";
         $scope.idDT= orderDetail.idDetail;
+        $scope.orderDT= orderDetail;
         $http.get(urlOrderDetail+'/imei/'+orderDetail.product.idProduct,token).then(resp=>{
             $scope.imeis=resp.data;
             $http.get(urlOrderDetail+'/imei2/'+orderDetail.idDetail,token).then(resp=>{
@@ -117,33 +118,67 @@ app.controller('order-admin-detail-ctrl',function($rootScope,$scope,$http,$compi
             console.log(error);
         })
     }
-    $scope.setImei=function () {
-        let idDetail=$scope.idDT;
-        $http.get(urlOrderDetail+'/imei/add/'+idDetail+"/"+$scope.form.idImei,token)
-            .then(resp=>{
-                $scope.imeis2=resp.data;
-                const Toast = Swal.mixin({
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 2000,
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                        toast.addEventListener('mouseenter', Swal.stopTimer)
-                        toast.addEventListener('mouseleave', Swal.resumeTimer)
-                    }
-                })
+    $scope.messageSuccess=function (text) {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
 
-                Toast.fire({
-                    icon: 'success',
-                    title: 'Thêm thành công!'
-                })
-                $scope.getImeis();
+        Toast.fire({
+            icon: 'success',
+            title: text
+        })
+    }
+    $scope.messageError=function (text) {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
 
-                document.getElementById("closeMd").click();
-        }).catch(error=>{
-            console.log(error);
+        Toast.fire({
+            icon: 'error',
+            title: text
         })
     }
     $scope.getAllByOrder();
+    $scope.logOut = function (){
+        $window.location.href = "http://localhost:8080/views/index.html#!/login"
+        Swal.fire({
+            icon: 'error',
+            title: 'Vui lòng đăng nhập lại!!',
+            text: 'Tài khoản của bạn không có quyền truy cập!!',
+        })
+    }
+
+    $scope.checkLogin = function () {
+        if (jwtToken == null){
+            $scope.logOut();
+        }else {
+            $http.get("http://localhost:8080/rest/user/getRole",token).then(respon =>{
+                if (respon.data.name === "USER"){
+                    $scope.logOut();
+                }else if (respon.data.name === "ADMIN"){
+                    $rootScope.check = null;
+                }else {
+                    $rootScope.check = "OK";
+                }
+            })
+        }
+    }
+
+    $scope.checkLogin();
 });

@@ -1,0 +1,178 @@
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
+
+<!-- Css Styles -->
+<link rel="stylesheet" href="product/css/bootstrap.min.css" type="text/css">
+<link rel="stylesheet" href="product/css/font-awesome.min.css" type="text/css">
+<link rel="stylesheet" href="product/css/nice-select.css" type="text/css">
+<link rel="stylesheet" href="product/css/jquery-ui.min.css" type="text/css">
+<link rel="stylesheet" href="product/css/style.css" type="text/css">
+
+
+<section class="product spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-5">
+                <div class="sidebar">
+                    <div class="sidebar__item">
+                        <h4>Lọc theo giá</h4>
+                        <div class="price-range-wrap">
+                            <div class="range-slider">
+                                <div class="price-input" style="text-align: center;  font-size: 12px;">
+                                    <input ng-model="findProductAll.priceSalemin"  class="col-4" type="number" min="0"  maxlength="9" id="minamount" placeholder="Từ"> <b> VNĐ</b>
+                                     -->
+                                    <input ng-model="findProductAll.priceSalemax"  class="col-4" type="number" min="0"  maxlength="9" id="maxamount" placeholder="Đến"> <b> VNĐ</b>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sidebar__item sidebar__item__color--option">
+                        <h4>Lọc theo dung lượng</h4>
+                        <div class="sidebar__item__color sidebar__item__color--gray"
+                             ng-repeat="capacity in capacityProducts">
+                            <input type="checkbox" class="form-check-input" value=""
+                                   ng-click="checkSelected(capacity.idCapacity,1)">
+                            <label class="form-check-label">
+                                {{capacity.name}}
+                            </label>
+                        </div>
+                    </div>
+                    <div class="sidebar__item sidebar__item__color--option">
+                        <h4>Lọc theo RAM</h4>
+                        <div class="sidebar__item__color sidebar__item__color--gray"
+                             ng-repeat="ram in ramProducts">
+                            <input type="checkbox" class="form-check-input" value=""
+                                   ng-click="checkSelected(ram.idRam,2)">
+                            <label class="form-check-label">
+                                {{ram.name}}
+                            </label>
+                        </div>
+                    </div>
+                    <div class="sidebar__item sidebar__item__color--option">
+                        <h4>Lọc theo màu sắc</h4>
+                        <div class="sidebar__item__color sidebar__item__color--gray"
+                             ng-repeat="color in colorProducts">
+                            <input type="checkbox" class="form-check-input" value=""
+                                   ng-click="checkSelected(color.idColor,3)">
+                            <label class="form-check-label">
+                                {{color.name}}
+                            </label>
+                        </div>
+                    </div>
+                    <button class="btn btn-success" style="text-align: center"
+                    ng-click="findProduct(0)">Lọc sản phẩm</button>
+
+                </div>
+            </div>
+            <div class="col-lg-9 col-md-7">
+                <div class="product__discount row">
+                    <div class="section-title product__discount__title  col-5" style="margin-bottom: 0">
+                        <h2>Sản phẩm</h2>
+                    </div>
+                    <div class="col-7">
+                        <input class="form-control me-2" type="search" placeholder="Tìm kiếm sản phẩm theo tên tại đây" aria-label="Search"
+                        style="margin-bottom: -23%;margin-top: 8%;" ng-model="findProductAll.search" ng-keydown="findProduct(0)">
+                    </div>
+                </div>
+                <div class="filter__item">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-5">
+                            <div class="filter__sort">
+                                <span>Sắp xếp theo giá</span>
+                                <select ng-model="findProductAll.sortMinMax" ng-change="">
+                                    <option ng-value="0">Tăng dần</option>
+                                    <option ng-value="1">Dảm dần</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4">
+                            <div class="filter__found">
+                                <h6><span>{{getAllProduct.length}}</span> Sản phẩm được tìm thấy</h6>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-3">
+                            <div class="filter__option">
+                                <span class="icon_grid-2x2"></span>
+                                <span class="icon_ul"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" >
+                    <div class="col-lg-4 col-md-6 col-sm-6" ng-repeat="p in getAllProduct">
+                        <div class="product__item">
+                            <div class="product__item__pic set-bg" data-setbg="{{p.images[0]}}" style="background-image: url({{p.images[0]}});">
+                                <ul class="product__item__pic__hover" style="  margin-left: 0;">
+                                    <li><a href="#!product" ng-click="getDetailProduct(p.id)"><i class="fa fa-shopping-cart"></i></a></li>
+                                </ul>
+                            </div>
+                            <div class="product__item__text">
+                                <h6><a href="#!product" ng-click="getDetailProduct(p.id)" style="font-size: 30px;">{{p.name}}</a></h6>
+                                <h5>
+                                    <span ng-if="p.priceMin != p.priceMax">{{p.priceMin | number}} VNĐ - {{p.priceMax | number}} VNĐ</span>
+                                    <span ng-if="p.priceMin == p.priceMax">{{p.priceMin | number}} VNĐ</span>
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <nav class="row table-responsive">
+
+                    <table>
+                        <ul class="pagination justify-content-center row">
+                            <div class="col-1">
+                                <li class="page-item">
+                                    <button class="btn btn-default" ng-click="findProduct(0)"ng-disabled="numberPagePRD==0">
+                                        <i class="fa fa-fast-backward" aria-hidden="true"></i>
+                                    </button>
+                                </li>
+                            </div>
+                            <div class="col-1">
+                                <li class="page-item ms-2 me-2">
+                                    <button class="btn btn-default" ng-click="findProduct(numberPagePRD - 1 )" ><i class="fa fa-step-backward"
+                                                                                                                  aria-hidden="true"></i></button>
+                                </li>
+                            </div>
+                            <div class="col-1">
+                                <li class="page-item ms-1 me-1 pt-1 ">
+                                    <h4>{{numberPagePRD + 1}}/{{totalPagesPRD}}</h4>
+                                </li>
+                            </div>
+                            <div class="col-1">
+                                <li class="page-item ms-2 me-2">
+                                    <button class="btn btn-default"ng-click="findProduct(numberPagePRD +1)">
+                                        <i class="fa fa-step-forward" aria-hidden="true"></i>
+                                    </button>
+                                    <!--            <p class="btn btn-success" disabled ng-show="!check_last">Trang sau</p>-->
+                                </li>
+                            </div>
+                            <div class="col-1">
+                                <li class="page-item">
+                                    <button class="btn btn-default" ng-click="findProduct(totalPagesPRD - 1)" ng-disabled="numberPagePRD==totalPagesPRD-1">
+                                        <i class="fa fa-fast-forward" aria-hidden="true"></i>
+                                    </button>
+                                    <!--            <p class="btn btn-dark" disabled ng-show="!check_last">Trang cuối</p>-->
+                                </li>
+                            </div>
+                        </ul>
+                    </table>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Product Section End -->
+
+
+<!-- Js Plugins -->
+
+<!-- Product Section End -->
+<script src="product/js/jquery-3.3.1.min.js"></script>
+<script src="product/js/bootstrap.min.js"></script>
+<script src="product/js/jquery.nice-select.min.js"></script>
+<script src="product/js/jquery-ui.min.js"></script>
+<script src="product/js/jquery.slicknav.js"></script>
+<script src="product/js/mixitup.min.js"></script>
+<script src="product/js/owl.carousel.min.js"></script>
+<script src="product/js/main.js"></script>

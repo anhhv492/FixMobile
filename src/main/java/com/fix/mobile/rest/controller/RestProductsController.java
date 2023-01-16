@@ -2,18 +2,22 @@ package com.fix.mobile.rest.controller;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fix.mobile.dto.CheckProductDTO;
 import com.fix.mobile.dto.ImayProductDTO;
 import com.fix.mobile.dto.ImeiProductResponDTO;
+import com.fix.mobile.dto.ProductDetailDTO;
 import com.fix.mobile.entity.*;
 import com.fix.mobile.helper.ExcelProducts;
 import com.fix.mobile.payload.SaveProductRequest;
+import com.fix.mobile.repository.ImayProductRepository;
 import com.fix.mobile.repository.ProductRepository;
 import com.fix.mobile.service.*;
 import org.apache.log4j.Logger;
 import org.hibernate.StaleStateException;
-import org.hibernate.annotations.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -23,15 +27,14 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.Valid;
 import javax.websocket.server.PathParam;
+import java.math.BigDecimal;
 import java.util.*;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
-import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
 @RestController
-@RequestMapping(value= "/rest/admin/product")
+@RequestMapping(value= "/rest/staff/product")
 @CrossOrigin("*")
 @Component
 public class RestProductsController {
@@ -55,6 +58,9 @@ public class RestProductsController {
 	private CategoryService categoryService;
 
 	@Autowired
+	private ImayProductService imayProductService;
+
+	@Autowired
 	private Cloudinary cloud;
 
 	@Autowired  private ExcelProducts excelProduct;
@@ -62,6 +68,8 @@ public class RestProductsController {
 	@Autowired private ImayProductService imayService;
 
 	@Autowired private ProductRepository repose;
+	@Autowired
+	private ImayProductRepository imayProductRepository;
 
 	@GetMapping("/getAllRam")
 	public List<Ram> findAllRam(){
@@ -115,11 +123,44 @@ public class RestProductsController {
 		}
 	}
 
+	private String generationName(SaveProductRequest prd){
+		String name="";
+		List<Category> listCate =categoryService.findAll();
+		List<Capacity> listCapa = capacityService.findAll();
+		List<Color> listColor = colorService.findAll();
+		List<Ram> listRam = ramService.findAll();
+		for (Category cate:listCate
+			 ) {
+			if(prd.getCategory().getIdCategory()==cate.getIdCategory()){
+				name+= cate.getName();
+			}
+		}
+		for (Capacity capa:listCapa
+		) {
+			if(prd.getCapacity().getIdCapacity()==capa.getIdCapacity()){
+				name+= " Dung Lượng " + capa.getName();
+			}
+		}
+		for (Ram ram:listRam
+		) {
+			if(prd.getRam().getIdRam()==ram.getIdRam()){
+				name+=" RAM " + ram.getName();
+			}
+		}
+		for (Color color:listColor
+		) {
+			if(prd.getColor().getIdColor() == color.getIdColor()){
+				name+=" Màu " +color.getName();
+			}
+		}
+		return name;
+	}
+
 	@RequestMapping(path = "/saveProduct", method = POST, consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
 	public void save(@ModelAttribute SaveProductRequest saveProductRequest){
 		Date date = new Date();
 		Product p = new Product();
-		p.setName(saveProductRequest.getName());
+		p.setName(generationName(saveProductRequest));
 		p.setNote(saveProductRequest.getNote());
 		p.setSize(saveProductRequest.getSize());
 		p.setCategory(saveProductRequest.getCategory());
@@ -169,6 +210,28 @@ public class RestProductsController {
 	public void update(@RequestParam("id") Integer id ,
 					   @ModelAttribute SaveProductRequest saveProductRequest) {
 	        Optional<Product> p = productService.findById(id);
+		try {
+			List<ImayProduct> imayProducts = null;
+			ImayProduct imayProduct = null;
+			if(saveProductRequest.getStatus()==0){
+				imayProducts= imayProductRepository.findAllByProductAndStatus(p.get(),1);
+				if(imayProducts!=null) {
+					for (int i = 0; i < imayProducts.size(); i++) {
+						imayProduct = imayProducts.get(i);
+						imayProduct.setStatus(4);
+						imayService.update(imayProduct, imayProduct.getIdImay());
+					}
+				}
+			}else{
+				imayProducts= imayProductRepository.findAllByProductAndStatus(p.get(),4);
+				if(imayProducts!=null){
+					for(int i=0;i<imayProducts.size();i++){
+						imayProduct = imayProducts.get(i);
+						imayProduct.setStatus(1);
+						imayService.update(imayProduct,imayProduct.getIdImay());
+					}
+				}
+			}
 			if(p!=null){
 				p.orElseThrow().setName(saveProductRequest.getName());
 				p.orElseThrow().setNote(saveProductRequest.getNote());
@@ -181,13 +244,20 @@ public class RestProductsController {
 				p.orElseThrow().setStatus(saveProductRequest.getStatus());
 				p.orElseThrow().setPrice(saveProductRequest.getPrice());
 				productService.save(p.get());
+
 			}else{
 				throw new StaleStateException("Bản ghi này không tòn tại");
 			}
+			System.out.println("Uploaded the files successfully: " + saveProductRequest.getFiles().size());
+
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
+
 
 	}
 
-   
+
 	@PostMapping("/readExcel")
 	public Boolean readExcel(@PathParam("file") MultipartFile file) throws Exception{
 		Boolean checkExcel= excelProduct.readExcel(file);
@@ -195,19 +265,39 @@ public class RestProductsController {
 	}
 	// imay product
 	@PostMapping("/saveImay")
-	public void saveImay(@ModelAttribute ImayProductDTO  imay){
+	public ImayProduct saveImay(@ModelAttribute ImayProduct  imay){
 		try {
-			for ( String  s :  imay.getName()) {
-				ImayProduct i = new ImayProduct();
-				i.setName(s);
-				i.setProduct(imay.getProduct());
-				i.setStatus(1);
-				imayService.save(i);
+			List<ImayProduct> list = imayService.findAll();
+			Boolean aBoolean=false;
+			ImayProduct im=null;
+			if(list.size()>0){
+				for (int i = 0; i < list.size(); i++) {
+					if(imay.getName().equals(list.get(i).getName())){
+						aBoolean=false;
+						return null;
+					}else{
+						aBoolean=true;
+						im = new ImayProduct();
+					}
+				}
+			}
+			if(aBoolean==true){
+				im.setName(imay.getName());
+				im.setProduct(imay.getProduct());
+				im.setStatus(1);
+				imayService.save(im);
+				return imay;
 			}
 		}catch (Exception e ){
 			e.getMessage();
 			e.printStackTrace();
 		}
+		return null;
+	}
+
+	@GetMapping("/getImeiByName")
+	public ImayProduct getImeiByname(@RequestParam("name") String name){
+		return imayProductService.findImeiByName(name);
 	}
 
 	@PostMapping("/readExcelImay")
@@ -266,13 +356,29 @@ public class RestProductsController {
 	}
 
 	//findBy product price
-	@RequestMapping(value = "/findProductByPrice",method = RequestMethod.GET)
-	public List<Product> findProductByPrice(){
-		List<Product> listproduct = productService.findProductByPrices();
-		if(listproduct.isEmpty()){
-			return  null;
-		}
-		return listproduct;
+
+
+
+	@RequestMapping("/findproduct/{page}")
+	public Page<ProductDetailDTO> findProduct(
+			@PathVariable ("page") Integer page,
+			@RequestBody JsonNode findProcuctAll
+	) {
+		return productService.getByPage(page,9,findProcuctAll);
+	}
+	@RequestMapping("/detailproduct/{idcate}")
+	public ProductDetailDTO getDetailProduct(
+			@PathVariable("idcate")Integer id
+	){
+		return productService.getDetailProduct(id);
+	}
+	@RequestMapping("/getdetailproduct/{idCapa}/{idRam}/{idColor}")
+	public Product getdetailProduct(
+			@PathVariable("idCapa")Integer idCapa,
+			@PathVariable("idRam")Integer idRam,
+			@PathVariable("idColor")Integer idColor
+	){
+		return productService.getdeTailPrd(idCapa,idRam,idColor);
 	}
 
 }

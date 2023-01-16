@@ -9,11 +9,15 @@ import com.fix.mobile.dto.account.AccountResponDTO;
 import com.fix.mobile.dto.account.UpdatePasswordDTO;
 import com.fix.mobile.dto.AccountDTO;
 import com.fix.mobile.dto.AddressDTO;
+import com.fix.mobile.service.sendMailService;
 import com.fix.mobile.utils.UserName;
+import org.apache.naming.factory.SendMailFactory;
+import org.hibernate.StaleStateException;
 import org.modelmapper.ModelMapper;
 import com.fix.mobile.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -39,6 +43,8 @@ public class AccountRestController {
     @Autowired
     ModelMapper modelMapper;
 
+    @Autowired
+    sendMailService mailService;
     public AccountRestController(AccountService accountService, RoleService roleService, ServletContext application, ModelMapper modelMapper) {
         this.accountService = accountService;
         this.roleService = roleService;
@@ -84,12 +90,7 @@ public class AccountRestController {
     }
 
     
-    @GetMapping("/getAccountActive")
-    public AccountDTO getAccountActive() {
-        Account account = accountService.findByUsername(UserName.getUserName());
-        AccountDTO accountDTO = modelMapper.map(account, AccountDTO.class);
-        return accountDTO;
-    }
+
     @RequestMapping("/getdatasale/{page}")
     public Page<Account> getDataShowSale(
             @PathVariable ("page") Integer page,
@@ -101,10 +102,6 @@ public class AccountRestController {
         return accountService.getByPage(page,5,share);
     }
 
-    @PostMapping("/setaddressdefault")
-    public void setaddressdefault(@RequestBody Integer id){
-        accountService.setAddressDefault(id);
-    }
 
     @GetMapping("/getAddress")
     public AddressDTO getAddress(){
@@ -126,4 +123,7 @@ public class AccountRestController {
 
          return accountService.updatePassword(updatePasswordDTO);
     }
+
+
+
 }

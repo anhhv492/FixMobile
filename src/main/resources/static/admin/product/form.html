@@ -31,7 +31,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group mt-1">
                                         <label >Thể loại </label>
-                                        <select ng-model="formProduct.category" class="form-select" name="category" required>
+                                        <select ng-model="formProduct.category" class="form-select" name="category" required ng-change="generationName()">
                                             <option  ng-value="">Chọn thể loại
                                             </option>
                                             <option ng-repeat="cate in categories" ng-value="cate.idCategory">{{cate.name}}
@@ -45,7 +45,7 @@
                                     </div>
                                     <div class="form-group mt-1">
                                         <label>Tên sản phẩm</label>
-                                        <input maxlength="250" ng-model="formProduct.name" class="form-control" name="name" placeholder="Tên sản phẩm"
+                                        <input disabled maxlength="250" ng-model="formProduct.name" class="form-control" name="name" placeholder="Tên sản phẩm"
                                                ng-minlength="6" ng-maxlength="250" required>
                                         <span ng-show="myForm.$submitted || myForm.name.$dirty" style="color: red">
                                         <span class="error" ng-show="myForm.name.$error.required"> <i
@@ -58,7 +58,7 @@
                                     </div>
                                     <div class="form-group mt-1">
                                         <label >Ram </label>
-                                        <select ng-model="formProduct.ram" class="form-select" name="ram" required>
+                                        <select ng-model="formProduct.ram" class="form-select" name="ram" required ng-change="generationName()">
                                             <option value="" ng-value="">Chọn ram
                                             </option>
                                             <option ng-repeat="cate in rams" ng-value="cate.idRam">{{cate.name}}
@@ -71,7 +71,7 @@
                                     </div>
                                     <div class="form-group mt-1">
                                             <label >Màu </label>
-                                            <select ng-model="formProduct.color" class="form-select" name="color" required>
+                                            <select ng-model="formProduct.color" class="form-select" name="color" required ng-change="generationName()">
                                                 <option  value="" ng-value="">Chọn màu
                                                 </option>
                                                 <option ng-repeat="color in colors" ng-value="color.idColor">{{color.name}}
@@ -84,11 +84,13 @@
                                     </div>
                                     <div class="form-group mt-1">
                                         <label>Dung lượng</label>
-                                        <select ng-model="formProduct.capacity" class="form-select" name="capacity" required>
+                                        <select ng-model="formProduct.capacity" class="form-select" name="capacity" required ng-change="generationName()">
                                             <option  value="" ng-value="">Chọn dung lượng
                                             </option>
+
                                             <option ng-repeat="capa in capacitys"  ng-value="capa.idCapacity">{{capa.name}}
                                             </option>
+
                                         </select>
                                         <span ng-show="myForm.$submitted || myForm.capacity.$dirty" style="color: red">
                                         <span class="error" ng-show="myForm.capacity.$error.required"> <i
@@ -98,15 +100,14 @@
                                     <div class="form-group mt-1">
                                         <label>Giá</label>
                                         <input ng-maxlength="9" maxlength="9" ng-model="formProduct.price" required type="number"
-                                               class="form-control" name="price" placeholder="Giá bán" min="1" max="999999999">
+                                               class="form-control" name="price"  placeholder="Giá bán"  min="1" max="999999999">
                                         <span ng-show="myForm.$submitted || myForm.price.$dirty" style="color: red">
                                         <span class="error" ng-show="myForm.price.$error.required"> <i
                                                 class="fa fa-exclamation-circle"></i>Giá bán không được trống</span>
                                         <span class="error" ng-show="myForm.price.$error.min"> <i
                                                 class="fa fa-exclamation-circle"></i>Giá bán phải > 0</span>
                                         <span class="error" ng-show="myForm.price.$error.max">
-                                        <i class="fa fa-exclamation-circle"></i>Giá sản phẩm quá lớn</span>
-
+                                        <i class="fa fa-exclamation-circle"></i>Giá sản phẩm không quá 9 ký tự </span>
                                         </span>
 
                                     </div>
@@ -123,8 +124,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group mt-1">
-                                        <label>camera</label>
-                                        <input maxlength="250" ng-model="formProduct.camera" class="form-control" placeholder="Camera" required>
+                                        <label>Camera</label>
+                                        <input maxlength="250" oninput="this.value = this.value.toUpperCase()" ng-model="formProduct.camera" class="form-control" placeholder="Camera">
                                         <span ng-show="myForm.$submitted || myForm.size.$dirty" style="color: red">
                                         <span class="error" ng-show="formProduct.camera.$error.required"> <i
                                                 class="fa fa-exclamation-circle"></i>Camera không được trống</span>
@@ -151,7 +152,7 @@
 
                                     <div class="form-group mt-1">
                                         <label>Kích thước</label>
-                                        <input maxlength="250" ng-model="formProduct.size" class="form-control" name="size" placeholder="Kích thước" required>
+                                        <input oninput="this.value = this.value.toUpperCase()" maxlength="250" ng-model="formProduct.size" class="form-control" name="size" placeholder="Kích thước" required>
                                         <span ng-show="myForm.$submitted || myForm.size.$dirty" style="color: red">
                                         <span class="error" ng-show="myForm.size.$error.required"> <i
                                                 class="fa fa-exclamation-circle"></i>Kích thước không được trống</span>
@@ -165,7 +166,7 @@
                                     </div>
 
                                     <div class="form-group mt-4">
-                                        <button type="submit"  class="btn btn-success" ng-disabled="myForm.$invalid">{{checkSubmit==false?title.insert:title.update}}</button>
+                                        <button type="submit"  class="btn {{checkSubmit == false ? 'btn-success' : 'btn-primary'}}" ng-disabled="myForm.$invalid">{{checkSubmit==false?title.insert:title.update}}</button>
                                         <button type="button" ng-if="checkSubmit" ng-click="refresh()" class="btn btn-warning">Làm mới</button>
                                     </div>
                                 </div>
@@ -282,17 +283,19 @@
                                         </option>
                                     </select>
                                 </div>
-
                                 <div class="form-group mt-1 ">
-                                        <label>Mã imei máy</label>
-                                        <input oninput="this.value = this.value.toUpperCase().trim()" minlength="15" maxlength="15" ng-model="formProduct.name"  class="form-control" placeholder="Nhập imei máy" required>
-
+                                    <label>Mã imei máy</label>
+                                    <input PATTERN="^[0-9]{15,15}|[,]$" name="imei" oninput="this.value = this.value.toUpperCase().trim()" minlength="15" maxlength="15" ng-model="formProduct.name"   class="form-control" placeholder="Nhập imei máy" required>
+                                    <span ng-show="myFormImay.$submitted || myFormImay.imei.$dirty" style="color: red">
+                                        <span class="error" ng-show="myFormImay.imei.$error.required"> <i
+                                                class="fa fa-exclamation-circle"></i>Mã imei không được trống</span>
+                                        <span class="error" ng-show="myFormImay.imei.$error.pattern"> <i
+                                                class="fa fa-exclamation-circle"></i>Mã imei gồm 15 chữ số</span>
+                                    </span>
                                 </div>
-                                <div class="mt-3" ng-repeat="imei in imeis">
-                                    <input ng-model="imei.value"  class="form-control" placeholder="Nhập imay máy" required>
-                                </div>
-
                             </div>
+
+
                             <div class="col-md-6">
                                 <div ng-if="checkSubmit==false" class="form-group mt-1">
                                     <label>Thêm file Excel</label>
@@ -302,8 +305,6 @@
                                 <div class="form-group mt-4">
                                     <button type="submit"  class="btn btn-success"  ng-disabled="myFormImay.$invalid">{{checkSubmit==false?title.insert:title.update}}</button>
                                     <button type="button" ng-if="checkSubmit" ng-click="refresh()" class="btn btn-warning">Làm mới</button>
-                                    <button type="button" class="btn btn-success" ng-click="addImei()">Thêm input</button>
-                                    <button type="button" class="btn btn-success" ng-click="removeImei()" >Xóa input</button>
                                 </div>
                             </div>
 
@@ -347,7 +348,7 @@
                         </div>
                         <div class="col-1 justify-content-center pagination">
                             <li class="page-item ms-2 me-2">
-                                <button class="btn btn-default" ng-click="prevPageImei()"><i class="fa fa-step-backward" aria-hidden="true"></i></button>
+                                <button class="btn btn-default {{!check_prev_imei?'disabled':''}}" ng-click="prevPageImei()"><i class="fa fa-step-backward" aria-hidden="true"></i></button>
                             </li>
                         </div>
                         <div class="col-sm-1 col-12 justify-content-center pagination">
@@ -357,7 +358,7 @@
                         </div>
                         <div class="col-1 justify-content-center pagination">
                             <li class="page-item ms-2 me-2">
-                                <button class="btn btn-default" ng-click="nextPageImei()"><i class="fa fa-step-forward" aria-hidden="true"></i></button>
+                                <button class="btn btn-default {{!check_next_imei?'disabled':''}}"  ng-click="nextPageImei()"><i class="fa fa-step-forward" aria-hidden="true"></i></button>
                             </li>
                         </div>
                         <div class="col-1 justify-content-center pagination">

@@ -125,7 +125,7 @@ CREATE TABLE sale_detail (
 	id_product int  NULL,
 	id_accessory int NULL,
 	username nvarchar(50) null,
-	foreign key(id_sale) references sale(id_sale),
+	foreign key(id_sale) references sale(id_sale)
 );
 
 CREATE TABLE orders (
@@ -139,10 +139,10 @@ CREATE TABLE orders (
 	status_buy int null,
 	type binary  null,
 	username nvarchar(50)  NULL,
-    	money_ship decimal(10,0) null,
+	money_ship decimal(10,0) null,
 	person_take nvarchar(50)  NULL,
 	phone_take nvarchar(15)  NULL,
-	foreign key(username) references accounts(username),
+	foreign key(username) references accounts(username)
 );
 
 CREATE TABLE order_detail (
@@ -362,31 +362,37 @@ VALUES ('vietanhvs','$2a$12$FUNIidYXB/rc3BRR1XuQZObS4Vn7BPPomqllVvwcBOkJtZJWKFM1
 	
 CREATE OR REPLACE view customerorders as select o.id_order AS 'id_order',count(d.id_detail) AS 'totalquantity',count(o.id_order) AS 'totalorder',`a`.`full_name` AS 'full_name', a.create_date AS 'create_date',sum(o.total) AS 'totalmoney' from ((((`fix_mobile`.`accounts` `a` left join `fix_mobile`.`orders` `o` on(`a`.`username` = `o`.`username`)) left join `fix_mobile`.`order_detail` `d` on(`d`.`id_order` = `o`.`id_order`)) left join `fix_mobile`.`products` `p` on(`p`.`id_product` = `d`.`id_product`)) left join `fix_mobile`.`imayproduct` `i` on(`i`.`id_product` = `p`.`id_product`)) group by `o`.`id_order`,`a`.`username`,`p`.`id_product`;
 
---  lấy giảm giá cao nhất của giảm toàn bộ cửa hàng
-create
-    definer = root@localhost procedure getBigSale_ALLSHOP(IN _money decimal)
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getBigSale_ALLSHOP`(IN _money decimal)
 begin
     declare max_moneySale decimal;
     declare max_percentSale integer;
-    select MAX(money_sale) FROM sale where type_sale = 0 and
-            quantity_use != 0 and NOW() between create_start  and create_end
+    select MAX(money_sale) FROM sale where type_sale = 0 and discount_method = 1 and
+            quantity != 0 and NOW() between create_start  and create_end
     into max_moneySale;
-    select MAX(percent_sale) FROM sale where type_sale = 0 and
-            quantity_use != 0 and NOW() between create_start  and create_end
+    select MAX(percent_sale) FROM sale where type_sale = 0 and discount_method = 1 and
+            quantity != 0 and NOW() between create_start  and create_end
     into max_percentSale;
-
-    if (max_moneySale > _money * max_percentSale/100) then
-        select * from sale where money_sale = max_moneySale and
-                quantity_use != 0 and NOW() between create_start  and create_end limit 1;
+    if(max_moneySale is null) then
+        select * from sale where percent_sale = max_percentSale and type_sale = 0 and discount_method = 1 and
+                quantity != 0 and NOW() between create_start  and create_end limit 1;
+    elseif (max_percentSale is null ) then
+        select * from sale where money_sale = max_moneySale and type_sale = 0 and discount_method = 1 and
+                quantity != 0 and NOW() between create_start  and create_end limit 1;
+    elseif (max_moneySale > _money * max_percentSale/100) then
+        select * from sale where money_sale = max_moneySale and type_sale = 0 and discount_method = 1 and
+                quantity != 0 and NOW() between create_start  and create_end limit 1;
     else
-        select * from sale where percent_sale = max_percentSale and
-                quantity_use != 0 and NOW() between create_start  and create_end limit 1;
+        select * from sale where percent_sale = max_percentSale and type_sale = 0 and discount_method = 1 and
+                quantity != 0 and NOW() between create_start  and create_end limit 1;
     end if;
-END;
+END$$
+DELIMITER ;
 
--- giảm giá theo phụ kiện
-create
-    definer = root@localhost procedure getBigSale_Accessory(IN _idacsr int)
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getBigSale_Accessory`(IN _idacsr int)
 begin
     declare max_moneySale decimal;
     declare max_percentSale integer;
@@ -394,60 +400,64 @@ begin
 
     select MAX(money_sale) FROM sale s LEFT join sale_detail sd ON s.id_sale = sd.id_sale
                            where type_sale = 4 and discount_method = 1 and id_accessory = _idacsr and
-            quantity_use != 0 and NOW() between create_start  and create_end
+            quantity != 0 and NOW() between create_start  and create_end
     into max_moneySale;
     select MAX(percent_sale) FROM sale s LEFT join sale_detail sd ON s.id_sale = sd.id_sale
                              where type_sale = 4 and discount_method = 1 and id_accessory = _idacsr and
-            quantity_use != 0 and NOW() between create_start  and create_end
+            quantity != 0 and NOW() between create_start  and create_end
     into max_percentSale;
     select price from accessories where accessories.id_accessory = _idacsr
     into _money;
 
     if(max_moneySale is null) then
         select * from sale where percent_sale = max_percentSale and type_sale = 4 and discount_method = 1 and
-                quantity_use != 0 and NOW() between create_start  and create_end limit 1;
+                quantity != 0 and NOW() between create_start  and create_end limit 1;
     ELSEIF (max_percentSale is null) then
         select * from sale where money_sale = max_moneySale and type_sale = 4 and discount_method = 1 and
-                quantity_use != 0 and NOW() between create_start  and create_end limit 1;
+                quantity != 0 and NOW() between create_start  and create_end limit 1;
     ELSEIF (max_moneySale > _money * max_percentSale/100) then
         select * from sale where money_sale = max_moneySale and type_sale = 4 and discount_method = 1 and
-                quantity_use != 0 and NOW() between create_start  and create_end limit 1;
+                quantity != 0 and NOW() between create_start  and create_end limit 1;
     else
         select * from sale where percent_sale = max_percentSale and type_sale = 4 and discount_method = 1 and
-                quantity_use != 0 and NOW() between create_start  and create_end limit 1;
+                quantity != 0 and NOW() between create_start  and create_end limit 1;
     end if;
-END;
+END$$
+DELIMITER ;
 
--- giảm giá theo đơn hàng
-create
-    definer = root@localhost procedure getBigSale_Order(IN _money decimal)
+
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getBigSale_Order`(IN _money decimal)
 begin
     declare max_moneySale decimal;
     declare max_percentSale integer;
-    select MAX(money_sale) FROM sale where type_sale = 2 and discount_method = 1 and _money >= sale.value_min and
-            quantity_use != 0 and NOW() between create_start  and create_end
+    select MAX(money_sale) FROM sale where type_sale = 2 and discount_method = 1 and _money > sale.value_min and
+            quantity != 0 and NOW() between create_start  and create_end
     into max_moneySale;
-    select MAX(percent_sale) FROM sale where type_sale = 2 and discount_method = 1 and _money >= sale.value_min and
-            quantity_use != 0 and NOW() between create_start  and create_end
+    select MAX(percent_sale) FROM sale where type_sale = 2 and discount_method = 1 and _money > sale.value_min and
+            quantity != 0 and NOW() between create_start  and create_end
     into max_percentSale;
     if(max_moneySale is null) then
-        select * from sale where percent_sale = max_percentSale and type_sale = 2 and discount_method = 1 and _money >= sale.value_min and
-                quantity_use != 0 and NOW() between create_start  and create_end limit 1;
+        select * from sale where percent_sale = max_percentSale and type_sale = 2 and discount_method = 1 and _money > sale.value_min and
+                quantity != 0 and NOW() between create_start  and create_end limit 1;
     elseif (max_percentSale is null ) then
-        select * from sale where money_sale = max_moneySale and type_sale = 2 and discount_method = 1 and _money >= sale.value_min and
-                quantity_use != 0 and NOW() between create_start  and create_end limit 1;
+        select * from sale where money_sale = max_moneySale and type_sale = 2 and discount_method = 1 and _money > sale.value_min and
+                quantity != 0 and NOW() between create_start  and create_end limit 1;
     elseif (max_moneySale > _money * max_percentSale/100) then
-        select * from sale where money_sale = max_moneySale and type_sale = 2 and discount_method = 1 and _money >= sale.value_min and
-                quantity_use != 0 and NOW() between create_start  and create_end limit 1;
+        select * from sale where money_sale = max_moneySale and type_sale = 2 and discount_method = 1 and _money > sale.value_min and
+                quantity != 0 and NOW() between create_start  and create_end limit 1;
     else
-        select * from sale where percent_sale = max_percentSale and type_sale = 2 and discount_method = 1 and _money >= sale.value_min and
-                quantity_use != 0 and NOW() between create_start  and create_end limit 1;
+        select * from sale where percent_sale = max_percentSale and type_sale = 2 and discount_method = 1 and _money > sale.value_min and
+                quantity != 0 and NOW() between create_start  and create_end limit 1;
     end if;
-END;
+END$$
+DELIMITER ;
 
--- giảm giá theo sản phẩm
-create
-    definer = root@localhost procedure getBigSale_Products(IN _idprd int)
+
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getBigSale_Products`(IN _idprd int)
 begin
     declare max_moneySale decimal;
     declare max_percentSale integer;
@@ -455,36 +465,39 @@ begin
 
     select MAX(money_sale) FROM sale s LEFT join sale_detail sd ON s.id_sale = sd.id_sale
                            where type_sale = 1 and discount_method = 1 and id_product = _idprd and
-            quantity_use != 0 and NOW() between create_start  and create_end
+            quantity != 0 and NOW() between create_start  and create_end
     into max_moneySale;
     select MAX(percent_sale) FROM sale s LEFT join sale_detail sd ON s.id_sale = sd.id_sale
                              where type_sale = 1 and discount_method = 1 and id_product = _idprd and
-            quantity_use != 0 and NOW() between create_start  and create_end
+            quantity != 0 and NOW() between create_start  and create_end
     into max_percentSale;
     select price from products where id_product = _idprd
     into _money;
 
     if(max_moneySale is null) then
         select * from sale where percent_sale = max_percentSale and type_sale = 1 and discount_method = 1 and
-                quantity_use != 0 and NOW() between create_start  and create_end limit 1;
+                quantity != 0 and NOW() between create_start  and create_end limit 1;
     ELSEIF (max_percentSale is null) then
         select * from sale where money_sale = max_moneySale and type_sale = 1 and discount_method = 1 and
-                quantity_use != 0 and NOW() between create_start  and create_end limit 1;
+                quantity != 0 and NOW() between create_start  and create_end limit 1;
     ELSEIF (max_moneySale > _money * max_percentSale/100) then
         select * from sale where money_sale = max_moneySale and type_sale = 1 and discount_method = 1 and
-                quantity_use != 0 and NOW() between create_start  and create_end limit 1;
+                quantity != 0 and NOW() between create_start  and create_end limit 1;
     else
         select * from sale where percent_sale = max_percentSale and type_sale = 1 and discount_method = 1 and
-                quantity_use != 0 and NOW() between create_start  and create_end limit 1;
+                quantity != 0 and NOW() between create_start  and create_end limit 1;
     end if;
-END;
+END$$
+DELIMITER ;
 
---  quản lý theo người dùng
-create
-    definer = root@localhost procedure getBigSale_UserName(IN _userName varchar(50), IN _money  decimal(10,0))
+
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getBigSale_UserName`(IN _userName varchar(50), IN _money decimal)
 begin
-    declare max_moneySale decimal(10,0);
+    declare max_moneySale decimal;
     declare max_percentSale integer;
+
     if ((select username from orders where username like _userName limit 1) is null) then
         select MAX(money_sale) FROM sale s where type_sale = 3 and discount_method = 1 and user_type = 0 and
                 quantity != 0 and NOW() between create_start  and create_end
@@ -524,6 +537,7 @@ begin
             into max_percentSale;
         end if;
     end if;
+
     if(max_moneySale is null) then
         select * FROM sale s LEFT join sale_detail sd ON s.id_sale = sd.id_sale
         where percent_sale = max_percentSale and type_sale = 3 and discount_method = 1 and username = _userName and user_type = 1 and
@@ -541,7 +555,7 @@ begin
         where percent_sale = max_percentSale and type_sale = 3 and discount_method = 1 and username = _userName and user_type = 1 and
                 quantity != 0 and NOW() between create_start  and create_end limit 1;
     end if;
-END;
-
+END$$
+DELIMITER ;
 
 

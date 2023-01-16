@@ -1,5 +1,5 @@
-app.controller('rest_accessory', function($scope, $http) {
-    const pathAPI = "http://localhost:8080/rest/admin/accessory";
+app.controller('rest_accessory', function($scope, $http,$rootScope,$window) {
+    const pathAPI = "http://localhost:8080/rest/staff/accessory";
     $scope.form = {};
     $scope.accessories = [];
     $scope.categories = [];
@@ -7,6 +7,7 @@ app.controller('rest_accessory', function($scope, $http) {
     $scope.check_first=false;
     $scope.check_last=true;
     $scope.totalPages=0;
+    $rootScope.check = null;
     $scope.title={
         insert:'Thêm mới',
         update:'Cập nhật'
@@ -76,6 +77,7 @@ app.controller('rest_accessory', function($scope, $http) {
         $http.get(`${pathAPI}/cate`,token).then(function(response) {
             $scope.categories = response.data;
         }).catch(error=>{
+            $scope.categories=[];
             console.log("error findByCate",error);
         });
     };
@@ -92,7 +94,7 @@ app.controller('rest_accessory', function($scope, $http) {
         formData.append("category", $scope.form.category);
         let req = {
             method: 'POST',
-            url: '/rest/admin/accessory/create',
+            url: '/rest/staff/accessory/create',
             headers: {
                 'Content-Type': undefined,
                 Authorization: `Bearer `+jwtToken
@@ -121,7 +123,6 @@ app.controller('rest_accessory', function($scope, $http) {
         $http(req).then(response => {
             console.log(response.data);
             $scope.message("Thêm mới thành công");
-            $scope.reset();
         })
     };
     $scope.changeStatus = function(accessory) {
@@ -135,7 +136,7 @@ app.controller('rest_accessory', function($scope, $http) {
             confirmButtonText: 'Xác nhận!'
         }).then((result) => {
             if (result.isConfirmed) {
-                $http.put(`${pathAPI}/change/${accessory.idAccessory}`,token).then(response=> {
+                $http.put(`${pathAPI}/change/${accessory.idAccessory}`,accessory,token).then(response=> {
                     const Toast = Swal.mixin({
                         toast: true,
                         position: 'top-end',
@@ -154,6 +155,7 @@ app.controller('rest_accessory', function($scope, $http) {
                     })
                     console.log(response.data);
                     $scope.accessories.find(item=>item.idAccessory==accessory.idAccessory).status=!accessory.status;
+                    $scope.accessories.find(item=>item.idAccessory==accessory.idAccessory).quantity=0;
                 }).catch(error=>{
                     const Toast = Swal.mixin({
                         toast: true,
@@ -198,7 +200,7 @@ app.controller('rest_accessory', function($scope, $http) {
         formData.append("category", $scope.form.category);
         let req = {
             method: 'POST',
-            url: '/rest/admin/accessory/update?id='+accessory.idAccessory,
+            url: '/rest/staff/accessory/update?id='+accessory.idAccessory,
             headers: {
                 'Content-Type': undefined,
                 Authorization: `Bearer `+jwtToken
@@ -242,8 +244,8 @@ app.controller('rest_accessory', function($scope, $http) {
                 icon: 'success',
                 title: 'Cập nhật thành công!'
             })
-            $scope.reset();
-        })
+            $scope.loadAccessories();
+        });
     };
     // submit form
     $scope.doSubmit = function() {
@@ -268,6 +270,7 @@ app.controller('rest_accessory', function($scope, $http) {
                 /* Read more about handling dismissals below */
                 if (result.dismiss === Swal.DismissReason.timer) {
                     $scope.onUpdate();
+                    document.getElementById('list-tab').click();
                     console.log('I was closed by the timer')
                 }
             })
@@ -466,5 +469,32 @@ app.controller('rest_accessory', function($scope, $http) {
         })
     }
     $scope.loadAccessories();
+
+    $scope.logOut = function (){
+        $window.location.href = "http://localhost:8080/views/index.html#!/login"
+        Swal.fire({
+            icon: 'error',
+            title: 'Vui lòng đăng nhập lại!!',
+            text: 'Tài khoản của bạn không có quyền truy cập!!',
+        })
+    }
+
+    $scope.checkLogin = function () {
+        if (jwtToken == null){
+            $scope.logOut();
+        }else {
+            $http.get("http://localhost:8080/rest/user/getRole",token).then(respon =>{
+                if (respon.data.name === "USER"){
+                    $scope.logOut();
+                }else if (respon.data.name === "ADMIN"){
+                    $rootScope.check = null;
+                }else {
+                    $rootScope.check = "OK";
+                }
+            })
+        }
+    }
+
+    $scope.checkLogin();
 
 });

@@ -11,6 +11,7 @@ app.controller('order-admin-ctrl',function($rootScope,$scope,$http,$window,$filt
     $scope.checkNgayMua=false;
     $scope.checkTongGia=false;
     $scope.checkTrangThai=false;
+    $rootScope.check = null;
     $scope.status = [
         {id : '', name : "Thay đổi"},
         {id : 0, name : "Chờ xác nhận"},
@@ -45,6 +46,20 @@ app.controller('order-admin-ctrl',function($rootScope,$scope,$http,$window,$filt
         let urlUpdate=`http://localhost:8080/rest/staff/order`;
         $scope.showUpdate=false;
         $scope.form.idOrder=id;
+        if($scope.form.status==2||$scope.form.status==3){
+            $http.get(urlOrder+'/getDetail/'+id,token).then(function(response){
+                if(response.data) {
+                    Swal.fire({
+                        title: 'Cảnh báo!',
+                        text: "Có sản phẩm trong đơn hàng không đủ số lượng!",
+                        icon: 'warning',
+                    })
+                }
+            }).catch(err=>{
+                console.log(err)
+            });
+        }
+
         Swal.fire({
             title: 'Bạn có chắc muốn đổi trạng thái không?',
             text: "Đổi không thể quay lại!",
@@ -55,62 +70,39 @@ app.controller('order-admin-ctrl',function($rootScope,$scope,$http,$window,$filt
             confirmButtonText: 'Xác nhận'
         }).then((result) => {
             if (result.isConfirmed) {
-                $http.put(urlUpdate,$scope.form,token).then(function(response){
-                    if(response.data){
-                        $scope.form.status=null;
-                        $scope.getAll();
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: 'top-end',
-                            showConfirmButton: false,
-                            timer: 2000,
-                            timerProgressBar: true,
-                            didOpen: (toast) => {
-                                toast.addEventListener('mouseenter', Swal.stopTimer)
-                                toast.addEventListener('mouseleave', Swal.resumeTimer)
+                let timerInterval
+                Swal.fire({
+                    title: 'Đang gửi thông báo cho khách hàng!',
+                    html: 'Vui lòng chờ <b></b> milliseconds.',
+                    timer: 4000,
+                    timerProgressBar: true,
+                    didOpen: () => {
+                        Swal.showLoading();
+                        $http.put(urlUpdate,$scope.form,token).then(function(response){
+                            if(response.data){
+                                $scope.form.status=null;
+                                $scope.getAll();
+                                $scope.messageSuccess("Đổi trạng thái thành công");
+                            }else{
+                                $scope.messageError("Đổi trạng thái thất bại");
                             }
-                        })
-
-                        Toast.fire({
-                            icon: 'success',
-                            title: 'Thay đổi thành công!'
-                        })
-                    }else{
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: 'top-end',
-                            showConfirmButton: false,
-                            timer: 2000,
-                            timerProgressBar: true,
-                            didOpen: (toast) => {
-                                toast.addEventListener('mouseenter', Swal.stopTimer)
-                                toast.addEventListener('mouseleave', Swal.resumeTimer)
-                            }
-                        })
-
-                        Toast.fire({
-                            icon: 'error',
-                            title: 'Không thể thay đổi trạng thái!'
-                        })
+                        }).catch(error=>{
+                            $scope.messageError("Đổi trạng thái thất bại");
+                        });
+                        const b = Swal.getHtmlContainer().querySelector('b')
+                        timerInterval = setInterval(() => {
+                            b.textContent = Swal.getTimerLeft()
+                        }, 100)
+                    },
+                    willClose: () => {
+                        clearInterval(timerInterval)
                     }
-                }).catch(error=>{
-                    const Toast = Swal.mixin({
-                        toast: true,
-                        position: 'top-end',
-                        showConfirmButton: false,
-                        timer: 2000,
-                        timerProgressBar: true,
-                        didOpen: (toast) => {
-                            toast.addEventListener('mouseenter', Swal.stopTimer)
-                            toast.addEventListener('mouseleave', Swal.resumeTimer)
-                        }
-                    })
-
-                    Toast.fire({
-                        icon: 'error',
-                        title: 'Không thể thay đổi trạng thái!'
-                    })
-                });
+                }).then((result) => {
+                    /* Read more about handling dismissals below */
+                    if (result.dismiss === Swal.DismissReason.timer) {
+                        console.log('I was closed by the timer')
+                    }
+                })
             }
         })
     }
@@ -180,6 +172,14 @@ app.controller('order-admin-ctrl',function($rootScope,$scope,$http,$window,$filt
             $scope.messageError('Không tìm thấy đơn hàng!');
         });
     }
+    $scope.findByStatus=function(){
+        $http.get(urlOrder+`/status/`+$scope.statusChange,token).then(function(response){
+            $scope.orders=response.data;
+        }).catch(error=>{
+            console.log('error getOrder',error);
+            $scope.messageError('Không tìm thấy đơn hàng!');
+        });
+    }
     $scope.getAllUser=function(){
         $http.get(urlOrder+'/usernames',token).then(function(response){
             if(response.data){
@@ -223,22 +223,37 @@ app.controller('order-admin-ctrl',function($rootScope,$scope,$http,$window,$filt
             }
         }
     }
-    $scope.hoTen=function(){
-        $scope.checkHoTen=!$scope.checkHoTen;
-    }
-    $scope.ngayMua=function(){
-        $scope.checkNgayMua=!$scope.checkNgayMua;
-    }
-    $scope.tongGiaTang=function(){
-        $scope.checkTongGia=!$scope.checkTongGia;
-        $scope.sortPriceUp();
-    }
-    $scope.tongGiaGiam=function(){
-        $scope.checkTongGia=!$scope.checkTongGia;
-        $scope.sortPriceDown();
-    }
-    $scope.trangThai=function(){
-        $scope.checkTrangThai=!$scope.checkTrangThai;
+    $scope.exportExcel = function () {
+        $http.get(urlOrder+'/export-excel',token).then(function(response){
+            if(response.data){
+                let timerInterval
+                Swal.fire({
+                    title: 'Đang xuất file đến thư mục C:\\FixMobile\\excels',
+                    html: 'Vui lòng chờ <b></b> milliseconds.',
+                    timer: 3500,
+                    timerProgressBar: true,
+                    didOpen: () => {
+                        Swal.showLoading();
+                        // cho code vao day
+                        const b = Swal.getHtmlContainer().querySelector('b')
+                        timerInterval = setInterval(() => {
+                            b.textContent = Swal.getTimerLeft()
+                        }, 100)
+                    },
+                    willClose: () => {
+                        $scope.messageSuccess('Xuất file excel thành công');
+                    }
+                }).then((result) => {
+                    /* Read more about handling dismissals below */
+                    if (result.dismiss === Swal.DismissReason.timer) {
+                        console.log('I was closed by the timer')
+                    }
+                })
+            }
+        }).catch(error=>{
+            $scope.messageError("Không có dữ liệu để xuất file!");
+            console.log('error getOrder',error);
+        });
     }
     $scope.status.id='';
     $scope.getAll();
@@ -248,8 +263,8 @@ app.controller('order-admin-ctrl',function($rootScope,$scope,$http,$window,$filt
         if($scope.ordersDetail[x].idSale==null){
             $scope.ordersDetail[x].noteSale = '';
         }else {
-            var urlSale = `http://localhost:8080/admin/rest/sale/getsale/` + $scope.ordersDetail[x].idSale;
-            $http.get(urlSale).then(resp => {
+            var urlSale = `http://localhost:8080/rest/admin/sale/getsale/` + $scope.ordersDetail[x].idSale;
+            $http.get(urlSale,token).then(resp => {
                 if (resp.data != '') {
                     let priceSale='';
                     if(resp.data.moneySale==null){
@@ -286,7 +301,7 @@ app.controller('order-admin-ctrl',function($rootScope,$scope,$http,$window,$filt
     }
     $scope.getOrderDetail=function (idOrder){
         let url=`/rest/staff/order/detail/`+idOrder;
-        $http.get(url).then(function(response){
+        $http.get(url,token).then(function(response){
             if(response.data){
                 $scope.ordersDetail=response.data;
                 for(let i=0;i<$scope.ordersDetail.length;i++){
@@ -296,8 +311,8 @@ app.controller('order-admin-ctrl',function($rootScope,$scope,$http,$window,$filt
         }).catch(error=>{
             console.log(error);
         });
-        let urlapplysale=`/admin/rest/sale/saleapply/`+idOrder;
-        $http.get(urlapplysale).then(function(response){
+        let urlapplysale=`/rest/admin/sale/saleapply/`+idOrder;
+        $http.get(urlapplysale,token).then(function(response){
                 $scope.saleApply=response.data;
         }).catch(error=>{
             $scope.saleApply={};
@@ -323,9 +338,36 @@ app.controller('order-admin-ctrl',function($rootScope,$scope,$http,$window,$filt
         let total=0;
         if($scope.ordersDetail.length!=0) {
             for (let i = 0; i < $scope.ordersDetail.length; i++) {
-                total=total+$scope.ordersDetail[i].price;
+                total=total+$scope.ordersDetail[i].price*$scope.ordersDetail[i].quantity;
             }
         }
         return total;
     }
+
+    $scope.logOut = function (){
+        $window.location.href = "http://localhost:8080/views/index.html#!/login"
+        Swal.fire({
+            icon: 'error',
+            title: 'Vui lòng đăng nhập lại!!',
+            text: 'Tài khoản của bạn không có quyền truy cập!!',
+        })
+    }
+
+    $scope.checkLogin = function () {
+        if (jwtToken == null){
+            $scope.logOut();
+        }else {
+            $http.get("http://localhost:8080/rest/user/getRole",token).then(respon =>{
+                if (respon.data.name === "USER"){
+                    $scope.logOut();
+                }else if (respon.data.name === "ADMIN"){
+                    $rootScope.check = null;
+                }else {
+                    $rootScope.check = "OK";
+                }
+            })
+        }
+    }
+
+    $scope.checkLogin();
 });

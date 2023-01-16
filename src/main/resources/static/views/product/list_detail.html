@@ -15,48 +15,75 @@
                                         <div class="module-filter">
                                             <h2 class="title-filter-top margin-top-0">
                                                 Lọc sản phẩm
+                                                <a href="#!/demo">product</a>
                                             </h2>
                                         </div>
                                         <div class="filter-container">
+                                            Loại sản phẩm
                                             <!-- Lọc Thương hiệu -->
                                             <!-- End Lọc Thương hiệu -->
                                             <!-- Lọc giá -->
-                                            <aside class="aside-item filter-price f-left">
-                                                <div class="block-title">
-                                                    <h2 class="title-module ">Theo mức giá</h2>
-                                                </div>
-                                                <div class="aside-content margin-top-0 filter-group content_price">
-                                                        <li class="filter-item filter-item--check-box filter-item--green">
-                                                                <span>
-                                                                   <label>
-                                                                         <a class="" href="#!filterproductprice"
-                                                                            ng-click="findProductByPr()">Từ 100.000 đ đến 500.000đ</a>
-                                                                    </label>
-                                                                </span>
-                                                        </li>
+
+                                            <div  ng-repeat="catePro in cateProducts">
+                                                <div class="form-check" style="margin-left: 10px;">
+                                                    <div>
+                                                        <input type="checkbox" class="form-check-input" value="vdsf">
+
+                                                        <label class="form-check-label">
+                                                            {{catePro.name}}
+                                                        </label>
+                                                    </div>
 
                                                 </div>
-                                            </aside>
-                                            <!-- End Lọc giá -->
-                                            <!-- Lọc Loại -->
-                                            <aside class="aside-item aside-itemxx filter-type">
-                                                <div class="block-title">
-                                                    <h2 class="title-module ">Tìm theo loại</h2>
+
+                                            </div>
+                                            <br>
+                                            Lọc theo RAM
+                                            <div  ng-repeat="ram in ramProducts">
+                                                <div class="form-check" style="margin-left: 10px;">
+                                                    <div>
+                                                        <input type="checkbox" class="form-check-input" value="vdsf">
+
+                                                        <label class="form-check-label">
+                                                            {{ram.name}}
+                                                        </label>
+                                                    </div>
+
                                                 </div>
-                                                <div class="aside-content filter-group">
-                                                    <ul>
-                                                        <li class="filter-item filter-item--check-box filter-item--green"
-                                                            ng-repeat="catePro in cateProducts">
-                                                        <span>
-                                                            <label>
-                                                                <a class="" href="#!product/detail"  ng-click="getDetail(catePro)">{{catePro.name}}</a>
-                                                            </label>
-                                                        </span>
-                                                        </li>
-                                                    </ul>
+
+                                            </div>
+                                            <br>
+                                            Lọc theo dung lượng
+                                            <div  ng-repeat="capacity in capacityProducts">
+                                                <div class="form-check" style="margin-left: 10px;">
+                                                    <div>
+                                                        <input type="checkbox" class="form-check-input" value="vdsf">
+
+                                                        <label class="form-check-label">
+                                                            {{capacity.name}}
+                                                        </label>
+                                                    </div>
+
                                                 </div>
-                                            </aside>
-                                            <!-- End Lọc Loại -->
+
+                                            </div>
+                                            <br>
+                                            Lọc theo màu sắc
+                                            <div  ng-repeat="color in colorProducts">
+                                                <div class="form-check" style="margin-left: 10px;">
+                                                    <div>
+                                                        <input type="checkbox" class="form-check-input" value="vdsf">
+
+                                                        <label class="form-check-label">
+                                                            {{color.name}}
+                                                        </label>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+
 
 
                                         </div>
@@ -104,14 +131,14 @@
                                 <section class="products-view products-view-grid collection_reponsive">
                                     <div class="row" ng-if="detailProducts.length > 0">
                                         <div class="col-6 col-md-3 col-lg-3 product-col"
-                                             ng-repeat="p in detailProducts">
+                                             ng-repeat="p in getAllProduct">
                                             <div class="item_product_main">
                                                 <form action="/cart/add" method="post"
                                                       class="variants product-action wishItem" data-cart-form
                                                       data-id="product-actions-27234048" enctype="multipart/form-data">
                                                     <a class="image_thumb" href="/san-pham-khong-co-anh"
                                                        title="san pham khong co anh">
-                                                        <span class="label-sale">95%</span>
+                                                        <span class="label-sale">{{(p.priceSale) * 100 / p.price | number:0}}%</span>
                                                         <img width="199" height="199"
                                                              src="{{p.image}}"
                                                              alt="san pham khong co anh"
@@ -119,7 +146,8 @@
                                                     </a>
                                                     <div class="info-product">
                                                         <h3 class="product-name"><a hfre=""
-                                                                           title="san pham khong co anh">{{p.name}}</a></h3>
+                                                                                    title="san pham khong co anh">{{p.name}}</a>
+                                                        </h3>
                                                         <div class="weight">
                                                             <small style="color: lightslategray">Còn
                                                                 {{p.totail | number}} sản phẩm</small>
@@ -127,16 +155,18 @@
                                                         <div class="price-box">
                                                             <span ng-if="p.priceSale == 0">{{p.price | number}} VNĐ</span>
                                                             <span ng-if="p.priceSale != 0">
-															<del>{{p.price | number}} VNĐ</del> &nbsp; {{p.price - p.priceSale| number}} VNĐ
-														</span>
+															<del>{{p.price | number}} VNĐ</del> &nbsp; {{p.price - p.priceSale | number}} VNĐ
+														    </span>
                                                         </div>
                                                     </div>
                                                     <div class="action-cart">
                                                         <button type="button" ng-click="addCart(p)"
                                                                 class="btn btn-lg btn-gray btn_buy">
                                                             <i class="fa fa-shopping-cart"></i>
-                                                            <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                                                   xlink:href="#plusiconregular"></use></svg>
+                                                            <svg class="icon">
+                                                                <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                                     xlink:href="#plusiconregular"></use>
+                                                            </svg>
                                                         </button>
                                                     </div>
                                                 </form>
@@ -156,7 +186,8 @@
                                                     </svg>
                                                 </a></li>
 
-                                                <li class="page-item hidden-xs"><a class="page-link" onclick="doSearch(2)"
+                                                <li class="page-item hidden-xs"><a class="page-link"
+                                                                                   onclick="doSearch(2)"
                                                                                    href="javascript:;">
                                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512">
                                                         <path d="M64 448c-8.188 0-16.38-3.125-22.62-9.375c-12.5-12.5-12.5-32.75 0-45.25L178.8 256L41.38 118.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0l160 160c12.5 12.5 12.5 32.75 0 45.25l-160 160C80.38 444.9 72.19 448 64 448z"/>
@@ -177,7 +208,6 @@
 
 
     </main>
-
 
 
     <link rel="preload" as="script" href="//bizweb.sapocdn.net/100/460/476/themes/869615/assets/col.js?1669866878969"/>
@@ -202,8 +232,8 @@
             --bg-sup: #f3faff;
         }
     </style>
-    <link href="//bizweb.sapocdn.net/100/460/476/themes/869615/assets/plugin-css.scss.css?1669866878969"
-          rel="stylesheet" type="text/css"/>
+<!--    <link href="//bizweb.sapocdn.net/100/460/476/themes/869615/assets/plugin-css.scss.css?1669866878969"-->
+<!--          rel="stylesheet" type="text/css"/>-->
     <link rel="preload" as='style'
           href="//bizweb.sapocdn.net/100/460/476/themes/869615/assets/swiper-style.scss.css?1669866878969">
     <link href="//bizweb.sapocdn.net/100/460/476/themes/869615/assets/swiper-style.scss.css?1669866878969"

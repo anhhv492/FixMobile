@@ -1,4 +1,6 @@
-app.controller("restaccsesries", function ($scope, $http) {
+app.controller("restaccsesries", function ($scope, $http, $window,$rootScope) {
+
+    const callApi = "http://localhost:8080/rest/staff/accessories";
     // ram máy
     $scope.items = [];
     $scope.formCreate  = [];
@@ -7,12 +9,43 @@ app.controller("restaccsesries", function ($scope, $http) {
     $scope.colorItems = [];
     $scope.color = {};
 
+    $rootScope.check = null;
+
     const jwtToken = localStorage.getItem("jwtToken")
     const token = {
         headers: {
             Authorization: `Bearer `+jwtToken
         }
     }
+
+    $scope.logOut = function (){
+        $window.location.href = "http://localhost:8080/views/index.html#!/login"
+        Swal.fire({
+            icon: 'error',
+            title: 'Vui lòng đăng nhập lại!!',
+            text: 'Tài khoản của bạn không có quyền truy cập!!',
+        })
+    }
+
+    $scope.checkLogin = function () {
+        if (jwtToken == null){
+            $scope.logOut();
+        }else {
+            $http.get("http://localhost:8080/rest/user/getRole",token).then(respon =>{
+                console.log(respon.data.name);
+                if (respon.data.name === "USER"){
+                    $scope.logOut();
+                }else if (respon.data.name === "ADMIN"){
+                    $rootScope.check = null;
+                }else {
+                    $rootScope.check = "OK";
+
+                }
+            })
+        }
+    }
+
+    $scope.checkLogin();
 
     $scope.message = function (mes){
         const Toast = Swal.mixin({
@@ -52,7 +85,7 @@ app.controller("restaccsesries", function ($scope, $http) {
 
     // hàm ram
     $scope.getAllRam = function () {
-        $http.get("/rest/admin/accessoríes",token).then(resp => {
+        $http.get("/rest/staff/accessories",token).then(resp => {
             $scope.items = resp.data;
             $scope.items.forEach(item => {
                 console.log(resp.data);
@@ -71,7 +104,7 @@ app.controller("restaccsesries", function ($scope, $http) {
     $scope.create = function (){
         var item = angular.copy($scope.accseries);
         console.log(item);
-        $http.post("/rest/admin/accessoríes",item).then(resp => {
+        $http.post("/rest/staff/accessories",item,token).then(resp => {
             $scope.items.push(item);
             $scope.reset();
             $scope.message("Đã thêm thành công");
@@ -81,7 +114,7 @@ app.controller("restaccsesries", function ($scope, $http) {
         })
     }
     $scope.delete = function(items) {
-            $http.delete(`/rest/admin/accessoríes/delete/${items.idRam}`,token).then(response=> {
+            $http.post(`/rest/staff/accessories/delete/${items.idRam}`,items.idRam,token).then(response=> {
                 $scope.items.splice($scope.items.indexOf(items), 1);
                 $scope.message('xóa thành công');
                 $scope.reset();
@@ -95,7 +128,7 @@ app.controller("restaccsesries", function ($scope, $http) {
     $scope.getAllRam();
     //hàm màu
     $scope.findAll = function () {
-        $http.get("/rest/admin/accessoríes/getall",token).then(resp => {
+        $http.get("/rest/staff/accessories/getall",token).then(resp => {
             $scope.colorItems = resp.data;
             $scope.colorItems.forEach(color => {
             })
@@ -108,7 +141,7 @@ app.controller("restaccsesries", function ($scope, $http) {
     $scope.createColor = function (){
         var item = angular.copy($scope.color);
         console.log(item);
-        $http.post("/rest/admin/accessoríes/save",item,token).then(resp => {
+        $http.post("/rest/staff/accessories/save",item,token).then(resp => {
             $scope.colorItems.push(item);
             $scope.resetColor();
             $scope.findAll();
@@ -148,7 +181,7 @@ app.controller("restaccsesries", function ($scope, $http) {
                 }).then((result) => {
                     /* Read more about handling dismissals below */
                     if (result.dismiss === Swal.DismissReason.timer) {
-                        $http.delete(`/rest/admin/accessoríes/deleteColor/${colorItems.idColor}`,token).then(response=> {
+                        $http.post(callApi+`/deleteColor/${colorItems.idColor}`,colorItems.idColor,token).then(response=> {
                             $scope.colorItems.splice($scope.colorItems.indexOf(colorItems), 1);
                             $scope.message('xóa thành công');
                             $scope.reset();
@@ -169,7 +202,7 @@ app.controller("restaccsesries", function ($scope, $http) {
     $scope.capacity ={};
 
     $scope.findAllCapacity = function () {
-        $http.get("/rest/admin/accessoríes/getCapacity",token).then(resp => {
+        $http.get("/rest/staff/accessories/getCapacity",token).then(resp => {
             $scope.capacityItems = resp.data;
             $scope.capacityItems.forEach(color => {
             })
@@ -182,7 +215,7 @@ app.controller("restaccsesries", function ($scope, $http) {
     $scope.createCapacity = function (){
         var capacitys = angular.copy($scope.capacity);
         console.log(capacitys);
-        $http.post("/rest/admin/accessoríes/saveCapacity",capacitys,token).then(resp => {
+        $http.post("/rest/staff/accessories/saveCapacity",capacitys,token).then(resp => {
             $scope.capacityItems.push(capacitys);
             $scope.resetCapacity();
             $scope.findAllCapacity();
@@ -221,7 +254,7 @@ app.controller("restaccsesries", function ($scope, $http) {
                     }
                 }).then((result) => {
                     if (result.dismiss === Swal.DismissReason.timer) {
-                        $http.delete(`/rest/admin/accessoríes/deleteCapacity/${capacityItems.idCapacity}`,token).then(response=> {
+                        $http.post(`/rest/staff/accessories/deleteCapacity/${capacityItems.idCapacity}`,capacityItems.idCapacity,token).then(response=> {
                             $scope.capacityItems.splice($scope.capacityItems.indexOf(capacityItems), 1);
                             $scope.message('xóa thành công');
                             $scope.reset();
@@ -258,7 +291,7 @@ app.controller("restaccsesries", function ($scope, $http) {
     }
 
     $scope.allImage = function () {
-        $http.get("/rest/admin/accessoríes/allImage",token).then(resp => {
+        $http.get("/rest/staff/accessories/allImage",token).then(resp => {
             $scope.img = resp.data;
             $scope.img.forEach(image => {
                 console.log(resp.data +'  list');
@@ -272,7 +305,7 @@ app.controller("restaccsesries", function ($scope, $http) {
 
     $scope.saveImage = function (){
         var item = angular.copy($scope.imagePr);
-        $http.post("/rest/admin/accessoríes/saveImage",item,token).then(resp => {
+        $http.post("/rest/staff/accessories/saveImage",item,token).then(resp => {
             $scope.img.push(item);
             $scope.message('thêm ảnh thành công');
             $scope.resetImage();
@@ -311,7 +344,7 @@ app.controller("restaccsesries", function ($scope, $http) {
                 }).then((result) => {
                     /* Read more about handling dismissals below */
                     if (result.dismiss === Swal.DismissReason.timer) {
-                        $http.delete(`/rest/admin/accessoríes/${img.idImage}`,token).then(response=> {
+                        $http.post(`/rest/staff/accessories/${img.idImage}`,img.idImage,token).then(response=> {
                             $scope.img.splice($scope.img.indexOf(img), 1);
                             $scope.message('xóa thành công');
                             $scope.resetImage();

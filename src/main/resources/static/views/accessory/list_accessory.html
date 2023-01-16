@@ -1,0 +1,151 @@
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
+
+<!-- Css Styles -->
+<link rel="stylesheet" href="product/css/bootstrap.min.css" type="text/css">
+<link rel="stylesheet" href="product/css/font-awesome.min.css" type="text/css">
+<link rel="stylesheet" href="product/css/nice-select.css" type="text/css">
+<link rel="stylesheet" href="product/css/jquery-ui.min.css" type="text/css">
+<link rel="stylesheet" href="product/css/style.css" type="text/css">
+
+<section class="product spad">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3 col-md-5">
+        <div class="sidebar">
+          <div class="sidebar__item">
+            <h4>Lọc theo loại phụ kiện</h4>
+            <ul ng-repeat="catePro in cateAccessories">
+              <li>
+                <input type="checkbox" class="form-check-input" value=""
+                       ng-click="checkSelected(catePro.idCategory,0)">
+                {{catePro.name}}
+              </li>
+            </ul>
+          </div>
+          <div class="sidebar__item">
+            <h4>Lọc theo giá</h4>
+            <div class="price-range-wrap">
+              <div class="range-slider">
+                <div class="price-input" style="text-align: center;  font-size: 12px;">
+                  <input ng-model="findProductAll.priceSalemin"  class="col-4" type="number" min="0"  maxlength="9" id="minamount" placeholder="Từ"> <b> VNĐ</b>
+                  -->
+                  <input ng-model="findProductAll.priceSalemax"  class="col-4" type="number" min="0"  maxlength="9" id="maxamount" placeholder="Đến"> <b> VNĐ</b>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button class="btn btn-success" style="text-align: center"
+                  ng-click="findAccessory(0)">Lọc sản phẩm</button>
+
+        </div>
+      </div>
+      <div class="col-lg-9 col-md-7">
+        <div class="product__discount row">
+          <div class="section-title product__discount__title  col-5" style="margin-bottom: 0">
+            <h2>Phụ Kiện</h2>
+          </div>
+          <div class="col-7">
+            <input class="form-control me-2" type="search" placeholder="Tìm kiếm sản phẩm theo tên tại đây" aria-label="Search"
+                   style="margin-bottom: -23%;margin-top: 8%;" ng-model="findProductAll.search" ng-keydown="findAccessory()">
+          </div>
+        </div>
+        <div class="filter__item">
+          <div class="row">
+            <div class="col-lg-4 col-md-5">
+              <div class="filter__sort">
+                <span>Sắp xếp theo giá</span>
+                <select ng-model="findProductAll.sortMinMax">
+                  <option ng-value="0">Tăng dần</option>
+                  <option ng-value="1">Dảm dần</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4">
+              <div class="filter__found">
+                <h6><span>{{totalElements}}</span> Sản phẩm được tìm thấy</h6>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-3">
+              <div class="filter__option">
+                <span class="icon_grid-2x2"></span>
+                <span class="icon_ul"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row" >
+          <div class="col-lg-4 col-md-6 col-sm-6" ng-repeat="acsr in detailAccessories">
+            <div class="product__item">
+              <div class="product__item__pic set-bg" data-setbg="{{acsr.image}}" style="background-image: url({{acsr.image}};);">
+                <ul class="product__item__pic__hover" style="  margin-left: 0;">
+                  <li><a ng-click="addCart(acsr)" ><i class="fa fa-shopping-cart"></i></a></li>
+                </ul>
+              </div>
+              <div class="product__item__text">
+                <h6><a href="#">{{acsr.name}}</a></h6>
+                <h5>
+                  <span ng-if="acsr.priceSale == 0">{{acsr.price | number}} VNĐ</span>
+                  <span ng-if="acsr.priceSale != 0">
+                                    <del>{{acsr.price | number}} VNĐ</del> <br> {{acsr.price - acsr.priceSale | number}} VNĐ
+                                    </span>
+                </h5>
+              </div>
+            </div>
+          </div>
+        </div>
+        <nav class="row table-responsive">
+
+          <table>
+            <ul class="pagination justify-content-center row">
+              <div class="col-1">
+                <li class="page-item">
+                  <button class="btn btn-default" ng-click="findAccessory(0)"ng-disabled="numberPage==0">
+                    <i class="fa fa-fast-backward" aria-hidden="true"></i>
+                  </button>
+                </li>
+              </div>
+              <div class="col-1">
+                <li class="page-item ms-2 me-2">
+                  <button class="btn btn-default" ng-click="findAccessory(numberPage - 1 )" ><i class="fa fa-step-backward"
+                                                      aria-hidden="true"></i></button>
+                </li>
+              </div>
+              <div class="col-1">
+                <li class="page-item ms-1 me-1 pt-1 ">
+                  <h4>{{numberPage + 1}}/{{totalPages}}</h4>
+                </li>
+              </div>
+              <div class="col-1">
+                <li class="page-item ms-2 me-2">
+                  <button class="btn btn-default"ng-click="findAccessory(numberPage +1)">
+                    <i class="fa fa-step-forward" aria-hidden="true"></i>
+                  </button>
+                  <!--            <p class="btn btn-success" disabled ng-show="!check_last">Trang sau</p>-->
+                </li>
+              </div>
+              <div class="col-1">
+                <li class="page-item">
+                  <button class="btn btn-default" ng-click="findAccessory(totalPages - 1)" ng-disabled="numberPage==totalPages-1">
+                    <i class="fa fa-fast-forward" aria-hidden="true"></i>
+                  </button>
+                  <!--            <p class="btn btn-dark" disabled ng-show="!check_last">Trang cuối</p>-->
+                </li>
+              </div>
+            </ul>
+          </table>
+        </nav>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Product Section End -->
+<script src="product/js/jquery-3.3.1.min.js"></script>
+<script src="product/js/bootstrap.min.js"></script>
+<script src="product/js/jquery.select.min.js"></script>
+<script src="product/js/jquery-ui.min.js"></script>
+<script src="product/js/jquery.slicknav.js"></script>
+<script src="product/js/mixitup.min.js"></script>
+<script src="product/js/owl.carousel.min.js"></script>
+<script src="product/js/main.js"></script>
+

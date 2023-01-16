@@ -5,6 +5,8 @@ import com.cloudinary.utils.ObjectUtils;
 import com.fix.mobile.dto.ChangeDetailDTO;
 import com.fix.mobile.dto.ProductChangeDTO;
 import com.fix.mobile.entity.*;
+import com.fix.mobile.repository.OrderDetailRepository;
+import com.fix.mobile.repository.OrderRepository;
 import com.fix.mobile.service.*;
 import com.fix.mobile.utils.UserName;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.*;
 
 @RestController
-@RequestMapping(value= "/rest/productchange")
+@RequestMapping(value= "/rest/user/productchange")
 @CrossOrigin("*")
 public class ProductChangeRestController {
 
@@ -26,6 +28,11 @@ public class ProductChangeRestController {
 
 	@Autowired private AccountService accountService;
 	@Autowired private OrderDetailService  orderDetailsService;
+	@Autowired
+	private OrderDetailRepository orderDetailRepository;
+	@Autowired
+	private OrderRepository orderRepository;
+
 	@RequestMapping(value = "/findProductChange/{idDetail}",method = RequestMethod.GET)
 	public OrderDetail findByProductChange (@PathVariable("idDetail") Integer idOrderDetails){
 			Optional<OrderDetail> orderDetails =  orderDetailsService.findById(idOrderDetails);
@@ -46,6 +53,9 @@ public class ProductChangeRestController {
 				p.setOrderDetail(productchange.getOrderDetail());
 				p.setStatus(1);
 				productChangeSerivce.save(p);
+				OrderDetail orderDetail = orderDetailRepository.findById(productchange.getOrderDetail().getIdDetail()).get();
+				orderDetail.setStatus(1);
+				orderDetailsService.update(orderDetail,orderDetail.getIdDetail());
 				for (MultipartFile multipartFile :  productchange.getFiles()) {
 					Map r = this.cloud.uploader().upload(multipartFile.getBytes(),
 							ObjectUtils.asMap(
@@ -76,7 +86,7 @@ public class ProductChangeRestController {
 				change.setOrderDetail(changeDetails.getOrderDetail());
 				changeDetailsService.createChangeDetails(changeDetails.getOrderDetail().getIdDetail());
 				Optional<OrderDetail> orderDetails =  orderDetailsService.findById(changeDetails.getOrderDetail().getIdDetail());
-				orderDetails.orElseThrow().setStatus(0);
+				orderDetails.orElseThrow().setStatus(1);
 				orderDetailsService.save(orderDetails.get());
 			}else;
 		}catch (Exception e ){
@@ -113,6 +123,16 @@ public class ProductChangeRestController {
 	public List<ProductChange> findByUser(@RequestParam("username") String user) {
 		List<ProductChange> listPrChangeDetails = productChangeSerivce.findByUsername(user);
 		return listPrChangeDetails;
+	}
+
+	// get ảnh
+	@GetMapping(value = "/findImageByPr/{id}")
+	public List<Image>   findAllImageByPr(@PathVariable("id") Integer id){
+		List<Image> listImage = imageService.findImageByPr(id);
+		if(listImage !=null){
+			return listImage;
+		}
+		return null;
 	}
 
 }

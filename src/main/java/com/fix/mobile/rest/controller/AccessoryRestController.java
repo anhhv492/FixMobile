@@ -1,27 +1,31 @@
 package com.fix.mobile.rest.controller;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fix.mobile.dto.accessory.AccessoryDTO;
 import com.fix.mobile.dto.accessory.AccessoryResponDTO;
 import com.fix.mobile.entity.Accessory;
 import com.fix.mobile.entity.Category;
+import com.fix.mobile.entity.Product;
 import com.fix.mobile.helper.ExcelHelper;
 import com.fix.mobile.repository.AccessoryRepository;
+import com.fix.mobile.repository.CategoryRepository;
 import com.fix.mobile.service.AccessoryService;
 import com.fix.mobile.service.CategoryService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
+import java.math.BigDecimal;
+import java.util.*;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping(value="/rest/admin/accessory")
+@RequestMapping(value="/rest/staff/accessory")
 public class AccessoryRestController {
 	Logger LOGGER = Logger.getLogger(AccessoryRestController.class);
 	@Autowired
@@ -32,6 +36,8 @@ public class AccessoryRestController {
 	private CategoryService categoryService;
 	@Autowired
 	private ExcelHelper excelHelper;
+	@Autowired
+	private CategoryRepository categoryRepository;
 	//findAll accessory
 	@GetMapping
 	public List<Accessory> findAll(){
@@ -57,7 +63,8 @@ public class AccessoryRestController {
 	//find category by accessory
 	@GetMapping("/cate")
 	public List<Category> findByCate(){
-		return categoryService.findByType();
+		List<Category> categories = categoryRepository.findByTypeAndStatus(1,1);
+		return categories;
 	}
 	//find accessory by category
 	@GetMapping("/cate/{id}")
@@ -82,6 +89,7 @@ public class AccessoryRestController {
 	public Accessory changeStatus(@PathVariable("id") Integer id){
 	    Accessory accessory = accessoryService.findById(id).get();
 		if(accessory.getStatus() == true){
+			accessory.setQuantity(0);
 			accessory.setStatus(false);
 		}else{
 			accessory.setStatus(true);
@@ -117,5 +125,12 @@ public class AccessoryRestController {
 			share="";
 		}
 		return accessoryService.getByPage(page,5,share);
+	}
+	@RequestMapping("/findaccessory/{page}")
+	public Page<Accessory> findProduct(
+			@PathVariable ("page") Integer page,
+			@RequestBody JsonNode findProcuctAll
+	) {
+		return accessoryService.getByPage(page,9,findProcuctAll);
 	}
 }

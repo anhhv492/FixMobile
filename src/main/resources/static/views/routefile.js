@@ -10,18 +10,6 @@ app.config(function($routeProvider){
             templateUrl:"cart/cart.html",
             controller: "cart-ctrl"
         })
-        .when("/accessory/detail",{
-            templateUrl:"accessory/list_detail.html",
-            controller: "view_accessory_ctrl",
-            controller: "home-ctrl",
-            controller: "view_product_ctrl",
-
-        })
-        .when("/product/detail",{
-            templateUrl:"product/list_detail.html",
-            controller: "home-ctrl",
-            controller: "view_product_ctrl",
-        })
         .when("/order",{
             templateUrl:"order/view.html",
             controller: "order-ctrl"
@@ -80,15 +68,22 @@ app.config(function($routeProvider){
             controller: "home-ctrl",
             controller: "view_product_ctrl",
         })
+        .when("/listproducts",{
+            templateUrl:"product/list_product.html",
+            controller: "home-ctrl",
+            controller: "view_product_ctrl",
+            controller: "home-ctr-v2",
+        })
+        .when("/listaccessory",{
+            templateUrl:"accessory/list_accessory.html",
+            controller: "home-ctrl",
+            controller: "view_accessory_ctrl",
+            controller: "home-ctr-v2"
+        })
         .when("/viewaccesory",{
             templateUrl:"accessory/viewaccesory.html",
             //controller: "productchange-ctrl",
         })
-        .when("/filterproductprice",{
-            templateUrl:"product/fileterByPriceProduct.html",
-            controller: "view_product_ctrl",
-        })
-
 
 });
 

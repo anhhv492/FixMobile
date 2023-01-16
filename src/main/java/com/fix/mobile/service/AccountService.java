@@ -1,12 +1,14 @@
 package com.fix.mobile.service;
 
 
+import com.fix.mobile.dto.RoleDTO;
 import com.fix.mobile.dto.account.AccountRequestDTO;
 import com.fix.mobile.dto.account.AccountResponDTO;
 import com.fix.mobile.dto.account.UpdatePasswordDTO;
 import com.fix.mobile.dto.AccountDTO;
 import com.fix.mobile.dto.AddressDTO;
 import com.fix.mobile.entity.Account;
+import com.fix.mobile.entity.Role;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -47,4 +49,6 @@ public interface AccountService {
     AccountResponDTO updateImage(AccountRequestDTO accountRequestDTO);
 
     Boolean updatePassword(UpdatePasswordDTO updatePasswordDTO);
+
+    Role getRoleByUserName(String userName);
 }

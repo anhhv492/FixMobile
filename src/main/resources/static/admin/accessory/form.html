@@ -46,7 +46,8 @@
                                     </div>
                                     <div class="form-group mt-1">
                                         <label>Số lượng</label>
-                                        <input ng-model="form.quantity" required name="quantity" type="number" min="0" class="form-control">
+                                        <input ng-model="form.quantity" required name="quantity" type="number" min="1"
+                                               maxlength="7" class="form-control">
                                         <span ng-show="myForm.$submitted || myForm.quantity.$dirty" style="color: red">
                                         <span class="error" ng-show="myForm.quantity.$error.required"> <i
                                                 class="fa fa-exclamation-circle"></i>Số lượng không được trống</span>
@@ -67,7 +68,8 @@
                                     </div>
                                     <div class="form-group mt-1">
                                         <label>Giá</label>
-                                        <input ng-model="form.price" required name="price" min="1" type="number" class="form-control">
+                                        <input ng-model="form.price" required name="price" min="10000" maxlength="9"
+                                               type="number" class="form-control">
                                         <span ng-show="myForm.$submitted || myForm.price.$dirty" style="color: red">
                                         <span class="error" ng-show="myForm.price.$error.required"> <i
                                                 class="fa fa-exclamation-circle"></i>Giá không được trống</span>
@@ -108,7 +110,7 @@
                                     </span>
                                     </div>
                                     <div class="form-group mt-4">
-                                        <button type="submit" class="btn btn-success" ng-disabled="myForm.$invalid">{{checkSubmit==false?title.insert:title.update}}</button>
+                                        <button type="submit" class="btn {{checkSubmit == false ? 'btn-success' : 'btn-primary'}}" ng-disabled="myForm.$invalid">{{checkSubmit==false?title.insert:title.update}}</button>
                                         <button type="button" ng-if="checkSubmit" ng-click="refresh()" class="btn btn-warning">Hủy</button>
                                     </div>
                                 </div>
@@ -153,7 +155,7 @@
                                         aria-controls="home-tab-pane">
                                     <i class="fa fa-pencil-square" aria-hidden="true"> Sửa</i>
                                 </button>
-                                <button class="btn btn-default" ng-click="changeStatus(accessory)">
+                                <button class="btn btn-default" ng-click="changeStatus(accessory)" ng-if="accessory.quantity>0">
                                     <i class="fa fa-wrench"> Thay đổi</i>
                                 </button>
                             </td>

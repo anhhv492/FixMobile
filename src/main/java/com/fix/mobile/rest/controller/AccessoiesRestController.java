@@ -24,7 +24,7 @@ import java.util.*;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping(value="/rest/admin/accessoríes")
+@RequestMapping(value="/rest/staff/accessories")
 public class AccessoiesRestController {
 
 	Logger LOGGER = Logger.getLogger(AccessoiesRestController.class);
@@ -60,7 +60,7 @@ public class AccessoiesRestController {
 		return ramService.save(ram);
 	}
 
-	@DeleteMapping("/delete/{idRam}")
+	@PostMapping("/delete/{idRam}")
 	public void delete(@PathVariable("idRam") Integer id){
 		ramService.deleteById(id);
 	}
@@ -76,7 +76,7 @@ public class AccessoiesRestController {
 	public Color createColor(@RequestBody Color color){
 		return colorService.save(color);
 	}
-	@DeleteMapping("/deleteColor/{idColor}")
+	@PostMapping("/deleteColor/{idColor}")
 	public void deleteColor(@PathVariable("idColor") Integer id){
 		colorService.deleteById(id);
 	}
@@ -92,7 +92,7 @@ public class AccessoiesRestController {
 		return capacityService.save(capacity);
 	}
 
-	@DeleteMapping("/deleteCapacity/{idCapacity}")
+	@PostMapping("/deleteCapacity/{idCapacity}")
 	public void deleteCapacity(@PathVariable("idCapacity") Integer id){
 		capacityService.deleteById(id);
 	}
@@ -146,7 +146,7 @@ public class AccessoiesRestController {
 		});
 	}
 
-	@DeleteMapping("/{id}")
+	@PostMapping("/{id}")
 	public void deleteImage(@PathVariable("id") Integer id){
 		try {
 			if(id!=null){

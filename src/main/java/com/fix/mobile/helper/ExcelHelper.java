@@ -2,37 +2,26 @@ package com.fix.mobile.helper;
 
 import com.fix.mobile.entity.Accessory;
 import com.fix.mobile.entity.Category;
-import com.fix.mobile.repository.CategoryRepository;
+import com.fix.mobile.entity.Color;
+import com.fix.mobile.repository.ColorRepository;
 import com.fix.mobile.service.AccessoryService;
 import com.fix.mobile.service.CategoryService;
 import com.fix.mobile.service.FileManagerService;
-import com.fix.mobile.service.impl.CategoryServiceImpl;
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.disk.DiskFileItem;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.util.IOUtils;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import javax.persistence.Column;
-import java.awt.*;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.math.BigDecimal;
-import java.nio.file.Files;
 import java.sql.Date;
 import java.util.Iterator;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -44,6 +33,9 @@ public class ExcelHelper {
     private AccessoryService accessoryService;
     @Autowired
     private FileManagerService fileManagerService;
+
+    @Autowired
+    private ColorRepository colorRepository;
 
     private Integer idAccessory=null;
     private String name=null;
