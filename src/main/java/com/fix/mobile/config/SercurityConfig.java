@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-
 import com.fix.mobile.jwt.JwtEntrypoint;
 import com.fix.mobile.jwt.JwtFilter;
 import com.fix.mobile.jwt.JwtUtil;
